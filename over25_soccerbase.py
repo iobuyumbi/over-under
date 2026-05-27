@@ -306,25 +306,25 @@ def apply_algorithm(home_data_3, away_data_3, home_data_6=None, away_data_6=None
             details['A5'] = f"FAIL ({away_over25_6}/6, need 4+)"
             is_perfect = False
 
-    # New clauses: Total goals in last 6 home/away matches ≥20 (optional)
+    # New clauses: Total goals in last 6 home/away matches ≥18 (optional)
     if home_data_6 and len(home_data_6) >= 6:
         home_total_goals_6 = sum(gf + ga for gf, ga in home_data_6)
-        if home_total_goals_6 >= 20:
+        if home_total_goals_6 >= 18:
             passed.append("H4")
             details['H4'] = f"PASS ({home_total_goals_6} total goals)"
         else:
             failed.append("H4")
-            details['H4'] = f"FAIL ({home_total_goals_6}, need 20+)"
+            details['H4'] = f"FAIL ({home_total_goals_6}, need 18+)"
             is_perfect = False
     
     if away_data_6 and len(away_data_6) >= 6:
         away_total_goals_6 = sum(gf + ga for gf, ga in away_data_6)
-        if away_total_goals_6 >= 20:
+        if away_total_goals_6 >= 18:
             passed.append("A6")
             details['A6'] = f"PASS ({away_total_goals_6} total goals)"
         else:
             failed.append("A6")
-            details['A6'] = f"FAIL ({away_total_goals_6}, need 20+)"
+            details['A6'] = f"FAIL ({away_total_goals_6}, need 18+)"
             is_perfect = False
 
     return passed, failed, details, is_perfect
