@@ -341,6 +341,9 @@ def main(date_str=None, only_scheduled=False):
         print("Only analyzing scheduled matches")
     else:
         print("Analyzing all matches (scheduled + completed)")
+    print("\n💡 SUGGESTION:")
+    print("   - For OVER matches: Consider OVER 1.5 goals for a safer pick!")
+    print("   - For UNDER matches: Consider UNDER 3.5 goals for a safer pick!")
     print("=" * 70)
 
     print("\n[+] Fetching fixtures from Soccerbase...")
