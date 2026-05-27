@@ -24,14 +24,20 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run predictor
+      - name: Run predictor and capture output
         id: run-predictor
         run: |
           # Get today's date in YYYY-MM-DD format
           DATE=$(date +'%Y-%m-%d')
-          # Run the script (uses today's date by default)
-          python over25_soccerbase.py
+          # Run the script and capture output
+          python over25_soccerbase.py 2>&1 | tee output.txt
           echo "date=$DATE" >> $GITHUB_OUTPUT
+          # Read output into a variable
+          OUTPUT=$(cat output.txt)
+          # Use a delimiter that doesn't appear in the output
+          echo "output<<EOF" >> $GITHUB_OUTPUT
+          echo "$OUTPUT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Commit and push results
         uses: EndBug/add-and-commit@v9
@@ -40,3 +46,15 @@ jobs:
           author_email: "github-actions[bot]@users.noreply.github.com"
           message: "Daily predictions update (${{ steps.run-predictor.outputs.date }})"
           add: "predictions_soccerbase_*.json"
+
+      - name: Send email with results
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Daily Over 2.5 Predictions - ${{ steps.run-predictor.outputs.date }}"
+          body: ${{ steps.run-predictor.outputs.output }}
+          to: ${{ secrets.TO_EMAIL }}
+          from: ${{ secrets.EMAIL_USERNAME }}
