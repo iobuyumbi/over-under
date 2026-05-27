@@ -65,7 +65,7 @@ Make sure all files are committed and pushed to your repo.
 Go to your repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret** and add these secrets:
 1. `EMAIL_USERNAME`: Your Gmail address (e.g., "you@gmail.com")
 2. `EMAIL_PASSWORD`: A **Gmail App Password** (NOT your regular password! [Learn how to create one here](https://support.google.com/accounts/answer/185833))
-3. `TO_EMAIL`: The email address to send the predictions to
+3. `TO_EMAILS`: Email addresses to send to, **comma-separated** (e.g., "user1@example.com,user2@example.com,user3@example.com")
 
 ### 3. Manual trigger from GitHub
 Go to your repo → **Actions** → **Daily Over/Under Goals Predictor** → **Run workflow**
