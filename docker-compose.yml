@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  over25-predictor:
+    build: .
+    container_name: football-predictor
+    volumes:
+      - ./predictions:/app/predictions
+      - ./data:/app/data
+    environment:
+      - TZ=Europe/London
+    restart: unless-stopped
+    # Or run once and exit:
+    # command: python3 over25_predictor.py

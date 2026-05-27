@@ -1,0 +1,11 @@
+﻿File,Purpose,Download
+**over25\_predictor.py**,"Main engine — fetches today's matches, scrapes form data, applies your 6-check algorithm",[Download](sandbox:///mnt/agents/output/over25_predictor.py)
+**daily\_runner.py**,Automation wrapper — runs the predictor daily + sends notifications,[Download](sandbox:///mnt/agents/output/daily_runner.py)
+**team\_data\_manager.py**,Manual fallback — enter results by hand when APIs fail,[Download](sandbox:///mnt/agents/output/team_data_manager.py)
+**SETUP\_GUIDE.txt**,Complete instructions for every OS,[Download](sandbox:///mnt/agents/output/SETUP_GUIDE.txt)
+**requirements.txt**,Python dependencies,[Download](sandbox:///mnt/agents/output/requirements.txt)
+**install.sh**,Linux/Mac one-line installer,[Download](sandbox:///mnt/agents/output/install.sh)
+**install.bat**,Windows installer,[Download](sandbox:///mnt/agents/output/install.bat)
+**Dockerfile**,Container setup,[Download](sandbox:///mnt/agents/output/Dockerfile)
+**docker-compose.yml**,Docker orchestration,[Download](sandbox:///mnt/agents/output/docker-compose.yml)
+**team\_data.json**,Template for manual data entry,[Download](sandbox:///mnt/agents/output/team_data.json)

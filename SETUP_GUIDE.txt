@@ -1,0 +1,138 @@
+OVER 2.5 GOALS PREDICTION SYSTEM - SETUP GUIDE
+================================================
+
+QUICK START (5 minutes):
+------------------------
+1. Install Python 3.8+ from python.org
+2. Install required packages:
+   pip install requests beautifulsoup4
+
+3. Run the predictor:
+   python3 over25_predictor.py
+
+That's it! The script will:
+• Fetch today's matches from 20+ leagues
+• Scrape recent form for each team
+• Apply your 6-check algorithm
+• Output qualified matches
+
+FILES INCLUDED:
+---------------
+📄 over25_predictor.py      - Main prediction engine
+📄 daily_runner.py          - Automated daily execution
+📄 team_data_manager.py     - Manual data entry fallback
+📄 Dockerfile               - Container setup
+📄 docker-compose.yml       - Docker orchestration
+📄 team_data.json           - Manual data storage (create as needed)
+
+DATA SOURCES USED:
+------------------
+The script tries these sources in order:
+1. WorldFootball.net (free, no key) - PRIMARY
+2. API-Football (100 free requests/day) - BACKUP
+3. Football-Data.org (free tier) - BACKUP
+4. Manual team_data.json - FALLBACK
+
+TO GET API KEYS (optional but recommended):
+-------------------------------------------
+• API-Football: https://www.api-football.com/ (free tier)
+• Football-Data: https://www.football-data.org/ (free tier)
+
+Add your API key to over25_predictor.py:
+   API_KEY = "your-key-here"
+
+AUTOMATION OPTIONS:
+-------------------
+
+OPTION A: Cron Job (Linux/Mac)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. Edit crontab:
+   crontab -e
+
+2. Add this line for 8:00 AM daily:
+   0 8 * * * cd /path/to/your/scripts && python3 daily_runner.py >> predictions.log 2>&1
+
+3. Save and exit. It will run every morning automatically.
+
+OPTION B: Windows Task Scheduler
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. Open Task Scheduler → Create Basic Task
+2. Name: "Football Predictions"
+3. Trigger: Daily at 8:00 AM
+4. Action: Start a program
+5. Program: C:\Python311\python.exe (or your path)
+6. Arguments: daily_runner.py
+7. Start in: C:\path\to\your\scripts
+
+OPTION C: Docker (Any OS)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+1. Install Docker
+2. In the script folder, run:
+   docker-compose up -d
+
+3. Container runs daily at 8 AM automatically
+4. Check logs: docker logs football-predictor
+
+OPTION D: PythonAnywhere (Cloud - FREE)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. Sign up at pythonanywhere.com (free tier)
+2. Upload these files
+3. Set up a daily scheduled task
+4. Check results online anytime
+
+MANUAL DATA ENTRY (When APIs Fail):
+------------------------------------
+1. Run: python3 team_data_manager.py
+2. Choose option 1 to add team data
+3. Enter last 3 home and away results
+4. Choose option 3 to analyze matches
+
+TROUBLESHOOTING:
+----------------
+"No matches found":
+  → Check if it's offseason for your leagues
+  → Try adding more leagues to LEAGUE_SOURCES
+  → Use manual data entry for cup matches
+
+"Rate limited":
+  → The script has built-in delays
+  → If still limited, switch to API-Football key
+  → Or use manual data entry
+
+"Team not found":
+  → Names might differ between sources
+  → Check WorldFootball.net for exact spelling
+  → Add manual mapping in clean_team_name()
+
+CUSTOMIZATION:
+--------------
+To add more leagues, edit LEAGUE_SOURCES in over25_predictor.py:
+   "League Name": "https://www.worldfootball.net/all_matches/XXX/",
+
+Find league URLs at: https://www.worldfootball.net/
+
+To adjust the algorithm thresholds, edit apply_algorithm():
+   H1 threshold: change "7" to your number
+   H2 threshold: change "2" to your number
+   etc.
+
+OUTPUT FORMAT:
+------------
+The script saves JSON files like: predictions_2024-01-15.json
+Structure:
+{
+  "date": "2024-01-15",
+  "qualified": [...],
+  "close_calls": [...],
+  "total_matches": 45
+}
+
+SUPPORT:
+--------
+If something breaks:
+1. Check the error message
+2. Verify your internet connection
+3. Try manual data entry as fallback
+4. Update the script if website structures changed
+
+Happy predicting! 🎯

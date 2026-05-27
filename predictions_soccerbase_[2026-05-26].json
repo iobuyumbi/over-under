@@ -1,0 +1,543 @@
+{
+  "date": "[2026-05-26]",
+  "perfect": [],
+  "qualified": [
+    {
+      "match": {
+        "league": "Scottish Premier",
+        "home": "St Mirren",
+        "away": "Partick",
+        "home_team_id": "2475",
+        "away_team_id": "2081",
+        "date": "[2026-05-26]",
+        "status": "Scheduled",
+        "score": null
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "failed": [],
+      "details": {
+        "H1": "PASS (13 goals)",
+        "H2": "PASS (2/3)",
+        "A1": "PASS (15 goals)",
+        "A2": "PASS (5 goals)",
+        "A3": "PERFECT PASS (scored in 3/3)",
+        "A4": "PERFECT PASS (3/3 Over 2.5)"
+      },
+      "home_form": [
+        [
+          8,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "away_form": [
+        [
+          4,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "score": 6,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "German Bundesliga",
+        "home": "SC Paderborn",
+        "away": "Wolfsburg",
+        "home_team_id": "3523",
+        "away_team_id": "2967",
+        "date": "[2026-05-26]",
+        "status": "Scheduled",
+        "score": null
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "failed": [],
+      "details": {
+        "H1": "PASS (7 goals)",
+        "H2": "PASS (2/3)",
+        "A1": "PASS (14 goals)",
+        "A2": "PASS (9 goals)",
+        "A3": "PASS (scored in 2/3)",
+        "A4": "PASS (2/3)"
+      },
+      "home_form": [
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "away_form": [
+        [
+          9,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "score": 6,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Romanian Liga 1",
+        "home": "Rapid Buch.",
+        "away": "Uni Craiova",
+        "home_team_id": "2184",
+        "away_team_id": "2660",
+        "date": "[2026-05-26]",
+        "status": "Scheduled",
+        "score": null
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "failed": [],
+      "details": {
+        "H1": "PASS (9 goals)",
+        "H2": "PASS (2/3)",
+        "A1": "PASS (14 goals)",
+        "A2": "PASS (6 goals)",
+        "A3": "PERFECT PASS (scored in 3/3)",
+        "A4": "PERFECT PASS (3/3 Over 2.5)"
+      },
+      "home_form": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "away_form": [
+        [
+          3,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "score": 6,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "League of Ireland",
+        "home": "Derry City",
+        "away": "Shelbourne",
+        "home_team_id": "808",
+        "away_team_id": "2360",
+        "date": "[2026-05-26]",
+        "status": "Scheduled",
+        "score": null
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "failed": [],
+      "details": {
+        "H1": "PASS (8 goals)",
+        "H2": "PASS (2/3)",
+        "A1": "PASS (8 goals)",
+        "A2": "PASS (2 goals)",
+        "A3": "PERFECT PASS (scored in 3/3)",
+        "A4": "PASS (2/3)"
+      },
+      "home_form": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "away_form": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "score": 6,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "MLS",
+        "home": "Inter Miami CF",
+        "away": "Philadelphia U",
+        "home_team_id": "7080",
+        "away_team_id": "5524",
+        "date": "[2026-05-26]",
+        "status": "Completed",
+        "score": "6-4"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "failed": [],
+      "details": {
+        "H1": "PASS (10 goals)",
+        "H2": "PASS (2/3)",
+        "A1": "PASS (10 goals)",
+        "A2": "PASS (5 goals)",
+        "A3": "PASS (scored in 2/3)",
+        "A4": "PASS (2/3)"
+      },
+      "home_form": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "away_form": [
+        [
+          5,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "score": 6,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Swedish Superettan",
+        "home": "Norrkoping",
+        "away": "Osters",
+        "home_team_id": "1841",
+        "away_team_id": "1954",
+        "date": "[2026-05-26]",
+        "status": "Scheduled",
+        "score": null
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "failed": [],
+      "details": {
+        "H1": "PASS (12 goals)",
+        "H2": "PASS (2/3)",
+        "A1": "PASS (12 goals)",
+        "A2": "PASS (5 goals)",
+        "A3": "PERFECT PASS (scored in 3/3)",
+        "A4": "PERFECT PASS (3/3 Over 2.5)"
+      },
+      "home_form": [
+        [
+          6,
+          0
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "away_form": [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "score": 6,
+      "is_perfect": false
+    }
+  ],
+  "close_calls": [
+    {
+      "match": {
+        "league": "Bulgarian League",
+        "home": "Cherno More",
+        "away": "Arda",
+        "home_team_id": "3351",
+        "away_team_id": "6931",
+        "date": "[2026-05-26]",
+        "status": "Scheduled",
+        "score": null
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "A2"
+      ],
+      "details": {
+        "H1": "PASS (8 goals)",
+        "H2": "PASS (2/3)",
+        "A1": "PASS (10 goals)",
+        "A2": "FAIL (1, need 2+)",
+        "A3": "PASS (scored in 2/3)",
+        "A4": "PASS (2/3)"
+      },
+      "home_form": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "away_form": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "score": 5,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Bulgarian League",
+        "home": "Ludogorets",
+        "away": "CSKA Sofia",
+        "home_team_id": "5344",
+        "away_team_id": "561",
+        "date": "[2026-05-26]",
+        "status": "Scheduled",
+        "score": null
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "failed": [
+        "A4"
+      ],
+      "details": {
+        "H1": "PASS (10 goals)",
+        "H2": "PASS (2/3)",
+        "A1": "PASS (7 goals)",
+        "A2": "PASS (2 goals)",
+        "A3": "PASS (scored in 2/3)",
+        "A4": "FAIL (1/3, need 2+)"
+      },
+      "home_form": [
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "away_form": [
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "score": 5,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Mexican Primera Clausura",
+        "home": "Pumas UNAM",
+        "away": "Cruz Azul",
+        "home_team_id": "1352",
+        "away_team_id": "1275",
+        "date": "[2026-05-26]",
+        "status": "Completed",
+        "score": "1-2"
+      },
+      "passed": [
+        "H1",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "H2"
+      ],
+      "details": {
+        "H1": "PASS (8 goals)",
+        "H2": "FAIL (1/3, need 2+)",
+        "A1": "PASS (13 goals)",
+        "A2": "PASS (3 goals)",
+        "A3": "PERFECT PASS (scored in 3/3)",
+        "A4": "PERFECT PASS (3/3 Over 2.5)"
+      },
+      "home_form": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "away_form": [
+        [
+          1,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "score": 5,
+      "is_perfect": false
+    }
+  ],
+  "total_matches": 30
+}

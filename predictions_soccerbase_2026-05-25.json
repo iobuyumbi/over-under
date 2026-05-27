@@ -1,0 +1,466 @@
+{
+  "date": "2026-05-25",
+  "only_scheduled": false,
+  "perfect": [],
+  "qualified": [
+    {
+      "match": {
+        "league": "Swedish Superettan",
+        "home": "SC Paderborn",
+        "away": "Wolfsburg",
+        "home_team_id": "3523",
+        "away_team_id": "2967",
+        "date": "2026-05-25",
+        "status": "Completed",
+        "score": "2-1"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3",
+        "A5",
+        "H4",
+        "A6"
+      ],
+      "failed": [],
+      "details": {
+        "H1": "PASS (16 goals)",
+        "H2": "PERFECT PASS (3/3 Over 2.5)",
+        "A1": "PASS (9 goals)",
+        "A2": "PASS (4 goals)",
+        "A3": "PERFECT PASS (scored in 3/3)",
+        "A4": "PASS (2/3)",
+        "H3": "PASS (5/6 Over 2.5)",
+        "A5": "PASS (4/6 Over 2.5)",
+        "H4": "PASS (28 total goals)",
+        "A6": "PASS (24 total goals)"
+      },
+      "home_form": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "home_form_6": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          5,
+          2
+        ]
+      ],
+      "away_form": [
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "away_form_6": [
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      "score": 10,
+      "is_perfect": false
+    }
+  ],
+  "close_calls": [],
+  "under25": [
+    {
+      "match": {
+        "league": "Norwegian Tippeligaen",
+        "home": "KFUM Oslo",
+        "away": "Rosenborg",
+        "home_team_id": "8003",
+        "away_team_id": "2190",
+        "date": "2026-05-25",
+        "status": "Completed",
+        "score": "2-0"
+      },
+      "passed": [
+        "A2"
+      ],
+      "failed": [
+        "H1",
+        "H2",
+        "A1",
+        "A3",
+        "A4"
+      ],
+      "details": {
+        "H1": "FAIL (6, need 7+)",
+        "H2": "FAIL (1/3, need 2+)",
+        "A1": "FAIL (5, need 7+)",
+        "A2": "PASS (3 goals)",
+        "A3": "FAIL (scored in 0/3, need 2+)",
+        "A4": "FAIL (1/3, need 2+)"
+      },
+      "home_form": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "home_form_6": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "away_form": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "away_form_6": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "score": 1,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Austrian Bundesliga",
+        "home": "Rapid Vienna",
+        "away": "Ried",
+        "home_team_id": "2187",
+        "away_team_id": "3304",
+        "date": "2026-05-25",
+        "status": "Completed",
+        "score": "3-0"
+      },
+      "passed": [
+        "A2"
+      ],
+      "failed": [
+        "H1",
+        "H2",
+        "A1",
+        "A3",
+        "A4",
+        "H3",
+        "A5",
+        "H4",
+        "A6"
+      ],
+      "details": {
+        "H1": "FAIL (5, need 7+)",
+        "H2": "FAIL (0/3, need 2+)",
+        "A1": "FAIL (5, need 7+)",
+        "A2": "PASS (2 goals)",
+        "A3": "FAIL (scored in 1/3, need 2+)",
+        "A4": "FAIL (0/3, need 2+)",
+        "H3": "FAIL (1/6, need 4+)",
+        "A5": "FAIL (2/6, need 4+)",
+        "H4": "FAIL (14, need 20+)",
+        "A6": "FAIL (13, need 20+)"
+      },
+      "home_form": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "home_form_6": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "away_form": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "away_form_6": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "score": 1,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Ecuador Liga Pro",
+        "home": "Delfin",
+        "away": "Barcelona de G",
+        "home_team_id": "7512",
+        "away_team_id": "3785",
+        "date": "2026-05-25",
+        "status": "Completed",
+        "score": "1-2"
+      },
+      "passed": [
+        "A2"
+      ],
+      "failed": [
+        "H1",
+        "H2",
+        "A1",
+        "A3",
+        "A4",
+        "H3",
+        "A5",
+        "H4",
+        "A6"
+      ],
+      "details": {
+        "H1": "FAIL (3, need 7+)",
+        "H2": "FAIL (0/3, need 2+)",
+        "A1": "FAIL (5, need 7+)",
+        "A2": "PASS (2 goals)",
+        "A3": "FAIL (scored in 1/3, need 2+)",
+        "A4": "FAIL (0/3, need 2+)",
+        "H3": "FAIL (0/6, need 4+)",
+        "A5": "FAIL (2/6, need 4+)",
+        "H4": "FAIL (5, need 20+)",
+        "A6": "FAIL (14, need 20+)"
+      },
+      "home_form": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "home_form_6": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "away_form": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "away_form_6": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "score": 1,
+      "is_perfect": false
+    }
+  ],
+  "total_matches": 28
+}

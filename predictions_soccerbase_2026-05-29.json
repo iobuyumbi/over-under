@@ -1,0 +1,129 @@
+{
+  "date": "2026-05-29",
+  "only_scheduled": false,
+  "perfect": [],
+  "qualified": [],
+  "close_calls": [],
+  "under25": [
+    {
+      "match": {
+        "league": "League of Ireland Div 1",
+        "home": "Cobh",
+        "away": "Kerry",
+        "home_team_id": "494",
+        "away_team_id": "7844",
+        "date": "2026-05-29",
+        "status": "Scheduled",
+        "score": null
+      },
+      "passed": [],
+      "failed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3",
+        "A5",
+        "H4",
+        "A6"
+      ],
+      "details": {
+        "H1": "FAIL (4, need 7+)",
+        "H2": "FAIL (1/3, need 2+)",
+        "A1": "FAIL (2, need 7+)",
+        "A2": "FAIL (1, need 2+)",
+        "A3": "FAIL (scored in 0/3, need 2+)",
+        "A4": "FAIL (0/3, need 2+)",
+        "H3": "FAIL (2/6, need 4+)",
+        "A5": "FAIL (2/6, need 4+)",
+        "H4": "FAIL (12, need 20+)",
+        "A6": "FAIL (13, need 20+)"
+      },
+      "home_form": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "home_form_6": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "away_form": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "away_form_6": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "score": 0,
+      "is_perfect": false
+    }
+  ],
+  "total_matches": 30
+}

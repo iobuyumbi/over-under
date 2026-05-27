@@ -1,0 +1,848 @@
+{
+  "date": "2026-05-23",
+  "only_scheduled": false,
+  "perfect": [],
+  "qualified": [
+    {
+      "match": {
+        "league": "Spanish La Liga",
+        "home": "Celta Vigo",
+        "away": "Sevilla",
+        "home_team_id": "690",
+        "away_team_id": "2292",
+        "date": "2026-05-23",
+        "status": "Completed",
+        "score": "1-0"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3",
+        "A5",
+        "H4",
+        "A6"
+      ],
+      "failed": [],
+      "details": {
+        "H1": "PASS (13 goals)",
+        "H2": "PERFECT PASS (3/3 Over 2.5)",
+        "A1": "PASS (10 goals)",
+        "A2": "PASS (5 goals)",
+        "A3": "PASS (scored in 2/3)",
+        "A4": "PASS (2/3)",
+        "H3": "PASS (5/6 Over 2.5)",
+        "A5": "PASS (4/6 Over 2.5)",
+        "H4": "PASS (25 total goals)",
+        "A6": "PASS (22 total goals)"
+      },
+      "home_form": [
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "home_form_6": [
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "away_form": [
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "away_form_6": [
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "score": 10,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Peru Liga 1 Apertura",
+        "home": "UTC Cajamarca",
+        "away": "Sport Boys",
+        "home_team_id": "7550",
+        "away_team_id": "7546",
+        "date": "2026-05-23",
+        "status": "Completed",
+        "score": "0-0"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3",
+        "A5",
+        "H4",
+        "A6"
+      ],
+      "failed": [],
+      "details": {
+        "H1": "PASS (10 goals)",
+        "H2": "PERFECT PASS (3/3 Over 2.5)",
+        "A1": "PASS (11 goals)",
+        "A2": "PASS (5 goals)",
+        "A3": "PERFECT PASS (scored in 3/3)",
+        "A4": "PASS (2/3)",
+        "H3": "PASS (6/6 Over 2.5)",
+        "A5": "PASS (4/6 Over 2.5)",
+        "H4": "PASS (22 total goals)",
+        "A6": "PASS (22 total goals)"
+      },
+      "home_form": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "home_form_6": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "away_form": [
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "away_form_6": [
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "score": 10,
+      "is_perfect": false
+    }
+  ],
+  "close_calls": [
+    {
+      "match": {
+        "league": "Slovenian League",
+        "home": "Koper",
+        "away": "Domzale",
+        "home_team_id": "3331",
+        "away_team_id": "3356",
+        "date": "2026-05-23",
+        "status": "Scheduled",
+        "score": null
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3",
+        "A5",
+        "A6"
+      ],
+      "failed": [
+        "H4"
+      ],
+      "details": {
+        "H1": "PASS (10 goals)",
+        "H2": "PASS (2/3)",
+        "A1": "PASS (10 goals)",
+        "A2": "PASS (3 goals)",
+        "A3": "PERFECT PASS (scored in 3/3)",
+        "A4": "PERFECT PASS (3/3 Over 2.5)",
+        "H3": "PASS (4/6 Over 2.5)",
+        "A5": "PASS (5/6 Over 2.5)",
+        "H4": "FAIL (18, need 20+)",
+        "A6": "PASS (20 total goals)"
+      },
+      "home_form": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "home_form_6": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "away_form": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "away_form_6": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "score": 9,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Ecuador Liga Pro",
+        "home": "Vegalta Sendai",
+        "away": "Yokohama FC",
+        "home_team_id": "4040",
+        "away_team_id": "4583",
+        "date": "2026-05-23",
+        "status": "Completed",
+        "score": "0-3"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A3",
+        "A4",
+        "H3",
+        "A5",
+        "H4",
+        "A6"
+      ],
+      "failed": [
+        "A2"
+      ],
+      "details": {
+        "H1": "PASS (8 goals)",
+        "H2": "PASS (2/3)",
+        "A1": "PASS (9 goals)",
+        "A2": "FAIL (1, need 2+)",
+        "A3": "PERFECT PASS (scored in 3/3)",
+        "A4": "PASS (2/3)",
+        "H3": "PASS (5/6 Over 2.5)",
+        "A5": "PASS (4/6 Over 2.5)",
+        "H4": "PASS (21 total goals)",
+        "A6": "PASS (20 total goals)"
+      },
+      "home_form": [
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "home_form_6": [
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "away_form": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "away_form_6": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "score": 9,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Ecuador Liga Pro",
+        "home": "Gifu",
+        "away": "Omiya Ardija",
+        "home_team_id": "8414",
+        "away_team_id": "5229",
+        "date": "2026-05-23",
+        "status": "Completed",
+        "score": "0-2"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3",
+        "A5",
+        "A6"
+      ],
+      "failed": [
+        "H4"
+      ],
+      "details": {
+        "H1": "PASS (9 goals)",
+        "H2": "PERFECT PASS (3/3 Over 2.5)",
+        "A1": "PASS (12 goals)",
+        "A2": "PASS (7 goals)",
+        "A3": "PERFECT PASS (scored in 3/3)",
+        "A4": "PASS (2/3)",
+        "H3": "PASS (5/6 Over 2.5)",
+        "A5": "PASS (5/6 Over 2.5)",
+        "H4": "FAIL (19, need 20+)",
+        "A6": "PASS (25 total goals)"
+      },
+      "home_form": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "home_form_6": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "away_form": [
+        [
+          3,
+          4
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "away_form_6": [
+        [
+          3,
+          4
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "score": 9,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Korean K-League 2",
+        "home": "Gyeongnam",
+        "away": "Suwon FC",
+        "home_team_id": "7536",
+        "away_team_id": "7477",
+        "date": "2026-05-23",
+        "status": "Completed",
+        "score": "3-2"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3",
+        "A5",
+        "A6"
+      ],
+      "failed": [
+        "H4"
+      ],
+      "details": {
+        "H1": "PASS (7 goals)",
+        "H2": "PASS (2/3)",
+        "A1": "PASS (9 goals)",
+        "A2": "PASS (4 goals)",
+        "A3": "PERFECT PASS (scored in 3/3)",
+        "A4": "PASS (2/3)",
+        "H3": "PASS (4/6 Over 2.5)",
+        "A5": "PASS (5/6 Over 2.5)",
+        "H4": "FAIL (17, need 20+)",
+        "A6": "PASS (20 total goals)"
+      },
+      "home_form": [
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "home_form_6": [
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "away_form": [
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "away_form_6": [
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "score": 9,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Chile Primera",
+        "home": "Audax Italiano",
+        "away": "Cobresal",
+        "home_team_id": "4902",
+        "away_team_id": "7438",
+        "date": "2026-05-23",
+        "status": "Completed",
+        "score": "2-1"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3",
+        "A5",
+        "A6"
+      ],
+      "failed": [
+        "H4"
+      ],
+      "details": {
+        "H1": "PASS (14 goals)",
+        "H2": "PERFECT PASS (3/3 Over 2.5)",
+        "A1": "PASS (10 goals)",
+        "A2": "PASS (4 goals)",
+        "A3": "PASS (scored in 2/3)",
+        "A4": "PASS (2/3)",
+        "H3": "PASS (4/6 Over 2.5)",
+        "A5": "PASS (4/6 Over 2.5)",
+        "H4": "FAIL (19, need 20+)",
+        "A6": "PASS (24 total goals)"
+      },
+      "home_form": [
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "home_form_6": [
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "away_form": [
+        [
+          1,
+          3
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "away_form_6": [
+        [
+          1,
+          3
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "score": 9,
+      "is_perfect": false
+    }
+  ],
+  "total_matches": 111
+}

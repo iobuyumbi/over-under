@@ -1,0 +1,139 @@
+{
+  "date": "2026-05-25",
+  "qualified": [
+    {
+      "match": {
+        "league": "Test League",
+        "home": "Manchester City",
+        "away": "Liverpool",
+        "source": "manual"
+      },
+      "details": {
+        "H1": "PASS (11 goals)",
+        "H2": "PASS (3/3 Over 2.5)",
+        "A1": "PASS (13 goals)",
+        "A2": "PASS (5 goals in prev away)",
+        "A3": "PASS (scored in 3/3 away)",
+        "A4": "PASS (3/3 Over 2.5)"
+      },
+      "home_form": [
+        [
+          3,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "away_form": [
+        [
+          3,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "match": {
+        "league": "Test League",
+        "home": "Bayern Munich",
+        "away": "Borussia Dortmund",
+        "source": "manual"
+      },
+      "details": {
+        "H1": "PASS (15 goals)",
+        "H2": "PASS (3/3 Over 2.5)",
+        "A1": "PASS (13 goals)",
+        "A2": "PASS (4 goals in prev away)",
+        "A3": "PASS (scored in 3/3 away)",
+        "A4": "PASS (3/3 Over 2.5)"
+      },
+      "home_form": [
+        [
+          5,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "away_form": [
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "match": {
+        "league": "Test League",
+        "home": "Real Madrid",
+        "away": "Barcelona",
+        "source": "manual"
+      },
+      "details": {
+        "H1": "PASS (12 goals)",
+        "H2": "PASS (3/3 Over 2.5)",
+        "A1": "PASS (10 goals)",
+        "A2": "PASS (3 goals in prev away)",
+        "A3": "PASS (scored in 3/3 away)",
+        "A4": "PASS (2/3 Over 2.5)"
+      },
+      "home_form": [
+        [
+          4,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "away_form": [
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    }
+  ],
+  "close_calls": [],
+  "total": 3
+}

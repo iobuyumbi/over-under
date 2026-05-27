@@ -1,0 +1,588 @@
+{
+  "date": "2026-05-22",
+  "only_scheduled": false,
+  "perfect": [],
+  "qualified": [
+    {
+      "match": {
+        "league": "Slovenian League",
+        "home": "NK Radomlje",
+        "away": "NS Mura",
+        "home_team_id": "5841",
+        "away_team_id": "6723",
+        "date": "2026-05-22",
+        "status": "Completed",
+        "score": "3-2"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3",
+        "A5"
+      ],
+      "failed": [],
+      "details": {
+        "H1": "PASS (10 goals)",
+        "H2": "PERFECT PASS (3/3 Over 2.5)",
+        "A1": "PASS (8 goals)",
+        "A2": "PASS (2 goals)",
+        "A3": "PASS (scored in 2/3)",
+        "A4": "PASS (2/3)",
+        "H3": "PASS (6/6 Over 2.5)",
+        "A5": "PASS (4/6 Over 2.5)"
+      },
+      "home_form": [
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "home_form_6": [
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "away_form": [
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "away_form_6": [
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "score": 8,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Bulgarian League",
+        "home": "Spartak Varna",
+        "away": "Lokomotiv Sofia 1929",
+        "home_team_id": "2434",
+        "away_team_id": "7281",
+        "date": "2026-05-22",
+        "status": "Completed",
+        "score": "3-0"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3",
+        "A5"
+      ],
+      "failed": [],
+      "details": {
+        "H1": "PASS (8 goals)",
+        "H2": "PASS (2/3)",
+        "A1": "PASS (12 goals)",
+        "A2": "PASS (4 goals)",
+        "A3": "PERFECT PASS (scored in 3/3)",
+        "A4": "PERFECT PASS (3/3 Over 2.5)",
+        "H3": "PASS (4/6 Over 2.5)",
+        "A5": "PASS (4/6 Over 2.5)"
+      },
+      "home_form": [
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "home_form_6": [
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "away_form": [
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "away_form_6": [
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "score": 8,
+      "is_perfect": false
+    }
+  ],
+  "close_calls": [
+    {
+      "match": {
+        "league": "Serbian League",
+        "home": "Red Star",
+        "away": "OFK Belgrade",
+        "home_team_id": "2193",
+        "away_team_id": "1919",
+        "date": "2026-05-22",
+        "status": "Completed",
+        "score": "1-2"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "H3",
+        "A5"
+      ],
+      "failed": [
+        "A4"
+      ],
+      "details": {
+        "H1": "PASS (11 goals)",
+        "H2": "PERFECT PASS (3/3 Over 2.5)",
+        "A1": "PASS (10 goals)",
+        "A2": "PASS (2 goals)",
+        "A3": "PASS (scored in 2/3)",
+        "A4": "FAIL (1/3, need 2+)",
+        "H3": "PASS (5/6 Over 2.5)",
+        "A5": "PASS (4/6 Over 2.5)"
+      },
+      "home_form": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "home_form_6": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "away_form": [
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "away_form_6": [
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "score": 7,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "League of Ireland",
+        "home": "Galway FC",
+        "away": "Bohemians D.",
+        "home_team_id": "5752",
+        "away_team_id": "282",
+        "date": "2026-05-22",
+        "status": "Completed",
+        "score": "2-4"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3"
+      ],
+      "failed": [
+        "A5"
+      ],
+      "details": {
+        "H1": "PASS (11 goals)",
+        "H2": "PERFECT PASS (3/3 Over 2.5)",
+        "A1": "PASS (11 goals)",
+        "A2": "PASS (4 goals)",
+        "A3": "PERFECT PASS (scored in 3/3)",
+        "A4": "PERFECT PASS (3/3 Over 2.5)",
+        "H3": "PASS (5/6 Over 2.5)",
+        "A5": "FAIL (3/6, need 4+)"
+      },
+      "home_form": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "home_form_6": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "away_form": [
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "away_form_6": [
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "score": 7,
+      "is_perfect": true
+    },
+    {
+      "match": {
+        "league": "Copa Libertadores",
+        "home": "Penarol",
+        "away": "Corinthians",
+        "home_team_id": "2058",
+        "away_team_id": "4001",
+        "date": "2026-05-22",
+        "status": "Completed",
+        "score": "1-1"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3"
+      ],
+      "failed": [
+        "A5"
+      ],
+      "details": {
+        "H1": "PASS (9 goals)",
+        "H2": "PASS (2/3)",
+        "A1": "PASS (9 goals)",
+        "A2": "PASS (4 goals)",
+        "A3": "PERFECT PASS (scored in 3/3)",
+        "A4": "PASS (2/3)",
+        "H3": "PASS (4/6 Over 2.5)",
+        "A5": "FAIL (3/6, need 4+)"
+      },
+      "home_form": [
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "home_form_6": [
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "away_form": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "away_form_6": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "score": 7,
+      "is_perfect": false
+    }
+  ],
+  "total_matches": 36
+}
