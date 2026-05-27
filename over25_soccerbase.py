@@ -18,13 +18,16 @@ import requests
 import json
 import re
 import argparse
+import time
+import random
 from datetime import datetime
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+from fake_useragent import UserAgent
 
+ua = UserAgent()
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
     "Referer": "https://www.google.com/",
@@ -43,7 +46,19 @@ adapter = HTTPAdapter(max_retries=retry_strategy)
 session = requests.Session()
 session.mount("https://", adapter)
 session.mount("http://", adapter)
-session.headers.update(HEADERS)
+
+
+def get_random_headers():
+    """Return headers with a random User-Agent"""
+    headers = HEADERS.copy()
+    headers["User-Agent"] = ua.random
+    return headers
+
+
+def random_delay():
+    """Wait for a random amount of time (1.5 to 3.5 seconds)"""
+    delay = random.uniform(1.5, 3.5)
+    time.sleep(delay)
 
 
 def fetch_soccerbase_fixtures(date_str):
@@ -53,7 +68,8 @@ def fetch_soccerbase_fixtures(date_str):
     """
     url = f"https://www.soccerbase.com/matches/results.sd?date={date_str}"
     try:
-        response = session.get(url, timeout=15)
+        headers = get_random_headers()
+        response = session.get(url, headers=headers, timeout=15)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
         
@@ -110,7 +126,8 @@ def fetch_soccerbase_team_results(team_id):
     """
     url = f"https://www.soccerbase.com/teams/team.sd?team_id={team_id}&teamTabs=results"
     try:
-        response = session.get(url, timeout=15)
+        headers = get_random_headers()
+        response = session.get(url, headers=headers, timeout=15)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
         
@@ -411,6 +428,10 @@ def main(date_str=None, only_scheduled=False):
             print("[!] UNDER 2.5 CANDIDATE ({} checks)".format(len(passed)))
         else:
             print(f"[X] ({len(passed)}/10)")
+
+        # Add random delay between matches
+        if match != all_matches[-1]:  # Don't delay after last match
+            random_delay()
 
     print("\n" + "=" * 70)
     print("[+] PERFECT MATCHES (10/10 checks)")
