@@ -351,7 +351,8 @@ def main(date_str=None, only_scheduled=False):
     perfect = []
     qualified = []
     close_calls = []
-    under25 = []
+    under25_0 = []
+    under25_1 = []
     all_results = []
 
     for match in all_matches:
@@ -405,9 +406,12 @@ def main(date_str=None, only_scheduled=False):
         elif len(passed) == 9:
             close_calls.append(result)
             print("[WARN] Close (9/10)")
-        elif len(passed) <= 1:
-            under25.append(result)
-            print("[!] UNDER 2.5 CANDIDATE ({} checks)".format(len(passed)))
+        elif len(passed) == 0:
+            under25_0.append(result)
+            print("[!] UNDER 2.5 CANDIDATE (0/10 checks)")
+        elif len(passed) == 1:
+            under25_1.append(result)
+            print("[!] UNDER 2.5 CANDIDATE (1/10 checks)")
         else:
             print(f"[X] ({len(passed)}/10)")
 
@@ -473,17 +477,38 @@ def main(date_str=None, only_scheduled=False):
         print("\nNone")
 
     print("\n" + "=" * 70)
-    print("[!] UNDER 2.5 CANDIDATES (0/10 or 1/10 checks)")
+    print("[!] UNDER 2.5 CANDIDATES (0/10 checks)")
     print("=" * 70)
 
-    if under25:
-        for i, u in enumerate(under25, 1):
+    if under25_0:
+        for i, u in enumerate(under25_0, 1):
             m = u["match"]
             print(f"\n{i}. {m['league']}: {m['home']} vs {m['away']}")
             print(f"   Status: {m['status']}")
             if m['score']:
                 print(f"   Score: {m['score']}")
-            print(f"   Passed checks: {len(u['passed'])}/10")
+            print(f"   Passed checks: 0/10")
+            print(f"   Home form (last 3): {u['home_form']}")
+            print(f"   Home form (last 6): {u['home_form_6']}")
+            print(f"   Away form (last 3): {u['away_form']}")
+            print(f"   Away form (last 6): {u['away_form_6']}")
+            for check, status in u['details'].items():
+                print(f"   {check}: {status}")
+    else:
+        print("\nNone")
+
+    print("\n" + "=" * 70)
+    print("[!] UNDER 2.5 CANDIDATES (1/10 checks)")
+    print("=" * 70)
+
+    if under25_1:
+        for i, u in enumerate(under25_1, 1):
+            m = u["match"]
+            print(f"\n{i}. {m['league']}: {m['home']} vs {m['away']}")
+            print(f"   Status: {m['status']}")
+            if m['score']:
+                print(f"   Score: {m['score']}")
+            print(f"   Passed checks: 1/10")
             print(f"   Home form (last 3): {u['home_form']}")
             print(f"   Home form (last 6): {u['home_form_6']}")
             print(f"   Away form (last 3): {u['away_form']}")
@@ -499,7 +524,8 @@ def main(date_str=None, only_scheduled=False):
         "perfect": perfect,
         "qualified": qualified,
         "close_calls": close_calls,
-        "under25": under25,
+        "under25_0": under25_0,
+        "under25_1": under25_1,
         "total_matches": len(all_matches)
     }
 
