@@ -2,34 +2,33 @@ name: Daily Over 2.5 Goals Predictions
 
 on:
   schedule:
-    # [span_1](start_span)Runs every day at 03:00 UTC[span_1](end_span)
+    # Runs every day at 03:00 UTC
     - cron: "0 3 * * *"
-  # [span_2](start_span)Allows you to run this workflow manually from the Actions tab[span_2](end_span)
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 env:
-  [span_3](start_span)FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true[span_3](end_span)
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
   build:
-    [span_4](start_span)runs-on: ubuntu-latest[span_4](end_span)
-    # 👇 ADD THIS BLOCK TO FIX THE 403 ERROR
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       
     steps:
       - name: Checkout repository
-        [span_5](start_span)uses: actions/checkout@v4[span_5](end_span)
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        [span_6](start_span)uses: actions/setup-python@v5[span_6](end_span)
+        uses: actions/setup-python@v5
         with:
-          [span_7](start_span)python-version: "3.11"[span_7](end_span)
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
-          [span_8](start_span)python -m pip install --upgrade pip[span_8](end_span)
-          [span_9](start_span)pip install -r requirements.txt[span_9](end_span)
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Run predictor and isolate email content
         id: run-predictor
@@ -51,21 +50,21 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Commit and push results
-        [span_10](start_span)uses: EndBug/add-and-commit@v9[span_10](end_span)
+        uses: EndBug/add-and-commit@v9
         with:
-          [span_11](start_span)author_name: "github-actions[bot]"[span_11](end_span)
-          [span_12](start_span)author_email: "github-actions[bot]@users.noreply.github.com"[span_12](end_span)
-          [span_13](start_span)message: "Daily predictions update (${{ steps.run-predictor.outputs.date }})"[span_13](end_span)
-          [span_14](start_span)add: "predictions_soccerbase_*.json"[span_14](end_span)
+          author_name: "github-actions[bot]"
+          author_email: "github-actions[bot]@users.noreply.github.com"
+          message: "Daily predictions update (${{ steps.run-predictor.outputs.date }})"
+          add: "predictions_soccerbase_*.json"
 
       - name: Send email with results
-        [span_15](start_span)uses: dawidd6/action-send-mail@v3[span_15](end_span)
+        uses: dawidd6/action-send-mail@v3
         with:
-          [span_16](start_span)server_address: smtp.gmail.com[span_16](end_span)
-          [span_17](start_span)server_port: 587[span_17](end_span)
-          [span_18](start_span)username: ${{ secrets.EMAIL_USERNAME }}[span_18](end_span)
-          [span_19](start_span)password: ${{ secrets.EMAIL_PASSWORD }}[span_19](end_span)
-          [span_20](start_span)subject: "Daily Over 2.5 Predictions - ${{ steps.run-predictor.outputs.date }}"[span_20](end_span)
-          [span_21](start_span)body: ${{ steps.run-predictor.outputs.output }}[span_21](end_span)
-          [span_22](start_span)to: ${{ secrets.TO_EMAIL }}[span_22](end_span)
-          [span_23](start_span)from: ${{ secrets.EMAIL_USERNAME }}[span_23](end_span)
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Daily Over 2.5 Predictions - ${{ steps.run-predictor.outputs.date }}"
+          body: ${{ steps.run-predictor.outputs.output }}
+          to: ${{ secrets.TO_EMAIL }}
+          from: ${{ secrets.EMAIL_USERNAME }}
