@@ -2,20 +2,15 @@ name: Daily Over 2.5 Goals Predictions
 
 on:
   schedule:
-    # Runs every day at 03:00 UTC
-    - cron: "0 3 * * *"
-  # Allows you to run this workflow manually from the Actions tab
+    - cron: "0 6 * * *"  # 7 AM London time (BST)
   workflow_dispatch:
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -30,24 +25,22 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run predictor and isolate email content
+      - name: Run predictor and capture output
         id: run-predictor
         run: |
-          # Get today's date in YYYY-MM-DD format
           DATE=$(date +'%Y-%m-%d')
+          python over25_soccerbase.py > output.txt 2> errors.txt
           echo "date=$DATE" >> $GITHUB_OUTPUT
           
-          # Run script and save all console logs out of the way
-          python over25_soccerbase.py > console_output.txt 2>&1
-          cat console_output.txt
+          # Extract just the email content between markers
+          EMAIL_BODY=$(sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d')
           
-          # Extract the optimized email text between the markers
-          sed -n '/===EMAIL_START===/,/===EMAIL_END===\|$/p' console_output.txt | grep -v -E "===EMAIL_START===|===EMAIL_END===" > email_body.txt
-          
-          # Format output correctly into GITHUB_OUTPUT environment variable
-          echo "output<<EOF" >> $GITHUB_OUTPUT
-          cat email_body.txt >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          # Write to GITHUB_OUTPUT using EOF delimiter
+          {
+            echo "email_body<<EOF"
+            echo "$EMAIL_BODY"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
 
       - name: Commit and push results
         uses: EndBug/add-and-commit@v9
@@ -65,6 +58,6 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Daily Over 2.5 Predictions - ${{ steps.run-predictor.outputs.date }}"
-          body: ${{ steps.run-predictor.outputs.output }}
+          body: ${{ steps.run-predictor.outputs.email_body }}
           to: ${{ secrets.TO_EMAIL }}
           from: ${{ secrets.EMAIL_USERNAME }}
