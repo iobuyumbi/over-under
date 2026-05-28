@@ -2,16 +2,7 @@
 """
 OVER 2.5 GOALS PREDICTION SYSTEM - SOCCERBASE VERSION
 =======================================================
-Uses Soccerbase.com for fixtures, results, and team form data.
-
-FIXES APPLIED:
-1. Added date extraction and proper sorting of matches (newest first)
-2. Improved home/away detection reliability
-3. Added retries for requests to handle temporary blocks/errors
-4. Added option to filter only scheduled matches (enabled by default)
-5. EXTRACTED HIDDEN ISO DATES for accurate date filtering
-6. ADDED TARGET DATE FILTER: only use matches BEFORE fixture date
-7. STATS ON SEPARATE LINES
+Optimized for clean email reporting and robust tracking.
 """
 
 import requests
@@ -36,7 +27,6 @@ HEADERS = {
     "Upgrade-Insecure-Requests": "1",
 }
 
-# Configure retries for requests
 retry_strategy = Retry(
     total=3,
     backoff_factor=1,
@@ -49,23 +39,17 @@ session.mount("http://", adapter)
 
 
 def get_random_headers():
-    """Return headers with a random User-Agent"""
     headers = HEADERS.copy()
     headers["User-Agent"] = ua.random
     return headers
 
 
 def random_delay():
-    """Wait for a random amount of time (1.5 to 3.5 seconds)"""
     delay = random.uniform(1.5, 3.5)
     time.sleep(delay)
 
 
 def fetch_soccerbase_fixtures(date_str):
-    """
-    Fetch fixtures/results from Soccerbase for a specific date.
-    date_str should be in YYYY-MM-DD format.
-    """
     url = f"https://www.soccerbase.com/matches/results.sd?date={date_str}"
     try:
         headers = get_random_headers()
@@ -119,11 +103,6 @@ def fetch_soccerbase_fixtures(date_str):
 
 
 def fetch_soccerbase_team_results(team_id):
-    """
-    Fetch recent results for a team from Soccerbase using team_id.
-    Returns list of matches sorted NEWEST FIRST with (home_team, away_team, gf, ga, is_home, date)
-    Uses HIDDEN ISO DATES from Soccerbase's HTML for accuracy!
-    """
     url = f"https://www.soccerbase.com/teams/team.sd?team_id={team_id}&teamTabs=results"
     try:
         headers = get_random_headers()
@@ -150,7 +129,6 @@ def fetch_soccerbase_team_results(team_id):
                     
                     if "-" in score:
                         try:
-                            # EXTRACT HIDDEN ISO DATE from the cell HTML
                             iso_match = re.search(r"(\d{4}-\d{2}-\d{2})", str(date_cell))
                             match_date_str = iso_match.group(1) if iso_match else None
                             
@@ -177,7 +155,6 @@ def fetch_soccerbase_team_results(team_id):
                         except Exception as e:
                             continue
         
-        # Sort matches NEWEST FIRST using the ISO date string
         matches.sort(key=lambda x: x["date_str"] or "", reverse=True)
         return matches
     except Exception as e:
@@ -186,14 +163,9 @@ def fetch_soccerbase_team_results(team_id):
 
 
 def get_team_form(team_id, is_home=True, num_matches=3, target_date_str=None):
-    """
-    Get last N home or away matches for a team that occurred BEFORE target_date_str.
-    Returns list of (gf, ga) tuples, NEWEST FIRST.
-    """
     all_matches = fetch_soccerbase_team_results(team_id)
     form = []
     for match in all_matches:
-        # Skip if match date is >= target date
         if target_date_str and match["date_str"] and match["date_str"] >= target_date_str:
             continue
         if (is_home and match["is_home"]) or (not is_home and not match["is_home"]):
@@ -204,12 +176,6 @@ def get_team_form(team_id, is_home=True, num_matches=3, target_date_str=None):
 
 
 def apply_algorithm(home_data_3, away_data_3, home_data_6=None, away_data_6=None):
-    """
-    Apply the Over 2.5 goals prediction algorithm
-    home_data_3/away_data_3: list of (gf, ga) tuples (last 3 matches, NEWEST FIRST)
-    home_data_6/away_data_6: list of (gf, ga) tuples (last 6 matches, NEWEST FIRST, optional)
-    Returns: (passed_list, failed_list, details_dict, is_perfect)
-    """
     passed = []
     failed = []
     details = {}
@@ -218,7 +184,7 @@ def apply_algorithm(home_data_3, away_data_3, home_data_6=None, away_data_6=None
     if len(home_data_3) < 3 or len(away_data_3) < 3:
         return None, None, {"error": "Insufficient data (need 3 matches minimum)"}, False
 
-    # Original 6 checks (H1/H2, A1-A4)
+    # H1
     home_goals_total = sum(gf + ga for gf, ga in home_data_3)
     if home_goals_total >= 7:
         passed.append("H1")
@@ -228,6 +194,7 @@ def apply_algorithm(home_data_3, away_data_3, home_data_6=None, away_data_6=None
         details['H1'] = f"FAIL ({home_goals_total}, need 7+)"
         is_perfect = False
 
+    # H2
     home_over25_3 = sum(1 for gf, ga in home_data_3 if gf + ga > 2.5)
     if home_over25_3 >= 2:
         passed.append("H2")
@@ -241,6 +208,7 @@ def apply_algorithm(home_data_3, away_data_3, home_data_6=None, away_data_6=None
         details['H2'] = f"FAIL ({home_over25_3}/3, need 2+)"
         is_perfect = False
 
+    # A1
     away_goals_total = sum(gf + ga for gf, ga in away_data_3)
     if away_goals_total >= 7:
         passed.append("A1")
@@ -250,6 +218,7 @@ def apply_algorithm(home_data_3, away_data_3, home_data_6=None, away_data_6=None
         details['A1'] = f"FAIL ({away_goals_total}, need 7+)"
         is_perfect = False
 
+    # A2
     prev_away_total = away_data_3[0][0] + away_data_3[0][1]
     if prev_away_total >= 2:
         passed.append("A2")
@@ -259,6 +228,7 @@ def apply_algorithm(home_data_3, away_data_3, home_data_6=None, away_data_6=None
         details['A2'] = f"FAIL ({prev_away_total}, need 2+)"
         is_perfect = False
 
+    # A3
     away_scored = sum(1 for gf, _ in away_data_3 if gf > 0)
     if away_scored >= 2:
         passed.append("A3")
@@ -272,6 +242,7 @@ def apply_algorithm(home_data_3, away_data_3, home_data_6=None, away_data_6=None
         details['A3'] = f"FAIL (scored in {away_scored}/3, need 2+)"
         is_perfect = False
 
+    # A4
     away_over25_3 = sum(1 for gf, ga in away_data_3 if gf + ga > 2.5)
     if away_over25_3 >= 2:
         passed.append("A4")
@@ -285,7 +256,7 @@ def apply_algorithm(home_data_3, away_data_3, home_data_6=None, away_data_6=None
         details['A4'] = f"FAIL ({away_over25_3}/3, need 2+)"
         is_perfect = False
 
-    # New clauses: 4/6 home and away Over 2.5 (optional)
+    # H3
     if home_data_6 and len(home_data_6) >= 6:
         home_over25_6 = sum(1 for gf, ga in home_data_6 if gf + ga > 2.5)
         if home_over25_6 >= 4:
@@ -296,6 +267,7 @@ def apply_algorithm(home_data_3, away_data_3, home_data_6=None, away_data_6=None
             details['H3'] = f"FAIL ({home_over25_6}/6, need 4+)"
             is_perfect = False
     
+    # A5
     if away_data_6 and len(away_data_6) >= 6:
         away_over25_6 = sum(1 for gf, ga in away_data_6 if gf + ga > 2.5)
         if away_over25_6 >= 4:
@@ -306,7 +278,7 @@ def apply_algorithm(home_data_3, away_data_3, home_data_6=None, away_data_6=None
             details['A5'] = f"FAIL ({away_over25_6}/6, need 4+)"
             is_perfect = False
 
-    # New clauses: Total goals in last 6 home/away matches ≥18 (optional)
+    # H4
     if home_data_6 and len(home_data_6) >= 6:
         home_total_goals_6 = sum(gf + ga for gf, ga in home_data_6)
         if home_total_goals_6 >= 18:
@@ -317,6 +289,7 @@ def apply_algorithm(home_data_3, away_data_3, home_data_6=None, away_data_6=None
             details['H4'] = f"FAIL ({home_total_goals_6}, need 18+)"
             is_perfect = False
     
+    # A6
     if away_data_6 and len(away_data_6) >= 6:
         away_total_goals_6 = sum(gf + ga for gf, ga in away_data_6)
         if away_total_goals_6 >= 18:
@@ -330,27 +303,26 @@ def apply_algorithm(home_data_3, away_data_3, home_data_6=None, away_data_6=None
     return passed, failed, details, is_perfect
 
 
+def format_match_block(idx, match_dict):
+    """Helper to format detailed target list metrics cleanly."""
+    m = match_dict["match"]
+    lines = [
+        f"\n{idx}. {m['league']}: {m['home']} vs {m['away']}",
+        f"   Score Metrics Passed: {match_dict['score']}/10 (Perfect: {match_dict['is_perfect']})"
+    ]
+    lines.append("   Checks:")
+    for check, status in match_dict['details'].items():
+        lines.append(f"     • {check}: {status}")
+    return "\n".join(lines)
+
+
 def main(date_str=None, only_scheduled=False):
     if date_str is None:
         date_str = datetime.now().strftime("%Y-%m-%d")
     
-    print("=" * 70)
-    print("OVER 2.5 GOALS PREDICTION SYSTEM - SOCCERBASE")
-    print(f"Date: {date_str}")
-    if only_scheduled:
-        print("Only analyzing scheduled matches")
-    else:
-        print("Analyzing all matches (scheduled + completed)")
-    print("\n💡 SUGGESTION:")
-    print("   - For OVER matches: Consider OVER 1.5 goals for a safer pick!")
-    print("   - For UNDER matches: Consider UNDER 3.5 goals for a safer pick!")
-    print("=" * 70)
-
-    print("\n[+] Fetching fixtures from Soccerbase...")
+    print(f"[+] Starting analysis for Date: {date_str}...")
     all_matches = fetch_soccerbase_fixtures(date_str)
-    print(f"[*] Total matches found: {len(all_matches)}")
-
-    # Remove duplicates (using a set of (home, away, league) as key)
+    
     seen = set()
     unique_matches = []
     for m in all_matches:
@@ -358,23 +330,17 @@ def main(date_str=None, only_scheduled=False):
         if key not in seen:
             seen.add(key)
             unique_matches.append(m)
-    if len(unique_matches) < len(all_matches):
-        print(f"[*] Removed {len(all_matches) - len(unique_matches)} duplicate(s)")
     all_matches = unique_matches
 
     if only_scheduled:
         all_matches = [m for m in all_matches if m["status"] == "Scheduled"]
-        print(f"[*] Scheduled matches to analyze: {len(all_matches)}")
-    else:
-        print(f"[*] Matches to analyze: {len(all_matches)}")
 
-    print("\n[+] Analyzing team form (matches before {})...".format(date_str))
     perfect = []
     qualified = []
     close_calls = []
     under25_0 = []
     under25_1 = []
-    all_results = []
+    insufficient_data_count = 0
 
     for match in all_matches:
         home = match["home"]
@@ -382,26 +348,20 @@ def main(date_str=None, only_scheduled=False):
         home_id = match["home_team_id"]
         away_id = match["away_team_id"]
 
-        print(f"\n   Checking {home} vs {away}...", end=" ")
-
         if not home_id or not away_id:
-            print("[WARN] No team IDs found")
             continue
 
-        # Pass target_date_str to filter team form
         home_form_3 = get_team_form(home_id, is_home=True, num_matches=3, target_date_str=date_str)
         away_form_3 = get_team_form(away_id, is_home=False, num_matches=3, target_date_str=date_str)
         home_form_6 = get_team_form(home_id, is_home=True, num_matches=6, target_date_str=date_str)
         away_form_6 = get_team_form(away_id, is_home=False, num_matches=6, target_date_str=date_str)
 
         if len(home_form_3) < 3 or len(away_form_3) < 3:
-            print(f"[WARN] Insufficient data (home: {len(home_form_3)}, away: {len(away_form_3)})")
+            insufficient_data_count += 1
             continue
 
         passed, failed, details, is_perfect = apply_algorithm(home_form_3, away_form_3, home_form_6, away_form_6)
-
         if passed is None:
-            print("[ERROR] Error in algorithm")
             continue
 
         result = {
@@ -420,175 +380,73 @@ def main(date_str=None, only_scheduled=False):
         if len(passed) == 10:
             if is_perfect:
                 perfect.append(result)
-                print("[OK] PERFECT QUALIFIED (10/10)")
             else:
                 qualified.append(result)
-                print("[OK] QUALIFIED (10/10)")
         elif len(passed) == 9:
             close_calls.append(result)
-            print("[WARN] Close (9/10)")
         elif len(passed) == 0:
             under25_0.append(result)
-            print("[!] UNDER 2.5 CANDIDATE (0/10 checks)")
         elif len(passed) == 1:
             under25_1.append(result)
-            print("[!] UNDER 2.5 CANDIDATE (1/10 checks)")
-        else:
-            print(f"[X] ({len(passed)}/10)")
 
-        # Add random delay between matches
-        if match != all_matches[-1]:  # Don't delay after last match
+        if match != all_matches[-1]:
             random_delay()
 
-    print("\n" + "=" * 70)
-    print("[+] PERFECT MATCHES (10/10 checks)")
-    print("=" * 70)
+    # ==========================================
+    # BUILD CLEAN EMAIL OUTPUT
+    # ==========================================
+    email = []
+    email.append("⚽ DAILY OVER 2.5 GOALS PREDICTIONS RECAP")
+    email.append(f"📅 Date: {date_str}")
+    email.append(f"📊 Scope: {'Only Scheduled' if only_scheduled else 'All Matches (Scheduled + Completed)'}")
+    email.append("-" * 50)
+    email.append(f"• Total fixtures parsed: {len(all_matches)}")
+    email.append(f"• Skipped (insufficient data): {insufficient_data_count}")
+    email.append(f"• High Value Targets Identified: {len(perfect) + len(qualified)}")
+    email.append("-" * 50 + "\n")
 
+    email.append("⭐ PERFECT MATCHES (10/10 Checks & Strict Form)")
     if perfect:
-        for i, p in enumerate(perfect, 1):
-            m = p["match"]
-            print(f"\n{i}. {m['league']}: {m['home']} vs {m['away']}")
-            print(f"   Status: {m['status']}")
-            if m['score']:
-                print(f"   Score: {m['score']}")
-            print(f"   Home form (last 3):")
-            for idx, gf_ga in enumerate(p['home_form'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Home form (last 6):")
-            for idx, gf_ga in enumerate(p['home_form_6'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Away form (last 3):")
-            for idx, gf_ga in enumerate(p['away_form'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Away form (last 6):")
-            for idx, gf_ga in enumerate(p['away_form_6'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Checks:")
-            for check, status in p['details'].items():
-                print(f"     {check}: {status}")
+        for idx, p in enumerate(perfect, 1):
+            email.append(format_match_block(idx, p))
     else:
-        print("\n[X] No perfect matches today.")
+        email.append("  None found today.")
 
-    print("\n" + "=" * 70)
-    print("[+] QUALIFIED MATCHES (10/10 checks)")
-    print("=" * 70)
-
+    email.append("\n✅ QUALIFIED MATCHES (10/10 Checks)")
     if qualified:
-        for i, q in enumerate(qualified, 1):
-            m = q["match"]
-            print(f"\n{i}. {m['league']}: {m['home']} vs {m['away']}")
-            print(f"   Status: {m['status']}")
-            if m['score']:
-                print(f"   Score: {m['score']}")
-            print(f"   Home form (last 3):")
-            for idx, gf_ga in enumerate(q['home_form'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Home form (last 6):")
-            for idx, gf_ga in enumerate(q['home_form_6'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Away form (last 3):")
-            for idx, gf_ga in enumerate(q['away_form'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Away form (last 6):")
-            for idx, gf_ga in enumerate(q['away_form_6'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Checks:")
-            for check, status in q['details'].items():
-                print(f"     {check}: {status}")
+        for idx, q in enumerate(qualified, 1):
+            email.append(format_match_block(idx, q))
     else:
-        print("\n[X] No matches fully qualified (non-perfect).")
+        email.append("  None found today.")
 
-    print("\n" + "=" * 70)
-    print("[WARN] CLOSE CALLS (9/10)")
-    print("=" * 70)
-
+    email.append("\n⚠️ CLOSE CALLS (9/10 Checks)")
     if close_calls:
         for c in close_calls:
             m = c["match"]
-            print(f"\n- {m['league']}: {m['home']} vs {m['away']}")
-            print(f"  Status: {m['status']}")
-            if m['score']:
-                print(f"  Score: {m['score']}")
-            print(f"  Failed: {', '.join(c['failed'])}")
-            print(f"  Home form (last 3):")
-            for idx, gf_ga in enumerate(c['home_form'], 1):
-                print(f"    {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"  Home form (last 6):")
-            for idx, gf_ga in enumerate(c['home_form_6'], 1):
-                print(f"    {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"  Away form (last 3):")
-            for idx, gf_ga in enumerate(c['away_form'], 1):
-                print(f"    {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"  Away form (last 6):")
-            for idx, gf_ga in enumerate(c['away_form_6'], 1):
-                print(f"    {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"  Checks:")
-            for check, status in c['details'].items():
-                print(f"    {check}: {status}")
+            email.append(f"• {m['league']}: {m['home']} vs {m['away']} | Failed: {', '.join(c['failed'])}")
     else:
-        print("\nNone")
+        email.append("  None.")
 
-    print("\n" + "=" * 70)
-    print("[!] UNDER 2.5 CANDIDATES (0/10 checks)")
-    print("=" * 70)
-
-    if under25_0:
-        for i, u in enumerate(under25_0, 1):
+    email.append("\n📉 UNDER 2.5 GOALS CANDIDATES (0/10 or 1/10 Checks)")
+    under25_all = under25_0 + under25_1
+    if under25_all:
+        for u in under25_all:
             m = u["match"]
-            print(f"\n{i}. {m['league']}: {m['home']} vs {m['away']}")
-            print(f"   Status: {m['status']}")
-            if m['score']:
-                print(f"   Score: {m['score']}")
-            print(f"   Passed checks: 0/10")
-            print(f"   Home form (last 3):")
-            for idx, gf_ga in enumerate(u['home_form'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Home form (last 6):")
-            for idx, gf_ga in enumerate(u['home_form_6'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Away form (last 3):")
-            for idx, gf_ga in enumerate(u['away_form'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Away form (last 6):")
-            for idx, gf_ga in enumerate(u['away_form_6'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Checks:")
-            for check, status in u['details'].items():
-                print(f"     {check}: {status}")
+            email.append(f"• {m['league']}: {m['home']} vs {m['away']} ({u['score']}/10 checks)")
     else:
-        print("\nNone")
+        email.append("  None.")
 
-    print("\n" + "=" * 70)
-    print("[!] UNDER 2.5 CANDIDATES (1/10 checks)")
-    print("=" * 70)
+    email.append("\n💡 STRATEGY REMINDER:")
+    email.append("  - For high probability OVER selections, consider Over 1.5 Goals for risk mitigation.")
+    email.append("  - For strong UNDER selections, consider Under 3.5 Goals for a safer baseline.")
+    
+    # Output the email block safely wrapped in tags for GitHub Actions extraction
+    print("\n===EMAIL_START===")
+    print("\n".join(email))
+    print("===EMAIL_END===")
 
-    if under25_1:
-        for i, u in enumerate(under25_1, 1):
-            m = u["match"]
-            print(f"\n{i}. {m['league']}: {m['home']} vs {m['away']}")
-            print(f"   Status: {m['status']}")
-            if m['score']:
-                print(f"   Score: {m['score']}")
-            print(f"   Passed checks: 1/10")
-            print(f"   Home form (last 3):")
-            for idx, gf_ga in enumerate(u['home_form'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Home form (last 6):")
-            for idx, gf_ga in enumerate(u['home_form_6'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Away form (last 3):")
-            for idx, gf_ga in enumerate(u['away_form'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Away form (last 6):")
-            for idx, gf_ga in enumerate(u['away_form_6'], 1):
-                print(f"     {idx}. GF: {gf_ga[0]}, GA: {gf_ga[1]} (Total: {gf_ga[0]+gf_ga[1]})")
-            print(f"   Checks:")
-            for check, status in u['details'].items():
-                print(f"     {check}: {status}")
-    else:
-        print("\nNone")
-
-    output = {
+    # Save artifact as JSON for record-keeping
+    output_data = {
         "date": date_str,
         "only_scheduled": only_scheduled,
         "perfect": perfect,
@@ -598,21 +456,16 @@ def main(date_str=None, only_scheduled=False):
         "under25_1": under25_1,
         "total_matches": len(all_matches)
     }
-
     filename = f"predictions_soccerbase_{date_str}.json"
     with open(filename, "w") as f:
-        json.dump(output, f, indent=2, default=str)
-
-    print(f"\n[*] Results saved to: {filename}")
-    print("=" * 70)
+        json.dump(output_data, f, indent=2, default=str)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run the Soccerbase Over 2.5 goals algorithm.")
     parser.add_argument("date", nargs="?", default=datetime.now().strftime("%Y-%m-%d"), help="Date in YYYY-MM-DD format")
-    parser.add_argument("--scheduled", action="store_true", help="Only analyze scheduled matches (default: all matches)")
-    parser.add_argument("--all", action="store_true", help="Backwards compatibility (now default)")
+    parser.add_argument("--scheduled", action="store_true", help="Only analyze scheduled matches")
+    parser.add_argument("--all", action="store_true", help="Backwards compatibility")
     parser.add_argument("--json-out", help="Optional path to save JSON output")
     args = parser.parse_args()
-    # --all is now default, so only use --scheduled if provided
     main(args.date, only_scheduled=args.scheduled)
