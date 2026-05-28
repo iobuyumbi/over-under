@@ -27,19 +27,23 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run predictor and capture output
+      - name: Run predictor and isolate email content
         id: run-predictor
         run: |
           # Get today's date in YYYY-MM-DD format
           DATE=$(date +'%Y-%m-%d')
-          # Run the script and capture output
-          python over25_soccerbase.py 2>&1 | tee output.txt
           echo "date=$DATE" >> $GITHUB_OUTPUT
-          # Read output into a variable
-          OUTPUT=$(cat output.txt)
-          # Use a delimiter that doesn't appear in the output
+          
+          # Run script and save all console logs out of the way
+          python over25_soccerbase.py > console_output.txt 2>&1
+          cat console_output.txt # Keep visible in GitHub Actions run histories
+          
+          # Extract the optimized email text between the markers
+          sed -n '/===EMAIL_START===/,/===EMAIL_END===\|$/p' console_output.txt | grep -v -E "===EMAIL_START===|===EMAIL_END===" > email_body.txt
+          
+          # Format output correctly into GITHUB_OUTPUT environment variable
           echo "output<<EOF" >> $GITHUB_OUTPUT
-          echo "$OUTPUT" >> $GITHUB_OUTPUT
+          cat email_body.txt >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Commit and push results
@@ -61,3 +65,4 @@ jobs:
           body: ${{ steps.run-predictor.outputs.output }}
           to: ${{ secrets.TO_EMAIL }}
           from: ${{ secrets.EMAIL_USERNAME }}
+          
