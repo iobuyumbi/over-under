@@ -1,12 +1,12 @@
-name: Daily Over 2.5 Goals Predictions
+name: Daily Predictions (Over 2.5 + Home Win)
 
 on:
   schedule:
-    - cron: "0 2 * * *"  # 7 AM London time (BST)
+    - cron: "0 5 * * *"  # 6 AM London time (BST), 5 AM GMT
   workflow_dispatch:
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
 
 jobs:
   build:
@@ -25,42 +25,20 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run predictor and capture output
+      - name: Run Over 2.5 predictor
         id: run-predictor
         run: |
           DATE=$(date +'%Y-%m-%d')
           python over25_soccerbase.py > output.txt 2> errors.txt
           echo "date=$DATE" >> $GITHUB_OUTPUT
           
-          # Extract just the email content between markers
           EMAIL_BODY=$(sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d')
           
-          # Write to GITHUB_OUTPUT using EOF delimiter
           {
             echo "email_body<<EOF"
             echo "$EMAIL_BODY"
             echo "EOF"
           } >> $GITHUB_OUTPUT
-
-      - name: Commit and push results
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "github-actions[bot]"
-          author_email: "github-actions[bot]@users.noreply.github.com"
-          message: "Daily predictions update (${{ steps.run-predictor.outputs.date }})"
-          add: "predictions_soccerbase_*.json"
-
-      - name: Send email with results
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Daily Over 2.5 Predictions - ${{ steps.run-predictor.outputs.date }}"
-          body: ${{ steps.run-predictor.outputs.email_body }}
-          to: ${{ secrets.TO_EMAIL }}
-          from: ${{ secrets.EMAIL_USERNAME }}
 
       - name: Run Home Win predictor
         id: run-home-win
@@ -76,16 +54,43 @@ jobs:
             echo "EOF"
           } >> $GITHUB_OUTPUT
 
-      - name: Send Home Win email
+      - name: Commit and push results
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: "github-actions[bot]"
+          author_email: "github-actions[bot]@users.noreply.github.com"
+          message: "Daily predictions update (${{ steps.run-predictor.outputs.date }})"
+          add: |
+            predictions_soccerbase_*.json
+            home_win_predictions_*.json
+
+      - name: Build combined email and send
+        id: combined-email
+        run: |
+          DATE=${{ steps.run-predictor.outputs.date }}
+          
+          # Build combined email body
+          {
+            echo "combined<<EOF"
+            echo "⚽ DAILY PREDICTIONS RECAP - $DATE"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo ""
+            echo "${{ steps.run-predictor.outputs.email_body }}"
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo ""
+            echo "${{ steps.run-home-win.outputs.hw_email }}"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
+      - name: Send combined email
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Daily Home Win Predictions - ${{ steps.run-predictor.outputs.date }}"
-          body: ${{ steps.run-home-win.outputs.hw_email }}
+          subject: "Daily Predictions - ${{ steps.run-predictor.outputs.date }}"
+          body: ${{ steps.combined-email.outputs.combined }}
           to: ${{ secrets.TO_EMAIL }}
           from: ${{ secrets.EMAIL_USERNAME }}
-
-
