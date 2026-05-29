@@ -61,3 +61,31 @@ jobs:
           body: ${{ steps.run-predictor.outputs.email_body }}
           to: ${{ secrets.TO_EMAIL }}
           from: ${{ secrets.EMAIL_USERNAME }}
+
+      - name: Run Home Win predictor
+        id: run-home-win
+        run: |
+          DATE=$(date +'%Y-%m-%d')
+          python home_win_soccerbase.py > hw_output.txt 2> hw_errors.txt
+          
+          EMAIL_BODY=$(sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d')
+          
+          {
+            echo "hw_email<<EOF"
+            echo "$EMAIL_BODY"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
+      - name: Send Home Win email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Daily Home Win Predictions - ${{ steps.run-predictor.outputs.date }}"
+          body: ${{ steps.run-home-win.outputs.hw_email }}
+          to: ${{ secrets.TO_EMAIL }}
+          from: ${{ secrets.EMAIL_USERNAME }}
+
+
