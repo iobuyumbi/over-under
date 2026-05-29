@@ -2,7 +2,7 @@ name: Daily Over 2.5 Goals Predictions
 
 on:
   schedule:
-    - cron: "0 6 * * *"  # 7 AM London time (BST)
+    - cron: "0 2 * * *"  # 7 AM London time (BST)
   workflow_dispatch:
 
 env:
