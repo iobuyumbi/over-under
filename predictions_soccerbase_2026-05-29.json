@@ -4,7 +4,7 @@
   "perfect": [],
   "qualified": [],
   "close_calls": [],
-  "under25": [
+  "under25_0": [
     {
       "match": {
         "league": "League of Ireland Div 1",
@@ -38,8 +38,8 @@
         "A4": "FAIL (0/3, need 2+)",
         "H3": "FAIL (2/6, need 4+)",
         "A5": "FAIL (2/6, need 4+)",
-        "H4": "FAIL (12, need 20+)",
-        "A6": "FAIL (13, need 20+)"
+        "H4": "FAIL (12, need 18+)",
+        "A6": "FAIL (13, need 18+)"
       },
       "home_form": [
         [
@@ -125,5 +125,6 @@
       "is_perfect": false
     }
   ],
+  "under25_1": [],
   "total_matches": 30
 }
