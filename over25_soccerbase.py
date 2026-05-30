@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-OVER 2.5 GOALS PREDICTION SYSTEM - SOCCERBASE VERSION (PATCHED)
-===============================================================
-Fixed: League header carryover bug, strict row tracking, and home/away string safety.
+OVER 2.5 GOALS PREDICTION SYSTEM - SOCCERBASE VERSION (PATCHED ID ENGINE)
+========================================================================
+Fixed: Total elimination of string containment matching for team histories.
+Enforces accurate data splitting for true 3-game and 6-game goal matrices.
 """
 
 import requests
@@ -54,19 +55,16 @@ def fetch_soccerbase_fixtures(date_str):
         soup = BeautifulSoup(response.text, "html.parser")
         
         matches = []
-        
-        # Target the main match container tables explicitly
         tables = soup.find_all("table", class_="listWithCards")
         for table in tables:
-            current_league = "Unknown League" # Reset per table to prevent crossing continents
+            current_league = "Unknown League"
             rows = table.find_all("tr")
             
             for row in rows:
-                # Check for explicit league header block inside the table row
                 league_link = row.find("a", href=lambda href: href and "comp_id=" in href)
                 if league_link:
                     current_league = league_link.get_text(strip=True)
-                    continue # Move to match rows under this header
+                    continue
                 
                 cells = row.find_all("td")
                 if len(cells) >= 6:
@@ -74,7 +72,6 @@ def fetch_soccerbase_fixtures(date_str):
                     score_or_v = cells[4].get_text(strip=True)
                     away_team = cells[5].get_text(strip=True)
                     
-                    # Strip away extraneous date metadata strings from team fields
                     home_team_clean = re.sub(r'\s*\d+.*$', '', home_team).strip()
                     away_team_clean = re.sub(r'\s*\d+.*$', '', away_team).strip()
                     
@@ -111,11 +108,6 @@ def fetch_soccerbase_team_results(team_id):
         soup = BeautifulSoup(response.text, "html.parser")
         
         matches = []
-        team_name = None
-        team_header = soup.find("table", class_="imageHead")
-        if team_header:
-            team_name = team_header.get_text(strip=True).split("Results")[0].strip().lower()
-        
         tables = soup.find_all("table", class_="soccerGrid")
         for table in tables:
             rows = table.find_all("tr")
@@ -123,9 +115,7 @@ def fetch_soccerbase_team_results(team_id):
                 cells = row.find_all("td")
                 if len(cells) >= 8:
                     date_cell = cells[1]
-                    home_team = cells[3].get_text(strip=True).lower()
                     score = cells[4].get_text(strip=True)
-                    away_team = cells[5].get_text(strip=True).lower()
                     
                     if "-" in score:
                         try:
@@ -133,21 +123,20 @@ def fetch_soccerbase_team_results(team_id):
                             match_date_str = iso_match.group(1) if iso_match else None
                             
                             gf_h, gf_a = map(int, score.split("-"))
-                            home_team_clean = re.sub(r'\s*\d+.*$', '', home_team).strip()
-                            away_team_clean = re.sub(r'\s*\d+.*$', '', away_team).strip()
                             
-                            # Robust normalized containment check
-                            if team_name:
-                                is_home = (team_name in home_team_clean or home_team_clean in team_name)
-                            else:
-                                is_home = True # Fallback baseline
-                                
+                            # ID FIX: Pull the unique home team ID from the row anchor tag
+                            home_link = cells[3].find("a", href=lambda h: h and "team_id=" in h)
+                            if not home_link:
+                                continue
+                            url_home_id = home_link["href"].split("team_id=")[1].split("&")[0]
+                            
+                            # Complete structural safety compared to mutable strings
+                            is_home = (str(url_home_id) == str(team_id))
+                            
                             gf = gf_h if is_home else gf_a
                             ga = gf_a if is_home else gf_h
                             
                             matches.append({
-                                "home_team": home_team_clean,
-                                "away_team": away_team_clean,
                                 "gf": gf,
                                 "ga": ga,
                                 "is_home": is_home,
@@ -156,7 +145,6 @@ def fetch_soccerbase_team_results(team_id):
                         except Exception:
                             continue
         
-        # Ensure fallback filtering works seamlessly even on missing date items
         matches.sort(key=lambda x: x["date_str"] if x["date_str"] else "0000-00-00", reverse=True)
         return matches
     except Exception as e:
@@ -169,7 +157,7 @@ def get_team_form(team_id, is_home=True, num_matches=3, target_date_str=None):
     for match in all_matches:
         if target_date_str and match["date_str"] and match["date_str"] >= target_date_str:
             continue
-        if (is_home and match["is_home"]) or (not is_home and not match["is_home"]):
+        if match["is_home"] == is_home:
             form.append((match["gf"], match["ga"]))
             if len(form) >= num_matches:
                 break
@@ -314,7 +302,7 @@ def main(date_str=None, only_scheduled=False):
     seen = set()
     unique_matches = []
     for m in all_matches:
-        key = (m["home"], m["away"], m["league"])
+        key = (m["home_team_id"], m["away_team_id"], m["league"])
         if key not in seen:
             seen.add(key)
             unique_matches.append(m)
