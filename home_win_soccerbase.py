@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-HOME WIN PREDICTION SYSTEM - SOCCERBASE ORIGINAL SPEC
+HOME WIN PREDICTION SYSTEM - SOCCERBASE OPTIMIZED SPEC
 =====================================================
-Strictly enforces the original 9-point rule checklist.
+Strictly enforces the customized 9-point rule checklist.
 Uses ID-driven parsing to completely eliminate team naming bugs.
 """
 
@@ -145,7 +145,7 @@ def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
 
 def apply_home_win_algorithm(home_data_6, away_data_6):
     """
-    Exact Original 9-Point Rule Logic Engine
+    Evaluates matches using your customized 9-point criteria.
     """
     passed, failed, details = [], [], {}
 
@@ -153,7 +153,7 @@ def apply_home_win_algorithm(home_data_6, away_data_6):
         return None, None, {"error": "Insufficient matches"}, False
 
     # --- HOME METRICS (6 Home Matches) ---
-    # H1: Home not to lose in 5/6
+    # H1: Home not to lose in 5/6 (losses <= 1)
     home_not_lost = sum(1 for m in home_data_6 if m["result"] != "L")
     if home_not_lost >= 5:
         passed.append("H1")
@@ -171,23 +171,23 @@ def apply_home_win_algorithm(home_data_6, away_data_6):
         failed.append("H2")
         details["H2"] = f"FAIL ({home_gf} goals, need 10+)"
 
-    # H3: Home conceded < 5 goals
+    # H3 UPDATED: Home conceded 5 or fewer goals total (0-5 range)
     home_ga = sum(m["ga"] for m in home_data_6)
-    if home_ga < 5:
+    if home_ga <= 5:
         passed.append("H3")
         details["H3"] = f"PASS ({home_ga} goals conceded)"
     else:
         failed.append("H3")
-        details["H3"] = f"FAIL ({home_ga} goals, need < 5)"
+        details["H3"] = f"FAIL ({home_ga} goals, need <= 5)"
 
-    # H4: Home won 4+ matches (FIXED)
+    # H4 UPDATED: Home won 3 or more matches (3+ wins)
     home_wins = sum(1 for m in home_data_6 if m["result"] == "W")
-    if home_wins >= 4:
+    if home_wins >= 3:
         passed.append("H4")
         details["H4"] = f"PASS ({home_wins}/6 Wins)"
     else:
         failed.append("H4")
-        details["H4"] = f"FAIL ({home_wins}/6, need 4+)"
+        details["H4"] = f"FAIL ({home_wins}/6, need 3+)"
 
     # H5: Won last 2 home matches
     last_2_home_wins = sum(1 for m in home_data_6[:2] if m["result"] == "W")
@@ -226,16 +226,16 @@ def apply_home_win_algorithm(home_data_6, away_data_6):
         failed.append("A3")
         details["A3"] = f"FAIL ({away_gf} goals, need <= 5)"
 
-    # A4: Away won fewer than 4 matches (0-3 wins) (FIXED REDUNDANCY)
+    # A4 UPDATED: Away won a maximum of 2 matches (0-2 wins allowed)
     away_wins = sum(1 for m in away_data_6 if m["result"] == "W")
-    if away_wins < 4:
+    if away_wins <= 2:
         passed.append("A4")
         details["A4"] = f"PASS ({away_wins}/6 Wins)"
     else:
         failed.append("A4")
-        details["A4"] = f"FAIL ({away_wins}/6, need < 4)"
+        details["A4"] = f"FAIL ({away_wins}/6, need <= 2)"
 
-    # Check for "Perfect" status: Passed all 9 conditions AND home team has 0 losses at home
+    # Perfect definition: All 9 conditions met AND home team has 0 losses at home (completely undefeated)
     is_perfect = (len(passed) == 9 and home_not_lost == 6)
     
     return passed, failed, details, is_perfect
@@ -301,15 +301,15 @@ def main(date_str=None, only_scheduled=False):
         if match != all_matches[-1]:
             random_delay()
 
-    # Consolidated 9-Point Report Formatting
+    # Consolidated Report Output
     email = [
-        "🏠 CORRECTED 9-POINT HOME WIN PREDICTIONS REPORT",
+        "🏠 UPDATED 9-POINT HOME WIN PREDICTIONS REPORT",
         f"📅 Date: {date_str}",
         "-" * 50,
         f"• Total Clean Fixtures: {len(all_matches)}",
         f"• Skipped (Insufficient Data): {insufficient_data}",
-        f"• Perfect targets (9/9 Form Perfect): {len(perfect)}",
-        f"• Qualified targets (9/9 Standard): {len(qualified)}",
+        f"• Perfect targets (9/9 Undefeated Home Form): {len(perfect)}",
+        f"• Qualified targets (9/9 Marginally Passed): {len(qualified)}",
         f"• Close Calls (8/9): {len(close_calls)}",
         f"• Watchlist Funnel Pool (7/9): {len(general_pool)}",
         "-" * 50 + "\n"
