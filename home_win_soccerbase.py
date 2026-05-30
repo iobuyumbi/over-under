@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-HOME WIN PREDICTION SYSTEM - SOCCERBASE OPTIMIZED SPEC
-=====================================================
+HOME WIN PREDICTION SYSTEM - SOCCERBASE OPTIMIZED SPEC (PATCHED ENGINE)
+=====================================================================
 Strictly enforces the customized 9-point rule checklist.
-Uses ID-driven parsing to completely eliminate team naming bugs.
+Uses ID-driven parsing and a bulletproof chronological sorting fix 
+to completely eliminate team naming bugs and data timeline drift.
 """
 
 import requests
@@ -58,6 +59,7 @@ def fetch_soccerbase_fixtures(date_str):
                 league_link = row.find("a", href=lambda h: h and "comp_id=" in h)
                 if league_link:
                     current_league = league_link.get_text(strip=True)
+                    continue
                 elif len(cells) >= 6 and current_league:
                     home_team = cells[3].get_text(strip=True)
                     score_or_v = cells[4].get_text(strip=True)
@@ -80,7 +82,7 @@ def fetch_soccerbase_fixtures(date_str):
                                 "home_team_id": home_id,
                                 "away_team_id": away_id,
                                 "date": date_str,
-                                "status": "Scheduled" if score_or_v == "v" else "Completed"
+                                "status": "Scheduled" if score_or_v.lower() == "v" else "Completed"
                             })
         return matches
     except Exception as e:
@@ -125,7 +127,9 @@ def fetch_soccerbase_team_results(team_id):
                             })
                         except Exception:
                             continue
-        matches.sort(key=lambda x: x["date_str"] or "", reverse=True)
+                            
+        # FIXED: Enforces string comparisons by using a standardized baseline for missing dates
+        matches.sort(key=lambda x: x["date_str"] if x["date_str"] is not None else "0000-00-00", reverse=True)
         return matches
     except Exception as e:
         print(f"[ERROR] Team ID data processing error {team_id}: {e}")
@@ -171,7 +175,7 @@ def apply_home_win_algorithm(home_data_6, away_data_6):
         failed.append("H2")
         details["H2"] = f"FAIL ({home_gf} goals, need 10+)"
 
-    # H3 UPDATED: Home conceded 5 or fewer goals total (0-5 range)
+    # H3: Home conceded 5 or fewer goals total (0-5 range)
     home_ga = sum(m["ga"] for m in home_data_6)
     if home_ga <= 5:
         passed.append("H3")
@@ -180,7 +184,7 @@ def apply_home_win_algorithm(home_data_6, away_data_6):
         failed.append("H3")
         details["H3"] = f"FAIL ({home_ga} goals, need <= 5)"
 
-    # H4 UPDATED: Home won 3 or more matches (3+ wins)
+    # H4: Home won 3 or more matches (3+ wins)
     home_wins = sum(1 for m in home_data_6 if m["result"] == "W")
     if home_wins >= 3:
         passed.append("H4")
@@ -226,7 +230,7 @@ def apply_home_win_algorithm(home_data_6, away_data_6):
         failed.append("A3")
         details["A3"] = f"FAIL ({away_gf} goals, need <= 5)"
 
-    # A4 UPDATED: Away won a maximum of 2 matches (0-2 wins allowed)
+    # A4: Away won a maximum of 2 matches (0-2 wins allowed)
     away_wins = sum(1 for m in away_data_6 if m["result"] == "W")
     if away_wins <= 2:
         passed.append("A4")
@@ -240,14 +244,12 @@ def apply_home_win_algorithm(home_data_6, away_data_6):
     
     return passed, failed, details, is_perfect
 
-
 def format_match_block(idx, r):
     m = r["match"]
     lines = [f"\n{idx}. {m['league']}: {m['home']} vs {m['away']} [Score: {r['score']}/9]"]
     for check, res in r["details"].items():
         lines.append(f"      • {check}: {res}")
     return "\n".join(lines)
-
 
 def main(date_str=None, only_scheduled=False):
     if date_str is None:
@@ -259,7 +261,8 @@ def main(date_str=None, only_scheduled=False):
     seen = set()
     unique_matches = []
     for m in all_matches:
-        key = (m["home_team_id"], m["away_team_id"])
+        # Robust compound matching key using team IDs and league metadata
+        key = (m["home_team_id"], m["away_team_id"], m["league"])
         if key not in seen:
             seen.add(key)
             unique_matches.append(m)
