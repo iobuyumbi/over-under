@@ -11,8 +11,8 @@
         "home_team_id": "4583",
         "away_team_id": "5229",
         "date": "2026-05-30",
-        "status": "Scheduled",
-        "score": null
+        "status": "Completed",
+        "score": "2-1"
       },
       "passed": [
         "H1",
@@ -123,8 +123,369 @@
       "is_perfect": false
     }
   ],
-  "close_calls": [],
-  "under25": [
+  "close_calls": [
+    {
+      "match": {
+        "league": "Chile Primera",
+        "home": "V-Varen Nagasaki",
+        "away": "Mito HollyHock",
+        "home_team_id": "7684",
+        "away_team_id": "7685",
+        "date": "2026-05-30",
+        "status": "Scheduled",
+        "score": null
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3",
+        "H4",
+        "A6"
+      ],
+      "failed": [
+        "A5"
+      ],
+      "details": {
+        "H1": "PASS (10 goals)",
+        "H2": "PERFECT PASS (3/3 Over 2.5)",
+        "A1": "PASS (12 goals)",
+        "A2": "PASS (3 goals)",
+        "A3": "PASS (scored in 2/3)",
+        "A4": "PASS (2/3)",
+        "H3": "PASS (5/6 Over 2.5)",
+        "A5": "FAIL (3/6, need 4+)",
+        "H4": "PASS (18 total goals)",
+        "A6": "PASS (19 total goals)"
+      },
+      "home_form": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "home_form_6": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "away_form": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "away_form_6": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "score": 9,
+      "is_perfect": false
+    }
+  ],
+  "under25_0": [
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Estudiantes Caseros",
+        "away": "Godoy Cruz",
+        "home_team_id": "7463",
+        "away_team_id": "7650",
+        "date": "2026-05-30",
+        "status": "Scheduled",
+        "score": null
+      },
+      "passed": [],
+      "failed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3",
+        "A5",
+        "H4",
+        "A6"
+      ],
+      "details": {
+        "H1": "FAIL (4, need 7+)",
+        "H2": "FAIL (0/3, need 2+)",
+        "A1": "FAIL (3, need 7+)",
+        "A2": "FAIL (1, need 2+)",
+        "A3": "FAIL (scored in 0/3, need 2+)",
+        "A4": "FAIL (0/3, need 2+)",
+        "H3": "FAIL (0/6, need 4+)",
+        "A5": "FAIL (0/6, need 4+)",
+        "H4": "FAIL (8, need 18+)",
+        "A6": "FAIL (8, need 18+)"
+      },
+      "home_form": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "home_form_6": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "away_form": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "away_form_6": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "score": 0,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Defensores de Belgrano",
+        "away": "San Telmo",
+        "home_team_id": "7459",
+        "away_team_id": "7453",
+        "date": "2026-05-30",
+        "status": "Scheduled",
+        "score": null
+      },
+      "passed": [],
+      "failed": [
+        "H1",
+        "H2",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "H3",
+        "A5",
+        "H4",
+        "A6"
+      ],
+      "details": {
+        "H1": "FAIL (2, need 7+)",
+        "H2": "FAIL (0/3, need 2+)",
+        "A1": "FAIL (2, need 7+)",
+        "A2": "FAIL (0, need 2+)",
+        "A3": "FAIL (scored in 1/3, need 2+)",
+        "A4": "FAIL (0/3, need 2+)",
+        "H3": "FAIL (0/6, need 4+)",
+        "A5": "FAIL (1/6, need 4+)",
+        "H4": "FAIL (6, need 18+)",
+        "A6": "FAIL (9, need 18+)"
+      },
+      "home_form": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "home_form_6": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "away_form": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "away_form_6": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "score": 0,
+      "is_perfect": false
+    }
+  ],
+  "under25_1": [
     {
       "match": {
         "league": "Finland League",
@@ -224,125 +585,6 @@
     {
       "match": {
         "league": "Argentina Primera Nacional",
-        "home": "Estudiantes Caseros",
-        "away": "Godoy Cruz",
-        "home_team_id": "7463",
-        "away_team_id": "7650",
-        "date": "2026-05-30",
-        "status": "Scheduled",
-        "score": null
-      },
-      "passed": [],
-      "failed": [
-        "H1",
-        "H2",
-        "A1",
-        "A2",
-        "A3",
-        "A4",
-        "H3",
-        "A5",
-        "H4",
-        "A6"
-      ],
-      "details": {
-        "H1": "FAIL (4, need 7+)",
-        "H2": "FAIL (0/3, need 2+)",
-        "A1": "FAIL (3, need 7+)",
-        "A2": "FAIL (1, need 2+)",
-        "A3": "FAIL (scored in 0/3, need 2+)",
-        "A4": "FAIL (0/3, need 2+)",
-        "H3": "FAIL (0/6, need 4+)",
-        "A5": "FAIL (0/6, need 4+)",
-        "H4": "FAIL (8, need 20+)",
-        "A6": "FAIL (8, need 20+)"
-      },
-      "home_form": [
-        [
-          1,
-          1
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "home_form_6": [
-        [
-          1,
-          1
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          1,
-          0
-        ],
-        [
-          0,
-          2
-        ],
-        [
-          0,
-          1
-        ]
-      ],
-      "away_form": [
-        [
-          0,
-          1
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          2
-        ]
-      ],
-      "away_form_6": [
-        [
-          0,
-          1
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          2
-        ],
-        [
-          1,
-          0
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          1,
-          1
-        ]
-      ],
-      "score": 0,
-      "is_perfect": false
-    },
-    {
-      "match": {
-        "league": "Argentina Primera Nacional",
         "home": "All Boys",
         "away": "Los Andes",
         "home_team_id": "7454",
@@ -371,7 +613,7 @@
         "A3": "PASS (scored in 2/3)",
         "A4": "FAIL (0/3, need 2+)",
         "H3": "FAIL (0/6, need 4+)",
-        "H4": "FAIL (4, need 20+)"
+        "H4": "FAIL (4, need 18+)"
       },
       "home_form": [
         [
@@ -450,125 +692,6 @@
         ]
       ],
       "score": 1,
-      "is_perfect": false
-    },
-    {
-      "match": {
-        "league": "Argentina Primera Nacional",
-        "home": "Defensores de Belgrano",
-        "away": "San Telmo",
-        "home_team_id": "7459",
-        "away_team_id": "7453",
-        "date": "2026-05-30",
-        "status": "Scheduled",
-        "score": null
-      },
-      "passed": [],
-      "failed": [
-        "H1",
-        "H2",
-        "A1",
-        "A2",
-        "A3",
-        "A4",
-        "H3",
-        "A5",
-        "H4",
-        "A6"
-      ],
-      "details": {
-        "H1": "FAIL (2, need 7+)",
-        "H2": "FAIL (0/3, need 2+)",
-        "A1": "FAIL (2, need 7+)",
-        "A2": "FAIL (0, need 2+)",
-        "A3": "FAIL (scored in 1/3, need 2+)",
-        "A4": "FAIL (0/3, need 2+)",
-        "H3": "FAIL (0/6, need 4+)",
-        "A5": "FAIL (1/6, need 4+)",
-        "H4": "FAIL (6, need 20+)",
-        "A6": "FAIL (9, need 20+)"
-      },
-      "home_form": [
-        [
-          0,
-          0
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "home_form_6": [
-        [
-          0,
-          0
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          1,
-          1
-        ]
-      ],
-      "away_form": [
-        [
-          0,
-          0
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "away_form_6": [
-        [
-          0,
-          0
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          1
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          2,
-          2
-        ]
-      ],
-      "score": 0,
       "is_perfect": false
     },
     {
@@ -602,7 +725,7 @@
         "A3": "FAIL (scored in 1/3, need 2+)",
         "A4": "FAIL (1/3, need 2+)",
         "A5": "FAIL (2/6, need 4+)",
-        "A6": "FAIL (11, need 20+)"
+        "A6": "FAIL (11, need 18+)"
       },
       "home_form": [
         [
@@ -678,126 +801,6 @@
         [
           0,
           2
-        ]
-      ],
-      "score": 1,
-      "is_perfect": false
-    },
-    {
-      "match": {
-        "league": "Chile Primera",
-        "home": "Sagamihara",
-        "away": "Fujieda MYFC",
-        "home_team_id": "8410",
-        "away_team_id": "7849",
-        "date": "2026-05-30",
-        "status": "Scheduled",
-        "score": null
-      },
-      "passed": [
-        "A2"
-      ],
-      "failed": [
-        "H1",
-        "H2",
-        "A1",
-        "A3",
-        "A4",
-        "H3",
-        "A5",
-        "H4",
-        "A6"
-      ],
-      "details": {
-        "H1": "FAIL (5, need 7+)",
-        "H2": "FAIL (0/3, need 2+)",
-        "A1": "FAIL (3, need 7+)",
-        "A2": "PASS (3 goals)",
-        "A3": "FAIL (scored in 1/3, need 2+)",
-        "A4": "FAIL (1/3, need 2+)",
-        "H3": "FAIL (3/6, need 4+)",
-        "A5": "FAIL (3/6, need 4+)",
-        "H4": "FAIL (18, need 20+)",
-        "A6": "FAIL (10, need 20+)"
-      },
-      "home_form": [
-        [
-          1,
-          1
-        ],
-        [
-          1,
-          0
-        ],
-        [
-          1,
-          1
-        ]
-      ],
-      "home_form_6": [
-        [
-          1,
-          1
-        ],
-        [
-          1,
-          0
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          0,
-          3
-        ],
-        [
-          2,
-          4
-        ],
-        [
-          4,
-          0
-        ]
-      ],
-      "away_form": [
-        [
-          3,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "away_form_6": [
-        [
-          3,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          1,
-          2
-        ],
-        [
-          1,
-          0
-        ],
-        [
-          2,
-          1
         ]
       ],
       "score": 1,
@@ -1041,8 +1044,8 @@
         "A4": "FAIL (1/3, need 2+)",
         "H3": "FAIL (2/6, need 4+)",
         "A5": "FAIL (1/6, need 4+)",
-        "H4": "FAIL (14, need 20+)",
-        "A6": "FAIL (10, need 20+)"
+        "H4": "FAIL (14, need 18+)",
+        "A6": "FAIL (10, need 18+)"
       },
       "home_form": [
         [
@@ -1161,8 +1164,8 @@
         "A4": "FAIL (1/3, need 2+)",
         "H3": "FAIL (2/6, need 4+)",
         "A5": "FAIL (3/6, need 4+)",
-        "H4": "FAIL (14, need 20+)",
-        "A6": "FAIL (14, need 20+)"
+        "H4": "FAIL (14, need 18+)",
+        "A6": "FAIL (14, need 18+)"
       },
       "home_form": [
         [
@@ -1281,8 +1284,8 @@
         "A4": "FAIL (0/3, need 2+)",
         "H3": "FAIL (0/6, need 4+)",
         "A5": "FAIL (2/6, need 4+)",
-        "H4": "FAIL (6, need 20+)",
-        "A6": "FAIL (14, need 20+)"
+        "H4": "FAIL (6, need 18+)",
+        "A6": "FAIL (14, need 18+)"
       },
       "home_form": [
         [
@@ -1368,5 +1371,5 @@
       "is_perfect": false
     }
   ],
-  "total_matches": 68
+  "total_matches": 70
 }
