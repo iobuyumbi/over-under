@@ -64,12 +64,11 @@ jobs:
             predictions_soccerbase_*.json
             home_win_predictions_*.json
 
-      - name: Build combined email and send
+      - name: Build combined email body
         id: combined-email
         run: |
           DATE=${{ steps.run-predictor.outputs.date }}
           
-          # Build combined email body
           {
             echo "combined<<EOF"
             echo "⚽ DAILY PREDICTIONS RECAP - $DATE"
@@ -83,7 +82,7 @@ jobs:
             echo "EOF"
           } >> $GITHUB_OUTPUT
 
-      - name: Send combined email
+      - name: Send email
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -94,3 +93,21 @@ jobs:
           body: ${{ steps.combined-email.outputs.combined }}
           to: ${{ secrets.TO_EMAIL }}
           from: ${{ secrets.EMAIL_USERNAME }}
+
+      - name: Send Telegram notification
+        if: always()
+        run: |
+          MESSAGE="${{ steps.combined-email.outputs.combined }}"
+          
+          # Telegram has 4096 char limit, truncate if needed
+          if [ ${#MESSAGE} -gt 4000 ]; then
+            MESSAGE="${MESSAGE:0:3900}\n\n...[truncated for Telegram]"
+          fi
+          
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d "text=$MESSAGE" \
+            -d "parse_mode=HTML" || \
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d "text=$MESSAGE"
