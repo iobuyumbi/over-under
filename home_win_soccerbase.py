@@ -155,7 +155,7 @@ def fetch_soccerbase_team_results(team_id):
                                 "result": result,
                                 "date_str": match_date_str
                             })
-                        except Exception as e:
+                        except Exception:
                             continue
 
         matches.sort(key=lambda x: x["date_str"] or "", reverse=True)
@@ -180,17 +180,7 @@ def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
 
 def apply_home_win_algorithm(home_data_6, away_data_6):
     """
-    Home Win Algorithm:
-    H1: Home team not to lose in 5 out of last 6 home matches (W+D >= 5)
-    H2: Home team scored 10+ goals in last 6 home matches
-    H3: Home team conceded less than 5 goals in last 6 home matches
-    H4: Home team won 3+ of last 6 home matches
-    H5: Home team won last 2 home matches
-    A1: Away team lost 2+ of last 6 away matches
-    A2: Away team conceded 10+ goals in last 6 away matches
-    A3: Away team scored 5 or fewer goals in last 6 away matches
-    A4: Away team won 2 or fewer of last 6 away matches
-    A5: Away team did not win 4+ of last 6 away matches (max 3 wins, can draw or lose)
+    Home Win Algorithm Evaluator
     """
     passed = []
     failed = []
@@ -298,14 +288,13 @@ def apply_home_win_algorithm(home_data_6, away_data_6):
         details["A4"] = f"FAIL ({away_wins}/6, need <= 2 wins)"
         is_perfect = False
 
-    # A5: Away team did not win 4+ of last 6 away matches (max 3 wins, can draw or lose)
-    away_wins_a5 = sum(1 for m in away_data_6 if m["result"] == "W")
-    if away_wins_a5 < 4:
+    # A5: Away team did not win 4+ of last 6 away matches
+    if away_wins < 4:
         passed.append("A5")
-        details["A5"] = f"PASS ({away_wins_a5}/6 wins, max 3)"
+        details["A5"] = f"PASS ({away_wins}/6 wins, max 3)"
     else:
         failed.append("A5")
-        details["A5"] = f"FAIL ({away_wins_a5}/6, need < 4 wins)"
+        details["A5"] = f"FAIL ({away_wins}/6, need < 4 wins)"
         is_perfect = False
 
     return passed, failed, details, is_perfect
@@ -316,11 +305,11 @@ def format_match_block(idx, match_dict):
     m = match_dict["match"]
     lines = [
         f"\n{idx}. {m['league']}: {m['home']} vs {m['away']}",
-        f"   Score Metrics Passed: {match_dict['score']}/10 (Perfect: {match_dict['is_perfect']})"
+        f"    Score Metrics Passed: {match_dict['score']}/10 (Perfect: {match_dict['is_perfect']})"
     ]
-    lines.append("   Checks:")
+    lines.append("    Checks:")
     for check, status in match_dict["details"].items():
-        lines.append(f"     • {check}: {status}")
+        lines.append(f"      • {check}: {status}")
     return "\n".join(lines)
 
 
@@ -349,8 +338,6 @@ def main(date_str=None, only_scheduled=False):
     insufficient_data_count = 0
 
     for match in all_matches:
-        home = match["home"]
-        away = match["away"]
         home_id = match["home_team_id"]
         away_id = match["away_team_id"]
 
@@ -391,7 +378,7 @@ def main(date_str=None, only_scheduled=False):
             random_delay()
 
     # ==========================================
-    # BUILD CLEAN EMAIL OUTPUT
+    # BUILD CLEAN EMAIL OUTPUT (COMPLETED)
     # ==========================================
     email = []
     email.append("🏠 DAILY HOME WIN PREDICTIONS RECAP")
@@ -419,7 +406,7 @@ def main(date_str=None, only_scheduled=False):
 
     email.append("\n⚠️ CLOSE CALLS (9/10 Checks)")
     if close_calls:
-        for c in close_calls:
+        for idx, c in enumerate(close_calls, 1):
             m = c["match"]
             email.append(f"• {m['league']}: {m['home']} vs {m['away']} | Failed: {', '.join(c['failed'])}")
     else:
