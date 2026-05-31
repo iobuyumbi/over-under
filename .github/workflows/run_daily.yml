@@ -2,7 +2,7 @@ name: Daily Predictions (Over 2.5 + Home Win)
 
 on:
   schedule:
-    - cron: "0 3 * * *"  # 6:00 AM EAT, 3:00 AM UTC
+    - cron: "0 1 * * *"  # 6:00 AM EAT, 3:00 AM UTC
   workflow_dispatch:
 
 env:
