@@ -23,13 +23,16 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      # --- ENGINE 1: OVER 2.5 PREDICTIONS ---
+      # Runs over_25_soccerbase.py and captures output streams
+       Sir, 
       - name: Run Over 2.5 predictor
         id: run-predictor
         run: |
           DATE=$(date +'%Y-%m-%d')
-          python over25_soccerbase.py > output.txt 2> errors.txt
+          python over_25_soccerbase.py > output.txt 2> errors.txt || true
           echo "date=$DATE" >> $GITHUB_OUTPUT
           
           EMAIL_BODY=$(sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d')
@@ -40,11 +43,12 @@ jobs:
             echo "EOF"
           } >> $GITHUB_OUTPUT
 
+      # --- ENGINE 2: 9-POINT HOME WIN PREDICTIONS ---
+      # Runs home_win_soccerbase.py and captures output streams
       - name: Run Home Win predictor
         id: run-home-win
         run: |
-          DATE=$(date +'%Y-%m-%d')
-          python home_win_soccerbase.py > hw_output.txt 2> hw_errors.txt
+          python home_win_soccerbase.py > hw_output.txt 2> hw_errors.txt || true
           
           EMAIL_BODY=$(sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d')
           
@@ -99,15 +103,10 @@ jobs:
         run: |
           MESSAGE="${{ steps.combined-email.outputs.combined }}"
           
-          # Telegram has 4096 char limit, truncate if needed
           if [ ${#MESSAGE} -gt 4000 ]; then
-            MESSAGE="${MESSAGE:0:3900}\n\n...[truncated for Telegram]"
+            MESSAGE=$(echo -e "${MESSAGE:0:3900}\n\n...[truncated for Telegram]")
           fi
           
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -d "text=$MESSAGE" \
-            -d "parse_mode=HTML" || \
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -d "text=$MESSAGE"
+            --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            --data-urlencode "text=$MESSAGE"
