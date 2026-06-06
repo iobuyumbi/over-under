@@ -1,0 +1,83 @@
+{
+  "date": "2026-06-06",
+  "perfect": [],
+  "qualified": [],
+  "close_calls": [
+    {
+      "match": {
+        "league": "Korean K-League 2",
+        "home": "Nacional Montevideo",
+        "away": "Juventud de Las Piedras",
+        "home_team_id": "3968",
+        "away_team_id": "8180",
+        "date": "2026-06-06",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "A1",
+        "A2",
+        "A4"
+      ],
+      "failed": [
+        "A3"
+      ],
+      "details": {
+        "H1": "PASS (5/6 No Losses)",
+        "H2": "PASS (10 goals scored)",
+        "H3": "PASS (3 goals conceded)",
+        "H4": "PASS (4/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "PASS (4/6 Losses)",
+        "A2": "PASS (12 goals conceded)",
+        "A3": "FAIL (7 goals, need <= 5)",
+        "A4": "PASS (1/6 Wins)"
+      },
+      "score": 8,
+      "is_perfect": false
+    }
+  ],
+  "pool_7_9": [
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Atletico Rafaela",
+        "away": "Colegiales",
+        "home_team_id": "7455",
+        "away_team_id": "8168",
+        "date": "2026-06-06",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H3",
+        "H4",
+        "H5",
+        "A1",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "H2",
+        "A2"
+      ],
+      "details": {
+        "H1": "PASS (5/6 No Losses)",
+        "H2": "FAIL (8 goals, need 10+)",
+        "H3": "PASS (3 goals conceded)",
+        "H4": "PASS (4/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "PASS (4/6 Losses)",
+        "A2": "FAIL (9 goals, need 10+)",
+        "A3": "PASS (2 goals scored)",
+        "A4": "PASS (0/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    }
+  ]
+}
