@@ -1,0 +1,82 @@
+{
+  "date": "2026-06-07",
+  "perfect": [],
+  "qualified": [],
+  "close_calls": [],
+  "pool_7_9": [
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Deportivo Moron",
+        "away": "Almirante Brown",
+        "home_team_id": "7451",
+        "away_team_id": "7456",
+        "date": "2026-06-07",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "A1",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "H5",
+        "A2"
+      ],
+      "details": {
+        "H1": "PASS (6/6 No Losses)",
+        "H2": "PASS (10 goals scored)",
+        "H3": "PASS (3 goals conceded)",
+        "H4": "PASS (5/6 Wins)",
+        "H5": "FAIL (Won 1/2 immediate form)",
+        "A1": "PASS (3/6 Losses)",
+        "A2": "FAIL (5 goals, need 10+)",
+        "A3": "PASS (3 goals scored)",
+        "A4": "PASS (1/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Godoy Cruz",
+        "away": "Mitre",
+        "home_team_id": "7650",
+        "away_team_id": "7468",
+        "date": "2026-06-07",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "A1",
+        "A2"
+      ],
+      "details": {
+        "H1": "PASS (6/6 No Losses)",
+        "H2": "PASS (12 goals scored)",
+        "H3": "PASS (4 goals conceded)",
+        "H4": "PASS (4/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "FAIL (0/6, need 2+)",
+        "A2": "FAIL (5 goals, need 10+)",
+        "A3": "PASS (5 goals scored)",
+        "A4": "PASS (0/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    }
+  ]
+}
