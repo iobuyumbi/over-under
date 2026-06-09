@@ -1,0 +1,45 @@
+{
+  "date": "2026-06-09",
+  "perfect": [],
+  "qualified": [],
+  "close_calls": [
+    {
+      "match": {
+        "league": "International Friendly",
+        "home": "Russia",
+        "away": "Trinidad",
+        "home_team_id": "2204",
+        "away_team_id": "2544",
+        "date": "2026-06-09",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "H5"
+      ],
+      "details": {
+        "H1": "PASS (5/6 No Losses)",
+        "H2": "PASS (10 goals scored)",
+        "H3": "PASS (4 goals conceded)",
+        "H4": "PASS (3/6 Wins)",
+        "H5": "FAIL (Won 1/2 immediate form)",
+        "A1": "PASS (4/6 Losses)",
+        "A2": "PASS (15 goals conceded)",
+        "A3": "PASS (5 goals scored)",
+        "A4": "PASS (1/6 Wins)"
+      },
+      "score": 8,
+      "is_perfect": false
+    }
+  ],
+  "pool_7_9": []
+}
