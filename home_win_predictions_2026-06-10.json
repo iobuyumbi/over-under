@@ -1,0 +1,45 @@
+{
+  "date": "2026-06-10",
+  "perfect": [],
+  "qualified": [],
+  "close_calls": [],
+  "pool_7_9": [
+    {
+      "match": {
+        "league": "International Friendly",
+        "home": "England",
+        "away": "Costa Rica",
+        "home_team_id": "909",
+        "away_team_id": "661",
+        "date": "2026-06-10",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H3",
+        "H4",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "H2",
+        "H5"
+      ],
+      "details": {
+        "H1": "PASS (5/6 No Losses)",
+        "H2": "FAIL (9 goals, need 10+)",
+        "H3": "PASS (2 goals conceded)",
+        "H4": "PASS (4/6 Wins)",
+        "H5": "FAIL (Won 1/2 immediate form)",
+        "A1": "PASS (3/6 Losses)",
+        "A2": "PASS (12 goals conceded)",
+        "A3": "PASS (4 goals scored)",
+        "A4": "PASS (0/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    }
+  ]
+}
