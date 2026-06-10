@@ -1,0 +1,305 @@
+{
+  "date": "2026-05-31",
+  "perfect": [],
+  "qualified": [],
+  "close_calls": [
+    {
+      "match": {
+        "league": "Spanish Segunda",
+        "home": "Deportivo",
+        "away": "Las Palmas",
+        "home_team_id": "776",
+        "away_team_id": "1615",
+        "date": "2026-05-31",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "A1",
+        "A2",
+        "A4"
+      ],
+      "failed": [
+        "A3"
+      ],
+      "details": {
+        "H1": "PASS (6/6 No Losses)",
+        "H2": "PASS (12 goals scored)",
+        "H3": "PASS (5 goals conceded)",
+        "H4": "PASS (5/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "PASS (4/6 Losses)",
+        "A2": "PASS (14 goals conceded)",
+        "A3": "FAIL (7 goals, need <= 5)",
+        "A4": "PASS (2/6 Wins)"
+      },
+      "score": 8,
+      "is_perfect": false
+    }
+  ],
+  "pool_7_9": [
+    {
+      "match": {
+        "league": "Spanish Segunda",
+        "home": "Racing",
+        "away": "Cadiz",
+        "home_team_id": "2223",
+        "away_team_id": "3216",
+        "date": "2026-05-31",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "H4",
+        "H5",
+        "A1",
+        "A2",
+        "A4"
+      ],
+      "failed": [
+        "H3",
+        "A3"
+      ],
+      "details": {
+        "H1": "PASS (5/6 No Losses)",
+        "H2": "PASS (20 goals scored)",
+        "H3": "FAIL (12 goals, need <= 5)",
+        "H4": "PASS (5/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "PASS (3/6 Losses)",
+        "A2": "PASS (11 goals conceded)",
+        "A3": "FAIL (6 goals, need <= 5)",
+        "A4": "PASS (1/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Brazilian Serie A",
+        "home": "Palmeiras",
+        "away": "Chapecoense",
+        "home_team_id": "1974",
+        "away_team_id": "7428",
+        "date": "2026-05-31",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H3",
+        "H4",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "H2",
+        "H5"
+      ],
+      "details": {
+        "H1": "PASS (5/6 No Losses)",
+        "H2": "FAIL (9 goals, need 10+)",
+        "H3": "PASS (5 goals conceded)",
+        "H4": "PASS (3/6 Wins)",
+        "H5": "FAIL (Won 1/2 immediate form)",
+        "A1": "PASS (5/6 Losses)",
+        "A2": "PASS (11 goals conceded)",
+        "A3": "PASS (3 goals scored)",
+        "A4": "PASS (0/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Brazilian Serie A",
+        "home": "Toluca",
+        "away": "Tigres",
+        "home_team_id": "1550",
+        "away_team_id": "958",
+        "date": "2026-05-31",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "A1",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "H5",
+        "A2"
+      ],
+      "details": {
+        "H1": "PASS (5/6 No Losses)",
+        "H2": "PASS (17 goals scored)",
+        "H3": "PASS (5 goals conceded)",
+        "H4": "PASS (4/6 Wins)",
+        "H5": "FAIL (Won 1/2 immediate form)",
+        "A1": "PASS (3/6 Losses)",
+        "A2": "FAIL (7 goals, need 10+)",
+        "A3": "PASS (3 goals scored)",
+        "A4": "PASS (1/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Peru Liga 1 Apertura",
+        "home": "Los Chankas",
+        "away": "UTC Cajamarca",
+        "home_team_id": "8012",
+        "away_team_id": "7550",
+        "date": "2026-05-31",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H3",
+        "H4",
+        "H5",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "H1",
+        "H2"
+      ],
+      "details": {
+        "H1": "FAIL (4/6, need 5+)",
+        "H2": "FAIL (4 goals, need 10+)",
+        "H3": "PASS (2 goals conceded)",
+        "H4": "PASS (4/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "PASS (6/6 Losses)",
+        "A2": "PASS (14 goals conceded)",
+        "A3": "PASS (4 goals scored)",
+        "A4": "PASS (0/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Swedish Superettan",
+        "home": "Juventud de Las Piedras",
+        "away": "Montevideo W",
+        "home_team_id": "8180",
+        "away_team_id": "3754",
+        "date": "2026-05-31",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H3",
+        "H4",
+        "H5",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "H1",
+        "H2"
+      ],
+      "details": {
+        "H1": "FAIL (4/6, need 5+)",
+        "H2": "FAIL (7 goals, need 10+)",
+        "H3": "PASS (5 goals conceded)",
+        "H4": "PASS (3/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "PASS (5/6 Losses)",
+        "A2": "PASS (12 goals conceded)",
+        "A3": "PASS (4 goals scored)",
+        "A4": "PASS (0/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Swedish Superettan",
+        "home": "Deportivo Maldonado",
+        "away": "Nacional Montevideo",
+        "home_team_id": "5348",
+        "away_team_id": "3968",
+        "date": "2026-05-31",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "H4",
+        "H5",
+        "A1",
+        "A2",
+        "A4"
+      ],
+      "failed": [
+        "H3",
+        "A3"
+      ],
+      "details": {
+        "H1": "PASS (5/6 No Losses)",
+        "H2": "PASS (12 goals scored)",
+        "H3": "FAIL (6 goals, need <= 5)",
+        "H4": "PASS (5/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "PASS (4/6 Losses)",
+        "A2": "PASS (16 goals conceded)",
+        "A3": "FAIL (11 goals, need <= 5)",
+        "A4": "PASS (2/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Ferrocarril Midland",
+        "away": "San Martin de Tucuman",
+        "home_team_id": "8399",
+        "away_team_id": "7450",
+        "date": "2026-05-31",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H3",
+        "H4",
+        "H5",
+        "A1",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "H2",
+        "A2"
+      ],
+      "details": {
+        "H1": "PASS (5/6 No Losses)",
+        "H2": "FAIL (6 goals, need 10+)",
+        "H3": "PASS (3 goals conceded)",
+        "H4": "PASS (3/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "PASS (2/6 Losses)",
+        "A2": "FAIL (5 goals, need 10+)",
+        "A3": "PASS (5 goals scored)",
+        "A4": "PASS (2/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    }
+  ]
+}

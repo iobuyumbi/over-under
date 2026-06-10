@@ -1,6 +1,5 @@
 {
   "date": "2026-05-30",
-  "only_scheduled": false,
   "perfect": [
     {
       "match": {
@@ -10,8 +9,7 @@
         "home_team_id": "7631",
         "away_team_id": "7549",
         "date": "2026-05-30",
-        "status": "Scheduled",
-        "score": null
+        "status": "Scheduled"
       },
       "passed": [
         "H1",
@@ -26,128 +24,16 @@
       ],
       "failed": [],
       "details": {
-        "H1": "PERFECT PASS (6/6 no losses)",
+        "H1": "PASS (6/6 No Losses)",
         "H2": "PASS (14 goals scored)",
         "H3": "PASS (0 goals conceded)",
-        "H4": "PERFECT PASS (6/6 wins)",
-        "H5": "PERFECT PASS (won last 2/2)",
-        "A1": "PASS (4/6 losses)",
+        "H4": "PASS (6/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "PASS (4/6 Losses)",
         "A2": "PASS (10 goals conceded)",
         "A3": "PASS (4 goals scored)",
-        "A4": "PASS (0/6 wins)"
+        "A4": "PASS (0/6 Wins)"
       },
-      "home_form": [
-        {
-          "home_team": "ADT1 2026-05-17 17:00",
-          "away_team": "Comerciantes Unidos2 2026-05-17 17:00",
-          "gf": 2,
-          "ga": 0,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-05-17"
-        },
-        {
-          "home_team": "ADT1 2026-05-17 17:00",
-          "away_team": "Comerciantes Unidos2 2026-05-17 17:00",
-          "gf": 2,
-          "ga": 0,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-05-17"
-        },
-        {
-          "home_team": "ADT1 2026-05-02 21:15",
-          "away_team": "Atletico Grau2 2026-05-02 21:15",
-          "gf": 1,
-          "ga": 0,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-05-02"
-        },
-        {
-          "home_team": "ADT1 2026-05-02 21:15",
-          "away_team": "Atletico Grau2 2026-05-02 21:15",
-          "gf": 1,
-          "ga": 0,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-05-02"
-        },
-        {
-          "home_team": "ADT1 2026-04-27 21:00",
-          "away_team": "Los Chankas2 2026-04-27 21:00",
-          "gf": 4,
-          "ga": 0,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-04-27"
-        },
-        {
-          "home_team": "ADT1 2026-04-27 21:00",
-          "away_team": "Los Chankas2 2026-04-27 21:00",
-          "gf": 4,
-          "ga": 0,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-04-27"
-        }
-      ],
-      "away_form": [
-        {
-          "home_team": "Flamengo2 2026-05-27 01:30",
-          "away_team": "Cusco1 2026-05-27 01:30",
-          "gf": 0,
-          "ga": 3,
-          "is_home": false,
-          "result": "L",
-          "date_str": "2026-05-27"
-        },
-        {
-          "home_team": "Sport Boys2 2026-05-17 02:30",
-          "away_team": "Cusco1 2026-05-17 02:30",
-          "gf": 0,
-          "ga": 1,
-          "is_home": false,
-          "result": "L",
-          "date_str": "2026-05-17"
-        },
-        {
-          "home_team": "Sport Boys2 2026-05-17 02:30",
-          "away_team": "Cusco1 2026-05-17 02:30",
-          "gf": 0,
-          "ga": 1,
-          "is_home": false,
-          "result": "L",
-          "date_str": "2026-05-17"
-        },
-        {
-          "home_team": "Sporting Cristal2 2026-05-03 17:00",
-          "away_team": "Cusco1 2026-05-03 17:00",
-          "gf": 2,
-          "ga": 2,
-          "is_home": false,
-          "result": "D",
-          "date_str": "2026-05-03"
-        },
-        {
-          "home_team": "Sporting Cristal2 2026-05-03 17:00",
-          "away_team": "Cusco1 2026-05-03 17:00",
-          "gf": 2,
-          "ga": 2,
-          "is_home": false,
-          "result": "D",
-          "date_str": "2026-05-03"
-        },
-        {
-          "home_team": "Independiente M2 2026-05-01 03:00",
-          "away_team": "Cusco1 2026-05-01 03:00",
-          "gf": 0,
-          "ga": 1,
-          "is_home": false,
-          "result": "L",
-          "date_str": "2026-05-01"
-        }
-      ],
       "score": 9,
       "is_perfect": true
     },
@@ -159,8 +45,7 @@
         "home_team_id": "7853",
         "away_team_id": "8171",
         "date": "2026-05-30",
-        "status": "Scheduled",
-        "score": null
+        "status": "Scheduled"
       },
       "passed": [
         "H1",
@@ -175,128 +60,16 @@
       ],
       "failed": [],
       "details": {
-        "H1": "PERFECT PASS (6/6 no losses)",
+        "H1": "PASS (6/6 No Losses)",
         "H2": "PASS (10 goals scored)",
         "H3": "PASS (2 goals conceded)",
-        "H4": "PERFECT PASS (6/6 wins)",
-        "H5": "PERFECT PASS (won last 2/2)",
-        "A1": "PASS (4/6 losses)",
+        "H4": "PASS (6/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "PASS (4/6 Losses)",
         "A2": "PASS (12 goals conceded)",
         "A3": "PASS (4 goals scored)",
-        "A4": "PASS (0/6 wins)"
+        "A4": "PASS (0/6 Wins)"
       },
-      "home_form": [
-        {
-          "home_team": "Deportivo Garcilaso1 2026-05-17 19:15",
-          "away_team": "UTC Cajamarca2 2026-05-17 19:15",
-          "gf": 2,
-          "ga": 0,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-05-17"
-        },
-        {
-          "home_team": "Deportivo Garcilaso1 2026-05-17 19:15",
-          "away_team": "UTC Cajamarca2 2026-05-17 19:15",
-          "gf": 2,
-          "ga": 0,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-05-17"
-        },
-        {
-          "home_team": "Deportivo Garcilaso1 2026-05-11 19:00",
-          "away_team": "Alianza Atletico2 2026-05-11 19:00",
-          "gf": 2,
-          "ga": 1,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-05-11"
-        },
-        {
-          "home_team": "Deportivo Garcilaso1 2026-05-11 19:00",
-          "away_team": "Alianza Atletico2 2026-05-11 19:00",
-          "gf": 2,
-          "ga": 1,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-05-11"
-        },
-        {
-          "home_team": "Deportivo Garcilaso1 2026-04-28 01:00",
-          "away_team": "Melgar2 2026-04-28 01:00",
-          "gf": 1,
-          "ga": 0,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-04-28"
-        },
-        {
-          "home_team": "Deportivo Garcilaso1 2026-04-28 01:00",
-          "away_team": "Melgar2 2026-04-28 01:00",
-          "gf": 1,
-          "ga": 0,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-04-28"
-        }
-      ],
-      "away_form": [
-        {
-          "home_team": "Sport Huancayo2 2026-05-10 19:00",
-          "away_team": "Juan Pablo II College1 2026-05-10 19:00",
-          "gf": 1,
-          "ga": 2,
-          "is_home": false,
-          "result": "L",
-          "date_str": "2026-05-10"
-        },
-        {
-          "home_team": "Sport Huancayo2 2026-05-10 19:00",
-          "away_team": "Juan Pablo II College1 2026-05-10 19:00",
-          "gf": 1,
-          "ga": 2,
-          "is_home": false,
-          "result": "L",
-          "date_str": "2026-05-10"
-        },
-        {
-          "home_team": "Sport Boys2 2026-04-26 01:00",
-          "away_team": "Juan Pablo II College1 2026-04-26 01:00",
-          "gf": 1,
-          "ga": 1,
-          "is_home": false,
-          "result": "D",
-          "date_str": "2026-04-26"
-        },
-        {
-          "home_team": "Sport Boys2 2026-04-26 01:00",
-          "away_team": "Juan Pablo II College1 2026-04-26 01:00",
-          "gf": 1,
-          "ga": 1,
-          "is_home": false,
-          "result": "D",
-          "date_str": "2026-04-26"
-        },
-        {
-          "home_team": "Deportivo Moquegua2 2026-04-14 19:00",
-          "away_team": "Juan Pablo II College1 2026-04-14 19:00",
-          "gf": 0,
-          "ga": 3,
-          "is_home": false,
-          "result": "L",
-          "date_str": "2026-04-14"
-        },
-        {
-          "home_team": "Deportivo Moquegua2 2026-04-14 19:00",
-          "away_team": "Juan Pablo II College1 2026-04-14 19:00",
-          "gf": 0,
-          "ga": 3,
-          "is_home": false,
-          "result": "L",
-          "date_str": "2026-04-14"
-        }
-      ],
       "score": 9,
       "is_perfect": true
     }
@@ -311,8 +84,7 @@
         "home_team_id": "8168",
         "away_team_id": "7469",
         "date": "2026-05-30",
-        "status": "Scheduled",
-        "score": null
+        "status": "Scheduled"
       },
       "passed": [
         "H1",
@@ -328,131 +100,94 @@
         "H2"
       ],
       "details": {
-        "H1": "PERFECT PASS (6/6 no losses)",
-        "H2": "FAIL (9, need 10+)",
+        "H1": "PASS (6/6 No Losses)",
+        "H2": "FAIL (9 goals, need 10+)",
         "H3": "PASS (2 goals conceded)",
-        "H4": "PASS (4/6 wins)",
-        "H5": "PERFECT PASS (won last 2/2)",
-        "A1": "PASS (3/6 losses)",
+        "H4": "PASS (4/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "PASS (3/6 Losses)",
         "A2": "PASS (10 goals conceded)",
         "A3": "PASS (5 goals scored)",
-        "A4": "PASS (1/6 wins)"
+        "A4": "PASS (1/6 Wins)"
       },
-      "home_form": [
-        {
-          "home_team": "Colegiales1 2026-05-16 20:00",
-          "away_team": "Guemes2 2026-05-16 20:00",
-          "gf": 4,
-          "ga": 1,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-05-16"
-        },
-        {
-          "home_team": "Colegiales1 2026-05-03 19:00",
-          "away_team": "San Martin de San Juan2 2026-05-03 19:00",
-          "gf": 2,
-          "ga": 0,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-05-03"
-        },
-        {
-          "home_team": "Colegiales1 2026-04-19 18:00",
-          "away_team": "Temperley2 2026-04-19 18:00",
-          "gf": 1,
-          "ga": 1,
-          "is_home": true,
-          "result": "D",
-          "date_str": "2026-04-19"
-        },
-        {
-          "home_team": "Colegiales1 2026-04-04 20:00",
-          "away_team": "Almagro2 2026-04-04 20:00",
-          "gf": 1,
-          "ga": 0,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-04-04"
-        },
-        {
-          "home_team": "Colegiales1 2026-03-28 23:00",
-          "away_team": "San Miguel2 2026-03-28 23:00",
-          "gf": 0,
-          "ga": 0,
-          "is_home": true,
-          "result": "D",
-          "date_str": "2026-03-28"
-        },
-        {
-          "home_team": "Colegiales1 2026-02-22 23:00",
-          "away_team": "Atlanta2 2026-02-22 23:00",
-          "gf": 1,
-          "ga": 0,
-          "is_home": true,
-          "result": "W",
-          "date_str": "2026-02-22"
-        }
-      ],
-      "away_form": [
-        {
-          "home_team": "Ferrocarril Midland2 2026-05-17 20:30",
-          "away_team": "Agropecuario1 2026-05-17 20:30",
-          "gf": 0,
-          "ga": 2,
-          "is_home": false,
-          "result": "L",
-          "date_str": "2026-05-17"
-        },
-        {
-          "home_team": "Gimnasia y Tiro2 2026-05-05 01:30",
-          "away_team": "Agropecuario1 2026-05-05 01:30",
-          "gf": 3,
-          "ga": 2,
-          "is_home": false,
-          "result": "W",
-          "date_str": "2026-05-05"
-        },
-        {
-          "home_team": "Atletico Rafaela2 2026-04-21 00:00",
-          "away_team": "Agropecuario1 2026-04-21 00:00",
-          "gf": 1,
-          "ga": 4,
-          "is_home": false,
-          "result": "L",
-          "date_str": "2026-04-21"
-        },
-        {
-          "home_team": "Ciudad de Bolivar2 2026-03-27 21:15",
-          "away_team": "Agropecuario1 2026-03-27 21:15",
-          "gf": 0,
-          "ga": 0,
-          "is_home": false,
-          "result": "D",
-          "date_str": "2026-03-27"
-        },
-        {
-          "home_team": "Guemes2 2026-03-22 20:00",
-          "away_team": "Agropecuario1 2026-03-22 20:00",
-          "gf": 1,
-          "ga": 1,
-          "is_home": false,
-          "result": "D",
-          "date_str": "2026-03-22"
-        },
-        {
-          "home_team": "Temperley2 2026-02-22 23:00",
-          "away_team": "Agropecuario1 2026-02-22 23:00",
-          "gf": 0,
-          "ga": 1,
-          "is_home": false,
-          "result": "L",
-          "date_str": "2026-02-22"
-        }
-      ],
       "score": 8,
       "is_perfect": false
     }
   ],
-  "total_matches": 70
+  "pool_7_9": [
+    {
+      "match": {
+        "league": "Peru Liga 1 Apertura",
+        "home": "Sport Boys",
+        "away": "Comerciantes Unidos",
+        "home_team_id": "7546",
+        "away_team_id": "8011",
+        "date": "2026-05-30",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H3",
+        "H5",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "H2",
+        "H4"
+      ],
+      "details": {
+        "H1": "PASS (6/6 No Losses)",
+        "H2": "FAIL (4 goals, need 10+)",
+        "H3": "PASS (2 goals conceded)",
+        "H4": "FAIL (2/6, need 3+)",
+        "H5": "PASS (Won last 2)",
+        "A1": "PASS (4/6 Losses)",
+        "A2": "PASS (10 goals conceded)",
+        "A3": "PASS (4 goals scored)",
+        "A4": "PASS (0/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Brazilian Serie A",
+        "home": "Paranaense",
+        "away": "Mirassol",
+        "home_team_id": "3736",
+        "away_team_id": "7497",
+        "date": "2026-05-30",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "A1",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "H5",
+        "A2"
+      ],
+      "details": {
+        "H1": "PASS (6/6 No Losses)",
+        "H2": "PASS (12 goals scored)",
+        "H3": "PASS (3 goals conceded)",
+        "H4": "PASS (4/6 Wins)",
+        "H5": "FAIL (Won 0/2 immediate form)",
+        "A1": "PASS (4/6 Losses)",
+        "A2": "FAIL (9 goals, need 10+)",
+        "A3": "PASS (5 goals scored)",
+        "A4": "PASS (2/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    }
+  ]
 }

@@ -1,0 +1,45 @@
+{
+  "date": "2026-06-15",
+  "perfect": [],
+  "qualified": [],
+  "close_calls": [],
+  "pool_7_9": [
+    {
+      "match": {
+        "league": "World Cup",
+        "home": "Ivory Coast",
+        "away": "Ecuador",
+        "home_team_id": "3115",
+        "away_team_id": "868",
+        "date": "2026-06-15",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "A1",
+        "A2"
+      ],
+      "details": {
+        "H1": "PASS (6/6 No Losses)",
+        "H2": "PASS (10 goals scored)",
+        "H3": "PASS (1 goals conceded)",
+        "H4": "PASS (5/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "FAIL (0/6, need 2+)",
+        "A2": "FAIL (4 goals, need 10+)",
+        "A3": "PASS (4 goals scored)",
+        "A4": "PASS (0/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    }
+  ]
+}
