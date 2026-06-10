@@ -132,8 +132,8 @@
         "home_team_id": "7684",
         "away_team_id": "7685",
         "date": "2026-05-30",
-        "status": "Scheduled",
-        "score": null
+        "status": "Completed",
+        "score": "1-0"
       },
       "passed": [
         "H1",
@@ -814,8 +814,8 @@
         "home_team_id": "4605",
         "away_team_id": "8425",
         "date": "2026-05-30",
-        "status": "Scheduled",
-        "score": null
+        "status": "Completed",
+        "score": "4-1"
       },
       "passed": [
         "A3"

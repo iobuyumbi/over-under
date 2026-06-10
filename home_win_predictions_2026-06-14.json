@@ -1,0 +1,45 @@
+{
+  "date": "2026-06-14",
+  "perfect": [],
+  "qualified": [],
+  "close_calls": [],
+  "pool_7_9": [
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Gimnasia de Jujuy",
+        "away": "San Martin de San Juan",
+        "home_team_id": "682",
+        "away_team_id": "7448",
+        "date": "2026-06-14",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "A1",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "H5",
+        "A2"
+      ],
+      "details": {
+        "H1": "PASS (6/6 No Losses)",
+        "H2": "PASS (13 goals scored)",
+        "H3": "PASS (3 goals conceded)",
+        "H4": "PASS (5/6 Wins)",
+        "H5": "FAIL (Won 1/2 immediate form)",
+        "A1": "PASS (3/6 Losses)",
+        "A2": "FAIL (7 goals, need 10+)",
+        "A3": "PASS (5 goals scored)",
+        "A4": "PASS (2/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    }
+  ]
+}

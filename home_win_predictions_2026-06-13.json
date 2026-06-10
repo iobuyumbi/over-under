@@ -1,0 +1,120 @@
+{
+  "date": "2026-06-13",
+  "perfect": [],
+  "qualified": [],
+  "close_calls": [
+    {
+      "match": {
+        "league": "Chile Primera",
+        "home": "Coquimbo Unido",
+        "away": "O'Higgins",
+        "home_team_id": "7657",
+        "away_team_id": "5794",
+        "date": "2026-06-13",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "A1",
+        "A2",
+        "A4"
+      ],
+      "failed": [
+        "A3"
+      ],
+      "details": {
+        "H1": "PASS (6/6 No Losses)",
+        "H2": "PASS (13 goals scored)",
+        "H3": "PASS (5 goals conceded)",
+        "H4": "PASS (4/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "PASS (3/6 Losses)",
+        "A2": "PASS (13 goals conceded)",
+        "A3": "FAIL (11 goals, need <= 5)",
+        "A4": "PASS (2/6 Wins)"
+      },
+      "score": 8,
+      "is_perfect": false
+    }
+  ],
+  "pool_7_9": [
+    {
+      "match": {
+        "league": "Chile Primera",
+        "home": "Colo-Colo",
+        "away": "Cobresal",
+        "home_team_id": "273",
+        "away_team_id": "7438",
+        "date": "2026-06-13",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "A1",
+        "A2",
+        "A4"
+      ],
+      "failed": [
+        "H1",
+        "A3"
+      ],
+      "details": {
+        "H1": "FAIL (4/6, need 5+)",
+        "H2": "PASS (12 goals scored)",
+        "H3": "PASS (5 goals conceded)",
+        "H4": "PASS (4/6 Wins)",
+        "H5": "PASS (Won last 2)",
+        "A1": "PASS (5/6 Losses)",
+        "A2": "PASS (14 goals conceded)",
+        "A3": "FAIL (7 goals, need <= 5)",
+        "A4": "PASS (0/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    },
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Quilmes",
+        "away": "Gimnasia y Tiro",
+        "home_team_id": "4478",
+        "away_team_id": "8010",
+        "date": "2026-06-13",
+        "status": "Scheduled"
+      },
+      "passed": [
+        "H1",
+        "H3",
+        "H4",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "failed": [
+        "H2",
+        "H5"
+      ],
+      "details": {
+        "H1": "PASS (5/6 No Losses)",
+        "H2": "FAIL (7 goals, need 10+)",
+        "H3": "PASS (2 goals conceded)",
+        "H4": "PASS (3/6 Wins)",
+        "H5": "FAIL (Won 1/2 immediate form)",
+        "A1": "PASS (4/6 Losses)",
+        "A2": "PASS (10 goals conceded)",
+        "A3": "PASS (5 goals scored)",
+        "A4": "PASS (1/6 Wins)"
+      },
+      "score": 7,
+      "is_perfect": false
+    }
+  ]
+}

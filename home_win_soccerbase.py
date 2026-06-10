@@ -1,35 +1,34 @@
 #!/usr/bin/env python3
 """
-HOME WIN PREDICTION SYSTEM - SOCCERBASE OPTIMIZED SPEC (PATCHED ENGINE)
-=====================================================================
-Strictly enforces the customized 9-point rule checklist.
-Uses ID-driven parsing and a bulletproof chronological sorting fix 
-to completely eliminate team naming bugs and data timeline drift.
+HOME WIN PREDICTION SYSTEM - MULTI-DAY CONCURRENT ENGINE
+=========================================================
+Strictly enforces the customized 10-point rule checklist.
+Scans up to 4 days ahead if fewer than 10 combined targets are found.
+Optimized clean notification UI for Email and Telegram.
 """
 
 import requests
 import json
 import re
 import argparse
-import time
-import random
-from datetime import datetime
+import os
+from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from fake_useragent import UserAgent
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 ua = UserAgent()
 HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
     "Referer": "https://www.google.com/",
-    "DNT": "1",
     "Connection": "keep-alive",
 }
 
-retry_strategy = Retry(total=3, backoff_factor=1, status_forcelist=[429, 500, 502, 503, 504])
-adapter = HTTPAdapter(max_retries=retry_strategy)
+retry_strategy = Retry(total=5, backoff_factor=0.5, status_forcelist=[429, 500, 502, 503, 504])
+adapter = HTTPAdapter(max_retries=retry_strategy, pool_connections=20, pool_maxsize=20)
 session = requests.Session()
 session.mount("https://", adapter)
 session.mount("http://", adapter)
@@ -38,9 +37,6 @@ def get_random_headers():
     headers = HEADERS.copy()
     headers["User-Agent"] = ua.random
     return headers
-
-def random_delay():
-    time.sleep(random.uniform(1.5, 3.0))
 
 def fetch_soccerbase_fixtures(date_str):
     url = f"https://www.soccerbase.com/matches/results.sd?date={date_str}"
@@ -74,25 +70,23 @@ def fetch_soccerbase_fixtures(date_str):
                                 ids.append(m_id)
                         
                         if len(ids) >= 2:
-                            home_id, away_id = ids[0], ids[1]
                             matches.append({
                                 "league": current_league,
                                 "home": home_team,
                                 "away": away_team,
-                                "home_team_id": home_id,
-                                "away_team_id": away_id,
+                                "home_team_id": ids[0],
+                                "away_team_id": ids[1],
                                 "date": date_str,
                                 "status": "Scheduled" if score_or_v.lower() == "v" else "Completed"
                             })
         return matches
-    except Exception as e:
-        print(f"[ERROR] Fixture fetch failed: {e}")
+    except Exception:
         return []
 
 def fetch_soccerbase_team_results(team_id):
     url = f"https://www.soccerbase.com/teams/team.sd?team_id={team_id}&teamTabs=results"
     try:
-        response = session.get(url, headers=get_random_headers(), timeout=15)
+        response = session.get(url, headers=get_random_headers(), timeout=12)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
 
@@ -128,11 +122,9 @@ def fetch_soccerbase_team_results(team_id):
                         except Exception:
                             continue
                             
-        # FIXED: Enforces string comparisons by using a standardized baseline for missing dates
         matches.sort(key=lambda x: x["date_str"] if x["date_str"] is not None else "0000-00-00", reverse=True)
         return matches
-    except Exception as e:
-        print(f"[ERROR] Team ID data processing error {team_id}: {e}")
+    except Exception:
         return []
 
 def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
@@ -141,211 +133,184 @@ def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
     for match in all_matches:
         if target_date_str and match["date_str"] and match["date_str"] >= target_date_str:
             continue
-        if match["is_home"] == is_home:
+        if (is_home and match["is_home"]) or (not is_home and not match["is_home"]):
             form.append(match)
             if len(form) >= num_matches:
                 break
     return form
 
-def apply_home_win_algorithm(home_data_6, away_data_6):
-    """
-    Evaluates matches using your customized 9-point criteria.
-    """
+def apply_home_win_algorithm(home_form, away_form):
+    if len(home_form) < 6 or len(away_form) < 6:
+        return None, None, {}, False
+
     passed, failed, details = [], [], {}
 
-    if len(home_data_6) < 6 or len(away_data_6) < 6:
-        return None, None, {"error": "Insufficient matches"}, False
+    # Home team checks (H1-H5)
+    h_not_lost = sum(1 for m in home_form if m["result"] != "L")
+    if h_not_lost >= 5: passed.append("H1"); details["H1"] = f"PASS ({h_not_lost}/6 No Losses)"
+    else: failed.append("H1"); details["H1"] = f"FAIL ({h_not_lost}/6)"
 
-    # --- HOME METRICS (6 Home Matches) ---
-    # H1: Home not to lose in 5/6 (losses <= 1)
-    home_not_lost = sum(1 for m in home_data_6 if m["result"] != "L")
-    if home_not_lost >= 5:
-        passed.append("H1")
-        details["H1"] = f"PASS ({home_not_lost}/6 No Losses)"
-    else:
-        failed.append("H1")
-        details["H1"] = f"FAIL ({home_not_lost}/6, need 5+)"
+    h_gf = sum(m["gf"] for m in home_form)
+    if h_gf >= 10: passed.append("H2"); details["H2"] = f"PASS ({h_gf} GF)"
+    else: failed.append("H2"); details["H2"] = f"FAIL ({h_gf} GF)"
 
-    # H2: Home scored 10+ goals
-    home_gf = sum(m["gf"] for m in home_data_6)
-    if home_gf >= 10:
-        passed.append("H2")
-        details["H2"] = f"PASS ({home_gf} goals scored)"
-    else:
-        failed.append("H2")
-        details["H2"] = f"FAIL ({home_gf} goals, need 10+)"
+    h_ga = sum(m["ga"] for m in home_form)
+    if h_ga <= 5: passed.append("H3"); details["H3"] = f"PASS ({h_ga} GA)"
+    else: failed.append("H3"); details["H3"] = f"FAIL ({h_ga} GA)"
 
-    # H3: Home conceded 5 or fewer goals total (0-5 range)
-    home_ga = sum(m["ga"] for m in home_data_6)
-    if home_ga <= 5:
-        passed.append("H3")
-        details["H3"] = f"PASS ({home_ga} goals conceded)"
-    else:
-        failed.append("H3")
-        details["H3"] = f"FAIL ({home_ga} goals, need <= 5)"
+    h_wins = sum(1 for m in home_form if m["result"] == "W")
+    if h_wins >= 3: passed.append("H4"); details["H4"] = f"PASS ({h_wins}/6 Wins)"
+    else: failed.append("H4"); details["H4"] = f"FAIL ({h_wins}/6)"
 
-    # H4: Home won 3 or more matches (3+ wins)
-    home_wins = sum(1 for m in home_data_6 if m["result"] == "W")
-    if home_wins >= 3:
-        passed.append("H4")
-        details["H4"] = f"PASS ({home_wins}/6 Wins)"
-    else:
-        failed.append("H4")
-        details["H4"] = f"FAIL ({home_wins}/6, need 3+)"
+    h_last_2 = sum(1 for m in home_form[:2] if m["result"] == "W")
+    if h_last_2 == 2: passed.append("H5"); details["H5"] = f"PASS (Won Last 2)"
+    else: failed.append("H5"); details["H5"] = f"FAIL (Won {h_last_2}/2)"
 
-    # H5: Won last 2 home matches
-    last_2_home_wins = sum(1 for m in home_data_6[:2] if m["result"] == "W")
-    if last_2_home_wins == 2:
-        passed.append("H5")
-        details["H5"] = f"PASS (Won last 2)"
-    else:
-        failed.append("H5")
-        details["H5"] = f"FAIL (Won {last_2_home_wins}/2 immediate form)"
+    # Away team checks (A1-A5)
+    a_losses = sum(1 for m in away_form if m["result"] == "L")
+    if a_losses >= 2: passed.append("A1"); details["A1"] = f"PASS ({a_losses}/6 Losses)"
+    else: failed.append("A1"); details["A1"] = f"FAIL ({a_losses}/6)"
 
-    # --- AWAY METRICS (6 Away Matches) ---
-    # A1: Away lost 2+ matches
-    away_losses = sum(1 for m in away_data_6 if m["result"] == "L")
-    if away_losses >= 2:
-        passed.append("A1")
-        details["A1"] = f"PASS ({away_losses}/6 Losses)"
-    else:
-        failed.append("A1")
-        details["A1"] = f"FAIL ({away_losses}/6, need 2+)"
+    a_ga = sum(m["ga"] for m in away_form)
+    if a_ga >= 10: passed.append("A2"); details["A2"] = f"PASS ({a_ga} GA)"
+    else: failed.append("A2"); details["A2"] = f"FAIL ({a_ga} GA)"
 
-    # A2: Away conceded 10+ goals
-    away_ga = sum(m["ga"] for m in away_data_6)
-    if away_ga >= 10:
-        passed.append("A2")
-        details["A2"] = f"PASS ({away_ga} goals conceded)"
-    else:
-        failed.append("A2")
-        details["A2"] = f"FAIL ({away_ga} goals, need 10+)"
+    a_gf = sum(m["gf"] for m in away_form)
+    if a_gf <= 5: passed.append("A3"); details["A3"] = f"PASS ({a_gf} GF)"
+    else: failed.append("A3"); details["A3"] = f"FAIL ({a_gf} GF)"
 
-    # A3: Away scored 5 or fewer goals
-    away_gf = sum(m["gf"] for m in away_data_6)
-    if away_gf <= 5:
-        passed.append("A3")
-        details["A3"] = f"PASS ({away_gf} goals scored)"
-    else:
-        failed.append("A3")
-        details["A3"] = f"FAIL ({away_gf} goals, need <= 5)"
+    a_wins = sum(1 for m in away_form if m["result"] == "W")
+    if a_wins <= 2: passed.append("A4"); details["A4"] = f"PASS ({a_wins}/6 Wins)"
+    else: failed.append("A4"); details["A4"] = f"FAIL ({a_wins}/6)"
 
-    # A4: Away won a maximum of 2 matches (0-2 wins allowed)
-    away_wins = sum(1 for m in away_data_6 if m["result"] == "W")
-    if away_wins <= 2:
-        passed.append("A4")
-        details["A4"] = f"PASS ({away_wins}/6 Wins)"
-    else:
-        failed.append("A4")
-        details["A4"] = f"FAIL ({away_wins}/6, need <= 2)"
+    a_last_2_no_win = sum(1 for m in away_form[:2] if m["result"] != "W")
+    if a_last_2_no_win == 2: passed.append("A5"); details["A5"] = f"PASS (No Win Last 2)"
+    else: failed.append("A5"); details["A5"] = f"FAIL (Win tracked)"
 
-    # Perfect definition: All 9 conditions met AND home team has 0 losses at home (completely undefeated)
-    is_perfect = (len(passed) == 9 and home_not_lost == 6)
-    
+    is_perfect = (len(passed) == 10 and h_not_lost == 6)
     return passed, failed, details, is_perfect
 
-def format_match_block(idx, r):
-    m = r["match"]
-    lines = [f"\n{idx}. {m['league']}: {m['home']} vs {m['away']} [Score: {r['score']}/9]"]
-    for check, res in r["details"].items():
-        lines.append(f"      • {check}: {res}")
-    return "\n".join(lines)
-
-def main(date_str=None, only_scheduled=False):
-    if date_str is None:
-        date_str = datetime.now().strftime("%Y-%m-%d")
-
-    print(f"[+] Launching Pure 9-Point Spec Engine for Date: {date_str}...")
-    all_matches = fetch_soccerbase_fixtures(date_str)
-
-    seen = set()
-    unique_matches = []
-    for m in all_matches:
-        # Robust compound matching key using team IDs and league metadata
-        key = (m["home_team_id"], m["away_team_id"], m["league"])
-        if key not in seen:
-            seen.add(key)
-            unique_matches.append(m)
-    all_matches = unique_matches
-
-    if only_scheduled:
-        all_matches = [m for m in all_matches if m["status"] == "Scheduled"]
-
-    perfect, qualified, close_calls, general_pool = [], [], [], []
-    insufficient_data = 0
-
-    for idx, match in enumerate(all_matches):
-        home_id, away_id = match["home_team_id"], match["away_team_id"]
-        
-        home_form = get_team_form(home_id, is_home=True, num_matches=6, target_date_str=date_str)
-        away_form = get_team_form(away_id, is_home=False, num_matches=6, target_date_str=date_str)
-
-        if len(home_form) < 6 or len(away_form) < 6:
-            insufficient_data += 1
-            continue
+def process_single_match(match, date_str):
+    try:
+        home_form = get_team_form(match["home_team_id"], is_home=True, num_matches=6, target_date_str=date_str)
+        away_form = get_team_form(match["away_team_id"], is_home=False, num_matches=6, target_date_str=date_str)
 
         passed, failed, details, is_perfect = apply_home_win_algorithm(home_form, away_form)
-        if passed is None:
-            continue
+        if passed is None: return {"status": "insufficient"}
 
-        res = {
-            "match": match, "passed": passed, "failed": failed, 
-            "details": details, "score": len(passed), "is_perfect": is_perfect
+        return {
+            "status": "success",
+            "data": {
+                "match": match, "score": len(passed), "failed": failed,
+                "details": details, "is_perfect": is_perfect
+            }
         }
+    except Exception:
+        return {"status": "error"}
 
-        if len(passed) == 9:
-            if is_perfect: perfect.append(res)
-            else: qualified.append(res)
-        elif len(passed) == 8:
-            close_calls.append(res)
-        elif len(passed) == 7:
-            general_pool.append(res)
-
-        if match != all_matches[-1]:
-            random_delay()
-
-    # Consolidated Report Output
-    email = [
-        "🏠 UPDATED 9-POINT HOME WIN PREDICTIONS REPORT",
-        f"📅 Date: {date_str}",
-        "-" * 50,
-        f"• Total Clean Fixtures: {len(all_matches)}",
-        f"• Skipped (Insufficient Data): {insufficient_data}",
-        f"• Perfect targets (9/9 Undefeated Home Form): {len(perfect)}",
-        f"• Qualified targets (9/9 Marginally Passed): {len(qualified)}",
-        f"• Close Calls (8/9): {len(close_calls)}",
-        f"• Watchlist Funnel Pool (7/9): {len(general_pool)}",
-        "-" * 50 + "\n"
-    ]
-
-    email.append("⭐ PERFECT MATCHES")
-    for i, p in enumerate(perfect, 1): email.append(format_match_block(i, p))
-    if not perfect: email.append("  None.")
-
-    email.append("\n✅ QUALIFIED MATCHES (9/9)")
-    for i, q in enumerate(qualified, 1): email.append(format_match_block(i, q))
-    if not qualified: email.append("  None.")
-
-    email.append("\n⚠️ CLOSE CALL CONDITIONALS (8/9)")
-    for c in close_calls:
-        m = c["match"]
-        email.append(f"• {m['league']}: {m['home']} vs {m['away']} | Failed: {', '.join(c['failed'])}")
-
-    email.append("\n📊 WATCHLIST POOL (7/9)")
-    for g in general_pool:
-        m = g["match"]
-        email.append(f"• {m['league']}: {m['home']} vs {m['away']} | Failed: {', '.join(g['failed'])}")
-
-    print("\n===EMAIL_START===")
-    print("\n".join(email))
-    print("===EMAIL_END===")
-
-    with open(f"home_win_predictions_{date_str}.json", "w") as f:
-        json.dump({"date": date_str, "perfect": perfect, "qualified": qualified, "close_calls": close_calls, "pool_7_9": general_pool}, f, indent=2, default=str)
-
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("date", nargs="?", default=datetime.now().strftime("%Y-%m-%d"))
     parser.add_argument("--scheduled", action="store_true")
     args = parser.parse_args()
-    main(args.date, only_scheduled=args.scheduled)
+
+    start_date = datetime.strptime(args.date, "%Y-%m-%d")
+    
+    all_perfect, all_qualified, all_close_calls, all_pool = [], [], [], []
+    total_analyzed, total_insufficient = 0, 0
+    scanned_dates = []
+
+    # Multi-day Scanning Evaluation Loop
+    for day_offset in range(4):
+        current_date_obj = start_date + timedelta(days=day_offset)
+        date_str = current_date_obj.strftime("%Y-%m-%d")
+        scanned_dates.append(date_str)
+
+        fixtures = fetch_soccerbase_fixtures(date_str)
+        seen = set()
+        unique_fixtures = []
+        for f in fixtures:
+            key = (f["home_team_id"], f["away_team_id"], f["league"])
+            if key not in seen:
+                seen.add(key)
+                unique_fixtures.append(f)
+        
+        if args.scheduled:
+            unique_fixtures = [m for m in unique_fixtures if m["status"] == "Scheduled"]
+
+        if not unique_fixtures:
+            continue
+
+        day_perfect, day_qualified = [], []
+        
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            futures = {executor.submit(process_single_match, m, date_str): m for m in unique_fixtures}
+            for future in as_completed(futures):
+                res = future.result()
+                if res["status"] == "insufficient":
+                    total_insufficient += 1
+                elif res["status"] == "success":
+                    total_analyzed += 1
+                    payload = res["data"]
+                    score = payload["score"]
+                    
+                    if score == 10:
+                        if payload["is_perfect"]: day_perfect.append(payload)
+                        else: day_qualified.append(payload)
+                    elif score == 9:
+                        all_close_calls.append(payload)
+                    elif score == 8:
+                        all_pool.append(payload)
+
+        all_perfect.extend(day_perfect)
+        all_qualified.extend(day_qualified)
+
+        # Threshold check: break loop if 10 or more secure targets are captured
+        if (len(all_perfect) + len(all_qualified)) >= 10:
+            break
+
+    # Clean UI Layout Construction
+    ui = [
+        "🏠 HOME WIN PREDICTIONS REPORT",
+        f"📅 Scanned Window: {scanned_dates[0]} to {scanned_dates[-1]} ({len(scanned_dates)} Days)",
+        "▪" * 25,
+        f"• Matches Analyzed: {total_analyzed} | Skipped Data Profiles: {total_insufficient}",
+        f"• Perfect Core (10/10 - Undefeated): {len(all_perfect)}",
+        f"• Qualified Core (10/10): {len(all_qualified)}",
+        f"• Close Checks (9/10): {len(all_close_calls)}",
+        "▪" * 25 + "\n"
+    ]
+
+    ui.append("🔥 APEX HOME WIN TARGETS (10/10)")
+    combined_top = all_perfect + all_qualified
+    if combined_top:
+        for idx, item in enumerate(combined_top, 1):
+            m = item["match"]
+            badge = "⭐ [PERFECT]" if item["is_perfect"] else "✅ [QUALIFIED]"
+            ui.append(f"{idx}. {m['date']} | {m['league']}\n   {m['home']} vs {m['away']} {badge}")
+    else:
+        ui.append("  No direct 10/10 matches qualified across scanned dates.")
+
+    ui.append("\n⚠️ STRONG CONDITIONALS (9/10)")
+    if all_close_calls:
+        for item in all_close_calls[:15]:  # Caps output sizing comfortably
+            m = item["match"]
+            ui.append(f"• {m['date']} | {m['home']} vs {m['away']} (Missed: {', '.join(item['failed'])})")
+    else:
+        ui.append("  None tracked.")
+
+    ui.append("\n📊 PIPELINE FUNNEL WATCHLIST (8/10)")
+    if all_pool:
+        for item in all_pool[:15]:
+            m = item["match"]
+            ui.append(f"• {m['date']} | {m['home']} vs {m['away']} [{item['score']}/10]")
+    else:
+        ui.append("  None tracked.")
+
+    print("\n===EMAIL_START===\n" + "\n".join(ui) + "\n===EMAIL_END===")
+
+    with open(f"home_win_predictions_{scanned_dates[0]}.json", "w") as out:
+        json.dump({"scanned_window": scanned_dates, "perfect": all_perfect, "qualified": all_qualified, "close_calls": all_close_calls}, out, indent=2, default=str)
+
+if __name__ == "__main__":
+    main()
