@@ -1,0 +1,194 @@
+{
+  "scanned_window": [
+    "2026-06-13",
+    "2026-06-14",
+    "2026-06-15",
+    "2026-06-16"
+  ],
+  "apex_10_10": [
+    {
+      "match": {
+        "league": "World Cup",
+        "home": "USA",
+        "away": "Paraguay",
+        "home_team_id": "2652",
+        "away_team_id": "2008",
+        "date": "2026-06-13",
+        "status": "Scheduled"
+      },
+      "score": 10,
+      "checks": {
+        "H_O25": "PASS (5/6)",
+        "A_O25": "PASS (4/6)",
+        "H_AVG": "PASS (4.33)",
+        "A_AVG": "PASS (2.67)",
+        "COMBINED_AVG": "PASS (3.50)"
+      },
+      "metrics": {
+        "home_o25": 5,
+        "away_o25": 4,
+        "avg_home": 4.333333333333333,
+        "avg_away": 2.6666666666666665,
+        "combined_avg": 3.5
+      }
+    },
+    {
+      "match": {
+        "league": "Chile Primera",
+        "home": "Audax Italiano",
+        "away": "La Serena",
+        "home_team_id": "4902",
+        "away_team_id": "7439",
+        "date": "2026-06-13",
+        "status": "Scheduled"
+      },
+      "score": 10,
+      "checks": {
+        "H_O25": "PASS (4/6)",
+        "A_O25": "PASS (4/6)",
+        "H_AVG": "PASS (3.17)",
+        "A_AVG": "PASS (3.67)",
+        "COMBINED_AVG": "PASS (3.42)"
+      },
+      "metrics": {
+        "home_o25": 4,
+        "away_o25": 4,
+        "avg_home": 3.1666666666666665,
+        "avg_away": 3.6666666666666665,
+        "combined_avg": 3.4166666666666665
+      }
+    },
+    {
+      "match": {
+        "league": "Chile Primera",
+        "home": "Coquimbo Unido",
+        "away": "O'Higgins",
+        "home_team_id": "7657",
+        "away_team_id": "5794",
+        "date": "2026-06-13",
+        "status": "Scheduled"
+      },
+      "score": 10,
+      "checks": {
+        "H_O25": "PASS (4/6)",
+        "A_O25": "PASS (4/6)",
+        "H_AVG": "PASS (3.00)",
+        "A_AVG": "PASS (4.00)",
+        "COMBINED_AVG": "PASS (3.50)"
+      },
+      "metrics": {
+        "home_o25": 4,
+        "away_o25": 4,
+        "avg_home": 3.0,
+        "avg_away": 4.0,
+        "combined_avg": 3.5
+      }
+    }
+  ],
+  "strong_8_10": [
+    {
+      "match": {
+        "league": "Chile Primera",
+        "home": "Colo-Colo",
+        "away": "Cobresal",
+        "home_team_id": "273",
+        "away_team_id": "7438",
+        "date": "2026-06-13",
+        "status": "Scheduled"
+      },
+      "score": 8,
+      "checks": {
+        "H_O25": "FAIL (2/6)",
+        "A_O25": "PASS (4/6)",
+        "H_AVG": "PASS (2.83)",
+        "A_AVG": "PASS (3.50)",
+        "COMBINED_AVG": "PASS (3.17)"
+      },
+      "metrics": {
+        "home_o25": 2,
+        "away_o25": 4,
+        "avg_home": 2.8333333333333335,
+        "avg_away": 3.5,
+        "combined_avg": 3.1666666666666665
+      }
+    },
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Temperley",
+        "away": "Guemes",
+        "home_team_id": "7460",
+        "away_team_id": "7467",
+        "date": "2026-06-14",
+        "status": "Scheduled"
+      },
+      "score": 8,
+      "checks": {
+        "H_O25": "PASS (4/6)",
+        "A_O25": "FAIL (3/6)",
+        "H_AVG": "PASS (3.00)",
+        "A_AVG": "PASS (2.83)",
+        "COMBINED_AVG": "PASS (2.92)"
+      },
+      "metrics": {
+        "home_o25": 4,
+        "away_o25": 3,
+        "avg_home": 3.0,
+        "avg_away": 2.8333333333333335,
+        "combined_avg": 2.9166666666666665
+      }
+    },
+    {
+      "match": {
+        "league": "Chile Primera",
+        "home": "Univ Catolica",
+        "away": "Universidad de Concepcion",
+        "home_team_id": "2954",
+        "away_team_id": "8404",
+        "date": "2026-06-14",
+        "status": "Scheduled"
+      },
+      "score": 8,
+      "checks": {
+        "H_O25": "PASS (4/6)",
+        "A_O25": "FAIL (3/6)",
+        "H_AVG": "PASS (3.00)",
+        "A_AVG": "PASS (3.00)",
+        "COMBINED_AVG": "PASS (3.00)"
+      },
+      "metrics": {
+        "home_o25": 4,
+        "away_o25": 3,
+        "avg_home": 3.0,
+        "avg_away": 3.0,
+        "combined_avg": 3.0
+      }
+    },
+    {
+      "match": {
+        "league": "Chile Primera",
+        "home": "Deportes Concepcion",
+        "away": "Deportes Limache",
+        "home_team_id": "8403",
+        "away_team_id": "8179",
+        "date": "2026-06-14",
+        "status": "Scheduled"
+      },
+      "score": 8,
+      "checks": {
+        "H_O25": "FAIL (1/6)",
+        "A_O25": "PASS (4/6)",
+        "H_AVG": "PASS (2.50)",
+        "A_AVG": "PASS (3.67)",
+        "COMBINED_AVG": "PASS (3.08)"
+      },
+      "metrics": {
+        "home_o25": 1,
+        "away_o25": 4,
+        "avg_home": 2.5,
+        "avg_away": 3.6666666666666665,
+        "combined_avg": 3.0833333333333335
+      }
+    }
+  ]
+}
