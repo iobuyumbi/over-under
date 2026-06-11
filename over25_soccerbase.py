@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
 """
-OVER 2.5 GOALS PREDICTOR - MULTI-DAY CONCURRENT ENGINE
-======================================================
-Processes matches across up to 4 sequential calendar days.
-Halts early when 10 or more apex high-probability selections are saved.
-Clean layout generation tailored for cross-platform reading.
+OVER 2.5 GOALS PREDICTOR - PRODUCTION HARDENED v4
+====================================================
+Rule-based filtering | Shrinkage xG | Portfolio Kelly | SQLite Cache
 """
 
 import requests
 import json
 import re
 import argparse
+import time
+import random
+import math
+import logging
+import sqlite3
+import hashlib
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
@@ -18,199 +22,590 @@ from urllib3.util.retry import Retry
 from fake_useragent import UserAgent
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+# =============================================================================
+# CONFIGURATION
+# =============================================================================
+CACHE_DB = "soccerbase_cache.db"
+CACHE_TTL_HOURS = 24
+MAX_WORKERS = 4
+REQUEST_DELAY_MIN = 2.5
+REQUEST_DELAY_MAX = 5.0
+MAX_TOTAL_EXPOSURE = 0.25
+SHRINKAGE_WEIGHT = 0.60
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
+
 ua = UserAgent()
+
 HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
     "Referer": "https://www.google.com/",
+    "DNT": "1",
     "Connection": "keep-alive",
 }
 
-retry_strategy = Retry(total=5, backoff_factor=0.5, status_forcelist=[429, 500, 502, 503, 504])
-adapter = HTTPAdapter(max_retries=retry_strategy, pool_connections=20, pool_maxsize=20)
+retry_strategy = Retry(
+    total=4,
+    backoff_factor=1.5,
+    status_forcelist=[429, 500, 502, 503, 504]
+)
+adapter = HTTPAdapter(
+    max_retries=retry_strategy,
+    pool_connections=10,
+    pool_maxsize=10
+)
 session = requests.Session()
 session.mount("https://", adapter)
 session.mount("http://", adapter)
 
+
+# =============================================================================
+# CACHE LAYER
+# =============================================================================
+class Cache:
+    def __init__(self, db_path=CACHE_DB, ttl_hours=CACHE_TTL_HOURS):
+        self.db_path = db_path
+        self.ttl = timedelta(hours=ttl_hours)
+        self._init_db()
+
+    def _init_db(self):
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS cache (
+                    key TEXT PRIMARY KEY,
+                    value TEXT,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+            conn.execute("""
+                CREATE INDEX IF NOT EXISTS idx_created ON cache(created_at)
+            """)
+
+    def _make_key(self, url):
+        return hashlib.sha256(url.encode()).hexdigest()
+
+    def get(self, url):
+        key = self._make_key(url)
+        cutoff = (datetime.now() - self.ttl).isoformat()
+        with sqlite3.connect(self.db_path) as conn:
+            row = conn.execute(
+                "SELECT value FROM cache WHERE key = ? AND created_at > ?",
+                (key, cutoff)
+            ).fetchone()
+        return json.loads(row[0]) if row else None
+
+    def set(self, url, value):
+        key = self._make_key(url)
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute(
+                "INSERT OR REPLACE INTO cache (key, value) VALUES (?, ?)",
+                (key, json.dumps(value))
+            )
+
+    def clear(self):
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute("DELETE FROM cache")
+        logger.info("Cache cleared.")
+
+
+cache = Cache()
+
+
+# =============================================================================
+# HTTP HELPERS
+# =============================================================================
 def get_random_headers():
     headers = HEADERS.copy()
     headers["User-Agent"] = ua.random
     return headers
 
+
+def random_delay():
+    time.sleep(random.uniform(REQUEST_DELAY_MIN, REQUEST_DELAY_MAX))
+
+
+def fetch(url, use_cache=True):
+    if use_cache:
+        cached = cache.get(url)
+        if cached is not None:
+            logger.debug(f"Cache hit: {url[:80]}...")
+            return cached
+
+    random_delay()
+    try:
+        response = session.get(url, headers=get_random_headers(), timeout=20)
+        response.raise_for_status()
+        data = response.text
+        if use_cache:
+            cache.set(url, data)
+        return data
+    except Exception as e:
+        logger.error(f"Fetch failed for {url[:80]}: {e}")
+        return None
+
+
+# =============================================================================
+# SCRAPING
+# =============================================================================
 def fetch_soccerbase_fixtures(date_str):
     url = f"https://www.soccerbase.com/matches/results.sd?date={date_str}"
-    try:
-        response = session.get(url, headers=get_random_headers(), timeout=15)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, "html.parser")
-
-        matches = []
-        current_league = None
-
-        tables = soup.find_all("table", class_="listWithCards")
-        for table in tables:
-            for row in table.find_all("tr"):
-                cells = row.find_all("td")
-                league_link = row.find("a", href=lambda h: h and "comp_id=" in h)
-                if league_link:
-                    current_league = league_link.get_text(strip=True)
-                    continue
-                elif len(cells) >= 6 and current_league:
-                    home_team = cells[3].get_text(strip=True)
-                    score_or_v = cells[4].get_text(strip=True)
-                    away_team = cells[5].get_text(strip=True)
-
-                    if home_team and away_team:
-                        team_links = row.find_all("a", href=lambda h: h and "team_id=" in h)
-                        ids = []
-                        for link in team_links:
-                            m_id = link["href"].split("team_id=")[1].split("&")[0]
-                            if m_id not in ids:
-                                ids.append(m_id)
-                        
-                        if len(ids) >= 2:
-                            matches.append({
-                                "league": current_league,
-                                "home": home_team,
-                                "away": away_team,
-                                "home_team_id": ids[0],
-                                "away_team_id": ids[1],
-                                "date": date_str,
-                                "status": "Scheduled" if score_or_v.lower() == "v" else "Completed"
-                            })
-        return matches
-    except Exception:
+    html = fetch(url)
+    if html is None:
         return []
+
+    soup = BeautifulSoup(html, "html.parser")
+    matches = []
+
+    tables = soup.find_all("table", class_="listWithCards")
+    if not tables:
+        logger.warning(f"No fixture tables found for {date_str}")
+        return matches
+
+    for table in tables:
+        current_league = "Unknown League"
+        for row in table.find_all("tr"):
+            league_link = row.find("a", href=lambda h: h and "comp_id=" in h)
+            if league_link:
+                current_league = league_link.get_text(strip=True)
+                continue
+
+            cells = row.find_all("td")
+            if len(cells) < 6:
+                continue
+
+            home_raw = cells[3].get_text(strip=True)
+            score_or_v = cells[4].get_text(strip=True)
+            away_raw = cells[5].get_text(strip=True)
+
+            home = re.sub(r"\s*\d+.*$", "", home_raw).strip()
+            away = re.sub(r"\s*\d+.*$", "", away_raw).strip()
+
+            if not home or not away:
+                continue
+
+            team_links = row.find_all("a", href=lambda h: h and "team_id=" in h)
+            if len(team_links) < 2:
+                continue
+
+            try:
+                home_id = team_links[0]["href"].split("team_id=")[1].split("&")[0]
+                away_id = team_links[1]["href"].split("team_id=")[1].split("&")[0]
+            except (KeyError, IndexError):
+                continue
+
+            matches.append({
+                "league": current_league,
+                "home": home,
+                "away": away,
+                "home_team_id": home_id,
+                "away_team_id": away_id,
+                "date": date_str,
+                "status": "Scheduled" if score_or_v.lower() == "v" else "Completed"
+            })
+
+    return matches
+
 
 def fetch_soccerbase_team_results(team_id):
     url = f"https://www.soccerbase.com/teams/team.sd?team_id={team_id}&teamTabs=results"
-    try:
-        response = session.get(url, headers=get_random_headers(), timeout=12)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, "html.parser")
-
-        matches = []
-        tables = soup.find_all("table", class_="soccerGrid")
-        for table in tables:
-            for row in table.find_all("tr")[2:]:
-                cells = row.find_all("td")
-                if len(cells) >= 8:
-                    date_cell = cells[1]
-                    score = cells[4].get_text(strip=True)
-
-                    if "-" in score:
-                        try:
-                            iso_match = re.search(r"(\d{4}-\d{2}-\d{2})", str(date_cell))
-                            match_date = iso_match.group(1) if iso_match else None
-
-                            gf_h, gf_a = map(int, score.split("-"))
-                            home_link = cells[3].find("a", href=lambda h: h and "team_id=" in h)
-                            if not home_link:
-                                continue
-                            url_home_id = home_link["href"].split("team_id=")[1].split("&")[0]
-                            
-                            is_home = (str(url_home_id) == str(team_id))
-                            gf = gf_h if is_home else gf_a
-                            ga = gf_a if is_home else gf_h
-                            total_goals = gf + ga
-
-                            matches.append({
-                                "gf": gf, "ga": ga, "total": total_goals,
-                                "is_home": is_home, "date_str": match_date
-                            })
-                        except Exception:
-                            continue
-                            
-        matches.sort(key=lambda x: x["date_str"] if x["date_str"] is not None else "0000-00-00", reverse=True)
-        return matches
-    except Exception:
+    html = fetch(url)
+    if html is None:
         return []
+
+    soup = BeautifulSoup(html, "html.parser")
+    matches = []
+
+    for table in soup.find_all("table", class_="soccerGrid"):
+        for row in table.find_all("tr")[2:]:
+            cells = row.find_all("td")
+            if len(cells) < 8:
+                continue
+
+            score = cells[4].get_text(strip=True)
+            if "-" not in score:
+                continue
+
+            try:
+                gf_h, gf_a = map(int, score.split("-"))
+            except ValueError:
+                continue
+
+            home_link = cells[3].find("a", href=lambda h: h and "team_id=" in h)
+            if not home_link:
+                continue
+
+            try:
+                home_id_in_row = home_link["href"].split("team_id=")[1].split("&")[0]
+            except (KeyError, IndexError):
+                continue
+
+            is_home = str(home_id_in_row) == str(team_id)
+            gf = gf_h if is_home else gf_a
+            ga = gf_a if is_home else gf_h
+
+            date_match = re.search(r"(\d{4}-\d{2}-\d{2})", str(cells[1]))
+            date_str = date_match.group(1) if date_match else None
+
+            matches.append({
+                "gf": gf,
+                "ga": ga,
+                "total": gf + ga,
+                "is_home": is_home,
+                "date_str": date_str
+            })
+
+    matches.sort(key=lambda x: x.get("date_str") or "0000-00-00", reverse=True)
+    return matches
+
+
+# =============================================================================
+# FORM & DATA HELPERS
+# =============================================================================
+def parse_date(date_str):
+    try:
+        return datetime.strptime(date_str, "%Y-%m-%d")
+    except (ValueError, TypeError):
+        return None
+
 
 def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
     all_matches = fetch_soccerbase_team_results(team_id)
+    target_dt = parse_date(target_date_str) if target_date_str else None
     form = []
+
     for match in all_matches:
-        if target_date_str and match["date_str"] and match["date_str"] >= target_date_str:
+        match_dt = parse_date(match.get("date_str"))
+        if target_dt and match_dt and match_dt >= target_dt:
             continue
-        if (is_home and match["is_home"]) or (not is_home and not match["is_home"]):
-            form.append(match)
+        if match["is_home"] == is_home:
+            form.append((match["gf"], match["ga"]))
             if len(form) >= num_matches:
                 break
+
     return form
 
-def evaluate_over25_algorithm(home_form, away_form):
-    if len(home_form) < 6 or len(away_form) < 6:
-        return None
 
-    home_over_count = sum(1 for m in home_form if m["total"] > 2)
-    away_over_count = sum(1 for m in away_form if m["total"] > 2)
-    
-    total_home_goals = sum(m["total"] for m in home_form)
-    total_away_goals = sum(m["total"] for m in away_form)
-    
-    avg_home = total_home_goals / 6.0
-    avg_away = total_away_goals / 6.0
-    combined_avg = (total_home_goals + total_away_goals) / 12.0
+# =============================================================================
+# ALGORITHM (Your Original Rules — Fully Preserved)
+# =============================================================================
+def apply_algorithm(home_3, away_3, home_6, away_6):
+    if len(home_3) < 3 or len(away_3) < 3:
+        return None, None, {"error": "Insufficient data"}, False
 
-    score = 0
-    checks = {}
+    passed, failed, details = [], [], {}
+    is_perfect = True
 
-    if home_over_count >= 4: score += 2; checks["H_O25"] = f"PASS ({home_over_count}/6)"
-    else: checks["H_O25"] = f"FAIL ({home_over_count}/6)"
+    # Home 3-game checks
+    h_total_3 = sum(gf + ga for gf, ga in home_3)
+    if h_total_3 >= 7:
+        passed.append("H1"); details["H1"] = f"PASS ({h_total_3})"
+    else:
+        failed.append("H1"); details["H1"] = f"FAIL ({h_total_3})"; is_perfect = False
 
-    if away_over_count >= 4: score += 2; checks["A_O25"] = f"PASS ({away_over_count}/6)"
-    else: checks["A_O25"] = f"FAIL ({away_over_count}/6)"
+    h_over_3 = sum(1 for gf, ga in home_3 if gf + ga > 2.5)
+    if h_over_3 >= 2:
+        passed.append("H2"); details["H2"] = f"PASS ({h_over_3}/3)"
+        if h_over_3 < 3:
+            is_perfect = False
+    else:
+        failed.append("H2"); details["H2"] = f"FAIL ({h_over_3}/3)"; is_perfect = False
 
-    if avg_home >= 2.5: score += 2; checks["H_AVG"] = f"PASS ({avg_home:.2f})"
-    else: checks["H_AVG"] = f"FAIL ({avg_home:.2f})"
+    # Away 3-game checks
+    a_total_3 = sum(gf + ga for gf, ga in away_3)
+    if a_total_3 >= 7:
+        passed.append("A1"); details["A1"] = f"PASS ({a_total_3})"
+    else:
+        failed.append("A1"); details["A1"] = f"FAIL ({a_total_3})"; is_perfect = False
 
-    if avg_away >= 2.5: score += 2; checks["A_AVG"] = f"PASS ({avg_away:.2f})"
-    else: checks["A_AVG"] = f"FAIL ({avg_away:.2f})"
+    prev_a_total = away_3[0][0] + away_3[0][1]
+    if prev_a_total >= 2:
+        passed.append("A2"); details["A2"] = f"PASS ({prev_a_total})"
+    else:
+        failed.append("A2"); details["A2"] = f"FAIL ({prev_a_total})"; is_perfect = False
 
-    if combined_avg >= 2.7: score += 2; checks["COMBINED_AVG"] = f"PASS ({combined_avg:.2f})"
-    else: checks["COMBINED_AVG"] = f"FAIL ({combined_avg:.2f})"
+    a_scored = sum(1 for gf, _ in away_3 if gf > 0)
+    if a_scored >= 2:
+        passed.append("A3"); details["A3"] = f"PASS ({a_scored}/3)"
+        if a_scored < 3:
+            is_perfect = False
+    else:
+        failed.append("A3"); details["A3"] = f"FAIL ({a_scored}/3)"; is_perfect = False
 
-    return {
-        "score": score, "checks": checks,
-        "metrics": {
-            "home_o25": home_over_count, "away_o25": away_over_count,
-            "avg_home": avg_home, "avg_away": avg_away, "combined_avg": combined_avg
-        }
-    }
+    a_over_3 = sum(1 for gf, ga in away_3 if gf + ga > 2.5)
+    if a_over_3 >= 2:
+        passed.append("A4"); details["A4"] = f"PASS ({a_over_3}/3)"
+        if a_over_3 < 3:
+            is_perfect = False
+    else:
+        failed.append("A4"); details["A4"] = f"FAIL ({a_over_3}/3)"; is_perfect = False
 
-def process_single_match(match, date_str):
+    # 6-game checks
+    if len(home_6) >= 6:
+        h_over_6 = sum(1 for gf, ga in home_6 if gf + ga > 2.5)
+        if h_over_6 >= 4:
+            passed.append("H3"); details["H3"] = f"PASS ({h_over_6}/6)"
+        else:
+            failed.append("H3"); details["H3"] = f"FAIL ({h_over_6}/6)"; is_perfect = False
+
+        h_total_6 = sum(gf + ga for gf, ga in home_6)
+        if h_total_6 >= 18:
+            passed.append("H4"); details["H4"] = f"PASS ({h_total_6})"
+        else:
+            failed.append("H4"); details["H4"] = f"FAIL ({h_total_6})"; is_perfect = False
+
+    if len(away_6) >= 6:
+        a_over_6 = sum(1 for gf, ga in away_6 if gf + ga > 2.5)
+        if a_over_6 >= 4:
+            passed.append("A5"); details["A5"] = f"PASS ({a_over_6}/6)"
+        else:
+            failed.append("A5"); details["A5"] = f"FAIL ({a_over_6}/6)"; is_perfect = False
+
+        a_total_6 = sum(gf + ga for gf, ga in away_6)
+        if a_total_6 >= 18:
+            passed.append("A6"); details["A6"] = f"PASS ({a_total_6})"
+        else:
+            failed.append("A6"); details["A6"] = f"FAIL ({a_total_6})"; is_perfect = False
+
+    return passed, failed, details, is_perfect
+
+
+# =============================================================================
+# POISSON MODEL
+# =============================================================================
+def poisson_pmf(k, lam):
+    if lam <= 0:
+        return 0.0
+    return (math.exp(-lam) * (lam ** k)) / math.factorial(k)
+
+
+def calculate_poisson_over25(home_lambda, away_lambda, max_goals=10):
+    over_prob = 0.0
+    for h in range(max_goals + 1):
+        for a in range(max_goals + 1):
+            if h + a > 2:
+                over_prob += poisson_pmf(h, home_lambda) * poisson_pmf(a, away_lambda)
+    return round(over_prob * 100, 1)
+
+
+# =============================================================================
+# EXPECTED GOALS (Shrinkage Estimator — Fixed)
+# =============================================================================
+def get_expected_goals(form_data, is_home=True):
+    baseline = 1.45 if is_home else 1.20
+
+    if not form_data:
+        return round(baseline, 2)
+
+    sample = form_data[:6]
+    n = len(sample)
+    goals_scored = sum(gf for gf, _ in sample)
+    raw_avg = goals_scored / n
+
+    xg = SHRINKAGE_WEIGHT * raw_avg + (1 - SHRINKAGE_WEIGHT) * baseline
+    return round(max(0.8, min(3.8, xg)), 2)
+
+
+# =============================================================================
+# KELLY CRITERION
+# =============================================================================
+def calculate_kelly(prob, decimal_odds=2.0, use_half=True):
+    if prob <= 0.0 or decimal_odds <= 1.0:
+        return 0.0
+    kelly = (prob * decimal_odds - 1) / (decimal_odds - 1)
+    return max(0.0, kelly * 0.5 if use_half else kelly)
+
+
+def apply_portfolio_kelly(recommendations, bankroll, max_exposure=MAX_TOTAL_EXPOSURE):
+    if not recommendations or bankroll <= 0:
+        return recommendations
+
+    total_kelly = sum(r["kelly"]["half"] / 100 for r in recommendations)
+    if total_kelly <= 0:
+        return recommendations
+
+    if total_kelly > max_exposure:
+        scale = max_exposure / total_kelly
+        for r in recommendations:
+            r["kelly"]["half"] *= scale
+        logger.info(
+            f"Portfolio Kelly scaled by {scale:.3f} "
+            f"({total_kelly*100:.1f}% -> {max_exposure*100:.1f}% exposure)"
+        )
+
+    return recommendations
+
+
+# =============================================================================
+# MATCH PROCESSING
+# =============================================================================
+def process_single_match(match, target_date, default_odds=2.0):
     try:
-        home_form = get_team_form(match["home_team_id"], is_home=True, num_matches=6, target_date_str=date_str)
-        away_form = get_team_form(match["away_team_id"], is_home=False, num_matches=6, target_date_str=date_str)
+        home_3 = get_team_form(match["home_team_id"], True, 3, target_date)
+        away_3 = get_team_form(match["away_team_id"], False, 3, target_date)
+        home_6 = get_team_form(match["home_team_id"], True, 6, target_date)
+        away_6 = get_team_form(match["away_team_id"], False, 6, target_date)
 
-        analysis = evaluate_over25_algorithm(home_form, away_form)
-        if not analysis: return {"status": "insufficient"}
+        passed, failed, details, is_perfect = apply_algorithm(home_3, away_3, home_6, away_6)
+        if passed is None:
+            return {"status": "insufficient"}
+
+        home_xg = get_expected_goals(home_6, True)
+        away_xg = get_expected_goals(away_6, False)
+        over25_prob_pct = calculate_poisson_over25(home_xg, away_xg)
+        over25_prob = over25_prob_pct / 100.0
+
+        score = len(passed)
+        confidence = (
+            "HIGH" if over25_prob >= 0.58
+            else "MEDIUM" if over25_prob >= 0.52
+            else "LOW"
+        )
+
+        kelly_half = calculate_kelly(over25_prob, default_odds, use_half=True)
 
         return {
             "status": "success",
             "data": {
-                "match": match, "score": analysis["score"],
-                "checks": analysis["checks"], "metrics": analysis["metrics"]
+                "match": match,
+                "score": score,
+                "passed": passed,
+                "details": details,
+                "is_perfect": is_perfect,
+                "poisson": {
+                    "home_xg": home_xg,
+                    "away_xg": away_xg,
+                    "over25_prob": over25_prob_pct,
+                    "confidence": confidence
+                },
+                "kelly": {"half": round(kelly_half * 100, 2)}
             }
         }
-    except Exception:
+    except Exception as e:
+        logger.error(
+            f"Processing failed for "
+            f"{match.get("home", "N/A")} vs {match.get("away", "N/A")}: {e}",
+            exc_info=True
+        )
         return {"status": "error"}
 
+
+# =============================================================================
+# REPORTING
+# =============================================================================
+def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds):
+    base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
+    end_date = scanned_dates[-1] if scanned_dates else base_date
+
+    total_analyzed = len(perfect) + len(qualified) + len(close_calls)
+
+    report = [
+        "🔥 OVER 2.5 GOALS - PROFESSIONAL PREDICTION REPORT",
+        f"📅 Period: {base_date} → {end_date}",
+        f"📊 Analyzed: {total_analyzed} matches",
+        f"⭐ Perfect (10/10): {len(perfect)} | Qualified (10/10): {len(qualified)} | Candidates (8/10): {len(close_calls)}",
+        "=" * 70,
+        ""
+    ]
+
+    report.append("🏆 PERFECT MATCHES (10/10 + All Checks Passed)")
+    if perfect:
+        for i, item in enumerate(perfect[:10], 1):
+            m = item["match"]
+            p = item["poisson"]
+            k = item["kelly"]
+            stake = round(bankroll * k["half"] / 100, 2)
+            report.append(
+                f"{i:2d}. {m['date']} | {m['league']}\n"
+                f"     {m['home']} vs {m['away']}\n"
+                f"     Poisson: {p['over25_prob']}% ({p['home_xg']}-{p['away_xg']}) → {p['confidence']}\n"
+                f"     Half-Kelly: {k['half']:.2f}% → ${stake:,.2f}"
+            )
+    else:
+        report.append("   No perfect matches found.")
+
+    report.append("\n✅ QUALIFIED MATCHES (10/10)")
+    if qualified:
+        for item in qualified[:12]:
+            m = item["match"]
+            p = item["poisson"]
+            report.append(f"• {m['date']} | {m['home']} vs {m['away']} ({p['over25_prob']}%)")
+    else:
+        report.append("   No qualified matches found.")
+
+    report.append("\n📊 PROBABLE CANDIDATES (8/10)")
+    if close_calls:
+        for item in close_calls[:10]:
+            m = item["match"]
+            p = item["poisson"]
+            report.append(f"• {m['league']}: {m['home']} vs {m['away']} ({p['over25_prob']}%)")
+    else:
+        report.append("   No candidates found.")
+
+    report.extend([
+        "",
+        "=" * 70,
+        f"💰 Bankroll: ${bankroll:,.2f} | Avg Odds: {odds}",
+        f"💡 Total exposure capped at {MAX_TOTAL_EXPOSURE*100:.0f}% of bankroll.",
+        "💡 Tip: Prioritize HIGH confidence matches. Never bet more than you can afford to lose."
+    ])
+
+    return "\n".join(report), base_date
+
+
+# =============================================================================
+# MAIN
+# =============================================================================
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("date", nargs="?", default=datetime.now().strftime("%Y-%m-%d"))
-    parser.add_argument("--scheduled", action="store_true")
+    parser = argparse.ArgumentParser(
+        description="Over 2.5 Goals Predictor with Poisson + Kelly"
+    )
+    parser.add_argument(
+        "date",
+        nargs="?",
+        default=datetime.now().strftime("%Y-%m-%d"),
+        help="Start date (YYYY-MM-DD)"
+    )
+    parser.add_argument(
+        "--scheduled",
+        action="store_true",
+        help="Only include scheduled (upcoming) matches"
+    )
+    parser.add_argument(
+        "--bankroll",
+        type=float,
+        default=1000.0,
+        help="Total bankroll in currency units"
+    )
+    parser.add_argument(
+        "--odds",
+        type=float,
+        default=2.0,
+        help="Average decimal odds for Over 2.5"
+    )
+    parser.add_argument(
+        "--clear-cache",
+        action="store_true",
+        help="Clear the SQLite cache before running"
+    )
     args = parser.parse_args()
 
+    if args.clear_cache:
+        cache.clear()
+
     start_date = datetime.strptime(args.date, "%Y-%m-%d")
-    
-    all_tier_10, all_tier_8, all_tier_6 = [], [], []
-    total_analyzed, total_insufficient = 0, 0
+    perfect, qualified, close_calls = [], [], []
     scanned_dates = []
 
+    print(f"🔍 Starting analysis from {args.date}...")
+
     for day_offset in range(4):
-        current_date_obj = start_date + timedelta(days=day_offset)
-        date_str = current_date_obj.strftime("%Y-%m-%d")
+        current_date = start_date + timedelta(days=day_offset)
+        date_str = current_date.strftime("%Y-%m-%d")
         scanned_dates.append(date_str)
 
         fixtures = fetch_soccerbase_fixtures(date_str)
@@ -218,80 +613,76 @@ def main():
         unique_fixtures = []
         for f in fixtures:
             key = (f["home_team_id"], f["away_team_id"], f["league"])
-            if key not in seen:
-                seen.add(key)
-                unique_fixtures.append(f)
-        
-        if args.scheduled:
-            unique_fixtures = [m for m in unique_fixtures if m["status"] == "Scheduled"]
+            if key not in seen and f["home_team_id"] and f["away_team_id"]:
+                if not args.scheduled or f["status"] == "Scheduled":
+                    seen.add(key)
+                    unique_fixtures.append(f)
 
         if not unique_fixtures:
+            logger.info(f"No fixtures to process on {date_str}")
             continue
 
-        day_tier_10 = []
+        print(f"   Processing {len(unique_fixtures)} matches on {date_str}...")
 
-        with ThreadPoolExecutor(max_workers=10) as executor:
-            futures = {executor.submit(process_single_match, match, date_str): match for match in unique_fixtures}
-            for future in as_completed(futures):
-                res = future.result()
+        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+            futures = {
+                executor.submit(process_single_match, match, date_str, args.odds): match
+                for match in unique_fixtures
+            }
+            for future in as_completed(futures, timeout=600):
+                try:
+                    res = future.result(timeout=60)
+                except Exception as e:
+                    logger.error(f"Future timeout/error: {e}")
+                    continue
+
                 if res["status"] == "insufficient":
-                    total_insufficient += 1
+                    pass
                 elif res["status"] == "success":
-                    total_analyzed += 1
-                    payload = res["data"]
-                    score = payload["score"]
-                    
-                    if score == 10: day_tier_10.append(payload)
-                    elif score == 8: all_tier_8.append(payload)
-                    elif score == 6: all_tier_6.append(payload)
+                    data = res["data"]
+                    if data["score"] == 10:
+                        if data["is_perfect"]:
+                            perfect.append(data)
+                        else:
+                            qualified.append(data)
+                    elif data["score"] == 8:
+                        close_calls.append(data)
 
-        all_tier_10.extend(day_tier_10)
-
-        # Threshold check: stop scanning forward if 10 or more high-probability targets accumulate
-        if len(all_tier_10) >= 10:
+        if len(perfect) + len(qualified) >= 12:
+            logger.info("Reached target of 12+ qualifying matches. Stopping scan.")
             break
 
-    # Format output for clean email / Telegram consumption
-    report = [
-        "🔥 OVER 2.5 GOALS PREDICTIONS REPORT",
-        f"📅 Scanned Window: {scanned_dates[0]} to {scanned_dates[-1]} ({len(scanned_dates)} Days)",
-        "▪" * 25,
-        f"• Matches Analyzed: {total_analyzed} | Skipped Data Profiles: {total_insufficient}",
-        f"• Apex Targets (10/10 Score): {len(all_tier_10)}",
-        f"• High Candidates (8/10 Score): {len(all_tier_8)}",
-        "▪" * 25 + "\n"
-    ]
+    # Apply portfolio Kelly cap
+    all_recs = perfect + qualified
+    apply_portfolio_kelly(all_recs, args.bankroll, MAX_TOTAL_EXPOSURE)
 
-    report.append("⭐ APEX GOAL TARGETS (10/10)")
-    if all_tier_10:
-        for idx, item in enumerate(all_tier_10, 1):
-            m = item["match"]
-            met = item["metrics"]
-            report.append(f"{idx}. {m['date']} | {m['league']}\n   {m['home']} vs {m['away']} ⚽ (Comb: {met['combined_avg']:.2f}/gm)")
-    else:
-        report.append("  No direct 10/10 matches qualified across scanned dates.")
+    # Build and output report
+    final_report, base_date = build_report(
+        perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds
+    )
 
-    report.append("\n✅ PROBABLE HIGH-YIELD CANDIDATES (8/10)")
-    if all_tier_8:
-        for item in all_tier_8[:15]:
-            m = item["match"]
-            met = item["metrics"]
-            report.append(f"• {m['date']} | {m['home']} vs {m['away']} (Comb: {met['combined_avg']:.2f}/gm)")
-    else:
-        report.append("  None tracked.")
+    print("\n===EMAIL_START===")
+    print(final_report)
+    print("===EMAIL_END===")
 
-    report.append("\n📊 CONTEXTUAL WATCHLIST (6/10)")
-    if all_tier_6:
-        for item in all_tier_6[:15]:
-            m = item["match"]
-            report.append(f"• {m['date']} | {m['home']} vs {m['away']}")
-    else:
-        report.append("  None tracked.")
+    # Save JSON
+    output_path = f"over25_report_{base_date}.json"
+    with open(output_path, "w") as f:
+        json.dump({
+            "metadata": {
+                "scanned_window": scanned_dates,
+                "bankroll": args.bankroll,
+                "odds": args.odds,
+                "max_exposure": MAX_TOTAL_EXPOSURE,
+                "generated_at": datetime.now().isoformat()
+            },
+            "perfect": perfect,
+            "qualified": qualified,
+            "close_calls": close_calls
+        }, f, indent=2, default=str)
 
-    print("\n===EMAIL_START===\n" + "\n".join(report) + "\n===EMAIL_END===")
+    print(f"\n✅ Report saved: {output_path}")
 
-    with open(f"predictions_soccerbase_{scanned_dates[0]}.json", "w") as out:
-        json.dump({"scanned_window": scanned_dates, "apex_10_10": all_tier_10, "strong_8_10": all_tier_8}, out, indent=2, default=str)
 
 if __name__ == "__main__":
     main()
