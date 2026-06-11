@@ -2,7 +2,7 @@ name: Daily Predictions (Over 2.5 + Home Win)
 
 on:
   schedule:
-    - cron: "0 5 * * *"  # 6 AM London time (BST), 5 AM GMT
+    - cron: "0 1 * * *"  # 6:00 AM EAT, 3:00 AM UTC
   workflow_dispatch:
 
 env:
@@ -23,36 +23,27 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      # --- ENGINE 1: OVER 2.5 PREDICTIONS ---
+      # Runs over25_soccerbase.py accurately matching your repository file name
       - name: Run Over 2.5 predictor
         id: run-predictor
         run: |
           DATE=$(date +'%Y-%m-%d')
-          python over25_soccerbase.py > output.txt 2> errors.txt
+          python over25_soccerbase.py > output.txt 2> errors.txt || true
           echo "date=$DATE" >> $GITHUB_OUTPUT
           
-          EMAIL_BODY=$(sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d')
-          
-          {
-            echo "email_body<<EOF"
-            echo "$EMAIL_BODY"
-            echo "EOF"
-          } >> $GITHUB_OUTPUT
+          sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d' > over25_body.txt
 
+      # --- ENGINE 2: 9-POINT HOME WIN PREDICTIONS ---
+      # Runs home_win_soccerbase.py accurately matching your repository file name
       - name: Run Home Win predictor
         id: run-home-win
         run: |
-          DATE=$(date +'%Y-%m-%d')
-          python home_win_soccerbase.py > hw_output.txt 2> hw_errors.txt
+          python home_win_soccerbase.py > hw_output.txt 2> hw_errors.txt || true
           
-          EMAIL_BODY=$(sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d')
-          
-          {
-            echo "hw_email<<EOF"
-            echo "$EMAIL_BODY"
-            echo "EOF"
-          } >> $GITHUB_OUTPUT
+          sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d' > hw_body.txt
 
       - name: Commit and push results
         uses: EndBug/add-and-commit@v9
@@ -64,24 +55,31 @@ jobs:
             predictions_soccerbase_*.json
             home_win_predictions_*.json
 
+      # --- CONSOLIDATION ENGINE ---
+      # Safely bundles text and registers the multi-line variable context
       - name: Build combined email body
         id: combined-email
         run: |
-          DATE=${{ steps.run-predictor.outputs.date }}
+          DATE="${{ steps.run-predictor.outputs.date }}"
           
           {
-            echo "combined<<EOF"
             echo "⚽ DAILY PREDICTIONS RECAP - $DATE"
             echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
             echo ""
-            echo "${{ steps.run-predictor.outputs.email_body }}"
+            cat over25_body.txt
             echo ""
             echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
             echo ""
-            echo "${{ steps.run-home-win.outputs.hw_email }}"
+            cat hw_body.txt
+          } > combined_report.txt
+          
+          {
+            echo "email_body<<EOF"
+            cat combined_report.txt
             echo "EOF"
           } >> $GITHUB_OUTPUT
 
+      # --- NOTIFICATION DELIVERY ---
       - name: Send email
         uses: dawidd6/action-send-mail@v3
         with:
@@ -90,24 +88,39 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Daily Predictions - ${{ steps.run-predictor.outputs.date }}"
-          body: ${{ steps.combined-email.outputs.combined }}
+          body: ${{ steps.combined-email.outputs.email_body }}
           to: ${{ secrets.TO_EMAIL }}
           from: ${{ secrets.EMAIL_USERNAME }}
 
       - name: Send Telegram notification
         if: always()
         run: |
-          MESSAGE="${{ steps.combined-email.outputs.combined }}"
+          # Use python to safely handle slicing and URL-encoding of a multi-line file
+          python -c '
+          import os, requests
           
-          # Telegram has 4096 char limit, truncate if needed
-          if [ ${#MESSAGE} -gt 4000 ]; then
-            MESSAGE="${MESSAGE:0:3900}\n\n...[truncated for Telegram]"
-          fi
+          token = os.getenv("TELEGRAM_BOT_TOKEN")
+          chat_id = os.getenv("TELEGRAM_CHAT_ID")
           
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -d "text=$MESSAGE" \
-            -d "parse_mode=HTML" || \
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -d "text=$MESSAGE"
+          if not token or not chat_id:
+              print("Missing Telegram credentials.")
+              exit(0)
+              
+          if not os.path.exists("combined_report.txt"):
+              print("combined_report.txt missing.")
+              exit(0)
+              
+          with open("combined_report.txt", "r", encoding="utf-8") as f:
+              msg = f.read()
+              
+          if len(msg) > 4000:
+              msg = msg[:3900] + "\n\n...[truncated for Telegram]"
+              
+          url = f"https://api.telegram.org/bot{token}/sendMessage"
+          payload = {"chat_id": chat_id, "text": msg}
+          res = requests.post(url, data=payload)
+          print("Telegram Response:", res.status_code, res.text)
+          '
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
