@@ -1043,18 +1043,18 @@ def main():
         # Record over picks
         for pick in over_perfect + over_qualified + over_close:
             ou_picks.append({
-                "league": pick["league"],
-                "home": pick["home"],
-                "away": pick["away"],
+                "league": pick["match"]["league"],
+                "home": pick["match"]["home"],
+                "away": pick["match"]["away"],
                 "prediction": "over",
                 "confidence": "perfect" if pick in over_perfect else ("qualified" if pick in over_qualified else "close")
             })
         # Record under picks
         for pick in under_perfect + under_qualified + under_close:
             ou_picks.append({
-                "league": pick["league"],
-                "home": pick["home"],
-                "away": pick["away"],
+                "league": pick["match"]["league"],
+                "home": pick["match"]["home"],
+                "away": pick["match"]["away"],
                 "prediction": "under",
                 "confidence": "perfect" if pick in under_perfect else ("qualified" if pick in under_qualified else "close")
             })

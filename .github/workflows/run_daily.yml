@@ -79,8 +79,10 @@ jobs:
           author_email: "github-actions[bot]@users.noreply.github.com"
           message: "Daily predictions update (${{ steps.run-predictor.outputs.date }})"
           add: |
-            predictions_soccerbase_*.json
-            home_win_predictions_*.json
+            over_under_25_report_*.json
+            home_win_report_*.json
+            over_under_vip_report_*.txt
+            home_win_vip_report_*.txt
 
       # --- CONSOLIDATION ENGINE ---
       - name: Build combined reports
