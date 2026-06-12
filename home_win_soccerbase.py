@@ -22,6 +22,9 @@ from urllib3.util.retry import Retry
 from fake_useragent import UserAgent
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+# Import prediction tracker
+from prediction_tracker import record_predictions
+
 # =============================================================================
 # CONFIGURATION
 # =============================================================================
@@ -724,6 +727,21 @@ def main():
             "qualified": qualified,
             "close_calls": close_calls
         }, f, indent=2, default=str)
+
+    # Record predictions for tracking
+    try:
+        hw_picks = []
+        for pick in perfect + qualified + close_calls:
+            hw_picks.append({
+                "league": pick["league"],
+                "home": pick["home"],
+                "away": pick["away"],
+                "confidence": "perfect" if pick in perfect else ("qualified" if pick in qualified else "close")
+            })
+        record_predictions(base_date, hw_picks, [])
+        print("✅ Predictions recorded for performance tracking")
+    except Exception as e:
+        print(f"⚠️ Could not record predictions: {e}")
 
     print(f"\n✅ Report saved: {output_path}")
     print(f"✅ VIP report saved: {detailed_report_path}")

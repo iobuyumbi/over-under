@@ -24,6 +24,9 @@ from urllib3.util.retry import Retry
 from fake_useragent import UserAgent
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+# Import prediction tracker
+from prediction_tracker import record_predictions
+
 # =============================================================================
 # CONFIGURATION
 # =============================================================================
@@ -1033,6 +1036,32 @@ def main():
                 "weak": under_weak
             }
         }, f, indent=2, default=str)
+
+    # Record predictions for tracking
+    try:
+        ou_picks = []
+        # Record over picks
+        for pick in over_perfect + over_qualified + over_close:
+            ou_picks.append({
+                "league": pick["league"],
+                "home": pick["home"],
+                "away": pick["away"],
+                "prediction": "over",
+                "confidence": "perfect" if pick in over_perfect else ("qualified" if pick in over_qualified else "close")
+            })
+        # Record under picks
+        for pick in under_perfect + under_qualified + under_close:
+            ou_picks.append({
+                "league": pick["league"],
+                "home": pick["home"],
+                "away": pick["away"],
+                "prediction": "under",
+                "confidence": "perfect" if pick in under_perfect else ("qualified" if pick in under_qualified else "close")
+            })
+        record_predictions(base_date, [], ou_picks)
+        print("✅ Predictions recorded for performance tracking")
+    except Exception as e:
+        print(f"⚠️ Could not record predictions: {e}")
 
     print(f"\n✅ Report saved: {output_path}")
     print(f"✅ VIP report saved: {detailed_report_path}")
