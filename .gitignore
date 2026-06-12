@@ -1,0 +1,33 @@
+# Cache files
+soccerbase_cache*.db
+
+# Report files (generated daily)
+predictions_soccerbase_*.json
+home_win_predictions_*.json
+home_win_report_*.json
+over_under_25_report_*.json
+*_vip_report_*.txt
+monthly_report_*.json
+monthly_report_*.txt
+
+# Environment and sensitive files
+*.env
+*.key
+*.pub
+*key*
+
+# Python
+__pycache__/
+*.pyc
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+errors.txt
+output.txt
+hw_output.txt
+combined*.txt
+monthly_output.txt
