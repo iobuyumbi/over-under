@@ -26,6 +26,21 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      # --- FETCH YESTERDAY'S RESULTS ---
+      - name: Fetch Yesterday's Match Results
+        run: |
+          python fetch_results.py > fetch_output.txt 2> fetch_errors.txt || true
+          cat fetch_output.txt
+
+      - name: Commit Updated Prediction History
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: "github-actions[bot]"
+          author_email: "github-actions[bot]@users.noreply.github.com"
+          message: "Update prediction history with yesterday's results"
+          add: |
+            prediction_history.json
+
       # --- ENGINE 1: OVER 2.5 PREDICTIONS ---
       - name: Run Over 2.5 predictor
         id: run-predictor

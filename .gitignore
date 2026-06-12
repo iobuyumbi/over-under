@@ -1,8 +1,6 @@
 # Cache files
 soccerbase_cache*.db
-
-# Prediction history
-prediction_history.json
+soccerbase_results_cache.db
 
 # Report files (generated daily)
 predictions_soccerbase_*.json
