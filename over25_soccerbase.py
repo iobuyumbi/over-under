@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
-OVER 2.5 GOALS PREDICTOR - PRODUCTION HARDENED v4
-====================================================
-Rule-based filtering | Shrinkage xG | Portfolio Kelly | SQLite Cache
+OVER/UNDER 2.5 GOALS PREDICTOR - UNIFIED v5
+==============================================
+Over 2.5: High-scoring rules (from over25tips.com)
+Under 2.5: Low-scoring mirror rules (defensive caps)
+Shrinkage xG | Portfolio Kelly | SQLite Cache
 """
 
 import requests
@@ -33,13 +35,26 @@ REQUEST_DELAY_MAX = 5.0
 MAX_TOTAL_EXPOSURE = 0.25
 SHRINKAGE_WEIGHT = 0.60
 
+# Under 2.5 thresholds (from over25tips.com official algorithm)
+UNDER_HOME_SCORED_CAP = 1.2      # Max avg goals scored by home team in last 6 home
+UNDER_HOME_CONCEDED_CAP = 1.2    # Max avg goals conceded by home team in last 6 home
+UNDER_AWAY_SCORED_CAP = 1.0      # Max avg goals scored by away team in last 6 away
+UNDER_AWAY_CONCEDED_CAP = 1.0    # Max avg goals conceded by away team in last 6 away
+UNDER_HOME_TOTAL_6_CAP = 10.0    # Legacy cap for backwards compatibility
+UNDER_AWAY_TOTAL_6_CAP = 10.0    # Legacy cap for backwards compatibility
+UNDER_HOME_OVER25_MAX = 3        # Legacy max for backwards compatibility
+UNDER_AWAY_OVER25_MAX = 3        # Legacy max for backwards compatibility
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 
-ua = UserAgent()
+# Self-contained UserAgent - works offline, no remote dependency
+ua = UserAgent(
+    fallback="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+)
 
 HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
@@ -267,10 +282,32 @@ def fetch_soccerbase_team_results(team_id):
 # FORM & DATA HELPERS
 # =============================================================================
 def parse_date(date_str):
-    try:
-        return datetime.strptime(date_str, "%Y-%m-%d")
-    except (ValueError, TypeError):
+    """
+    Parse date string with multiple format fallbacks.
+    Handles Soccerbase variations: 2026-06-15, 15-Jun-26, 2026/06/15, etc.
+    """
+    if not date_str:
         return None
+
+    date_str = str(date_str).strip()
+
+    for fmt in ("%Y-%m-%d", "%d-%b-%y", "%d-%b-%Y", "%Y/%m/%d", "%d/%m/%Y", "%m/%d/%Y"):
+        try:
+            return datetime.strptime(date_str, fmt)
+        except (ValueError, TypeError):
+            continue
+
+    # Try to extract any date-like pattern as last resort
+    import re
+    match = re.search(r'(\d{4})[-/](\d{2})[-/](\d{2})', date_str)
+    if match:
+        try:
+            return datetime.strptime(match.group(0), "%Y-%m-%d")
+        except ValueError:
+            pass
+
+    logger.warning(f"Could not parse date: {date_str}")
+    return None
 
 
 def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
@@ -291,16 +328,16 @@ def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
 
 
 # =============================================================================
-# ALGORITHM (Your Original Rules — Fully Preserved)
+# OVER 2.5 ALGORITHM (Your Original 10-Check Rules)
 # =============================================================================
-def apply_algorithm(home_3, away_3, home_6, away_6):
+def apply_over_algorithm(home_3, away_3, home_6, away_6):
     if len(home_3) < 3 or len(away_3) < 3:
         return None, None, {"error": "Insufficient data"}, False
 
     passed, failed, details = [], [], {}
     is_perfect = True
 
-    # Home 3-game checks
+    # Home 3-game
     h_total_3 = sum(gf + ga for gf, ga in home_3)
     if h_total_3 >= 7:
         passed.append("H1"); details["H1"] = f"PASS ({h_total_3})"
@@ -315,7 +352,7 @@ def apply_algorithm(home_3, away_3, home_6, away_6):
     else:
         failed.append("H2"); details["H2"] = f"FAIL ({h_over_3}/3)"; is_perfect = False
 
-    # Away 3-game checks
+    # Away 3-game
     a_total_3 = sum(gf + ga for gf, ga in away_3)
     if a_total_3 >= 7:
         passed.append("A1"); details["A1"] = f"PASS ({a_total_3})"
@@ -375,6 +412,113 @@ def apply_algorithm(home_3, away_3, home_6, away_6):
 
 
 # =============================================================================
+# UNDER 2.5 ALGORITHM (Mirror Rules - Defensive Caps)
+# =============================================================================
+def apply_under_algorithm(home_3, away_3):
+    """
+    Official Under 2.5 Goals Algorithm from over25tips.com:
+
+    3-GAME HOME CHECKS:
+    UH1: Previous three home games must have ended under 2.5 in at least two of three.
+    UH2: One or more of the score lines must contain 0 goals (home or away side) in any of the three games.
+
+    3-GAME AWAY CHECKS:
+    UA1: Last three away games must be under 2.5 in at least two or three of the three.
+    UA2: The AWAY team must not have scored in at least one of the last three away games.
+
+    6-GAME AVERAGE CHECKS:
+    UC1: HS (home scored avg in last 6 home) ≤ 1.2
+    UC2: HC (home conceded avg in last 6 home) ≤ 1.2
+    UC3: AS (away scored avg in last 6 away) ≤ 1.0
+    UC4: AC (away conceded avg in last 6 away) ≤ 1.0
+    """
+    if len(home_3) < 3 or len(away_3) < 3:
+        return None, None, {"error": "Insufficient data"}, False
+
+    passed, failed, details = [], [], {}
+    is_perfect = True
+
+    # --- 3-GAME HOME CHECKS ---
+    # UH1: At least 2 of 3 home games under 2.5
+    h_under_3 = sum(1 for gf, ga in home_3 if gf + ga < 2.5)
+    if h_under_3 >= 2:
+        passed.append("UH1"); details["UH1"] = f"PASS ({h_under_3}/3 under 2.5)"
+        if h_under_3 < 3:
+            is_perfect = False
+    else:
+        failed.append("UH1"); details["UH1"] = f"FAIL ({h_under_3}/3 under 2.5)"; is_perfect = False
+
+    # UH2: At least one score line has 0 goals in the 3 home games
+    h_has_zero = any(gf == 0 or ga == 0 for gf, ga in home_3)
+    if h_has_zero:
+        passed.append("UH2"); details["UH2"] = "PASS (at least one 0-goal side)"
+    else:
+        failed.append("UH2"); details["UH2"] = "FAIL (no zero-goal sides)"; is_perfect = False
+
+    # --- 3-GAME AWAY CHECKS ---
+    # UA1: At least 2 of 3 away games under 2.5
+    a_under_3 = sum(1 for gf, ga in away_3 if gf + ga < 2.5)
+    if a_under_3 >= 2:
+        passed.append("UA1"); details["UA1"] = f"PASS ({a_under_3}/3 under 2.5)"
+        if a_under_3 < 3:
+            is_perfect = False
+    else:
+        failed.append("UA1"); details["UA1"] = f"FAIL ({a_under_3}/3 under 2.5)"; is_perfect = False
+
+    # UA2: Away team did NOT score in at least 1 of last 3 away games
+    a_blanked = sum(1 for gf, _ in away_3 if gf == 0)
+    if a_blanked >= 1:
+        passed.append("UA2"); details["UA2"] = f"PASS ({a_blanked}/3 away games with 0 scored)"
+    else:
+        failed.append("UA2"); details["UA2"] = f"FAIL ({a_blanked}/3 away games with 0 scored)"; is_perfect = False
+
+    return passed, failed, details, is_perfect
+
+
+def apply_under_6game_checks(home_6, away_6):
+    """
+    6-game average checks for Under 2.5 (supplementary to 3-game rules).
+    These are NOT part of the official over25tips.com algorithm but add
+    statistical rigor for classification tiers.
+    """
+    passed, failed, details = [], [], {}
+    is_perfect = True
+
+    if len(home_6) >= 6 and len(away_6) >= 6:
+        # UC1: Home scored average ≤ 1.2
+        hs = sum(gf for gf, _ in home_6) / 6
+        if hs <= 1.2:
+            passed.append("UC1"); details["UC1"] = f"PASS (HS={hs:.2f} ≤ 1.2)"
+        else:
+            failed.append("UC1"); details["UC1"] = f"FAIL (HS={hs:.2f} > 1.2)"; is_perfect = False
+
+        # UC2: Home conceded average ≤ 1.2
+        hc = sum(ga for _, ga in home_6) / 6
+        if hc <= 1.2:
+            passed.append("UC2"); details["UC2"] = f"PASS (HC={hc:.2f} ≤ 1.2)"
+        else:
+            failed.append("UC2"); details["UC2"] = f"FAIL (HC={hc:.2f} > 1.2)"; is_perfect = False
+
+        # UC3: Away scored average ≤ 1.0
+        a_s = sum(gf for gf, _ in away_6) / 6
+        if a_s <= 1.0:
+            passed.append("UC3"); details["UC3"] = f"PASS (AS={a_s:.2f} ≤ 1.0)"
+        else:
+            failed.append("UC3"); details["UC3"] = f"FAIL (AS={a_s:.2f} > 1.0)"; is_perfect = False
+
+        # UC4: Away conceded average ≤ 1.0
+        a_c = sum(ga for _, ga in away_6) / 6
+        if a_c <= 1.0:
+            passed.append("UC4"); details["UC4"] = f"PASS (AC={a_c:.2f} ≤ 1.0)"
+        else:
+            failed.append("UC4"); details["UC4"] = f"FAIL (AC={a_c:.2f} > 1.0)"; is_perfect = False
+    else:
+        details["UC1-4"] = "SKIPPED (need 6 games each)"
+
+    return passed, failed, details, is_perfect
+
+
+# =============================================================================
 # POISSON MODEL
 # =============================================================================
 def poisson_pmf(k, lam):
@@ -392,22 +536,47 @@ def calculate_poisson_over25(home_lambda, away_lambda, max_goals=10):
     return round(over_prob * 100, 1)
 
 
+def calculate_poisson_under25(home_lambda, away_lambda, max_goals=10):
+    """Under 2.5 = 1 - Over 2.5 probability"""
+    over_prob = calculate_poisson_over25(home_lambda, away_lambda, max_goals) / 100.0
+    return round((1.0 - over_prob) * 100, 1)
+
+
 # =============================================================================
-# EXPECTED GOALS (Shrinkage Estimator — Fixed)
+# EXPECTED GOALS (Shrinkage Estimator)
 # =============================================================================
-def get_expected_goals(form_data, is_home=True):
-    baseline = 1.45 if is_home else 1.20
+def get_match_lambdas(home_6, away_6):
+    """
+    Calculate cross-matched Poisson lambdas.
+    Home attack is adjusted by away defense weakness, and vice versa.
+    """
+    home_baseline_attack = 1.45
+    away_baseline_attack = 1.20
+    home_baseline_defense = 1.35  # avg goals home team concedes
+    away_baseline_defense = 1.25  # avg goals away team concedes
 
-    if not form_data:
-        return round(baseline, 2)
+    # Raw averages from form data
+    h_scored_avg = sum(gf for gf, _ in home_6) / max(len(home_6), 1) if home_6 else home_baseline_attack
+    h_conceded_avg = sum(ga for _, ga in home_6) / max(len(home_6), 1) if home_6 else away_baseline_attack
 
-    sample = form_data[:6]
-    n = len(sample)
-    goals_scored = sum(gf for gf, _ in sample)
-    raw_avg = goals_scored / n
+    a_scored_avg = sum(gf for gf, _ in away_6) / max(len(away_6), 1) if away_6 else away_baseline_attack
+    a_conceded_avg = sum(ga for _, ga in away_6) / max(len(away_6), 1) if away_6 else home_baseline_attack
 
-    xg = SHRINKAGE_WEIGHT * raw_avg + (1 - SHRINKAGE_WEIGHT) * baseline
-    return round(max(0.8, min(3.8, xg)), 2)
+    # Shrinkage: blend raw average with league baseline
+    h_attack = SHRINKAGE_WEIGHT * h_scored_avg + (1 - SHRINKAGE_WEIGHT) * home_baseline_attack
+    h_defense = SHRINKAGE_WEIGHT * h_conceded_avg + (1 - SHRINKAGE_WEIGHT) * away_baseline_defense
+
+    a_attack = SHRINKAGE_WEIGHT * a_scored_avg + (1 - SHRINKAGE_WEIGHT) * away_baseline_attack
+    a_defense = SHRINKAGE_WEIGHT * a_conceded_avg + (1 - SHRINKAGE_WEIGHT) * home_baseline_defense
+
+    # Cross-multiply: attack strength × opponent defense weakness
+    home_lambda = h_attack * (a_defense / home_baseline_attack)
+    away_lambda = a_attack * (h_defense / away_baseline_attack)
+
+    return (
+        round(max(0.5, min(3.8, home_lambda)), 2),
+        round(max(0.5, min(3.8, away_lambda)), 2)
+    )
 
 
 # =============================================================================
@@ -420,20 +589,24 @@ def calculate_kelly(prob, decimal_odds=2.0, use_half=True):
     return max(0.0, kelly * 0.5 if use_half else kelly)
 
 
-def apply_portfolio_kelly(recommendations, bankroll, max_exposure=MAX_TOTAL_EXPOSURE):
+def apply_portfolio_kelly(recommendations, bet_type, bankroll, max_exposure=MAX_TOTAL_EXPOSURE):
+    """
+    Scale Kelly fractions so total exposure does not exceed max_exposure.
+    bet_type: "over" or "under" — targets the correct nested dictionary.
+    """
     if not recommendations or bankroll <= 0:
         return recommendations
 
-    total_kelly = sum(r["kelly"]["half"] / 100 for r in recommendations)
+    total_kelly = sum(r[bet_type]["kelly"] / 100 for r in recommendations)
     if total_kelly <= 0:
         return recommendations
 
     if total_kelly > max_exposure:
         scale = max_exposure / total_kelly
         for r in recommendations:
-            r["kelly"]["half"] *= scale
+            r[bet_type]["kelly"] = round(r[bet_type]["kelly"] * scale, 2)
         logger.info(
-            f"Portfolio Kelly scaled by {scale:.3f} "
+            f"Portfolio Kelly ({bet_type}) scaled by {scale:.3f} "
             f"({total_kelly*100:.1f}% -> {max_exposure*100:.1f}% exposure)"
         )
 
@@ -443,52 +616,94 @@ def apply_portfolio_kelly(recommendations, bankroll, max_exposure=MAX_TOTAL_EXPO
 # =============================================================================
 # MATCH PROCESSING
 # =============================================================================
-def process_single_match(match, target_date, default_odds=2.0):
+def process_single_match(match, target_date, default_odds_over=2.0, default_odds_under=1.85):
     try:
+        # Fetch form data
         home_3 = get_team_form(match["home_team_id"], True, 3, target_date)
         away_3 = get_team_form(match["away_team_id"], False, 3, target_date)
         home_6 = get_team_form(match["home_team_id"], True, 6, target_date)
         away_6 = get_team_form(match["away_team_id"], False, 6, target_date)
 
-        passed, failed, details, is_perfect = apply_algorithm(home_3, away_3, home_6, away_6)
-        if passed is None:
-            return {"status": "insufficient"}
+        # --- OVER 2.5 ANALYSIS ---
+        over_passed, over_failed, over_details, over_is_perfect = apply_over_algorithm(
+            home_3, away_3, home_6, away_6
+        )
 
-        home_xg = get_expected_goals(home_6, True)
-        away_xg = get_expected_goals(away_6, False)
-        over25_prob_pct = calculate_poisson_over25(home_xg, away_xg)
+        over_score = len(over_passed) if over_passed else 0
+
+        # --- UNDER 2.5 ANALYSIS ---
+        under3_passed, under3_failed, under3_details, under3_perfect = apply_under_algorithm(
+            home_3, away_3
+        )
+        under6_passed, under6_failed, under6_details, under6_perfect = apply_under_6game_checks(
+            home_6, away_6
+        )
+
+        # Merge 3-game and 6-game Under results
+        under_passed = under3_passed + under6_passed
+        under_failed = under3_failed + under6_failed
+        under_details = {**under3_details, **under6_details}
+        under_is_perfect = under3_perfect and under6_perfect
+
+        under_score = len(under_passed) if under_passed else 0
+
+        # --- POISSON PROBABILITIES ---
+        home_lambda, away_lambda = get_match_lambdas(home_6, away_6)
+        over25_prob_pct = calculate_poisson_over25(home_lambda, away_lambda)
+        under25_prob_pct = calculate_poisson_under25(home_lambda, away_lambda)
+
         over25_prob = over25_prob_pct / 100.0
+        under25_prob = under25_prob_pct / 100.0
 
-        score = len(passed)
-        confidence = (
+        over_confidence = (
             "HIGH" if over25_prob >= 0.58
             else "MEDIUM" if over25_prob >= 0.52
             else "LOW"
         )
+        under_confidence = (
+            "HIGH" if under25_prob >= 0.58
+            else "MEDIUM" if under25_prob >= 0.52
+            else "LOW"
+        )
 
-        kelly_half = calculate_kelly(over25_prob, default_odds, use_half=True)
+        # --- KELLY STAKES ---
+        over_kelly = calculate_kelly(over25_prob, default_odds_over, use_half=True)
+        under_kelly = calculate_kelly(under25_prob, default_odds_under, use_half=True)
 
         return {
             "status": "success",
             "data": {
                 "match": match,
-                "score": score,
-                "passed": passed,
-                "details": details,
-                "is_perfect": is_perfect,
-                "poisson": {
-                    "home_xg": home_xg,
-                    "away_xg": away_xg,
-                    "over25_prob": over25_prob_pct,
-                    "confidence": confidence
+                "over": {
+                    "score": over_score,
+                    "passed": over_passed,
+                    "details": over_details,
+                    "is_perfect": over_is_perfect,
+                    "prob": over25_prob_pct,
+                    "confidence": over_confidence,
+                    "kelly": round(over_kelly * 100, 2)
                 },
-                "kelly": {"half": round(kelly_half * 100, 2)}
+                "under": {
+                    "score": under_score,
+                    "passed": under_passed,
+                    "details": under_details,
+                    "is_perfect": under_is_perfect,
+                    "prob": under25_prob_pct,
+                    "confidence": under_confidence,
+                    "kelly": round(under_kelly * 100, 2)
+                },
+                "poisson": {
+                    "home_lambda": home_lambda,
+                    "away_lambda": away_lambda,
+                    "over25_prob": over25_prob_pct,
+                    "under25_prob": under25_prob_pct
+                }
             }
         }
     except Exception as e:
         logger.error(
             f"Processing failed for "
-            f"{match.get("home", "N/A")} vs {match.get("away", "N/A")}: {e}",
+            f"{match.get('home', 'N/A')} vs {match.get('away', 'N/A')}: {e}",
             exc_info=True
         )
         return {"status": "error"}
@@ -497,72 +712,144 @@ def process_single_match(match, target_date, default_odds=2.0):
 # =============================================================================
 # REPORTING
 # =============================================================================
-def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds):
+def build_report(over_perfect, over_qualified, over_close, over_weak,
+               under_perfect, under_qualified, under_close, under_weak,
+               scanned_dates, bankroll, odds_over, odds_under, detailed=False):
+    """
+    Build a report: simplified for sharing, detailed for VIP
+    """
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
     end_date = scanned_dates[-1] if scanned_dates else base_date
 
-    total_analyzed = len(perfect) + len(qualified) + len(close_calls)
+    # Pre-sort Over 2.5 subsets
+    over_9 = [item for item in over_qualified if item["over"]["score"] == 9]
+    over_8 = [item for item in over_qualified if item["over"]["score"] == 8]
 
-    report = [
-        "🔥 OVER 2.5 GOALS - PROFESSIONAL PREDICTION REPORT",
-        f"📅 Period: {base_date} → {end_date}",
-        f"📊 Analyzed: {total_analyzed} matches",
-        f"⭐ Perfect (10/10): {len(perfect)} | Qualified (10/10): {len(qualified)} | Candidates (8/10): {len(close_calls)}",
-        "=" * 70,
-        ""
-    ]
+    # Pre-sort Under 2.5 subsets
+    under_7 = [item for item in under_qualified if item["under"]["score"] == 7]
+    under_6 = [item for item in under_qualified if item["under"]["score"] == 6]
 
-    report.append("🏆 PERFECT MATCHES (10/10 + All Checks Passed)")
-    if perfect:
-        for i, item in enumerate(perfect[:10], 1):
+    if detailed:
+        # ==================== DETAILED VIP REPORT ====================
+        report = [
+            "=" * 40,
+            "🔥 OVER/UNDER 2.5 GOALS - VIP REPORT",
+            "=" * 40,
+            f"📅 Dates: {base_date} to {end_date}",
+            f"💰 Bankroll: ${bankroll:,.2f} [Cap: {MAX_TOTAL_EXPOSURE*100:.0f}%]",
+            "-" * 40,
+            f"📈 Over Picks: Perfect[{len(over_perfect)}] | Good[{len(over_9)}] | Decent[{len(over_8)}]",
+            f"📉 Under Picks: Perfect[{len(under_perfect)}] | Good[{len(under_7)}] | Decent[{len(under_6)}]",
+            "=" * 40
+        ]
+
+        def format_match_block(idx, item, market_type):
             m = item["match"]
             p = item["poisson"]
-            k = item["kelly"]
-            stake = round(bankroll * k["half"] / 100, 2)
-            report.append(
-                f"{i:2d}. {m['date']} | {m['league']}\n"
-                f"     {m['home']} vs {m['away']}\n"
-                f"     Poisson: {p['over25_prob']}% ({p['home_xg']}-{p['away_xg']}) → {p['confidence']}\n"
-                f"     Half-Kelly: {k['half']:.2f}% → ${stake:,.2f}"
+            tgt = item[market_type]
+            stake = round(bankroll * tgt["kelly"] / 100, 2)
+            denom = "10" if market_type == "over" else "8"
+            prob_field = "over25_prob" if market_type == "over" else "under25_prob"
+            prob_val = p[prob_field]
+            league_str = f"[{m['league'][:18]}]".ljust(21)
+
+            return (
+                f"  {idx:2d}. 📅 {m['date']} | {league_str} {m['home']} vs {m['away']}\n"
+                f"      📊 Confidence: {prob_val}% ({tgt['confidence']}) | Lambda: {p['home_lambda']:.2f}-{p['away_lambda']:.2f}\n"
+                f"      💰 Allocation: {tgt['kelly']:.2f}% | Stake: ${stake:,.2f}"
             )
     else:
-        report.append("   No perfect matches found.")
+        # ==================== SIMPLIFIED FREE REPORT ====================
+        report = [
+            "=" * 40,
+            "🔥 OVER/UNDER 2.5 GOALS",
+            "=" * 40,
+            f"📅 Dates: {base_date} to {end_date}",
+            "-" * 40,
+            f"📈 Over Picks: Perfect[{len(over_perfect)}] | Good[{len(over_9)}] | Decent[{len(over_8)}]",
+            f"📉 Under Picks: Perfect[{len(under_perfect)}] | Good[{len(under_7)}] | Decent[{len(under_6)}]",
+            "=" * 40
+        ]
 
-    report.append("\n✅ QUALIFIED MATCHES (10/10)")
-    if qualified:
-        for item in qualified[:12]:
+        def format_match_block(idx, item, market_type):
             m = item["match"]
             p = item["poisson"]
-            report.append(f"• {m['date']} | {m['home']} vs {m['away']} ({p['over25_prob']}%)")
-    else:
-        report.append("   No qualified matches found.")
+            tgt = item[market_type]
+            prob_field = "over25_prob" if market_type == "over" else "under25_prob"
+            prob_val = p[prob_field]
+            league_str = f"[{m['league'][:18]}]".ljust(21)
 
-    report.append("\n📊 PROBABLE CANDIDATES (8/10)")
-    if close_calls:
-        for item in close_calls[:10]:
-            m = item["match"]
-            p = item["poisson"]
-            report.append(f"• {m['league']}: {m['home']} vs {m['away']} ({p['over25_prob']}%)")
-    else:
-        report.append("   No candidates found.")
+            return (
+                f"  {idx:2d}. 📅 {m['date']} | {league_str} {m['home']} vs {m['away']}\n"
+                f"      📊 Confidence: {prob_val}% ({tgt['confidence']})"
+            )
 
+    # ==================== OVER 2.5 SECTION ====================
+    report.append("\n📈 OVER 2.5 GOALS")
+    report.append("-" * 40)
+
+    report.append("\n🏆 TOP PICKS (Perfect Score)")
+    if over_perfect:
+        for i, item in enumerate(over_perfect, 1):
+            report.append(format_match_block(i, item, "over"))
+    else:
+        report.append("   None")
+
+    report.append("\n✨ GOOD PICKS")
+    if over_9:
+        for i, item in enumerate(over_9, 1):
+            report.append(format_match_block(i, item, "over"))
+    else:
+        report.append("   None")
+
+    report.append("\n✅ DECENT PICKS")
+    if over_8:
+        for i, item in enumerate(over_8, 1):
+            report.append(format_match_block(i, item, "over"))
+    else:
+        report.append("   None")
+
+    # ==================== UNDER 2.5 SECTION ====================
+    report.append("\n\n📉 UNDER 2.5 GOALS")
+    report.append("-" * 40)
+
+    report.append("\n🏆 TOP PICKS (Perfect Score)")
+    if under_perfect:
+        for i, item in enumerate(under_perfect, 1):
+            report.append(format_match_block(i, item, "under"))
+    else:
+        report.append("   None")
+
+    report.append("\n✨ GOOD PICKS")
+    if under_7:
+        for i, item in enumerate(under_7, 1):
+            report.append(format_match_block(i, item, "under"))
+    else:
+        report.append("   None")
+
+    report.append("\n✅ DECENT PICKS")
+    if under_6:
+        for i, item in enumerate(under_6, 1):
+            report.append(format_match_block(i, item, "under"))
+    else:
+        report.append("   None")
+
+    # ==================== DISCLAIMER ====================
     report.extend([
-        "",
-        "=" * 70,
-        f"💰 Bankroll: ${bankroll:,.2f} | Avg Odds: {odds}",
-        f"💡 Total exposure capped at {MAX_TOTAL_EXPOSURE*100:.0f}% of bankroll.",
-        "💡 Tip: Prioritize HIGH confidence matches. Never bet more than you can afford to lose."
+        "\n" + "=" * 40,
+        "⚠️ DISCLAIMER: This is for informational purposes only.",
+        "   Gambling involves risk. Bet responsibly and within your means.",
+        "=" * 40
     ])
 
     return "\n".join(report), base_date
-
 
 # =============================================================================
 # MAIN
 # =============================================================================
 def main():
     parser = argparse.ArgumentParser(
-        description="Over 2.5 Goals Predictor with Poisson + Kelly"
+        description="Over/Under 2.5 Goals Predictor with Unified Analysis"
     )
     parser.add_argument(
         "date",
@@ -582,10 +869,16 @@ def main():
         help="Total bankroll in currency units"
     )
     parser.add_argument(
-        "--odds",
+        "--odds-over",
         type=float,
         default=2.0,
         help="Average decimal odds for Over 2.5"
+    )
+    parser.add_argument(
+        "--odds-under",
+        type=float,
+        default=1.85,
+        help="Average decimal odds for Under 2.5"
     )
     parser.add_argument(
         "--clear-cache",
@@ -598,10 +891,15 @@ def main():
         cache.clear()
 
     start_date = datetime.strptime(args.date, "%Y-%m-%d")
-    perfect, qualified, close_calls = [], [], []
+
+    # Over 2.5 buckets
+    over_perfect, over_qualified, over_close, over_weak = [], [], [], []
+    # Under 2.5 buckets
+    under_perfect, under_qualified, under_close, under_weak = [], [], [], []
+
     scanned_dates = []
 
-    print(f"🔍 Starting analysis from {args.date}...")
+    print(f"🔍 Starting Over/Under 2.5 analysis from {args.date}...")
 
     for day_offset in range(4):
         current_date = start_date + timedelta(days=day_offset)
@@ -626,7 +924,9 @@ def main():
 
         with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
             futures = {
-                executor.submit(process_single_match, match, date_str, args.odds): match
+                executor.submit(
+                    process_single_match, match, date_str, args.odds_over, args.odds_under
+                ): match
                 for match in unique_fixtures
             }
             for future in as_completed(futures, timeout=600):
@@ -640,48 +940,102 @@ def main():
                     pass
                 elif res["status"] == "success":
                     data = res["data"]
-                    if data["score"] == 10:
-                        if data["is_perfect"]:
-                            perfect.append(data)
+
+                    # Over 2.5 categorization
+                    over_score = data["over"]["score"]
+                    if over_score == 10:
+                        if data["over"]["is_perfect"]:
+                            over_perfect.append(data)
                         else:
-                            qualified.append(data)
-                    elif data["score"] == 8:
-                        close_calls.append(data)
+                            over_qualified.append(data)
+                    elif over_score >= 8:
+                        over_close.append(data)
+                    elif over_score >= 6:
+                        over_weak.append(data)
 
-        if len(perfect) + len(qualified) >= 12:
-            logger.info("Reached target of 12+ qualifying matches. Stopping scan.")
+                    # Under 2.5 categorization
+                    under_score = data["under"]["score"]
+                    if under_score == 8:
+                        if data["under"]["is_perfect"]:
+                            under_perfect.append(data)
+                        else:
+                            under_qualified.append(data)
+                    elif under_score >= 7:
+                        under_close.append(data)
+                    elif under_score >= 6:
+                        under_weak.append(data)
+
+        # Early exit only if BOTH markets have sufficient matches
+        over_total = len(over_perfect) + len(over_qualified)
+        under_total = len(under_perfect) + len(under_qualified)
+
+        if over_total >= 12 and under_total >= 8:
+            logger.info(f"Reached targets: Over={over_total}, Under={under_total}. Stopping scan.")
             break
+        elif over_total >= 15:
+            logger.info(f"Over market saturated ({over_total}). Continuing scan for Under matches.")
+            # Don't break - keep scanning for Under value
 
-    # Apply portfolio Kelly cap
-    all_recs = perfect + qualified
-    apply_portfolio_kelly(all_recs, args.bankroll, MAX_TOTAL_EXPOSURE)
+    # Apply portfolio Kelly cap separately for Over and Under
+    apply_portfolio_kelly(over_perfect + over_qualified + over_close, "over", args.bankroll, MAX_TOTAL_EXPOSURE / 2)
+    apply_portfolio_kelly(under_perfect + under_qualified + under_close, "under", args.bankroll, MAX_TOTAL_EXPOSURE / 2)
 
-    # Build and output report
-    final_report, base_date = build_report(
-        perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds
+    # Build and output reports (both free and detailed)
+    free_report, base_date = build_report(
+        over_perfect, over_qualified, over_close, over_weak,
+        under_perfect, under_qualified, under_close, under_weak,
+        scanned_dates, args.bankroll, args.odds_over, args.odds_under, detailed=False
+    )
+    detailed_report, _ = build_report(
+        over_perfect, over_qualified, over_close, over_weak,
+        under_perfect, under_qualified, under_close, under_weak,
+        scanned_dates, args.bankroll, args.odds_over, args.odds_under, detailed=True
     )
 
+    # Output free report (default)
     print("\n===EMAIL_START===")
-    print(final_report)
+    print(free_report)
     print("===EMAIL_END===")
 
+    # Save detailed report to file
+    detailed_report_path = f"over_under_vip_report_{base_date}.txt"
+    with open(detailed_report_path, "w") as f:
+        f.write(detailed_report)
+
     # Save JSON
-    output_path = f"over25_report_{base_date}.json"
+    output_path = f"over_under_25_report_{base_date}.json"
     with open(output_path, "w") as f:
         json.dump({
             "metadata": {
                 "scanned_window": scanned_dates,
                 "bankroll": args.bankroll,
-                "odds": args.odds,
+                "odds_over": args.odds_over,
+                "odds_under": args.odds_under,
                 "max_exposure": MAX_TOTAL_EXPOSURE,
+                "under_caps": {
+                    "home_total_6": UNDER_HOME_TOTAL_6_CAP,
+                    "away_total_6": UNDER_AWAY_TOTAL_6_CAP,
+                    "home_over25_max": UNDER_HOME_OVER25_MAX,
+                    "away_over25_max": UNDER_AWAY_OVER25_MAX
+                },
                 "generated_at": datetime.now().isoformat()
             },
-            "perfect": perfect,
-            "qualified": qualified,
-            "close_calls": close_calls
+            "over": {
+                "perfect": over_perfect,
+                "qualified": over_qualified,
+                "close": over_close,
+                "weak": over_weak
+            },
+            "under": {
+                "perfect": under_perfect,
+                "qualified": under_qualified,
+                "close": under_close,
+                "weak": under_weak
+            }
         }, f, indent=2, default=str)
 
     print(f"\n✅ Report saved: {output_path}")
+    print(f"✅ VIP report saved: {detailed_report_path}")
 
 
 if __name__ == "__main__":
