@@ -11,7 +11,6 @@ over25_report_*.json
 *_vip_report_*.txt
 monthly_report_*.json
 monthly_report_*.txt
-prediction_history.json
 
 # Environment and sensitive files
 *.env
