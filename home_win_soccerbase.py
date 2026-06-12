@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-HOME WIN PREDICTOR - PRODUCTION HARDENED v4
+HOME WIN PREDICTOR - PRODUCTION HARDENED v5
 =============================================
 9-check rule system | Shrinkage strength | Logistic prob | Portfolio Kelly | SQLite Cache
 """
@@ -39,7 +39,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-ua = UserAgent()
+# Self-contained UserAgent - works offline, no remote dependency
+ua = UserAgent(
+    fallback="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+)
 
 HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
@@ -253,10 +256,31 @@ def fetch_soccerbase_team_results(team_id):
 # FORM & DATA HELPERS
 # =============================================================================
 def parse_date(date_str):
-    try:
-        return datetime.strptime(date_str, "%Y-%m-%d")
-    except (ValueError, TypeError):
+    """
+    Parse date string with multiple format fallbacks.
+    Handles Soccerbase variations: 2026-06-15, 15-Jun-26, 2026/06/15, etc.
+    """
+    if not date_str:
         return None
+
+    date_str = str(date_str).strip()
+
+    for fmt in ("%Y-%m-%d", "%d-%b-%y", "%d-%b-%Y", "%Y/%m/%d", "%d/%m/%Y", "%m/%d/%Y"):
+        try:
+            return datetime.strptime(date_str, fmt)
+        except (ValueError, TypeError):
+            continue
+
+    # Try to extract any date-like pattern as last resort
+    match = re.search(r'(\d{4})[-/](\d{2})[-/](\d{2})', date_str)
+    if match:
+        try:
+            return datetime.strptime(match.group(0), "%Y-%m-%d")
+        except ValueError:
+            pass
+
+    logger.warning(f"Could not parse date: {date_str}")
+    return None
 
 
 def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
@@ -276,7 +300,7 @@ def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
 
 
 # =============================================================================
-# HOME WIN ALGORITHM (9 Checks - Fully Preserved)
+# HOME WIN ALGORITHM (9 Checks - Official Rules)
 # =============================================================================
 def apply_home_win_algorithm(home_data_6, away_data_6):
     if len(home_data_6) < 6 or len(away_data_6) < 6:
@@ -398,17 +422,26 @@ def calculate_kelly(prob, decimal_odds=2.8, use_half=True):
 
 
 def apply_portfolio_kelly(recommendations, bankroll, max_exposure=MAX_TOTAL_EXPOSURE):
+    """
+    Scale Kelly fractions so total exposure does not exceed max_exposure.
+    """
     if not recommendations or bankroll <= 0:
-        return
-    total_kelly = sum(r["kelly"]["half"] / 100 for r in recommendations)
+        return recommendations
+
+    total_kelly = sum(r["kelly"] / 100 for r in recommendations)
+    if total_kelly <= 0:
+        return recommendations
+
     if total_kelly > max_exposure:
         scale = max_exposure / total_kelly
         for r in recommendations:
-            r["kelly"]["half"] *= scale
+            r["kelly"] = round(r["kelly"] * scale, 2)
         logger.info(
             f"Portfolio Kelly scaled by {scale:.3f} "
             f"({total_kelly*100:.1f}% -> {max_exposure*100:.1f}% exposure)"
         )
+
+    return recommendations
 
 
 # =============================================================================
@@ -448,13 +481,13 @@ def process_single_match(match, target_date, default_odds=2.8):
                     "home_win_prob": home_win_prob,
                     "confidence": confidence
                 },
-                "kelly": {"half": round(kelly_half * 100, 2)}
+                "kelly": round(kelly_half * 100, 2)
             }
         }
     except Exception as e:
         logger.error(
             f"Processing failed for "
-            f"{match.get("home", "N/A")} vs {match.get("away", "N/A")}: {e}",
+            f"{match.get('home', 'N/A')} vs {match.get('away', 'N/A')}: {e}",
             exc_info=True
         )
         return {"status": "error"}
@@ -463,68 +496,95 @@ def process_single_match(match, target_date, default_odds=2.8):
 # =============================================================================
 # REPORTING
 # =============================================================================
-def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds):
+def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds, detailed=False):
+    """
+    Build a report: simplified for sharing, detailed for VIP
+    """
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
     end_date = scanned_dates[-1] if scanned_dates else base_date
 
-    total_analyzed = len(perfect) + len(qualified) + len(close_calls)
+    # Pre-sort into sub-tiers
+    qualified_8 = [item for item in qualified if item["score"] == 8]
 
-    report = [
-        "🏠 HOME WIN PREDICTOR - PROFESSIONAL REPORT",
-        f"📅 Period: {base_date} → {end_date}",
-        f"📊 Analyzed: {total_analyzed} matches",
-        f"⭐ Perfect (9/9): {len(perfect)} | Qualified (9/9): {len(qualified)} | Candidates (7/9): {len(close_calls)}",
-        "=" * 70,
-        ""
-    ]
+    if detailed:
+        # ==================== DETAILED VIP REPORT ====================
+        report = [
+            "=" * 40,
+            "🏠 HOME WIN PREDICTIONS - VIP REPORT",
+            "=" * 40,
+            f"📅 Dates: {base_date} to {end_date}",
+            f"💰 Bankroll: ${bankroll:,.2f} [Cap: {MAX_TOTAL_EXPOSURE*100:.0f}%]",
+            "-" * 40,
+            f"📊 Picks: Perfect[{len(perfect)}] | Good[{len(qualified_8)}] | Decent[{len(close_calls)}]",
+            "=" * 40
+        ]
 
-    report.append("🏆 PERFECT MATCHES (9/9 + All Checks Passed)")
+        def format_match_block(idx, item):
+            m = item["match"]
+            mod = item["model"]
+            stake = round(bankroll * item["kelly"] / 100, 2)
+            league_str = f"[{m['league'][:18]}]".ljust(21)
+
+            return (
+                f"  {idx:2d}. 📅 {m['date']} | {league_str} {m['home']} vs {m['away']}\n"
+                f"      📊 Confidence: {mod['home_win_prob']}% ({mod['confidence']}) | Strength: {mod['home_strength']:.3f} vs {mod['away_strength']:.3f}\n"
+                f"      💰 Allocation: {item['kelly']:.2f}% | Stake: ${stake:,.2f}"
+            )
+    else:
+        # ==================== SIMPLIFIED FREE REPORT ====================
+        report = [
+            "=" * 40,
+            "🏠 HOME WIN PREDICTIONS",
+            "=" * 40,
+            f"📅 Dates: {base_date} to {end_date}",
+            "-" * 40,
+            f"📊 Picks: Perfect[{len(perfect)}] | Good[{len(qualified_8)}] | Decent[{len(close_calls)}]",
+            "=" * 40
+        ]
+
+        def format_match_block(idx, item):
+            m = item["match"]
+            mod = item["model"]
+            league_str = f"[{m['league'][:18]}]".ljust(21)
+
+            return (
+                f"  {idx:2d}. 📅 {m['date']} | {league_str} {m['home']} vs {m['away']}\n"
+                f"      📊 Confidence: {mod['home_win_prob']}% ({mod['confidence']})"
+            )
+
+    # ==================== PERFECT ====================
+    report.append("\n🏆 TOP PICKS (Perfect Score)")
+    report.append("-" * 40)
     if perfect:
-        for i, item in enumerate(perfect[:10], 1):
-            m = item["match"]
-            mod = item["model"]
-            k = item["kelly"]
-            stake = round(bankroll * k["half"] / 100, 2)
-            report.append(
-                f"{i:2d}. {m['date']} | {m['league']}\n"
-                f"     {m['home']} vs {m['away']}\n"
-                f"     Strength: {mod['home_strength']:.3f} vs {mod['away_strength']:.3f} "
-                f"→ {mod['home_win_prob']}% [{mod['confidence']}]\n"
-                f"     Half-Kelly: {k['half']:.2f}% → ${stake:,.2f}"
-            )
+        for i, item in enumerate(perfect, 1):
+            report.append(format_match_block(i, item))
     else:
-        report.append("   No perfect matches found.")
+        report.append("   None")
 
-    report.append("\n✅ QUALIFIED MATCHES (9/9)")
-    if qualified:
-        for item in qualified[:12]:
-            m = item["match"]
-            mod = item["model"]
-            report.append(
-                f"• {m['date']} | {m['home']} vs {m['away']} "
-                f"({mod['home_win_prob']}% [{mod['confidence']}])"
-            )
+    # ==================== HIGHLY QUALIFIED ====================
+    report.append("\n✨ GOOD PICKS")
+    report.append("-" * 40)
+    if qualified_8:
+        for i, item in enumerate(qualified_8, 1):
+            report.append(format_match_block(i, item))
     else:
-        report.append("   No qualified matches found.")
+        report.append("   None")
 
-    report.append("\n📊 PROBABLE CANDIDATES (7/9)")
+    # ==================== STANDARD QUALIFIED ====================
+    report.append("\n✅ DECENT PICKS")
+    report.append("-" * 40)
     if close_calls:
-        for item in close_calls[:10]:
-            m = item["match"]
-            mod = item["model"]
-            report.append(
-                f"• {m['league']}: {m['home']} vs {m['away']} "
-                f"({mod['home_win_prob']}% [{mod['confidence']}])"
-            )
+        for i, item in enumerate(close_calls, 1):
+            report.append(format_match_block(i, item))
     else:
-        report.append("   No candidates found.")
+        report.append("   None")
 
+    # ==================== DISCLAIMER ====================
     report.extend([
-        "",
-        "=" * 70,
-        f"💰 Bankroll: ${bankroll:,.2f} | Avg Odds: {odds}",
-        f"💡 Total exposure capped at {MAX_TOTAL_EXPOSURE*100:.0f}% of bankroll.",
-        "💡 Tip: Prioritize HIGH confidence matches. Never bet more than you can afford to lose."
+        "\n" + "=" * 40,
+        "⚠️ DISCLAIMER: This is for informational purposes only.",
+        "   Gambling involves risk. Bet responsibly and within your means.",
+        "=" * 40
     ])
 
     return "\n".join(report), base_date
@@ -618,7 +678,9 @@ def main():
                             perfect.append(data)
                         else:
                             qualified.append(data)
-                    elif data["score"] >= 7:
+                    elif data["score"] == 8:
+                        qualified.append(data)
+                    elif data["score"] == 7:
                         close_calls.append(data)
 
         if len(perfect) + len(qualified) >= 12:
@@ -626,17 +688,26 @@ def main():
             break
 
     # Apply portfolio Kelly cap
-    all_recs = perfect + qualified
+    all_recs = perfect + qualified + close_calls
     apply_portfolio_kelly(all_recs, args.bankroll, MAX_TOTAL_EXPOSURE)
 
-    # Build and output report
-    final_report, base_date = build_report(
-        perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds
+    # Build and output reports (both free and detailed)
+    free_report, base_date = build_report(
+        perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=False
+    )
+    detailed_report, _ = build_report(
+        perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=True
     )
 
+    # Output free report (default)
     print("\n===EMAIL_START===")
-    print(final_report)
+    print(free_report)
     print("===EMAIL_END===")
+
+    # Save detailed report to file
+    detailed_report_path = f"home_win_vip_report_{base_date}.txt"
+    with open(detailed_report_path, "w") as f:
+        f.write(detailed_report)
 
     # Save JSON
     output_path = f"home_win_report_{base_date}.json"
@@ -655,6 +726,7 @@ def main():
         }, f, indent=2, default=str)
 
     print(f"\n✅ Report saved: {output_path}")
+    print(f"✅ VIP report saved: {detailed_report_path}")
 
 
 if __name__ == "__main__":

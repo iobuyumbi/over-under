@@ -2,7 +2,8 @@ name: Daily Predictions (Over 2.5 + Home Win)
 
 on:
   schedule:
-    - cron: "0 1 * * *"  # 6:00 AM EAT, 3:00 AM UTC
+    - cron: "0 1 * * *"  # 6:00 AM EAT, 3:00 AM UTC (daily)
+    - cron: "0 3 1 * *"  # 5:00 AM EAT, 2:00 AM UTC on 1st of month (monthly report)
   workflow_dispatch:
 
 env:
@@ -26,24 +27,31 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       # --- ENGINE 1: OVER 2.5 PREDICTIONS ---
-      # Runs over25_soccerbase.py accurately matching your repository file name
       - name: Run Over 2.5 predictor
         id: run-predictor
         run: |
           DATE=$(date +'%Y-%m-%d')
           python over25_soccerbase.py > output.txt 2> errors.txt || true
           echo "date=$DATE" >> $GITHUB_OUTPUT
-          
-          sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d' > over25_body.txt
 
       # --- ENGINE 2: 9-POINT HOME WIN PREDICTIONS ---
-      # Runs home_win_soccerbase.py accurately matching your repository file name
       - name: Run Home Win predictor
         id: run-home-win
         run: |
           python home_win_soccerbase.py > hw_output.txt 2> hw_errors.txt || true
+
+      # --- MONTHLY REPORT (only on 1st day of month) ---
+      - name: Generate Monthly Report
+        id: monthly-report
+        if: github.event.schedule == '0 3 1 * *' || github.event_name == 'workflow_dispatch'
+        run: |
+          python generate_monthly_report.py > monthly_output.txt 2> monthly_errors.txt || true
           
-          sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d' > hw_body.txt
+          # Find the latest monthly report text file
+          REPORT_FILE=$(ls -t monthly_report_*.txt | head -1)
+          if [ -f "$REPORT_FILE" ]; then
+              echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
+          fi
 
       - name: Commit and push results
         uses: EndBug/add-and-commit@v9
@@ -54,73 +62,138 @@ jobs:
           add: |
             predictions_soccerbase_*.json
             home_win_predictions_*.json
+            home_win_vip_report_*.txt
+            over_under_vip_report_*.txt
+            monthly_report_*.json
+            monthly_report_*.txt
 
       # --- CONSOLIDATION ENGINE ---
-      # Safely bundles text and registers the multi-line variable context
-      - name: Build combined email body
-        id: combined-email
+      - name: Build combined reports
+        id: combined-reports
         run: |
           DATE="${{ steps.run-predictor.outputs.date }}"
+          SEPARATOR=$(printf '=%.0s' {1..40})
           
+          # Build FREE REPORT (simplified for public sharing)
           {
-            echo "⚽ DAILY PREDICTIONS RECAP - $DATE"
-            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "⚽ DAILY PREDICTIONS (FREE)"
+            echo "$SEPARATOR"
             echo ""
-            cat over25_body.txt
+            sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d'
             echo ""
-            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "$SEPARATOR"
             echo ""
-            cat hw_body.txt
-          } > combined_report.txt
+            sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d'
+          } > combined_free.txt
           
+          # Build VIP REPORT (detailed)
           {
-            echo "email_body<<EOF"
-            cat combined_report.txt
-            echo "EOF"
-          } >> $GITHUB_OUTPUT
+            echo "⚽ DAILY PREDICTIONS (VIP)"
+            echo "$SEPARATOR"
+            echo ""
+            # Load detailed VIP reports
+            if [ -f "over_under_vip_report_$DATE.txt" ]; then
+                cat "over_under_vip_report_$DATE.txt"
+            fi
+            echo ""
+            echo "$SEPARATOR"
+            echo ""
+            if [ -f "home_win_vip_report_$DATE.txt" ]; then
+                cat "home_win_vip_report_$DATE.txt"
+            fi
+          } > combined_vip.txt
 
       # --- NOTIFICATION DELIVERY ---
-      - name: Send email
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Daily Predictions - ${{ steps.run-predictor.outputs.date }}"
-          body: ${{ steps.combined-email.outputs.email_body }}
-          to: ${{ secrets.TO_EMAIL }}
-          from: ${{ secrets.EMAIL_USERNAME }}
-
-      - name: Send Telegram notification
+      - name: Send Telegram notifications (Free + VIP)
         if: always()
         run: |
-          # Use python to safely handle slicing and URL-encoding of a multi-line file
           python -c '
           import os, requests
-          
+
           token = os.getenv("TELEGRAM_BOT_TOKEN")
-          chat_id = os.getenv("TELEGRAM_CHAT_ID")
-          
-          if not token or not chat_id:
-              print("Missing Telegram credentials.")
+          free_channel = os.getenv("TELEGRAM_FREE_CHAT_ID")
+          vip_channel = os.getenv("TELEGRAM_VIP_CHAT_ID")
+          date = os.getenv("DATE")
+          monthly_report_file = os.getenv("MONTHLY_REPORT_FILE")
+
+          if not token:
+              print("Missing Bot Token.")
               exit(0)
+
+          # Read reports
+          free_report = ""
+          vip_report = ""
+          monthly_report = ""
+
+          if os.path.exists("combined_free.txt"):
+              with open("combined_free.txt", "r", encoding="utf-8") as f:
+                  free_report = f.read()
+
+          if os.path.exists("combined_vip.txt"):
+              with open("combined_vip.txt", "r", encoding="utf-8") as f:
+                  vip_report = f.read()
+
+          if monthly_report_file and os.path.exists(monthly_report_file):
+              with open(monthly_report_file, "r", encoding="utf-8") as f:
+                  monthly_report = f.read()
+
+          # --- FREE CHANNEL ---
+          if free_channel:
+              # Send monthly report first if available
+              if monthly_report:
+                  try:
+                      requests.post(
+                          f"https://api.telegram.org/bot{token}/sendMessage",
+                          data={"chat_id": free_channel, "text": monthly_report}
+                      )
+                  except Exception as e:
+                      print(f"Monthly report error: {e}")
               
-          if not os.path.exists("combined_report.txt"):
-              print("combined_report.txt missing.")
-              exit(0)
+              # Send daily free report
+              if free_report:
+                  public_msg = (
+                      f"📢 DAILY PREDICTIONS ({date})\n"
+                      f"========================================\n\n"
+                      f"{free_report}\n\n"
+                      f"💡 Support our free service by registering using our affiliate link!\n"
+                      f"� Place Your Bookmaker Affiliate Link Here"
+                  )
+                  if len(public_msg) > 4000:
+                      public_msg = public_msg[:3900] + "\n\n...[truncated]"
+                  try:
+                      requests.post(
+                          f"https://api.telegram.org/bot{token}/sendMessage",
+                          data={"chat_id": free_channel, "text": public_msg}
+                      )
+                  except Exception as e:
+                      print(f"Free channel error: {e}")
+
+          # --- VIP CHANNEL ---
+          if vip_channel and vip_report:
+              # Send monthly report first if available
+              if monthly_report:
+                  try:
+                      requests.post(
+                          f"https://api.telegram.org/bot{token}/sendMessage",
+                          data={"chat_id": vip_channel, "text": monthly_report}
+                      )
+                  except Exception as e:
+                      print(f"Monthly report VIP error: {e}")
               
-          with open("combined_report.txt", "r", encoding="utf-8") as f:
-              msg = f.read()
-              
-          if len(msg) > 4000:
-              msg = msg[:3900] + "\n\n...[truncated for Telegram]"
-              
-          url = f"https://api.telegram.org/bot{token}/sendMessage"
-          payload = {"chat_id": chat_id, "text": msg}
-          res = requests.post(url, data=payload)
-          print("Telegram Response:", res.status_code, res.text)
+              # Send daily VIP report
+              if len(vip_report) > 4000:
+                  vip_report = vip_report[:3900] + "\n\n...[truncated]"
+              try:
+                  requests.post(
+                      f"https://api.telegram.org/bot{token}/sendMessage",
+                      data={"chat_id": vip_channel, "text": vip_report}
+                  )
+              except Exception as e:
+                  print(f"VIP channel error: {e}")
           '
         env:
+          DATE: ${{ steps.run-predictor.outputs.date }}
+          MONTHLY_REPORT_FILE: ${{ steps.monthly-report.outputs.report_file }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_FREE_CHAT_ID: ${{ secrets.TELEGRAM_FREE_CHAT_ID }}
+          TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}

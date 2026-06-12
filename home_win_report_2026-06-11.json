@@ -1,0 +1,187 @@
+{
+  "metadata": {
+    "scanned_window": [
+      "2026-06-11",
+      "2026-06-12",
+      "2026-06-13",
+      "2026-06-14"
+    ],
+    "bankroll": 1000.0,
+    "odds": 2.8,
+    "max_exposure": 0.25,
+    "generated_at": "2026-06-11T10:24:20.470655"
+  },
+  "perfect": [],
+  "qualified": [],
+  "close_calls": [
+    {
+      "match": {
+        "league": "Chile Primera",
+        "home": "Coquimbo Unido",
+        "away": "O'Higgins",
+        "home_team_id": "7657",
+        "away_team_id": "5794",
+        "date": "2026-06-13",
+        "status": "Scheduled"
+      },
+      "score": 8,
+      "passed": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "A1",
+        "A2",
+        "A4"
+      ],
+      "details": {
+        "H1": "PASS (6/6 No Losses)",
+        "H2": "PASS (13 GF)",
+        "H3": "PASS (5 GA)",
+        "H4": "PASS (4/6 Wins)",
+        "H5": "PASS (Won Last 2)",
+        "A1": "PASS (3/6 Losses)",
+        "A2": "PASS (13 GA)",
+        "A3": "FAIL (11)",
+        "A4": "PASS (2/6 Wins)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.608,
+        "away_strength": 0.392,
+        "home_win_prob": 70.3,
+        "confidence": "HIGH"
+      },
+      "kelly": {
+        "half": 26.9
+      }
+    },
+    {
+      "match": {
+        "league": "Chile Primera",
+        "home": "Colo-Colo",
+        "away": "Cobresal",
+        "home_team_id": "273",
+        "away_team_id": "7438",
+        "date": "2026-06-13",
+        "status": "Scheduled"
+      },
+      "score": 7,
+      "passed": [
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "A1",
+        "A2",
+        "A4"
+      ],
+      "details": {
+        "H1": "FAIL (4/6)",
+        "H2": "PASS (12 GF)",
+        "H3": "PASS (5 GA)",
+        "H4": "PASS (4/6 Wins)",
+        "H5": "PASS (Won Last 2)",
+        "A1": "PASS (5/6 Losses)",
+        "A2": "PASS (14 GA)",
+        "A3": "FAIL (7)",
+        "A4": "PASS (0/6 Wins)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.608,
+        "away_strength": 0.175,
+        "home_win_prob": 85.0,
+        "confidence": "HIGH"
+      },
+      "kelly": {
+        "half": 38.33
+      }
+    },
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Quilmes",
+        "away": "Gimnasia y Tiro",
+        "home_team_id": "4478",
+        "away_team_id": "8010",
+        "date": "2026-06-13",
+        "status": "Scheduled"
+      },
+      "score": 7,
+      "passed": [
+        "H1",
+        "H3",
+        "H4",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "details": {
+        "H1": "PASS (5/6 No Losses)",
+        "H2": "FAIL (7)",
+        "H3": "PASS (2 GA)",
+        "H4": "PASS (3/6 Wins)",
+        "H5": "FAIL (1/2)",
+        "A1": "PASS (4/6 Losses)",
+        "A2": "PASS (10 GA)",
+        "A3": "PASS (5 GF)",
+        "A4": "PASS (1/6 Wins)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.5,
+        "away_strength": 0.283,
+        "home_win_prob": 70.4,
+        "confidence": "HIGH"
+      },
+      "kelly": {
+        "half": 26.98
+      }
+    },
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Gimnasia de Jujuy",
+        "away": "San Martin de San Juan",
+        "home_team_id": "682",
+        "away_team_id": "7448",
+        "date": "2026-06-14",
+        "status": "Scheduled"
+      },
+      "score": 7,
+      "passed": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "A1",
+        "A3",
+        "A4"
+      ],
+      "details": {
+        "H1": "PASS (6/6 No Losses)",
+        "H2": "PASS (13 GF)",
+        "H3": "PASS (3 GA)",
+        "H4": "PASS (5/6 Wins)",
+        "H5": "FAIL (1/2)",
+        "A1": "PASS (3/6 Losses)",
+        "A2": "FAIL (7)",
+        "A3": "PASS (5 GF)",
+        "A4": "PASS (2/6 Wins)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.717,
+        "away_strength": 0.392,
+        "home_win_prob": 78.6,
+        "confidence": "HIGH"
+      },
+      "kelly": {
+        "half": 33.36
+      }
+    }
+  ]
+}
