@@ -733,9 +733,9 @@ def main():
         hw_picks = []
         for pick in perfect + qualified + close_calls:
             hw_picks.append({
-                "league": pick["league"],
-                "home": pick["home"],
-                "away": pick["away"],
+                "league": pick["match"]["league"],
+                "home": pick["match"]["home"],
+                "away": pick["match"]["away"],
                 "confidence": "perfect" if pick in perfect else ("qualified" if pick in qualified else "close")
             })
         record_predictions(base_date, hw_picks, [])
