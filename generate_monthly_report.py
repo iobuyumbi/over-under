@@ -20,7 +20,7 @@ def main():
         report_year = now.year
         report_month = now.month - 1
     
-    print(f"📊 Generating monthly report for {report_year}-{report_month:02d}...")
+    print(f"Generating monthly report for {report_year}-{report_month:02d}...")
     
     # Generate report using prediction tracker
     report_text, report_data = generate_monthly_report(report_year, report_month)
@@ -29,16 +29,15 @@ def main():
     json_filename = f"monthly_report_{report_year}-{report_month:02d}.json"
     with open(json_filename, "w") as f:
         json.dump(report_data, f, indent=2, default=str)
-    print(f"✅ JSON report saved to {json_filename}")
+    print(f"JSON report saved to {json_filename}")
     
     # Save text report
     text_filename = f"monthly_report_{report_year}-{report_month:02d}.txt"
     with open(text_filename, "w") as f:
         f.write(report_text)
-    print(f"✅ Text report saved to {text_filename}")
+    print(f"Text report saved to {text_filename}")
     
-    print("\n📈 Monthly Performance Report:")
-    print("=" * 40)
+    print("\nMonthly Performance Report:")
     print(report_text)
 
 if __name__ == "__main__":
