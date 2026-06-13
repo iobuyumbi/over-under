@@ -635,12 +635,17 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         over_score = len(over_passed) if over_passed else 0
 
         # --- UNDER 2.5 ANALYSIS ---
-        under3_passed, under3_failed, under3_details, under3_perfect = apply_under_algorithm(
-            home_3, away_3
-        )
-        under6_passed, under6_failed, under6_details, under6_perfect = apply_under_6game_checks(
-            home_6, away_6
-        )
+        under3_result = apply_under_algorithm(home_3, away_3)
+        if under3_result[0] is None:
+            under3_passed, under3_failed, under3_details, under3_perfect = [], [], {}, False
+        else:
+            under3_passed, under3_failed, under3_details, under3_perfect = under3_result
+            
+        under6_result = apply_under_6game_checks(home_6, away_6)
+        if under6_result[0] is None:
+            under6_passed, under6_failed, under6_details, under6_perfect = [], [], {}, False
+        else:
+            under6_passed, under6_failed, under6_details, under6_perfect = under6_result
 
         # Merge 3-game and 6-game Under results
         under_passed = under3_passed + under6_passed
@@ -719,133 +724,56 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                under_perfect, under_qualified, under_close, under_weak,
                scanned_dates, bankroll, odds_over, odds_under, detailed=False):
     """
-    Build a report: simplified for sharing, detailed for VIP
+    Build a clean, mobile-friendly report
     """
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
-    end_date = scanned_dates[-1] if scanned_dates else base_date
 
-    # Pre-sort Over 2.5 subsets
+    # Pre-sort
     over_9 = [item for item in over_qualified if item["over"]["score"] == 9]
     over_8 = [item for item in over_qualified if item["over"]["score"] == 8]
-
-    # Pre-sort Under 2.5 subsets
     under_7 = [item for item in under_qualified if item["under"]["score"] == 7]
     under_6 = [item for item in under_qualified if item["under"]["score"] == 6]
 
-    if detailed:
-        # ==================== DETAILED VIP REPORT ====================
-        report = [
-            "=" * 40,
-            "🔥 OVER/UNDER 2.5 GOALS - VIP REPORT",
-            "=" * 40,
-            f"📅 Dates: {base_date} to {end_date}",
-            f"💰 Bankroll: ${bankroll:,.2f} [Cap: {MAX_TOTAL_EXPOSURE*100:.0f}%]",
-            "-" * 40,
-            f"📈 Over Picks: Perfect[{len(over_perfect)}] | Good[{len(over_9)}] | Decent[{len(over_8)}]",
-            f"📉 Under Picks: Perfect[{len(under_perfect)}] | Good[{len(under_7)}] | Decent[{len(under_6)}]",
-            "=" * 40
-        ]
-
-        def format_match_block(idx, item, market_type):
+    lines = []
+    lines.append("OVER/UNDER 2.5 PICKS")
+    lines.append("")
+    lines.append(f"Date: {base_date}")
+    lines.append("")
+    
+    # Over 2.5 section
+    over_picks = over_perfect + over_9 + over_8
+    if over_picks:
+        lines.append("OVER 2.5 GOALS")
+        lines.append("")
+        for i, item in enumerate(over_picks, 1):
             m = item["match"]
             p = item["poisson"]
-            tgt = item[market_type]
-            stake = round(bankroll * tgt["kelly"] / 100, 2)
-            denom = "10" if market_type == "over" else "8"
-            prob_field = "over25_prob" if market_type == "over" else "under25_prob"
-            prob_val = p[prob_field]
-            league_str = f"[{m['league'][:18]}]".ljust(21)
-
-            return (
-                f"  {idx:2d}. 📅 {m['date']} | {league_str} {m['home']} vs {m['away']}\n"
-                f"      📊 Confidence: {prob_val}% ({tgt['confidence']}) | Lambda: {p['home_lambda']:.2f}-{p['away_lambda']:.2f}\n"
-                f"      💰 Allocation: {tgt['kelly']:.2f}% | Stake: ${stake:,.2f}"
-            )
-    else:
-        # ==================== SIMPLIFIED FREE REPORT ====================
-        report = [
-            "=" * 40,
-            "🔥 OVER/UNDER 2.5 GOALS",
-            "=" * 40,
-            f"📅 Dates: {base_date} to {end_date}",
-            "-" * 40,
-            f"📈 Over Picks: Perfect[{len(over_perfect)}] | Good[{len(over_9)}] | Decent[{len(over_8)}]",
-            f"📉 Under Picks: Perfect[{len(under_perfect)}] | Good[{len(under_7)}] | Decent[{len(under_6)}]",
-            "=" * 40
-        ]
-
-        def format_match_block(idx, item, market_type):
+            tgt = item["over"]
+            lines.append(f"{i}. {m['home']} vs {m['away']}")
+            lines.append(f"   {tgt['confidence']} ({p['over25_prob']}%)")
+            lines.append("")
+    
+    # Under 2.5 section
+    under_picks = under_perfect + under_7 + under_6
+    if under_picks:
+        lines.append("UNDER 2.5 GOALS")
+        lines.append("")
+        for i, item in enumerate(under_picks, 1):
             m = item["match"]
             p = item["poisson"]
-            tgt = item[market_type]
-            prob_field = "over25_prob" if market_type == "over" else "under25_prob"
-            prob_val = p[prob_field]
-            league_str = f"[{m['league'][:18]}]".ljust(21)
+            tgt = item["under"]
+            lines.append(f"{i}. {m['home']} vs {m['away']}")
+            lines.append(f"   {tgt['confidence']} ({p['under25_prob']}%)")
+            lines.append("")
 
-            return (
-                f"  {idx:2d}. 📅 {m['date']} | {league_str} {m['home']} vs {m['away']}\n"
-                f"      📊 Confidence: {prob_val}% ({tgt['confidence']})"
-            )
+    # Disclaimer
+    lines.append("---")
+    lines.append("For informational purposes only")
+    lines.append("Gamble responsibly")
+    lines.append("")
 
-    # ==================== OVER 2.5 SECTION ====================
-    report.append("\n📈 OVER 2.5 GOALS")
-    report.append("-" * 40)
-
-    report.append("\n🏆 TOP PICKS (Perfect Score)")
-    if over_perfect:
-        for i, item in enumerate(over_perfect, 1):
-            report.append(format_match_block(i, item, "over"))
-    else:
-        report.append("   None")
-
-    report.append("\n✨ GOOD PICKS")
-    if over_9:
-        for i, item in enumerate(over_9, 1):
-            report.append(format_match_block(i, item, "over"))
-    else:
-        report.append("   None")
-
-    report.append("\n✅ DECENT PICKS")
-    if over_8:
-        for i, item in enumerate(over_8, 1):
-            report.append(format_match_block(i, item, "over"))
-    else:
-        report.append("   None")
-
-    # ==================== UNDER 2.5 SECTION ====================
-    report.append("\n\n📉 UNDER 2.5 GOALS")
-    report.append("-" * 40)
-
-    report.append("\n🏆 TOP PICKS (Perfect Score)")
-    if under_perfect:
-        for i, item in enumerate(under_perfect, 1):
-            report.append(format_match_block(i, item, "under"))
-    else:
-        report.append("   None")
-
-    report.append("\n✨ GOOD PICKS")
-    if under_7:
-        for i, item in enumerate(under_7, 1):
-            report.append(format_match_block(i, item, "under"))
-    else:
-        report.append("   None")
-
-    report.append("\n✅ DECENT PICKS")
-    if under_6:
-        for i, item in enumerate(under_6, 1):
-            report.append(format_match_block(i, item, "under"))
-    else:
-        report.append("   None")
-
-    # ==================== DISCLAIMER ====================
-    report.extend([
-        "\n" + "=" * 40,
-        "⚠️ DISCLAIMER: This is for informational purposes only.",
-        "   Gambling involves risk. Bet responsibly and within your means.",
-        "=" * 40
-    ])
-
-    return "\n".join(report), base_date
+    report = "\n".join(lines)
+    return report, base_date
 
 # =============================================================================
 # MAIN
@@ -902,7 +830,7 @@ def main():
 
     scanned_dates = []
 
-    print(f"🔍 Starting Over/Under 2.5 analysis from {args.date}...")
+    print(f"Starting Over/Under 2.5 analysis from {args.date}...")
 
     for day_offset in range(4):
         current_date = start_date + timedelta(days=day_offset)
@@ -1059,12 +987,12 @@ def main():
                 "confidence": "perfect" if pick in under_perfect else ("qualified" if pick in under_qualified else "close")
             })
         record_predictions(base_date, [], ou_picks)
-        print("✅ Predictions recorded for performance tracking")
+        print("Predictions recorded for performance tracking")
     except Exception as e:
-        print(f"⚠️ Could not record predictions: {e}")
+        print(f"Could not record predictions: {e}")
 
-    print(f"\n✅ Report saved: {output_path}")
-    print(f"✅ VIP report saved: {detailed_report_path}")
+    print(f"\nReport saved: {output_path}")
+    print(f"VIP report saved: {detailed_report_path}")
 
 
 if __name__ == "__main__":
