@@ -505,6 +505,14 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
     """
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
+    # Filter picks to base date
+    def filter_by_date(picks, date_str):
+        return [item for item in picks if item["match"]["date"] == date_str]
+    
+    perfect = filter_by_date(perfect, base_date)
+    qualified = filter_by_date(qualified, base_date)
+    close_calls = filter_by_date(close_calls, base_date)
+    
     # Pre-sort
     qualified_8 = [item for item in qualified if item["score"] == 8]
 
