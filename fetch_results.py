@@ -289,18 +289,14 @@ def main():
         yesterday = datetime.now() - timedelta(days=1)
         target_date = yesterday.strftime("%Y-%m-%d")
     
-    print("=" * 60)
-    print(f"🎯 FETCHING RESULTS FOR: {target_date}")
-    print("=" * 60)
+    print(f"FETCHING RESULTS FOR: {target_date}")
     
     updated = update_history_with_results(target_date)
     
-    print("\n" + "=" * 60)
     if updated > 0:
-        print(f"✅ Success! Updated {updated} prediction results!")
+        print(f"Success! Updated {updated} prediction results!")
     else:
-        print("ℹ️ No updates were needed.")
-    print("=" * 60)
+        print("No updates were needed.")
 
 if __name__ == "__main__":
     main()

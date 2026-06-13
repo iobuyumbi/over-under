@@ -141,37 +141,31 @@ def generate_monthly_report(year, month):
     # Generate report text
     month_name = month_start.strftime("%B %Y")
     report = []
-    report.append("=" * 40)
-    report.append(f"📊 MONTHLY PERFORMANCE REPORT - {month_name}")
-    report.append("=" * 40)
+    report.append("MONTHLY PERFORMANCE REPORT")
+    report.append(f"{month_name}")
     report.append("")
-    report.append("🏠 HOME WIN PREDICTIONS")
-    report.append("-" * 40)
-    report.append(f"  Total picks: {hw_stats['total']}")
-    report.append(f"  Wins: {hw_stats['wins']}")
-    report.append(f"  Losses: {hw_stats['losses']}")
-    report.append(f"  Pushes: {hw_stats['pushes']}")
-    report.append(f"  Pending: {hw_stats['pending']}")
+    report.append("HOME WIN PREDICTIONS")
+    report.append(f"Total picks: {hw_stats['total']}")
+    report.append(f"Wins: {hw_stats['wins']}")
+    report.append(f"Losses: {hw_stats['losses']}")
+    report.append(f"Pushes: {hw_stats['pushes']}")
+    report.append(f"Pending: {hw_stats['pending']}")
     if hw_stats['decisions'] > 0:
-        report.append(f"  Win Rate: {hw_stats['win_rate']:.1f}%")
+        report.append(f"Win Rate: {hw_stats['win_rate']:.1f}%")
     report.append("")
-    report.append("🔥 OVER/UNDER 2.5 GOALS")
-    report.append("-" * 40)
-    report.append(f"  Total picks: {ou_stats['total']}")
-    report.append(f"  Wins: {ou_stats['wins']}")
-    report.append(f"  Losses: {ou_stats['losses']}")
-    report.append(f"  Pushes: {ou_stats['pushes']}")
-    report.append(f"  Pending: {ou_stats['pending']}")
+    report.append("OVER/UNDER 2.5 GOALS")
+    report.append(f"Total picks: {ou_stats['total']}")
+    report.append(f"Wins: {ou_stats['wins']}")
+    report.append(f"Losses: {ou_stats['losses']}")
+    report.append(f"Pushes: {ou_stats['pushes']}")
+    report.append(f"Pending: {ou_stats['pending']}")
     if ou_stats['decisions'] > 0:
-        report.append(f"  Win Rate: {ou_stats['win_rate']:.1f}%")
+        report.append(f"Win Rate: {ou_stats['win_rate']:.1f}%")
     report.append("")
-    report.append("=" * 40)
-    report.append("⚠️ DISCLAIMER: Past performance doesn't guarantee future results.")
-    report.append("   Gamble responsibly and within your means.")
-    report.append("=" * 40)
+    report.append("---")
+    report.append("For informational purposes only")
+    report.append("Gamble responsibly")
     report.append("")
-    report.append("💡 Support our free service by registering using our affiliate link!")
-    report.append("🔗 Place Your Bookmaker Affiliate Link Here")
     
     return "\n".join(report), {
         "month": f"{year}-{month:02d}",
@@ -215,8 +209,7 @@ def main():
     """Main function - show history overview."""
     history = load_history()
     
-    print(f"📊 Prediction History Overview")
-    print("=" * 40)
+    print(f"Prediction History Overview")
     print(f"Home Win Predictions: {len(history['home_win'])} total")
     print(f"Over/Under Predictions: {len(history['over_under'])} total")
     
@@ -236,7 +229,7 @@ def main():
         last_month_year = now.year
         last_month = now.month - 1
     
-    print(f"\n📈 Last Month's Performance:")
+    print(f"\nLast Month's Performance:")
     report_text, report_data = generate_monthly_report(last_month_year, last_month)
     print(report_text)
 
