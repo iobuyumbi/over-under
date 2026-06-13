@@ -728,11 +728,12 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     """
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
-    # Pre-sort
-    over_9 = [item for item in over_qualified if item["over"]["score"] == 9]
-    over_8 = [item for item in over_qualified if item["over"]["score"] == 8]
-    under_7 = [item for item in under_qualified if item["under"]["score"] == 7]
-    under_6 = [item for item in under_qualified if item["under"]["score"] == 6]
+    # Filter picks to base date
+    def filter_by_date(picks, date_str):
+        return [item for item in picks if item["match"]["date"] == date_str]
+    
+    over_picks = filter_by_date(over_perfect + over_qualified + over_close, base_date)
+    under_picks = filter_by_date(under_perfect + under_qualified + under_close, base_date)
 
     lines = []
     lines.append("OVER/UNDER 2.5 PICKS")
@@ -741,7 +742,6 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     lines.append("")
     
     # Over 2.5 section
-    over_picks = over_perfect + over_9 + over_8
     if over_picks:
         lines.append("OVER 2.5 GOALS")
         lines.append("")
@@ -754,7 +754,6 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
             lines.append("")
     
     # Under 2.5 section
-    under_picks = under_perfect + under_7 + under_6
     if under_picks:
         lines.append("UNDER 2.5 GOALS")
         lines.append("")
