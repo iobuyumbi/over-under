@@ -20,7 +20,7 @@ def normalize_team_name(name):
     name = re.sub(r"\s+cf$", "", name)
     name = re.sub(r"\s+city$", "", name)
     name = re.sub(r"\s+united$", "", name)
-    name = re.sub(r"\s+athletic$", "", name)
+    name = re.sub(r"\s+athletico$", "", name)
     name = re.sub(r"\s+afc$", "", name)
     return name.strip()
 
@@ -218,7 +218,7 @@ def update_and_analyze():
                 c_decisions = c_stats["win"] + c_stats["loss"]
                 c_win_rate = (c_stats["win"] / c_decisions * 100) if c_decisions > 0 else 0
                 print(f"    {conf}: W:{c_stats['win']} L:{c_stats['loss']} P:{c_stats['push']}")
-                if c_decisions >0:
+                if c_decisions > 0:
                     print(f"      Win rate: {c_win_rate:.1f}%")
     
     print("\n" + "="*60)
