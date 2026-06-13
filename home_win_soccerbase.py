@@ -501,96 +501,58 @@ def process_single_match(match, target_date, default_odds=2.8):
 # =============================================================================
 def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds, detailed=False):
     """
-    Build a report: simplified for sharing, detailed for VIP
+    Build a clean, mobile-friendly report
     """
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
-    end_date = scanned_dates[-1] if scanned_dates else base_date
 
-    # Pre-sort into sub-tiers
+    # Pre-sort
     qualified_8 = [item for item in qualified if item["score"] == 8]
 
-    if detailed:
-        # ==================== DETAILED VIP REPORT ====================
-        report = [
-            "=" * 40,
-            "🏠 HOME WIN PREDICTIONS - VIP REPORT",
-            "=" * 40,
-            f"📅 Dates: {base_date} to {end_date}",
-            f"💰 Bankroll: ${bankroll:,.2f} [Cap: {MAX_TOTAL_EXPOSURE*100:.0f}%]",
-            "-" * 40,
-            f"📊 Picks: Perfect[{len(perfect)}] | Good[{len(qualified_8)}] | Decent[{len(close_calls)}]",
-            "=" * 40
-        ]
-
-        def format_match_block(idx, item):
-            m = item["match"]
-            mod = item["model"]
-            stake = round(bankroll * item["kelly"] / 100, 2)
-            league_str = f"[{m['league'][:18]}]".ljust(21)
-
-            return (
-                f"  {idx:2d}. 📅 {m['date']} | {league_str} {m['home']} vs {m['away']}\n"
-                f"      📊 Confidence: {mod['home_win_prob']}% ({mod['confidence']}) | Strength: {mod['home_strength']:.3f} vs {mod['away_strength']:.3f}\n"
-                f"      💰 Allocation: {item['kelly']:.2f}% | Stake: ${stake:,.2f}"
-            )
-    else:
-        # ==================== SIMPLIFIED FREE REPORT ====================
-        report = [
-            "=" * 40,
-            "🏠 HOME WIN PREDICTIONS",
-            "=" * 40,
-            f"📅 Dates: {base_date} to {end_date}",
-            "-" * 40,
-            f"📊 Picks: Perfect[{len(perfect)}] | Good[{len(qualified_8)}] | Decent[{len(close_calls)}]",
-            "=" * 40
-        ]
-
-        def format_match_block(idx, item):
-            m = item["match"]
-            mod = item["model"]
-            league_str = f"[{m['league'][:18]}]".ljust(21)
-
-            return (
-                f"  {idx:2d}. 📅 {m['date']} | {league_str} {m['home']} vs {m['away']}\n"
-                f"      📊 Confidence: {mod['home_win_prob']}% ({mod['confidence']})"
-            )
-
-    # ==================== PERFECT ====================
-    report.append("\n🏆 TOP PICKS (Perfect Score)")
-    report.append("-" * 40)
+    # Clean report (mobile-friendly)
+    lines = []
+    lines.append("HOME WIN PICKS")
+    lines.append("")
+    lines.append(f"Date: {base_date}")
+    lines.append("")
+    
     if perfect:
+        lines.append("TOP PICKS")
+        lines.append("")
         for i, item in enumerate(perfect, 1):
-            report.append(format_match_block(i, item))
-    else:
-        report.append("   None")
-
-    # ==================== HIGHLY QUALIFIED ====================
-    report.append("\n✨ GOOD PICKS")
-    report.append("-" * 40)
+            m = item["match"]
+            p = item["model"]
+            lines.append(f"{i}. {m['home']} vs {m['away']}")
+            lines.append(f"   {p['confidence']} ({p['home_win_prob']}%)")
+            lines.append("")
+            
     if qualified_8:
+        lines.append("GOOD PICKS")
+        lines.append("")
         for i, item in enumerate(qualified_8, 1):
-            report.append(format_match_block(i, item))
-    else:
-        report.append("   None")
-
-    # ==================== STANDARD QUALIFIED ====================
-    report.append("\n✅ DECENT PICKS")
-    report.append("-" * 40)
+            m = item["match"]
+            p = item["model"]
+            lines.append(f"{i}. {m['home']} vs {m['away']}")
+            lines.append(f"   {p['confidence']} ({p['home_win_prob']}%)")
+            lines.append("")
+            
     if close_calls:
+        lines.append("DECENT PICKS")
+        lines.append("")
         for i, item in enumerate(close_calls, 1):
-            report.append(format_match_block(i, item))
-    else:
-        report.append("   None")
+            m = item["match"]
+            p = item["model"]
+            lines.append(f"{i}. {m['home']} vs {m['away']}")
+            lines.append(f"   {p['confidence']} ({p['home_win_prob']}%)")
+            lines.append("")
 
-    # ==================== DISCLAIMER ====================
-    report.extend([
-        "\n" + "=" * 40,
-        "⚠️ DISCLAIMER: This is for informational purposes only.",
-        "   Gambling involves risk. Bet responsibly and within your means.",
-        "=" * 40
-    ])
+    # Add disclaimer
+    lines.append("---")
+    lines.append("For informational purposes only")
+    lines.append("Gamble responsibly")
+    lines.append("")
 
-    return "\n".join(report), base_date
+    report = "\n".join(lines)
+    return report, base_date
 
 
 # =============================================================================
@@ -637,7 +599,7 @@ def main():
     perfect, qualified, close_calls = [], [], []
     scanned_dates = []
 
-    print(f"🔍 Starting Home Win analysis from {args.date}...")
+    print(f"Starting Home Win analysis from {args.date}...")
 
     for day_offset in range(4):
         current_date = start_date + timedelta(days=day_offset)
@@ -739,12 +701,12 @@ def main():
                 "confidence": "perfect" if pick in perfect else ("qualified" if pick in qualified else "close")
             })
         record_predictions(base_date, hw_picks, [])
-        print("✅ Predictions recorded for performance tracking")
+        print("Predictions recorded for performance tracking")
     except Exception as e:
-        print(f"⚠️ Could not record predictions: {e}")
+        print(f"Could not record predictions: {e}")
 
-    print(f"\n✅ Report saved: {output_path}")
-    print(f"✅ VIP report saved: {detailed_report_path}")
+    print(f"\nReport saved: {output_path}")
+    print(f"VIP report saved: {detailed_report_path}")
 
 
 if __name__ == "__main__":
