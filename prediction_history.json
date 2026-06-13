@@ -89,6 +89,51 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-06-13T15:28:15.995313"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Chile Primera",
+      "home_team": "Coquimbo Unido",
+      "away_team": "O'Higgins",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:43:56.772357"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Chile Primera",
+      "home_team": "Colo-Colo",
+      "away_team": "Cobresal",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:43:56.772357"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Quilmes",
+      "away_team": "Gimnasia y Tiro",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:43:56.772357"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Gimnasia de Jujuy",
+      "away_team": "San Martin de San Juan",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:43:56.772357"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "World Cup",
+      "home_team": "Ivory Coast",
+      "away_team": "Ecuador",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:43:56.772357"
     }
   ],
   "over_under": [
@@ -801,6 +846,156 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-06-13T15:39:31.815604"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Chile Primera",
+      "home_team": "Audax Italiano",
+      "away_team": "La Serena",
+      "prediction": "over",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Chile Primera",
+      "home_team": "Coquimbo Unido",
+      "away_team": "O'Higgins",
+      "prediction": "over",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "World Cup",
+      "home_team": "USA",
+      "away_team": "Paraguay",
+      "prediction": "over",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Chile Primera",
+      "home_team": "Colo-Colo",
+      "away_team": "Cobresal",
+      "prediction": "over",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Temperley",
+      "away_team": "Guemes",
+      "prediction": "over",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Swedish Superettan",
+      "home_team": "Sundsvall",
+      "away_team": "Osters",
+      "prediction": "over",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Almirante Brown",
+      "away_team": "Godoy Cruz",
+      "prediction": "under",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Ferrocarril Midland",
+      "away_team": "Atlanta",
+      "prediction": "under",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Ferro Carril Oeste",
+      "away_team": "Acassuso",
+      "prediction": "under",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Central Norte",
+      "away_team": "San Telmo",
+      "prediction": "under",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Nueva Chicago",
+      "away_team": "Chacarita",
+      "prediction": "under",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Almagro",
+      "away_team": "Agropecuario",
+      "prediction": "under",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Quilmes",
+      "away_team": "Gimnasia y Tiro",
+      "prediction": "under",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Patronato",
+      "away_team": "Atletico Rafaela",
+      "prediction": "under",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
+    },
+    {
+      "date": "2026-06-13",
+      "league": "World Cup",
+      "home_team": "Ivory Coast",
+      "away_team": "Ecuador",
+      "prediction": "under",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-13T15:42:46.673238"
     }
   ]
 }
