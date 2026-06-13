@@ -724,44 +724,66 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                under_perfect, under_qualified, under_close, under_weak,
                scanned_dates, bankroll, odds_over, odds_under, detailed=False):
     """
-    Build a clean, mobile-friendly report
+    Build a clean, mobile-friendly report - include up to 4 days if needed to reach 10 picks
+    Returns: (report, base_date, included_over, included_under
     """
-    base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
-
-    # Filter picks to base date
-    def filter_by_date(picks, date_str):
-        return [item for item in picks if item["match"]["date"] == date_str]
+    all_over_picks = over_perfect + over_qualified + over_close
+    all_under_picks = under_perfect + under_qualified + under_close
     
-    over_picks = filter_by_date(over_perfect + over_qualified + over_close, base_date)
-    under_picks = filter_by_date(under_perfect + under_qualified + under_close, base_date)
+    # Collect picks from days until we have at least 10 total or exhaust scanned days
+    included_over = []
+    included_under = []
+    included_dates = []
+    
+    for date_str in scanned_dates:
+        def filter_by_date(picks, d):
+            return [item for item in picks if item["match"]["date"] == d]
+        
+        day_over = filter_by_date(all_over_picks, date_str)
+        day_under = filter_by_date(all_under_picks, date_str)
+        
+        included_over.extend(day_over)
+        included_under.extend(day_under)
+        included_dates.append(date_str)
+        
+        total_picks = len(included_over) + len(included_under)
+        if total_picks >= 10:
+            break
+    
+    base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
     lines = []
     lines.append("OVER/UNDER 2.5 PICKS")
     lines.append("")
-    lines.append(f"Date: {base_date}")
+    
+    if len(included_dates) > 1:
+        lines.append(f"Dates: {included_dates[0]} to {included_dates[-1]}")
+    else:
+        lines.append(f"Date: {base_date}")
+    
     lines.append("")
     
     # Over 2.5 section
-    if over_picks:
+    if included_over:
         lines.append("OVER 2.5 GOALS")
         lines.append("")
-        for i, item in enumerate(over_picks, 1):
+        for i, item in enumerate(included_over, 1):
             m = item["match"]
             p = item["poisson"]
             tgt = item["over"]
-            lines.append(f"{i}. {m['home']} vs {m['away']}")
+            lines.append(f"{i}. {m['home']} vs {m['away']} ({m['date']})")
             lines.append(f"   {tgt['confidence']} ({p['over25_prob']}%)")
             lines.append("")
     
     # Under 2.5 section
-    if under_picks:
+    if included_under:
         lines.append("UNDER 2.5 GOALS")
         lines.append("")
-        for i, item in enumerate(under_picks, 1):
+        for i, item in enumerate(included_under, 1):
             m = item["match"]
             p = item["poisson"]
             tgt = item["under"]
-            lines.append(f"{i}. {m['home']} vs {m['away']}")
+            lines.append(f"{i}. {m['home']} vs {m['away']} ({m['date']})")
             lines.append(f"   {tgt['confidence']} ({p['under25_prob']}%)")
             lines.append("")
 
@@ -772,7 +794,7 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     lines.append("")
 
     report = "\n".join(lines)
-    return report, base_date
+    return report, base_date, included_over, included_under
 
 # =============================================================================
 # MAIN
@@ -911,12 +933,12 @@ def main():
     apply_portfolio_kelly(under_perfect + under_qualified + under_close, "under", args.bankroll, MAX_TOTAL_EXPOSURE / 2)
 
     # Build and output reports (both free and detailed)
-    free_report, base_date = build_report(
+    free_report, base_date, included_over, included_under = build_report(
         over_perfect, over_qualified, over_close, over_weak,
         under_perfect, under_qualified, under_close, under_weak,
         scanned_dates, args.bankroll, args.odds_over, args.odds_under, detailed=False
     )
-    detailed_report, _ = build_report(
+    detailed_report, _, _, _ = build_report(
         over_perfect, over_qualified, over_close, over_weak,
         under_perfect, under_qualified, under_close, under_weak,
         scanned_dates, args.bankroll, args.odds_over, args.odds_under, detailed=True
@@ -968,20 +990,22 @@ def main():
     try:
         ou_picks = []
         # Record over picks
-        for pick in over_perfect + over_qualified + over_close:
+        for pick in included_over:
             ou_picks.append({
                 "league": pick["match"]["league"],
                 "home": pick["match"]["home"],
                 "away": pick["match"]["away"],
+                "date": pick["match"]["date"],
                 "prediction": "over",
                 "confidence": "perfect" if pick in over_perfect else ("qualified" if pick in over_qualified else "close")
             })
         # Record under picks
-        for pick in under_perfect + under_qualified + under_close:
+        for pick in included_under:
             ou_picks.append({
                 "league": pick["match"]["league"],
                 "home": pick["match"]["home"],
                 "away": pick["match"]["away"],
+                "date": pick["match"]["date"],
                 "prediction": "under",
                 "confidence": "perfect" if pick in under_perfect else ("qualified" if pick in under_qualified else "close")
             })

@@ -501,35 +501,58 @@ def process_single_match(match, target_date, default_odds=2.8):
 # =============================================================================
 def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds, detailed=False):
     """
-    Build a clean, mobile-friendly report
+    Build a clean, mobile-friendly report - include up to 4 days if needed to reach 10 picks
+    Returns: (report, base_date, included_perfect, included_qualified, included_close)
     """
+    all_picks = perfect + qualified + close_calls
+    
+    # Collect picks from days until we have at least 10 total or exhaust scanned days
+    included_perfect = []
+    included_qualified = []
+    included_close = []
+    included_dates = []
+    
+    for date_str in scanned_dates:
+        def filter_by_date(picks, d):
+            return [item for item in picks if item["match"]["date"] == d]
+        
+        day_perfect = filter_by_date(perfect, date_str)
+        day_qualified = filter_by_date(qualified, date_str)
+        day_close = filter_by_date(close_calls, date_str)
+        
+        included_perfect.extend(day_perfect)
+        included_qualified.extend(day_qualified)
+        included_close.extend(day_close)
+        included_dates.append(date_str)
+        
+        total_picks = len(included_perfect) + len(included_qualified) + len(included_close)
+        if total_picks >= 10:
+            break
+    
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
-
-    # Filter picks to base date
-    def filter_by_date(picks, date_str):
-        return [item for item in picks if item["match"]["date"] == date_str]
     
-    perfect = filter_by_date(perfect, base_date)
-    qualified = filter_by_date(qualified, base_date)
-    close_calls = filter_by_date(close_calls, base_date)
-    
-    # Pre-sort
-    qualified_8 = [item for item in qualified if item["score"] == 8]
+    # Pre-sort the included qualified picks
+    qualified_8 = [item for item in included_qualified if item["score"] == 8]
 
     # Clean report (mobile-friendly)
     lines = []
     lines.append("HOME WIN PICKS")
     lines.append("")
-    lines.append(f"Date: {base_date}")
+    
+    if len(included_dates) > 1:
+        lines.append(f"Dates: {included_dates[0]} to {included_dates[-1]}")
+    else:
+        lines.append(f"Date: {base_date}")
+    
     lines.append("")
     
-    if perfect:
+    if included_perfect:
         lines.append("TOP PICKS")
         lines.append("")
-        for i, item in enumerate(perfect, 1):
+        for i, item in enumerate(included_perfect, 1):
             m = item["match"]
             p = item["model"]
-            lines.append(f"{i}. {m['home']} vs {m['away']}")
+            lines.append(f"{i}. {m['home']} vs {m['away']} ({m['date']})")
             lines.append(f"   {p['confidence']} ({p['home_win_prob']}%)")
             lines.append("")
             
@@ -539,17 +562,17 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
         for i, item in enumerate(qualified_8, 1):
             m = item["match"]
             p = item["model"]
-            lines.append(f"{i}. {m['home']} vs {m['away']}")
+            lines.append(f"{i}. {m['home']} vs {m['away']} ({m['date']})")
             lines.append(f"   {p['confidence']} ({p['home_win_prob']}%)")
             lines.append("")
             
-    if close_calls:
+    if included_close:
         lines.append("DECENT PICKS")
         lines.append("")
-        for i, item in enumerate(close_calls, 1):
+        for i, item in enumerate(included_close, 1):
             m = item["match"]
             p = item["model"]
-            lines.append(f"{i}. {m['home']} vs {m['away']}")
+            lines.append(f"{i}. {m['home']} vs {m['away']} ({m['date']})")
             lines.append(f"   {p['confidence']} ({p['home_win_prob']}%)")
             lines.append("")
 
@@ -560,7 +583,7 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
     lines.append("")
 
     report = "\n".join(lines)
-    return report, base_date
+    return report, base_date, included_perfect, included_qualified, included_close
 
 
 # =============================================================================
@@ -665,10 +688,10 @@ def main():
     apply_portfolio_kelly(all_recs, args.bankroll, MAX_TOTAL_EXPOSURE)
 
     # Build and output reports (both free and detailed)
-    free_report, base_date = build_report(
+    free_report, base_date, included_perfect, included_qualified, included_close = build_report(
         perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=False
     )
-    detailed_report, _ = build_report(
+    detailed_report, _, _, _, _ = build_report(
         perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=True
     )
 
@@ -701,12 +724,13 @@ def main():
     # Record predictions for tracking
     try:
         hw_picks = []
-        for pick in perfect + qualified + close_calls:
+        for pick in included_perfect + included_qualified + included_close:
             hw_picks.append({
                 "league": pick["match"]["league"],
                 "home": pick["match"]["home"],
                 "away": pick["match"]["away"],
-                "confidence": "perfect" if pick in perfect else ("qualified" if pick in qualified else "close")
+                "date": pick["match"]["date"],
+                "confidence": "perfect" if pick in included_perfect else ("qualified" if pick in included_qualified else "close")
             })
         record_predictions(base_date, hw_picks, [])
         print("Predictions recorded for performance tracking")
