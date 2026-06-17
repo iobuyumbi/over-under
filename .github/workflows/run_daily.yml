@@ -2,16 +2,19 @@ name: Daily Predictions (Over 2.5 + Home Win)
 
 on:
   schedule:
-    - cron: "0 1 * * *"  # 6:00 AM EAT, 3:00 AM UTC (daily)
-    - cron: "0 3 1 * *"  # 5:00 AM EAT, 2:00 AM UTC on 1st of month (monthly report)
+    - cron: "0 1 * * *"  # 4:00 AM EAT, 1:00 AM UTC (daily predictions)
+    - cron: "0 20 * * *"  # 11:00 PM EAT, 8:00 PM UTC (fetch yesterday's results)
+    - cron: "0 3 1 * *"  # 6:00 AM EAT, 3:00 AM UTC on 1st of month (monthly report)
   workflow_dispatch:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
 
 jobs:
-  build:
+  # JOB 1: Fetch Results (runs daily at 20:00 UTC / 23:00 EAT)
+  fetch-results:
     runs-on: ubuntu-latest
+    if: github.event.schedule == '0 20 * * *'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,7 +29,39 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      # --- FETCH YESTERDAY'S RESULTS ---
+      - name: Fetch Yesterday's Match Results
+        run: |
+          python fetch_results.py > fetch_output.txt 2> fetch_errors.txt || true
+          cat fetch_output.txt
+
+      - name: Commit Updated Prediction History
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: "github-actions[bot]"
+          author_email: "github-actions[bot]@users.noreply.github.com"
+          message: "Update prediction history with yesterday's results"
+          add: |
+            prediction_history.json
+
+  # JOB 2: Daily Predictions (runs daily at 1:00 UTC / 4:00 EAT)
+  daily-predictions:
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '0 1 * * *' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      # --- FETCH YESTERDAY'S RESULTS (in case anything missed) ---
       - name: Fetch Yesterday's Match Results
         run: |
           python fetch_results.py > fetch_output.txt 2> fetch_errors.txt || true
@@ -89,24 +124,17 @@ jobs:
         id: combined-reports
         run: |
           DATE="${{ steps.run-predictor.outputs.date }}"
-          SEPARATOR=$(printf '=%.0s' {1..40})
           
-          # Build FREE REPORT (simplified for public sharing)
+          # Build FREE REPORT (no affiliate links, no "Free" mention)
           {
-            echo "⚽ DAILY PREDICTIONS (FREE)"
-            echo "$SEPARATOR"
-            echo ""
             sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d'
-            echo ""
-            echo "$SEPARATOR"
             echo ""
             sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d'
           } > combined_free.txt
           
           # Build VIP REPORT (detailed)
           {
-            echo "⚽ DAILY PREDICTIONS (VIP)"
-            echo "$SEPARATOR"
+            echo "DAILY PREDICTIONS (VIP)"
             echo ""
             # Load detailed VIP reports if available
             if [ -f "over_under_vip_report_$DATE.txt" ]; then
@@ -114,8 +142,6 @@ jobs:
             else
                 sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d'
             fi
-            echo ""
-            echo "$SEPARATOR"
             echo ""
             if [ -f "home_win_vip_report_$DATE.txt" ]; then
                 cat "home_win_vip_report_$DATE.txt"
@@ -170,7 +196,7 @@ jobs:
               with open(monthly_report_file, "r", encoding="utf-8") as f:
                   monthly_report = f.read()
 
-          # --- FREE CHANNEL (using existing TELEGRAM_CHAT_ID) ---
+          # --- FREE CHANNEL (no affiliate links, no "Free" mention) ---
           if free_channel:
               # Send monthly report first if available
               if monthly_report:
@@ -182,14 +208,11 @@ jobs:
                   except Exception as e:
                       print(f"Monthly report error: {e}")
 
-              # Send daily free report
+              # Send daily free report (no affiliate links)
               if free_report:
                   public_msg = (
-                      f"📢 DAILY PREDICTIONS ({date})\n"
-                      f"========================================\n\n"
-                      f"{free_report}\n\n"
-                      f"💡 Support our free service by registering using our affiliate link!\n"
-                      f"🔗 Place Your Bookmaker Affiliate Link Here"
+                      f"DAILY PREDICTIONS ({date})\n\n"
+                      f"{free_report}"
                   )
                   if len(public_msg) > 4000:
                       public_msg = public_msg[:3900] + "\n\n...[truncated]"
