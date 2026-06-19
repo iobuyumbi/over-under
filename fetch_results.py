@@ -151,6 +151,70 @@ def fetch_match_results(date_str):
         logger.error(f"Error fetching results for {date_str}: {e}")
         return []
 
+
+def fetch_fixtures_for_date(date_str):
+    """Return home/away pairs for all matches listed on Soccerbase for a date."""
+    logger.info(f"Fetching fixtures for {date_str}...")
+
+    cache_key = f"fixtures_{date_str}"
+    cached = get_cache(cache_key)
+    if cached:
+        return cached
+
+    try:
+        dt = datetime.strptime(date_str, "%Y-%m-%d")
+        date_param = dt.strftime("%d/%m/%Y")
+        url = f"https://www.soccerbase.com/matches/results.sd?date={date_param}"
+        session = get_session()
+        resp = session.get(url, timeout=30)
+        resp.raise_for_status()
+
+        soup = BeautifulSoup(resp.text, "html.parser")
+        matches = []
+
+        for table in soup.find_all("table", class_="listWithCards"):
+            for row in table.find_all("tr"):
+                cells = row.find_all("td")
+                if len(cells) < 6:
+                    continue
+
+                home_raw = cells[3].get_text(strip=True)
+                away_raw = cells[5].get_text(strip=True)
+                home = re.sub(r"\s*\d+.*$", "", home_raw).strip()
+                away = re.sub(r"\s*\d+.*$", "", away_raw).strip()
+                if not home or not away:
+                    continue
+
+                matches.append({
+                    "home_team": home,
+                    "away_team": away,
+                })
+
+        set_cache(cache_key, matches)
+        return matches
+    except Exception as e:
+        logger.error(f"Error fetching fixtures for {date_str}: {e}")
+        return []
+
+
+def find_match_date(home_team, away_team, start_date, end_date):
+    """Find the calendar date for a fixture by scanning Soccerbase day pages."""
+    home_norm = normalize_team_name(home_team)
+    away_norm = normalize_team_name(away_team)
+    current = start_date
+
+    while current <= end_date:
+        date_str = current.strftime("%Y-%m-%d")
+        for match in fetch_fixtures_for_date(date_str):
+            if (
+                normalize_team_name(match["home_team"]) == home_norm
+                and normalize_team_name(match["away_team"]) == away_norm
+            ):
+                return date_str
+        current += timedelta(days=1)
+
+    return None
+
 def normalize_team_name(name):
     """Normalize team name for better matching."""
     name = name.strip().lower()

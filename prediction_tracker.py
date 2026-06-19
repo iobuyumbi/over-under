@@ -11,6 +11,63 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 
 HISTORY_FILE = "prediction_history.json"
+SETTLED_RESULTS = frozenset({"win", "loss", "push"})
+
+
+def home_win_key(pick):
+    return (pick["date"], pick["home_team"], pick["away_team"], pick["confidence"])
+
+
+def over_under_key(pick):
+    return (
+        pick["date"],
+        pick["home_team"],
+        pick["away_team"],
+        pick["prediction"],
+        pick["confidence"],
+    )
+
+
+def _pick_better(existing, new):
+    """Prefer settled results; otherwise keep the most recent entry."""
+    existing_settled = existing.get("result") in SETTLED_RESULTS
+    new_settled = new.get("result") in SETTLED_RESULTS
+    if existing_settled and not new_settled:
+        return existing
+    if new_settled and not existing_settled:
+        return new
+    if existing.get("recorded_at", "") >= new.get("recorded_at", ""):
+        return existing
+    return new
+
+
+def dedupe_predictions(picks, key_fn):
+    best = {}
+    for pick in picks:
+        key = key_fn(pick)
+        best[key] = _pick_better(best[key], pick) if key in best else pick
+    return list(best.values())
+
+
+def dedupe_history(history=None, save=True):
+    """Remove duplicate prediction rows from history."""
+    history = history or load_history()
+    before_hw = len(history["home_win"])
+    before_ou = len(history["over_under"])
+
+    history["home_win"] = dedupe_predictions(history["home_win"], home_win_key)
+    history["over_under"] = dedupe_predictions(history["over_under"], over_under_key)
+
+    stats = {
+        "home_win_removed": before_hw - len(history["home_win"]),
+        "over_under_removed": before_ou - len(history["over_under"]),
+        "home_win_remaining": len(history["home_win"]),
+        "over_under_remaining": len(history["over_under"]),
+    }
+
+    if save:
+        save_history(history)
+    return history, stats
 
 def load_history():
     """Load prediction history from file."""
@@ -28,10 +85,13 @@ def save_history(history):
         json.dump(history, f, indent=2, default=str)
 
 def record_predictions(date, home_win_picks, over_under_picks):
-    """Record predictions for a given date."""
+    """Record predictions for a given date. Skips duplicates already in history."""
     history = load_history()
-    
-    # Record home win picks
+    existing_hw = {home_win_key(p) for p in history["home_win"]}
+    existing_ou = {over_under_key(p) for p in history["over_under"]}
+    added = 0
+    skipped = 0
+
     for pick in home_win_picks:
         entry = {
             "date": pick.get("date", date),
@@ -42,23 +102,36 @@ def record_predictions(date, home_win_picks, over_under_picks):
             "result": "pending",
             "recorded_at": datetime.now().isoformat()
         }
+        key = home_win_key(entry)
+        if key in existing_hw:
+            skipped += 1
+            continue
         history["home_win"].append(entry)
-    
-    # Record over/under picks
+        existing_hw.add(key)
+        added += 1
+
     for pick in over_under_picks:
         entry = {
             "date": pick.get("date", date),
             "league": pick["league"],
             "home_team": pick["home"],
             "away_team": pick["away"],
-            "prediction": pick["prediction"],  # "over" or "under"
+            "prediction": pick["prediction"],
             "confidence": pick["confidence"],
             "result": "pending",
             "recorded_at": datetime.now().isoformat()
         }
+        key = over_under_key(entry)
+        if key in existing_ou:
+            skipped += 1
+            continue
         history["over_under"].append(entry)
-    
-    save_history(history)
+        existing_ou.add(key)
+        added += 1
+
+    if added:
+        save_history(history)
+    return {"added": added, "skipped": skipped}
 
 def update_result(prediction_type, index, result):
     """Update the result of a specific prediction.
