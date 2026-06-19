@@ -743,8 +743,11 @@ def main():
                 "date": pick["match"]["date"],
                 "confidence": "perfect" if pick in included_perfect else ("qualified" if pick in included_qualified else "close")
             })
-        record_predictions(base_date, hw_picks, [])
-        print("Predictions recorded for performance tracking")
+        stats = record_predictions(base_date, hw_picks, [])
+        if stats["added"]:
+            print(f"Predictions recorded for performance tracking ({stats['added']} new)")
+        elif stats["skipped"]:
+            print(f"Predictions already recorded ({stats['skipped']} skipped)")
     except Exception as e:
         print(f"Could not record predictions: {e}")
 
