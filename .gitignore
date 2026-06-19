@@ -11,6 +11,8 @@ over25_report_*.json
 *_vip_report_*.txt
 monthly_report_*.json
 monthly_report_*.txt
+weekly_report_*.json
+weekly_report_*.txt
 
 # Environment and sensitive files
 *.env
