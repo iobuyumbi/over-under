@@ -2,11 +2,17 @@ name: Daily Predictions (Over 2.5 + Home Win)
 
 on:
   schedule:
-    - cron: "0 1 * * *"  # 4:00 AM EAT, 1:00 AM UTC (daily predictions)
+    - cron: "0 1 * * *"   # 4:00 AM EAT, 1:00 AM UTC (daily predictions)
     - cron: "0 20 * * *"  # 11:00 PM EAT, 8:00 PM UTC (fetch yesterday's results)
-    - cron: "0 3 1 * *"  # 6:00 AM EAT, 3:00 AM UTC on 1st of month (monthly report)
-    - cron: "0 3 * * 1"  # 6:00 AM EAT, 3:00 AM UTC on Mondays (weekly report)
+    - cron: "0 3 1 * *"   # 6:00 AM EAT, 3:00 AM UTC on 1st of month (monthly report)
+    - cron: "0 3 * * 1"   # 6:00 AM EAT, 3:00 AM UTC on Mondays (weekly report)
   workflow_dispatch:
+    inputs:
+      days_back:
+        description: 'Number of past days to fetch results for'
+        required: false
+        default: '3'
+        type: string
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
@@ -15,7 +21,7 @@ jobs:
   # JOB 1: Fetch Results (runs daily at 20:00 UTC / 23:00 EAT)
   fetch-results:
     runs-on: ubuntu-latest
-    if: github.event.schedule == '0 20 * * *'
+    if: github.event.schedule == '0 20 * * *' || github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -30,17 +36,28 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Fetch Yesterday's Match Results
+      - name: Fetch Match Results
+        id: fetch
         run: |
-          python fetch_results.py > fetch_output.txt 2> fetch_errors.txt || true
-          cat fetch_output.txt
+          DAYS="${{ github.event.inputs.days_back || '3' }}"
+          python fetch_results.py --days "$DAYS" 2>&1 | tee fetch_output.txt
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+
+      - name: Upload fetch logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fetch-logs-${{ github.run_id }}
+          path: fetch_output.txt
 
       - name: Commit Updated Prediction History
+        if: success()
         uses: EndBug/add-and-commit@v9
         with:
           author_name: "github-actions[bot]"
           author_email: "github-actions[bot]@users.noreply.github.com"
-          message: "Update prediction history with yesterday's results"
+          message: "Update prediction history with results"
           add: |
             prediction_history.json
 
@@ -64,9 +81,18 @@ jobs:
 
       # --- FETCH YESTERDAY'S RESULTS (in case anything missed) ---
       - name: Fetch Yesterday's Match Results
+        id: fetch-yesterday
         run: |
-          python fetch_results.py > fetch_output.txt 2> fetch_errors.txt || true
-          cat fetch_output.txt
+          python fetch_results.py --days 2 2>&1 | tee fetch_output.txt
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+
+      - name: Upload fetch logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fetch-logs-daily-${{ github.run_id }}
+          path: fetch_output.txt
 
       - name: Commit Updated Prediction History
         uses: EndBug/add-and-commit@v9
