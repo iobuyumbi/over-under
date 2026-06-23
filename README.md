@@ -16,15 +16,22 @@ Automated daily soccer predictions with performance tracking for monetization.
 Runs automatically every morning via GitHub Actions.
 
 ### 2. Updating Results
-After matches finish, update results manually:
+After matches finish, update results using the automated fetcher:
 
+```bash
+python fetch_results.py
+```
+
+This will try multiple data sources to get match results:
+1. Soccerbase (scraping - note: now blocking many automated requests)
+2. API-Football (API)
+3. Football-Data.org (API)
+4. TheSportsDB (free API, no key needed)
+
+Or you can update manually:
 ```bash
 python update_results.py
 ```
-
-This will show a menu:
-1. Update pending results interactively
-2. View overall history
 
 ### 3. Updating Results Manually
 You can also edit `prediction_history.json` directly.
@@ -33,12 +40,21 @@ Change `"result": "pending"` to:
 - `"loss"` if prediction was incorrect
 - `"push"` for draws or exact 2 goals
 
+## Data Sources
+
+### API Keys (Optional but Recommended)
+Set these environment variables for better reliability:
+
+- `API_FOOTBALL_KEY`: Get from https://www.api-football.com/
+- `FOOTBALL_DATA_ORG_KEY`: Get from https://www.football-data.org/
+
 ## File Structure
 
 | File | Description |
 |------|-------------|
 | home_win_soccerbase.py | Home win prediction engine |
 | over25_soccerbase.py | Over/Under 2.5 goals prediction engine |
+| fetch_results.py | Automated result fetcher with multiple data sources |
 | prediction_tracker.py | History tracking system |
 | update_results.py | User-friendly result updater |
 | generate_monthly_report.py | Monthly performance report generator |
