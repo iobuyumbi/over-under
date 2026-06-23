@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """
-Automatic Result Fetcher - v2
+Automatic Result Fetcher - v3
 Fetches match results and updates prediction history.
-Tries Soccerbase first, falls back to API-Football if scraping fails.
+Tries multiple data sources for better reliability:
+1. Soccerbase (scraping)
+2. API-Football (API)
+3. Football-Data.org (API)
+4. TheSportsDB (API)
 """
 
 import requests
@@ -26,10 +30,15 @@ from prediction_tracker import load_history, save_history
 CACHE_DB = "soccerbase_results_cache.db"
 CACHE_TTL_HOURS = 24
 
-# API-Football fallback (free tier: 100 requests/day)
-# Get a free key at https://www.api-football.com/
+# API Keys from environment variables
 API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_KEY", "")
 API_FOOTBALL_HOST = "v3.football.api-sports.io"
+
+FOOTBALL_DATA_ORG_KEY = os.environ.get("FOOTBALL_DATA_ORG_KEY", "")
+FOOTBALL_DATA_ORG_HOST = "api.football-data.org"
+
+# TheSportsDB is free, no key needed for basic use
+THESPORTSDB_HOST = "www.thesportsdb.com"
 
 # Setup logging
 logging.basicConfig(
@@ -416,15 +425,15 @@ def fetch_match_results_soccerbase(date_str):
 # =============================================================================
 # API-FOOTBALL FALLBACK
 # =============================================================================
-def fetch_match_results_api(date_str):
+def fetch_match_results_api_football(date_str):
     """Fetch match results using API-Football (free tier)."""
     if not API_FOOTBALL_KEY:
-        logger.info("[API-Football] No API key configured, skipping fallback.")
+        logger.info("[API-Football] No API key configured, skipping.")
         return []
 
     logger.info(f"[API-Football] Fetching results for {date_str}...")
 
-    cache_key = f"api_results_{date_str}"
+    cache_key = f"api_football_results_{date_str}"
     cached = get_cache(cache_key)
     if cached:
         logger.info(f"[API-Football] Using cached results for {date_str}")
@@ -465,15 +474,127 @@ def fetch_match_results_api(date_str):
         logger.error(f"[API-Football] Error: {e}")
         return []
 
+
 # =============================================================================
-# COMBINED FETCH
+# FOOTBALL-DATA.ORG FALLBACK
+# =============================================================================
+def fetch_match_results_football_data_org(date_str):
+    """Fetch match results using Football-Data.org."""
+    if not FOOTBALL_DATA_ORG_KEY:
+        logger.info("[Football-Data.org] No API key configured, skipping.")
+        return []
+
+    logger.info(f"[Football-Data.org] Fetching results for {date_str}...")
+
+    cache_key = f"football_data_org_results_{date_str}"
+    cached = get_cache(cache_key)
+    if cached:
+        logger.info(f"[Football-Data.org] Using cached results for {date_str}")
+        return cached
+
+    try:
+        url = f"https://{FOOTBALL_DATA_ORG_HOST}/v4/matches"
+        headers = {"X-Auth-Token": FOOTBALL_DATA_ORG_KEY}
+        params = {"dateFrom": date_str, "dateTo": date_str, "status": "FINISHED"}
+
+        resp = requests.get(url, headers=headers, params=params, timeout=30)
+        resp.raise_for_status()
+        data = resp.json()
+
+        matches = []
+        for match in data.get("matches", []):
+            home = match["homeTeam"]["name"]
+            away = match["awayTeam"]["name"]
+            score = match["score"]["fullTime"]
+            if score and score["home"] is not None and score["away"] is not None:
+                matches.append({
+                    "home_team": home,
+                    "away_team": away,
+                    "score": f"{score['home']}-{score['away']}",
+                    "source": "football-data-org"
+                })
+
+        logger.info(f"[Football-Data.org] Found {len(matches)} match results for {date_str}")
+        set_cache(cache_key, matches)
+        return matches
+
+    except Exception as e:
+        logger.error(f"[Football-Data.org] Error: {e}")
+        return []
+
+
+# =============================================================================
+# THESPORTSDB FALLBACK
+# =============================================================================
+def fetch_match_results_thesportsdb(date_str):
+    """Fetch match results using TheSportsDB (free, no key needed for basic use)."""
+    logger.info(f"[TheSportsDB] Fetching results for {date_str}...")
+
+    cache_key = f"thesportsdb_results_{date_str}"
+    cached = get_cache(cache_key)
+    if cached:
+        logger.info(f"[TheSportsDB] Using cached results for {date_str}")
+        return cached
+
+    try:
+        # TheSportsDB uses date format DD/MM/YYYY
+        dt = datetime.strptime(date_str, "%Y-%m-%d")
+        tsdb_date = dt.strftime("%d/%m/%Y")
+        
+        url = f"https://{THESPORTSDB_HOST}/api/v1/json/1/eventsday.php?d={tsdb_date}"
+        resp = requests.get(url, timeout=30)
+        resp.raise_for_status()
+        data = resp.json()
+
+        matches = []
+        for event in data.get("events", []):
+            if event.get("intHomeScore") is not None and event.get("intAwayScore") is not None:
+                matches.append({
+                    "home_team": event["strHomeTeam"],
+                    "away_team": event["strAwayTeam"],
+                    "score": f"{event['intHomeScore']}-{event['intAwayScore']}",
+                    "source": "thesportsdb"
+                })
+
+        logger.info(f"[TheSportsDB] Found {len(matches)} match results for {date_str}")
+        set_cache(cache_key, matches)
+        return matches
+
+    except Exception as e:
+        logger.error(f"[TheSportsDB] Error: {e}")
+        return []
+
+
+# =============================================================================
+# COMBINED FETCH - TRIES ALL SOURCES
 # =============================================================================
 def fetch_match_results(date_str):
-    """Fetch match results, trying Soccerbase first then API fallback."""
-    results = fetch_match_results_soccerbase(date_str)
-    if not results:
-        results = fetch_match_results_api(date_str)
-    return results
+    """Fetch match results, trying multiple sources in order."""
+    all_results = []
+    seen = set()
+
+    # Try all sources and collect unique results
+    sources = [
+        ("Soccerbase", fetch_match_results_soccerbase),
+        ("API-Football", fetch_match_results_api_football),
+        ("Football-Data.org", fetch_match_results_football_data_org),
+        ("TheSportsDB", fetch_match_results_thesportsdb)
+    ]
+
+    for source_name, source_func in sources:
+        try:
+            results = source_func(date_str)
+            for match in results:
+                key = (match["home_team"], match["away_team"])
+                if key not in seen:
+                    seen.add(key)
+                    all_results.append(match)
+        except Exception as e:
+            logger.error(f"Error with {source_name}: {e}")
+            continue
+
+    logger.info(f"Total unique results found from all sources: {len(all_results)}")
+    return all_results
 
 # =============================================================================
 # UPDATE HISTORY
