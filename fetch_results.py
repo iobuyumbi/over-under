@@ -431,9 +431,13 @@ def update_history_with_results(date_str):
                 history["home_win"][idx]["result"] = result
                 history["home_win"][idx]["updated_at"] = datetime.now().isoformat()
                 updated += 1
-                logger.info(f"✅ HW: {pick['home_team']} vs {pick['away_team']} = {result}")
+                pick_home = pick.get("home_team", pick.get("home"))
+                pick_away = pick.get("away_team", pick.get("away"))
+                logger.info(f"✅ HW: {pick_home} vs {pick_away} = {result}")
             else:
-                unmatched.append(f"HW: {pick['home_team']} vs {pick['away_team']}")
+                pick_home = pick.get("home_team", pick.get("home"))
+                pick_away = pick.get("away_team", pick.get("away"))
+                unmatched.append(f"HW: {pick_home} vs {pick_away}")
 
     for idx, pick in enumerate(history["over_under"]):
         if pick["result"] == "pending" and pick["date"] == date_str:
@@ -442,9 +446,13 @@ def update_history_with_results(date_str):
                 history["over_under"][idx]["result"] = result
                 history["over_under"][idx]["updated_at"] = datetime.now().isoformat()
                 updated += 1
-                logger.info(f"✅ OU: {pick['home_team']} vs {pick['away_team']} = {result}")
+                pick_home = pick.get("home_team", pick.get("home"))
+                pick_away = pick.get("away_team", pick.get("away"))
+                logger.info(f"✅ OU: {pick_home} vs {pick_away} = {result}")
             else:
-                unmatched.append(f"OU: {pick['home_team']} vs {pick['away_team']}")
+                pick_home = pick.get("home_team", pick.get("home"))
+                pick_away = pick.get("away_team", pick.get("away"))
+                unmatched.append(f"OU: {pick_home} vs {pick_away}")
 
     if updated > 0:
         save_history(history)
@@ -460,9 +468,11 @@ def update_history_with_results(date_str):
     return updated, unmatched
 
 def determine_home_win_result(pick, results):
+    pick_home = pick.get("home_team", pick.get("home"))
+    pick_away = pick.get("away_team", pick.get("away"))
     for match in results:
-        if (team_names_match(match["home_team"], pick["home_team"]) and
-                team_names_match(match["away_team"], pick["away_team"])):
+        if (team_names_match(match["home_team"], pick_home) and
+                team_names_match(match["away_team"], pick_away)):
             hg, ag = parse_score(match["score"])
             if hg is not None and ag is not None:
                 if hg > ag:
@@ -474,13 +484,16 @@ def determine_home_win_result(pick, results):
     return None
 
 def determine_over_under_result(pick, results):
+    pick_home = pick.get("home_team", pick.get("home"))
+    pick_away = pick.get("away_team", pick.get("away"))
     for match in results:
-        if (team_names_match(match["home_team"], pick["home_team"]) and
-                team_names_match(match["away_team"], pick["away_team"])):
+        if (team_names_match(match["home_team"], pick_home) and
+                team_names_match(match["away_team"], pick_away)):
             hg, ag = parse_score(match["score"])
             if hg is not None and ag is not None:
                 total = hg + ag
-                if pick["prediction"] == "over":
+                prediction = pick.get("prediction", "over")
+                if prediction in ("over", "Over 2.5"):
                     if total > 2:
                         return "win"
                     elif total < 2:
@@ -538,5 +551,51 @@ def main():
 
     return total_updated
 
+def update_all_pending_results(days_back=7):
+    """Backward compatibility: Update all pending predictions from last N days"""
+    from prediction_tracker import load_history, save_history
+    history = load_history()
+    updated = 0
+    today = datetime.now()
+    
+    dates_to_check = []
+    for i in range(1, days_back + 1):
+        d = (today - timedelta(days=i)).strftime("%Y-%m-%d")
+        dates_to_check.append(d)
+        
+    for date_str in dates_to_check:
+        results = fetch_match_results(date_str)
+        
+        for idx, pick in enumerate(history["home_win"]):
+            if pick["result"] == "pending" and pick["date"] == date_str:
+                result = determine_home_win_result(pick, results)
+                if result:
+                    history["home_win"][idx]["result"] = result
+                    history["home_win"][idx]["updated_at"] = datetime.now().isoformat()
+                    updated += 1
+                    logger.info(f"Updated: {pick['home_team']} vs {pick['away_team']} → {result}")
+        
+        for idx, pick in enumerate(history["over_under"]):
+            if pick["result"] == "pending" and pick["date"] == date_str:
+                result = determine_over_under_result(pick, results)
+                if result:
+                    history["over_under"][idx]["result"] = result
+                    history["over_under"][idx]["updated_at"] = datetime.now().isoformat()
+                    updated += 1
+                    logger.info(f"Updated: {pick['home_team']} vs {pick['away_team']} → {result}")
+    
+    if updated > 0:
+        save_history(history)
+        logger.info(f"✅ Successfully updated {updated} match results")
+    else:
+        logger.info("No pending results to update.")
+    
+    return updated
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "update":
+        update_all_pending_results(days_back=int(sys.argv[2]) if len(sys.argv) > 2 else 14)
+    else:
+        sys.exit(main())
