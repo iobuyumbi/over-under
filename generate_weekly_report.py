@@ -86,8 +86,8 @@ def update_readme():
     # Replace or append performance section
     if "## 📊 Weekly Performance Report" in content:
         before = content.split("## 📊 Weekly Performance Report")[0]
-        after_parts = content.split("## 📊 Weekly Performance Report")[1].split("\n## ")
-        after = "\n## " + after_parts[1] if len(after_parts) > 1 else ""
+        after_part = content.split("## 📊 Weekly Performance Report")[1]
+        after = after_part.split("\n## ")[0] if "## " in after_part else ""
         new_content = before + generate_readme_section(stats) + after
     else:
         new_content = content.rstrip() + "\n" + generate_readme_section(stats)

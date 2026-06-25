@@ -348,7 +348,7 @@ jobs:
               echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
           fi
 
-      - name: Commit weekly report
+      - name: Commit weekly report and updated README
         uses: EndBug/add-and-commit@v9
         with:
           author_name: "github-actions[bot]"
@@ -357,6 +357,7 @@ jobs:
           add: |
             weekly_report_*.txt
             weekly_report_*.json
+            README.md
 
       - name: Send weekly report to Telegram
         if: always()
