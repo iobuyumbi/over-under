@@ -5,7 +5,7 @@ Automated daily soccer predictions with performance tracking for monetization.
 - 🏠 Home win predictions with 9-point rule system
 - 🔥 Over/Under 2.5 goals predictions
 - 📊 Automatic performance tracking with win/loss history
-- 📈 Monthly performance reports
+- 📈 Monthly/weekly performance reports
 - 💌 Daily email alerts
 - 📱 Telegram notifications (Free and VIP channels)
 - 💰 Affiliate-friendly design for monetization
@@ -22,18 +22,33 @@ After matches finish, update results using the automated fetcher:
 python fetch_results.py
 ```
 
-This will try multiple data sources to get match results:
-1. Soccerbase (scraping - note: now blocking many automated requests)
-2. API-Football (API)
-3. Football-Data.org (API)
-4. TheSportsDB (free API, no key needed)
+This will try multiple data sources in order to get match results:
+1. Football-Data.org (primary, free tier covers Chile, Argentina, World Cup)
+2. API-Football (fallback)
+3. Manual override (CSV/JSON)
 
-Or you can update manually:
+You can also use manual entry directly:
 ```bash
 python update_results.py
 ```
 
-### 3. Updating Results Manually
+### 3. Manual Results Entry
+If APIs don't cover your matches, you can add results manually:
+- Create `manual_results.csv` with columns: `date,home_team,away_team,score`
+- Or create `manual_results.json` with structure:
+  ```json
+  {
+    "results": [
+      {
+        "date": "2026-06-15",
+        "home_team": "Team A",
+        "away_team": "Team B",
+        "score": "2-1"
+      }
+    ]
+  }
+  ```
+
 You can also edit `prediction_history.json` directly.
 Change `"result": "pending"` to:
 - `"win"` if prediction was correct
@@ -43,10 +58,10 @@ Change `"result": "pending"` to:
 ## Data Sources
 
 ### API Keys (Optional but Recommended)
-Set these environment variables for better reliability:
+Set these environment variables in GitHub Secrets for better reliability:
 
+- `FOOTBALL_DATA_KEY`: Get free from https://www.football-data.org/client/register
 - `API_FOOTBALL_KEY`: Get from https://www.api-football.com/
-- `FOOTBALL_DATA_ORG_KEY`: Get from https://www.football-data.org/
 
 ## File Structure
 
@@ -58,6 +73,7 @@ Set these environment variables for better reliability:
 | prediction_tracker.py | History tracking system |
 | update_results.py | User-friendly result updater |
 | generate_monthly_report.py | Monthly performance report generator |
+| generate_weekly_report.py | Weekly performance report generator |
 | .github/workflows/run_daily.yml | GitHub Actions workflow |
 
 ## Monetization Ideas
@@ -70,3 +86,4 @@ Set these environment variables for better reliability:
 - This is for educational purposes only
 - Gambling has risks, gamble responsibly
 - Never bet more than you can afford to lose
+
