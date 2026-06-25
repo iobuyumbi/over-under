@@ -1,20 +1,25 @@
 #!/usr/bin/env python3
 """
-Weekly Performance Report Generator
-Generates performance reports and auto-updates README.md
+WEEKLY PERFORMANCE REPORT GENERATOR
+===================================
+Auto-updates README.md with performance statistics
 """
 
 import json
-import os
 from datetime import datetime, timedelta
 from collections import defaultdict
-
-from prediction_tracker import generate_weekly_report as generate_7day_report
-from prediction_tracker import load_history, save_history
 
 
 HISTORY_FILE = "prediction_history.json"
 README_FILE = "README.md"
+
+
+def load_history():
+    try:
+        with open(HISTORY_FILE, "r") as f:
+            return json.load(f)
+    except:
+        return {"home_win": [], "over_under": []}
 
 
 def calculate_weekly_stats(history, weeks=4):
@@ -98,30 +103,5 @@ def update_readme():
     print("✅ README.md updated with latest weekly performance report!")
 
 
-def main():
-    today = datetime.now().strftime("%Y-%m-%d")
-    print(f"Generating weekly report ending {today}...")
-
-    # Generate and save the 7-day report
-    report_text, report_data = generate_7day_report()
-
-    json_filename = f"weekly_report_{today}.json"
-    with open(json_filename, "w") as f:
-        json.dump(report_data, f, indent=2, default=str)
-    print(f"JSON report saved to {json_filename}")
-
-    text_filename = f"weekly_report_{today}.txt"
-    with open(text_filename, "w") as f:
-        f.write(report_text)
-    print(f"Text report saved to {text_filename}")
-
-    print("\nWeekly Performance Report (7 days):")
-    print(report_text)
-
-    # Update README with weekly history
-    print("\nUpdating README...")
-    update_readme()
-
-
 if __name__ == "__main__":
-    main()
+    update_readme()
