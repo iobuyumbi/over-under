@@ -43,6 +43,7 @@ jobs:
           python fetch_results.py --days "$DAYS" 2>&1 | tee fetch_output.txt
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
       - name: Upload fetch logs
         if: always()
@@ -86,6 +87,7 @@ jobs:
           python fetch_results.py --days 2 2>&1 | tee fetch_output.txt
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
       - name: Upload fetch logs
         if: always()
