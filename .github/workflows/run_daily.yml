@@ -26,7 +26,7 @@ on:
         type: string
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
+  # Node.js 20 deprecated, let workflows use latest automatically
 
 permissions:
   contents: write
