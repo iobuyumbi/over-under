@@ -576,32 +576,28 @@ def find_matching_result(pick, results):
     return None
 
 def append_selected_results_report(date_str, settled, unmatched, dry_run=False):
-    mode = "DRY RUN - " if dry_run else ""
+    # Only add to report if there are settled matches OR (unmatched AND it's the first run)
+    if not settled and not unmatched:
+        return
+    
+    mode = "[DRY RUN] " if dry_run else ""
     with open(SELECTED_RESULTS_REPORT, "a", encoding="utf-8") as f:
-        f.write(f"{mode}SELECTED MATCH RESULTS - {date_str}\n")
-        f.write("=" * 44 + "\n")
+        # Write header only if we have content
+        f.write(f"\n{mode}{date_str}\n")
+        f.write("-" * 30 + "\n")
+        
         if settled:
             for item in settled:
                 result = item["result"].upper()
-                source = item.get("source") or "unknown"
-                confidence = item.get("confidence") or "N/A"
-                league = item.get("league") or "Unknown League"
-                f.write(
-                    f"{item['type']}: {item['home_team']} vs {item['away_team']}\n"
-                    f"Pick: {item['prediction']} ({confidence})\n"
-                    f"Score: {item['score']} | Result: {result}\n"
-                    f"League: {league} | Source: {source}\n\n"
-                )
-        else:
-            f.write("No selected pending matches were settled for this date.\n\n")
-
+                f.write(f"✅ {item['home_team']} vs {item['away_team']}\n")
+                f.write(f"   {item['prediction']} → {result} ({item['score']})\n\n")
+        
         if unmatched:
-            f.write(f"Still unmatched: {len(unmatched)}\n")
-            for item in unmatched[:10]:
-                f.write(f"- {item}\n")
-            if len(unmatched) > 10:
-                f.write(f"...and {len(unmatched) - 10} more\n")
-            f.write("\n")
+            f.write(f"⚠️ Unmatched: {len(unmatched)}\n")
+            for item in unmatched[:5]:
+                f.write(f"   - {item}\n")
+            if len(unmatched) > 5:
+                f.write(f"   ...and {len(unmatched) - 5} more\n")
 
 def determine_home_win_result(pick, results):
     pick_home = pick.get("home_team", pick.get("home"))
