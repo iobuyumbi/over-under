@@ -102,15 +102,16 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
 
-      - name: Commit updated results
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "github-actions[bot]"
-          author_email: "41898282+github-actions[bot]@users.noreply.github.com"
-          message: "Update prediction history with results"
-          add: |
-            prediction_history.json
-            manual_results.csv
+      - name: Stage and commit updated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # Add files that exist
+          git add prediction_history.json manual_results.csv 2>/dev/null || true
+          
+          # Commit only if there are changes
+          git diff --cached --exit-code || git commit -m "Update prediction history with results" && git push
 
   daily-predictions:
     runs-on: ubuntu-latest
@@ -172,23 +173,24 @@ jobs:
             fi
           } > combined_vip.txt
 
-      - name: Commit predictions and reports
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "github-actions[bot]"
-          author_email: "41898282+github-actions[bot]@users.noreply.github.com"
-          message: "Daily update: predictions and results"
-          add: |
-            prediction_history.json
-            over_under_25_report_*.json
-            home_win_report_*.json
-            over_under_vip_report_*.txt
-            home_win_vip_report_*.txt
-            weekly_report_*.txt
-            weekly_report_*.json
-            monthly_report_*.txt
-            monthly_report_*.json
-            README.md
+      - name: Stage and commit predictions and reports
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # Add files that exist
+          git add prediction_history.json README.md 2>/dev/null || true
+          git add over_under_25_report_*.json 2>/dev/null || true
+          git add home_win_report_*.json 2>/dev/null || true
+          git add over_under_vip_report_*.txt 2>/dev/null || true
+          git add home_win_vip_report_*.txt 2>/dev/null || true
+          git add weekly_report_*.txt 2>/dev/null || true
+          git add weekly_report_*.json 2>/dev/null || true
+          git add monthly_report_*.txt 2>/dev/null || true
+          git add monthly_report_*.json 2>/dev/null || true
+          
+          # Commit only if there are changes
+          git diff --cached --exit-code || git commit -m "Daily update: predictions and results" && git push
 
       - name: Send public email
         uses: dawidd6/action-send-mail@v3
@@ -274,17 +276,18 @@ jobs:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
-      - name: Commit weekly report
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "github-actions[bot]"
-          author_email: "41898282+github-actions[bot]@users.noreply.github.com"
-          message: "Weekly performance report"
-          add: |
-            prediction_history.json
-            weekly_report_*.txt
-            weekly_report_*.json
-            README.md
+      - name: Stage and commit weekly report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # Add files that exist
+          git add prediction_history.json README.md 2>/dev/null || true
+          git add weekly_report_*.txt 2>/dev/null || true
+          git add weekly_report_*.json 2>/dev/null || true
+          
+          # Commit only if there are changes
+          git diff --cached --exit-code || git commit -m "Weekly performance report" && git push
 
       - name: Send weekly report to Telegram
         if: always()
@@ -336,16 +339,18 @@ jobs:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
-      - name: Commit monthly report
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "github-actions[bot]"
-          author_email: "41898282+github-actions[bot]@users.noreply.github.com"
-          message: "Monthly performance report"
-          add: |
-            prediction_history.json
-            monthly_report_*.txt
-            monthly_report_*.json
+      - name: Stage and commit monthly report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # Add files that exist
+          git add prediction_history.json 2>/dev/null || true
+          git add monthly_report_*.txt 2>/dev/null || true
+          git add monthly_report_*.json 2>/dev/null || true
+          
+          # Commit only if there are changes
+          git diff --cached --exit-code || git commit -m "Monthly performance report" && git push
 
       - name: Send monthly report to Telegram
         if: always()
