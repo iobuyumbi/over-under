@@ -285,21 +285,17 @@ jobs:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
-      - name: Stage and commit weekly report
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          # Pull latest changes
-          git pull --rebase
-          
-          # Add files that exist
-          git add prediction_history.json README.md 2>/dev/null || true
-          git add weekly_report_*.txt 2>/dev/null || true
-          git add weekly_report_*.json 2>/dev/null || true
-          
-          # Commit only if there are changes
-          git diff --cached --exit-code || (git commit -m "Weekly performance report" && git push)
+      - name: Commit weekly report
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: "github-actions[bot]"
+          author_email: "github-actions[bot]@users.noreply.github.com"
+          message: "Weekly performance report"
+          add: |
+            prediction_history.json
+            README.md
+            weekly_report_*.txt
+            weekly_report_*.json
 
       - name: Send weekly report to Telegram
         if: always()
@@ -353,21 +349,16 @@ jobs:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
-      - name: Stage and commit monthly report
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          # Pull latest changes
-          git pull --rebase
-          
-          # Add files that exist
-          git add prediction_history.json 2>/dev/null || true
-          git add monthly_report_*.txt 2>/dev/null || true
-          git add monthly_report_*.json 2>/dev/null || true
-          
-          # Commit only if there are changes
-          git diff --cached --exit-code || (git commit -m "Monthly performance report" && git push)
+      - name: Commit monthly report
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: "github-actions[bot]"
+          author_email: "github-actions[bot]@users.noreply.github.com"
+          message: "Monthly performance report"
+          add: |
+            prediction_history.json
+            monthly_report_*.txt
+            monthly_report_*.json
 
       - name: Send monthly report to Telegram
         if: always()
