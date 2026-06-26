@@ -5,10 +5,15 @@ PREDICTION TRACKER - PRODUCTION VERSION
 Tracks performance of Over 2.5 and Home Win predictions with auto-updating stats. 
 """ 
  
-import json 
-import os 
-from datetime import datetime, timedelta 
-from collections import defaultdict 
+import json
+import os
+import csv
+import logging
+from datetime import datetime, timedelta
+from collections import defaultdict
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO) 
  
 HISTORY_FILE = "prediction_history.json" 
 SETTLED_RESULTS = frozenset({"win", "loss", "push"})
@@ -72,13 +77,62 @@ def dedupe_history(history=None, save=True):
     return history, stats
 
  
-def load_history(): 
-    if os.path.exists(HISTORY_FILE): 
-        try: 
-            with open(HISTORY_FILE, "r") as f: 
-                return json.load(f) 
-        except: 
-            pass 
+def add_to_manual_results_csv(date_str, home_team, away_team):
+    """Add a match to manual_results.csv if it doesn't already exist."""
+    csv_path = "manual_results.csv"
+    existing_rows = []
+    
+    # Read existing CSV
+    if os.path.exists(csv_path):
+        try:
+            with open(csv_path, "r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                existing_rows = list(reader)
+        except Exception as e:
+            logger.warning(f"Could not read existing manual_results.csv: {e}")
+    
+    # Check if match already exists
+    match_exists = False
+    for row in existing_rows:
+        if (row.get("date") == date_str and
+            row.get("home_team") == home_team and
+            row.get("away_team") == away_team):
+            match_exists = True
+            break
+    
+    # Add if not exists
+    if not match_exists:
+        new_row = {
+            "date": date_str,
+            "home_team": home_team,
+            "away_team": away_team,
+            "score": ""
+        }
+        existing_rows.append(new_row)
+        
+        # Write back to CSV
+        try:
+            with open(csv_path, "w", encoding="utf-8", newline="") as f:
+                writer = csv.DictWriter(f, fieldnames=["date", "home_team", "away_team", "score"])
+                writer.writeheader()
+                for row in existing_rows:
+                    # Ensure all fields exist
+                    for field in ["date", "home_team", "away_team", "score"]:
+                        if field not in row:
+                            row[field] = ""
+                    writer.writerow(row)
+            logger.info(f"Added to manual_results.csv: {date_str} - {home_team} vs {away_team}")
+        except Exception as e:
+            logger.error(f"Could not write to manual_results.csv: {e}")
+
+
+def load_history():
+    if os.path.exists(HISTORY_FILE):
+        try:
+            with open(HISTORY_FILE, "r") as f:
+                return json.load(f)
+        except:
+            pass
     return {"home_win": [], "over_under": [], "stats": {}} 
  
  
@@ -94,7 +148,7 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None):
     existing_ou = {over_under_key(p) for p in history["over_under"]}
     added = 0 
     skipped = 0
- 
+
     if home_win_picks: 
         for pick in home_win_picks: 
             entry = { 
@@ -114,7 +168,9 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None):
             history["home_win"].append(entry) 
             existing_hw.add(key)
             added += 1 
- 
+            # Add to manual_results.csv
+            add_to_manual_results_csv(entry["date"], entry["home_team"], entry["away_team"])
+
     if over_under_picks: 
         for pick in over_under_picks: 
             entry = { 
@@ -131,16 +187,18 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None):
             } 
             key = over_under_key(entry)
             if key in existing_ou:
-                skipped +=1
+                skipped += 1
                 continue
             history["over_under"].append(entry) 
             existing_ou.add(key)
             added += 1 
- 
+            # Add to manual_results.csv
+            add_to_manual_results_csv(entry["date"], entry["home_team"], entry["away_team"])
+
     if added > 0: 
         save_history(history) 
         print(f"✅ Recorded {added} new predictions for {date_str}") 
- 
+
     return {"added": added, "skipped": skipped}
  
  
