@@ -18,6 +18,7 @@ import csv
 from datetime import datetime, timedelta
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+from bs4 import BeautifulSoup
 
 from prediction_tracker import load_history, save_history
 
@@ -376,6 +377,65 @@ def fetch_manual_override(date_str):
     return []
 
 # =============================================================================
+# SOURCE 4: SOCCERBASE SCRAPE (FALLBACK FOR LEAGUES NOT COVERED BY APIs)
+# =============================================================================
+def fetch_soccerbase_results(date_str):
+    logger.info(f"[Soccerbase] Fetching results for {date_str}...")
+    cache_key = f"soccerbase_results_{date_str}"
+    cached = get_cache(cache_key)
+    if cached:
+        return cached
+
+    try:
+        session = requests.Session()
+        retry_strategy = Retry(
+            total=3,
+            backoff_factor=1.5,
+            status_forcelist=[429, 500, 502, 503, 504],
+        )
+        session.mount("https://", HTTPAdapter(max_retries=retry_strategy))
+        resp = session.get(
+            f"https://www.soccerbase.com/matches/results.sd?date={date_str}",
+            headers={
+                "User-Agent": (
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/120.0.0.0 Safari/537.36"
+                )
+            },
+            timeout=30,
+        )
+        resp.raise_for_status()
+
+        soup = BeautifulSoup(resp.text, "html.parser")
+        matches = []
+        for table in soup.find_all("table", class_="listWithCards"):
+            for row in table.find_all("tr"):
+                cells = row.find_all("td")
+                if len(cells) < 6:
+                    continue
+
+                home = re.sub(r"\s*\d+.*$", "", cells[3].get_text(strip=True)).strip()
+                score = cells[4].get_text(" ", strip=True)
+                away = re.sub(r"\s*\d+.*$", "", cells[5].get_text(strip=True)).strip()
+                hg, ag = parse_score(score)
+
+                if home and away and hg is not None and ag is not None:
+                    matches.append({
+                        "home_team": home,
+                        "away_team": away,
+                        "score": f"{hg}-{ag}",
+                        "source": "soccerbase",
+                    })
+
+        logger.info(f"[Soccerbase] Found {len(matches)} matches")
+        set_cache(cache_key, matches)
+        return matches
+    except Exception as e:
+        logger.error(f"[Soccerbase] Error: {e}")
+        return []
+
+# =============================================================================
 # COMBINED FETCH
 # =============================================================================
 def fetch_match_results(date_str):
@@ -383,9 +443,10 @@ def fetch_match_results(date_str):
     seen = set()
 
     sources = [
+        ("Manual Override", fetch_manual_override),
         ("Football-Data.org", fetch_football_data_org),
         ("API-Football", fetch_api_football),
-        ("Manual Override", fetch_manual_override),
+        ("Soccerbase", fetch_soccerbase_results),
     ]
 
     for source_name, source_func in sources:
@@ -405,7 +466,7 @@ def fetch_match_results(date_str):
 # =============================================================================
 # UPDATE HISTORY
 # =============================================================================
-def update_history_with_results(date_str):
+def update_history_with_results(date_str, dry_run=False):
     logger.info(f"Updating history for {date_str}...")
 
     results = fetch_match_results(date_str)
@@ -428,8 +489,9 @@ def update_history_with_results(date_str):
         if pick["result"] == "pending" and pick["date"] == date_str:
             result = determine_home_win_result(pick, results)
             if result:
-                history["home_win"][idx]["result"] = result
-                history["home_win"][idx]["updated_at"] = datetime.now().isoformat()
+                if not dry_run:
+                    history["home_win"][idx]["result"] = result
+                    history["home_win"][idx]["updated_at"] = datetime.now().isoformat()
                 updated += 1
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
@@ -443,8 +505,9 @@ def update_history_with_results(date_str):
         if pick["result"] == "pending" and pick["date"] == date_str:
             result = determine_over_under_result(pick, results)
             if result:
-                history["over_under"][idx]["result"] = result
-                history["over_under"][idx]["updated_at"] = datetime.now().isoformat()
+                if not dry_run:
+                    history["over_under"][idx]["result"] = result
+                    history["over_under"][idx]["updated_at"] = datetime.now().isoformat()
                 updated += 1
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
@@ -454,9 +517,11 @@ def update_history_with_results(date_str):
                 pick_away = pick.get("away_team", pick.get("away"))
                 unmatched.append(f"OU: {pick_home} vs {pick_away}")
 
-    if updated > 0:
+    if updated > 0 and not dry_run:
         save_history(history)
         logger.info(f"Updated {updated} predictions!")
+    elif updated > 0:
+        logger.info(f"[DRY RUN] Would update {updated} predictions.")
     else:
         logger.warning("No predictions matched.")
 
@@ -494,19 +559,9 @@ def determine_over_under_result(pick, results):
                 total = hg + ag
                 prediction = pick.get("prediction", "over")
                 if prediction in ("over", "Over 2.5"):
-                    if total > 2:
-                        return "win"
-                    elif total < 2:
-                        return "loss"
-                    else:
-                        return "push"
+                    return "win" if total > 2 else "loss"
                 else:
-                    if total < 2:
-                        return "win"
-                    elif total > 2:
-                        return "loss"
-                    else:
-                        return "push"
+                    return "win" if total < 3 else "loss"
     return None
 
 # =============================================================================
@@ -539,7 +594,7 @@ def main():
         if args.dry_run:
             print("[DRY RUN] Not saving changes")
 
-        updated, unmatched = update_history_with_results(date_str)
+        updated, unmatched = update_history_with_results(date_str, dry_run=args.dry_run)
         total_updated += updated
         all_unmatched.extend(unmatched)
 

@@ -784,6 +784,14 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
             tgt = item["over"]
             lines.append(f"{i}. {m['home']} vs {m['away']} ({m['date']})")
             lines.append(f"   {tgt['confidence']} ({p['over25_prob']}%)")
+            if detailed:
+                lines.append(f"   Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_over}")
+                lines.append(f"   Model xG: {p['home_lambda']} - {p['away_lambda']}")
+                lines.append(f"   Rule score: {tgt['score']} checks passed")
+                if tgt.get("passed"):
+                    lines.append(f"   Passed: {', '.join(tgt['passed'])}")
+                for rule, detail in sorted(tgt.get("details", {}).items()):
+                    lines.append(f"   {rule}: {detail}")
             lines.append("")
     
     # Under 2.5 section
@@ -796,6 +804,14 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
             tgt = item["under"]
             lines.append(f"{i}. {m['home']} vs {m['away']} ({m['date']})")
             lines.append(f"   {tgt['confidence']} ({p['under25_prob']}%)")
+            if detailed:
+                lines.append(f"   Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_under}")
+                lines.append(f"   Model xG: {p['home_lambda']} - {p['away_lambda']}")
+                lines.append(f"   Rule score: {tgt['score']} checks passed")
+                if tgt.get("passed"):
+                    lines.append(f"   Passed: {', '.join(tgt['passed'])}")
+                for rule, detail in sorted(tgt.get("details", {}).items()):
+                    lines.append(f"   {rule}: {detail}")
             lines.append("")
 
     # Disclaimer
