@@ -1,4 +1,4 @@
-name: Daily Predictions (Over 2.5 + Home Win)
+name: Daily Soccer Predictions + Results
 
 on:
   schedule:
@@ -62,7 +62,7 @@ jobs:
           add: |
             prediction_history.json
 
-  # JOB 2: Daily Predictions (runs daily at 1:00 UTC / 4:00 EAT)
+  # JOB 2: Daily Predictions + Results + Reports (runs daily at 1:00 UTC / 4:00 EAT)
   daily-predictions:
     runs-on: ubuntu-latest
     if: github.event.schedule == '0 1 * * *' || github.event_name == 'workflow_dispatch'
@@ -80,7 +80,7 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      # --- FETCH YESTERDAY'S RESULTS (in case anything missed) ---
+      # --- FETCH YESTERDAY'S RESULTS ---
       - name: Fetch Yesterday's Match Results
         id: fetch-yesterday
         run: |
@@ -95,15 +95,6 @@ jobs:
         with:
           name: fetch-logs-daily-${{ github.run_id }}
           path: fetch_output.txt
-
-      - name: Commit Updated Prediction History
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "github-actions[bot]"
-          author_email: "github-actions[bot]@users.noreply.github.com"
-          message: "Update prediction history with yesterday's results"
-          add: |
-            prediction_history.json
 
       # --- ENGINE 1: OVER 2.5 PREDICTIONS ---
       - name: Run Over 2.5 predictor
@@ -123,10 +114,10 @@ jobs:
           
           sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d' > hw_body.txt
 
-      # --- MONTHLY REPORT (manual dispatch with daily run) ---
+      # --- MONTHLY REPORT (if 1st of month) ---
       - name: Generate Monthly Report
         id: monthly-report
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch' || (github.event.schedule == '0 1 * * *' && (date +'%d' == '01'))
         run: |
           python generate_monthly_report.py > monthly_output.txt 2> monthly_errors.txt || true
           
@@ -135,10 +126,9 @@ jobs:
               echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
           fi
 
-      # --- WEEKLY REPORT (manual dispatch with daily run) ---
+      # --- WEEKLY REPORT ---
       - name: Generate Weekly Report
         id: weekly-report
-        if: github.event_name == 'workflow_dispatch'
         run: |
           python generate_weekly_report.py > weekly_output.txt 2> weekly_errors.txt || true
 
@@ -146,18 +136,6 @@ jobs:
           if [ -f "$REPORT_FILE" ]; then
               echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
           fi
-
-      - name: Commit and push results
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "github-actions[bot]"
-          author_email: "github-actions[bot]@users.noreply.github.com"
-          message: "Daily predictions update (${{ steps.run-predictor.outputs.date }})"
-          add: |
-            over_under_25_report_*.json
-            home_win_report_*.json
-            over_under_vip_report_*.txt
-            home_win_vip_report_*.txt
 
       # --- CONSOLIDATION ENGINE ---
       - name: Build combined reports
@@ -189,6 +167,25 @@ jobs:
                 sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d'
             fi
           } > combined_vip.txt
+
+      # --- COMMIT EVERYTHING ---
+      - name: Commit and Push Updates
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: "github-actions[bot]"
+          author_email: "github-actions[bot]@users.noreply.github.com"
+          message: "Daily update: Predictions + Results + Reports - $(date)"
+          add: |
+            over_under_25_report_*.json
+            home_win_report_*.json
+            over_under_vip_report_*.txt
+            home_win_vip_report_*.txt
+            prediction_history.json
+            weekly_report_*.txt
+            weekly_report_*.json
+            monthly_report_*.txt
+            monthly_report_*.json
+            README.md
 
       # --- NOTIFICATION DELIVERY ---
       - name: Send email
