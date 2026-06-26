@@ -1,4 +1,4 @@
-name: Daily Soccer Predictions + Results
+name: Daily Predictions + Results Update
 
 on:
   schedule:
@@ -18,15 +18,14 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
 
 jobs:
-  # JOB 1: Fetch Results (runs daily at 20:00 UTC / 23:00 EAT)
-  fetch-results:
+  predict-and-track:
     runs-on: ubuntu-latest
-    if: github.event.schedule == '0 20 * * *' || github.event_name == 'workflow_dispatch'
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -45,59 +44,7 @@ jobs:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
-      - name: Upload fetch logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: fetch-logs-${{ github.run_id }}
-          path: fetch_output.txt
-
-      - name: Commit Updated Prediction History
-        if: success()
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "github-actions[bot]"
-          author_email: "github-actions[bot]@users.noreply.github.com"
-          message: "Update prediction history with results"
-          add: |
-            prediction_history.json
-
-  # JOB 2: Daily Predictions + Results + Reports (runs daily at 1:00 UTC / 4:00 EAT)
-  daily-predictions:
-    runs-on: ubuntu-latest
-    if: github.event.schedule == '0 1 * * *' || github.event_name == 'workflow_dispatch'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      # --- FETCH YESTERDAY'S RESULTS ---
-      - name: Fetch Yesterday's Match Results
-        id: fetch-yesterday
-        run: |
-          python fetch_results.py --days 2 2>&1 | tee fetch_output.txt
-        env:
-          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
-
-      - name: Upload fetch logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: fetch-logs-daily-${{ github.run_id }}
-          path: fetch_output.txt
-
-      # --- ENGINE 1: OVER 2.5 PREDICTIONS ---
-      - name: Run Over 2.5 predictor
+      - name: Run Over 2.5 Predictor
         id: run-predictor
         run: |
           DATE=$(date +'%Y-%m-%d')
@@ -106,15 +53,13 @@ jobs:
           
           sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d' > over25_body.txt
 
-      # --- ENGINE 2: 9-POINT HOME WIN PREDICTIONS ---
-      - name: Run Home Win predictor
+      - name: Run Home Win Predictor
         id: run-home-win
         run: |
           python home_win_soccerbase.py > hw_output.txt 2> hw_errors.txt || true
           
           sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d' > hw_body.txt
 
-      # --- MONTHLY REPORT (if 1st of month) ---
       - name: Generate Monthly Report
         id: monthly-report
         if: github.event_name == 'workflow_dispatch' || (github.event.schedule == '0 1 * * *' && (date +'%d' == '01'))
@@ -126,7 +71,6 @@ jobs:
               echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
           fi
 
-      # --- WEEKLY REPORT ---
       - name: Generate Weekly Report
         id: weekly-report
         run: |
@@ -137,7 +81,6 @@ jobs:
               echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
           fi
 
-      # --- CONSOLIDATION ENGINE ---
       - name: Build combined reports
         id: combined-reports
         run: |
@@ -168,26 +111,25 @@ jobs:
             fi
           } > combined_vip.txt
 
-      # --- COMMIT EVERYTHING ---
-      - name: Commit and Push Updates
+      - name: Commit & Push Reports
         uses: EndBug/add-and-commit@v9
         with:
           author_name: "github-actions[bot]"
-          author_email: "github-actions[bot]@users.noreply.github.com"
-          message: "Daily update: Predictions + Results + Reports - $(date)"
+          author_email: "41898282+github-actions[bot]@users.noreply.github.com"
+          message: "Daily automated update - $(date)"
           add: |
-            over_under_25_report_*.json
-            home_win_report_*.json
-            over_under_vip_report_*.txt
-            home_win_vip_report_*.txt
+            *.json
+            README.md
             prediction_history.json
             weekly_report_*.txt
             weekly_report_*.json
             monthly_report_*.txt
             monthly_report_*.json
-            README.md
+            over_under_25_report_*.json
+            home_win_report_*.json
+            over_under_vip_report_*.txt
+            home_win_vip_report_*.txt
 
-      # --- NOTIFICATION DELIVERY ---
       - name: Send email
         uses: dawidd6/action-send-mail@v3
         with:
@@ -312,151 +254,6 @@ jobs:
           DATE: ${{ steps.run-predictor.outputs.date }}
           MONTHLY_REPORT_FILE: ${{ steps.monthly-report.outputs.report_file }}
           WEEKLY_REPORT_FILE: ${{ steps.weekly-report.outputs.report_file }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID || '' }}
-
-  # JOB 3: Weekly performance report (Mondays at 3:00 UTC)
-  weekly-report:
-    runs-on: ubuntu-latest
-    if: github.event.schedule == '0 3 * * 1'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name: Generate Weekly Report
-        id: weekly-report
-        run: |
-          python generate_weekly_report.py > weekly_output.txt 2> weekly_errors.txt || true
-          cat weekly_output.txt
-
-          REPORT_FILE=$(ls -t weekly_report_*.txt 2>/dev/null | head -1)
-          if [ -f "$REPORT_FILE" ]; then
-              echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Commit weekly report and updated README
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "github-actions[bot]"
-          author_email: "github-actions[bot]@users.noreply.github.com"
-          message: "Weekly performance report"
-          add: |
-            weekly_report_*.txt
-            weekly_report_*.json
-            README.md
-
-      - name: Send weekly report to Telegram
-        if: always()
-        run: |
-          python -c '
-          import os, requests
-
-          token = os.getenv("TELEGRAM_BOT_TOKEN")
-          free_channel = os.getenv("TELEGRAM_CHAT_ID")
-          vip_channel = os.getenv("TELEGRAM_VIP_CHAT_ID", "")
-          report_file = os.getenv("WEEKLY_REPORT_FILE")
-
-          if not token or not report_file or not os.path.exists(report_file):
-              print("Skipping Telegram: missing token or report file.")
-              exit(0)
-
-          with open(report_file, "r", encoding="utf-8") as f:
-              report = f.read()
-
-          for chat_id in filter(None, [free_channel, vip_channel]):
-              try:
-                  requests.post(
-                      f"https://api.telegram.org/bot{token}/sendMessage",
-                      data={"chat_id": chat_id, "text": report}
-                  )
-              except Exception as e:
-                  print(f"Telegram error ({chat_id}): {e}")
-          '
-        env:
-          WEEKLY_REPORT_FILE: ${{ steps.weekly-report.outputs.report_file }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID || '' }}
-
-  # JOB 4: Monthly performance report (1st of month at 3:00 UTC)
-  monthly-report:
-    runs-on: ubuntu-latest
-    if: github.event.schedule == '0 3 1 * *'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name: Generate Monthly Report
-        id: monthly-report
-        run: |
-          python generate_monthly_report.py > monthly_output.txt 2> monthly_errors.txt || true
-          cat monthly_output.txt
-
-          REPORT_FILE=$(ls -t monthly_report_*.txt 2>/dev/null | head -1)
-          if [ -f "$REPORT_FILE" ]; then
-              echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Commit monthly report
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "github-actions[bot]"
-          author_email: "github-actions[bot]@users.noreply.github.com"
-          message: "Monthly performance report"
-          add: |
-            monthly_report_*.txt
-            monthly_report_*.json
-
-      - name: Send monthly report to Telegram
-        if: always()
-        run: |
-          python -c '
-          import os, requests
-
-          token = os.getenv("TELEGRAM_BOT_TOKEN")
-          free_channel = os.getenv("TELEGRAM_CHAT_ID")
-          vip_channel = os.getenv("TELEGRAM_VIP_CHAT_ID", "")
-          report_file = os.getenv("MONTHLY_REPORT_FILE")
-
-          if not token or not report_file or not os.path.exists(report_file):
-              print("Skipping Telegram: missing token or report file.")
-              exit(0)
-
-          with open(report_file, "r", encoding="utf-8") as f:
-              report = f.read()
-
-          for chat_id in filter(None, [free_channel, vip_channel]):
-              try:
-                  requests.post(
-                      f"https://api.telegram.org/bot{token}/sendMessage",
-                      data={"chat_id": chat_id, "text": report}
-                  )
-              except Exception as e:
-                  print(f"Telegram error ({chat_id}): {e}")
-          '
-        env:
-          MONTHLY_REPORT_FILE: ${{ steps.monthly-report.outputs.report_file }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID || '' }}
