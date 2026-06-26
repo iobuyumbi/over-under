@@ -90,7 +90,13 @@ def update_interactive():
                 
                 if result_choice in result_map:
                     result = result_map[result_choice]
-                    if update_result(pick['type'], pick['index'], result):
+                    if update_result(
+                        pick["date"],
+                        pick["home_team"],
+                        pick["away_team"],
+                        result,
+                        pick["type"],
+                    ):
                         print(f"✅ Updated prediction as: {result.upper()}")
                     else:
                         print("❌ Failed to update prediction")

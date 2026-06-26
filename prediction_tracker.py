@@ -98,7 +98,7 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None):
     if home_win_picks: 
         for pick in home_win_picks: 
             entry = { 
-                "date": date_str, 
+                "date": pick.get("date", date_str), 
                 "type": "home_win", 
                 "league": pick.get("league"), 
                 "home_team": pick.get("home"), 
@@ -118,7 +118,7 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None):
     if over_under_picks: 
         for pick in over_under_picks: 
             entry = { 
-                "date": date_str, 
+                "date": pick.get("date", date_str), 
                 "type": "over_under", 
                 "league": pick.get("league"), 
                 "home_team": pick.get("home"), 
