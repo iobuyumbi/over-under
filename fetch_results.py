@@ -27,6 +27,7 @@ from prediction_tracker import load_history, save_history
 # =============================================================================
 CACHE_DB = "results_cache.db"
 CACHE_TTL_HOURS = 24
+SELECTED_RESULTS_REPORT = "selected_results_report.txt"
 
 # API Keys from environment
 FOOTBALL_DATA_KEY = os.environ.get("FOOTBALL_DATA_KEY", "")
@@ -473,6 +474,7 @@ def update_history_with_results(date_str, dry_run=False):
 
     if not results:
         logger.warning(f"No results found for {date_str}")
+        append_selected_results_report(date_str, [], [], dry_run=dry_run)
         return 0, []
 
     logger.info(f"Results to check: {len(results)}")
@@ -484,18 +486,33 @@ def update_history_with_results(date_str, dry_run=False):
     history = load_history()
     updated = 0
     unmatched = []
+    settled = []
 
     for idx, pick in enumerate(history["home_win"]):
         if pick["result"] == "pending" and pick["date"] == date_str:
-            result = determine_home_win_result(pick, results)
+            match = find_matching_result(pick, results)
+            result = determine_home_win_result(pick, [match]) if match else None
             if result:
                 if not dry_run:
                     history["home_win"][idx]["result"] = result
                     history["home_win"][idx]["updated_at"] = datetime.now().isoformat()
+                    history["home_win"][idx]["final_score"] = match["score"]
+                    history["home_win"][idx]["result_source"] = match.get("source")
                 updated += 1
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
-                logger.info(f"✅ HW: {pick_home} vs {pick_away} = {result}")
+                settled.append({
+                    "type": "HOME WIN",
+                    "league": pick.get("league"),
+                    "home_team": pick_home,
+                    "away_team": pick_away,
+                    "prediction": "Home Win",
+                    "confidence": pick.get("confidence"),
+                    "score": match["score"],
+                    "result": result,
+                    "source": match.get("source"),
+                })
+                logger.info(f"✅ HW: {pick_home} vs {pick_away} = {match['score']} = {result}")
             else:
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
@@ -503,15 +520,31 @@ def update_history_with_results(date_str, dry_run=False):
 
     for idx, pick in enumerate(history["over_under"]):
         if pick["result"] == "pending" and pick["date"] == date_str:
-            result = determine_over_under_result(pick, results)
+            match = find_matching_result(pick, results)
+            result = determine_over_under_result(pick, [match]) if match else None
             if result:
                 if not dry_run:
                     history["over_under"][idx]["result"] = result
                     history["over_under"][idx]["updated_at"] = datetime.now().isoformat()
+                    history["over_under"][idx]["final_score"] = match["score"]
+                    history["over_under"][idx]["result_source"] = match.get("source")
                 updated += 1
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
-                logger.info(f"✅ OU: {pick_home} vs {pick_away} = {result}")
+                prediction = pick.get("prediction", "over")
+                market = "Over 2.5" if prediction in ("over", "Over 2.5") else "Under 2.5"
+                settled.append({
+                    "type": "OVER/UNDER",
+                    "league": pick.get("league"),
+                    "home_team": pick_home,
+                    "away_team": pick_away,
+                    "prediction": market,
+                    "confidence": pick.get("confidence"),
+                    "score": match["score"],
+                    "result": result,
+                    "source": match.get("source"),
+                })
+                logger.info(f"✅ OU: {pick_home} vs {pick_away} = {match['score']} = {result}")
             else:
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
@@ -530,7 +563,45 @@ def update_history_with_results(date_str, dry_run=False):
         for u in unmatched[:10]:
             logger.warning(f"  - {u}")
 
+    append_selected_results_report(date_str, settled, unmatched, dry_run=dry_run)
     return updated, unmatched
+
+def find_matching_result(pick, results):
+    pick_home = pick.get("home_team", pick.get("home"))
+    pick_away = pick.get("away_team", pick.get("away"))
+    for match in results:
+        if (team_names_match(match["home_team"], pick_home) and
+                team_names_match(match["away_team"], pick_away)):
+            return match
+    return None
+
+def append_selected_results_report(date_str, settled, unmatched, dry_run=False):
+    mode = "DRY RUN - " if dry_run else ""
+    with open(SELECTED_RESULTS_REPORT, "a", encoding="utf-8") as f:
+        f.write(f"{mode}SELECTED MATCH RESULTS - {date_str}\n")
+        f.write("=" * 44 + "\n")
+        if settled:
+            for item in settled:
+                result = item["result"].upper()
+                source = item.get("source") or "unknown"
+                confidence = item.get("confidence") or "N/A"
+                league = item.get("league") or "Unknown League"
+                f.write(
+                    f"{item['type']}: {item['home_team']} vs {item['away_team']}\n"
+                    f"Pick: {item['prediction']} ({confidence})\n"
+                    f"Score: {item['score']} | Result: {result}\n"
+                    f"League: {league} | Source: {source}\n\n"
+                )
+        else:
+            f.write("No selected pending matches were settled for this date.\n\n")
+
+        if unmatched:
+            f.write(f"Still unmatched: {len(unmatched)}\n")
+            for item in unmatched[:10]:
+                f.write(f"- {item}\n")
+            if len(unmatched) > 10:
+                f.write(f"...and {len(unmatched) - 10} more\n")
+            f.write("\n")
 
 def determine_home_win_result(pick, results):
     pick_home = pick.get("home_team", pick.get("home"))
@@ -585,6 +656,8 @@ def main():
 
     total_updated = 0
     all_unmatched = []
+    if os.path.exists(SELECTED_RESULTS_REPORT):
+        os.remove(SELECTED_RESULTS_REPORT)
 
     for date_str in dates_to_check:
         print(f"\n{'='*60}")

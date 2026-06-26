@@ -60,14 +60,15 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: fetch-logs-${{ github.run_id }}
-          path: fetch_output.txt
+          path: |
+            fetch_output.txt
+            selected_results_report.txt
 
-      - name: Send Telegram results summary
+      - name: Send Telegram selected match results
         if: always()
         run: |
           python - <<'PY'
           import os
-          import re
           import requests
 
           token = os.getenv("TELEGRAM_BOT_TOKEN")
@@ -78,34 +79,22 @@ jobs:
               print("Skipping Telegram results summary: missing bot token or chat id.")
               raise SystemExit(0)
 
-          try:
-              with open("fetch_output.txt", "r", encoding="utf-8", errors="replace") as f:
-                  output = f.read()
-          except FileNotFoundError:
-              output = ""
+          if os.path.exists("selected_results_report.txt"):
+              with open("selected_results_report.txt", "r", encoding="utf-8", errors="replace") as f:
+                  report = f.read().strip()
+          else:
+              report = "No selected-match result report was generated."
 
-          summary_match = re.search(r"SUMMARY:\s*(.+)", output)
-          unmatched_match = re.search(r"Unmatched:\s*(\d+)", output)
-          updated_match = re.search(r"Updated\s+(\d+)\s+predictions", output)
-
-          summary = summary_match.group(1).strip() if summary_match else "Results fetch completed."
-          updated = updated_match.group(1) if updated_match else "0"
-          unmatched = unmatched_match.group(1) if unmatched_match else "0"
-
-          message = (
-              "RESULTS UPDATE\n\n"
-              f"{summary}\n"
-              f"Updated: {updated}\n"
-              f"Unmatched: {unmatched}\n"
-              f"Days checked: {days}"
-          )
+          message = f"SELECTED MATCH RESULTS\nDays checked: {days}\n\n{report}"
+          chunks = [message[i:i + 3900] for i in range(0, len(message), 3900)]
 
           for chat_id in filter(None, chats):
-              requests.post(
-                  f"https://api.telegram.org/bot{token}/sendMessage",
-                  data={"chat_id": chat_id, "text": message},
-                  timeout=30,
-              )
+              for chunk in chunks:
+                  requests.post(
+                      f"https://api.telegram.org/bot{token}/sendMessage",
+                      data={"chat_id": chat_id, "text": chunk},
+                      timeout=30,
+                  )
           PY
         env:
           DAYS_BACK: ${{ github.event.inputs.days_back || '3' }}
