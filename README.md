@@ -87,3 +87,16 @@ Set these environment variables in GitHub Secrets for better reliability:
 - Gambling has risks, gamble responsibly
 - Never bet more than you can afford to lose
 
+## 📊 Weekly Performance Report
+
+**Last Updated:** 2026-06-26 21:37
+
+### Over 2.5 Goals
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+
+### Home Win
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
