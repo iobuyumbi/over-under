@@ -197,7 +197,7 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None):
 
     if added > 0: 
         save_history(history) 
-        print(f"✅ Recorded {added} new predictions for {date_str}") 
+        print(f"[OK] Recorded {added} new predictions for {date_str}") 
 
     return {"added": added, "skipped": skipped}
  
@@ -221,9 +221,9 @@ def update_result(date_str, home_team, away_team, result, prediction_type="over_
  
     if updated > 0: 
         save_history(history) 
-        print(f"✅ Updated {updated} match result(s) to '{result}'") 
+        print(f"[OK] Updated {updated} match result(s) to '{result}'") 
     else: 
-        print("⚠️  No matching prediction found to update.") 
+        print("[WARN] No matching prediction found to update.") 
  
     return updated 
  
