@@ -334,7 +334,7 @@ def fetch_api_football(date_str):
 # SOURCE 3: MANUAL OVERRIDE (CSV/JSON FILE)
 # =============================================================================
 def fetch_manual_override(date_str):
-    """Read results from manual_results.json or manual_results.csv"""
+    """Read results from manual_results.json or manual_results.csv (only matches with scores)"""
     results = []
 
     # Try JSON
@@ -343,7 +343,7 @@ def fetch_manual_override(date_str):
             with open("manual_results.json", "r") as f:
                 data = json.load(f)
                 for match in data.get("results", []):
-                    if match.get("date") == date_str:
+                    if match.get("date") == date_str and match.get("score", "").strip():
                         results.append({
                             "home_team": match["home_team"],
                             "away_team": match["away_team"],
@@ -351,7 +351,7 @@ def fetch_manual_override(date_str):
                             "source": "manual"
                         })
             if results:
-                logger.info(f"[Manual] Found {len(results)} matches in manual_results.json")
+                logger.info(f"[Manual] Found {len(results)} matches with scores in manual_results.json")
                 return results
         except Exception as e:
             logger.warning(f"[Manual] Error reading JSON: {e}")
@@ -362,7 +362,7 @@ def fetch_manual_override(date_str):
             with open("manual_results.csv", "r") as f:
                 reader = csv.DictReader(f)
                 for row in reader:
-                    if row.get("date") == date_str:
+                    if row.get("date") == date_str and row.get("score", "").strip():
                         results.append({
                             "home_team": row["home_team"],
                             "away_team": row["away_team"],
@@ -370,7 +370,7 @@ def fetch_manual_override(date_str):
                             "source": "manual"
                         })
             if results:
-                logger.info(f"[Manual] Found {len(results)} matches in manual_results.csv")
+                logger.info(f"[Manual] Found {len(results)} matches with scores in manual_results.csv")
                 return results
         except Exception as e:
             logger.warning(f"[Manual] Error reading CSV: {e}")
