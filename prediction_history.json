@@ -6,8 +6,11 @@
       "home_team": "Coquimbo Unido",
       "away_team": "O'Higgins",
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:40.975139"
+      "result": "push",
+      "recorded_at": "2026-06-13T16:17:40.975139",
+      "updated_at": "2026-06-27T13:50:06.494199",
+      "final_score": "0-0",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-13",
@@ -15,8 +18,11 @@
       "home_team": "Colo-Colo",
       "away_team": "Cobresal",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:40.975139"
+      "result": "win",
+      "recorded_at": "2026-06-13T16:17:40.975139",
+      "updated_at": "2026-06-27T13:50:06.499741",
+      "final_score": "3-0",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-13",
@@ -24,8 +30,11 @@
       "home_team": "Quilmes",
       "away_team": "Gimnasia y Tiro",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:40.975139"
+      "result": "win",
+      "recorded_at": "2026-06-13T16:17:40.975139",
+      "updated_at": "2026-06-27T13:50:06.507762",
+      "final_score": "1-0",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-14",
@@ -33,8 +42,11 @@
       "home_team": "Gimnasia de Jujuy",
       "away_team": "San Martin de San Juan",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:40.975139"
+      "result": "win",
+      "recorded_at": "2026-06-13T16:17:40.975139",
+      "updated_at": "2026-06-27T13:50:00.415148",
+      "final_score": "2-1",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-15",
@@ -42,8 +54,41 @@
       "home_team": "Ivory Coast",
       "away_team": "Ecuador",
       "confidence": "close",
+      "result": "win",
+      "recorded_at": "2026-06-13T16:17:40.975139",
+      "updated_at": "2026-06-27T13:49:52.289807",
+      "final_score": "1-0",
+      "result_source": "manual"
+    },
+    {
+      "date": "2026-06-27",
+      "type": "home_win",
+      "league": "Manual League",
+      "home_team": "Manchester City",
+      "away_team": "Liverpool",
+      "confidence": "perfect",
       "result": "pending",
-      "recorded_at": "2026-06-13T16:17:40.975139"
+      "recorded_at": "2026-06-27T14:03:04.177979"
+    },
+    {
+      "date": "2026-06-27",
+      "type": "home_win",
+      "league": "Manual League",
+      "home_team": "Real Madrid",
+      "away_team": "Barcelona",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-06-27T14:03:04.180496"
+    },
+    {
+      "date": "2026-06-27",
+      "type": "home_win",
+      "league": "Manual League",
+      "home_team": "Bayern Munich",
+      "away_team": "Borussia Dortmund",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-27T14:03:04.180496"
     }
   ],
   "over_under": [
@@ -54,8 +99,11 @@
       "away_team": "O'Higgins",
       "prediction": "over",
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:28.429488"
+      "result": "loss",
+      "recorded_at": "2026-06-13T16:17:28.429488",
+      "updated_at": "2026-06-27T13:50:06.508783",
+      "final_score": "0-0",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-13",
@@ -64,8 +112,11 @@
       "away_team": "Cobresal",
       "prediction": "over",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:28.429488"
+      "result": "win",
+      "recorded_at": "2026-06-13T16:17:28.429488",
+      "updated_at": "2026-06-27T13:50:06.509789",
+      "final_score": "3-0",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-14",
@@ -74,8 +125,11 @@
       "away_team": "Guemes",
       "prediction": "over",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:28.429488"
+      "result": "win",
+      "recorded_at": "2026-06-13T16:17:28.429488",
+      "updated_at": "2026-06-27T13:50:00.426744",
+      "final_score": "4-1",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-15",
@@ -84,8 +138,11 @@
       "away_team": "Osters",
       "prediction": "over",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-13T15:48:18.117164"
+      "result": "win",
+      "recorded_at": "2026-06-13T15:48:18.117164",
+      "updated_at": "2026-06-27T13:49:52.292955",
+      "final_score": "0-4",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-14",
@@ -94,8 +151,11 @@
       "away_team": "Godoy Cruz",
       "prediction": "under",
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:28.429488"
+      "result": "win",
+      "recorded_at": "2026-06-13T16:17:28.429488",
+      "updated_at": "2026-06-27T13:50:00.430743",
+      "final_score": "1-0",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-13",
@@ -104,8 +164,11 @@
       "away_team": "Atlanta",
       "prediction": "under",
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:28.429488"
+      "result": "loss",
+      "recorded_at": "2026-06-13T16:17:28.429488",
+      "updated_at": "2026-06-27T13:50:06.512307",
+      "final_score": "1-2",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-14",
@@ -114,8 +177,11 @@
       "away_team": "Acassuso",
       "prediction": "under",
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:28.429488"
+      "result": "loss",
+      "recorded_at": "2026-06-13T16:17:28.429488",
+      "updated_at": "2026-06-27T13:50:00.438881",
+      "final_score": "2-1",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-14",
@@ -124,8 +190,11 @@
       "away_team": "San Telmo",
       "prediction": "under",
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:28.429488"
+      "result": "win",
+      "recorded_at": "2026-06-13T16:17:28.429488",
+      "updated_at": "2026-06-27T13:50:00.449969",
+      "final_score": "0-0",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-13",
@@ -134,8 +203,11 @@
       "away_team": "Chacarita",
       "prediction": "under",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:28.429488"
+      "result": "win",
+      "recorded_at": "2026-06-13T16:17:28.429488",
+      "updated_at": "2026-06-27T13:50:06.514816",
+      "final_score": "2-0",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-13",
@@ -144,8 +216,11 @@
       "away_team": "Agropecuario",
       "prediction": "under",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:28.429488"
+      "result": "loss",
+      "recorded_at": "2026-06-13T16:17:28.429488",
+      "updated_at": "2026-06-27T13:50:06.517857",
+      "final_score": "2-1",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-13",
@@ -154,8 +229,11 @@
       "away_team": "Gimnasia y Tiro",
       "prediction": "under",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:28.429488"
+      "result": "win",
+      "recorded_at": "2026-06-13T16:17:28.429488",
+      "updated_at": "2026-06-27T13:50:06.519862",
+      "final_score": "1-0",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-14",
@@ -164,8 +242,11 @@
       "away_team": "Atletico Rafaela",
       "prediction": "under",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:28.429488"
+      "result": "win",
+      "recorded_at": "2026-06-13T16:17:28.429488",
+      "updated_at": "2026-06-27T13:50:00.452879",
+      "final_score": "0-0",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-15",
@@ -174,8 +255,11 @@
       "away_team": "Ecuador",
       "prediction": "under",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-13T15:48:18.117164"
+      "result": "win",
+      "recorded_at": "2026-06-13T15:48:18.117164",
+      "updated_at": "2026-06-27T13:49:52.326870",
+      "final_score": "1-0",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-13",
@@ -184,8 +268,11 @@
       "away_team": "La Serena",
       "prediction": "over",
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-06-13T16:17:28.429488"
+      "result": "loss",
+      "recorded_at": "2026-06-13T16:17:28.429488",
+      "updated_at": "2026-06-27T13:50:06.522377",
+      "final_score": "1-1",
+      "result_source": "manual"
     },
     {
       "date": "2026-06-13",
@@ -194,8 +281,47 @@
       "away_team": "Paraguay",
       "prediction": "over",
       "confidence": "close",
+      "result": "win",
+      "recorded_at": "2026-06-13T16:17:28.429488",
+      "updated_at": "2026-06-27T13:50:06.524375",
+      "final_score": "4-1",
+      "result_source": "manual"
+    },
+    {
+      "date": "2026-06-27",
+      "type": "over_under",
+      "league": "Manual League",
+      "home_team": "Manchester City",
+      "away_team": "Liverpool",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
       "result": "pending",
-      "recorded_at": "2026-06-13T16:17:28.429488"
+      "recorded_at": "2026-06-27T14:01:59.028128"
+    },
+    {
+      "date": "2026-06-27",
+      "type": "over_under",
+      "league": "Manual League",
+      "home_team": "Real Madrid",
+      "away_team": "Barcelona",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-06-27T14:01:59.034561"
+    },
+    {
+      "date": "2026-06-27",
+      "type": "over_under",
+      "league": "Manual League",
+      "home_team": "Bayern Munich",
+      "away_team": "Borussia Dortmund",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-27T14:01:59.051446"
     }
   ]
 }
