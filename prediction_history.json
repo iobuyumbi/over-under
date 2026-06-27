@@ -89,6 +89,46 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-06-27T14:03:04.180496"
+    },
+    {
+      "date": "2026-06-30",
+      "type": "home_win",
+      "league": "World Cup",
+      "home_team": "France",
+      "away_team": "Sweden",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-06-27T14:28:15.273596"
+    },
+    {
+      "date": "2026-06-27",
+      "type": "home_win",
+      "league": "Finland League",
+      "home_team": "TPS Turku",
+      "away_team": "FF Jaro",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-27T14:28:15.273596"
+    },
+    {
+      "date": "2026-06-26",
+      "type": "home_win",
+      "league": "League of Ireland Div 1",
+      "home_team": "Cork City",
+      "away_team": "Bray",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-06-27T15:13:42.490300"
+    },
+    {
+      "date": "2026-06-26",
+      "type": "home_win",
+      "league": "World Cup",
+      "home_team": "Senegal",
+      "away_team": "Iraq",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-27T15:13:42.490300"
     }
   ],
   "over_under": [
@@ -322,6 +362,126 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-06-27T14:01:59.051446"
+    },
+    {
+      "date": "2026-06-27",
+      "type": "over_under",
+      "league": "Swedish Superettan",
+      "home_team": "Varbergs Bois",
+      "away_team": "Osters",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-27T14:27:08.626013"
+    },
+    {
+      "date": "2026-06-27",
+      "type": "over_under",
+      "league": "Swedish Superettan",
+      "home_team": "Nordic United",
+      "away_team": "IK Oddevold",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-27T14:27:08.636642"
+    },
+    {
+      "date": "2026-06-29",
+      "type": "over_under",
+      "league": "World Cup",
+      "home_team": "Germany",
+      "away_team": "Paraguay",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-27T14:27:08.660054"
+    },
+    {
+      "date": "2026-06-30",
+      "type": "over_under",
+      "league": "World Cup",
+      "home_team": "France",
+      "away_team": "Sweden",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-06-27T14:27:08.681238"
+    },
+    {
+      "date": "2026-06-27",
+      "type": "over_under",
+      "league": "Belarus League",
+      "home_team": "Torpedo Zh",
+      "away_team": "Bate Borisov",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-27T14:27:08.712912"
+    },
+    {
+      "date": "2026-06-26",
+      "type": "over_under",
+      "league": "League of Ireland Div 1",
+      "home_team": "Cork City",
+      "away_team": "Bray",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-06-27T15:13:02.097863"
+    },
+    {
+      "date": "2026-06-26",
+      "type": "over_under",
+      "league": "Swedish Superettan",
+      "home_team": "IK Brage",
+      "away_team": "Falkenbergs FF",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-06-27T15:13:02.101933"
+    },
+    {
+      "date": "2026-06-26",
+      "type": "over_under",
+      "league": "World Cup",
+      "home_team": "Norway",
+      "away_team": "France",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-27T15:13:02.120534"
+    },
+    {
+      "date": "2026-06-26",
+      "type": "over_under",
+      "league": "World Cup",
+      "home_team": "Tunisia",
+      "away_team": "Netherlands",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-27T15:13:02.139856"
+    },
+    {
+      "date": "2026-06-26",
+      "type": "over_under",
+      "league": "League of Ireland",
+      "home_team": "Dundalk",
+      "away_team": "Waterford",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-06-27T15:13:02.153519"
     }
   ]
 }
