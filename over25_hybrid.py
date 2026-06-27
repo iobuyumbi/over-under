@@ -275,9 +275,9 @@ def main():
         stats = record_predictions(base_date, [], ou_picks)
         print(f"\nPredictions recorded: {stats.get('added', 0)} new")
     
-    print("\n" + "="*70)
+    print("\n" + "-"*50)
     print("HYBRID PREDICTOR COMPLETED")
-    print("="*70)
+    print("-"*50)
 
 if __name__ == "__main__":
     main()
