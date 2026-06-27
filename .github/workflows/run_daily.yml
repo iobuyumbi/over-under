@@ -138,13 +138,13 @@ jobs:
         id: over-under
         run: |
           DATE=$(date +'%Y-%m-%d')
-          python over25_hybrid.py > output.txt 2> errors.txt || true
+          python over25_soccerbase.py > output.txt 2> errors.txt || true
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
           sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d' > over25_body.txt
 
       - name: Run Home Win predictor
         run: |
-          python home_win_hybrid.py > hw_output.txt 2> hw_errors.txt || true
+          python home_win_soccerbase.py > hw_output.txt 2> hw_errors.txt || true
           sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d' > hw_body.txt
 
       - name: Build free and VIP reports
