@@ -727,8 +727,12 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     Build a clean, mobile-friendly report - include up to 4 days if needed to reach 10 picks
     Returns: (report, base_date, included_over, included_under
     """
-    all_over_picks = over_perfect + over_qualified + over_close
-    all_under_picks = under_perfect + under_qualified + under_close
+    if detailed:
+        all_over_picks = over_perfect + over_qualified + over_close
+        all_under_picks = under_perfect + under_qualified + under_close
+    else:
+        all_over_picks = over_perfect + over_qualified
+        all_under_picks = under_perfect + under_qualified
     
     # Collect picks from days until we have at least 10 total or exhaust scanned days
     included_over = []
@@ -753,7 +757,10 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
     lines = []
-    lines.append("OVER/UNDER 2.5 PICKS")
+    if detailed:
+        lines.append("OVER/UNDER 2.5 PICKS (VIP)")
+    else:
+        lines.append("OVER/UNDER 2.5 PICKS")
     lines.append("")
     
     if len(included_dates) > 1:
@@ -960,12 +967,12 @@ def main():
     apply_portfolio_kelly(under_perfect + under_qualified + under_close, "under", args.bankroll, MAX_TOTAL_EXPOSURE / 2)
 
     # Build and output reports (both free and detailed)
-    free_report, base_date, included_over, included_under = build_report(
+    free_report, base_date, _, _ = build_report(
         over_perfect, over_qualified, over_close, over_weak,
         under_perfect, under_qualified, under_close, under_weak,
         scanned_dates, args.bankroll, args.odds_over, args.odds_under, detailed=False
     )
-    detailed_report, _, _, _ = build_report(
+    detailed_report, _, included_over, included_under = build_report(
         over_perfect, over_qualified, over_close, over_weak,
         under_perfect, under_qualified, under_close, under_weak,
         scanned_dates, args.bankroll, args.odds_over, args.odds_under, detailed=True

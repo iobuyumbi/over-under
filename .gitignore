@@ -1,6 +1,7 @@
 # Cache files
 soccerbase_cache*.db
 soccerbase_results_cache.db
+results_cache.db
 
 # Report files (generated daily)
 predictions_soccerbase_*.json
@@ -35,3 +36,5 @@ output.txt
 hw_output.txt
 combined*.txt
 monthly_output.txt
+selected_results_report.txt
+fetch_output.txt

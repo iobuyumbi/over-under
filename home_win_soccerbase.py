@@ -504,7 +504,10 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
     Build a clean, mobile-friendly report - include up to 4 days if needed to reach 10 picks
     Returns: (report, base_date, included_perfect, included_qualified, included_close)
     """
-    all_picks = perfect + qualified + close_calls
+    if detailed:
+        all_picks = perfect + qualified + close_calls
+    else:
+        all_picks = perfect + qualified
     
     # Collect picks from days until we have at least 10 total or exhaust scanned days
     included_perfect = []
@@ -522,7 +525,8 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
         
         included_perfect.extend(day_perfect)
         included_qualified.extend(day_qualified)
-        included_close.extend(day_close)
+        if detailed:
+            included_close.extend(day_close)
         included_dates.append(date_str)
         
         total_picks = len(included_perfect) + len(included_qualified) + len(included_close)
@@ -536,7 +540,10 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
 
     # Clean report (mobile-friendly)
     lines = []
-    lines.append("HOME WIN PICKS")
+    if detailed:
+        lines.append("HOME WIN PICKS (VIP)")
+    else:
+        lines.append("HOME WIN PICKS")
     lines.append("")
     
     if len(included_dates) > 1:
@@ -723,10 +730,10 @@ def main():
     apply_portfolio_kelly(all_recs, args.bankroll, MAX_TOTAL_EXPOSURE)
 
     # Build and output reports (both free and detailed)
-    free_report, base_date, included_perfect, included_qualified, included_close = build_report(
+    free_report, base_date, _, _, _ = build_report(
         perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=False
     )
-    detailed_report, _, _, _, _ = build_report(
+    detailed_report, _, included_perfect, included_qualified, included_close = build_report(
         perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=True
     )
 

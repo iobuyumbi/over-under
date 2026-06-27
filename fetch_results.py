@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-Automatic Result Fetcher - v4
-Primary: Football-Data.org (free tier covers Chile, Argentina, World Cup)
-Fallback: API-Football
-Manual: CSV/JSON override for when APIs fail
+Automatic Result Fetcher
+Settles predictions using multiple sources (first match per team pair wins):
+1. Manual CSV/JSON override
+2. Soccerbase scrape (same source as daily predictions)
+3. Football-Data.org API (optional, FOOTBALL_DATA_KEY)
+4. API-Football (optional, API_FOOTBALL_KEY)
 """
 
 import requests
@@ -331,6 +333,65 @@ def fetch_api_football(date_str):
         return []
 
 # =============================================================================
+# UPDATE MANUAL RESULTS CSV
+# =============================================================================
+def update_manual_results_csv(date_str, home_team, away_team, score):
+    """Add or update a match in manual_results.csv (preserve all existing data)"""
+    import csv
+    import os
+    from datetime import datetime
+
+    csv_path = "manual_results.csv"
+    fieldnames = ["date", "home_team", "away_team", "score"]
+    rows = []
+
+    # Read existing data
+    if os.path.exists(csv_path):
+        try:
+            with open(csv_path, mode="r", encoding="utf-8", newline="") as f:
+                reader = csv.DictReader(f)
+                fieldnames = reader.fieldnames if reader.fieldnames else fieldnames
+                for row in reader:
+                    rows.append(row)
+        except Exception as e:
+            logger.warning(f"[Manual CSV] Could not read existing file: {e}")
+
+    # Check if match already exists
+    found = False
+    for i, row in enumerate(rows):
+        if (
+            row.get("date") == date_str
+            and row.get("home_team") == home_team
+            and row.get("away_team") == away_team
+        ):
+            # Only update if score was empty
+            if not row.get("score", "").strip():
+                rows[i]["score"] = score
+                logger.info(f"[Manual CSV] Updated score: {home_team} vs {away_team} = {score}")
+            found = True
+            break
+
+    # If not found, add new row
+    if not found:
+        new_row = {
+            "date": date_str,
+            "home_team": home_team,
+            "away_team": away_team,
+            "score": score
+        }
+        rows.append(new_row)
+        logger.info(f"[Manual CSV] Added new match: {home_team} vs {away_team} = {score}")
+
+    # Write back to file (preserve all data)
+    try:
+        with open(csv_path, mode="w", encoding="utf-8", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames, lineterminator="\n")
+            writer.writeheader()
+            writer.writerows(rows)
+    except Exception as e:
+        logger.error(f"[Manual CSV] Could not write to file: {e}")
+
+# =============================================================================
 # SOURCE 3: MANUAL OVERRIDE (CSV/JSON FILE)
 # =============================================================================
 def fetch_manual_override(date_str):
@@ -498,6 +559,8 @@ def update_history_with_results(date_str, dry_run=False):
                     history["home_win"][idx]["updated_at"] = datetime.now().isoformat()
                     history["home_win"][idx]["final_score"] = match["score"]
                     history["home_win"][idx]["result_source"] = match.get("source")
+                    # Auto-update manual_results.csv with this score
+                    update_manual_results_csv(date_str, match["home_team"], match["away_team"], match["score"])
                 updated += 1
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
@@ -528,6 +591,8 @@ def update_history_with_results(date_str, dry_run=False):
                     history["over_under"][idx]["updated_at"] = datetime.now().isoformat()
                     history["over_under"][idx]["final_score"] = match["score"]
                     history["over_under"][idx]["result_source"] = match.get("source")
+                    # Auto-update manual_results.csv with this score
+                    update_manual_results_csv(date_str, match["home_team"], match["away_team"], match["score"])
                 updated += 1
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
