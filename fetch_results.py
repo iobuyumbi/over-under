@@ -445,9 +445,9 @@ def fetch_match_results(date_str):
 
     sources = [
         ("Manual Override", fetch_manual_override),
+        ("Soccerbase", fetch_soccerbase_results),
         ("Football-Data.org", fetch_football_data_org),
         ("API-Football", fetch_api_football),
-        ("Soccerbase", fetch_soccerbase_results),
     ]
 
     for source_name, source_func in sources:
