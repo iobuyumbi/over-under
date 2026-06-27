@@ -430,10 +430,10 @@ def apply_under_algorithm(home_3, away_3):
     UA2: The AWAY team must not have scored in at least one of the last three away games.
 
     6-GAME AVERAGE CHECKS:
-    UC1: HS (home scored avg in last 6 home) ≤ 1.2
-    UC2: HC (home conceded avg in last 6 home) ≤ 1.2
-    UC3: AS (away scored avg in last 6 away) ≤ 1.0
-    UC4: AC (away conceded avg in last 6 away) ≤ 1.0
+    UC1: HS (home scored avg in last 6 home) <= 1.2
+    UC2: HC (home conceded avg in last 6 home) <= 1.2
+    UC3: AS (away scored avg in last 6 away) <= 1.0
+    UC4: AC (away conceded avg in last 6 away) <= 1.0
     """
     if len(home_3) < 3 or len(away_3) < 3:
         return None, None, {"error": "Insufficient data"}, False
@@ -488,31 +488,31 @@ def apply_under_6game_checks(home_6, away_6):
     is_perfect = True
 
     if len(home_6) >= 6 and len(away_6) >= 6:
-        # UC1: Home scored average ≤ 1.2
+        # UC1: Home scored average <= 1.2
         hs = sum(gf for gf, _ in home_6) / 6
         if hs <= 1.2:
-            passed.append("UC1"); details["UC1"] = f"PASS (HS={hs:.2f} ≤ 1.2)"
+            passed.append("UC1"); details["UC1"] = f"PASS (HS={hs:.2f} <= 1.2)"
         else:
             failed.append("UC1"); details["UC1"] = f"FAIL (HS={hs:.2f} > 1.2)"; is_perfect = False
 
-        # UC2: Home conceded average ≤ 1.2
+        # UC2: Home conceded average <= 1.2
         hc = sum(ga for _, ga in home_6) / 6
         if hc <= 1.2:
-            passed.append("UC2"); details["UC2"] = f"PASS (HC={hc:.2f} ≤ 1.2)"
+            passed.append("UC2"); details["UC2"] = f"PASS (HC={hc:.2f} <= 1.2)"
         else:
             failed.append("UC2"); details["UC2"] = f"FAIL (HC={hc:.2f} > 1.2)"; is_perfect = False
 
-        # UC3: Away scored average ≤ 1.0
+        # UC3: Away scored average <= 1.0
         a_s = sum(gf for gf, _ in away_6) / 6
         if a_s <= 1.0:
-            passed.append("UC3"); details["UC3"] = f"PASS (AS={a_s:.2f} ≤ 1.0)"
+            passed.append("UC3"); details["UC3"] = f"PASS (AS={a_s:.2f} <= 1.0)"
         else:
             failed.append("UC3"); details["UC3"] = f"FAIL (AS={a_s:.2f} > 1.0)"; is_perfect = False
 
-        # UC4: Away conceded average ≤ 1.0
+        # UC4: Away conceded average <= 1.0
         a_c = sum(ga for _, ga in away_6) / 6
         if a_c <= 1.0:
-            passed.append("UC4"); details["UC4"] = f"PASS (AC={a_c:.2f} ≤ 1.0)"
+            passed.append("UC4"); details["UC4"] = f"PASS (AC={a_c:.2f} <= 1.0)"
         else:
             failed.append("UC4"); details["UC4"] = f"FAIL (AC={a_c:.2f} > 1.0)"; is_perfect = False
     else:

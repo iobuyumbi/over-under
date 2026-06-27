@@ -378,7 +378,7 @@ def main():
         score = len(passed)
         status = "[+] QUALIFIED" if score == 6 else ("[WARN] CLOSE CALL" if score == 5 else "[X]")
 
-        print(f"\n{'─' * 70}")
+        print(f"\n{'-' * 70}")
         print(f"[*] {league} | {home} vs {away}")
         print(f"[*] Score: {score}/6 | {status}")
         for check, result in details.items():

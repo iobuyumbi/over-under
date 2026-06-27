@@ -512,7 +512,7 @@ def update_history_with_results(date_str, dry_run=False):
                     "result": result,
                     "source": match.get("source"),
                 })
-                logger.info(f"✅ HW: {pick_home} vs {pick_away} = {match['score']} = {result}")
+                logger.info(f"[WIN] HW: {pick_home} vs {pick_away} = {match['score']} = {result}")
             else:
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
@@ -544,7 +544,7 @@ def update_history_with_results(date_str, dry_run=False):
                     "result": result,
                     "source": match.get("source"),
                 })
-                logger.info(f"✅ OU: {pick_home} vs {pick_away} = {match['score']} = {result}")
+                logger.info(f"[WIN] OU: {pick_home} vs {pick_away} = {match['score']} = {result}")
             else:
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
@@ -589,11 +589,11 @@ def append_selected_results_report(date_str, settled, unmatched, dry_run=False):
         if settled:
             for item in settled:
                 result = item["result"].upper()
-                f.write(f"✅ {item['home_team']} vs {item['away_team']}\n")
-                f.write(f"   {item['prediction']} → {result} ({item['score']})\n\n")
+                f.write(f"[WIN] {item['home_team']} vs {item['away_team']}\n")
+                f.write(f"   {item['prediction']} -> {result} ({item['score']})\n\n")
         
         if unmatched:
-            f.write(f"⚠️ Unmatched: {len(unmatched)}\n")
+            f.write(f"[WARN] Unmatched: {len(unmatched)}\n")
             for item in unmatched[:5]:
                 f.write(f"   - {item}\n")
             if len(unmatched) > 5:
@@ -710,7 +710,7 @@ def update_all_pending_results(days_back=7):
     
     if updated > 0:
         save_history(history)
-        logger.info(f"✅ Successfully updated {updated} match results")
+        logger.info(f"[SUCCESS] Successfully updated {updated} match results")
     else:
         logger.info("No pending results to update.")
     
