@@ -121,30 +121,19 @@ def try_football_data():
 # Step 4: Use Manual Data (fallback)
 # =============================================================================
 def use_manual_data():
-    """Use manual data from team_data.json"""
+    """Use manual data from team_data.json (NO dummy matches!)"""
     print("[4/4] Using manual data from team_data.json...")
     try:
         if os.path.exists("team_data.json"):
             with open("team_data.json", "r") as f:
                 team_data = json.load(f)
             
-            # Create sample matches using available teams
-            teams = list(team_data.keys())
-            today = datetime.now().strftime('%Y-%m-%d')
-            
-            if len(teams) >= 2:
-                matches = []
-                # Pair teams
-                for i in range(0, min(6, len(teams)-1), 2):
-                    matches.append({
-                        'league': 'Manual League',
-                        'home': teams[i],
-                        'away': teams[i+1],
-                        'date': today,
-                        'source': 'manual'
-                    })
-                print(f"   [OK] {len(matches)} sample matches")
+            # Only use explicitly listed matches from team_data.json (if any)
+            if 'matches' in team_data:
+                matches = team_data['matches']
+                print(f"   [OK] {len(matches)} manual matches loaded")
                 return matches
+        print("   [SKIP] No manual matches configured")
         return []
     except Exception as e:
         print(f"   [FAIL] {e}")
@@ -257,23 +246,10 @@ def main():
         json.dump(output_data, f, indent=2, default=str)
     print(f"JSON report saved: {json_path}")
     
-    # 4. Record predictions (if we have any fixtures)
-    if fixtures:
-        ou_picks = []
-        # For demo, mark first 3 as "over" and next 3 as "under"
-        for i, match in enumerate(fixtures[:6]):
-            prediction = "over" if i < 3 else "under"
-            confidence = "qualified" if i < 2 else "close"
-            ou_picks.append({
-                "league": match['league'],
-                "home": match['home'],
-                "away": match['away'],
-                "date": match['date'],
-                "prediction": prediction,
-                "confidence": confidence
-            })
-        stats = record_predictions(base_date, [], ou_picks)
-        print(f"\nPredictions recorded: {stats.get('added', 0)} new")
+    # 4. Record predictions (if we have any real fixtures)
+    if fixtures and any(m.get('source') != 'dummy' for m in fixtures):
+        print("\n[INFO] Prediction recording logic needs real algorithm integration")
+        print("[INFO] Skipping prediction recording for now (hybrid script WIP)")
     
     print("\n" + "-"*50)
     print("HYBRID PREDICTOR COMPLETED")
