@@ -12,7 +12,7 @@ import json
 import re
 from datetime import datetime, timedelta
 
-from fetch_results import find_match_date, update_history_with_results
+from fetch_results import update_history_with_results
 from prediction_tracker import (
     dedupe_history,
     load_history,
@@ -113,10 +113,6 @@ def backfill_dates(history, use_online=True):
         new_date = report_hw.get((pick["home_team"], pick["away_team"], pick["confidence"]))
         if not new_date:
             new_date = vip_hw.get((pick["home_team"], pick["away_team"]))
-        if not new_date and use_online:
-            new_date = find_match_date(
-                pick["home_team"], pick["away_team"], start_date, end_date
-            )
         if new_date and new_date != pick["date"]:
             pick["date"] = new_date
             updated += 1
@@ -127,10 +123,6 @@ def backfill_dates(history, use_online=True):
         )
         if not new_date:
             new_date = vip_ou.get((pick["home_team"], pick["away_team"]))
-        if not new_date and use_online:
-            new_date = find_match_date(
-                pick["home_team"], pick["away_team"], start_date, end_date
-            )
         if new_date and new_date != pick["date"]:
             pick["date"] = new_date
             updated += 1
@@ -158,7 +150,8 @@ def refresh_results(history):
     dates = sorted({pick["date"] for pick in history["home_win"] + history["over_under"]})
     total = 0
     for date_str in dates:
-        total += update_history_with_results(date_str) or 0
+        updated, _ = update_history_with_results(date_str)
+        total += updated or 0
     return total
 
 
