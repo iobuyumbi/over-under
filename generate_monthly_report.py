@@ -27,13 +27,13 @@ def main():
     
     # Save JSON report
     json_filename = f"monthly_report_{report_year}-{report_month:02d}.json"
-    with open(json_filename, "w") as f:
+    with open(json_filename, "w", encoding="utf-8") as f:
         json.dump(report_data, f, indent=2, default=str)
     print(f"JSON report saved to {json_filename}")
     
     # Save text report
     text_filename = f"monthly_report_{report_year}-{report_month:02d}.txt"
-    with open(text_filename, "w") as f:
+    with open(text_filename, "w", encoding="utf-8") as f:
         f.write(report_text)
     print(f"Text report saved to {text_filename}")
     
