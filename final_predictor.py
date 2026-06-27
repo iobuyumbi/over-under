@@ -31,8 +31,8 @@ HEADERS = {
 }
 
 # API KEYS
-FOOTBALL_DATA_KEY = ""
-API_FOOTBALL_KEY = "168c8e43e9ff8e09752249976dc7115d"
+FOOTBALL_DATA_KEY = "a17ca455c2eb4ac79408f48dd8cca2bb"
+API_FOOTBALL_KEY = "7fefa847c763ebbbbda8d5ccc41a73e4"
 
 # ============================================================
 # SOURCE 1: OpenFootball JSON (GitHub) - FREE, NO BLOCKING
