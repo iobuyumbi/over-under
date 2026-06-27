@@ -56,7 +56,7 @@ def calculate_weekly_stats(history, weeks=4):
 
 
 def generate_readme_section(stats):
-    lines = ["\n## 📊 Weekly Performance Report\n"]
+    lines = ["\n## Weekly Performance Report\n"]
     lines.append(f"**Last Updated:** {datetime.now().strftime('%Y-%m-%d %H:%M')}\n")
 
     for ptype, data in stats.items():
@@ -84,9 +84,9 @@ def update_readme():
         content = "# Soccer Predictions\n\n"
 
     # Replace or append performance section
-    if "## 📊 Weekly Performance Report" in content:
-        before = content.split("## 📊 Weekly Performance Report")[0]
-        after_part = content.split("## 📊 Weekly Performance Report")[1]
+    if "## Weekly Performance Report" in content:
+        before = content.split("## Weekly Performance Report")[0]
+        after_part = content.split("## Weekly Performance Report")[1]
         after = after_part.split("\n## ")[0] if "## " in after_part else ""
         new_content = before + generate_readme_section(stats) + after
     else:
@@ -95,7 +95,7 @@ def update_readme():
     with open(README_FILE, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-    print("✅ README.md updated with latest weekly performance report!")
+    print("[OK] README.md updated with latest weekly performance report!")
 
 
 def main():
@@ -106,12 +106,12 @@ def main():
     report_text, report_data = generate_7day_report()
 
     json_filename = f"weekly_report_{today}.json"
-    with open(json_filename, "w") as f:
+    with open(json_filename, "w", encoding="utf-8") as f:
         json.dump(report_data, f, indent=2, default=str)
     print(f"JSON report saved to {json_filename}")
 
     text_filename = f"weekly_report_{today}.txt"
-    with open(text_filename, "w") as f:
+    with open(text_filename, "w", encoding="utf-8") as f:
         f.write(report_text)
     print(f"Text report saved to {text_filename}")
 
