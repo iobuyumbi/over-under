@@ -731,8 +731,8 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
         all_over_picks = over_perfect + over_qualified + over_close
         all_under_picks = under_perfect + under_qualified + under_close
     else:
-        all_over_picks = over_perfect + over_qualified
-        all_under_picks = under_perfect + under_qualified
+        all_over_picks = over_perfect + over_qualified + over_close
+        all_under_picks = under_perfect + under_qualified + under_close
     
     # Collect picks from days until we have at least 10 total or exhaust scanned days
     included_over = []
