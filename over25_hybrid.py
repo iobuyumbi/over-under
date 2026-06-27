@@ -154,9 +154,9 @@ def use_manual_data():
 # Main: Run the hybrid predictor
 # =============================================================================
 def main():
-    print("="*70)
+    print("-"*50)
     print("HYBRID OVER/UNDER 2.5 PREDICTOR")
-    print("="*70)
+    print("-"*50)
     print(f"Date: {datetime.now().strftime('%Y-%m-%d')}")
     print()
 
@@ -215,11 +215,11 @@ def main():
         }
     }
     
-    # Create a simple free report (email format)
+    # Create a simple free report (email format) - mobile friendly
     free_report = []
-    free_report.append("="*70)
+    free_report.append("-"*50)
     free_report.append("OVER/UNDER 2.5 GOALS PREDICTIONS")
-    free_report.append("="*70)
+    free_report.append("-"*50)
     free_report.append(f"Date: {base_date}")
     free_report.append("")
     
@@ -227,7 +227,8 @@ def main():
         free_report.append(f"Found {len(fixtures)} matches:")
         free_report.append("")
         for i, match in enumerate(fixtures[:5], 1):
-            free_report.append(f"{i}. {match['league']}: {match['home']} vs {match['away']}")
+            free_report.append(f"{i}. {match['home']} vs {match['away']}")
+            free_report.append(f"   League: {match['league']}")
         if len(fixtures) > 5:
             free_report.append(f"   ...and {len(fixtures)-5} more")
     else:
@@ -235,7 +236,7 @@ def main():
         free_report.append("Check back later or use manual data entry.")
     
     free_report.append("")
-    free_report.append("="*70)
+    free_report.append("-"*50)
     free_report_text = "\n".join(free_report)
     
     # Output in the exact same format as original:
@@ -244,10 +245,10 @@ def main():
     print(free_report_text)
     print("===EMAIL_END===")
     
-    # 2. Save VIP report (simple version)
+    # 2. Save VIP report (clean, simple version)
     vip_report_path = f"over_under_vip_report_{base_date}.txt"
     with open(vip_report_path, "w") as f:
-        f.write(free_report_text + "\n\n[DETAILED REPORT]\n(Full analysis would go here)")
+        f.write(free_report_text)  # Just the clean report, no extra bulk
     print(f"\nVIP report saved: {vip_report_path}")
     
     # 3. Save JSON report
