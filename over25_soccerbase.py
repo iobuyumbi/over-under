@@ -978,12 +978,12 @@ def main():
 
     # Save detailed report to file
     detailed_report_path = f"over_under_vip_report_{base_date}.txt"
-    with open(detailed_report_path, "w") as f:
+    with open(detailed_report_path, "w", encoding="utf-8") as f:
         f.write(detailed_report)
 
     # Save JSON
     output_path = f"over_under_25_report_{base_date}.json"
-    with open(output_path, "w") as f:
+    with open(output_path, "w", encoding="utf-8") as f:
         json.dump({
             "metadata": {
                 "scanned_window": scanned_dates,
