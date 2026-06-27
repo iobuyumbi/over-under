@@ -507,7 +507,7 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
     if detailed:
         all_picks = perfect + qualified + close_calls
     else:
-        all_picks = perfect + qualified
+        all_picks = perfect + qualified + close_calls
     
     # Collect picks from days until we have at least 10 total or exhaust scanned days
     included_perfect = []
