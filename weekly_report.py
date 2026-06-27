@@ -100,7 +100,7 @@ def update_readme():
     with open(README_FILE, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-    print("✅ README.md updated with latest weekly performance report!")
+    print("[OK] README.md updated with latest weekly performance report!")
 
 
 if __name__ == "__main__":

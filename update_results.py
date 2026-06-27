@@ -16,11 +16,11 @@ def clear_screen():
 def print_predictions_list(predictions):
     """Print a list of pending predictions with indices."""
     if not predictions:
-        print("✅ No pending predictions!")
+        print("[OK] No pending predictions!")
         return False
     
     print("=" * 80)
-    print(f"📋 PENDING PREDICTIONS ({len(predictions)} total)")
+    print(f"[PENDING] Pending Predictions ({len(predictions)} total)")
     print("=" * 80)
     
     for idx, pick in enumerate(predictions, 1):
@@ -97,15 +97,15 @@ def update_interactive():
                         result,
                         pick["type"],
                     ):
-                        print(f"✅ Updated prediction as: {result.upper()}")
+                        print(f"[OK] Updated prediction as: {result.upper()}")
                     else:
-                        print("❌ Failed to update prediction")
+                        print("[FAIL] Failed to update prediction")
                 else:
-                    print("❌ Invalid choice")
+                    print("[FAIL] Invalid choice")
             else:
-                print("❌ Invalid number")
+                print("[FAIL] Invalid number")
         else:
-            print("❌ Invalid choice")
+            print("[FAIL] Invalid choice")
 
 def show_history():
     """Show overall prediction history."""
@@ -185,7 +185,7 @@ def main():
             print("\n👋 Goodbye!")
             break
         else:
-            print("\n❌ Invalid choice!")
+            print("\n[FAIL] Invalid choice!")
 
 if __name__ == "__main__":
     main()

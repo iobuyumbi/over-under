@@ -173,9 +173,9 @@ def main():
         print(f"Fetching: {date} {home} vs {away}")
         score = fetch_match_result(date, home, away)
         if score:
-            print(f"  ✓ Result: {score}")
+            print(f"  [OK] Result: {score}")
         else:
-            print(f"  ✗ No result found")
+            print(f"  [FAIL] No result found")
         results.append((date, home, away, score or ""))
     
     # Write to CSV
