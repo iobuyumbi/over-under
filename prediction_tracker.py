@@ -399,7 +399,12 @@ def calculate_performance_for_month(picks, month_start, month_end):
     } 
     
     for pick in picks: 
-        pick_date = datetime.fromisoformat(pick["date"]) 
+        # Handle both date-only (YYYY-MM-DD) and full ISO strings
+        date_str = pick["date"]
+        if len(date_str) == 10:
+            pick_date = datetime.strptime(date_str, "%Y-%m-%d")
+        else:
+            pick_date = datetime.fromisoformat(date_str)
         if month_start <= pick_date < month_end: 
             stats["total"] += 1 
             if pick["result"] == "win": 
@@ -491,8 +496,14 @@ def generate_weekly_report():
         } 
         
         for pick in picks: 
-            pick_date = datetime.fromisoformat(pick["date"]) 
-            if week_ago <= pick_date <= today: 
+            # Handle both date-only (YYYY-MM-DD) and full ISO strings
+            date_str = pick["date"]
+            if len(date_str) == 10:
+                pick_date = datetime.strptime(date_str, "%Y-%m-%d")
+            else:
+                pick_date = datetime.fromisoformat(date_str)
+            # Normalize to date-only comparison (ignore time)
+            if week_ago.date() <= pick_date.date() <= today.date(): 
                 stats["total"] += 1 
                 conf = pick.get("confidence", "N/A") 
                 if conf not in stats["by_confidence"]: 
