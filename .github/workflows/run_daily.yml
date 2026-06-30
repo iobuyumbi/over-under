@@ -151,20 +151,28 @@ jobs:
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
 
+          # Free report - combined with section headers
           {
+            echo "=== OVER/UNDER PREDICTIONS ==="
+            echo ""
             cat over25_body.txt
+            echo ""
+            echo "=== HOME WIN PREDICTIONS ==="
             echo ""
             cat hw_body.txt
           } > combined_free.txt
 
+          # VIP report - combined with section headers
           {
-            echo "DAILY PREDICTIONS (VIP)"
+            echo "=== OVER/UNDER PREDICTIONS (VIP) ==="
             echo ""
             if [ -f "over_under_vip_report_$DATE.txt" ]; then
               cat "over_under_vip_report_$DATE.txt"
             else
               cat over25_body.txt
             fi
+            echo ""
+            echo "=== HOME WIN PREDICTIONS (VIP) ==="
             echo ""
             if [ -f "home_win_vip_report_$DATE.txt" ]; then
               cat "home_win_vip_report_$DATE.txt"
