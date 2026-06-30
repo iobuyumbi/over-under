@@ -437,8 +437,13 @@ def generate_monthly_report(year, month):
     # Calculate home win stats 
     hw_stats = calculate_performance_for_month(history["home_win"], month_start, month_end) 
     
-    # Calculate over/under stats 
-    ou_stats = calculate_performance_for_month(history["over_under"], month_start, month_end) 
+    # Separate over and under picks
+    over_picks = [p for p in history["over_under"] if p.get("prediction", "over").lower() == "over"]
+    under_picks = [p for p in history["over_under"] if p.get("prediction", "over").lower() == "under"]
+    
+    # Calculate separate stats
+    over_stats = calculate_performance_for_month(over_picks, month_start, month_end)
+    under_stats = calculate_performance_for_month(under_picks, month_start, month_end)
     
     # Generate report text 
     month_name = month_start.strftime("%B %Y") 
@@ -455,14 +460,23 @@ def generate_monthly_report(year, month):
     if hw_stats['decisions'] > 0: 
         report.append(f"Win Rate: {hw_stats['win_rate']:.1f}%") 
     report.append("") 
-    report.append("OVER/UNDER 2.5 GOALS") 
-    report.append(f"Total picks: {ou_stats['total']}") 
-    report.append(f"Wins: {ou_stats['wins']}") 
-    report.append(f"Losses: {ou_stats['losses']}") 
-    report.append(f"Pushes: {ou_stats['pushes']}") 
-    report.append(f"Pending: {ou_stats['pending']}") 
-    if ou_stats['decisions'] > 0: 
-        report.append(f"Win Rate: {ou_stats['win_rate']:.1f}%") 
+    report.append("OVER 2.5 GOALS") 
+    report.append(f"Total picks: {over_stats['total']}") 
+    report.append(f"Wins: {over_stats['wins']}") 
+    report.append(f"Losses: {over_stats['losses']}") 
+    report.append(f"Pushes: {over_stats['pushes']}") 
+    report.append(f"Pending: {over_stats['pending']}") 
+    if over_stats['decisions'] > 0: 
+        report.append(f"Win Rate: {over_stats['win_rate']:.1f}%") 
+    report.append("") 
+    report.append("UNDER 2.5 GOALS") 
+    report.append(f"Total picks: {under_stats['total']}") 
+    report.append(f"Wins: {under_stats['wins']}") 
+    report.append(f"Losses: {under_stats['losses']}") 
+    report.append(f"Pushes: {under_stats['pushes']}") 
+    report.append(f"Pending: {under_stats['pending']}") 
+    if under_stats['decisions'] > 0: 
+        report.append(f"Win Rate: {under_stats['win_rate']:.1f}%") 
     report.append("") 
     report.append("---") 
     report.append("For informational purposes only") 
@@ -472,7 +486,8 @@ def generate_monthly_report(year, month):
     return "\n".join(report), { 
         "month": f"{year}-{month:02d}", 
         "home_win": hw_stats, 
-        "over_under": ou_stats 
+        "over": over_stats,
+        "under": under_stats 
     }
 
 
@@ -536,8 +551,14 @@ def generate_weekly_report():
         
         return stats 
     
-    hw_stats = calc_stats(history["home_win"]) 
-    ou_stats = calc_stats(history["over_under"]) 
+    hw_stats = calc_stats(history["home_win"])
+    
+    # Separate over and under picks
+    over_picks = [p for p in history["over_under"] if p.get("prediction", "over").lower() == "over"]
+    under_picks = [p for p in history["over_under"] if p.get("prediction", "over").lower() == "under"]
+    
+    over_stats = calc_stats(over_picks)
+    under_stats = calc_stats(under_picks)
     
     report = [] 
     report.append("WEEKLY PERFORMANCE REPORT") 
@@ -563,31 +584,51 @@ def generate_weekly_report():
             report.append(f"  {conf}: {cs['wins']}/{cs['decisions']} wins ({cs['win_rate']:.1f}%)") 
     
     report.append("") 
-    report.append("OVER/UNDER 2.5 GOALS") 
-    report.append(f"Total picks: {ou_stats['total']}") 
-    report.append(f"Wins: {ou_stats['wins']}") 
-    report.append(f"Losses: {ou_stats['losses']}") 
-    report.append(f"Pushes: {ou_stats['pushes']}") 
-    report.append(f"Pending: {ou_stats['pending']}") 
-    if ou_stats['decisions']>0: 
-        report.append(f"Win rate: {ou_stats['win_rate']:.1f}%") 
+    report.append("OVER 2.5 GOALS") 
+    report.append(f"Total picks: {over_stats['total']}") 
+    report.append(f"Wins: {over_stats['wins']}") 
+    report.append(f"Losses: {over_stats['losses']}") 
+    report.append(f"Pushes: {over_stats['pushes']}") 
+    report.append(f"Pending: {over_stats['pending']}") 
+    if over_stats['decisions']>0: 
+        report.append(f"Win rate: {over_stats['win_rate']:.1f}%") 
     
-    settled_ou = [ 
-        (conf, cs) for conf, cs in sorted(ou_stats['by_confidence'].items()) 
+    settled_over = [ 
+        (conf, cs) for conf, cs in sorted(over_stats['by_confidence'].items()) 
         if cs['decisions'] > 0 
     ] 
-    if settled_ou: 
+    if settled_over: 
         report.append("") 
         report.append("Performance by confidence:") 
-        for conf, cs in settled_ou: 
+        for conf, cs in settled_over: 
             report.append(f"  {conf}: {cs['wins']}/{cs['decisions']} wins ({cs['win_rate']:.1f}%)") 
     
     report.append("") 
-    report.append("---") 
-    report.append("For informational purposes only") 
+    report.append("UNDER 2.5 GOALS") 
+    report.append(f"Total picks: {under_stats['total']}") 
+    report.append(f"Wins: {under_stats['wins']}") 
+    report.append(f"Losses: {under_stats['losses']}") 
+    report.append(f"Pushes: {under_stats['pushes']}") 
+    report.append(f"Pending: {under_stats['pending']}") 
+    if under_stats['decisions']>0: 
+        report.append(f"Win rate: {under_stats['win_rate']:.1f}%") 
+    
+    settled_under = [ 
+        (conf, cs) for conf, cs in sorted(under_stats['by_confidence'].items()) 
+        if cs['decisions'] > 0 
+    ] 
+    if settled_under:
+        report.append("")
+        report.append("Performance by confidence:")
+        for conf, cs in settled_under:
+            report.append(f"  {conf}: {cs['wins']}/{cs['decisions']} wins ({cs['win_rate']:.1f}%)")
+
+    report.append("")
+    report.append("---")
+    report.append("For informational purposes only")
     report.append("Gamble responsibly") 
     
-    return "\n".join(report), {"home_win": hw_stats, "over_under": ou_stats}
+    return "\n".join(report), {"home_win": hw_stats, "over": over_stats, "under": under_stats}
 
  
 def main(): 
