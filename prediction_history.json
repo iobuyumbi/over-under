@@ -592,8 +592,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:27:08.660054"
+      "result": "loss",
+      "recorded_at": "2026-06-27T14:27:08.660054",
+      "updated_at": "2026-06-30T21:21:40.982383",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-30",
