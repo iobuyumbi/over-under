@@ -67,8 +67,11 @@
       "home_team": "France",
       "away_team": "Sweden",
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:28:15.273596"
+      "result": "win",
+      "recorded_at": "2026-06-27T14:28:15.273596",
+      "updated_at": "2026-07-01T21:15:10.251896",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-27",
@@ -607,8 +610,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:27:08.681238"
+      "result": "win",
+      "recorded_at": "2026-06-27T14:27:08.681238",
+      "updated_at": "2026-07-01T21:15:10.252606",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-27",
