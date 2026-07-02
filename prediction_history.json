@@ -77,8 +77,11 @@
       "home_team": "TPS Turku",
       "away_team": "FF Jaro",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:28:15.273596"
+      "result": "win",
+      "recorded_at": "2026-06-27T14:28:15.273596",
+      "updated_at": "2026-06-28T20:49:45.541565",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-26",
@@ -559,8 +562,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:27:08.626013"
+      "result": "win",
+      "recorded_at": "2026-06-27T14:27:08.626013",
+      "updated_at": "2026-06-28T20:49:45.542622",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-27",
@@ -571,8 +577,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:27:08.636642"
+      "result": "win",
+      "recorded_at": "2026-06-27T14:27:08.636642",
+      "updated_at": "2026-06-28T20:49:45.543400",
+      "final_score": "3-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-29",
@@ -583,8 +592,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:27:08.660054"
+      "result": "loss",
+      "recorded_at": "2026-06-27T14:27:08.660054",
+      "updated_at": "2026-06-30T21:21:40.982383",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-30",
@@ -607,8 +619,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:27:08.712912"
+      "result": "loss",
+      "recorded_at": "2026-06-27T14:27:08.712912",
+      "updated_at": "2026-06-28T20:49:45.544004",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-26",
