@@ -61,36 +61,6 @@
       "result_source": "manual"
     },
     {
-      "date": "2026-06-27",
-      "type": "home_win",
-      "league": "Manual League",
-      "home_team": "Manchester City",
-      "away_team": "Liverpool",
-      "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:03:04.177979"
-    },
-    {
-      "date": "2026-06-27",
-      "type": "home_win",
-      "league": "Manual League",
-      "home_team": "Real Madrid",
-      "away_team": "Barcelona",
-      "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:03:04.180496"
-    },
-    {
-      "date": "2026-06-27",
-      "type": "home_win",
-      "league": "Manual League",
-      "home_team": "Bayern Munich",
-      "away_team": "Borussia Dortmund",
-      "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:03:04.180496"
-    },
-    {
       "date": "2026-06-30",
       "type": "home_win",
       "league": "World Cup",
@@ -332,42 +302,6 @@
       "updated_at": "2026-06-27T13:50:06.524375",
       "final_score": "4-1",
       "result_source": "manual"
-    },
-    {
-      "date": "2026-06-27",
-      "type": "over_under",
-      "league": "Manual League",
-      "home_team": "Manchester City",
-      "away_team": "Liverpool",
-      "prediction": "over",
-      "prob": null,
-      "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:01:59.028128"
-    },
-    {
-      "date": "2026-06-27",
-      "type": "over_under",
-      "league": "Manual League",
-      "home_team": "Real Madrid",
-      "away_team": "Barcelona",
-      "prediction": "over",
-      "prob": null,
-      "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:01:59.034561"
-    },
-    {
-      "date": "2026-06-27",
-      "type": "over_under",
-      "league": "Manual League",
-      "home_team": "Bayern Munich",
-      "away_team": "Borussia Dortmund",
-      "prediction": "over",
-      "prob": null,
-      "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:01:59.051446"
     },
     {
       "date": "2026-06-27",
