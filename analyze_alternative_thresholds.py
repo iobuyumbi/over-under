@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Analyze how Over 1.5 and Under 3.5 picks would have performed using existing prediction history
+Analyze how Over 1.5, Under 3.5, and Double Chance (home or draw) picks would have performed using existing prediction history
 """
 import json
 from datetime import datetime, timedelta
@@ -19,12 +19,22 @@ def calculate_result(home_score, away_score, prediction):
         return "win" if total_goals <= 3 else "loss"
     return "pending"
 
+def calculate_double_chance_result(home_score, away_score):
+    # Double chance home or draw: home wins OR draw
+    if home_score >= away_score:
+        return "win"
+    else:
+        return "loss"
+
 def analyze_period(history, days_back=30):
     now = datetime.now()
     cutoff = now - timedelta(days=days_back)
     
     stats = {
         "home_win": {
+            "total": 0, "wins": 0, "losses": 0, "pushes": 0, "pending": 0
+        },
+        "double_chance": {
             "total": 0, "wins": 0, "losses": 0, "pushes": 0, "pending": 0
         },
         "over_15": {
@@ -56,6 +66,18 @@ def analyze_period(history, days_back=30):
                     stats["home_win"]["pushes"] += 1
             else:
                 stats["home_win"]["pending"] += 1
+                
+            # Also analyze double chance for these home win picks
+            stats["double_chance"]["total"] +=1
+            if pick["result"] == "pending" or "final_score" not in pick:
+                stats["double_chance"]["pending"] +=1
+            else:
+                home_score, away_score = map(int, pick["final_score"].split("-"))
+                dc_result = calculate_double_chance_result(home_score, away_score)
+                if dc_result == "win":
+                    stats["double_chance"]["wins"] +=1
+                else:
+                    stats["double_chance"]["losses"] +=1
         except:
             pass
     
@@ -100,7 +122,7 @@ def analyze_period(history, days_back=30):
             pass
             
     # Calculate win rates
-    for key in ["home_win", "over_15", "under_35"]:
+    for key in ["home_win", "double_chance", "over_15", "under_35"]:
         total_decisions = stats[key]["wins"] + stats[key]["losses"] + stats[key]["pushes"]
         if total_decisions > 0:
             stats[key]["win_rate"] = round(stats[key]["wins"] / total_decisions * 100, 1)
@@ -124,6 +146,16 @@ def print_report(period_name, stats):
     print(f"Pending: {stats['home_win']['pending']}")
     if stats['home_win']['win_rate'] >0:
         print(f"Win rate: {stats['home_win']['win_rate']}%")
+    print()
+    
+    print("DOUBLE CHANCE (Home or Draw) - safer alternative")
+    print("-"*40)
+    print(f"Total picks: {stats['double_chance']['total']}")
+    print(f"Wins: {stats['double_chance']['wins']}")
+    print(f"Losses: {stats['double_chance']['losses']}")
+    print(f"Pending: {stats['double_chance']['pending']}")
+    if stats['double_chance']['win_rate'] >0:
+        print(f"Win rate: {stats['double_chance']['win_rate']}%")
     print()
     
     print("OVER 1.5 GOALS (instead of Over 2.5)")
