@@ -4,7 +4,7 @@
     "wins": 5,
     "losses": 0,
     "pushes": 0,
-    "pending": 3,
+    "pending": 0,
     "decisions": 5,
     "win_rate": 100.0,
     "by_confidence": {
@@ -20,7 +20,7 @@
         "wins": 3,
         "losses": 0,
         "pushes": 0,
-        "pending": 3,
+        "pending": 0,
         "decisions": 3,
         "win_rate": 100.0
       }
@@ -30,7 +30,7 @@
     "total": 8,
     "wins": 5,
     "losses": 0,
-    "pending": 3,
+    "pending": 0,
     "decisions": 5,
     "win_rate": 100.0
   },
@@ -39,7 +39,7 @@
     "wins": 8,
     "losses": 2,
     "pushes": 0,
-    "pending": 4,
+    "pending": 0,
     "decisions": 10,
     "win_rate": 80.0,
     "by_confidence": {
@@ -47,7 +47,7 @@
         "wins": 6,
         "losses": 1,
         "pushes": 0,
-        "pending": 3,
+        "pending": 0,
         "decisions": 7,
         "win_rate": 85.71428571428571
       },
@@ -55,7 +55,7 @@
         "wins": 2,
         "losses": 0,
         "pushes": 0,
-        "pending": 1,
+        "pending": 0,
         "decisions": 2,
         "win_rate": 100.0
       },
@@ -73,7 +73,7 @@
     "total": 14,
     "wins": 10,
     "losses": 0,
-    "pending": 4,
+    "pending": 0,
     "decisions": 10,
     "win_rate": 100.0
   },
