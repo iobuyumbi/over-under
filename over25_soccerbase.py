@@ -25,7 +25,7 @@ from fake_useragent import UserAgent
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Import prediction tracker
-from prediction_tracker import record_predictions, get_yesterday_results, format_yesterday_header, format_vip_extra_lines
+from prediction_tracker import record_predictions, get_yesterday_results, format_yesterday_header, format_vip_extra_lines, format_pick_block
 
 # =============================================================================
 # CONFIGURATION
@@ -714,6 +714,26 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
 # =============================================================================
 # REPORTING
 # =============================================================================
+def _append_ou_pick(lines, idx, item, side, odds, detailed):
+    """Append one over/under pick with consistent spacing."""
+    m = item["match"]
+    p = item["poisson"]
+    tgt = item[side]
+    prob_key = "over25_prob" if side == "over" else "under25_prob"
+    max_score = 10 if side == "over" else 8
+    extra = None
+    if detailed:
+        extra = format_vip_extra_lines(
+            tgt["kelly"], odds, tgt["score"], max_score,
+            home_lambda=p["home_lambda"], away_lambda=p["away_lambda"],
+        )
+    lines.extend(format_pick_block(
+        idx, m["home"], m["away"], m["date"],
+        f"{tgt['confidence']} ({p[prob_key]}%)",
+        extra,
+    ))
+
+
 def build_report(over_perfect, over_qualified, over_close, over_weak,
                under_perfect, under_qualified, under_close, under_weak,
                scanned_dates, bankroll, odds_over, odds_under, detailed=False):
@@ -761,69 +781,28 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
         
         if included_over_perfect:
             lines.append("  PREMIUM PICKS")
+            lines.append("")
             for i, item in enumerate(included_over_perfect, 1):
-                m = item["match"]
-                p = item["poisson"]
-                tgt = item["over"]
-                if detailed:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
-                    for extra in format_vip_extra_lines(
-                        tgt["kelly"], odds_over, tgt["score"], 10,
-                        home_lambda=p["home_lambda"], away_lambda=p["away_lambda"],
-                    ):
-                        lines.append(f"     {extra}")
-                    lines.append("")
-                else:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
+                _append_ou_pick(lines, i, item, "over", odds_over, detailed)
         
         if included_over_qualified:
             if not detailed and not included_over_perfect:
                 lines.append("  PREMIUM PICKS")
+                lines.append("")
             if detailed:
                 lines.append("  STRONG PICKS")
+                lines.append("")
             start_idx = len(included_over_perfect) + 1
             for i, item in enumerate(included_over_qualified, start_idx):
-                m = item["match"]
-                p = item["poisson"]
-                tgt = item["over"]
-                if detailed:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
-                    for extra in format_vip_extra_lines(
-                        tgt["kelly"], odds_over, tgt["score"], 10,
-                        home_lambda=p["home_lambda"], away_lambda=p["away_lambda"],
-                    ):
-                        lines.append(f"     {extra}")
-                    lines.append("")
-                else:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
+                _append_ou_pick(lines, i, item, "over", odds_over, detailed)
         
         if included_over_close:
             if detailed:
                 lines.append("  VALUE PICKS")
+                lines.append("")
             start_idx = len(included_over_perfect) + len(included_over_qualified) + 1
             for i, item in enumerate(included_over_close, start_idx):
-                m = item["match"]
-                p = item["poisson"]
-                tgt = item["over"]
-                if detailed:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
-                    for extra in format_vip_extra_lines(
-                        tgt["kelly"], odds_over, tgt["score"], 10,
-                        home_lambda=p["home_lambda"], away_lambda=p["away_lambda"],
-                    ):
-                        lines.append(f"     {extra}")
-                    lines.append("")
-                else:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
-        
-        if not detailed and (included_over_perfect or included_over_qualified or included_over_close):
-            lines.append("")
+                _append_ou_pick(lines, i, item, "over", odds_over, detailed)
     
     # Under 2.5 section
     if included_under:
@@ -837,69 +816,28 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
         
         if included_under_perfect:
             lines.append("  PREMIUM PICKS")
+            lines.append("")
             for i, item in enumerate(included_under_perfect, 1):
-                m = item["match"]
-                p = item["poisson"]
-                tgt = item["under"]
-                if detailed:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
-                    for extra in format_vip_extra_lines(
-                        tgt["kelly"], odds_under, tgt["score"], 8,
-                        home_lambda=p["home_lambda"], away_lambda=p["away_lambda"],
-                    ):
-                        lines.append(f"     {extra}")
-                    lines.append("")
-                else:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
+                _append_ou_pick(lines, i, item, "under", odds_under, detailed)
         
         if included_under_qualified:
             if not detailed and not included_under_perfect:
                 lines.append("  PREMIUM PICKS")
+                lines.append("")
             if detailed:
                 lines.append("  STRONG PICKS")
+                lines.append("")
             start_idx = len(included_under_perfect) + 1
             for i, item in enumerate(included_under_qualified, start_idx):
-                m = item["match"]
-                p = item["poisson"]
-                tgt = item["under"]
-                if detailed:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
-                    for extra in format_vip_extra_lines(
-                        tgt["kelly"], odds_under, tgt["score"], 8,
-                        home_lambda=p["home_lambda"], away_lambda=p["away_lambda"],
-                    ):
-                        lines.append(f"     {extra}")
-                    lines.append("")
-                else:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
+                _append_ou_pick(lines, i, item, "under", odds_under, detailed)
         
         if included_under_close:
             if detailed:
                 lines.append("  VALUE PICKS")
+                lines.append("")
             start_idx = len(included_under_perfect) + len(included_under_qualified) + 1
             for i, item in enumerate(included_under_close, start_idx):
-                m = item["match"]
-                p = item["poisson"]
-                tgt = item["under"]
-                if detailed:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
-                    for extra in format_vip_extra_lines(
-                        tgt["kelly"], odds_under, tgt["score"], 8,
-                        home_lambda=p["home_lambda"], away_lambda=p["away_lambda"],
-                    ):
-                        lines.append(f"     {extra}")
-                    lines.append("")
-                else:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
-        
-        if not detailed and (included_under_perfect or included_under_qualified or included_under_close):
-            lines.append("")
+                _append_ou_pick(lines, i, item, "under", odds_under, detailed)
 
     # Disclaimer
     lines.append("---")

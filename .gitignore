@@ -3,17 +3,10 @@ soccerbase_cache*.db
 soccerbase_results_cache.db
 results_cache.db
 
-# Report files (generated daily)
+# Local-only generated output (not committed by CI)
 predictions_soccerbase_*.json
 home_win_predictions_*.json
-home_win_report_*.json
-over_under_25_report_*.json
 over25_report_*.json
-*_vip_report_*.txt
-monthly_report_*.json
-monthly_report_*.txt
-weekly_report_*.json
-weekly_report_*.txt
 
 # Environment and sensitive files
 *.env

@@ -248,7 +248,7 @@ def get_performance_summary(days=30):
                 losses += 1 
             elif res == "push": 
                 pushes += 1 
-            else: 
+            elif count_report_pending(p):
                 pending += 1 
  
         total_decided = wins + losses + pushes 
@@ -277,24 +277,50 @@ def print_summary():
         print(f"  Wins: {s['wins']} | Losses: {s['losses']} | Pending: {s['pending']}") 
  
  
-def get_pending_predictions(days_old=None): 
-    """Get pending predictions (no result recorded yet).""" 
-    history = load_history() 
-    pending = [] 
-    
-    for p_type in ["home_win", "over_under"]: 
-        for idx, pick in enumerate(history[p_type]): 
-            if pick["result"] == "pending": 
-                pick["type"] = p_type 
-                pick["index"] = idx 
-                if days_old: 
-                    pick_date = datetime.fromisoformat(pick["date"]) 
-                    if (datetime.now() - pick_date).days <= days_old: 
-                        pending.append(pick) 
-                else: 
-                    pending.append(pick) 
-    
+def get_pending_predictions(days_old=None, due_only=True):
+    """Get pending predictions (no result recorded yet).
+
+    due_only: when True, skip future fixtures not yet played.
+    """
+    history = load_history()
+    pending = []
+    today = datetime.now().date()
+
+    for p_type in ["home_win", "over_under"]:
+        for idx, pick in enumerate(history[p_type]):
+            if pick["result"] != "pending":
+                continue
+            date_str = pick["date"][:10]
+            try:
+                pick_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+            except ValueError:
+                continue
+            if due_only and pick_date > today:
+                continue
+            pick = dict(pick)
+            pick["type"] = p_type
+            pick["index"] = idx
+            if days_old:
+                if (datetime.now() - datetime.combine(pick_date, datetime.min.time())).days <= days_old:
+                    pending.append(pick)
+            else:
+                pending.append(pick)
+
     return pending
+
+
+def pick_is_due(pick):
+    """True when the fixture date is today or earlier."""
+    try:
+        pick_date = datetime.strptime(pick["date"][:10], "%Y-%m-%d").date()
+    except ValueError:
+        return False
+    return pick_date <= datetime.now().date()
+
+
+def count_report_pending(pick):
+    """Pending for performance reports: only unsettled past/today fixtures."""
+    return pick.get("result") == "pending" and pick_is_due(pick)
 
 
 def get_yesterday_results(prediction_type=None): 
@@ -308,7 +334,7 @@ def get_yesterday_results(prediction_type=None):
     results = [] 
     summary = {"wins": 0, "losses": 0, "pushes": 0, "pending": 0} 
  
-    def format_status(result): 
+    def format_status(result, pick): 
         if result == "win": 
             summary["wins"] += 1 
             return "Win" 
@@ -318,15 +344,19 @@ def get_yesterday_results(prediction_type=None):
         if result == "push": 
             summary["pushes"] += 1 
             return "Push" 
-        summary["pending"] += 1 
-        return "Pending" 
+        if count_report_pending(pick):
+            summary["pending"] += 1 
+            return "Pending"
+        return None 
  
     if prediction_type in (None, "home_win"): 
         for pick in history["home_win"]: 
             if pick["date"] == yesterday: 
                 home = pick.get("home_team", pick.get("home"))
                 away = pick.get("away_team", pick.get("away"))
-                status = format_status(pick["result"]) 
+                status = format_status(pick["result"], pick)
+                if status is None:
+                    continue
                 results.append(f"HOME WIN: {home} vs {away} - {status}") 
  
     if prediction_type in (None, "over_under"): 
@@ -334,7 +364,9 @@ def get_yesterday_results(prediction_type=None):
             if pick["date"] == yesterday: 
                 home = pick.get("home_team", pick.get("home"))
                 away = pick.get("away_team", pick.get("away"))
-                status = format_status(pick["result"]) 
+                status = format_status(pick["result"], pick)
+                if status is None:
+                    continue
                 direction = "OVER 2.5" if pick["prediction"] in ("over", "Over 2.5") else "UNDER 2.5"
                 results.append(f"{direction}: {home} vs {away} - {status}") 
  
@@ -441,6 +473,19 @@ def format_vip_extra_lines(stake_pct, odds, score, max_score, *,
     return lines
 
 
+def format_pick_block(idx, home, away, date, summary, extra_lines=None):
+    """One pick with consistent spacing for free and VIP reports."""
+    lines = [
+        f"  {idx}. {home} vs {away} ({date})",
+        f"     {summary}",
+    ]
+    if extra_lines:
+        for line in extra_lines:
+            lines.append(f"     {line}")
+    lines.append("")
+    return lines
+
+
 def calculate_performance(history_list, days=30): 
     """Calculate performance metrics for last N days.""" 
     cutoff = datetime.now() - timedelta(days=days) 
@@ -502,7 +547,7 @@ def calculate_performance_for_month(picks, month_start, month_end):
                 stats["decisions"] += 1 
             elif pick["result"] == "push": 
                 stats["pushes"] += 1 
-            else: 
+            elif count_report_pending(pick):
                 stats["pending"] += 1 
     
     if stats["decisions"] > 0: 
@@ -545,12 +590,15 @@ def calculate_safer_pick_stats(picks, date_filter_fn):
         if date_filter_fn(pick):
             stats["double_chance"]["total"] += 1
             if pick["result"] == "pending":
+                if not pick_is_due(pick):
+                    continue
                 stats["double_chance"]["pending"] += 1
                 continue
 
             parsed = parse_final_score(pick.get("final_score"))
             if parsed is None:
-                stats["double_chance"]["pending"] += 1
+                if pick_is_due(pick):
+                    stats["double_chance"]["pending"] += 1
                 continue
 
             home_score, away_score = parsed
@@ -571,6 +619,8 @@ def calculate_safer_pick_stats(picks, date_filter_fn):
                 stats["under_3_5"]["total"] += 1
             
             if pick["result"] == "pending":
+                if not pick_is_due(pick):
+                    continue
                 if prediction == "over":
                     stats["over_1_5"]["pending"] += 1
                 else:
@@ -579,6 +629,8 @@ def calculate_safer_pick_stats(picks, date_filter_fn):
 
             parsed = parse_final_score(pick.get("final_score"))
             if parsed is None:
+                if not pick_is_due(pick):
+                    continue
                 if prediction == "over":
                     stats["over_1_5"]["pending"] += 1
                 else:
@@ -762,7 +814,7 @@ def generate_weekly_report():
                 elif pick["result"] == "push": 
                     stats["pushes"] +=1 
                     stats["by_confidence"][conf]["pushes"] +=1 
-                else: 
+                elif count_report_pending(pick): 
                     stats["pending"] +=1 
                     stats["by_confidence"][conf]["pending"] +=1 
         
