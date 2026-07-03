@@ -1,0 +1,107 @@
+{
+  "home_win": {
+    "total": 8,
+    "wins": 5,
+    "losses": 0,
+    "pushes": 0,
+    "pending": 3,
+    "decisions": 5,
+    "win_rate": 100.0,
+    "by_confidence": {
+      "qualified": {
+        "wins": 2,
+        "losses": 0,
+        "pushes": 0,
+        "pending": 0,
+        "decisions": 2,
+        "win_rate": 100.0
+      },
+      "close": {
+        "wins": 3,
+        "losses": 0,
+        "pushes": 0,
+        "pending": 3,
+        "decisions": 3,
+        "win_rate": 100.0
+      }
+    }
+  },
+  "double_chance": {
+    "total": 8,
+    "wins": 5,
+    "losses": 0,
+    "pending": 3,
+    "decisions": 5,
+    "win_rate": 100.0
+  },
+  "over": {
+    "total": 14,
+    "wins": 8,
+    "losses": 2,
+    "pushes": 0,
+    "pending": 4,
+    "decisions": 10,
+    "win_rate": 80.0,
+    "by_confidence": {
+      "close": {
+        "wins": 6,
+        "losses": 1,
+        "pushes": 0,
+        "pending": 3,
+        "decisions": 7,
+        "win_rate": 85.71428571428571
+      },
+      "qualified": {
+        "wins": 2,
+        "losses": 0,
+        "pushes": 0,
+        "pending": 1,
+        "decisions": 2,
+        "win_rate": 100.0
+      },
+      "perfect": {
+        "wins": 0,
+        "losses": 1,
+        "pushes": 0,
+        "pending": 0,
+        "decisions": 1,
+        "win_rate": 0.0
+      }
+    }
+  },
+  "over_1_5": {
+    "total": 14,
+    "wins": 10,
+    "losses": 0,
+    "pending": 4,
+    "decisions": 10,
+    "win_rate": 100.0
+  },
+  "under": {
+    "total": 1,
+    "wins": 0,
+    "losses": 1,
+    "pushes": 0,
+    "pending": 0,
+    "decisions": 1,
+    "win_rate": 0.0,
+    "by_confidence": {
+      "close": {
+        "wins": 0,
+        "losses": 1,
+        "pushes": 0,
+        "pending": 0,
+        "decisions": 1,
+        "win_rate": 0.0
+      }
+    }
+  },
+  "under_3_5": {
+    "total": 1,
+    "wins": 1,
+    "losses": 0,
+    "pending": 0,
+    "decisions": 1,
+    "win_rate": 100.0
+  }
+}
