@@ -67,8 +67,11 @@
       "home_team": "France",
       "away_team": "Sweden",
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:28:15.273596"
+      "result": "win",
+      "recorded_at": "2026-06-27T14:28:15.273596",
+      "updated_at": "2026-07-03T02:01:50.342179",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-27",
@@ -77,8 +80,11 @@
       "home_team": "TPS Turku",
       "away_team": "FF Jaro",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:28:15.273596"
+      "result": "win",
+      "recorded_at": "2026-06-27T14:28:15.273596",
+      "updated_at": "2026-07-03T02:01:55.952812",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-26",
@@ -203,8 +209,11 @@
       "home_team": "Mexico",
       "away_team": "Ecuador",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-03T04:47:47.368629"
+      "result": "win",
+      "recorded_at": "2026-07-03T04:47:47.368629",
+      "updated_at": "2026-07-03T02:01:48.949430",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     }
   ],
   "over_under": [
@@ -412,8 +421,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:27:08.626013"
+      "result": "win",
+      "recorded_at": "2026-06-27T14:27:08.626013",
+      "updated_at": "2026-07-03T02:01:55.953280",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-27",
@@ -424,8 +436,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:27:08.636642"
+      "result": "win",
+      "recorded_at": "2026-06-27T14:27:08.636642",
+      "updated_at": "2026-07-03T02:01:55.953746",
+      "final_score": "3-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-29",
@@ -436,8 +451,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:27:08.660054"
+      "result": "loss",
+      "recorded_at": "2026-06-27T14:27:08.660054",
+      "updated_at": "2026-07-03T02:01:52.844790",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-30",
@@ -448,8 +466,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:27:08.681238"
+      "result": "win",
+      "recorded_at": "2026-06-27T14:27:08.681238",
+      "updated_at": "2026-07-03T02:01:50.342408",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-27",
@@ -460,8 +481,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-06-27T14:27:08.712912"
+      "result": "loss",
+      "recorded_at": "2026-06-27T14:27:08.712912",
+      "updated_at": "2026-07-03T02:01:55.954092",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-26",
