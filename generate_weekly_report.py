@@ -19,76 +19,38 @@ README_FILE = "README.md"
 
 def calculate_weekly_stats(history, weeks=4):
     """Calculate performance for last N weeks"""
-    stats = {"over": {}, "under": {}, "home_win": {}}
+    stats = {"over_under": {}, "home_win": {}}
     now = datetime.now()
 
-    # Process over_under picks separately by prediction type
-    ou_picks = history.get("over_under", [])
-    weekly_over = defaultdict(lambda: {"wins": 0, "losses": 0, "pushes": 0, "total": 0})
-    weekly_under = defaultdict(lambda: {"wins": 0, "losses": 0, "pushes": 0, "total": 0})
+    for ptype in ["over_under", "home_win"]:
+        picks = history.get(ptype, [])
+        weekly = defaultdict(lambda: {"wins": 0, "losses": 0, "pushes": 0, "total": 0})
 
-    for pick in ou_picks:
-        if pick.get("result") in ["pending", None]:
-            continue
-        try:
-            pick_date = datetime.strptime(pick["date"], "%Y-%m-%d")
-            week_key = pick_date.strftime("%Y-W%W")
-            res = pick["result"]
-            prediction = pick.get("prediction", "over").lower()
+        for pick in picks:
+            if pick.get("result") in ["pending", None]:
+                continue
+            try:
+                pick_date = datetime.strptime(pick["date"], "%Y-%m-%d")
+                week_key = pick_date.strftime("%Y-W%W")
+                res = pick["result"]
 
-            weekly_dict = weekly_over if prediction == "over" else weekly_under
-            weekly_dict[week_key]["total"] += 1
-            if res == "win":
-                weekly_dict[week_key]["wins"] += 1
-            elif res == "loss":
-                weekly_dict[week_key]["losses"] += 1
-            elif res == "push":
-                weekly_dict[week_key]["pushes"] += 1
-        except:
-            continue
+                weekly[week_key]["total"] += 1
+                if res == "win":
+                    weekly[week_key]["wins"] += 1
+                elif res == "loss":
+                    weekly[week_key]["losses"] += 1
+                elif res == "push":
+                    weekly[week_key]["pushes"] += 1
+            except:
+                continue
 
-    stats["over"] = sorted(
-        [{"week": k, **v, "win_rate": round(v["wins"]/v["total"]*100, 1) if v["total"] > 0 else 0}
-         for k, v in weekly_over.items()],
-        key=lambda x: x["week"],
-        reverse=True
-    )[:weeks]
-
-    stats["under"] = sorted(
-        [{"week": k, **v, "win_rate": round(v["wins"]/v["total"]*100, 1) if v["total"] > 0 else 0}
-         for k, v in weekly_under.items()],
-        key=lambda x: x["week"],
-        reverse=True
-    )[:weeks]
-
-    # Process home_win picks
-    hw_picks = history.get("home_win", [])
-    weekly_hw = defaultdict(lambda: {"wins": 0, "losses": 0, "pushes": 0, "total": 0})
-
-    for pick in hw_picks:
-        if pick.get("result") in ["pending", None]:
-            continue
-        try:
-            pick_date = datetime.strptime(pick["date"], "%Y-%m-%d")
-            week_key = pick_date.strftime("%Y-W%W")
-            res = pick["result"]
-
-            weekly_hw[week_key]["total"] += 1
-            if res == "win":
-                weekly_hw[week_key]["wins"] += 1
-            elif res == "loss":
-                weekly_hw[week_key]["losses"] += 1
-            elif res == "push":
-                weekly_hw[week_key]["pushes"] += 1
-        except:
-            continue
-
-    stats["home_win"] = sorted(
-        [{"week": k, **v, "win_rate": round(v["wins"]/v["total"]*100, 1) if v["total"] > 0 else 0}
-         for k, v in weekly_hw.items()],
-        key=lambda x: x["week"],
-        reverse=True
-    )[:weeks]
+        # Convert to list and sort
+        stats[ptype] = sorted(
+            [{"week": k, **v, "win_rate": round(v["wins"]/v["total"]*100, 1) if v["total"] > 0 else 0}
+             for k, v in weekly.items()],
+            key=lambda x: x["week"],
+            reverse=True
+        )[:weeks]
 
     return stats
 
@@ -98,13 +60,7 @@ def generate_readme_section(stats):
     lines.append(f"**Last Updated:** {datetime.now().strftime('%Y-%m-%d %H:%M')}\n")
 
     for ptype, data in stats.items():
-        if ptype == "over":
-            name = "Over 2.5 Goals"
-        elif ptype == "under":
-            name = "Under 2.5 Goals"
-        else:
-            name = "Home Win"
-        
+        name = "Over 2.5 Goals" if ptype == "over_under" else "Home Win"
         lines.append(f"### {name}\n")
         lines.append("| Week | Matches | Wins | Losses | Win Rate |")
         lines.append("|------|---------|------|--------|----------|")

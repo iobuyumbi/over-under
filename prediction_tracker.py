@@ -354,6 +354,60 @@ def format_yesterday_header(summary):
     return None
 
 
+def parse_final_score(score_str):
+    """Parse a score string like '2-1' into (home_goals, away_goals) or None."""
+    if not score_str or "-" not in str(score_str):
+        return None
+    try:
+        home, away = map(int, str(score_str).split("-", 1))
+        return home, away
+    except ValueError:
+        return None
+
+
+def compute_safer_result(market, score_str):
+    """
+    Derive safer-market result from a final score.
+    market: 'double_chance', 'over_1_5', or 'under_3_5'
+    Returns 'win', 'loss', or None if score is unavailable.
+    """
+    parsed = parse_final_score(score_str)
+    if parsed is None:
+        return None
+    home, away = parsed
+    total = home + away
+    if market == "double_chance":
+        return "win" if home >= away else "loss"
+    if market == "over_1_5":
+        return "win" if total >= 2 else "loss"
+    if market == "under_3_5":
+        return "win" if total <= 3 else "loss"
+    return None
+
+
+def safer_market_label(primary_market):
+    """Map a primary prediction label to its safer companion market."""
+    market = (primary_market or "").lower()
+    if market in ("home win", "home_win"):
+        return "double_chance", "Double Chance (Home or Draw)"
+    if market in ("over", "over 2.5"):
+        return "over_1_5", "Over 1.5 Goals"
+    if market in ("under", "under 2.5"):
+        return "under_3_5", "Under 3.5 Goals"
+    return None, None
+
+
+def format_safer_result_line(primary_market, score_str):
+    """Format one safer-pick result line for reports."""
+    market_key, label = safer_market_label(primary_market)
+    if not market_key:
+        return None
+    result = compute_safer_result(market_key, score_str)
+    if result is None:
+        return None
+    return f"   Safer: {label} -> {result.upper()} ({score_str})"
+
+
 def calculate_performance(history_list, days=30): 
     """Calculate performance metrics for last N days.""" 
     cutoff = datetime.now() - timedelta(days=days) 
@@ -424,6 +478,106 @@ def calculate_performance_for_month(picks, month_start, month_end):
     return stats
 
 
+def calculate_safer_pick_stats(picks, date_filter_fn):
+    """Calculate stats for safer picks (Double Chance, Over 1.5, Under 3.5)"""
+    stats = {
+        "double_chance": {
+            "total": 0,
+            "wins": 0,
+            "losses": 0,
+            "pending": 0,
+            "decisions": 0,
+            "win_rate": 0.0
+        },
+        "over_1_5": {
+            "total": 0,
+            "wins": 0,
+            "losses": 0,
+            "pending": 0,
+            "decisions": 0,
+            "win_rate": 0.0
+        },
+        "under_3_5": {
+            "total": 0,
+            "wins": 0,
+            "losses": 0,
+            "pending": 0,
+            "decisions": 0,
+            "win_rate": 0.0
+        }
+    }
+    
+    # Process Double Chance (for Home Win picks)
+    for pick in picks.get("home_win", []):
+        if date_filter_fn(pick):
+            stats["double_chance"]["total"] += 1
+            if pick["result"] == "pending":
+                stats["double_chance"]["pending"] += 1
+                continue
+
+            parsed = parse_final_score(pick.get("final_score"))
+            if parsed is None:
+                stats["double_chance"]["pending"] += 1
+                continue
+
+            home_score, away_score = parsed
+            if home_score >= away_score:
+                stats["double_chance"]["wins"] += 1
+                stats["double_chance"]["decisions"] += 1
+            else:
+                stats["double_chance"]["losses"] += 1
+                stats["double_chance"]["decisions"] += 1
+    
+    # Process Over 1.5 and Under 3.5 (for Over/Under picks)
+    for pick in picks.get("over_under", []):
+        if date_filter_fn(pick):
+            prediction = pick.get("prediction", "over").lower()
+            if prediction == "over":
+                stats["over_1_5"]["total"] += 1
+            else:
+                stats["under_3_5"]["total"] += 1
+            
+            if pick["result"] == "pending":
+                if prediction == "over":
+                    stats["over_1_5"]["pending"] += 1
+                else:
+                    stats["under_3_5"]["pending"] += 1
+                continue
+
+            parsed = parse_final_score(pick.get("final_score"))
+            if parsed is None:
+                if prediction == "over":
+                    stats["over_1_5"]["pending"] += 1
+                else:
+                    stats["under_3_5"]["pending"] += 1
+                continue
+
+            home_score, away_score = parsed
+            total_goals = home_score + away_score
+            
+            if prediction == "over":
+                if total_goals >= 2:
+                    stats["over_1_5"]["wins"] += 1
+                    stats["over_1_5"]["decisions"] += 1
+                else:
+                    stats["over_1_5"]["losses"] += 1
+                    stats["over_1_5"]["decisions"] += 1
+            else:
+                if total_goals <= 3:
+                    stats["under_3_5"]["wins"] += 1
+                    stats["under_3_5"]["decisions"] += 1
+                else:
+                    stats["under_3_5"]["losses"] += 1
+                    stats["under_3_5"]["decisions"] += 1
+    
+    # Calculate win rates
+    for key in stats:
+        if stats[key]["decisions"] > 0:
+            stats[key]["win_rate"] = (stats[key]["wins"] / stats[key]["decisions"]) * 100
+    
+    return stats
+
+
 def generate_monthly_report(year, month): 
     """Generate detailed monthly performance report with win/loss tracking.""" 
     history = load_history() 
@@ -437,13 +591,24 @@ def generate_monthly_report(year, month):
     # Calculate home win stats 
     hw_stats = calculate_performance_for_month(history["home_win"], month_start, month_end) 
     
-    # Separate over and under picks
+    # Separate over and under picks 
     over_picks = [p for p in history["over_under"] if p.get("prediction", "over").lower() == "over"]
     under_picks = [p for p in history["over_under"] if p.get("prediction", "over").lower() == "under"]
     
-    # Calculate separate stats
-    over_stats = calculate_performance_for_month(over_picks, month_start, month_end)
-    under_stats = calculate_performance_for_month(under_picks, month_start, month_end)
+    # Calculate separate over and under stats
+    over_stats = calculate_performance_for_month(over_picks, month_start, month_end) 
+    under_stats = calculate_performance_for_month(under_picks, month_start, month_end) 
+    
+    # Calculate safer pick stats
+    def month_filter(pick):
+        date_str = pick["date"]
+        if len(date_str) == 10:
+            pick_date = datetime.strptime(date_str, "%Y-%m-%d")
+        else:
+            pick_date = datetime.fromisoformat(date_str)
+        return month_start <= pick_date < month_end
+    
+    safer_stats = calculate_safer_pick_stats(history, month_filter)
     
     # Generate report text 
     month_name = month_start.strftime("%B %Y") 
@@ -460,6 +625,14 @@ def generate_monthly_report(year, month):
     if hw_stats['decisions'] > 0: 
         report.append(f"Win Rate: {hw_stats['win_rate']:.1f}%") 
     report.append("") 
+    report.append("DOUBLE CHANCE (HOME OR DRAW)") 
+    report.append(f"Total picks: {safer_stats['double_chance']['total']}") 
+    report.append(f"Wins: {safer_stats['double_chance']['wins']}") 
+    report.append(f"Losses: {safer_stats['double_chance']['losses']}") 
+    report.append(f"Pending: {safer_stats['double_chance']['pending']}") 
+    if safer_stats['double_chance']['decisions'] > 0: 
+        report.append(f"Win Rate: {safer_stats['double_chance']['win_rate']:.1f}%") 
+    report.append("") 
     report.append("OVER 2.5 GOALS") 
     report.append(f"Total picks: {over_stats['total']}") 
     report.append(f"Wins: {over_stats['wins']}") 
@@ -468,6 +641,14 @@ def generate_monthly_report(year, month):
     report.append(f"Pending: {over_stats['pending']}") 
     if over_stats['decisions'] > 0: 
         report.append(f"Win Rate: {over_stats['win_rate']:.1f}%") 
+    report.append("") 
+    report.append("OVER 1.5 GOALS") 
+    report.append(f"Total picks: {safer_stats['over_1_5']['total']}") 
+    report.append(f"Wins: {safer_stats['over_1_5']['wins']}") 
+    report.append(f"Losses: {safer_stats['over_1_5']['losses']}") 
+    report.append(f"Pending: {safer_stats['over_1_5']['pending']}") 
+    if safer_stats['over_1_5']['decisions'] > 0: 
+        report.append(f"Win Rate: {safer_stats['over_1_5']['win_rate']:.1f}%") 
     report.append("") 
     report.append("UNDER 2.5 GOALS") 
     report.append(f"Total picks: {under_stats['total']}") 
@@ -478,6 +659,14 @@ def generate_monthly_report(year, month):
     if under_stats['decisions'] > 0: 
         report.append(f"Win Rate: {under_stats['win_rate']:.1f}%") 
     report.append("") 
+    report.append("UNDER 3.5 GOALS") 
+    report.append(f"Total picks: {safer_stats['under_3_5']['total']}") 
+    report.append(f"Wins: {safer_stats['under_3_5']['wins']}") 
+    report.append(f"Losses: {safer_stats['under_3_5']['losses']}") 
+    report.append(f"Pending: {safer_stats['under_3_5']['pending']}") 
+    if safer_stats['under_3_5']['decisions'] > 0: 
+        report.append(f"Win Rate: {safer_stats['under_3_5']['win_rate']:.1f}%") 
+    report.append("") 
     report.append("---") 
     report.append("For informational purposes only") 
     report.append("Gamble responsibly") 
@@ -486,8 +675,11 @@ def generate_monthly_report(year, month):
     return "\n".join(report), { 
         "month": f"{year}-{month:02d}", 
         "home_win": hw_stats, 
+        "double_chance": safer_stats["double_chance"],
         "over": over_stats,
-        "under": under_stats 
+        "over_1_5": safer_stats["over_1_5"],
+        "under": under_stats,
+        "under_3_5": safer_stats["under_3_5"]
     }
 
 
@@ -551,14 +743,25 @@ def generate_weekly_report():
         
         return stats 
     
-    hw_stats = calc_stats(history["home_win"])
+    hw_stats = calc_stats(history["home_win"]) 
     
     # Separate over and under picks
     over_picks = [p for p in history["over_under"] if p.get("prediction", "over").lower() == "over"]
     under_picks = [p for p in history["over_under"] if p.get("prediction", "over").lower() == "under"]
     
-    over_stats = calc_stats(over_picks)
-    under_stats = calc_stats(under_picks)
+    over_stats = calc_stats(over_picks) 
+    under_stats = calc_stats(under_picks) 
+    
+    # Calculate safer pick stats
+    def week_filter(pick):
+        date_str = pick["date"]
+        if len(date_str) == 10:
+            pick_date = datetime.strptime(date_str, "%Y-%m-%d")
+        else:
+            pick_date = datetime.fromisoformat(date_str)
+        return week_ago.date() <= pick_date.date() <= today.date()
+    
+    safer_stats = calculate_safer_pick_stats(history, week_filter)
     
     report = [] 
     report.append("WEEKLY PERFORMANCE REPORT") 
@@ -584,6 +787,15 @@ def generate_weekly_report():
             report.append(f"  {conf}: {cs['wins']}/{cs['decisions']} wins ({cs['win_rate']:.1f}%)") 
     
     report.append("") 
+    report.append("DOUBLE CHANCE (HOME OR DRAW)") 
+    report.append(f"Total picks: {safer_stats['double_chance']['total']}") 
+    report.append(f"Wins: {safer_stats['double_chance']['wins']}") 
+    report.append(f"Losses: {safer_stats['double_chance']['losses']}") 
+    report.append(f"Pending: {safer_stats['double_chance']['pending']}") 
+    if safer_stats['double_chance']['decisions']>0: 
+        report.append(f"Win rate: {safer_stats['double_chance']['win_rate']:.1f}%") 
+    
+    report.append("") 
     report.append("OVER 2.5 GOALS") 
     report.append(f"Total picks: {over_stats['total']}") 
     report.append(f"Wins: {over_stats['wins']}") 
@@ -604,6 +816,15 @@ def generate_weekly_report():
             report.append(f"  {conf}: {cs['wins']}/{cs['decisions']} wins ({cs['win_rate']:.1f}%)") 
     
     report.append("") 
+    report.append("OVER 1.5 GOALS") 
+    report.append(f"Total picks: {safer_stats['over_1_5']['total']}") 
+    report.append(f"Wins: {safer_stats['over_1_5']['wins']}") 
+    report.append(f"Losses: {safer_stats['over_1_5']['losses']}") 
+    report.append(f"Pending: {safer_stats['over_1_5']['pending']}") 
+    if safer_stats['over_1_5']['decisions']>0: 
+        report.append(f"Win rate: {safer_stats['over_1_5']['win_rate']:.1f}%") 
+    
+    report.append("") 
     report.append("UNDER 2.5 GOALS") 
     report.append(f"Total picks: {under_stats['total']}") 
     report.append(f"Wins: {under_stats['wins']}") 
@@ -617,18 +838,34 @@ def generate_weekly_report():
         (conf, cs) for conf, cs in sorted(under_stats['by_confidence'].items()) 
         if cs['decisions'] > 0 
     ] 
-    if settled_under:
-        report.append("")
-        report.append("Performance by confidence:")
-        for conf, cs in settled_under:
-            report.append(f"  {conf}: {cs['wins']}/{cs['decisions']} wins ({cs['win_rate']:.1f}%)")
-
-    report.append("")
-    report.append("---")
-    report.append("For informational purposes only")
+    if settled_under: 
+        report.append("") 
+        report.append("Performance by confidence:") 
+        for conf, cs in settled_under: 
+            report.append(f"  {conf}: {cs['wins']}/{cs['decisions']} wins ({cs['win_rate']:.1f}%)") 
+    
+    report.append("") 
+    report.append("UNDER 3.5 GOALS") 
+    report.append(f"Total picks: {safer_stats['under_3_5']['total']}") 
+    report.append(f"Wins: {safer_stats['under_3_5']['wins']}") 
+    report.append(f"Losses: {safer_stats['under_3_5']['losses']}") 
+    report.append(f"Pending: {safer_stats['under_3_5']['pending']}") 
+    if safer_stats['under_3_5']['decisions']>0: 
+        report.append(f"Win rate: {safer_stats['under_3_5']['win_rate']:.1f}%") 
+    
+    report.append("") 
+    report.append("---") 
+    report.append("For informational purposes only") 
     report.append("Gamble responsibly") 
     
-    return "\n".join(report), {"home_win": hw_stats, "over": over_stats, "under": under_stats}
+    return "\n".join(report), {
+        "home_win": hw_stats, 
+        "double_chance": safer_stats["double_chance"],
+        "over": over_stats, 
+        "over_1_5": safer_stats["over_1_5"],
+        "under": under_stats,
+        "under_3_5": safer_stats["under_3_5"]
+    }
 
  
 def main(): 

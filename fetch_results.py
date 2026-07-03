@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 """
-Automatic Result Fetcher
-Settles predictions using multiple sources (first match per team pair wins):
-1. Manual CSV/JSON override
-2. Soccerbase scrape (same source as daily predictions)
-3. Football-Data.org API (optional, FOOTBALL_DATA_KEY)
-4. API-Football (optional, API_FOOTBALL_KEY)
+Automatic Result Fetcher - v4
+Primary: Football-Data.org (free tier covers Chile, Argentina, World Cup)
+Fallback: API-Football
+Manual: CSV/JSON override for when APIs fail
 """
 
 import requests
@@ -22,7 +20,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 
-from prediction_tracker import load_history, save_history
+from prediction_tracker import load_history, save_history, format_safer_result_line
 
 # =============================================================================
 # CONFIGURATION
@@ -333,65 +331,6 @@ def fetch_api_football(date_str):
         return []
 
 # =============================================================================
-# UPDATE MANUAL RESULTS CSV
-# =============================================================================
-def update_manual_results_csv(date_str, home_team, away_team, score):
-    """Add or update a match in manual_results.csv (preserve all existing data)"""
-    import csv
-    import os
-    from datetime import datetime
-
-    csv_path = "manual_results.csv"
-    fieldnames = ["date", "home_team", "away_team", "score"]
-    rows = []
-
-    # Read existing data
-    if os.path.exists(csv_path):
-        try:
-            with open(csv_path, mode="r", encoding="utf-8", newline="") as f:
-                reader = csv.DictReader(f)
-                fieldnames = reader.fieldnames if reader.fieldnames else fieldnames
-                for row in reader:
-                    rows.append(row)
-        except Exception as e:
-            logger.warning(f"[Manual CSV] Could not read existing file: {e}")
-
-    # Check if match already exists
-    found = False
-    for i, row in enumerate(rows):
-        if (
-            row.get("date") == date_str
-            and row.get("home_team") == home_team
-            and row.get("away_team") == away_team
-        ):
-            # Only update if score was empty
-            if not row.get("score", "").strip():
-                rows[i]["score"] = score
-                logger.info(f"[Manual CSV] Updated score: {home_team} vs {away_team} = {score}")
-            found = True
-            break
-
-    # If not found, add new row
-    if not found:
-        new_row = {
-            "date": date_str,
-            "home_team": home_team,
-            "away_team": away_team,
-            "score": score
-        }
-        rows.append(new_row)
-        logger.info(f"[Manual CSV] Added new match: {home_team} vs {away_team} = {score}")
-
-    # Write back to file (preserve all data)
-    try:
-        with open(csv_path, mode="w", encoding="utf-8", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=fieldnames, lineterminator="\n")
-            writer.writeheader()
-            writer.writerows(rows)
-    except Exception as e:
-        logger.error(f"[Manual CSV] Could not write to file: {e}")
-
-# =============================================================================
 # SOURCE 3: MANUAL OVERRIDE (CSV/JSON FILE)
 # =============================================================================
 def fetch_manual_override(date_str):
@@ -559,8 +498,6 @@ def update_history_with_results(date_str, dry_run=False):
                     history["home_win"][idx]["updated_at"] = datetime.now().isoformat()
                     history["home_win"][idx]["final_score"] = match["score"]
                     history["home_win"][idx]["result_source"] = match.get("source")
-                    # Auto-update manual_results.csv with this score
-                    update_manual_results_csv(date_str, match["home_team"], match["away_team"], match["score"])
                 updated += 1
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
@@ -591,8 +528,6 @@ def update_history_with_results(date_str, dry_run=False):
                     history["over_under"][idx]["updated_at"] = datetime.now().isoformat()
                     history["over_under"][idx]["final_score"] = match["score"]
                     history["over_under"][idx]["result_source"] = match.get("source")
-                    # Auto-update manual_results.csv with this score
-                    update_manual_results_csv(date_str, match["home_team"], match["away_team"], match["score"])
                 updated += 1
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
@@ -655,7 +590,11 @@ def append_selected_results_report(date_str, settled, unmatched, dry_run=False):
             for item in settled:
                 result = item["result"].upper()
                 f.write(f"[WIN] {item['home_team']} vs {item['away_team']}\n")
-                f.write(f"   {item['prediction']} -> {result} ({item['score']})\n\n")
+                f.write(f"   {item['prediction']} -> {result} ({item['score']})\n")
+                safer_line = format_safer_result_line(item["prediction"], item["score"])
+                if safer_line:
+                    f.write(f"{safer_line}\n")
+                f.write("\n")
         
         if unmatched:
             f.write(f"[WARN] Unmatched: {len(unmatched)}\n")
@@ -757,21 +696,33 @@ def update_all_pending_results(days_back=7):
         
         for idx, pick in enumerate(history["home_win"]):
             if pick["result"] == "pending" and pick["date"] == date_str:
-                result = determine_home_win_result(pick, results)
+                match = find_matching_result(pick, results)
+                result = determine_home_win_result(pick, [match]) if match else None
                 if result:
                     history["home_win"][idx]["result"] = result
                     history["home_win"][idx]["updated_at"] = datetime.now().isoformat()
+                    if match:
+                        history["home_win"][idx]["final_score"] = match["score"]
+                        history["home_win"][idx]["result_source"] = match.get("source")
                     updated += 1
-                    logger.info(f"Updated: {pick['home_team']} vs {pick['away_team']} → {result}")
+                    pick_home = pick.get("home_team", pick.get("home"))
+                    pick_away = pick.get("away_team", pick.get("away"))
+                    logger.info(f"Updated: {pick_home} vs {pick_away} → {result}")
         
         for idx, pick in enumerate(history["over_under"]):
             if pick["result"] == "pending" and pick["date"] == date_str:
-                result = determine_over_under_result(pick, results)
+                match = find_matching_result(pick, results)
+                result = determine_over_under_result(pick, [match]) if match else None
                 if result:
                     history["over_under"][idx]["result"] = result
                     history["over_under"][idx]["updated_at"] = datetime.now().isoformat()
+                    if match:
+                        history["over_under"][idx]["final_score"] = match["score"]
+                        history["over_under"][idx]["result_source"] = match.get("source")
                     updated += 1
-                    logger.info(f"Updated: {pick['home_team']} vs {pick['away_team']} → {result}")
+                    pick_home = pick.get("home_team", pick.get("home"))
+                    pick_away = pick.get("away_team", pick.get("away"))
+                    logger.info(f"Updated: {pick_home} vs {pick_away} → {result}")
     
     if updated > 0:
         save_history(history)
