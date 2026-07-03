@@ -49,8 +49,8 @@ jobs:
       - name: Fetch and settle match results
         run: |
           DAYS="${{ github.event.inputs.days_back || '3' }}"
-          python fetch_results.py --days "$DAYS" 2>&1 | tee fetch_output.txt
           python update_manual_results.py 2>&1 | tee update_manual_output.txt
+          python fetch_results.py --days "$DAYS" 2>&1 | tee fetch_output.txt
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
@@ -131,7 +131,9 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Fetch recent results before publishing
-        run: python fetch_results.py --days 3 2>&1 | tee fetch_output.txt
+        run: |
+          python update_manual_results.py 2>&1 | tee update_manual_output.txt
+          python fetch_results.py --days 3 2>&1 | tee fetch_output.txt
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
@@ -273,6 +275,7 @@ jobs:
       - name: Settle results and generate weekly report
         id: report
         run: |
+          python update_manual_results.py
           python fetch_results.py --days 10
           python generate_weekly_report.py
           REPORT_FILE=$(ls -t weekly_report_*.txt 2>/dev/null | head -1)
@@ -346,6 +349,7 @@ jobs:
       - name: Settle results and generate monthly report
         id: report
         run: |
+          python update_manual_results.py
           python fetch_results.py --days 35
           python generate_monthly_report.py
           REPORT_FILE=$(ls -t monthly_report_*.txt 2>/dev/null | head -1)
