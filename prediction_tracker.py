@@ -354,6 +354,60 @@ def format_yesterday_header(summary):
     return None
 
 
+def parse_final_score(score_str):
+    """Parse a score string like '2-1' into (home_goals, away_goals) or None."""
+    if not score_str or "-" not in str(score_str):
+        return None
+    try:
+        home, away = map(int, str(score_str).split("-", 1))
+        return home, away
+    except ValueError:
+        return None
+
+
+def compute_safer_result(market, score_str):
+    """
+    Derive safer-market result from a final score.
+    market: 'double_chance', 'over_1_5', or 'under_3_5'
+    Returns 'win', 'loss', or None if score is unavailable.
+    """
+    parsed = parse_final_score(score_str)
+    if parsed is None:
+        return None
+    home, away = parsed
+    total = home + away
+    if market == "double_chance":
+        return "win" if home >= away else "loss"
+    if market == "over_1_5":
+        return "win" if total >= 2 else "loss"
+    if market == "under_3_5":
+        return "win" if total <= 3 else "loss"
+    return None
+
+
+def safer_market_label(primary_market):
+    """Map a primary prediction label to its safer companion market."""
+    market = (primary_market or "").lower()
+    if market in ("home win", "home_win"):
+        return "double_chance", "Double Chance (Home or Draw)"
+    if market in ("over", "over 2.5"):
+        return "over_1_5", "Over 1.5 Goals"
+    if market in ("under", "under 2.5"):
+        return "under_3_5", "Under 3.5 Goals"
+    return None, None
+
+
+def format_safer_result_line(primary_market, score_str):
+    """Format one safer-pick result line for reports."""
+    market_key, label = safer_market_label(primary_market)
+    if not market_key:
+        return None
+    result = compute_safer_result(market_key, score_str)
+    if result is None:
+        return None
+    return f"   Safer: {label} -> {result.upper()} ({score_str})"
+
+
 def calculate_performance(history_list, days=30): 
     """Calculate performance metrics for last N days.""" 
     cutoff = datetime.now() - timedelta(days=days) 
@@ -457,11 +511,16 @@ def calculate_safer_pick_stats(picks, date_filter_fn):
     for pick in picks.get("home_win", []):
         if date_filter_fn(pick):
             stats["double_chance"]["total"] += 1
-            if pick["result"] == "pending" or "final_score" not in pick:
+            if pick["result"] == "pending":
                 stats["double_chance"]["pending"] += 1
                 continue
-            
-            home_score, away_score = map(int, pick["final_score"].split("-"))
+
+            parsed = parse_final_score(pick.get("final_score"))
+            if parsed is None:
+                stats["double_chance"]["pending"] += 1
+                continue
+
+            home_score, away_score = parsed
             if home_score >= away_score:
                 stats["double_chance"]["wins"] += 1
                 stats["double_chance"]["decisions"] += 1
@@ -478,14 +537,22 @@ def calculate_safer_pick_stats(picks, date_filter_fn):
             else:
                 stats["under_3_5"]["total"] += 1
             
-            if pick["result"] == "pending" or "final_score" not in pick:
+            if pick["result"] == "pending":
                 if prediction == "over":
                     stats["over_1_5"]["pending"] += 1
                 else:
                     stats["under_3_5"]["pending"] += 1
                 continue
-            
-            home_score, away_score = map(int, pick["final_score"].split("-"))
+
+            parsed = parse_final_score(pick.get("final_score"))
+            if parsed is None:
+                if prediction == "over":
+                    stats["over_1_5"]["pending"] += 1
+                else:
+                    stats["under_3_5"]["pending"] += 1
+                continue
+
+            home_score, away_score = parsed
             total_goals = home_score + away_score
             
             if prediction == "over":

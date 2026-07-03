@@ -100,3 +100,23 @@ Set these environment variables in GitHub Secrets for better reliability:
 
 | Week | Matches | Wins | Losses | Win Rate |
 |------|---------|------|--------|----------|
+
+## Weekly Performance Report
+
+**Last Updated:** 2026-07-03 04:26
+
+### Over 2.5 Goals
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+| 2026-W25 | 5 | 4 | 1 | 80.0% |
+| 2026-W24 | 2 | 2 | 0 | 100.0% |
+| 2026-W23 | 13 | 8 | 5 | 61.5% |
+
+### Home Win
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+| 2026-W25 | 2 | 2 | 0 | 100.0% |
+| 2026-W24 | 1 | 1 | 0 | 100.0% |
+| 2026-W23 | 4 | 3 | 0 | 75.0% |

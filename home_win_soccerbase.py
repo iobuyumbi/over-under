@@ -501,38 +501,15 @@ def process_single_match(match, target_date, default_odds=2.8):
 # =============================================================================
 def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds, detailed=False):
     """
-    Build a clean, mobile-friendly report - include up to 4 days if needed to reach 10 picks
+    Build a clean, mobile-friendly report with all qualifying picks across scanned days.
     Returns: (report, base_date, included_perfect, included_qualified, included_close)
     """
-    all_picks = perfect + qualified + close_calls
-    
-    # Collect picks from days until we have at least 10 total or exhaust scanned days
-    included_perfect = []
-    included_qualified = []
-    included_close = []
-    included_dates = []
-    
-    for date_str in scanned_dates:
-        def filter_by_date(picks, d):
-            return [item for item in picks if item["match"]["date"] == d]
-        
-        day_perfect = filter_by_date(perfect, date_str)
-        day_qualified = filter_by_date(qualified, date_str)
-        day_close = filter_by_date(close_calls, date_str)
-        
-        included_perfect.extend(day_perfect)
-        included_qualified.extend(day_qualified)
-        included_close.extend(day_close)
-        included_dates.append(date_str)
-        
-        total_picks = len(included_perfect) + len(included_qualified) + len(included_close)
-        if total_picks >= 10:
-            break
-    
+    included_perfect = list(perfect)
+    included_qualified = list(qualified)
+    included_close = list(close_calls)
+    included_dates = scanned_dates
+
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
-    
-    # Pre-sort the included qualified picks
-    qualified_8 = [item for item in included_qualified if item["score"] == 8]
 
     # Clean report (mobile-friendly)
     lines = []
@@ -575,10 +552,10 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
                     lines.append(f"     {rule}: {detail}")
             lines.append("")
         
-    if qualified_8:
+    if included_qualified:
         lines.append("  STRONG PICKS")
         lines.append("")
-        for i, item in enumerate(qualified_8, 1):
+        for i, item in enumerate(included_qualified, 1):
             m = item["match"]
             p = item["model"]
             lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
