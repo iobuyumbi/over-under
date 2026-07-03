@@ -721,12 +721,8 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     Build a clean, mobile-friendly report - both channels show all picks, free is simplified
     Returns: (report, base_date, included_over, included_under)
     """
-    all_over_picks = over_perfect + over_qualified + over_close
-    all_under_picks = under_perfect + under_qualified + under_close
-    
-    # Both channels show all picks
-    included_over = all_over_picks
-    included_under = all_under_picks
+    included_over = over_perfect + over_qualified + over_close
+    included_under = under_perfect + under_qualified + under_close
     included_dates = scanned_dates
     
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
@@ -781,7 +777,8 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                         lines.append(f"     {rule}: {detail}")
                     lines.append("")
                 else:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']}")
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
         
         if included_over_qualified:
             if not detailed and not included_over_perfect:
@@ -805,7 +802,8 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                         lines.append(f"     {rule}: {detail}")
                     lines.append("")
                 else:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']}")
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
         
         if included_over_close:
             if detailed:
@@ -827,7 +825,8 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                         lines.append(f"     {rule}: {detail}")
                     lines.append("")
                 else:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']}")
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
         
         if not detailed and (included_over_perfect or included_over_qualified or included_over_close):
             lines.append("")
@@ -860,7 +859,8 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                         lines.append(f"     {rule}: {detail}")
                     lines.append("")
                 else:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']}")
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
         
         if included_under_qualified:
             if not detailed and not included_under_perfect:
@@ -884,7 +884,8 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                         lines.append(f"     {rule}: {detail}")
                     lines.append("")
                 else:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']}")
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
         
         if included_under_close:
             if detailed:
@@ -906,7 +907,8 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                         lines.append(f"     {rule}: {detail}")
                     lines.append("")
                 else:
-                    lines.append(f"  {i}. {m['home']} vs {m['away']}")
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
         
         if not detailed and (included_under_perfect or included_under_qualified or included_under_close):
             lines.append("")

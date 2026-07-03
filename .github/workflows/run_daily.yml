@@ -153,25 +153,27 @@ jobs:
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
 
+          # Free channel: simplified EMAIL body only (never VIP report files)
           {
             cat over25_body.txt
             echo ""
             cat hw_body.txt
           } > combined_free.txt
 
+          # VIP channel: full detail from VIP report files
           {
             echo "DAILY PREDICTIONS (VIP)"
             echo ""
             if [ -f "over_under_vip_report_$DATE.txt" ]; then
               cat "over_under_vip_report_$DATE.txt"
             else
-              cat over25_body.txt
+              echo "Over/Under report unavailable."
             fi
             echo ""
             if [ -f "home_win_vip_report_$DATE.txt" ]; then
               cat "home_win_vip_report_$DATE.txt"
             else
-              cat hw_body.txt
+              echo "Home win report unavailable."
             fi
           } > combined_vip.txt
 
@@ -298,16 +300,25 @@ jobs:
           import os
           import requests
 
+          def send(chat_id, text):
+              if not chat_id or not text:
+                  return
+              for chunk in (text[i:i + 3900] for i in range(0, len(text), 3900)):
+                  requests.post(
+                      f"https://api.telegram.org/bot{token}/sendMessage",
+                      data={"chat_id": chat_id, "text": chunk},
+                      timeout=30,
+                  )
+
           token = os.getenv("TELEGRAM_BOT_TOKEN")
           report_file = os.getenv("REPORT_FILE")
           if not token or not report_file or not os.path.exists(report_file):
               print("Skipping Telegram weekly report.")
               raise SystemExit(0)
           with open(report_file, "r", encoding="utf-8") as f:
-              report = f.read()
+              report = f.read().strip()
           for chat_id in (os.getenv("TELEGRAM_CHAT_ID"), os.getenv("TELEGRAM_VIP_CHAT_ID")):
-              if chat_id:
-                  requests.post(f"https://api.telegram.org/bot{token}/sendMessage", data={"chat_id": chat_id, "text": report}, timeout=30)
+              send(chat_id, report)
           PY
         env:
           REPORT_FILE: ${{ steps.report.outputs.file }}
@@ -361,16 +372,25 @@ jobs:
           import os
           import requests
 
+          def send(chat_id, text):
+              if not chat_id or not text:
+                  return
+              for chunk in (text[i:i + 3900] for i in range(0, len(text), 3900)):
+                  requests.post(
+                      f"https://api.telegram.org/bot{token}/sendMessage",
+                      data={"chat_id": chat_id, "text": chunk},
+                      timeout=30,
+                  )
+
           token = os.getenv("TELEGRAM_BOT_TOKEN")
           report_file = os.getenv("REPORT_FILE")
           if not token or not report_file or not os.path.exists(report_file):
               print("Skipping Telegram monthly report.")
               raise SystemExit(0)
           with open(report_file, "r", encoding="utf-8") as f:
-              report = f.read()
+              report = f.read().strip()
           for chat_id in (os.getenv("TELEGRAM_CHAT_ID"), os.getenv("TELEGRAM_VIP_CHAT_ID")):
-              if chat_id:
-                  requests.post(f"https://api.telegram.org/bot{token}/sendMessage", data={"chat_id": chat_id, "text": report}, timeout=30)
+              send(chat_id, report)
           PY
         env:
           REPORT_FILE: ${{ steps.report.outputs.file }}
