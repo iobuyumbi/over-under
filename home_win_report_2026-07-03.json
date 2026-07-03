@@ -1,0 +1,341 @@
+{
+  "metadata": {
+    "scanned_window": [
+      "2026-07-03",
+      "2026-07-04",
+      "2026-07-05",
+      "2026-07-06"
+    ],
+    "bankroll": 1000.0,
+    "odds": 2.8,
+    "max_exposure": 0.25,
+    "generated_at": "2026-07-03T04:41:59.546957"
+  },
+  "perfect": [],
+  "qualified": [
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Colegiales",
+        "away": "Gimnasia y Tiro",
+        "home_team_id": "8168",
+        "away_team_id": "8010",
+        "date": "2026-07-04",
+        "status": "Scheduled"
+      },
+      "score": 8,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals scored",
+        "Away wins"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (6/6 No Losses)",
+        "Home goals scored": "PASS (12 GF)",
+        "Home goals conceded": "PASS (3 GA)",
+        "Home wins": "PASS (4/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (4/6 Losses)",
+        "Away goals conceded": "FAIL (7)",
+        "Away goals scored": "PASS (2 GF)",
+        "Away wins": "PASS (0/6 Wins)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.608,
+        "away_strength": 0.175,
+        "home_win_prob": 85.0,
+        "confidence": "HIGH"
+      },
+      "kelly": 3.54
+    },
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Estudiantes Caseros",
+        "away": "Racing Cordoba",
+        "home_team_id": "7463",
+        "away_team_id": "4776",
+        "date": "2026-07-05",
+        "status": "Scheduled"
+      },
+      "score": 8,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals conceded",
+        "Away goals scored",
+        "Away wins"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (6/6 No Losses)",
+        "Home goals scored": "FAIL (6)",
+        "Home goals conceded": "PASS (3 GA)",
+        "Home wins": "PASS (3/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (5/6 Losses)",
+        "Away goals conceded": "PASS (10 GA)",
+        "Away goals scored": "PASS (3 GF)",
+        "Away wins": "PASS (0/6 Wins)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.5,
+        "away_strength": 0.175,
+        "home_win_prob": 78.6,
+        "confidence": "HIGH"
+      },
+      "kelly": 3.08
+    }
+  ],
+  "close_calls": [
+    {
+      "match": {
+        "league": "World Cup",
+        "home": "Argentina",
+        "away": "Cape Verde Is.",
+        "home_team_id": "128",
+        "away_team_id": "3925",
+        "date": "2026-07-03",
+        "status": "Scheduled"
+      },
+      "score": 7,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away goals conceded",
+        "Away wins"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (6/6 No Losses)",
+        "Home goals scored": "PASS (17 GF)",
+        "Home goals conceded": "PASS (1 GA)",
+        "Home wins": "PASS (6/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "FAIL (1)",
+        "Away goals conceded": "PASS (10 GA)",
+        "Away goals scored": "FAIL (8)",
+        "Away wins": "PASS (0/6 Wins)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.825,
+        "away_strength": 0.175,
+        "home_win_prob": 93.1,
+        "confidence": "HIGH"
+      },
+      "kelly": 4.13
+    },
+    {
+      "match": {
+        "league": "League of Ireland Div 1",
+        "home": "Bray",
+        "away": "Athlone Town",
+        "home_team_id": "453",
+        "away_team_id": "169",
+        "date": "2026-07-03",
+        "status": "Scheduled"
+      },
+      "score": 7,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals scored",
+        "Away wins"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (6/6 No Losses)",
+        "Home goals scored": "PASS (19 GF)",
+        "Home goals conceded": "FAIL (8)",
+        "Home wins": "PASS (3/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (4/6 Losses)",
+        "Away goals conceded": "FAIL (6)",
+        "Away goals scored": "PASS (3 GF)",
+        "Away wins": "PASS (1/6 Wins)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.5,
+        "away_strength": 0.283,
+        "home_win_prob": 70.4,
+        "confidence": "HIGH"
+      },
+      "kelly": 2.49
+    },
+    {
+      "match": {
+        "league": "League of Ireland",
+        "home": "Derry City",
+        "away": "Waterford",
+        "home_team_id": "808",
+        "away_team_id": "2877",
+        "date": "2026-07-03",
+        "status": "Scheduled"
+      },
+      "score": 7,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals conceded",
+        "Away wins"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (6/6 No Losses)",
+        "Home goals scored": "FAIL (8)",
+        "Home goals conceded": "PASS (2 GA)",
+        "Home wins": "PASS (3/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (4/6 Losses)",
+        "Away goals conceded": "PASS (14 GA)",
+        "Away goals scored": "FAIL (8)",
+        "Away wins": "PASS (1/6 Wins)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.5,
+        "away_strength": 0.283,
+        "home_win_prob": 70.4,
+        "confidence": "HIGH"
+      },
+      "kelly": 2.49
+    },
+    {
+      "match": {
+        "league": "Finland League",
+        "home": "VPS Vaasa",
+        "away": "Mariehamn",
+        "home_team_id": "3018",
+        "away_team_id": "4365",
+        "date": "2026-07-04",
+        "status": "Scheduled"
+      },
+      "score": 7,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home wins",
+        "Away losses",
+        "Away goals conceded",
+        "Away goals scored",
+        "Away wins"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (6/6 No Losses)",
+        "Home goals scored": "PASS (12 GF)",
+        "Home goals conceded": "FAIL (6)",
+        "Home wins": "PASS (3/6 Wins)",
+        "Home recent form": "FAIL (1/2)",
+        "Away losses": "PASS (5/6 Losses)",
+        "Away goals conceded": "PASS (11 GA)",
+        "Away goals scored": "PASS (2 GF)",
+        "Away wins": "PASS (0/6 Wins)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.5,
+        "away_strength": 0.175,
+        "home_win_prob": 78.6,
+        "confidence": "HIGH"
+      },
+      "kelly": 3.08
+    },
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "San Martin de San Juan",
+        "away": "Chacarita",
+        "home_team_id": "7448",
+        "away_team_id": "3732",
+        "date": "2026-07-05",
+        "status": "Scheduled"
+      },
+      "score": 7,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals scored",
+        "Away wins"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (5/6 No Losses)",
+        "Home goals scored": "FAIL (7)",
+        "Home goals conceded": "PASS (4 GA)",
+        "Home wins": "PASS (3/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (4/6 Losses)",
+        "Away goals conceded": "FAIL (9)",
+        "Away goals scored": "PASS (3 GF)",
+        "Away wins": "PASS (0/6 Wins)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.5,
+        "away_strength": 0.175,
+        "home_win_prob": 78.6,
+        "confidence": "HIGH"
+      },
+      "kelly": 3.08
+    },
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Deportivo Maipu",
+        "away": "Agropecuario",
+        "home_team_id": "7473",
+        "away_team_id": "7469",
+        "date": "2026-07-05",
+        "status": "Scheduled"
+      },
+      "score": 7,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals conceded",
+        "Home wins",
+        "Away losses",
+        "Away goals conceded",
+        "Away goals scored",
+        "Away wins"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (5/6 No Losses)",
+        "Home goals scored": "FAIL (8)",
+        "Home goals conceded": "PASS (4 GA)",
+        "Home wins": "PASS (4/6 Wins)",
+        "Home recent form": "FAIL (0/2)",
+        "Away losses": "PASS (4/6 Losses)",
+        "Away goals conceded": "PASS (12 GA)",
+        "Away goals scored": "PASS (5 GF)",
+        "Away wins": "PASS (1/6 Wins)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.608,
+        "away_strength": 0.283,
+        "home_win_prob": 78.6,
+        "confidence": "HIGH"
+      },
+      "kelly": 3.08
+    }
+  ]
+}
