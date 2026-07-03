@@ -199,8 +199,11 @@
       "home_team": "Palestino",
       "away_team": "Audax Italiano",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-03T04:14:54.877880"
+      "result": "push",
+      "recorded_at": "2026-07-03T04:14:54.877880",
+      "updated_at": "2026-07-03T02:21:31.580562",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-01",
