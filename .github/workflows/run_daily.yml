@@ -28,6 +28,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   fetch-results:
     runs-on: ubuntu-latest
@@ -111,13 +115,19 @@ jobs:
           author_name: "github-actions[bot]"
           author_email: "github-actions[bot]@users.noreply.github.com"
           message: "Update prediction history with results"
+          pull: "--rebase --autostash"
           add: |
             prediction_history.json
             manual_results.csv
 
   daily-predictions:
     runs-on: ubuntu-latest
-    if: github.event.schedule == '0 1 * * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'predictions' || github.event.inputs.mode == 'all'))
+    needs: fetch-results
+    if: |
+      always() &&
+      !cancelled() &&
+      (needs.fetch-results.result == 'success' || needs.fetch-results.result == 'skipped') &&
+      (github.event.schedule == '0 1 * * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'predictions' || github.event.inputs.mode == 'all')))
     steps:
       - uses: actions/checkout@v4
         with:
@@ -196,6 +206,7 @@ jobs:
           author_name: "github-actions[bot]"
           author_email: "github-actions[bot]@users.noreply.github.com"
           message: "Daily update: predictions and results"
+          pull: "--rebase --autostash"
           add: |
             prediction_history.json
             README.md
@@ -260,7 +271,12 @@ jobs:
 
   weekly-report:
     runs-on: ubuntu-latest
-    if: github.event.schedule == '0 3 * * 1' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'weekly' || github.event.inputs.mode == 'all'))
+    needs: daily-predictions
+    if: |
+      always() &&
+      !cancelled() &&
+      (needs.daily-predictions.result == 'success' || needs.daily-predictions.result == 'skipped') &&
+      (github.event.schedule == '0 3 * * 1' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'weekly' || github.event.inputs.mode == 'all')))
     steps:
       - uses: actions/checkout@v4
         with:
@@ -302,6 +318,7 @@ jobs:
           author_name: "github-actions[bot]"
           author_email: "github-actions[bot]@users.noreply.github.com"
           message: "Weekly performance report"
+          pull: "--rebase --autostash"
           add: |
             prediction_history.json
             README.md
@@ -341,7 +358,12 @@ jobs:
 
   monthly-report:
     runs-on: ubuntu-latest
-    if: github.event.schedule == '0 3 1 * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'monthly' || github.event.inputs.mode == 'all'))
+    needs: weekly-report
+    if: |
+      always() &&
+      !cancelled() &&
+      (needs.weekly-report.result == 'success' || needs.weekly-report.result == 'skipped') &&
+      (github.event.schedule == '0 3 1 * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'monthly' || github.event.inputs.mode == 'all')))
     steps:
       - uses: actions/checkout@v4
         with:
@@ -383,6 +405,7 @@ jobs:
           author_name: "github-actions[bot]"
           author_email: "github-actions[bot]@users.noreply.github.com"
           message: "Monthly performance report"
+          pull: "--rebase --autostash"
           add: |
             prediction_history.json
 
