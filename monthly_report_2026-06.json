@@ -3,11 +3,11 @@
   "home_win": {
     "total": 10,
     "wins": 8,
-    "losses": 0,
-    "pushes": 2,
+    "losses": 2,
+    "pushes": 0,
     "pending": 0,
-    "decisions": 8,
-    "win_rate": 100.0
+    "decisions": 10,
+    "win_rate": 80.0
   },
   "double_chance": {
     "total": 10,
