@@ -280,7 +280,7 @@ def print_summary():
 def get_pending_predictions(days_old=None, due_only=True):
     """Get pending predictions (no result recorded yet).
 
-    due_only: when True, skip future fixtures not yet played.
+    due_only: when True, skip today and future fixtures (only overdue past dates).
     """
     history = load_history()
     pending = []
@@ -295,7 +295,7 @@ def get_pending_predictions(days_old=None, due_only=True):
                 pick_date = datetime.strptime(date_str, "%Y-%m-%d").date()
             except ValueError:
                 continue
-            if due_only and pick_date > today:
+            if due_only and pick_date >= today:
                 continue
             pick = dict(pick)
             pick["type"] = p_type
@@ -310,7 +310,7 @@ def get_pending_predictions(days_old=None, due_only=True):
 
 
 def pick_is_due(pick):
-    """True when the fixture date is today or earlier."""
+    """True when the fixture date is today or earlier (eligible for settlement)."""
     try:
         pick_date = datetime.strptime(pick["date"][:10], "%Y-%m-%d").date()
     except ValueError:
@@ -318,9 +318,18 @@ def pick_is_due(pick):
     return pick_date <= datetime.now().date()
 
 
+def pick_is_overdue(pick):
+    """True when the fixture date is before today (should have a final score)."""
+    try:
+        pick_date = datetime.strptime(pick["date"][:10], "%Y-%m-%d").date()
+    except ValueError:
+        return False
+    return pick_date < datetime.now().date()
+
+
 def count_report_pending(pick):
-    """Pending for performance reports: only unsettled past/today fixtures."""
-    return pick.get("result") == "pending" and pick_is_due(pick)
+    """Pending for performance reports: only unsettled past fixtures."""
+    return pick.get("result") == "pending" and pick_is_overdue(pick)
 
 
 def get_yesterday_results(prediction_type=None): 
@@ -590,14 +599,14 @@ def calculate_safer_pick_stats(picks, date_filter_fn):
         if date_filter_fn(pick):
             stats["double_chance"]["total"] += 1
             if pick["result"] == "pending":
-                if not pick_is_due(pick):
+                if not pick_is_overdue(pick):
                     continue
                 stats["double_chance"]["pending"] += 1
                 continue
 
             parsed = parse_final_score(pick.get("final_score"))
             if parsed is None:
-                if pick_is_due(pick):
+                if pick_is_overdue(pick):
                     stats["double_chance"]["pending"] += 1
                 continue
 
@@ -619,7 +628,7 @@ def calculate_safer_pick_stats(picks, date_filter_fn):
                 stats["under_3_5"]["total"] += 1
             
             if pick["result"] == "pending":
-                if not pick_is_due(pick):
+                if not pick_is_overdue(pick):
                     continue
                 if prediction == "over":
                     stats["over_1_5"]["pending"] += 1
@@ -629,7 +638,7 @@ def calculate_safer_pick_stats(picks, date_filter_fn):
 
             parsed = parse_final_score(pick.get("final_score"))
             if parsed is None:
-                if not pick_is_due(pick):
+                if not pick_is_overdue(pick):
                     continue
                 if prediction == "over":
                     stats["over_1_5"]["pending"] += 1
