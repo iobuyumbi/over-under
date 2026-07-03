@@ -428,6 +428,19 @@ def format_vip_rule_summary(details, score, max_score):
     return lines
 
 
+def format_vip_extra_lines(stake_pct, odds, score, max_score, *,
+                           home_strength=None, away_strength=None,
+                           home_lambda=None, away_lambda=None):
+    """VIP extras on top of the free-channel pick summary."""
+    lines = [f"Stake: {stake_pct:.1f}% at odds {odds}"]
+    if home_strength is not None and away_strength is not None:
+        lines.append(f"Strength: home {home_strength} vs away {away_strength}")
+    if home_lambda is not None and away_lambda is not None:
+        lines.append(f"Expected goals: {home_lambda} - {away_lambda}")
+    lines.append(f"Rule score: {score}/{max_score}")
+    return lines
+
+
 def calculate_performance(history_list, days=30): 
     """Calculate performance metrics for last N days.""" 
     cutoff = datetime.now() - timedelta(days=days) 

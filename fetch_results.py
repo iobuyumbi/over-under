@@ -20,7 +20,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 
-from prediction_tracker import load_history, save_history, format_safer_result_line
+from prediction_tracker import load_history, save_history, format_safer_result_line, get_pending_predictions
 
 # =============================================================================
 # CONFIGURATION
@@ -158,6 +158,17 @@ TEAM_NAME_MAP = {
     "sundsvall": "sundsvall",
     "osters": "osters",
     "paraguay": "paraguay",
+    "cape verde is": "cape verde",
+    "bosnia hz": "bosnia herzegovina",
+    "bosniaherzegovina": "bosnia herzegovina",
+    "dr congo": "congo",
+    "n ireland": "northern ireland",
+    "dominican rep": "dominican republic",
+    "trinidad": "trinidad tobago",
+    "korea republic": "south korea",
+    "croatia": "croatia",
+    "mexico": "mexico",
+    "ecuador": "ecuador",
 }
 
 # =============================================================================
@@ -566,6 +577,49 @@ def update_history_with_results(date_str, dry_run=False):
     append_selected_results_report(date_str, settled, unmatched, dry_run=dry_run)
     return updated, unmatched
 
+
+def collect_settlement_dates(days_back, history=None):
+    """Calendar lookback plus every date that still has pending picks."""
+    if history is None:
+        history = load_history()
+
+    dates = set()
+    for i in range(1, days_back + 1):
+        dates.add((datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d"))
+
+    today = datetime.now().date()
+    for ptype in ("home_win", "over_under"):
+        for pick in history.get(ptype, []):
+            if pick.get("result") != "pending":
+                continue
+            date_str = pick["date"][:10]
+            try:
+                pick_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+            except ValueError:
+                continue
+            if pick_date <= today:
+                dates.add(date_str)
+
+    return sorted(dates, reverse=True)
+
+
+def append_still_pending_report(history):
+    """Note picks that remain pending after a settlement run."""
+    pending = get_pending_predictions()
+    if not pending:
+        return
+
+    with open(SELECTED_RESULTS_REPORT, "a", encoding="utf-8") as f:
+        f.write("\nSTILL PENDING\n")
+        f.write("-" * 30 + "\n")
+        for pick in pending[:20]:
+            home = pick.get("home_team", pick.get("home"))
+            away = pick.get("away_team", pick.get("away"))
+            market = "HW" if pick.get("type") == "home_win" else "OU"
+            f.write(f"[PENDING] {market}: {home} vs {away} ({pick['date']})\n")
+        if len(pending) > 20:
+            f.write(f"   ...and {len(pending) - 20} more\n")
+
 def find_matching_result(pick, results):
     pick_home = pick.get("home_team", pick.get("home"))
     pick_away = pick.get("away_team", pick.get("away"))
@@ -649,10 +703,8 @@ def main():
     if args.date:
         dates_to_check = [args.date]
     else:
-        dates_to_check = []
-        for i in range(1, args.days + 1):
-            d = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
-            dates_to_check.append(d)
+        history = load_history()
+        dates_to_check = collect_settlement_dates(args.days, history)
 
     total_updated = 0
     all_unmatched = []
@@ -671,8 +723,13 @@ def main():
         total_updated += updated
         all_unmatched.extend(unmatched)
 
+    if not args.dry_run:
+        append_still_pending_report(load_history())
+
+    pending_left = len(get_pending_predictions())
     print(f"\n{'='*60}")
     print(f"SUMMARY: Updated {total_updated} predictions across {len(dates_to_check)} day(s)")
+    print(f"Still pending: {pending_left}")
     if all_unmatched:
         print(f"Unmatched: {len(all_unmatched)}")
     print(f"{'='*60}")
