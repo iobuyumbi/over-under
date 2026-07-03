@@ -312,63 +312,63 @@ def apply_home_win_algorithm(home_data_6, away_data_6):
     passed, failed, details = [], [], {}
     is_perfect = True
 
-    # Home Checks (H1-H5)
+    # Home Checks
     home_not_lost = sum(1 for m in home_data_6 if m["result"] != "L")
     if home_not_lost >= 5:
-        passed.append("H1"); details["H1"] = f"PASS ({home_not_lost}/6 No Losses)"
+        passed.append("Home form (no losses)"); details["Home form (no losses)"] = f"PASS ({home_not_lost}/6 No Losses)"
         if home_not_lost < 6:
             is_perfect = False
     else:
-        failed.append("H1"); details["H1"] = f"FAIL ({home_not_lost}/6)"; is_perfect = False
+        failed.append("Home form (no losses)"); details["Home form (no losses)"] = f"FAIL ({home_not_lost}/6)"; is_perfect = False
 
     home_gf = sum(m["gf"] for m in home_data_6)
     if home_gf >= 10:
-        passed.append("H2"); details["H2"] = f"PASS ({home_gf} GF)"
+        passed.append("Home goals scored"); details["Home goals scored"] = f"PASS ({home_gf} GF)"
     else:
-        failed.append("H2"); details["H2"] = f"FAIL ({home_gf})"; is_perfect = False
+        failed.append("Home goals scored"); details["Home goals scored"] = f"FAIL ({home_gf})"; is_perfect = False
 
     home_ga = sum(m["ga"] for m in home_data_6)
     if home_ga <= 5:
-        passed.append("H3"); details["H3"] = f"PASS ({home_ga} GA)"
+        passed.append("Home goals conceded"); details["Home goals conceded"] = f"PASS ({home_ga} GA)"
     else:
-        failed.append("H3"); details["H3"] = f"FAIL ({home_ga})"; is_perfect = False
+        failed.append("Home goals conceded"); details["Home goals conceded"] = f"FAIL ({home_ga})"; is_perfect = False
 
     home_wins = sum(1 for m in home_data_6 if m["result"] == "W")
     if home_wins >= 3:
-        passed.append("H4"); details["H4"] = f"PASS ({home_wins}/6 Wins)"
+        passed.append("Home wins"); details["Home wins"] = f"PASS ({home_wins}/6 Wins)"
     else:
-        failed.append("H4"); details["H4"] = f"FAIL ({home_wins})"; is_perfect = False
+        failed.append("Home wins"); details["Home wins"] = f"FAIL ({home_wins})"; is_perfect = False
 
     last_2_wins = sum(1 for m in home_data_6[:2] if m["result"] == "W")
     if last_2_wins == 2:
-        passed.append("H5"); details["H5"] = "PASS (Won Last 2)"
+        passed.append("Home recent form"); details["Home recent form"] = "PASS (Won Last 2)"
     else:
-        failed.append("H5"); details["H5"] = f"FAIL ({last_2_wins}/2)"; is_perfect = False
+        failed.append("Home recent form"); details["Home recent form"] = f"FAIL ({last_2_wins}/2)"; is_perfect = False
 
-    # Away Checks (A1-A4)
+    # Away Checks
     away_losses = sum(1 for m in away_data_6 if m["result"] == "L")
     if away_losses >= 2:
-        passed.append("A1"); details["A1"] = f"PASS ({away_losses}/6 Losses)"
+        passed.append("Away losses"); details["Away losses"] = f"PASS ({away_losses}/6 Losses)"
     else:
-        failed.append("A1"); details["A1"] = f"FAIL ({away_losses})"; is_perfect = False
+        failed.append("Away losses"); details["Away losses"] = f"FAIL ({away_losses})"; is_perfect = False
 
     away_ga = sum(m["ga"] for m in away_data_6)
     if away_ga >= 10:
-        passed.append("A2"); details["A2"] = f"PASS ({away_ga} GA)"
+        passed.append("Away goals conceded"); details["Away goals conceded"] = f"PASS ({away_ga} GA)"
     else:
-        failed.append("A2"); details["A2"] = f"FAIL ({away_ga})"; is_perfect = False
+        failed.append("Away goals conceded"); details["Away goals conceded"] = f"FAIL ({away_ga})"; is_perfect = False
 
     away_gf = sum(m["gf"] for m in away_data_6)
     if away_gf <= 5:
-        passed.append("A3"); details["A3"] = f"PASS ({away_gf} GF)"
+        passed.append("Away goals scored"); details["Away goals scored"] = f"PASS ({away_gf} GF)"
     else:
-        failed.append("A3"); details["A3"] = f"FAIL ({away_gf})"; is_perfect = False
+        failed.append("Away goals scored"); details["Away goals scored"] = f"FAIL ({away_gf})"; is_perfect = False
 
     away_wins = sum(1 for m in away_data_6 if m["result"] == "W")
     if away_wins <= 2:
-        passed.append("A4"); details["A4"] = f"PASS ({away_wins}/6 Wins)"
+        passed.append("Away wins"); details["Away wins"] = f"PASS ({away_wins}/6 Wins)"
     else:
-        failed.append("A4"); details["A4"] = f"FAIL ({away_wins})"; is_perfect = False
+        failed.append("Away wins"); details["Away wins"] = f"FAIL ({away_wins})"; is_perfect = False
 
     return passed, failed, details, is_perfect
 
@@ -501,49 +501,19 @@ def process_single_match(match, target_date, default_odds=2.8):
 # =============================================================================
 def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds, detailed=False):
     """
-    Build a clean, mobile-friendly report - include up to 4 days if needed to reach 10 picks
+    Build a clean, mobile-friendly report with all qualifying picks across scanned days.
     Returns: (report, base_date, included_perfect, included_qualified, included_close)
     """
-    if detailed:
-        all_picks = perfect + qualified + close_calls
-    else:
-        all_picks = perfect + qualified + close_calls
-    
-    # Collect picks from days until we have at least 10 total or exhaust scanned days
-    included_perfect = []
-    included_qualified = []
-    included_close = []
-    included_dates = []
-    
-    for date_str in scanned_dates:
-        def filter_by_date(picks, d):
-            return [item for item in picks if item["match"]["date"] == d]
-        
-        day_perfect = filter_by_date(perfect, date_str)
-        day_qualified = filter_by_date(qualified, date_str)
-        day_close = filter_by_date(close_calls, date_str)
-        
-        included_perfect.extend(day_perfect)
-        included_qualified.extend(day_qualified)
-        if detailed:
-            included_close.extend(day_close)
-        included_dates.append(date_str)
-        
-        total_picks = len(included_perfect) + len(included_qualified) + len(included_close)
-        if total_picks >= 10:
-            break
-    
+    included_perfect = list(perfect)
+    included_qualified = list(qualified)
+    included_close = list(close_calls)
+    included_dates = scanned_dates
+
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
-    
-    # Pre-sort the included qualified picks
-    qualified_8 = [item for item in included_qualified if item["score"] == 8]
 
     # Clean report (mobile-friendly)
     lines = []
-    if detailed:
-        lines.append("HOME WIN PICKS (VIP)")
-    else:
-        lines.append("HOME WIN PICKS")
+    lines.append("HOME WIN PICKS")
     lines.append("")
     
     if len(included_dates) > 1:
@@ -565,57 +535,57 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
         lines.append("")
     
     if included_perfect:
-        lines.append("TOP PICKS")
+        lines.append("  PREMIUM PICKS")
         lines.append("")
         for i, item in enumerate(included_perfect, 1):
             m = item["match"]
             p = item["model"]
-            lines.append(f"{i}. {m['home']} vs {m['away']} ({m['date']})")
-            lines.append(f"   {p['confidence']} ({p['home_win_prob']}%)")
+            lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+            lines.append(f"     {p['confidence']} ({p['home_win_prob']}%)")
             if detailed:
-                lines.append(f"   Stake: {item['kelly']:.2f}% bankroll at odds {odds}")
-                lines.append(f"   Strength: home {p['home_strength']} vs away {p['away_strength']}")
-                lines.append(f"   Rule score: {item['score']}/9")
+                lines.append(f"     Stake: {item['kelly']:.2f}% bankroll at odds {odds}")
+                lines.append(f"     Strength: home {p['home_strength']} vs away {p['away_strength']}")
+                lines.append(f"     Rule score: {item['score']}/9")
                 if item.get("passed"):
-                    lines.append(f"   Passed: {', '.join(item['passed'])}")
+                    lines.append(f"     Passed: {', '.join(item['passed'])}")
                 for rule, detail in sorted(item.get("details", {}).items()):
-                    lines.append(f"   {rule}: {detail}")
+                    lines.append(f"     {rule}: {detail}")
             lines.append("")
-            
-    if qualified_8:
-        lines.append("GOOD PICKS")
+        
+    if included_qualified:
+        lines.append("  STRONG PICKS")
         lines.append("")
-        for i, item in enumerate(qualified_8, 1):
+        for i, item in enumerate(included_qualified, 1):
             m = item["match"]
             p = item["model"]
-            lines.append(f"{i}. {m['home']} vs {m['away']} ({m['date']})")
-            lines.append(f"   {p['confidence']} ({p['home_win_prob']}%)")
+            lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+            lines.append(f"     {p['confidence']} ({p['home_win_prob']}%)")
             if detailed:
-                lines.append(f"   Stake: {item['kelly']:.2f}% bankroll at odds {odds}")
-                lines.append(f"   Strength: home {p['home_strength']} vs away {p['away_strength']}")
-                lines.append(f"   Rule score: {item['score']}/9")
+                lines.append(f"     Stake: {item['kelly']:.2f}% bankroll at odds {odds}")
+                lines.append(f"     Strength: home {p['home_strength']} vs away {p['away_strength']}")
+                lines.append(f"     Rule score: {item['score']}/9")
                 if item.get("passed"):
-                    lines.append(f"   Passed: {', '.join(item['passed'])}")
+                    lines.append(f"     Passed: {', '.join(item['passed'])}")
                 for rule, detail in sorted(item.get("details", {}).items()):
-                    lines.append(f"   {rule}: {detail}")
+                    lines.append(f"     {rule}: {detail}")
             lines.append("")
-            
+        
     if included_close:
-        lines.append("DECENT PICKS")
+        lines.append("  VALUE PICKS")
         lines.append("")
         for i, item in enumerate(included_close, 1):
             m = item["match"]
             p = item["model"]
-            lines.append(f"{i}. {m['home']} vs {m['away']} ({m['date']})")
-            lines.append(f"   {p['confidence']} ({p['home_win_prob']}%)")
+            lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+            lines.append(f"     {p['confidence']} ({p['home_win_prob']}%)")
             if detailed:
-                lines.append(f"   Stake: {item['kelly']:.2f}% bankroll at odds {odds}")
-                lines.append(f"   Strength: home {p['home_strength']} vs away {p['away_strength']}")
-                lines.append(f"   Rule score: {item['score']}/9")
+                lines.append(f"     Stake: {item['kelly']:.2f}% bankroll at odds {odds}")
+                lines.append(f"     Strength: home {p['home_strength']} vs away {p['away_strength']}")
+                lines.append(f"     Rule score: {item['score']}/9")
                 if item.get("passed"):
-                    lines.append(f"   Passed: {', '.join(item['passed'])}")
+                    lines.append(f"     Passed: {', '.join(item['passed'])}")
                 for rule, detail in sorted(item.get("details", {}).items()):
-                    lines.append(f"   {rule}: {detail}")
+                    lines.append(f"     {rule}: {detail}")
             lines.append("")
 
     # Add disclaimer
@@ -730,10 +700,10 @@ def main():
     apply_portfolio_kelly(all_recs, args.bankroll, MAX_TOTAL_EXPOSURE)
 
     # Build and output reports (both free and detailed)
-    free_report, base_date, _, _, _ = build_report(
+    free_report, base_date, included_perfect, included_qualified, included_close = build_report(
         perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=False
     )
-    detailed_report, _, included_perfect, included_qualified, included_close = build_report(
+    detailed_report, _, _, _, _ = build_report(
         perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=True
     )
 

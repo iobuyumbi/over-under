@@ -1,86 +1,122 @@
 # Soccer Prediction System
-
-Automated daily soccer predictions with performance tracking.
+Automated daily soccer predictions with performance tracking for monetization.
 
 ## Features
+- 🏠 Home win predictions with 9-point rule system
+- 🔥 Over/Under 2.5 goals predictions
+- 📊 Automatic performance tracking with win/loss history
+- 📈 Monthly/weekly performance reports
+- 💌 Daily email alerts
+- 📱 Telegram notifications (Free and VIP channels)
+- 💰 Affiliate-friendly design for monetization
 
-- Home win predictions (9-point rule system)
-- Over/Under 2.5 goals predictions
-- Automatic win/loss tracking and yesterday's results in daily reports
-- Weekly and monthly performance reports
-- Email and Telegram delivery (free + VIP channels)
+## Quick Start
 
-## Production files (actively used)
+### 1. Daily Predictions (Automated)
+Runs automatically every morning via GitHub Actions.
 
-| File | Role |
-|------|------|
-| `over25_soccerbase.py` | Over/Under prediction engine (Soccerbase) |
-| `home_win_soccerbase.py` | Home win prediction engine (Soccerbase) |
-| `fetch_results.py` | Settle picks from manual + Soccerbase + APIs |
-| `prediction_tracker.py` | History, yesterday summary, weekly/monthly stats |
-| `generate_weekly_report.py` | Weekly performance report |
-| `generate_monthly_report.py` | Monthly performance report |
-| `backfill_history.py` | Dedupe history and fix dates from saved reports |
-| `update_results.py` | Interactive manual result entry |
-| `manual_results.csv` | Manual scores + auto-filled from fetch |
-| `.github/workflows/run_daily.yml` | Full automation schedule |
-
-Legacy / dev only (not in CI): `*_hybrid.py`, `over25_predictor.py`, `*_backup.py`, `debug_scraper.py`, `weekly_report.py`.
-
-## Data sources
-
-### Predictions (Soccerbase only)
-
-Both engines scrape fixtures and team form exclusively from Soccerbase. No API fallback in production.
-
-### Result settling (priority order)
-
-When `fetch_results.py` runs, the first source to return a score for each match wins:
-
-1. **Manual** — `manual_results.csv` / `manual_results.json` (intentional overrides)
-2. **Soccerbase** — same site as predictions; reliable for yesterday's results
-3. **Football-Data.org** — optional (`FOOTBALL_DATA_KEY` in GitHub Secrets)
-4. **API-Football** — optional (`API_FOOTBALL_KEY` in GitHub Secrets)
+### 2. Updating Results
+After matches finish, update results using the automated fetcher:
 
 ```bash
-python fetch_results.py              # yesterday only
-python fetch_results.py --days 7     # last 7 days
-python backfill_history.py           # dedupe + fix dates from saved reports, then refresh
+python fetch_results.py
 ```
 
-## Free vs VIP
+This will try multiple data sources in order to get match results:
+1. Football-Data.org (primary, free tier covers Chile, Argentina, World Cup)
+2. API-Football (fallback)
+3. Manual override (CSV/JSON)
 
-| | Free (email + public Telegram) | VIP (Telegram VIP channel) |
-|---|-------------------------------|----------------------------|
-| **Picks** | Top + Good only (perfect / qualified) | All picks including decent/close |
-| **Per pick** | Team, date, confidence, model % | + Kelly stake %, xG, rule score, check breakdown |
-| **Yesterday** | Win/loss summary for that market | Same |
-| **Reports** | Weekly/monthly on both channels | Same |
-
-**VIP advantages for subscribers:** more picks, stake sizing (Kelly), full model transparency (which rules passed/failed), and enough detail to audit every call.
-
-Free channel stays useful as a teaser; VIP is the actionable, full-analysis product.
-
-## Automation schedule (UTC)
-
-| Time | Job | What runs |
-|------|-----|-----------|
-| 01:00 daily | `daily-predictions` | `fetch_results --days 3` → predictors → email/Telegram |
-| 20:00 daily | `fetch-results` | `fetch_results --days 3` → commit history → Telegram result summary |
-| Mon 03:00 | `weekly-report` | fetch 10 days → weekly report → Telegram |
-| 1st 03:00 | `monthly-report` | fetch 35 days → monthly report → Telegram |
-
-Manual dispatch: workflow supports `results`, `predictions`, `weekly`, `monthly`, or `all`.
-
-## Manual results
-
+You can also use manual entry directly:
 ```bash
 python update_results.py
 ```
 
-Or edit `manual_results.csv`: `date,home_team,away_team,score`
+### 3. Manual Results Entry
+If APIs don't cover your matches, you can add results manually:
+- Create `manual_results.csv` with columns: `date,home_team,away_team,score`
+- Or create `manual_results.json` with structure:
+  ```json
+  {
+    "results": [
+      {
+        "date": "2026-06-15",
+        "home_team": "Team A",
+        "away_team": "Team B",
+        "score": "2-1"
+      }
+    ]
+  }
+  ```
+
+You can also edit `prediction_history.json` directly.
+Change `"result": "pending"` to:
+- `"win"` if prediction was correct
+- `"loss"` if prediction was incorrect
+- `"push"` for draws or exact 2 goals
+
+## Data Sources
+
+### API Keys (Optional but Recommended)
+Set these environment variables in GitHub Secrets for better reliability:
+
+- `FOOTBALL_DATA_KEY`: Get free from https://www.football-data.org/client/register
+- `API_FOOTBALL_KEY`: Get from https://www.api-football.com/
+
+## File Structure
+
+| File | Description |
+|------|-------------|
+| home_win_soccerbase.py | Home win prediction engine |
+| over25_soccerbase.py | Over/Under 2.5 goals prediction engine |
+| fetch_results.py | Automated result fetcher with multiple data sources |
+| prediction_tracker.py | History tracking system |
+| update_results.py | User-friendly result updater |
+| generate_monthly_report.py | Monthly performance report generator |
+| generate_weekly_report.py | Weekly performance report generator |
+| .github/workflows/run_daily.yml | GitHub Actions workflow |
+
+## Monetization Ideas
+1. **Affiliate Marketing**: Promote bookmaker affiliate links in your reports
+2. **Freemium Model**: Offer free daily picks and detailed VIP picks with stake recommendations
+3. **Sponsored Posts**: Work directly with bookmakers once you have an audience
+4. **Subscription Service**: Charge monthly for access to your VIP channel
 
 ## Notes
+- This is for educational purposes only
+- Gambling has risks, gamble responsibly
+- Never bet more than you can afford to lose
 
-- Educational purposes only. Gamble responsibly.
-- Never bet more than you can afford to lose.
+## 📊 Weekly Performance Report
+
+**Last Updated:** 2026-06-26 21:37
+
+### Over 2.5 Goals
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+
+### Home Win
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+
+## Weekly Performance Report
+
+**Last Updated:** 2026-07-03 04:26
+
+### Over 2.5 Goals
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+| 2026-W25 | 5 | 4 | 1 | 80.0% |
+| 2026-W24 | 2 | 2 | 0 | 100.0% |
+| 2026-W23 | 13 | 8 | 5 | 61.5% |
+
+### Home Win
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+| 2026-W25 | 2 | 2 | 0 | 100.0% |
+| 2026-W24 | 1 | 1 | 0 | 100.0% |
+| 2026-W23 | 4 | 3 | 0 | 75.0% |

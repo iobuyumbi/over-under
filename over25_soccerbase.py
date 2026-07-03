@@ -343,73 +343,73 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6):
     # Home 3-game
     h_total_3 = sum(gf + ga for gf, ga in home_3)
     if h_total_3 >= 7:
-        passed.append("H1"); details["H1"] = f"PASS ({h_total_3})"
+        passed.append("Home total goals (last 3)"); details["Home total goals (last 3)"] = f"PASS ({h_total_3})"
     else:
-        failed.append("H1"); details["H1"] = f"FAIL ({h_total_3})"; is_perfect = False
+        failed.append("Home total goals (last 3)"); details["Home total goals (last 3)"] = f"FAIL ({h_total_3})"; is_perfect = False
 
     h_over_3 = sum(1 for gf, ga in home_3 if gf + ga > 2.5)
     if h_over_3 >= 2:
-        passed.append("H2"); details["H2"] = f"PASS ({h_over_3}/3)"
+        passed.append("Home over 2.5 (last 3)"); details["Home over 2.5 (last 3)"] = f"PASS ({h_over_3}/3)"
         if h_over_3 < 3:
             is_perfect = False
     else:
-        failed.append("H2"); details["H2"] = f"FAIL ({h_over_3}/3)"; is_perfect = False
+        failed.append("Home over 2.5 (last 3)"); details["Home over 2.5 (last 3)"] = f"FAIL ({h_over_3}/3)"; is_perfect = False
 
     # Away 3-game
     a_total_3 = sum(gf + ga for gf, ga in away_3)
     if a_total_3 >= 7:
-        passed.append("A1"); details["A1"] = f"PASS ({a_total_3})"
+        passed.append("Away total goals (last 3)"); details["Away total goals (last 3)"] = f"PASS ({a_total_3})"
     else:
-        failed.append("A1"); details["A1"] = f"FAIL ({a_total_3})"; is_perfect = False
+        failed.append("Away total goals (last 3)"); details["Away total goals (last 3)"] = f"FAIL ({a_total_3})"; is_perfect = False
 
     prev_a_total = away_3[0][0] + away_3[0][1]
     if prev_a_total >= 2:
-        passed.append("A2"); details["A2"] = f"PASS ({prev_a_total})"
+        passed.append("Away last match goals"); details["Away last match goals"] = f"PASS ({prev_a_total})"
     else:
-        failed.append("A2"); details["A2"] = f"FAIL ({prev_a_total})"; is_perfect = False
+        failed.append("Away last match goals"); details["Away last match goals"] = f"FAIL ({prev_a_total})"; is_perfect = False
 
     a_scored = sum(1 for gf, _ in away_3 if gf > 0)
     if a_scored >= 2:
-        passed.append("A3"); details["A3"] = f"PASS ({a_scored}/3)"
+        passed.append("Away scored (last 3)"); details["Away scored (last 3)"] = f"PASS ({a_scored}/3)"
         if a_scored < 3:
             is_perfect = False
     else:
-        failed.append("A3"); details["A3"] = f"FAIL ({a_scored}/3)"; is_perfect = False
+        failed.append("Away scored (last 3)"); details["Away scored (last 3)"] = f"FAIL ({a_scored}/3)"; is_perfect = False
 
     a_over_3 = sum(1 for gf, ga in away_3 if gf + ga > 2.5)
     if a_over_3 >= 2:
-        passed.append("A4"); details["A4"] = f"PASS ({a_over_3}/3)"
+        passed.append("Away over 2.5 (last 3)"); details["Away over 2.5 (last 3)"] = f"PASS ({a_over_3}/3)"
         if a_over_3 < 3:
             is_perfect = False
     else:
-        failed.append("A4"); details["A4"] = f"FAIL ({a_over_3}/3)"; is_perfect = False
+        failed.append("Away over 2.5 (last 3)"); details["Away over 2.5 (last 3)"] = f"FAIL ({a_over_3}/3)"; is_perfect = False
 
     # 6-game checks
     if len(home_6) >= 6:
         h_over_6 = sum(1 for gf, ga in home_6 if gf + ga > 2.5)
         if h_over_6 >= 4:
-            passed.append("H3"); details["H3"] = f"PASS ({h_over_6}/6)"
+            passed.append("Home over 2.5 (last 6)"); details["Home over 2.5 (last 6)"] = f"PASS ({h_over_6}/6)"
         else:
-            failed.append("H3"); details["H3"] = f"FAIL ({h_over_6}/6)"; is_perfect = False
+            failed.append("Home over 2.5 (last 6)"); details["Home over 2.5 (last 6)"] = f"FAIL ({h_over_6}/6)"; is_perfect = False
 
         h_total_6 = sum(gf + ga for gf, ga in home_6)
         if h_total_6 >= 18:
-            passed.append("H4"); details["H4"] = f"PASS ({h_total_6})"
+            passed.append("Home total goals (last 6)"); details["Home total goals (last 6)"] = f"PASS ({h_total_6})"
         else:
-            failed.append("H4"); details["H4"] = f"FAIL ({h_total_6})"; is_perfect = False
+            failed.append("Home total goals (last 6)"); details["Home total goals (last 6)"] = f"FAIL ({h_total_6})"; is_perfect = False
 
     if len(away_6) >= 6:
         a_over_6 = sum(1 for gf, ga in away_6 if gf + ga > 2.5)
         if a_over_6 >= 4:
-            passed.append("A5"); details["A5"] = f"PASS ({a_over_6}/6)"
+            passed.append("Away over 2.5 (last 6)"); details["Away over 2.5 (last 6)"] = f"PASS ({a_over_6}/6)"
         else:
-            failed.append("A5"); details["A5"] = f"FAIL ({a_over_6}/6)"; is_perfect = False
+            failed.append("Away over 2.5 (last 6)"); details["Away over 2.5 (last 6)"] = f"FAIL ({a_over_6}/6)"; is_perfect = False
 
         a_total_6 = sum(gf + ga for gf, ga in away_6)
         if a_total_6 >= 18:
-            passed.append("A6"); details["A6"] = f"PASS ({a_total_6})"
+            passed.append("Away total goals (last 6)"); details["Away total goals (last 6)"] = f"PASS ({a_total_6})"
         else:
-            failed.append("A6"); details["A6"] = f"FAIL ({a_total_6})"; is_perfect = False
+            failed.append("Away total goals (last 6)"); details["Away total goals (last 6)"] = f"FAIL ({a_total_6})"; is_perfect = False
 
     return passed, failed, details, is_perfect
 
@@ -422,18 +422,12 @@ def apply_under_algorithm(home_3, away_3):
     Official Under 2.5 Goals Algorithm from over25tips.com:
 
     3-GAME HOME CHECKS:
-    UH1: Previous three home games must have ended under 2.5 in at least two of three.
-    UH2: One or more of the score lines must contain 0 goals (home or away side) in any of the three games.
+    - Previous three home games must have ended under 2.5 in at least two of three.
+    - One or more of the score lines must contain 0 goals (home or away side) in any of the three games.
 
     3-GAME AWAY CHECKS:
-    UA1: Last three away games must be under 2.5 in at least two or three of the three.
-    UA2: The AWAY team must not have scored in at least one of the last three away games.
-
-    6-GAME AVERAGE CHECKS:
-    UC1: HS (home scored avg in last 6 home) <= 1.2
-    UC2: HC (home conceded avg in last 6 home) <= 1.2
-    UC3: AS (away scored avg in last 6 away) <= 1.0
-    UC4: AC (away conceded avg in last 6 away) <= 1.0
+    - Last three away games must be under 2.5 in at least two of three.
+    - The AWAY team must not have scored in at least one of the last three away games.
     """
     if len(home_3) < 3 or len(away_3) < 3:
         return None, None, {"error": "Insufficient data"}, False
@@ -442,38 +436,38 @@ def apply_under_algorithm(home_3, away_3):
     is_perfect = True
 
     # --- 3-GAME HOME CHECKS ---
-    # UH1: At least 2 of 3 home games under 2.5
+    # At least 2 of 3 home games under 2.5
     h_under_3 = sum(1 for gf, ga in home_3 if gf + ga < 2.5)
     if h_under_3 >= 2:
-        passed.append("UH1"); details["UH1"] = f"PASS ({h_under_3}/3 under 2.5)"
+        passed.append("Home under 2.5 (last 3)"); details["Home under 2.5 (last 3)"] = f"PASS ({h_under_3}/3 under 2.5)"
         if h_under_3 < 3:
             is_perfect = False
     else:
-        failed.append("UH1"); details["UH1"] = f"FAIL ({h_under_3}/3 under 2.5)"; is_perfect = False
+        failed.append("Home under 2.5 (last 3)"); details["Home under 2.5 (last 3)"] = f"FAIL ({h_under_3}/3 under 2.5)"; is_perfect = False
 
-    # UH2: At least one score line has 0 goals in the 3 home games
+    # At least one score line has 0 goals in the 3 home games
     h_has_zero = any(gf == 0 or ga == 0 for gf, ga in home_3)
     if h_has_zero:
-        passed.append("UH2"); details["UH2"] = "PASS (at least one 0-goal side)"
+        passed.append("Home has 0-goal side (last 3)"); details["Home has 0-goal side (last 3)"] = "PASS (at least one 0-goal side)"
     else:
-        failed.append("UH2"); details["UH2"] = "FAIL (no zero-goal sides)"; is_perfect = False
+        failed.append("Home has 0-goal side (last 3)"); details["Home has 0-goal side (last 3)"] = "FAIL (no zero-goal sides)"; is_perfect = False
 
     # --- 3-GAME AWAY CHECKS ---
-    # UA1: At least 2 of 3 away games under 2.5
+    # At least 2 of 3 away games under 2.5
     a_under_3 = sum(1 for gf, ga in away_3 if gf + ga < 2.5)
     if a_under_3 >= 2:
-        passed.append("UA1"); details["UA1"] = f"PASS ({a_under_3}/3 under 2.5)"
+        passed.append("Away under 2.5 (last 3)"); details["Away under 2.5 (last 3)"] = f"PASS ({a_under_3}/3 under 2.5)"
         if a_under_3 < 3:
             is_perfect = False
     else:
-        failed.append("UA1"); details["UA1"] = f"FAIL ({a_under_3}/3 under 2.5)"; is_perfect = False
+        failed.append("Away under 2.5 (last 3)"); details["Away under 2.5 (last 3)"] = f"FAIL ({a_under_3}/3 under 2.5)"; is_perfect = False
 
-    # UA2: Away team did NOT score in at least 1 of last 3 away games
+    # Away team did NOT score in at least 1 of last 3 away games
     a_blanked = sum(1 for gf, _ in away_3 if gf == 0)
     if a_blanked >= 1:
-        passed.append("UA2"); details["UA2"] = f"PASS ({a_blanked}/3 away games with 0 scored)"
+        passed.append("Away blanked (last 3)"); details["Away blanked (last 3)"] = f"PASS ({a_blanked}/3 away games with 0 scored)"
     else:
-        failed.append("UA2"); details["UA2"] = f"FAIL ({a_blanked}/3 away games with 0 scored)"; is_perfect = False
+        failed.append("Away blanked (last 3)"); details["Away blanked (last 3)"] = f"FAIL ({a_blanked}/3 away games with 0 scored)"; is_perfect = False
 
     return passed, failed, details, is_perfect
 
@@ -488,33 +482,33 @@ def apply_under_6game_checks(home_6, away_6):
     is_perfect = True
 
     if len(home_6) >= 6 and len(away_6) >= 6:
-        # UC1: Home scored average <= 1.2
+        # Home scored average <= 1.2
         hs = sum(gf for gf, _ in home_6) / 6
         if hs <= 1.2:
-            passed.append("UC1"); details["UC1"] = f"PASS (HS={hs:.2f} <= 1.2)"
+            passed.append("Home scored avg (last 6)"); details["Home scored avg (last 6)"] = f"PASS (HS={hs:.2f} <= 1.2)"
         else:
-            failed.append("UC1"); details["UC1"] = f"FAIL (HS={hs:.2f} > 1.2)"; is_perfect = False
+            failed.append("Home scored avg (last 6)"); details["Home scored avg (last 6)"] = f"FAIL (HS={hs:.2f} > 1.2)"; is_perfect = False
 
-        # UC2: Home conceded average <= 1.2
+        # Home conceded average <= 1.2
         hc = sum(ga for _, ga in home_6) / 6
         if hc <= 1.2:
-            passed.append("UC2"); details["UC2"] = f"PASS (HC={hc:.2f} <= 1.2)"
+            passed.append("Home conceded avg (last 6)"); details["Home conceded avg (last 6)"] = f"PASS (HC={hc:.2f} <= 1.2)"
         else:
-            failed.append("UC2"); details["UC2"] = f"FAIL (HC={hc:.2f} > 1.2)"; is_perfect = False
+            failed.append("Home conceded avg (last 6)"); details["Home conceded avg (last 6)"] = f"FAIL (HC={hc:.2f} > 1.2)"; is_perfect = False
 
-        # UC3: Away scored average <= 1.0
+        # Away scored average <= 1.0
         a_s = sum(gf for gf, _ in away_6) / 6
         if a_s <= 1.0:
-            passed.append("UC3"); details["UC3"] = f"PASS (AS={a_s:.2f} <= 1.0)"
+            passed.append("Away scored avg (last 6)"); details["Away scored avg (last 6)"] = f"PASS (AS={a_s:.2f} <= 1.0)"
         else:
-            failed.append("UC3"); details["UC3"] = f"FAIL (AS={a_s:.2f} > 1.0)"; is_perfect = False
+            failed.append("Away scored avg (last 6)"); details["Away scored avg (last 6)"] = f"FAIL (AS={a_s:.2f} > 1.0)"; is_perfect = False
 
-        # UC4: Away conceded average <= 1.0
+        # Away conceded average <= 1.0
         a_c = sum(ga for _, ga in away_6) / 6
         if a_c <= 1.0:
-            passed.append("UC4"); details["UC4"] = f"PASS (AC={a_c:.2f} <= 1.0)"
+            passed.append("Away conceded avg (last 6)"); details["Away conceded avg (last 6)"] = f"PASS (AC={a_c:.2f} <= 1.0)"
         else:
-            failed.append("UC4"); details["UC4"] = f"FAIL (AC={a_c:.2f} > 1.0)"; is_perfect = False
+            failed.append("Away conceded avg (last 6)"); details["Away conceded avg (last 6)"] = f"FAIL (AC={a_c:.2f} > 1.0)"; is_perfect = False
     else:
         details["UC1-4"] = "SKIPPED (need 6 games each)"
 
@@ -724,43 +718,17 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                under_perfect, under_qualified, under_close, under_weak,
                scanned_dates, bankroll, odds_over, odds_under, detailed=False):
     """
-    Build a clean, mobile-friendly report - include up to 4 days if needed to reach 10 picks
-    Returns: (report, base_date, included_over, included_under
+    Build a clean, mobile-friendly report - both channels show all picks, free is simplified
+    Returns: (report, base_date, included_over, included_under)
     """
-    if detailed:
-        all_over_picks = over_perfect + over_qualified + over_close
-        all_under_picks = under_perfect + under_qualified + under_close
-    else:
-        all_over_picks = over_perfect + over_qualified + over_close
-        all_under_picks = under_perfect + under_qualified + under_close
-    
-    # Collect picks from days until we have at least 10 total or exhaust scanned days
-    included_over = []
-    included_under = []
-    included_dates = []
-    
-    for date_str in scanned_dates:
-        def filter_by_date(picks, d):
-            return [item for item in picks if item["match"]["date"] == d]
-        
-        day_over = filter_by_date(all_over_picks, date_str)
-        day_under = filter_by_date(all_under_picks, date_str)
-        
-        included_over.extend(day_over)
-        included_under.extend(day_under)
-        included_dates.append(date_str)
-        
-        total_picks = len(included_over) + len(included_under)
-        if total_picks >= 10:
-            break
+    included_over = over_perfect + over_qualified + over_close
+    included_under = under_perfect + under_qualified + under_close
+    included_dates = scanned_dates
     
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
     lines = []
-    if detailed:
-        lines.append("OVER/UNDER 2.5 PICKS (VIP)")
-    else:
-        lines.append("OVER/UNDER 2.5 PICKS")
+    lines.append("OVER/UNDER 2.5 PICKS")
     lines.append("")
     
     if len(included_dates) > 1:
@@ -785,40 +753,164 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     if included_over:
         lines.append("OVER 2.5 GOALS")
         lines.append("")
-        for i, item in enumerate(included_over, 1):
-            m = item["match"]
-            p = item["poisson"]
-            tgt = item["over"]
-            lines.append(f"{i}. {m['home']} vs {m['away']} ({m['date']})")
-            lines.append(f"   {tgt['confidence']} ({p['over25_prob']}%)")
+        
+        # Group over picks
+        included_over_perfect = [p for p in included_over if p in over_perfect]
+        included_over_qualified = [p for p in included_over if p in over_qualified]
+        included_over_close = [p for p in included_over if p in over_close]
+        
+        if included_over_perfect:
+            lines.append("  PREMIUM PICKS")
+            for i, item in enumerate(included_over_perfect, 1):
+                m = item["match"]
+                p = item["poisson"]
+                tgt = item["over"]
+                if detailed:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
+                    lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_over}")
+                    lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
+                    lines.append(f"     Rule score: {tgt['score']}/10 checks passed")
+                    if tgt.get("passed"):
+                        lines.append(f"     Passed: {', '.join(tgt['passed'])}")
+                    for rule, detail in sorted(tgt.get("details", {}).items()):
+                        lines.append(f"     {rule}: {detail}")
+                    lines.append("")
+                else:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
+        
+        if included_over_qualified:
+            if not detailed and not included_over_perfect:
+                lines.append("  PREMIUM PICKS")
             if detailed:
-                lines.append(f"   Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_over}")
-                lines.append(f"   Model xG: {p['home_lambda']} - {p['away_lambda']}")
-                lines.append(f"   Rule score: {tgt['score']} checks passed")
-                if tgt.get("passed"):
-                    lines.append(f"   Passed: {', '.join(tgt['passed'])}")
-                for rule, detail in sorted(tgt.get("details", {}).items()):
-                    lines.append(f"   {rule}: {detail}")
+                lines.append("  STRONG PICKS")
+            start_idx = len(included_over_perfect) + 1
+            for i, item in enumerate(included_over_qualified, start_idx):
+                m = item["match"]
+                p = item["poisson"]
+                tgt = item["over"]
+                if detailed:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
+                    lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_over}")
+                    lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
+                    lines.append(f"     Rule score: {tgt['score']}/10 checks passed")
+                    if tgt.get("passed"):
+                        lines.append(f"     Passed: {', '.join(tgt['passed'])}")
+                    for rule, detail in sorted(tgt.get("details", {}).items()):
+                        lines.append(f"     {rule}: {detail}")
+                    lines.append("")
+                else:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
+        
+        if included_over_close:
+            if detailed:
+                lines.append("  VALUE PICKS")
+            start_idx = len(included_over_perfect) + len(included_over_qualified) + 1
+            for i, item in enumerate(included_over_close, start_idx):
+                m = item["match"]
+                p = item["poisson"]
+                tgt = item["over"]
+                if detailed:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
+                    lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_over}")
+                    lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
+                    lines.append(f"     Rule score: {tgt['score']}/10 checks passed")
+                    if tgt.get("passed"):
+                        lines.append(f"     Passed: {', '.join(tgt['passed'])}")
+                    for rule, detail in sorted(tgt.get("details", {}).items()):
+                        lines.append(f"     {rule}: {detail}")
+                    lines.append("")
+                else:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
+        
+        if not detailed and (included_over_perfect or included_over_qualified or included_over_close):
             lines.append("")
     
     # Under 2.5 section
     if included_under:
         lines.append("UNDER 2.5 GOALS")
         lines.append("")
-        for i, item in enumerate(included_under, 1):
-            m = item["match"]
-            p = item["poisson"]
-            tgt = item["under"]
-            lines.append(f"{i}. {m['home']} vs {m['away']} ({m['date']})")
-            lines.append(f"   {tgt['confidence']} ({p['under25_prob']}%)")
+        
+        # Group under picks
+        included_under_perfect = [p for p in included_under if p in under_perfect]
+        included_under_qualified = [p for p in included_under if p in under_qualified]
+        included_under_close = [p for p in included_under if p in under_close]
+        
+        if included_under_perfect:
+            lines.append("  PREMIUM PICKS")
+            for i, item in enumerate(included_under_perfect, 1):
+                m = item["match"]
+                p = item["poisson"]
+                tgt = item["under"]
+                if detailed:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
+                    lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_under}")
+                    lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
+                    lines.append(f"     Rule score: {tgt['score']}/8 checks passed")
+                    if tgt.get("passed"):
+                        lines.append(f"     Passed: {', '.join(tgt['passed'])}")
+                    for rule, detail in sorted(tgt.get("details", {}).items()):
+                        lines.append(f"     {rule}: {detail}")
+                    lines.append("")
+                else:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
+        
+        if included_under_qualified:
+            if not detailed and not included_under_perfect:
+                lines.append("  PREMIUM PICKS")
             if detailed:
-                lines.append(f"   Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_under}")
-                lines.append(f"   Model xG: {p['home_lambda']} - {p['away_lambda']}")
-                lines.append(f"   Rule score: {tgt['score']} checks passed")
-                if tgt.get("passed"):
-                    lines.append(f"   Passed: {', '.join(tgt['passed'])}")
-                for rule, detail in sorted(tgt.get("details", {}).items()):
-                    lines.append(f"   {rule}: {detail}")
+                lines.append("  STRONG PICKS")
+            start_idx = len(included_under_perfect) + 1
+            for i, item in enumerate(included_under_qualified, start_idx):
+                m = item["match"]
+                p = item["poisson"]
+                tgt = item["under"]
+                if detailed:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
+                    lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_under}")
+                    lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
+                    lines.append(f"     Rule score: {tgt['score']}/8 checks passed")
+                    if tgt.get("passed"):
+                        lines.append(f"     Passed: {', '.join(tgt['passed'])}")
+                    for rule, detail in sorted(tgt.get("details", {}).items()):
+                        lines.append(f"     {rule}: {detail}")
+                    lines.append("")
+                else:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
+        
+        if included_under_close:
+            if detailed:
+                lines.append("  VALUE PICKS")
+            start_idx = len(included_under_perfect) + len(included_under_qualified) + 1
+            for i, item in enumerate(included_under_close, start_idx):
+                m = item["match"]
+                p = item["poisson"]
+                tgt = item["under"]
+                if detailed:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
+                    lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_under}")
+                    lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
+                    lines.append(f"     Rule score: {tgt['score']}/8 checks passed")
+                    if tgt.get("passed"):
+                        lines.append(f"     Passed: {', '.join(tgt['passed'])}")
+                    for rule, detail in sorted(tgt.get("details", {}).items()):
+                        lines.append(f"     {rule}: {detail}")
+                    lines.append("")
+                else:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
+        
+        if not detailed and (included_under_perfect or included_under_qualified or included_under_close):
             lines.append("")
 
     # Disclaimer
@@ -967,12 +1059,12 @@ def main():
     apply_portfolio_kelly(under_perfect + under_qualified + under_close, "under", args.bankroll, MAX_TOTAL_EXPOSURE / 2)
 
     # Build and output reports (both free and detailed)
-    free_report, base_date, _, _ = build_report(
+    free_report, base_date, included_over, included_under = build_report(
         over_perfect, over_qualified, over_close, over_weak,
         under_perfect, under_qualified, under_close, under_weak,
         scanned_dates, args.bankroll, args.odds_over, args.odds_under, detailed=False
     )
-    detailed_report, _, included_over, included_under = build_report(
+    detailed_report, _, _, _ = build_report(
         over_perfect, over_qualified, over_close, over_weak,
         under_perfect, under_qualified, under_close, under_weak,
         scanned_dates, args.bankroll, args.odds_over, args.odds_under, detailed=True
