@@ -25,7 +25,7 @@ from fake_useragent import UserAgent
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Import prediction tracker
-from prediction_tracker import record_predictions, get_yesterday_results, format_yesterday_header
+from prediction_tracker import record_predictions, get_yesterday_results, format_yesterday_header, format_vip_rule_summary
 
 # =============================================================================
 # CONFIGURATION
@@ -768,13 +768,10 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                 if detailed:
                     lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
                     lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
-                    lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_over}")
-                    lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
-                    lines.append(f"     Rule score: {tgt['score']}/10 checks passed")
-                    if tgt.get("passed"):
-                        lines.append(f"     Passed: {', '.join(tgt['passed'])}")
-                    for rule, detail in sorted(tgt.get("details", {}).items()):
-                        lines.append(f"     {rule}: {detail}")
+                    lines.append(f"     Suggested stake: {tgt['kelly']:.1f}% at odds {odds_over}")
+                    lines.append(f"     Expected goals: {p['home_lambda']} - {p['away_lambda']}")
+                    for note in format_vip_rule_summary(tgt.get("details", {}), tgt["score"], 10):
+                        lines.append(f"     {note}")
                     lines.append("")
                 else:
                     lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
@@ -793,13 +790,10 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                 if detailed:
                     lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
                     lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
-                    lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_over}")
-                    lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
-                    lines.append(f"     Rule score: {tgt['score']}/10 checks passed")
-                    if tgt.get("passed"):
-                        lines.append(f"     Passed: {', '.join(tgt['passed'])}")
-                    for rule, detail in sorted(tgt.get("details", {}).items()):
-                        lines.append(f"     {rule}: {detail}")
+                    lines.append(f"     Suggested stake: {tgt['kelly']:.1f}% at odds {odds_over}")
+                    lines.append(f"     Expected goals: {p['home_lambda']} - {p['away_lambda']}")
+                    for note in format_vip_rule_summary(tgt.get("details", {}), tgt["score"], 10):
+                        lines.append(f"     {note}")
                     lines.append("")
                 else:
                     lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
@@ -816,13 +810,10 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                 if detailed:
                     lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
                     lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
-                    lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_over}")
-                    lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
-                    lines.append(f"     Rule score: {tgt['score']}/10 checks passed")
-                    if tgt.get("passed"):
-                        lines.append(f"     Passed: {', '.join(tgt['passed'])}")
-                    for rule, detail in sorted(tgt.get("details", {}).items()):
-                        lines.append(f"     {rule}: {detail}")
+                    lines.append(f"     Suggested stake: {tgt['kelly']:.1f}% at odds {odds_over}")
+                    lines.append(f"     Expected goals: {p['home_lambda']} - {p['away_lambda']}")
+                    for note in format_vip_rule_summary(tgt.get("details", {}), tgt["score"], 10):
+                        lines.append(f"     {note}")
                     lines.append("")
                 else:
                     lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
@@ -850,13 +841,10 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                 if detailed:
                     lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
                     lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
-                    lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_under}")
-                    lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
-                    lines.append(f"     Rule score: {tgt['score']}/8 checks passed")
-                    if tgt.get("passed"):
-                        lines.append(f"     Passed: {', '.join(tgt['passed'])}")
-                    for rule, detail in sorted(tgt.get("details", {}).items()):
-                        lines.append(f"     {rule}: {detail}")
+                    lines.append(f"     Suggested stake: {tgt['kelly']:.1f}% at odds {odds_under}")
+                    lines.append(f"     Expected goals: {p['home_lambda']} - {p['away_lambda']}")
+                    for note in format_vip_rule_summary(tgt.get("details", {}), tgt["score"], 8):
+                        lines.append(f"     {note}")
                     lines.append("")
                 else:
                     lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
@@ -875,13 +863,10 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                 if detailed:
                     lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
                     lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
-                    lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_under}")
-                    lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
-                    lines.append(f"     Rule score: {tgt['score']}/8 checks passed")
-                    if tgt.get("passed"):
-                        lines.append(f"     Passed: {', '.join(tgt['passed'])}")
-                    for rule, detail in sorted(tgt.get("details", {}).items()):
-                        lines.append(f"     {rule}: {detail}")
+                    lines.append(f"     Suggested stake: {tgt['kelly']:.1f}% at odds {odds_under}")
+                    lines.append(f"     Expected goals: {p['home_lambda']} - {p['away_lambda']}")
+                    for note in format_vip_rule_summary(tgt.get("details", {}), tgt["score"], 8):
+                        lines.append(f"     {note}")
                     lines.append("")
                 else:
                     lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
@@ -898,13 +883,10 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                 if detailed:
                     lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
                     lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
-                    lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_under}")
-                    lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
-                    lines.append(f"     Rule score: {tgt['score']}/8 checks passed")
-                    if tgt.get("passed"):
-                        lines.append(f"     Passed: {', '.join(tgt['passed'])}")
-                    for rule, detail in sorted(tgt.get("details", {}).items()):
-                        lines.append(f"     {rule}: {detail}")
+                    lines.append(f"     Suggested stake: {tgt['kelly']:.1f}% at odds {odds_under}")
+                    lines.append(f"     Expected goals: {p['home_lambda']} - {p['away_lambda']}")
+                    for note in format_vip_rule_summary(tgt.get("details", {}), tgt["score"], 8):
+                        lines.append(f"     {note}")
                     lines.append("")
                 else:
                     lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
