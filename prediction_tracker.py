@@ -241,7 +241,7 @@ def get_performance_summary(days=30):
         recent = [p for p in picks if datetime.fromisoformat(p["date"]) >= cutoff] 
  
         for p in recent: 
-            res = p.get("result", "pending") 
+            res = resolve_pick_result(p)
             if res == "win": 
                 wins += 1 
             elif res == "loss": 
@@ -343,7 +343,10 @@ def get_yesterday_results(prediction_type=None):
     results = [] 
     summary = {"wins": 0, "losses": 0, "pushes": 0, "pending": 0} 
  
-    def format_status(result, pick): 
+    def format_status(pick):
+        result = pick.get("result")
+        if result in SETTLED_RESULTS:
+            result = resolve_pick_result(pick)
         if result == "win": 
             summary["wins"] += 1 
             return "Win" 
@@ -363,7 +366,7 @@ def get_yesterday_results(prediction_type=None):
             if pick["date"] == yesterday: 
                 home = pick.get("home_team", pick.get("home"))
                 away = pick.get("away_team", pick.get("away"))
-                status = format_status(pick["result"], pick)
+                status = format_status(pick)
                 if status is None:
                     continue
                 results.append(f"HOME WIN: {home} vs {away} - {status}") 
@@ -373,7 +376,7 @@ def get_yesterday_results(prediction_type=None):
             if pick["date"] == yesterday: 
                 home = pick.get("home_team", pick.get("home"))
                 away = pick.get("away_team", pick.get("away"))
-                status = format_status(pick["result"], pick)
+                status = format_status(pick)
                 if status is None:
                     continue
                 direction = "OVER 2.5" if pick["prediction"] in ("over", "Over 2.5") else "UNDER 2.5"
@@ -404,6 +407,16 @@ def parse_final_score(score_str):
         return home, away
     except ValueError:
         return None
+
+
+def resolve_pick_result(pick):
+    """Normalize stored results. Home-win draws are losses, not pushes."""
+    result = pick.get("result")
+    if result == "push":
+        parsed = parse_final_score(pick.get("final_score"))
+        if parsed and parsed[0] == parsed[1]:
+            return "loss"
+    return result
 
 
 def compute_safer_result(market, score_str):
@@ -548,13 +561,14 @@ def calculate_performance_for_month(picks, month_start, month_end):
             pick_date = datetime.fromisoformat(date_str)
         if month_start <= pick_date < month_end: 
             stats["total"] += 1 
-            if pick["result"] == "win": 
+            result = resolve_pick_result(pick)
+            if result == "win": 
                 stats["wins"] += 1 
                 stats["decisions"] += 1 
-            elif pick["result"] == "loss": 
+            elif result == "loss": 
                 stats["losses"] += 1 
                 stats["decisions"] += 1 
-            elif pick["result"] == "push": 
+            elif result == "push": 
                 stats["pushes"] += 1 
             elif count_report_pending(pick):
                 stats["pending"] += 1 
@@ -810,17 +824,18 @@ def generate_weekly_report():
                 if conf not in stats["by_confidence"]: 
                     stats["by_confidence"][conf] = {"wins":0, "losses":0, "pushes":0, "pending":0, "decisions":0} 
                 
-                if pick["result"] == "win": 
+                result = resolve_pick_result(pick)
+                if result == "win": 
                     stats["wins"] += 1 
                     stats["decisions"] += 1 
                     stats["by_confidence"][conf]["wins"] +=1 
                     stats["by_confidence"][conf]["decisions"] +=1 
-                elif pick["result"] == "loss": 
+                elif result == "loss": 
                     stats["losses"] += 1 
                     stats["decisions"] +=1 
                     stats["by_confidence"][conf]["losses"] +=1 
                     stats["by_confidence"][conf]["decisions"] +=1 
-                elif pick["result"] == "push": 
+                elif result == "push": 
                     stats["pushes"] +=1 
                     stats["by_confidence"][conf]["pushes"] +=1 
                 elif count_report_pending(pick): 

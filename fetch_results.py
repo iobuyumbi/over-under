@@ -20,7 +20,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 
-from prediction_tracker import load_history, save_history, format_safer_result_line, get_pending_predictions, pick_is_due, pick_is_overdue
+from prediction_tracker import load_history, save_history, format_safer_result_line, get_pending_predictions, pick_is_due, pick_is_overdue, resolve_pick_result
 
 # =============================================================================
 # CONFIGURATION
@@ -651,7 +651,9 @@ def write_selected_results_report(dates_to_check, history, dry_run=False):
             f.write("-" * 30 + "\n")
 
             for item in settled:
-                result = item["result"].upper()
+                result = resolve_pick_result(
+                    {"result": item["result"], "final_score": item["score"]}
+                ).upper()
                 f.write(f"[WIN] {item['home_team']} vs {item['away_team']}\n")
                 f.write(f"   {item['prediction']} -> {result} ({item['score']})\n")
                 safer_line = format_safer_result_line(item["prediction"], item["score"])
@@ -731,7 +733,7 @@ def determine_home_win_result(pick, results):
                 elif hg < ag:
                     return "loss"
                 else:
-                    return "push"
+                    return "loss"
     return None
 
 def determine_over_under_result(pick, results):
