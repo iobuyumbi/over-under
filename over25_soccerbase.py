@@ -718,31 +718,16 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                under_perfect, under_qualified, under_close, under_weak,
                scanned_dates, bankroll, odds_over, odds_under, detailed=False):
     """
-    Build a clean, mobile-friendly report - include up to 4 days if needed to reach 10 picks
-    Returns: (report, base_date, included_over, included_under
+    Build a clean, mobile-friendly report - both channels show all picks, free is simplified
+    Returns: (report, base_date, included_over, included_under)
     """
     all_over_picks = over_perfect + over_qualified + over_close
     all_under_picks = under_perfect + under_qualified + under_close
     
-    # Collect picks from days until we have at least 10 total or exhaust scanned days
-    included_over = []
-    included_under = []
-    included_dates = []
-    
-    for date_str in scanned_dates:
-        def filter_by_date(picks, d):
-            return [item for item in picks if item["match"]["date"] == d]
-        
-        day_over = filter_by_date(all_over_picks, date_str)
-        day_under = filter_by_date(all_under_picks, date_str)
-        
-        included_over.extend(day_over)
-        included_under.extend(day_under)
-        included_dates.append(date_str)
-        
-        total_picks = len(included_over) + len(included_under)
-        if total_picks >= 10:
-            break
+    # Both channels show all picks
+    included_over = all_over_picks
+    included_under = all_under_picks
+    included_dates = scanned_dates
     
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
@@ -784,9 +769,9 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                 m = item["match"]
                 p = item["poisson"]
                 tgt = item["over"]
-                lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
                 if detailed:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
                     lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_over}")
                     lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
                     lines.append(f"     Rule score: {tgt['score']}/10 checks passed")
@@ -794,17 +779,23 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                         lines.append(f"     Passed: {', '.join(tgt['passed'])}")
                     for rule, detail in sorted(tgt.get("details", {}).items()):
                         lines.append(f"     {rule}: {detail}")
-                lines.append("")
+                    lines.append("")
+                else:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']}")
         
         if included_over_qualified:
-            lines.append("  STRONG PICKS")
-            for i, item in enumerate(included_over_qualified, 1):
+            if not detailed and not included_over_perfect:
+                lines.append("  PREMIUM PICKS")
+            if detailed:
+                lines.append("  STRONG PICKS")
+            start_idx = len(included_over_perfect) + 1
+            for i, item in enumerate(included_over_qualified, start_idx):
                 m = item["match"]
                 p = item["poisson"]
                 tgt = item["over"]
-                lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
                 if detailed:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
                     lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_over}")
                     lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
                     lines.append(f"     Rule score: {tgt['score']}/10 checks passed")
@@ -812,17 +803,21 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                         lines.append(f"     Passed: {', '.join(tgt['passed'])}")
                     for rule, detail in sorted(tgt.get("details", {}).items()):
                         lines.append(f"     {rule}: {detail}")
-                lines.append("")
+                    lines.append("")
+                else:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']}")
         
         if included_over_close:
-            lines.append("  VALUE PICKS")
-            for i, item in enumerate(included_over_close, 1):
+            if detailed:
+                lines.append("  VALUE PICKS")
+            start_idx = len(included_over_perfect) + len(included_over_qualified) + 1
+            for i, item in enumerate(included_over_close, start_idx):
                 m = item["match"]
                 p = item["poisson"]
                 tgt = item["over"]
-                lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
                 if detailed:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['over25_prob']}%)")
                     lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_over}")
                     lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
                     lines.append(f"     Rule score: {tgt['score']}/10 checks passed")
@@ -830,7 +825,12 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                         lines.append(f"     Passed: {', '.join(tgt['passed'])}")
                     for rule, detail in sorted(tgt.get("details", {}).items()):
                         lines.append(f"     {rule}: {detail}")
-                lines.append("")
+                    lines.append("")
+                else:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']}")
+        
+        if not detailed and (included_over_perfect or included_over_qualified or included_over_close):
+            lines.append("")
     
     # Under 2.5 section
     if included_under:
@@ -848,9 +848,9 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                 m = item["match"]
                 p = item["poisson"]
                 tgt = item["under"]
-                lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
                 if detailed:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
                     lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_under}")
                     lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
                     lines.append(f"     Rule score: {tgt['score']}/8 checks passed")
@@ -858,17 +858,23 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                         lines.append(f"     Passed: {', '.join(tgt['passed'])}")
                     for rule, detail in sorted(tgt.get("details", {}).items()):
                         lines.append(f"     {rule}: {detail}")
-                lines.append("")
+                    lines.append("")
+                else:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']}")
         
         if included_under_qualified:
-            lines.append("  STRONG PICKS")
-            for i, item in enumerate(included_under_qualified, 1):
+            if not detailed and not included_under_perfect:
+                lines.append("  PREMIUM PICKS")
+            if detailed:
+                lines.append("  STRONG PICKS")
+            start_idx = len(included_under_perfect) + 1
+            for i, item in enumerate(included_under_qualified, start_idx):
                 m = item["match"]
                 p = item["poisson"]
                 tgt = item["under"]
-                lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
                 if detailed:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
                     lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_under}")
                     lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
                     lines.append(f"     Rule score: {tgt['score']}/8 checks passed")
@@ -876,17 +882,21 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                         lines.append(f"     Passed: {', '.join(tgt['passed'])}")
                     for rule, detail in sorted(tgt.get("details", {}).items()):
                         lines.append(f"     {rule}: {detail}")
-                lines.append("")
+                    lines.append("")
+                else:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']}")
         
         if included_under_close:
-            lines.append("  VALUE PICKS")
-            for i, item in enumerate(included_under_close, 1):
+            if detailed:
+                lines.append("  VALUE PICKS")
+            start_idx = len(included_under_perfect) + len(included_under_qualified) + 1
+            for i, item in enumerate(included_under_close, start_idx):
                 m = item["match"]
                 p = item["poisson"]
                 tgt = item["under"]
-                lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-                lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
                 if detailed:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
+                    lines.append(f"     {tgt['confidence']} ({p['under25_prob']}%)")
                     lines.append(f"     Stake: {tgt['kelly']:.2f}% bankroll at odds {odds_under}")
                     lines.append(f"     Model xG: {p['home_lambda']} - {p['away_lambda']}")
                     lines.append(f"     Rule score: {tgt['score']}/8 checks passed")
@@ -894,7 +904,12 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                         lines.append(f"     Passed: {', '.join(tgt['passed'])}")
                     for rule, detail in sorted(tgt.get("details", {}).items()):
                         lines.append(f"     {rule}: {detail}")
-                lines.append("")
+                    lines.append("")
+                else:
+                    lines.append(f"  {i}. {m['home']} vs {m['away']}")
+        
+        if not detailed and (included_under_perfect or included_under_qualified or included_under_close):
+            lines.append("")
 
     # Disclaimer
     lines.append("---")

@@ -50,6 +50,7 @@ jobs:
         run: |
           DAYS="${{ github.event.inputs.days_back || '3' }}"
           python fetch_results.py --days "$DAYS" 2>&1 | tee fetch_output.txt
+          python update_manual_results.py 2>&1 | tee update_manual_output.txt
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
@@ -61,6 +62,7 @@ jobs:
           name: fetch-logs-${{ github.run_id }}
           path: |
             fetch_output.txt
+            update_manual_output.txt
             selected_results_report.txt
 
       - name: Send Telegram selected match results
