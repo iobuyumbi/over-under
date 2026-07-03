@@ -597,14 +597,14 @@ def collect_settlement_dates(days_back, history=None):
                 pick_date = datetime.strptime(date_str, "%Y-%m-%d").date()
             except ValueError:
                 continue
-            if pick_date <= today:
+            if pick_date < today:
                 dates.add(date_str)
 
     return sorted(dates, reverse=True)
 
 
 def append_still_pending_report(history):
-    """Note picks that remain pending after a settlement run."""
+    """Note past-date picks that remain pending after a settlement run."""
     pending = get_pending_predictions()
     if not pending:
         return
@@ -630,8 +630,11 @@ def find_matching_result(pick, results):
     return None
 
 def append_selected_results_report(date_str, settled, unmatched, dry_run=False):
-    # Only add to report if there are settled matches OR (unmatched AND it's the first run)
     if not settled and not unmatched:
+        return
+
+    today_str = datetime.now().strftime("%Y-%m-%d")
+    if not settled and date_str >= today_str:
         return
     
     mode = "[DRY RUN] " if dry_run else ""
