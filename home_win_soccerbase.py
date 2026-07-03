@@ -28,6 +28,7 @@ from prediction_tracker import (
     get_yesterday_results,
     format_yesterday_header,
     format_vip_extra_lines,
+    format_pick_block,
 )
 
 # =============================================================================
@@ -545,15 +546,17 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
         for i, item in enumerate(included_perfect, 1):
             m = item["match"]
             p = item["model"]
-            lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-            lines.append(f"     {p['confidence']} ({p['home_win_prob']}%)")
+            extra = None
             if detailed:
-                for extra in format_vip_extra_lines(
+                extra = format_vip_extra_lines(
                     item["kelly"], odds, item["score"], 9,
                     home_strength=p["home_strength"], away_strength=p["away_strength"],
-                ):
-                    lines.append(f"     {extra}")
-            lines.append("")
+                )
+            lines.extend(format_pick_block(
+                i, m["home"], m["away"], m["date"],
+                f"{p['confidence']} ({p['home_win_prob']}%)",
+                extra,
+            ))
         
     if included_qualified:
         lines.append("  STRONG PICKS")
@@ -561,15 +564,17 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
         for i, item in enumerate(included_qualified, 1):
             m = item["match"]
             p = item["model"]
-            lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-            lines.append(f"     {p['confidence']} ({p['home_win_prob']}%)")
+            extra = None
             if detailed:
-                for extra in format_vip_extra_lines(
+                extra = format_vip_extra_lines(
                     item["kelly"], odds, item["score"], 9,
                     home_strength=p["home_strength"], away_strength=p["away_strength"],
-                ):
-                    lines.append(f"     {extra}")
-            lines.append("")
+                )
+            lines.extend(format_pick_block(
+                i, m["home"], m["away"], m["date"],
+                f"{p['confidence']} ({p['home_win_prob']}%)",
+                extra,
+            ))
         
     if included_close:
         lines.append("  VALUE PICKS")
@@ -577,15 +582,17 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
         for i, item in enumerate(included_close, 1):
             m = item["match"]
             p = item["model"]
-            lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
-            lines.append(f"     {p['confidence']} ({p['home_win_prob']}%)")
+            extra = None
             if detailed:
-                for extra in format_vip_extra_lines(
+                extra = format_vip_extra_lines(
                     item["kelly"], odds, item["score"], 9,
                     home_strength=p["home_strength"], away_strength=p["away_strength"],
-                ):
-                    lines.append(f"     {extra}")
-            lines.append("")
+                )
+            lines.extend(format_pick_block(
+                i, m["home"], m["away"], m["date"],
+                f"{p['confidence']} ({p['home_win_prob']}%)",
+                extra,
+            ))
 
     # Add disclaimer
     lines.append("---")

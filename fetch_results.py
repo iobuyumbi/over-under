@@ -20,7 +20,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 
-from prediction_tracker import load_history, save_history, format_safer_result_line, get_pending_predictions
+from prediction_tracker import load_history, save_history, format_safer_result_line, get_pending_predictions, pick_is_due
 
 # =============================================================================
 # CONFIGURATION
@@ -455,10 +455,10 @@ def fetch_match_results(date_str):
     seen = set()
 
     sources = [
-        ("Manual Override", fetch_manual_override),
         ("Soccerbase", fetch_soccerbase_results),
         ("Football-Data.org", fetch_football_data_org),
         ("API-Football", fetch_api_football),
+        ("Manual Override", fetch_manual_override),
     ]
 
     for source_name, source_func in sources:
@@ -500,7 +500,7 @@ def update_history_with_results(date_str, dry_run=False):
     settled = []
 
     for idx, pick in enumerate(history["home_win"]):
-        if pick["result"] == "pending" and pick["date"] == date_str:
+        if pick["result"] == "pending" and pick["date"] == date_str and pick_is_due(pick):
             match = find_matching_result(pick, results)
             result = determine_home_win_result(pick, [match]) if match else None
             if result:
@@ -530,7 +530,7 @@ def update_history_with_results(date_str, dry_run=False):
                 unmatched.append(f"HW: {pick_home} vs {pick_away}")
 
     for idx, pick in enumerate(history["over_under"]):
-        if pick["result"] == "pending" and pick["date"] == date_str:
+        if pick["result"] == "pending" and pick["date"] == date_str and pick_is_due(pick):
             match = find_matching_result(pick, results)
             result = determine_over_under_result(pick, [match]) if match else None
             if result:
