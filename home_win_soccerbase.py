@@ -23,7 +23,7 @@ from fake_useragent import UserAgent
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Import prediction tracker
-from prediction_tracker import record_predictions, get_yesterday_results, format_yesterday_header
+from prediction_tracker import record_predictions, get_yesterday_results, format_yesterday_header, format_vip_rule_summary
 
 # =============================================================================
 # CONFIGURATION
@@ -543,13 +543,10 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
             lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
             lines.append(f"     {p['confidence']} ({p['home_win_prob']}%)")
             if detailed:
-                lines.append(f"     Stake: {item['kelly']:.2f}% bankroll at odds {odds}")
-                lines.append(f"     Strength: home {p['home_strength']} vs away {p['away_strength']}")
-                lines.append(f"     Rule score: {item['score']}/9")
-                if item.get("passed"):
-                    lines.append(f"     Passed: {', '.join(item['passed'])}")
-                for rule, detail in sorted(item.get("details", {}).items()):
-                    lines.append(f"     {rule}: {detail}")
+                lines.append(f"     Suggested stake: {item['kelly']:.1f}% at odds {odds}")
+                lines.append(f"     Form edge: home {p['home_strength']} vs away {p['away_strength']}")
+                for note in format_vip_rule_summary(item.get("details", {}), item["score"], 9):
+                    lines.append(f"     {note}")
             lines.append("")
         
     if included_qualified:
@@ -561,13 +558,10 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
             lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
             lines.append(f"     {p['confidence']} ({p['home_win_prob']}%)")
             if detailed:
-                lines.append(f"     Stake: {item['kelly']:.2f}% bankroll at odds {odds}")
-                lines.append(f"     Strength: home {p['home_strength']} vs away {p['away_strength']}")
-                lines.append(f"     Rule score: {item['score']}/9")
-                if item.get("passed"):
-                    lines.append(f"     Passed: {', '.join(item['passed'])}")
-                for rule, detail in sorted(item.get("details", {}).items()):
-                    lines.append(f"     {rule}: {detail}")
+                lines.append(f"     Suggested stake: {item['kelly']:.1f}% at odds {odds}")
+                lines.append(f"     Form edge: home {p['home_strength']} vs away {p['away_strength']}")
+                for note in format_vip_rule_summary(item.get("details", {}), item["score"], 9):
+                    lines.append(f"     {note}")
             lines.append("")
         
     if included_close:
@@ -579,13 +573,10 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
             lines.append(f"  {i}. {m['home']} vs {m['away']} ({m['date']})")
             lines.append(f"     {p['confidence']} ({p['home_win_prob']}%)")
             if detailed:
-                lines.append(f"     Stake: {item['kelly']:.2f}% bankroll at odds {odds}")
-                lines.append(f"     Strength: home {p['home_strength']} vs away {p['away_strength']}")
-                lines.append(f"     Rule score: {item['score']}/9")
-                if item.get("passed"):
-                    lines.append(f"     Passed: {', '.join(item['passed'])}")
-                for rule, detail in sorted(item.get("details", {}).items()):
-                    lines.append(f"     {rule}: {detail}")
+                lines.append(f"     Suggested stake: {item['kelly']:.1f}% at odds {odds}")
+                lines.append(f"     Form edge: home {p['home_strength']} vs away {p['away_strength']}")
+                for note in format_vip_rule_summary(item.get("details", {}), item["score"], 9):
+                    lines.append(f"     {note}")
             lines.append("")
 
     # Add disclaimer

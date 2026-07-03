@@ -408,6 +408,26 @@ def format_safer_result_line(primary_market, score_str):
     return f"   Safer: {label} -> {result.upper()} ({score_str})"
 
 
+def format_vip_rule_summary(details, score, max_score):
+    """Compact human-readable rule summary for VIP pick lines."""
+    failed = []
+    for name in sorted(details):
+        value = str(details[name])
+        if value.startswith("FAIL"):
+            detail = value[4:].strip(" ()")
+            failed.append(f"{name} ({detail})" if detail else name)
+
+    lines = [f"Profile: {score}/{max_score} checks passed"]
+    if failed:
+        note = failed[0]
+        if len(failed) > 1:
+            note += f"; {failed[1]}"
+        if len(failed) > 2:
+            note += f" (+{len(failed) - 2} more)"
+        lines.append(f"Missed: {note}")
+    return lines
+
+
 def calculate_performance(history_list, days=30): 
     """Calculate performance metrics for last N days.""" 
     cutoff = datetime.now() - timedelta(days=days) 

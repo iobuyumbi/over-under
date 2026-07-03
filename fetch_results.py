@@ -677,7 +677,7 @@ def main():
         print(f"Unmatched: {len(all_unmatched)}")
     print(f"{'='*60}")
 
-    return total_updated
+    return 0
 
 def update_all_pending_results(days_back=7):
     """Backward compatibility: Update all pending predictions from last N days"""
@@ -737,5 +737,6 @@ if __name__ == "__main__":
     import sys
     if len(sys.argv) > 1 and sys.argv[1] == "update":
         update_all_pending_results(days_back=int(sys.argv[2]) if len(sys.argv) > 2 else 14)
+        sys.exit(0)
     else:
         sys.exit(main())
