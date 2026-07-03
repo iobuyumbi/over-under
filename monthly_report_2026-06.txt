@@ -4,10 +4,10 @@ June 2026
 HOME WIN PREDICTIONS
 Total picks: 10
 Wins: 8
-Losses: 0
-Pushes: 2
+Losses: 2
+Pushes: 0
 Pending: 0
-Win Rate: 100.0%
+Win Rate: 80.0%
 
 DOUBLE CHANCE (HOME OR DRAW)
 Total picks: 10
