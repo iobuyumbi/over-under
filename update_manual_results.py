@@ -7,6 +7,7 @@ import requests
 import csv
 import os
 import time
+import json
 from datetime import datetime
 
 API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_KEY", "7fefa847c763ebbbbda8d5ccc41a73e4")
@@ -15,25 +16,51 @@ API_FOOTBALL_HOST = "v3.football.api-sports.io"
 # Football-Data.org (free, no rate limit)
 FOOTBALL_DATA_KEY = os.environ.get("FOOTBALL_DATA_KEY", "")
 
-# All unique matches from prediction_history.json
-MATCHES = [
-    ("2026-06-13", "Coquimbo Unido", "O'Higgins"),
-    ("2026-06-13", "Colo-Colo", "Cobresal"),
-    ("2026-06-13", "Quilmes", "Gimnasia y Tiro"),
-    ("2026-06-13", "Ferrocarril Midland", "Atlanta"),
-    ("2026-06-13", "Nueva Chicago", "Chacarita"),
-    ("2026-06-13", "Almagro", "Agropecuario"),
-    ("2026-06-13", "Audax Italiano", "La Serena"),
-    ("2026-06-13", "USA", "Paraguay"),
-    ("2026-06-14", "Gimnasia de Jujuy", "San Martin de San Juan"),
-    ("2026-06-14", "Temperley", "Guemes"),
-    ("2026-06-14", "Almirante Brown", "Godoy Cruz"),
-    ("2026-06-14", "Ferro Carril Oeste", "Acassuso"),
-    ("2026-06-14", "Central Norte", "San Telmo"),
-    ("2026-06-14", "Patronato", "Atletico Rafaela"),
-    ("2026-06-15", "Ivory Coast", "Ecuador"),
-    ("2026-06-15", "Sundsvall", "Osters"),
-]
+def load_prediction_history():
+    """Load prediction history from prediction_history.json"""
+    history_path = "prediction_history.json"
+    if os.path.exists(history_path):
+        try:
+            with open(history_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"Error loading prediction_history.json: {e}")
+            return {"home_win": [], "over_under": []}
+    return {"home_win": [], "over_under": []}
+
+def get_unique_matches(history):
+    """Extract unique matches from prediction history"""
+    matches = set()
+    # Add home win matches
+    for pick in history.get("home_win", []):
+        date = pick.get("date")
+        home = pick.get("home_team", pick.get("home"))
+        away = pick.get("away_team", pick.get("away"))
+        if date and home and away:
+            matches.add((date, home, away))
+    # Add over/under matches
+    for pick in history.get("over_under", []):
+        date = pick.get("date")
+        home = pick.get("home_team", pick.get("home"))
+        away = pick.get("away_team", pick.get("away"))
+        if date and home and away:
+            matches.add((date, home, away))
+    return sorted(list(matches), key=lambda x: x[0])
+
+def load_manual_results():
+    """Load existing manual results from CSV"""
+    csv_path = "manual_results.csv"
+    existing = {}
+    if os.path.exists(csv_path):
+        try:
+            with open(csv_path, "r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    key = (row["date"], row["home_team"], row["away_team"])
+                    existing[key] = row.get("score", "")
+        except Exception as e:
+            print(f"Error loading manual_results.csv: {e}")
+    return existing
 
 def find_team_id(team_name):
     """Find team ID from API-Football by searching."""
@@ -168,24 +195,43 @@ def fetch_match_result(date, home_team, away_team):
 def main():
     print("Fetching results for all predicted matches...")
     
+    # Load prediction history
+    history = load_prediction_history()
+    matches = get_unique_matches(history)
+    # Load existing manual results
+    existing_scores = load_manual_results()
+    
     results = []
-    for date, home, away in MATCHES:
-        print(f"Fetching: {date} {home} vs {away}")
+    updated_count = 0
+    
+    for date, home, away in matches:
+        print(f"Processing: {date} {home} vs {away}")
+        key = (date, home, away)
+        # Check if we already have a score
+        existing_score = existing_scores.get(key, "")
+        if existing_score:
+            print(f"  [OK] Already has score: {existing_score}")
+            results.append((date, home, away, existing_score))
+            continue
+        
+        # Try to fetch score
         score = fetch_match_result(date, home, away)
         if score:
-            print(f"  [OK] Result: {score}")
+            print(f"  [OK] New result: {score}")
+            updated_count += 1
         else:
             print(f"  [FAIL] No result found")
         results.append((date, home, away, score or ""))
     
     # Write to CSV
-    with open("manual_results.csv", "w", newline="") as f:
+    with open("manual_results.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["date", "home_team", "away_team", "score"])
         writer.writerows(results)
     
     print(f"\nUpdated manual_results.csv with {len(results)} matches")
-    print(f"Found scores for {sum(1 for _, _, _, s in results if s)} matches")
+    print(f"Added/updated scores for {updated_count} matches")
+    print(f"Total matches with scores: {sum(1 for _, _, _, s in results if s)}")
 
 if __name__ == "__main__":
     main()
