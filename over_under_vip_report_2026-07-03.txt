@@ -20,16 +20,16 @@ OVER 2.5 GOALS
 
   VALUE PICKS
 
-  3. Argentina vs Cape Verde Is. (2026-07-03)
-     HIGH (59.0%)
-     Stake: 0.6% at odds 2.0
-     Expected goals: 2.42 - 0.64
-     Rule score: 9/10
-
-  4. Portugal vs Croatia (2026-07-03)
+  3. Portugal vs Croatia (2026-07-03)
      HIGH (72.6%)
      Stake: 1.6% at odds 2.0
      Expected goals: 2.74 - 1.03
+     Rule score: 9/10
+
+  4. Argentina vs Cape Verde Is. (2026-07-03)
+     HIGH (59.0%)
+     Stake: 0.6% at odds 2.0
+     Expected goals: 2.42 - 0.64
      Rule score: 9/10
 
   5. Finn Harps vs Wexford Yth (2026-07-03)
@@ -56,16 +56,16 @@ OVER 2.5 GOALS
      Expected goals: 1.22 - 1.7
      Rule score: 8/10
 
-  9. Neman Grodno vs Arsenal Dzyarzhynsk (2026-07-04)
-     HIGH (59.0%)
-     Stake: 0.6% at odds 2.0
-     Expected goals: 1.57 - 1.49
-     Rule score: 8/10
-
-  10. Longford T vs UCD (2026-07-04)
+  9. Longford T vs UCD (2026-07-04)
      LOW (49.7%)
      Stake: 0.0% at odds 2.0
      Expected goals: 1.18 - 1.48
+     Rule score: 8/10
+
+  10. Neman Grodno vs Arsenal Dzyarzhynsk (2026-07-04)
+     HIGH (59.0%)
+     Stake: 0.6% at odds 2.0
+     Expected goals: 1.57 - 1.49
      Rule score: 8/10
 
   11. Ansan Greeners vs Suwon FC (2026-07-04)
