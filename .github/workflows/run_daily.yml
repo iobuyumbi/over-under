@@ -142,6 +142,9 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      - name: Sync with latest main
+        run: git pull --rebase origin main
+
       - name: Fetch recent results before publishing
         run: |
           python fetch_results.py --days 3 2>&1 | tee fetch_output_automated.txt
@@ -199,6 +202,7 @@ jobs:
           if [ ${#files[@]} -gt 0 ]; then
             git add "${files[@]}"
           fi
+          git add manual_results.csv
 
       - name: Commit predictions and reports
         uses: EndBug/add-and-commit@v9
@@ -209,6 +213,7 @@ jobs:
           pull: "--rebase --autostash"
           add: |
             prediction_history.json
+            manual_results.csv
             README.md
 
       - name: Send public email
@@ -291,6 +296,9 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      - name: Sync with latest main
+        run: git pull --rebase origin main
+
       - name: Settle results and generate weekly report
         id: report
         run: |
@@ -311,6 +319,7 @@ jobs:
           if [ ${#files[@]} -gt 0 ]; then
             git add "${files[@]}"
           fi
+          git add manual_results.csv
 
       - name: Commit weekly report
         uses: EndBug/add-and-commit@v9
@@ -321,6 +330,7 @@ jobs:
           pull: "--rebase --autostash"
           add: |
             prediction_history.json
+            manual_results.csv
             README.md
 
       - name: Send weekly report to Telegram
@@ -378,6 +388,9 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      - name: Sync with latest main
+        run: git pull --rebase origin main
+
       - name: Settle results and generate monthly report
         id: report
         run: |
@@ -398,6 +411,7 @@ jobs:
           if [ ${#files[@]} -gt 0 ]; then
             git add "${files[@]}"
           fi
+          git add manual_results.csv
 
       - name: Commit monthly report
         uses: EndBug/add-and-commit@v9
@@ -408,6 +422,7 @@ jobs:
           pull: "--rebase --autostash"
           add: |
             prediction_history.json
+            manual_results.csv
 
       - name: Send monthly report to Telegram
         if: always()
