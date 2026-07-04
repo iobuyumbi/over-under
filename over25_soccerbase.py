@@ -2,8 +2,8 @@
 """
 OVER/UNDER 2.5 GOALS PREDICTOR - UNIFIED v5
 ==============================================
-Over 2.5: High-scoring rules (from over25tips.com)
-Under 2.5: Low-scoring mirror rules (defensive caps)
+Over 2.5: High-scoring rules + overall goal-activity filter (last 6)
+Under 2.5: Low-scoring mirror rules + overall under 2.5 in 4/6
 Shrinkage xG | Portfolio Kelly | SQLite Cache
 """
 
@@ -37,6 +37,8 @@ REQUEST_DELAY_MIN = 2.5
 REQUEST_DELAY_MAX = 5.0
 MAX_TOTAL_EXPOSURE = 0.25
 SHRINKAGE_WEIGHT = 0.60
+MAX_OVER_SCORE = 11
+MAX_UNDER_SCORE = 10
 
 # Under 2.5 thresholds (from over25tips.com official algorithm)
 UNDER_HOME_SCORED_CAP = 1.2      # Max avg goals scored by home team in last 6 home
@@ -330,10 +332,46 @@ def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
     return form
 
 
+def get_team_overall_form(team_id, num_matches=6, target_date_str=None):
+    """Last N matches home or away combined as (gf, ga) tuples."""
+    all_matches = fetch_soccerbase_team_results(team_id)
+    target_dt = parse_date(target_date_str) if target_date_str else None
+    form = []
+
+    for match in all_matches:
+        match_dt = parse_date(match.get("date_str"))
+        if target_dt and match_dt and match_dt >= target_dt:
+            continue
+        form.append((match["gf"], match["ga"]))
+        if len(form) >= num_matches:
+            break
+
+    return form
+
+
+def _team_scored_every_match(form):
+    sample = form[:6]
+    return len(sample) >= 6 and all(gf >= 1 for gf, _ in sample)
+
+
+def _team_conceded_every_match(form):
+    sample = form[:6]
+    return len(sample) >= 6 and all(ga >= 1 for _, ga in sample)
+
+
+def _team_active_goal_profile(form):
+    """Scored or conceded in every one of the last 6 overall matches."""
+    return _team_scored_every_match(form) or _team_conceded_every_match(form)
+
+
+def _count_under_25_overall(form):
+    return sum(1 for gf, ga in form[:6] if gf + ga < 2.5)
+
+
 # =============================================================================
-# OVER 2.5 ALGORITHM (Your Original 10-Check Rules)
+# OVER 2.5 ALGORITHM (10-Check Rules + Overall Form)
 # =============================================================================
-def apply_over_algorithm(home_3, away_3, home_6, away_6):
+def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, away_overall_6=None):
     if len(home_3) < 3 or len(away_3) < 3:
         return None, None, {"error": "Insufficient data"}, False
 
@@ -410,6 +448,29 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6):
             passed.append("Away total goals (last 6)"); details["Away total goals (last 6)"] = f"PASS ({a_total_6})"
         else:
             failed.append("Away total goals (last 6)"); details["Away total goals (last 6)"] = f"FAIL ({a_total_6})"; is_perfect = False
+
+    home_overall_6 = home_overall_6 or []
+    away_overall_6 = away_overall_6 or []
+    home_active = _team_active_goal_profile(home_overall_6)
+    away_active = _team_active_goal_profile(away_overall_6)
+    if home_active or away_active:
+        teams = []
+        if home_active:
+            if _team_scored_every_match(home_overall_6):
+                teams.append("home scored each")
+            else:
+                teams.append("home conceded each")
+        if away_active:
+            if _team_scored_every_match(away_overall_6):
+                teams.append("away scored each")
+            else:
+                teams.append("away conceded each")
+        passed.append("Overall goal activity (6)")
+        details["Overall goal activity (6)"] = f"PASS ({', '.join(teams)})"
+    else:
+        failed.append("Overall goal activity (6)")
+        details["Overall goal activity (6)"] = "FAIL (neither team scored/conceded in all 6)"
+        is_perfect = False
 
     return passed, failed, details, is_perfect
 
@@ -511,6 +572,46 @@ def apply_under_6game_checks(home_6, away_6):
             failed.append("Away conceded avg (last 6)"); details["Away conceded avg (last 6)"] = f"FAIL (AC={a_c:.2f} > 1.0)"; is_perfect = False
     else:
         details["UC1-4"] = "SKIPPED (need 6 games each)"
+
+    return passed, failed, details, is_perfect
+
+
+def apply_under_overall_checks(home_overall_6, away_overall_6):
+    """Each team must have under 2.5 in at least 4 of last 6 overall matches."""
+    passed, failed, details = [], [], {}
+    is_perfect = True
+
+    if len(home_overall_6) >= 6:
+        h_under = _count_under_25_overall(home_overall_6)
+        if h_under >= 4:
+            passed.append("Home under 2.5 overall (6)")
+            details["Home under 2.5 overall (6)"] = f"PASS ({h_under}/6 under 2.5)"
+            if h_under < 6:
+                is_perfect = False
+        else:
+            failed.append("Home under 2.5 overall (6)")
+            details["Home under 2.5 overall (6)"] = f"FAIL ({h_under}/6 under 2.5)"
+            is_perfect = False
+    else:
+        failed.append("Home under 2.5 overall (6)")
+        details["Home under 2.5 overall (6)"] = f"FAIL (only {len(home_overall_6)}/6 matches)"
+        is_perfect = False
+
+    if len(away_overall_6) >= 6:
+        a_under = _count_under_25_overall(away_overall_6)
+        if a_under >= 4:
+            passed.append("Away under 2.5 overall (6)")
+            details["Away under 2.5 overall (6)"] = f"PASS ({a_under}/6 under 2.5)"
+            if a_under < 6:
+                is_perfect = False
+        else:
+            failed.append("Away under 2.5 overall (6)")
+            details["Away under 2.5 overall (6)"] = f"FAIL ({a_under}/6 under 2.5)"
+            is_perfect = False
+    else:
+        failed.append("Away under 2.5 overall (6)")
+        details["Away under 2.5 overall (6)"] = f"FAIL (only {len(away_overall_6)}/6 matches)"
+        is_perfect = False
 
     return passed, failed, details, is_perfect
 
@@ -620,10 +721,12 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         away_3 = get_team_form(match["away_team_id"], False, 3, target_date)
         home_6 = get_team_form(match["home_team_id"], True, 6, target_date)
         away_6 = get_team_form(match["away_team_id"], False, 6, target_date)
+        home_overall_6 = get_team_overall_form(match["home_team_id"], 6, target_date)
+        away_overall_6 = get_team_overall_form(match["away_team_id"], 6, target_date)
 
         # --- OVER 2.5 ANALYSIS ---
         over_passed, over_failed, over_details, over_is_perfect = apply_over_algorithm(
-            home_3, away_3, home_6, away_6
+            home_3, away_3, home_6, away_6, home_overall_6, away_overall_6
         )
 
         over_score = len(over_passed) if over_passed else 0
@@ -641,11 +744,15 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         else:
             under6_passed, under6_failed, under6_details, under6_perfect = under6_result
 
-        # Merge 3-game and 6-game Under results
-        under_passed = under3_passed + under6_passed
-        under_failed = under3_failed + under6_failed
-        under_details = {**under3_details, **under6_details}
-        under_is_perfect = under3_perfect and under6_perfect
+        under_overall_passed, under_overall_failed, under_overall_details, under_overall_perfect = (
+            apply_under_overall_checks(home_overall_6, away_overall_6)
+        )
+
+        # Merge 3-game, 6-game venue, and overall Under results
+        under_passed = under3_passed + under6_passed + under_overall_passed
+        under_failed = under3_failed + under6_failed + under_overall_failed
+        under_details = {**under3_details, **under6_details, **under_overall_details}
+        under_is_perfect = under3_perfect and under6_perfect and under_overall_perfect
 
         under_score = len(under_passed) if under_passed else 0
 
@@ -720,7 +827,7 @@ def _append_ou_pick(lines, idx, item, side, odds, detailed):
     p = item["poisson"]
     tgt = item[side]
     prob_key = "over25_prob" if side == "over" else "under25_prob"
-    max_score = 10 if side == "over" else 8
+    max_score = MAX_OVER_SCORE if side == "over" else MAX_UNDER_SCORE
     extra = None
     if detailed:
         extra = format_vip_extra_lines(
@@ -945,26 +1052,26 @@ def main():
 
                     # Over 2.5 categorization
                     over_score = data["over"]["score"]
-                    if over_score == 10:
+                    if over_score == MAX_OVER_SCORE:
                         if data["over"]["is_perfect"]:
                             over_perfect.append(data)
                         else:
                             over_qualified.append(data)
-                    elif over_score >= 8:
+                    elif over_score >= MAX_OVER_SCORE - 1:
                         over_close.append(data)
-                    elif over_score >= 6:
+                    elif over_score >= MAX_OVER_SCORE - 3:
                         over_weak.append(data)
 
                     # Under 2.5 categorization
                     under_score = data["under"]["score"]
-                    if under_score == 8:
+                    if under_score == MAX_UNDER_SCORE:
                         if data["under"]["is_perfect"]:
                             under_perfect.append(data)
                         else:
                             under_qualified.append(data)
-                    elif under_score >= 7:
+                    elif under_score >= MAX_UNDER_SCORE - 1:
                         under_close.append(data)
-                    elif under_score >= 6:
+                    elif under_score >= MAX_UNDER_SCORE - 2:
                         under_weak.append(data)
 
         # Early exit only if BOTH markets have sufficient matches
