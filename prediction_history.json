@@ -139,8 +139,11 @@
       "home_team": "Argentina",
       "away_team": "Cape Verde Is.",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-03T04:12:36.285809"
+      "result": "win",
+      "recorded_at": "2026-07-03T04:12:36.285809",
+      "updated_at": "2026-07-04T04:27:34.024948",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-03",
@@ -149,8 +152,11 @@
       "home_team": "Bray",
       "away_team": "Athlone Town",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-03T04:12:36.332589"
+      "result": "win",
+      "recorded_at": "2026-07-03T04:12:36.332589",
+      "updated_at": "2026-07-04T04:27:34.025172",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-03",
@@ -159,8 +165,11 @@
       "home_team": "Derry City",
       "away_team": "Waterford",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-03T04:12:36.501595"
+      "result": "loss",
+      "recorded_at": "2026-07-03T04:12:36.501595",
+      "updated_at": "2026-07-04T04:27:34.025555",
+      "final_score": "2-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-04",
@@ -574,8 +583,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-03T04:16:08.078416"
+      "result": "loss",
+      "recorded_at": "2026-07-03T04:16:08.078416",
+      "updated_at": "2026-07-04T04:27:34.025759",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-06",
@@ -598,8 +610,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-03T04:16:08.105389"
+      "result": "win",
+      "recorded_at": "2026-07-03T04:16:08.105389",
+      "updated_at": "2026-07-04T04:27:34.025983",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-03",
@@ -625,8 +640,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-03T04:16:08.133978"
+      "result": "loss",
+      "recorded_at": "2026-07-03T04:16:08.133978",
+      "updated_at": "2026-07-04T04:27:34.026168",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-03",
@@ -637,8 +655,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-03T04:16:08.155982"
+      "result": "loss",
+      "recorded_at": "2026-07-03T04:16:08.155982",
+      "updated_at": "2026-07-04T04:27:34.026579",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-04",
