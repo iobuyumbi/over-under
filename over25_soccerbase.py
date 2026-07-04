@@ -25,7 +25,7 @@ from fake_useragent import UserAgent
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Import prediction tracker
-from prediction_tracker import record_predictions, get_yesterday_results, format_yesterday_header, format_vip_extra_lines, format_pick_block
+from prediction_tracker import record_predictions, get_yesterday_results, format_yesterday_header, format_vip_extra_lines, format_pick_block, is_blocked_fixture
 
 # =============================================================================
 # CONFIGURATION
@@ -741,8 +741,8 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     Build a clean, mobile-friendly report - both channels show all picks, free is simplified
     Returns: (report, base_date, included_over, included_under)
     """
-    included_over = over_perfect + over_qualified + over_close
-    included_under = under_perfect + under_qualified + under_close
+    included_over = [p for p in (over_perfect + over_qualified + over_close) if not is_blocked_fixture(p["match"])]
+    included_under = [p for p in (under_perfect + under_qualified + under_close) if not is_blocked_fixture(p["match"])]
     included_dates = scanned_dates
     
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
@@ -916,6 +916,8 @@ def main():
         for f in fixtures:
             key = (f["home_team_id"], f["away_team_id"], f["league"])
             if key not in seen and f["home_team_id"] and f["away_team_id"]:
+                if is_blocked_fixture(f):
+                    continue
                 if not args.scheduled or f["status"] == "Scheduled":
                     seen.add(key)
                     unique_fixtures.append(f)

@@ -29,6 +29,7 @@ from prediction_tracker import (
     format_yesterday_header,
     format_vip_extra_lines,
     format_pick_block,
+    is_blocked_fixture,
 )
 
 # =============================================================================
@@ -510,9 +511,9 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
     Build a clean, mobile-friendly report with all qualifying picks across scanned days.
     Returns: (report, base_date, included_perfect, included_qualified, included_close)
     """
-    included_perfect = list(perfect)
-    included_qualified = list(qualified)
-    included_close = list(close_calls)
+    included_perfect = [p for p in perfect if not is_blocked_fixture(p["match"])]
+    included_qualified = [p for p in qualified if not is_blocked_fixture(p["match"])]
+    included_close = [p for p in close_calls if not is_blocked_fixture(p["match"])]
     included_dates = scanned_dates
 
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
@@ -661,6 +662,8 @@ def main():
         for f in fixtures:
             key = (f["home_team_id"], f["away_team_id"], f["league"])
             if key not in seen and f["home_team_id"] and f["away_team_id"]:
+                if is_blocked_fixture(f):
+                    continue
                 if not args.scheduled or f["status"] == "Scheduled":
                     seen.add(key)
                     unique_fixtures.append(f)
