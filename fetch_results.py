@@ -20,7 +20,17 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 
-from prediction_tracker import load_history, save_history, format_safer_result_line, get_pending_predictions, pick_is_due, pick_is_overdue, resolve_pick_result
+from prediction_tracker import (
+    load_history,
+    save_history,
+    format_safer_result_line,
+    get_pending_predictions,
+    pick_is_due,
+    pick_is_overdue,
+    resolve_pick_result,
+    is_blocked_pick,
+    format_pick_result_lines,
+)
 
 # =============================================================================
 # CONFIGURATION
@@ -601,12 +611,12 @@ def collect_settled_picks_for_date(history, date_str):
     """All decided picks for a date, whether settled this run or earlier."""
     items = []
     for pick in history.get("home_win", []):
-        if pick.get("date", "")[:10] != date_str:
+        if pick.get("date", "")[:10] != date_str or is_blocked_pick(pick):
             continue
         if pick.get("result") in ("win", "loss", "push") and pick.get("final_score"):
             items.append(pick_to_report_item(pick, "home_win"))
     for pick in history.get("over_under", []):
-        if pick.get("date", "")[:10] != date_str:
+        if pick.get("date", "")[:10] != date_str or is_blocked_pick(pick):
             continue
         if pick.get("result") in ("win", "loss", "push") and pick.get("final_score"):
             items.append(pick_to_report_item(pick, "over_under"))
@@ -617,14 +627,14 @@ def collect_unmatched_pending_for_date(history, date_str):
     """Past-date picks still pending after settlement (missing scores)."""
     unmatched = []
     for pick in history.get("home_win", []):
-        if pick.get("date", "")[:10] != date_str:
+        if pick.get("date", "")[:10] != date_str or is_blocked_pick(pick):
             continue
         if pick.get("result") == "pending" and pick_is_overdue(pick):
             home = pick.get("home_team", pick.get("home"))
             away = pick.get("away_team", pick.get("away"))
             unmatched.append(f"HW: {home} vs {away}")
     for pick in history.get("over_under", []):
-        if pick.get("date", "")[:10] != date_str:
+        if pick.get("date", "")[:10] != date_str or is_blocked_pick(pick):
             continue
         if pick.get("result") == "pending" and pick_is_overdue(pick):
             home = pick.get("home_team", pick.get("home"))
@@ -633,13 +643,49 @@ def collect_unmatched_pending_for_date(history, date_str):
     return unmatched
 
 
+def build_yesterday_results_block(history):
+    """Detailed yesterday block for selected-results Telegram."""
+    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+    lines = []
+
+    for pick in history.get("home_win", []):
+        if pick.get("date", "")[:10] != yesterday:
+            continue
+        lines.extend(format_pick_result_lines(pick, "Home Win"))
+
+    for pick in history.get("over_under", []):
+        if pick.get("date", "")[:10] != yesterday:
+            continue
+        market = (
+            "Over 2.5"
+            if pick.get("prediction", "over").lower() in ("over", "over 2.5")
+            else "Under 2.5"
+        )
+        lines.extend(format_pick_result_lines(pick, market))
+
+    while lines and lines[-1] == "":
+        lines.pop()
+    return yesterday, lines
+
+
 def write_selected_results_report(dates_to_check, history, dry_run=False):
     """Rebuild the full selected-results report from history for the date window."""
     today_str = datetime.now().strftime("%Y-%m-%d")
+    yesterday_str = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
     mode = "[DRY RUN] " if dry_run else ""
 
     with open(SELECTED_RESULTS_REPORT, "w", encoding="utf-8") as f:
+        yesterday_str, yesterday_lines = build_yesterday_results_block(history)
+        if yesterday_lines:
+            f.write(f"\n{mode}YESTERDAY ({yesterday_str})\n")
+            f.write("-" * 30 + "\n")
+            for line in yesterday_lines:
+                f.write(f"{line}\n")
+
         for date_str in dates_to_check:
+            if date_str == yesterday_str:
+                continue
+
             settled = collect_settled_picks_for_date(history, date_str)
             unmatched = collect_unmatched_pending_for_date(history, date_str)
             if not settled and not unmatched:
@@ -696,7 +742,7 @@ def collect_settlement_dates(days_back, history=None):
 
 def append_still_pending_report(history):
     """Note past-date picks that remain pending after a settlement run."""
-    pending = get_pending_predictions()
+    pending = [p for p in get_pending_predictions() if not is_blocked_pick(p)]
     if not pending:
         return
 

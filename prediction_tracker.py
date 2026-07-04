@@ -18,6 +18,74 @@ logging.basicConfig(level=logging.INFO)
 HISTORY_FILE = "prediction_history.json" 
 SETTLED_RESULTS = frozenset({"win", "loss", "push"})
 MEDIUM = "MEDIUM"
+
+# Flagged regions with match-integrity concerns. Add new regions here as needed.
+BLOCKED_REGIONS = (
+    {
+        "name": "Ireland",
+        "league_keywords": (
+            "ireland",
+            "fai cup",
+            "irish",
+        ),
+        "team_keywords": (
+            "finn harps", "drogheda", "bray", "derry city", "waterford",
+            "bohemians", "cork city", "dundalk", "athlone", "wexford",
+            "longford", "ucd", "shelbourne", "shamrock", "sligo rovers",
+            "galway united", "limerick", "treaty united", "cobh ramblers",
+            "kerry fc", "st patrick", "st patricks",
+        ),
+    },
+)
+
+
+def _normalize_label(value):
+    return str(value or "").strip().lower()
+
+
+def is_blocked_league(league):
+    """True when a league belongs to a flagged region."""
+    normalized = _normalize_label(league)
+    if not normalized:
+        return False
+    for region in BLOCKED_REGIONS:
+        if any(keyword in normalized for keyword in region["league_keywords"]):
+            return True
+    return False
+
+
+def is_blocked_team(team_name):
+    """True when a club name matches a flagged region."""
+    normalized = _normalize_label(team_name)
+    if not normalized:
+        return False
+    for region in BLOCKED_REGIONS:
+        if any(keyword in normalized for keyword in region["team_keywords"]):
+            return True
+    return False
+
+
+def is_blocked_match(home, away, league=""):
+    """True when a fixture should be excluded from picks and reporting."""
+    if is_blocked_league(league):
+        return True
+    return is_blocked_team(home) or is_blocked_team(away)
+
+
+def is_blocked_pick(pick):
+    return is_blocked_match(
+        pick.get("home_team", pick.get("home", "")),
+        pick.get("away_team", pick.get("away", "")),
+        pick.get("league", ""),
+    )
+
+
+def is_blocked_fixture(fixture):
+    return is_blocked_match(
+        fixture.get("home", fixture.get("home_team", "")),
+        fixture.get("away", fixture.get("away_team", "")),
+        fixture.get("league", ""),
+    )
  
  
 def home_win_key(pick):
@@ -150,7 +218,14 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None):
     skipped = 0
 
     if home_win_picks: 
-        for pick in home_win_picks: 
+        for pick in home_win_picks:
+            if is_blocked_match(
+                pick.get("home", pick.get("home_team", "")),
+                pick.get("away", pick.get("away_team", "")),
+                pick.get("league", ""),
+            ):
+                skipped += 1
+                continue
             entry = { 
                 "date": pick.get("date", date_str), 
                 "type": "home_win", 
@@ -172,7 +247,14 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None):
             add_to_manual_results_csv(entry["date"], entry["home_team"], entry["away_team"])
 
     if over_under_picks: 
-        for pick in over_under_picks: 
+        for pick in over_under_picks:
+            if is_blocked_match(
+                pick.get("home", pick.get("home_team", "")),
+                pick.get("away", pick.get("away_team", "")),
+                pick.get("league", ""),
+            ):
+                skipped += 1
+                continue
             entry = { 
                 "date": pick.get("date", date_str), 
                 "type": "over_under", 
@@ -332,6 +414,49 @@ def count_report_pending(pick):
     return pick.get("result") == "pending" and pick_is_overdue(pick)
 
 
+def format_yesterday_line(pick, market_label):
+    """Compact one-line summary for daily prediction reports."""
+    if is_blocked_pick(pick):
+        return None
+
+    home = pick.get("home_team", pick.get("home"))
+    away = pick.get("away_team", pick.get("away"))
+    result = resolve_pick_result(pick)
+
+    if result in SETTLED_RESULTS:
+        return f"{market_label}: {home} vs {away} - {result.capitalize()}"
+    if pick.get("result") == "pending" and pick_is_overdue(pick):
+        return f"{market_label}: {home} vs {away} - Pending"
+    return None
+
+
+def format_pick_result_lines(pick, market_label):
+    """Detailed result lines for one pick (matches selected-results style)."""
+    if is_blocked_pick(pick):
+        return []
+
+    home = pick.get("home_team", pick.get("home"))
+    away = pick.get("away_team", pick.get("away"))
+    result = resolve_pick_result(pick)
+    score = pick.get("final_score", "")
+
+    if result in SETTLED_RESULTS and score:
+        lines = [
+            f"[WIN] {home} vs {away}",
+            f"   {market_label} -> {result.upper()} ({score})",
+        ]
+        safer = format_safer_result_line(market_label, score)
+        if safer:
+            lines.append(safer)
+        lines.append("")
+        return lines
+
+    if pick.get("result") == "pending" and pick_is_overdue(pick):
+        return [f"[PENDING] {market_label}: {home} vs {away}", ""]
+
+    return []
+
+
 def get_yesterday_results(prediction_type=None): 
     """Get a clean summary of yesterday's results.
  
@@ -342,45 +467,49 @@ def get_yesterday_results(prediction_type=None):
     yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d") 
     results = [] 
     summary = {"wins": 0, "losses": 0, "pushes": 0, "pending": 0} 
- 
-    def format_status(pick):
-        result = pick.get("result")
-        if result in SETTLED_RESULTS:
-            result = resolve_pick_result(pick)
-        if result == "win": 
-            summary["wins"] += 1 
-            return "Win" 
-        if result == "loss": 
-            summary["losses"] += 1 
-            return "Loss" 
-        if result == "push": 
-            summary["pushes"] += 1 
-            return "Push" 
-        if count_report_pending(pick):
-            summary["pending"] += 1 
-            return "Pending"
-        return None 
- 
+
+    def tally(result):
+        if result == "win":
+            summary["wins"] += 1
+        elif result == "loss":
+            summary["losses"] += 1
+        elif result == "push":
+            summary["pushes"] += 1
+
     if prediction_type in (None, "home_win"): 
         for pick in history["home_win"]: 
-            if pick["date"] == yesterday: 
-                home = pick.get("home_team", pick.get("home"))
-                away = pick.get("away_team", pick.get("away"))
-                status = format_status(pick)
-                if status is None:
-                    continue
-                results.append(f"HOME WIN: {home} vs {away} - {status}") 
+            if pick.get("date", "")[:10] != yesterday or is_blocked_pick(pick):
+                continue
+            result = resolve_pick_result(pick)
+            if result in SETTLED_RESULTS:
+                tally(result)
+            elif pick.get("result") == "pending" and pick_is_overdue(pick):
+                summary["pending"] += 1
+            else:
+                continue
+            line = format_yesterday_line(pick, "HOME WIN")
+            if line:
+                results.append(line)
  
     if prediction_type in (None, "over_under"): 
         for pick in history["over_under"]: 
-            if pick["date"] == yesterday: 
-                home = pick.get("home_team", pick.get("home"))
-                away = pick.get("away_team", pick.get("away"))
-                status = format_status(pick)
-                if status is None:
-                    continue
-                direction = "OVER 2.5" if pick["prediction"] in ("over", "Over 2.5") else "UNDER 2.5"
-                results.append(f"{direction}: {home} vs {away} - {status}") 
+            if pick.get("date", "")[:10] != yesterday or is_blocked_pick(pick):
+                continue
+            market = (
+                "OVER 2.5"
+                if pick.get("prediction", "over").lower() in ("over", "over 2.5")
+                else "UNDER 2.5"
+            )
+            result = resolve_pick_result(pick)
+            if result in SETTLED_RESULTS:
+                tally(result)
+            elif pick.get("result") == "pending" and pick_is_overdue(pick):
+                summary["pending"] += 1
+            else:
+                continue
+            line = format_yesterday_line(pick, market)
+            if line:
+                results.append(line)
  
     return yesterday, results, summary
 
@@ -553,6 +682,8 @@ def calculate_performance_for_month(picks, month_start, month_end):
     } 
     
     for pick in picks: 
+        if is_blocked_pick(pick):
+            continue
         # Handle both date-only (YYYY-MM-DD) and full ISO strings
         date_str = pick["date"]
         if len(date_str) == 10:
@@ -610,6 +741,8 @@ def calculate_safer_pick_stats(picks, date_filter_fn):
     
     # Process Double Chance (for Home Win picks)
     for pick in picks.get("home_win", []):
+        if is_blocked_pick(pick):
+            continue
         if date_filter_fn(pick):
             stats["double_chance"]["total"] += 1
             if pick["result"] == "pending":
@@ -634,6 +767,8 @@ def calculate_safer_pick_stats(picks, date_filter_fn):
     
     # Process Over 1.5 and Under 3.5 (for Over/Under picks)
     for pick in picks.get("over_under", []):
+        if is_blocked_pick(pick):
+            continue
         if date_filter_fn(pick):
             prediction = pick.get("prediction", "over").lower()
             if prediction == "over":
@@ -811,6 +946,8 @@ def generate_weekly_report():
         } 
         
         for pick in picks: 
+            if is_blocked_pick(pick):
+                continue
             # Handle both date-only (YYYY-MM-DD) and full ISO strings
             date_str = pick["date"]
             if len(date_str) == 10:
