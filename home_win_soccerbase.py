@@ -25,11 +25,10 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 # Import prediction tracker
 from prediction_tracker import (
     record_predictions,
-    get_yesterday_results,
-    format_yesterday_header,
     format_vip_extra_lines,
     format_pick_block,
     is_blocked_fixture,
+    append_yesterday_section,
 )
 
 # =============================================================================
@@ -530,16 +529,7 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
     
     lines.append("")
     
-    # Yesterday's results section
-    yesterday_date, yesterday_results, yesterday_summary = get_yesterday_results("home_win")
-    if yesterday_results:
-        lines.append(f"YESTERDAY'S RESULTS ({yesterday_date})")
-        header = format_yesterday_header(yesterday_summary)
-        if header:
-            lines.append(header)
-        for res in yesterday_results:
-            lines.append(res)
-        lines.append("")
+    append_yesterday_section(lines, "home_win", detailed=detailed)
     
     if included_perfect:
         lines.append("  PREMIUM PICKS")

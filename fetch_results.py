@@ -742,7 +742,7 @@ def collect_settlement_dates(days_back, history=None):
 
 def append_still_pending_report(history):
     """Note past-date picks that remain pending after a settlement run."""
-    pending = [p for p in get_pending_predictions() if not is_blocked_pick(p)]
+    pending = get_pending_predictions()
     if not pending:
         return
 

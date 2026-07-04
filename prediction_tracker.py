@@ -69,7 +69,7 @@ def is_blocked_team(team_name):
 
 
 def is_blocked_match(home, away, league=""):
-    """True when a fixture should be excluded from picks and reporting."""
+    """True when a fixture should be excluded from new predictions only."""
     if is_blocked_league(league):
         return True
     return is_blocked_team(home) or is_blocked_team(away)
@@ -422,9 +422,13 @@ def format_yesterday_line(pick, market_label):
     home = pick.get("home_team", pick.get("home"))
     away = pick.get("away_team", pick.get("away"))
     result = resolve_pick_result(pick)
+    score = pick.get("final_score", "")
 
     if result in SETTLED_RESULTS:
-        return f"{market_label}: {home} vs {away} - {result.capitalize()}"
+        line = f"{market_label}: {home} vs {away} - {result.capitalize()}"
+        if score:
+            line += f" ({score})"
+        return line
     if pick.get("result") == "pending" and pick_is_overdue(pick):
         return f"{market_label}: {home} vs {away} - Pending"
     return None
@@ -454,16 +458,15 @@ def format_pick_result_lines(pick, market_label):
     return []
 
 
-def get_yesterday_results(prediction_type=None): 
-    """Get a clean summary of yesterday's results.
- 
-    prediction_type: None for all, "home_win", or "over_under"
-    Returns: (date_str, result_lines, summary_dict) 
-    """ 
-    history = load_history() 
-    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d") 
-    results = [] 
-    summary = {"wins": 0, "losses": 0, "pushes": 0, "pending": 0} 
+def get_yesterday_results(prediction_type=None, detailed=False):
+    """Get yesterday's results for daily reports.
+
+    Blocked regions are still included here so past results stay visible.
+    """
+    history = load_history()
+    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+    results = []
+    summary = {"wins": 0, "losses": 0, "pushes": 0, "pending": 0}
 
     def tally(result):
         if result == "win":
@@ -473,42 +476,76 @@ def get_yesterday_results(prediction_type=None):
         elif result == "push":
             summary["pushes"] += 1
 
-    if prediction_type in (None, "home_win"): 
-        for pick in history["home_win"]: 
-            if pick.get("date", "")[:10] != yesterday:
-                continue
-            result = resolve_pick_result(pick)
-            if result in SETTLED_RESULTS:
-                tally(result)
-            elif pick.get("result") == "pending" and pick_is_overdue(pick):
-                summary["pending"] += 1
-            else:
-                continue
-            line = format_yesterday_line(pick, "HOME WIN")
+    def append_pick(pick, market_label):
+        result = resolve_pick_result(pick)
+        if result in SETTLED_RESULTS:
+            tally(result)
+        elif pick.get("result") == "pending" and pick_is_overdue(pick):
+            summary["pending"] += 1
+        else:
+            return
+
+        if detailed:
+            results.extend(format_pick_result_lines(pick, market_label))
+        else:
+            line = format_yesterday_line(pick, market_label)
             if line:
                 results.append(line)
- 
-    if prediction_type in (None, "over_under"): 
-        for pick in history["over_under"]: 
+
+    if prediction_type in (None, "home_win"):
+        for pick in history["home_win"]:
+            if pick.get("date", "")[:10] != yesterday:
+                continue
+            append_pick(pick, "Home Win" if detailed else "HOME WIN")
+
+    if prediction_type in (None, "over_under"):
+        for pick in history["over_under"]:
             if pick.get("date", "")[:10] != yesterday:
                 continue
             market = (
-                "OVER 2.5"
+                "Over 2.5"
                 if pick.get("prediction", "over").lower() in ("over", "over 2.5")
-                else "UNDER 2.5"
+                else "Under 2.5"
             )
-            result = resolve_pick_result(pick)
-            if result in SETTLED_RESULTS:
-                tally(result)
-            elif pick.get("result") == "pending" and pick_is_overdue(pick):
-                summary["pending"] += 1
-            else:
-                continue
-            line = format_yesterday_line(pick, market)
-            if line:
-                results.append(line)
- 
+            if not detailed:
+                market = market.upper()
+            append_pick(pick, market)
+
+    while results and results[-1] == "":
+        results.pop()
+
     return yesterday, results, summary
+
+
+def append_yesterday_section(lines, prediction_type, detailed=False):
+    """Add a spaced yesterday block before today's picks."""
+    yesterday_date, yesterday_results, yesterday_summary = get_yesterday_results(
+        prediction_type, detailed=detailed
+    )
+    if not yesterday_results:
+        return
+
+    lines.append("YESTERDAY'S RESULTS")
+    lines.append(f"({yesterday_date})")
+    lines.append("")
+    header = format_yesterday_header(yesterday_summary)
+    if header:
+        lines.append(f"  {header}")
+        lines.append("")
+
+    if detailed:
+        for line in yesterday_results:
+            lines.append(line)
+    else:
+        for line in yesterday_results:
+            lines.append(f"  {line}")
+            lines.append("")
+
+    lines.append("")
+    lines.append("---")
+    lines.append("")
+    lines.append("TODAY'S PICKS")
+    lines.append("")
 
 
 def format_yesterday_header(summary): 
