@@ -852,6 +852,18 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-03T04:16:08.498743"
+    },
+    {
+      "date": "2026-07-07",
+      "type": "over_under",
+      "league": "World Cup",
+      "home_team": "Switzerland",
+      "away_team": "Colombia",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-04T05:30:14.655093"
     }
   ]
 }
