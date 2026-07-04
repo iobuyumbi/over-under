@@ -25,7 +25,7 @@ from fake_useragent import UserAgent
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Import prediction tracker
-from prediction_tracker import record_predictions, get_yesterday_results, format_yesterday_header, format_vip_extra_lines, format_pick_block, is_blocked_fixture
+from prediction_tracker import record_predictions, format_vip_extra_lines, format_pick_block, is_blocked_fixture, append_yesterday_section
 
 # =============================================================================
 # CONFIGURATION
@@ -758,16 +758,7 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     
     lines.append("")
     
-    # Yesterday's results section
-    yesterday_date, yesterday_results, yesterday_summary = get_yesterday_results("over_under")
-    if yesterday_results:
-        lines.append(f"YESTERDAY'S RESULTS ({yesterday_date})")
-        header = format_yesterday_header(yesterday_summary)
-        if header:
-            lines.append(header)
-        for res in yesterday_results:
-            lines.append(res)
-        lines.append("")
+    append_yesterday_section(lines, "over_under", detailed=detailed)
     
     # Over 2.5 section
     if included_over:
