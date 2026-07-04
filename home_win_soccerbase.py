@@ -2,7 +2,7 @@
 """
 HOME WIN PREDICTOR - PRODUCTION HARDENED v5
 =============================================
-9-check rule system | Shrinkage strength | Logistic prob | Portfolio Kelly | SQLite Cache
+11-check rule system | Shrinkage strength | Logistic prob | Portfolio Kelly | SQLite Cache
 """
 
 import requests
@@ -292,6 +292,9 @@ def parse_date(date_str):
     return None
 
 
+MAX_HOME_WIN_SCORE = 11
+
+
 def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
     all_matches = fetch_soccerbase_team_results(team_id)
     form = []
@@ -308,10 +311,33 @@ def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
     return form
 
 
+def get_team_overall_form(team_id, num_matches=5, target_date_str=None):
+    """Last N matches home or away combined."""
+    all_matches = fetch_soccerbase_team_results(team_id)
+    form = []
+    target_dt = parse_date(target_date_str) if target_date_str else None
+
+    for match in all_matches:
+        match_dt = parse_date(match.get("date_str"))
+        if target_dt and match_dt and match_dt >= target_dt:
+            continue
+        form.append(match)
+        if len(form) >= num_matches:
+            break
+    return form
+
+
+def _form_record_summary(form):
+    wins = sum(1 for m in form if m["result"] == "W")
+    losses = sum(1 for m in form if m["result"] == "L")
+    draws = len(form) - wins - losses
+    return wins, losses, draws
+
+
 # =============================================================================
-# HOME WIN ALGORITHM (9 Checks - Official Rules)
+# HOME WIN ALGORITHM (11 Checks - Official Rules + Overall Form)
 # =============================================================================
-def apply_home_win_algorithm(home_data_6, away_data_6):
+def apply_home_win_algorithm(home_data_6, away_data_6, home_overall_5=None, away_overall_5=None):
     if len(home_data_6) < 6 or len(away_data_6) < 6:
         return None, None, {"error": "Insufficient data"}, False
 
@@ -375,6 +401,41 @@ def apply_home_win_algorithm(home_data_6, away_data_6):
         passed.append("Away wins"); details["Away wins"] = f"PASS ({away_wins}/6 Wins)"
     else:
         failed.append("Away wins"); details["Away wins"] = f"FAIL ({away_wins})"; is_perfect = False
+
+    # Overall form (last 5, home or away combined)
+    home_overall_5 = home_overall_5 or []
+    if len(home_overall_5) >= 5:
+        hw, hl, _ = _form_record_summary(home_overall_5[:5])
+        home_overall_ok = hl <= 1 or (hl == 2 and hw == 3)
+        if home_overall_ok:
+            passed.append("Home overall form (5)")
+            details["Home overall form (5)"] = f"PASS ({hw}W-{hl}L in 5)"
+            if hl == 2:
+                is_perfect = False
+        else:
+            failed.append("Home overall form (5)")
+            details["Home overall form (5)"] = f"FAIL ({hw}W-{hl}L in 5)"
+            is_perfect = False
+    else:
+        failed.append("Home overall form (5)")
+        details["Home overall form (5)"] = f"FAIL (only {len(home_overall_5)}/5 matches)"
+        is_perfect = False
+
+    away_overall_5 = away_overall_5 or []
+    if len(away_overall_5) >= 5:
+        aw, al, _ = _form_record_summary(away_overall_5[:5])
+        away_overall_ok = al >= 2 and aw <= 2
+        if away_overall_ok:
+            passed.append("Away overall form (5)")
+            details["Away overall form (5)"] = f"PASS ({aw}W-{al}L in 5)"
+        else:
+            failed.append("Away overall form (5)")
+            details["Away overall form (5)"] = f"FAIL ({aw}W-{al}L in 5)"
+            is_perfect = False
+    else:
+        failed.append("Away overall form (5)")
+        details["Away overall form (5)"] = f"FAIL (only {len(away_overall_5)}/5 matches)"
+        is_perfect = False
 
     return passed, failed, details, is_perfect
 
@@ -460,11 +521,15 @@ def process_single_match(match, target_date, default_odds=2.8):
     try:
         home_form = get_team_form(match["home_team_id"], True, 6, target_date)
         away_form = get_team_form(match["away_team_id"], False, 6, target_date)
+        home_overall_5 = get_team_overall_form(match["home_team_id"], 5, target_date)
+        away_overall_5 = get_team_overall_form(match["away_team_id"], 5, target_date)
 
         if len(home_form) < 6 or len(away_form) < 6:
             return {"status": "insufficient"}
 
-        passed, failed, details, is_perfect = apply_home_win_algorithm(home_form, away_form)
+        passed, failed, details, is_perfect = apply_home_win_algorithm(
+            home_form, away_form, home_overall_5, away_overall_5
+        )
         if passed is None:
             return {"status": "insufficient"}
 
@@ -540,7 +605,7 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
             extra = None
             if detailed:
                 extra = format_vip_extra_lines(
-                    item["kelly"], odds, item["score"], 9,
+                    item["kelly"], odds, item["score"], MAX_HOME_WIN_SCORE,
                     home_strength=p["home_strength"], away_strength=p["away_strength"],
                 )
             lines.extend(format_pick_block(
@@ -558,7 +623,7 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
             extra = None
             if detailed:
                 extra = format_vip_extra_lines(
-                    item["kelly"], odds, item["score"], 9,
+                    item["kelly"], odds, item["score"], MAX_HOME_WIN_SCORE,
                     home_strength=p["home_strength"], away_strength=p["away_strength"],
                 )
             lines.extend(format_pick_block(
@@ -576,7 +641,7 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
             extra = None
             if detailed:
                 extra = format_vip_extra_lines(
-                    item["kelly"], odds, item["score"], 9,
+                    item["kelly"], odds, item["score"], MAX_HOME_WIN_SCORE,
                     home_strength=p["home_strength"], away_strength=p["away_strength"],
                 )
             lines.extend(format_pick_block(
@@ -685,14 +750,14 @@ def main():
                     pass
                 elif res["status"] == "success":
                     data = res["data"]
-                    if data["score"] == 9:
+                    if data["score"] == MAX_HOME_WIN_SCORE:
                         if data["is_perfect"]:
                             perfect.append(data)
                         else:
                             qualified.append(data)
-                    elif data["score"] == 8:
+                    elif data["score"] == MAX_HOME_WIN_SCORE - 1:
                         qualified.append(data)
-                    elif data["score"] == 7:
+                    elif data["score"] == MAX_HOME_WIN_SCORE - 2:
                         close_calls.append(data)
 
         if len(perfect) + len(qualified) >= 12:
