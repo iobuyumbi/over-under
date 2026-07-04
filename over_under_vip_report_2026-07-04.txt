@@ -16,7 +16,7 @@ OVER 2.5 GOALS
 
   1. Universidad Catolica vs Mushuc Runa (2026-07-06)
      HIGH (75.6%)
-     Stake: 3.4% at odds 2.0
+     Stake: 2.4% at odds 2.0
      Expected goals: 2.78 - 1.18
      Rule score: 10/10
 
@@ -24,39 +24,39 @@ OVER 2.5 GOALS
 
   2. FF Jaro vs Ilves Tampere (2026-07-04)
      HIGH (78.2%)
-     Stake: 3.7% at odds 2.0
+     Stake: 2.6% at odds 2.0
      Expected goals: 2.29 - 1.85
      Rule score: 9/10
 
   3. Degerfors vs Malmo (2026-07-04)
      MEDIUM (55.9%)
-     Stake: 0.8% at odds 2.0
+     Stake: 0.5% at odds 2.0
      Expected goals: 1.22 - 1.7
      Rule score: 8/10
 
-  4. Longford T vs UCD (2026-07-04)
-     LOW (49.7%)
-     Stake: 0.0% at odds 2.0
-     Expected goals: 1.18 - 1.48
-     Rule score: 8/10
-
-  5. Neman Grodno vs Arsenal Dzyarzhynsk (2026-07-04)
+  4. Neman Grodno vs Arsenal Dzyarzhynsk (2026-07-04)
      HIGH (59.0%)
-     Stake: 1.2% at odds 2.0
+     Stake: 0.8% at odds 2.0
      Expected goals: 1.57 - 1.49
      Rule score: 8/10
 
-  6. Ansan Greeners vs Suwon FC (2026-07-04)
+  5. Ansan Greeners vs Suwon FC (2026-07-04)
      HIGH (63.0%)
-     Stake: 1.7% at odds 2.0
+     Stake: 1.2% at odds 2.0
      Expected goals: 1.3 - 1.95
      Rule score: 9/10
 
-  7. Gyeongnam vs Cheonan City (2026-07-05)
+  6. Gyeongnam vs Cheonan City (2026-07-05)
      HIGH (63.7%)
-     Stake: 1.8% at odds 2.0
+     Stake: 1.3% at odds 2.0
      Expected goals: 1.57 - 1.71
      Rule score: 9/10
+
+  7. Switzerland vs Colombia (2026-07-07)
+     HIGH (90.1%)
+     Stake: 3.7% at odds 2.0
+     Expected goals: 2.01 - 3.34
+     Rule score: 8/10
 
 UNDER 2.5 GOALS
 
@@ -70,16 +70,16 @@ UNDER 2.5 GOALS
 
   VALUE PICKS
 
-  2. Daejeon Hana Citizen vs Bucheon (2026-07-04)
-     HIGH (87.1%)
-     Stake: 1.6% at odds 1.85
-     Expected goals: 0.5 - 0.74
-     Rule score: 7/8
-
-  3. Anyang vs Pohang S (2026-07-04)
+  2. Anyang vs Pohang S (2026-07-04)
      HIGH (66.9%)
      Stake: 0.6% at odds 1.85
      Expected goals: 0.85 - 1.18
+     Rule score: 7/8
+
+  3. Daejeon Hana Citizen vs Bucheon (2026-07-04)
+     HIGH (87.1%)
+     Stake: 1.6% at odds 1.85
+     Expected goals: 0.5 - 0.74
      Rule score: 7/8
 
   4. Almagro vs Atletico Rafaela (2026-07-04)
@@ -106,16 +106,16 @@ UNDER 2.5 GOALS
      Expected goals: 1.25 - 0.52
      Rule score: 7/8
 
-  8. Chaco For Ever vs Acassuso (2026-07-05)
-     HIGH (81.9%)
-     Stake: 1.4% at odds 1.85
-     Expected goals: 0.93 - 0.53
-     Rule score: 7/8
-
-  9. Patronato vs San Martin de Tucuman (2026-07-05)
+  8. Patronato vs San Martin de Tucuman (2026-07-05)
      HIGH (78.1%)
      Stake: 1.2% at odds 1.85
      Expected goals: 1.09 - 0.52
+     Rule score: 7/8
+
+  9. Chaco For Ever vs Acassuso (2026-07-05)
+     HIGH (81.9%)
+     Stake: 1.4% at odds 1.85
+     Expected goals: 0.93 - 0.53
      Rule score: 7/8
 
   10. San Martin de San Juan vs Chacarita (2026-07-05)
