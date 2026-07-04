@@ -611,12 +611,12 @@ def collect_settled_picks_for_date(history, date_str):
     """All decided picks for a date, whether settled this run or earlier."""
     items = []
     for pick in history.get("home_win", []):
-        if pick.get("date", "")[:10] != date_str or is_blocked_pick(pick):
+        if pick.get("date", "")[:10] != date_str:
             continue
         if pick.get("result") in ("win", "loss", "push") and pick.get("final_score"):
             items.append(pick_to_report_item(pick, "home_win"))
     for pick in history.get("over_under", []):
-        if pick.get("date", "")[:10] != date_str or is_blocked_pick(pick):
+        if pick.get("date", "")[:10] != date_str:
             continue
         if pick.get("result") in ("win", "loss", "push") and pick.get("final_score"):
             items.append(pick_to_report_item(pick, "over_under"))
@@ -627,14 +627,14 @@ def collect_unmatched_pending_for_date(history, date_str):
     """Past-date picks still pending after settlement (missing scores)."""
     unmatched = []
     for pick in history.get("home_win", []):
-        if pick.get("date", "")[:10] != date_str or is_blocked_pick(pick):
+        if pick.get("date", "")[:10] != date_str:
             continue
         if pick.get("result") == "pending" and pick_is_overdue(pick):
             home = pick.get("home_team", pick.get("home"))
             away = pick.get("away_team", pick.get("away"))
             unmatched.append(f"HW: {home} vs {away}")
     for pick in history.get("over_under", []):
-        if pick.get("date", "")[:10] != date_str or is_blocked_pick(pick):
+        if pick.get("date", "")[:10] != date_str:
             continue
         if pick.get("result") == "pending" and pick_is_overdue(pick):
             home = pick.get("home_team", pick.get("home"))

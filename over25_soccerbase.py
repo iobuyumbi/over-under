@@ -913,14 +913,19 @@ def main():
         fixtures = fetch_soccerbase_fixtures(date_str)
         seen = set()
         unique_fixtures = []
+        blocked = 0
         for f in fixtures:
             key = (f["home_team_id"], f["away_team_id"], f["league"])
             if key not in seen and f["home_team_id"] and f["away_team_id"]:
                 if is_blocked_fixture(f):
+                    blocked += 1
                     continue
                 if not args.scheduled or f["status"] == "Scheduled":
                     seen.add(key)
                     unique_fixtures.append(f)
+
+        if blocked:
+            print(f"   Skipped {blocked} flagged-region fixtures on {date_str}")
 
         if not unique_fixtures:
             logger.info(f"No fixtures to process on {date_str}")

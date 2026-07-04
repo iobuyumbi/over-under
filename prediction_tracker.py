@@ -19,7 +19,10 @@ HISTORY_FILE = "prediction_history.json"
 SETTLED_RESULTS = frozenset({"win", "loss", "push"})
 MEDIUM = "MEDIUM"
 
-# Flagged regions with match-integrity concerns. Add new regions here as needed.
+# Flagged regions with match-integrity concerns.
+# - New predictions are blocked (fixtures filtered before analysis).
+# - Historical results in prediction_history.json stay for audit.
+# To add a region: copy the Ireland block and set league_keywords + team_keywords.
 BLOCKED_REGIONS = (
     {
         "name": "Ireland",
@@ -416,9 +419,6 @@ def count_report_pending(pick):
 
 def format_yesterday_line(pick, market_label):
     """Compact one-line summary for daily prediction reports."""
-    if is_blocked_pick(pick):
-        return None
-
     home = pick.get("home_team", pick.get("home"))
     away = pick.get("away_team", pick.get("away"))
     result = resolve_pick_result(pick)
@@ -432,9 +432,6 @@ def format_yesterday_line(pick, market_label):
 
 def format_pick_result_lines(pick, market_label):
     """Detailed result lines for one pick (matches selected-results style)."""
-    if is_blocked_pick(pick):
-        return []
-
     home = pick.get("home_team", pick.get("home"))
     away = pick.get("away_team", pick.get("away"))
     result = resolve_pick_result(pick)
@@ -478,7 +475,7 @@ def get_yesterday_results(prediction_type=None):
 
     if prediction_type in (None, "home_win"): 
         for pick in history["home_win"]: 
-            if pick.get("date", "")[:10] != yesterday or is_blocked_pick(pick):
+            if pick.get("date", "")[:10] != yesterday:
                 continue
             result = resolve_pick_result(pick)
             if result in SETTLED_RESULTS:
@@ -493,7 +490,7 @@ def get_yesterday_results(prediction_type=None):
  
     if prediction_type in (None, "over_under"): 
         for pick in history["over_under"]: 
-            if pick.get("date", "")[:10] != yesterday or is_blocked_pick(pick):
+            if pick.get("date", "")[:10] != yesterday:
                 continue
             market = (
                 "OVER 2.5"
@@ -682,8 +679,6 @@ def calculate_performance_for_month(picks, month_start, month_end):
     } 
     
     for pick in picks: 
-        if is_blocked_pick(pick):
-            continue
         # Handle both date-only (YYYY-MM-DD) and full ISO strings
         date_str = pick["date"]
         if len(date_str) == 10:
@@ -741,8 +736,6 @@ def calculate_safer_pick_stats(picks, date_filter_fn):
     
     # Process Double Chance (for Home Win picks)
     for pick in picks.get("home_win", []):
-        if is_blocked_pick(pick):
-            continue
         if date_filter_fn(pick):
             stats["double_chance"]["total"] += 1
             if pick["result"] == "pending":
@@ -767,8 +760,6 @@ def calculate_safer_pick_stats(picks, date_filter_fn):
     
     # Process Over 1.5 and Under 3.5 (for Over/Under picks)
     for pick in picks.get("over_under", []):
-        if is_blocked_pick(pick):
-            continue
         if date_filter_fn(pick):
             prediction = pick.get("prediction", "over").lower()
             if prediction == "over":
@@ -946,8 +937,6 @@ def generate_weekly_report():
         } 
         
         for pick in picks: 
-            if is_blocked_pick(pick):
-                continue
             # Handle both date-only (YYYY-MM-DD) and full ISO strings
             date_str = pick["date"]
             if len(date_str) == 10:
