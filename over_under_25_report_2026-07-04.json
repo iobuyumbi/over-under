@@ -16,7 +16,7 @@
       "home_over25_max": 3,
       "away_over25_max": 3
     },
-    "generated_at": "2026-07-04T05:30:14.652208"
+    "generated_at": "2026-07-05T00:01:34.425189"
   },
   "over": {
     "perfect": [],
@@ -32,7 +32,7 @@
           "status": "Scheduled"
         },
         "over": {
-          "score": 10,
+          "score": 11,
           "passed": [
             "Home total goals (last 3)",
             "Home over 2.5 (last 3)",
@@ -43,7 +43,8 @@
             "Home over 2.5 (last 6)",
             "Home total goals (last 6)",
             "Away over 2.5 (last 6)",
-            "Away total goals (last 6)"
+            "Away total goals (last 6)",
+            "Overall goal activity (6)"
           ],
           "details": {
             "Home total goals (last 3)": "PASS (13)",
@@ -55,12 +56,13 @@
             "Home over 2.5 (last 6)": "PASS (4/6)",
             "Home total goals (last 6)": "PASS (22)",
             "Away over 2.5 (last 6)": "PASS (5/6)",
-            "Away total goals (last 6)": "PASS (21)"
+            "Away total goals (last 6)": "PASS (21)",
+            "Overall goal activity (6)": "PASS (home conceded each)"
           },
           "is_perfect": false,
           "prob": 75.6,
           "confidence": "HIGH",
-          "kelly": 2.36
+          "kelly": 6.12
         },
         "under": {
           "score": 3,
@@ -77,7 +79,9 @@
             "Home scored avg (last 6)": "FAIL (HS=2.50 > 1.2)",
             "Home conceded avg (last 6)": "PASS (HC=1.17 <= 1.2)",
             "Away scored avg (last 6)": "FAIL (AS=1.17 > 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=2.33 > 1.0)"
+            "Away conceded avg (last 6)": "FAIL (AC=2.33 > 1.0)",
+            "Home under 2.5 overall (6)": "FAIL (2/6 under 2.5)",
+            "Away under 2.5 overall (6)": "FAIL (2/6 under 2.5)"
           },
           "is_perfect": false,
           "prob": 24.4,
@@ -95,210 +99,16 @@
     "close": [
       {
         "match": {
-          "league": "Finland League",
-          "home": "FF Jaro",
-          "away": "Ilves Tampere",
-          "home_team_id": "993",
-          "away_team_id": "1361",
-          "date": "2026-07-04",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 9,
-          "passed": [
-            "Home total goals (last 3)",
-            "Home over 2.5 (last 3)",
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)",
-            "Home total goals (last 6)",
-            "Away over 2.5 (last 6)",
-            "Away total goals (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (12)",
-            "Home over 2.5 (last 3)": "PASS (2/3)",
-            "Away total goals (last 3)": "PASS (16)",
-            "Away last match goals": "PASS (7)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "PASS (3/3)",
-            "Home over 2.5 (last 6)": "FAIL (3/6)",
-            "Home total goals (last 6)": "PASS (19)",
-            "Away over 2.5 (last 6)": "PASS (5/6)",
-            "Away total goals (last 6)": "PASS (27)"
-          },
-          "is_perfect": false,
-          "prob": 78.2,
-          "confidence": "HIGH",
-          "kelly": 2.6
-        },
-        "under": {
-          "score": 2,
-          "passed": [
-            "Home has 0-goal side (last 3)",
-            "Away blanked (last 3)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "FAIL (0/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=1.50 > 1.2)",
-            "Home conceded avg (last 6)": "FAIL (HC=1.67 > 1.2)",
-            "Away scored avg (last 6)": "FAIL (AS=1.67 > 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=2.83 > 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 21.8,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "poisson": {
-          "home_lambda": 2.29,
-          "away_lambda": 1.85,
-          "over25_prob": 78.2,
-          "under25_prob": 21.8
-        }
-      },
-      {
-        "match": {
-          "league": "Swedish Allsvenskan",
-          "home": "Degerfors",
-          "away": "Malmo",
-          "home_team_id": "757",
-          "away_team_id": "1716",
-          "date": "2026-07-04",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 8,
-          "passed": [
-            "Home total goals (last 3)",
-            "Home over 2.5 (last 3)",
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)",
-            "Home over 2.5 (last 6)",
-            "Home total goals (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (11)",
-            "Home over 2.5 (last 3)": "PASS (2/3)",
-            "Away total goals (last 3)": "PASS (11)",
-            "Away last match goals": "PASS (5)",
-            "Away scored (last 3)": "PASS (3/3)",
-            "Away over 2.5 (last 3)": "PASS (2/3)",
-            "Home over 2.5 (last 6)": "PASS (4/6)",
-            "Home total goals (last 6)": "PASS (18)"
-          },
-          "is_perfect": false,
-          "prob": 55.9,
-          "confidence": "MEDIUM",
-          "kelly": 0.54
-        },
-        "under": {
-          "score": 0,
-          "passed": [],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "FAIL (no zero-goal sides)",
-            "Away under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Away blanked (last 3)": "FAIL (0/3 away games with 0 scored)",
-            "UC1-4": "SKIPPED (need 6 games each)"
-          },
-          "is_perfect": false,
-          "prob": 44.1,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "poisson": {
-          "home_lambda": 1.22,
-          "away_lambda": 1.7,
-          "over25_prob": 55.9,
-          "under25_prob": 44.1
-        }
-      },
-      {
-        "match": {
-          "league": "Belarus League",
-          "home": "Neman Grodno",
-          "away": "Arsenal Dzyarzhynsk",
-          "home_team_id": "1819",
-          "away_team_id": "7679",
-          "date": "2026-07-04",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 8,
-          "passed": [
-            "Home total goals (last 3)",
-            "Home over 2.5 (last 3)",
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)",
-            "Home over 2.5 (last 6)",
-            "Away total goals (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (8)",
-            "Home over 2.5 (last 3)": "PASS (2/3)",
-            "Away total goals (last 3)": "PASS (9)",
-            "Away last match goals": "PASS (5)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "PASS (2/3)",
-            "Home over 2.5 (last 6)": "PASS (4/6)",
-            "Home total goals (last 6)": "FAIL (17)",
-            "Away over 2.5 (last 6)": "FAIL (3/6)",
-            "Away total goals (last 6)": "PASS (19)"
-          },
-          "is_perfect": false,
-          "prob": 59.0,
-          "confidence": "HIGH",
-          "kelly": 0.83
-        },
-        "under": {
-          "score": 2,
-          "passed": [
-            "Home has 0-goal side (last 3)",
-            "Away blanked (last 3)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=1.50 > 1.2)",
-            "Home conceded avg (last 6)": "FAIL (HC=1.33 > 1.2)",
-            "Away scored avg (last 6)": "FAIL (AS=1.50 > 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=1.67 > 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 41.0,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "poisson": {
-          "home_lambda": 1.57,
-          "away_lambda": 1.49,
-          "over25_prob": 59.0,
-          "under25_prob": 41.0
-        }
-      },
-      {
-        "match": {
           "league": "Korean K-League 2",
           "home": "Ansan Greeners",
           "away": "Suwon FC",
           "home_team_id": "7538",
           "away_team_id": "7477",
           "date": "2026-07-04",
-          "status": "Scheduled"
+          "status": "Completed"
         },
         "over": {
-          "score": 9,
+          "score": 10,
           "passed": [
             "Home total goals (last 3)",
             "Home over 2.5 (last 3)",
@@ -308,7 +118,8 @@
             "Away over 2.5 (last 3)",
             "Home over 2.5 (last 6)",
             "Away over 2.5 (last 6)",
-            "Away total goals (last 6)"
+            "Away total goals (last 6)",
+            "Overall goal activity (6)"
           ],
           "details": {
             "Home total goals (last 3)": "PASS (8)",
@@ -320,12 +131,13 @@
             "Home over 2.5 (last 6)": "PASS (4/6)",
             "Home total goals (last 6)": "FAIL (17)",
             "Away over 2.5 (last 6)": "PASS (5/6)",
-            "Away total goals (last 6)": "PASS (21)"
+            "Away total goals (last 6)": "PASS (21)",
+            "Overall goal activity (6)": "PASS (home conceded each)"
           },
           "is_perfect": false,
           "prob": 63.0,
           "confidence": "HIGH",
-          "kelly": 1.2
+          "kelly": 3.11
         },
         "under": {
           "score": 2,
@@ -341,7 +153,9 @@
             "Home scored avg (last 6)": "PASS (HS=0.83 <= 1.2)",
             "Home conceded avg (last 6)": "FAIL (HC=2.00 > 1.2)",
             "Away scored avg (last 6)": "FAIL (AS=1.50 > 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=2.00 > 1.0)"
+            "Away conceded avg (last 6)": "FAIL (AC=2.00 > 1.0)",
+            "Home under 2.5 overall (6)": "FAIL (2/6 under 2.5)",
+            "Away under 2.5 overall (6)": "FAIL (2/6 under 2.5)"
           },
           "is_perfect": false,
           "prob": 37.0,
@@ -366,7 +180,7 @@
           "status": "Scheduled"
         },
         "over": {
-          "score": 9,
+          "score": 10,
           "passed": [
             "Home total goals (last 3)",
             "Home over 2.5 (last 3)",
@@ -376,7 +190,8 @@
             "Away over 2.5 (last 3)",
             "Home over 2.5 (last 6)",
             "Away over 2.5 (last 6)",
-            "Away total goals (last 6)"
+            "Away total goals (last 6)",
+            "Overall goal activity (6)"
           ],
           "details": {
             "Home total goals (last 3)": "PASS (12)",
@@ -388,12 +203,13 @@
             "Home over 2.5 (last 6)": "PASS (4/6)",
             "Home total goals (last 6)": "FAIL (17)",
             "Away over 2.5 (last 6)": "PASS (5/6)",
-            "Away total goals (last 6)": "PASS (21)"
+            "Away total goals (last 6)": "PASS (21)",
+            "Overall goal activity (6)": "PASS (home conceded each)"
           },
           "is_perfect": false,
           "prob": 63.7,
           "confidence": "HIGH",
-          "kelly": 1.26
+          "kelly": 3.27
         },
         "under": {
           "score": 1,
@@ -408,7 +224,9 @@
             "Home scored avg (last 6)": "FAIL (HS=1.50 > 1.2)",
             "Home conceded avg (last 6)": "FAIL (HC=1.33 > 1.2)",
             "Away scored avg (last 6)": "FAIL (AS=1.83 > 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=1.67 > 1.0)"
+            "Away conceded avg (last 6)": "FAIL (AC=1.67 > 1.0)",
+            "Home under 2.5 overall (6)": "FAIL (3/6 under 2.5)",
+            "Away under 2.5 overall (6)": "FAIL (3/6 under 2.5)"
           },
           "is_perfect": false,
           "prob": 36.3,
@@ -421,19 +239,92 @@
           "over25_prob": 63.7,
           "under25_prob": 36.3
         }
+      }
+    ],
+    "weak": [
+      {
+        "match": {
+          "league": "Finland League",
+          "home": "FF Jaro",
+          "away": "Ilves Tampere",
+          "home_team_id": "993",
+          "away_team_id": "1361",
+          "date": "2026-07-04",
+          "status": "Completed"
+        },
+        "over": {
+          "score": 9,
+          "passed": [
+            "Home total goals (last 3)",
+            "Home over 2.5 (last 3)",
+            "Away total goals (last 3)",
+            "Away last match goals",
+            "Away scored (last 3)",
+            "Away over 2.5 (last 3)",
+            "Home total goals (last 6)",
+            "Away over 2.5 (last 6)",
+            "Away total goals (last 6)"
+          ],
+          "details": {
+            "Home total goals (last 3)": "PASS (12)",
+            "Home over 2.5 (last 3)": "PASS (2/3)",
+            "Away total goals (last 3)": "PASS (16)",
+            "Away last match goals": "PASS (7)",
+            "Away scored (last 3)": "PASS (2/3)",
+            "Away over 2.5 (last 3)": "PASS (3/3)",
+            "Home over 2.5 (last 6)": "FAIL (3/6)",
+            "Home total goals (last 6)": "PASS (19)",
+            "Away over 2.5 (last 6)": "PASS (5/6)",
+            "Away total goals (last 6)": "PASS (27)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
+          },
+          "is_perfect": false,
+          "prob": 78.2,
+          "confidence": "HIGH",
+          "kelly": 28.2
+        },
+        "under": {
+          "score": 2,
+          "passed": [
+            "Home has 0-goal side (last 3)",
+            "Away blanked (last 3)"
+          ],
+          "details": {
+            "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
+            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
+            "Away under 2.5 (last 3)": "FAIL (0/3 under 2.5)",
+            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
+            "Home scored avg (last 6)": "FAIL (HS=1.50 > 1.2)",
+            "Home conceded avg (last 6)": "FAIL (HC=1.67 > 1.2)",
+            "Away scored avg (last 6)": "FAIL (AS=1.67 > 1.0)",
+            "Away conceded avg (last 6)": "FAIL (AC=2.83 > 1.0)",
+            "Home under 2.5 overall (6)": "FAIL (1/6 under 2.5)",
+            "Away under 2.5 overall (6)": "FAIL (2/6 under 2.5)"
+          },
+          "is_perfect": false,
+          "prob": 21.8,
+          "confidence": "LOW",
+          "kelly": 0.0
+        },
+        "poisson": {
+          "home_lambda": 2.29,
+          "away_lambda": 1.85,
+          "over25_prob": 78.2,
+          "under25_prob": 21.8
+        }
       },
       {
         "match": {
-          "league": "World Cup",
-          "home": "Switzerland",
-          "away": "Colombia",
-          "home_team_id": "2527",
-          "away_team_id": "613",
-          "date": "2026-07-07",
-          "status": "Scheduled"
+          "league": "Swedish Allsvenskan",
+          "home": "Degerfors",
+          "away": "Malmo",
+          "home_team_id": "757",
+          "away_team_id": "1716",
+          "date": "2026-07-04",
+          "status": "Completed"
         },
         "over": {
-          "score": 8,
+          "score": 9,
           "passed": [
             "Home total goals (last 3)",
             "Home over 2.5 (last 3)",
@@ -442,173 +333,118 @@
             "Away scored (last 3)",
             "Away over 2.5 (last 3)",
             "Home over 2.5 (last 6)",
-            "Home total goals (last 6)"
+            "Home total goals (last 6)",
+            "Overall goal activity (6)"
           ],
           "details": {
-            "Home total goals (last 3)": "PASS (10)",
+            "Home total goals (last 3)": "PASS (11)",
             "Home over 2.5 (last 3)": "PASS (2/3)",
-            "Away total goals (last 3)": "PASS (17)",
-            "Away last match goals": "PASS (4)",
-            "Away scored (last 3)": "PASS (3/3)",
-            "Away over 2.5 (last 3)": "PASS (3/3)",
-            "Home over 2.5 (last 6)": "PASS (4/6)",
-            "Home total goals (last 6)": "PASS (24)"
-          },
-          "is_perfect": false,
-          "prob": 90.1,
-          "confidence": "HIGH",
-          "kelly": 3.7
-        },
-        "under": {
-          "score": 1,
-          "passed": [
-            "Home has 0-goal side (last 3)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "FAIL (0/3 under 2.5)",
-            "Away blanked (last 3)": "FAIL (0/3 away games with 0 scored)",
-            "UC1-4": "SKIPPED (need 6 games each)"
-          },
-          "is_perfect": false,
-          "prob": 9.9,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "poisson": {
-          "home_lambda": 2.01,
-          "away_lambda": 3.34,
-          "over25_prob": 90.1,
-          "under25_prob": 9.9
-        }
-      }
-    ],
-    "weak": [
-      {
-        "match": {
-          "league": "World Cup",
-          "home": "Paraguay",
-          "away": "France",
-          "home_team_id": "2008",
-          "away_team_id": "1040",
-          "date": "2026-07-04",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 6,
-          "passed": [
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)",
-            "Away over 2.5 (last 6)",
-            "Away total goals (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "FAIL (4)",
-            "Home over 2.5 (last 3)": "FAIL (1/3)",
-            "Away total goals (last 3)": "PASS (12)",
+            "Away total goals (last 3)": "PASS (11)",
             "Away last match goals": "PASS (5)",
             "Away scored (last 3)": "PASS (3/3)",
-            "Away over 2.5 (last 3)": "PASS (3/3)",
-            "Away over 2.5 (last 6)": "PASS (5/6)",
-            "Away total goals (last 6)": "PASS (22)"
+            "Away over 2.5 (last 3)": "PASS (2/3)",
+            "Home over 2.5 (last 6)": "PASS (4/6)",
+            "Home total goals (last 6)": "PASS (18)",
+            "Overall goal activity (6)": "PASS (home scored each, away scored each)"
           },
           "is_perfect": false,
-          "prob": 31.0,
+          "prob": 55.9,
+          "confidence": "MEDIUM",
+          "kelly": 5.9
+        },
+        "under": {
+          "score": 0,
+          "passed": [],
+          "details": {
+            "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
+            "Home has 0-goal side (last 3)": "FAIL (no zero-goal sides)",
+            "Away under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
+            "Away blanked (last 3)": "FAIL (0/3 away games with 0 scored)",
+            "UC1-4": "SKIPPED (need 6 games each)",
+            "Home under 2.5 overall (6)": "FAIL (3/6 under 2.5)",
+            "Away under 2.5 overall (6)": "FAIL (1/6 under 2.5)"
+          },
+          "is_perfect": false,
+          "prob": 44.1,
           "confidence": "LOW",
           "kelly": 0.0
         },
-        "under": {
-          "score": 2,
-          "passed": [
-            "Home under 2.5 (last 3)",
-            "Home has 0-goal side (last 3)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "FAIL (0/3 under 2.5)",
-            "Away blanked (last 3)": "FAIL (0/3 away games with 0 scored)",
-            "UC1-4": "SKIPPED (need 6 games each)"
-          },
-          "is_perfect": false,
-          "prob": 69.0,
-          "confidence": "HIGH",
-          "kelly": 16.26
-        },
         "poisson": {
-          "home_lambda": 1.08,
-          "away_lambda": 0.87,
-          "over25_prob": 31.0,
-          "under25_prob": 69.0
+          "home_lambda": 1.22,
+          "away_lambda": 1.7,
+          "over25_prob": 55.9,
+          "under25_prob": 44.1
         }
       },
       {
         "match": {
-          "league": "Finland League",
-          "home": "VPS Vaasa",
-          "away": "Mariehamn",
-          "home_team_id": "3018",
-          "away_team_id": "4365",
+          "league": "Belarus League",
+          "home": "Neman Grodno",
+          "away": "Arsenal Dzyarzhynsk",
+          "home_team_id": "1819",
+          "away_team_id": "7679",
           "date": "2026-07-04",
-          "status": "Scheduled"
+          "status": "Completed"
         },
         "over": {
-          "score": 6,
+          "score": 9,
           "passed": [
             "Home total goals (last 3)",
             "Home over 2.5 (last 3)",
             "Away total goals (last 3)",
             "Away last match goals",
+            "Away scored (last 3)",
             "Away over 2.5 (last 3)",
-            "Home total goals (last 6)"
+            "Home over 2.5 (last 6)",
+            "Away total goals (last 6)",
+            "Overall goal activity (6)"
           ],
           "details": {
-            "Home total goals (last 3)": "PASS (11)",
+            "Home total goals (last 3)": "PASS (8)",
             "Home over 2.5 (last 3)": "PASS (2/3)",
-            "Away total goals (last 3)": "PASS (7)",
-            "Away last match goals": "PASS (3)",
-            "Away scored (last 3)": "FAIL (1/3)",
+            "Away total goals (last 3)": "PASS (9)",
+            "Away last match goals": "PASS (5)",
+            "Away scored (last 3)": "PASS (2/3)",
             "Away over 2.5 (last 3)": "PASS (2/3)",
-            "Home over 2.5 (last 6)": "FAIL (3/6)",
-            "Home total goals (last 6)": "PASS (18)",
+            "Home over 2.5 (last 6)": "PASS (4/6)",
+            "Home total goals (last 6)": "FAIL (17)",
             "Away over 2.5 (last 6)": "FAIL (3/6)",
-            "Away total goals (last 6)": "FAIL (13)"
+            "Away total goals (last 6)": "PASS (19)",
+            "Overall goal activity (6)": "PASS (home conceded each)"
           },
           "is_perfect": false,
-          "prob": 48.9,
-          "confidence": "LOW",
-          "kelly": 0.0
+          "prob": 59.0,
+          "confidence": "HIGH",
+          "kelly": 9.0
         },
         "under": {
-          "score": 3,
+          "score": 2,
           "passed": [
-            "Away blanked (last 3)",
-            "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
+            "Home has 0-goal side (last 3)",
+            "Away blanked (last 3)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "FAIL (no zero-goal sides)",
+            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
             "Away under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (2/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=2.00 > 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=1.00 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=0.33 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=1.83 > 1.0)"
+            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
+            "Home scored avg (last 6)": "FAIL (HS=1.50 > 1.2)",
+            "Home conceded avg (last 6)": "FAIL (HC=1.33 > 1.2)",
+            "Away scored avg (last 6)": "FAIL (AS=1.50 > 1.0)",
+            "Away conceded avg (last 6)": "FAIL (AC=1.67 > 1.0)",
+            "Home under 2.5 overall (6)": "FAIL (2/6 under 2.5)",
+            "Away under 2.5 overall (6)": "FAIL (3/6 under 2.5)"
           },
           "is_perfect": false,
-          "prob": 51.1,
+          "prob": 41.0,
           "confidence": "LOW",
           "kelly": 0.0
         },
         "poisson": {
-          "home_lambda": 2.01,
-          "away_lambda": 0.62,
-          "over25_prob": 48.9,
-          "under25_prob": 51.1
+          "home_lambda": 1.57,
+          "away_lambda": 1.49,
+          "over25_prob": 59.0,
+          "under25_prob": 41.0
         }
       },
       {
@@ -619,10 +455,10 @@
           "home_team_id": "4832",
           "away_team_id": "3046",
           "date": "2026-07-04",
-          "status": "Scheduled"
+          "status": "Completed"
         },
         "over": {
-          "score": 7,
+          "score": 8,
           "passed": [
             "Home total goals (last 3)",
             "Home over 2.5 (last 3)",
@@ -630,7 +466,8 @@
             "Away last match goals",
             "Away scored (last 3)",
             "Away over 2.5 (last 6)",
-            "Away total goals (last 6)"
+            "Away total goals (last 6)",
+            "Overall goal activity (6)"
           ],
           "details": {
             "Home total goals (last 3)": "PASS (8)",
@@ -642,7 +479,8 @@
             "Home over 2.5 (last 6)": "FAIL (2/6)",
             "Home total goals (last 6)": "FAIL (13)",
             "Away over 2.5 (last 6)": "PASS (4/6)",
-            "Away total goals (last 6)": "PASS (20)"
+            "Away total goals (last 6)": "PASS (20)",
+            "Overall goal activity (6)": "PASS (home conceded each)"
           },
           "is_perfect": false,
           "prob": 50.6,
@@ -650,14 +488,15 @@
           "kelly": 0.6
         },
         "under": {
-          "score": 6,
+          "score": 7,
           "passed": [
             "Home has 0-goal side (last 3)",
             "Away under 2.5 (last 3)",
             "Away blanked (last 3)",
             "Home scored avg (last 6)",
             "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
+            "Away scored avg (last 6)",
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
@@ -667,7 +506,9 @@
             "Home scored avg (last 6)": "PASS (HS=1.17 <= 1.2)",
             "Home conceded avg (last 6)": "PASS (HC=1.00 <= 1.2)",
             "Away scored avg (last 6)": "PASS (AS=1.00 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=2.33 > 1.0)"
+            "Away conceded avg (last 6)": "FAIL (AC=2.33 > 1.0)",
+            "Home under 2.5 overall (6)": "FAIL (2/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (5/6 under 2.5)"
           },
           "is_perfect": false,
           "prob": 49.4,
@@ -683,712 +524,6 @@
       },
       {
         "match": {
-          "league": "Ecuador Liga Pro",
-          "home": "Independiente d V",
-          "away": "Manta",
-          "home_team_id": "5124",
-          "away_team_id": "7515",
-          "date": "2026-07-04",
-          "status": "Completed"
-        },
-        "over": {
-          "score": 6,
-          "passed": [
-            "Home total goals (last 3)",
-            "Home over 2.5 (last 3)",
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (11)",
-            "Home over 2.5 (last 3)": "PASS (2/3)",
-            "Away total goals (last 3)": "PASS (9)",
-            "Away last match goals": "PASS (4)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "PASS (2/3)",
-            "Home over 2.5 (last 6)": "FAIL (3/6)",
-            "Home total goals (last 6)": "FAIL (17)",
-            "Away over 2.5 (last 6)": "FAIL (2/6)",
-            "Away total goals (last 6)": "FAIL (12)"
-          },
-          "is_perfect": false,
-          "prob": 41.7,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 4,
-          "passed": [
-            "Home has 0-goal side (last 3)",
-            "Away blanked (last 3)",
-            "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=1.67 > 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=1.17 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=0.50 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=1.50 > 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 58.3,
-          "confidence": "HIGH",
-          "kelly": 4.62
-        },
-        "poisson": {
-          "home_lambda": 1.57,
-          "away_lambda": 0.78,
-          "over25_prob": 41.7,
-          "under25_prob": 58.3
-        }
-      },
-      {
-        "match": {
-          "league": "Korean K-League 2",
-          "home": "Cheongju",
-          "away": "Daegu",
-          "home_team_id": "7863",
-          "away_team_id": "7479",
-          "date": "2026-07-04",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 6,
-          "passed": [
-            "Home total goals (last 3)",
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 6)",
-            "Away total goals (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (7)",
-            "Home over 2.5 (last 3)": "FAIL (1/3)",
-            "Away total goals (last 3)": "PASS (7)",
-            "Away last match goals": "PASS (2)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "FAIL (1/3)",
-            "Home over 2.5 (last 6)": "FAIL (2/6)",
-            "Home total goals (last 6)": "FAIL (14)",
-            "Away over 2.5 (last 6)": "PASS (4/6)",
-            "Away total goals (last 6)": "PASS (20)"
-          },
-          "is_perfect": false,
-          "prob": 54.9,
-          "confidence": "MEDIUM",
-          "kelly": 4.9
-        },
-        "under": {
-          "score": 5,
-          "passed": [
-            "Home under 2.5 (last 3)",
-            "Home has 0-goal side (last 3)",
-            "Away under 2.5 (last 3)",
-            "Away blanked (last 3)",
-            "Home scored avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "PASS (HS=1.00 <= 1.2)",
-            "Home conceded avg (last 6)": "FAIL (HC=1.33 > 1.2)",
-            "Away scored avg (last 6)": "FAIL (AS=1.83 > 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=1.50 > 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 45.1,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "poisson": {
-          "home_lambda": 1.17,
-          "away_lambda": 1.71,
-          "over25_prob": 54.9,
-          "under25_prob": 45.1
-        }
-      },
-      {
-        "match": {
-          "league": "Argentina Primera Nacional",
-          "home": "Nueva Chicago",
-          "away": "Guemes",
-          "home_team_id": "3639",
-          "away_team_id": "7467",
-          "date": "2026-07-04",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 6,
-          "passed": [
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)",
-            "Away over 2.5 (last 6)",
-            "Away total goals (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "FAIL (4)",
-            "Home over 2.5 (last 3)": "FAIL (0/3)",
-            "Away total goals (last 3)": "PASS (12)",
-            "Away last match goals": "PASS (5)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "PASS (2/3)",
-            "Home over 2.5 (last 6)": "FAIL (2/6)",
-            "Home total goals (last 6)": "FAIL (11)",
-            "Away over 2.5 (last 6)": "PASS (4/6)",
-            "Away total goals (last 6)": "PASS (20)"
-          },
-          "is_perfect": false,
-          "prob": 45.1,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 6,
-          "passed": [
-            "Home under 2.5 (last 3)",
-            "Home has 0-goal side (last 3)",
-            "Away blanked (last 3)",
-            "Home scored avg (last 6)",
-            "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "PASS (3/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "PASS (HS=1.00 <= 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=0.83 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=1.00 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=2.33 > 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 54.9,
-          "confidence": "MEDIUM",
-          "kelly": 0.92
-        },
-        "poisson": {
-          "home_lambda": 1.58,
-          "away_lambda": 0.9,
-          "over25_prob": 45.1,
-          "under25_prob": 54.9
-        }
-      },
-      {
-        "match": {
-          "league": "Ecuador Liga Pro",
-          "home": "Macara",
-          "away": "LDU Quito",
-          "home_team_id": "7517",
-          "away_team_id": "5043",
-          "date": "2026-07-05",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 6,
-          "passed": [
-            "Home total goals (last 3)",
-            "Home over 2.5 (last 3)",
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Home over 2.5 (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (9)",
-            "Home over 2.5 (last 3)": "PASS (3/3)",
-            "Away total goals (last 3)": "PASS (8)",
-            "Away last match goals": "PASS (2)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "FAIL (1/3)",
-            "Home over 2.5 (last 6)": "PASS (4/6)",
-            "Home total goals (last 6)": "FAIL (15)",
-            "Away over 2.5 (last 6)": "FAIL (1/6)",
-            "Away total goals (last 6)": "FAIL (12)"
-          },
-          "is_perfect": false,
-          "prob": 36.7,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 6,
-          "passed": [
-            "Home has 0-goal side (last 3)",
-            "Away under 2.5 (last 3)",
-            "Away blanked (last 3)",
-            "Home conceded avg (last 6)",
-            "Away scored avg (last 6)",
-            "Away conceded avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (0/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=1.33 > 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=1.17 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=1.00 <= 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=1.00 <= 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 63.3,
-          "confidence": "HIGH",
-          "kelly": 10.06
-        },
-        "poisson": {
-          "home_lambda": 1.08,
-          "away_lambda": 1.08,
-          "over25_prob": 36.7,
-          "under25_prob": 63.3
-        }
-      },
-      {
-        "match": {
-          "league": "Korean K-League 2",
-          "home": "Jeonnam Dragons",
-          "away": "Busan IPark",
-          "home_team_id": "7533",
-          "away_team_id": "4605",
-          "date": "2026-07-05",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 6,
-          "passed": [
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)",
-            "Away over 2.5 (last 6)",
-            "Away total goals (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "FAIL (6)",
-            "Home over 2.5 (last 3)": "FAIL (1/3)",
-            "Away total goals (last 3)": "PASS (11)",
-            "Away last match goals": "PASS (5)",
-            "Away scored (last 3)": "PASS (3/3)",
-            "Away over 2.5 (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 6)": "PASS (5/6)",
-            "Away total goals (last 6)": "PASS (22)"
-          },
-          "is_perfect": false,
-          "prob": 54.5,
-          "confidence": "MEDIUM",
-          "kelly": 4.5
-        },
-        "under": {
-          "score": 2,
-          "passed": [
-            "Home under 2.5 (last 3)",
-            "Home has 0-goal side (last 3)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Away blanked (last 3)": "FAIL (0/3 away games with 0 scored)",
-            "UC1-4": "SKIPPED (need 6 games each)"
-          },
-          "is_perfect": false,
-          "prob": 45.5,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "poisson": {
-          "home_lambda": 1.04,
-          "away_lambda": 1.82,
-          "over25_prob": 54.5,
-          "under25_prob": 45.5
-        }
-      },
-      {
-        "match": {
-          "league": "Korean K-League 2",
-          "home": "Danubio",
-          "away": "Juventud de Las Piedras",
-          "home_team_id": "3753",
-          "away_team_id": "8180",
-          "date": "2026-07-05",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 6,
-          "passed": [
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)",
-            "Away over 2.5 (last 6)",
-            "Away total goals (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "FAIL (6)",
-            "Home over 2.5 (last 3)": "FAIL (1/3)",
-            "Away total goals (last 3)": "PASS (10)",
-            "Away last match goals": "PASS (3)",
-            "Away scored (last 3)": "PASS (3/3)",
-            "Away over 2.5 (last 3)": "PASS (3/3)",
-            "Home over 2.5 (last 6)": "FAIL (2/6)",
-            "Home total goals (last 6)": "FAIL (13)",
-            "Away over 2.5 (last 6)": "PASS (5/6)",
-            "Away total goals (last 6)": "PASS (19)"
-          },
-          "is_perfect": false,
-          "prob": 48.7,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 4,
-          "passed": [
-            "Home under 2.5 (last 3)",
-            "Home has 0-goal side (last 3)",
-            "Home scored avg (last 6)",
-            "Home conceded avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "FAIL (0/3 under 2.5)",
-            "Away blanked (last 3)": "FAIL (0/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "PASS (HS=1.17 <= 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=1.00 <= 1.2)",
-            "Away scored avg (last 6)": "FAIL (AS=1.17 > 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=2.00 > 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 51.3,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "poisson": {
-          "home_lambda": 1.54,
-          "away_lambda": 1.08,
-          "over25_prob": 48.7,
-          "under25_prob": 51.3
-        }
-      },
-      {
-        "match": {
-          "league": "Argentina Primera Nacional",
-          "home": "Mitre",
-          "away": "All Boys",
-          "home_team_id": "7468",
-          "away_team_id": "7454",
-          "date": "2026-07-05",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 7,
-          "passed": [
-            "Home total goals (last 3)",
-            "Home over 2.5 (last 3)",
-            "Away total goals (last 3)",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)",
-            "Home over 2.5 (last 6)",
-            "Home total goals (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (11)",
-            "Home over 2.5 (last 3)": "PASS (3/3)",
-            "Away total goals (last 3)": "PASS (8)",
-            "Away last match goals": "FAIL (1)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "PASS (2/3)",
-            "Home over 2.5 (last 6)": "PASS (4/6)",
-            "Home total goals (last 6)": "PASS (18)",
-            "Away over 2.5 (last 6)": "FAIL (3/6)",
-            "Away total goals (last 6)": "FAIL (16)"
-          },
-          "is_perfect": false,
-          "prob": 52.1,
-          "confidence": "MEDIUM",
-          "kelly": 2.1
-        },
-        "under": {
-          "score": 3,
-          "passed": [
-            "Home has 0-goal side (last 3)",
-            "Away blanked (last 3)",
-            "Away scored avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (0/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=1.33 > 1.2)",
-            "Home conceded avg (last 6)": "FAIL (HC=1.67 > 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=0.67 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=2.00 > 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 47.9,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "poisson": {
-          "home_lambda": 1.66,
-          "away_lambda": 1.1,
-          "over25_prob": 52.1,
-          "under25_prob": 47.9
-        }
-      },
-      {
-        "match": {
-          "league": "World Cup",
-          "home": "Portugal",
-          "away": "Spain",
-          "home_team_id": "2082",
-          "away_team_id": "2428",
-          "date": "2026-07-06",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 7,
-          "passed": [
-            "Home total goals (last 3)",
-            "Home over 2.5 (last 3)",
-            "Away total goals (last 3)",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)",
-            "Home over 2.5 (last 6)",
-            "Home total goals (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (10)",
-            "Home over 2.5 (last 3)": "PASS (2/3)",
-            "Away total goals (last 3)": "PASS (9)",
-            "Away last match goals": "FAIL (1)",
-            "Away scored (last 3)": "PASS (3/3)",
-            "Away over 2.5 (last 3)": "PASS (2/3)",
-            "Home over 2.5 (last 6)": "PASS (5/6)",
-            "Home total goals (last 6)": "PASS (26)"
-          },
-          "is_perfect": false,
-          "prob": 64.5,
-          "confidence": "HIGH",
-          "kelly": 14.5
-        },
-        "under": {
-          "score": 1,
-          "passed": [
-            "Home has 0-goal side (last 3)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Away blanked (last 3)": "FAIL (0/3 away games with 0 scored)",
-            "UC1-4": "SKIPPED (need 6 games each)"
-          },
-          "is_perfect": false,
-          "prob": 35.5,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "poisson": {
-          "home_lambda": 1.22,
-          "away_lambda": 2.1,
-          "over25_prob": 64.5,
-          "under25_prob": 35.5
-        }
-      },
-      {
-        "match": {
-          "league": "Swedish Allsvenskan",
-          "home": "Hacken",
-          "away": "Djurgaarden",
-          "home_team_id": "3308",
-          "away_team_id": "773",
-          "date": "2026-07-06",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 6,
-          "passed": [
-            "Home total goals (last 3)",
-            "Home over 2.5 (last 3)",
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (14)",
-            "Home over 2.5 (last 3)": "PASS (3/3)",
-            "Away total goals (last 3)": "PASS (10)",
-            "Away last match goals": "PASS (6)",
-            "Away scored (last 3)": "PASS (3/3)",
-            "Away over 2.5 (last 3)": "PASS (2/3)"
-          },
-          "is_perfect": false,
-          "prob": 77.3,
-          "confidence": "HIGH",
-          "kelly": 27.3
-        },
-        "under": {
-          "score": 0,
-          "passed": [],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (0/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "FAIL (no zero-goal sides)",
-            "Away under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Away blanked (last 3)": "FAIL (0/3 away games with 0 scored)",
-            "UC1-4": "SKIPPED (need 6 games each)"
-          },
-          "is_perfect": false,
-          "prob": 22.7,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "poisson": {
-          "home_lambda": 1.87,
-          "away_lambda": 2.21,
-          "over25_prob": 77.3,
-          "under25_prob": 22.7
-        }
-      },
-      {
-        "match": {
-          "league": "Swedish Allsvenskan",
-          "home": "IF BP",
-          "away": "GAIS",
-          "home_team_id": "5085",
-          "away_team_id": "1069",
-          "date": "2026-07-06",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 6,
-          "passed": [
-            "Home total goals (last 3)",
-            "Home over 2.5 (last 3)",
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (8)",
-            "Home over 2.5 (last 3)": "PASS (2/3)",
-            "Away total goals (last 3)": "PASS (8)",
-            "Away last match goals": "PASS (3)",
-            "Away scored (last 3)": "PASS (3/3)",
-            "Away over 2.5 (last 3)": "PASS (2/3)"
-          },
-          "is_perfect": false,
-          "prob": 54.0,
-          "confidence": "MEDIUM",
-          "kelly": 4.0
-        },
-        "under": {
-          "score": 1,
-          "passed": [
-            "Home has 0-goal side (last 3)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Away blanked (last 3)": "FAIL (0/3 away games with 0 scored)",
-            "UC1-4": "SKIPPED (need 6 games each)"
-          },
-          "is_perfect": false,
-          "prob": 46.0,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "poisson": {
-          "home_lambda": 1.54,
-          "away_lambda": 1.3,
-          "over25_prob": 54.0,
-          "under25_prob": 46.0
-        }
-      },
-      {
-        "match": {
-          "league": "World Cup",
-          "home": "USA",
-          "away": "Belgium",
-          "home_team_id": "2652",
-          "away_team_id": "275",
-          "date": "2026-07-07",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 6,
-          "passed": [
-            "Home total goals (last 3)",
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Home total goals (last 6)",
-            "Away total goals (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (9)",
-            "Home over 2.5 (last 3)": "FAIL (1/3)",
-            "Away total goals (last 3)": "PASS (10)",
-            "Away last match goals": "PASS (6)",
-            "Away scored (last 3)": "PASS (3/3)",
-            "Away over 2.5 (last 3)": "FAIL (1/3)",
-            "Home over 2.5 (last 6)": "FAIL (3/6)",
-            "Home total goals (last 6)": "PASS (19)",
-            "Away over 2.5 (last 6)": "FAIL (3/6)",
-            "Away total goals (last 6)": "PASS (25)"
-          },
-          "is_perfect": false,
-          "prob": 73.1,
-          "confidence": "HIGH",
-          "kelly": 23.1
-        },
-        "under": {
-          "score": 4,
-          "passed": [
-            "Home under 2.5 (last 3)",
-            "Home has 0-goal side (last 3)",
-            "Away under 2.5 (last 3)",
-            "Home conceded avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Away blanked (last 3)": "FAIL (0/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=2.00 > 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=1.17 <= 1.2)",
-            "Away scored avg (last 6)": "FAIL (AS=3.00 > 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=1.17 > 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 26.9,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "poisson": {
-          "home_lambda": 1.52,
-          "away_lambda": 2.28,
-          "over25_prob": 73.1,
-          "under25_prob": 26.9
-        }
-      },
-      {
-        "match": {
           "league": "World Cup",
           "home": "Argentina",
           "away": "Egypt",
@@ -1398,7 +533,7 @@
           "status": "Scheduled"
         },
         "over": {
-          "score": 7,
+          "score": 8,
           "passed": [
             "Home total goals (last 3)",
             "Home over 2.5 (last 3)",
@@ -1406,7 +541,8 @@
             "Away last match goals",
             "Away scored (last 3)",
             "Home over 2.5 (last 6)",
-            "Home total goals (last 6)"
+            "Home total goals (last 6)",
+            "Overall goal activity (6)"
           ],
           "details": {
             "Home total goals (last 3)": "PASS (10)",
@@ -1418,7 +554,8 @@
             "Home over 2.5 (last 6)": "PASS (4/6)",
             "Home total goals (last 6)": "PASS (20)",
             "Away over 2.5 (last 6)": "FAIL (3/6)",
-            "Away total goals (last 6)": "FAIL (15)"
+            "Away total goals (last 6)": "FAIL (15)",
+            "Overall goal activity (6)": "PASS (home scored each, away scored each)"
           },
           "is_perfect": false,
           "prob": 47.4,
@@ -1426,12 +563,13 @@
           "kelly": 0.0
         },
         "under": {
-          "score": 4,
+          "score": 5,
           "passed": [
             "Home has 0-goal side (last 3)",
             "Away under 2.5 (last 3)",
             "Home conceded avg (last 6)",
-            "Away conceded avg (last 6)"
+            "Away conceded avg (last 6)",
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
@@ -1441,7 +579,9 @@
             "Home scored avg (last 6)": "FAIL (HS=3.00 > 1.2)",
             "Home conceded avg (last 6)": "PASS (HC=0.33 <= 1.2)",
             "Away scored avg (last 6)": "FAIL (AS=1.67 > 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=0.83 <= 1.0)"
+            "Away conceded avg (last 6)": "PASS (AC=0.83 <= 1.0)",
+            "Home under 2.5 overall (6)": "FAIL (2/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (4/6 under 2.5)"
           },
           "is_perfect": false,
           "prob": 52.6,
@@ -1453,6 +593,72 @@
           "away_lambda": 0.86,
           "over25_prob": 47.4,
           "under25_prob": 52.6
+        }
+      },
+      {
+        "match": {
+          "league": "World Cup",
+          "home": "Switzerland",
+          "away": "Colombia",
+          "home_team_id": "2527",
+          "away_team_id": "613",
+          "date": "2026-07-07",
+          "status": "Scheduled"
+        },
+        "over": {
+          "score": 9,
+          "passed": [
+            "Home total goals (last 3)",
+            "Home over 2.5 (last 3)",
+            "Away total goals (last 3)",
+            "Away last match goals",
+            "Away scored (last 3)",
+            "Away over 2.5 (last 3)",
+            "Home over 2.5 (last 6)",
+            "Home total goals (last 6)",
+            "Overall goal activity (6)"
+          ],
+          "details": {
+            "Home total goals (last 3)": "PASS (10)",
+            "Home over 2.5 (last 3)": "PASS (2/3)",
+            "Away total goals (last 3)": "PASS (17)",
+            "Away last match goals": "PASS (4)",
+            "Away scored (last 3)": "PASS (3/3)",
+            "Away over 2.5 (last 3)": "PASS (3/3)",
+            "Home over 2.5 (last 6)": "PASS (4/6)",
+            "Home total goals (last 6)": "PASS (24)",
+            "Overall goal activity (6)": "PASS (home scored each)"
+          },
+          "is_perfect": false,
+          "prob": 90.1,
+          "confidence": "HIGH",
+          "kelly": 40.1
+        },
+        "under": {
+          "score": 2,
+          "passed": [
+            "Home has 0-goal side (last 3)",
+            "Away under 2.5 overall (6)"
+          ],
+          "details": {
+            "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
+            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
+            "Away under 2.5 (last 3)": "FAIL (0/3 under 2.5)",
+            "Away blanked (last 3)": "FAIL (0/3 away games with 0 scored)",
+            "UC1-4": "SKIPPED (need 6 games each)",
+            "Home under 2.5 overall (6)": "FAIL (3/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (4/6 under 2.5)"
+          },
+          "is_perfect": false,
+          "prob": 9.9,
+          "confidence": "LOW",
+          "kelly": 0.0
+        },
+        "poisson": {
+          "home_lambda": 2.01,
+          "away_lambda": 3.34,
+          "over25_prob": 90.1,
+          "under25_prob": 9.9
         }
       }
     ]
@@ -1483,7 +689,8 @@
             "Home over 2.5 (last 6)": "FAIL (2/6)",
             "Home total goals (last 6)": "FAIL (10)",
             "Away over 2.5 (last 6)": "FAIL (0/6)",
-            "Away total goals (last 6)": "FAIL (4)"
+            "Away total goals (last 6)": "FAIL (4)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
           },
           "is_perfect": false,
           "prob": 11.6,
@@ -1491,7 +698,7 @@
           "kelly": 0.0
         },
         "under": {
-          "score": 8,
+          "score": 10,
           "passed": [
             "Home under 2.5 (last 3)",
             "Home has 0-goal side (last 3)",
@@ -1500,7 +707,9 @@
             "Home scored avg (last 6)",
             "Home conceded avg (last 6)",
             "Away scored avg (last 6)",
-            "Away conceded avg (last 6)"
+            "Away conceded avg (last 6)",
+            "Home under 2.5 overall (6)",
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
@@ -1510,12 +719,14 @@
             "Home scored avg (last 6)": "PASS (HS=1.00 <= 1.2)",
             "Home conceded avg (last 6)": "PASS (HC=0.67 <= 1.2)",
             "Away scored avg (last 6)": "PASS (AS=0.17 <= 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=0.50 <= 1.0)"
+            "Away conceded avg (last 6)": "PASS (AC=0.50 <= 1.0)",
+            "Home under 2.5 overall (6)": "PASS (4/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (6/6 under 2.5)"
           },
           "is_perfect": false,
           "prob": 88.4,
           "confidence": "HIGH",
-          "kelly": 1.67
+          "kelly": 2.68
         },
         "poisson": {
           "home_lambda": 0.68,
@@ -1528,143 +739,13 @@
     "close": [
       {
         "match": {
-          "league": "Korean K-League 1",
-          "home": "Anyang",
-          "away": "Pohang S",
-          "home_team_id": "7540",
-          "away_team_id": "1807",
-          "date": "2026-07-04",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 3,
-          "passed": [
-            "Home total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (7)",
-            "Home over 2.5 (last 3)": "FAIL (1/3)",
-            "Away total goals (last 3)": "FAIL (5)",
-            "Away last match goals": "PASS (2)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "FAIL (0/3)",
-            "Home over 2.5 (last 6)": "FAIL (1/6)",
-            "Home total goals (last 6)": "FAIL (12)",
-            "Away over 2.5 (last 6)": "FAIL (1/6)",
-            "Away total goals (last 6)": "FAIL (13)"
-          },
-          "is_perfect": false,
-          "prob": 33.1,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 7,
-          "passed": [
-            "Home under 2.5 (last 3)",
-            "Home has 0-goal side (last 3)",
-            "Away under 2.5 (last 3)",
-            "Away blanked (last 3)",
-            "Home scored avg (last 6)",
-            "Home conceded avg (last 6)",
-            "Away conceded avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (3/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "PASS (HS=0.83 <= 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=1.17 <= 1.2)",
-            "Away scored avg (last 6)": "FAIL (AS=1.17 > 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=1.00 <= 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 66.9,
-          "confidence": "HIGH",
-          "kelly": 0.63
-        },
-        "poisson": {
-          "home_lambda": 0.85,
-          "away_lambda": 1.18,
-          "over25_prob": 33.1,
-          "under25_prob": 66.9
-        }
-      },
-      {
-        "match": {
-          "league": "Korean K-League 1",
-          "home": "Daejeon Hana Citizen",
-          "away": "Bucheon",
-          "home_team_id": "7534",
-          "away_team_id": "3778",
-          "date": "2026-07-04",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 0,
-          "passed": [],
-          "details": {
-            "Home total goals (last 3)": "FAIL (5)",
-            "Home over 2.5 (last 3)": "FAIL (1/3)",
-            "Away total goals (last 3)": "FAIL (5)",
-            "Away last match goals": "FAIL (1)",
-            "Away scored (last 3)": "FAIL (1/3)",
-            "Away over 2.5 (last 3)": "FAIL (1/3)",
-            "Home over 2.5 (last 6)": "FAIL (1/6)",
-            "Home total goals (last 6)": "FAIL (9)",
-            "Away over 2.5 (last 6)": "FAIL (1/6)",
-            "Away total goals (last 6)": "FAIL (7)"
-          },
-          "is_perfect": false,
-          "prob": 12.9,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 7,
-          "passed": [
-            "Home under 2.5 (last 3)",
-            "Home has 0-goal side (last 3)",
-            "Away under 2.5 (last 3)",
-            "Away blanked (last 3)",
-            "Home scored avg (last 6)",
-            "Away scored avg (last 6)",
-            "Away conceded avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (2/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "PASS (HS=0.17 <= 1.2)",
-            "Home conceded avg (last 6)": "FAIL (HC=1.33 > 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=0.33 <= 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=0.83 <= 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 87.1,
-          "confidence": "HIGH",
-          "kelly": 1.61
-        },
-        "poisson": {
-          "home_lambda": 0.5,
-          "away_lambda": 0.74,
-          "over25_prob": 12.9,
-          "under25_prob": 87.1
-        }
-      },
-      {
-        "match": {
           "league": "Argentina Primera Nacional",
           "home": "Almagro",
           "away": "Atletico Rafaela",
           "home_team_id": "4536",
           "away_team_id": "7455",
           "date": "2026-07-04",
-          "status": "Scheduled"
+          "status": "Completed"
         },
         "over": {
           "score": 1,
@@ -1681,7 +762,8 @@
             "Home over 2.5 (last 6)": "FAIL (2/6)",
             "Home total goals (last 6)": "FAIL (13)",
             "Away over 2.5 (last 6)": "FAIL (1/6)",
-            "Away total goals (last 6)": "FAIL (7)"
+            "Away total goals (last 6)": "FAIL (7)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
           },
           "is_perfect": false,
           "prob": 21.1,
@@ -1689,7 +771,7 @@
           "kelly": 0.0
         },
         "under": {
-          "score": 7,
+          "score": 9,
           "passed": [
             "Home under 2.5 (last 3)",
             "Home has 0-goal side (last 3)",
@@ -1697,7 +779,9 @@
             "Away blanked (last 3)",
             "Home conceded avg (last 6)",
             "Away scored avg (last 6)",
-            "Away conceded avg (last 6)"
+            "Away conceded avg (last 6)",
+            "Home under 2.5 overall (6)",
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
@@ -1707,12 +791,14 @@
             "Home scored avg (last 6)": "FAIL (HS=1.33 > 1.2)",
             "Home conceded avg (last 6)": "PASS (HC=0.83 <= 1.2)",
             "Away scored avg (last 6)": "PASS (AS=0.17 <= 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=1.00 <= 1.0)"
+            "Away conceded avg (last 6)": "PASS (AC=1.00 <= 1.0)",
+            "Home under 2.5 overall (6)": "PASS (4/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (6/6 under 2.5)"
           },
           "is_perfect": false,
           "prob": 78.9,
           "confidence": "HIGH",
-          "kelly": 1.21
+          "kelly": 1.94
         },
         "poisson": {
           "home_lambda": 1.08,
@@ -1729,7 +815,7 @@
           "home_team_id": "4478",
           "away_team_id": "157",
           "date": "2026-07-04",
-          "status": "Scheduled"
+          "status": "Completed"
         },
         "over": {
           "score": 2,
@@ -1747,7 +833,8 @@
             "Home over 2.5 (last 6)": "FAIL (1/6)",
             "Home total goals (last 6)": "FAIL (7)",
             "Away over 2.5 (last 6)": "FAIL (2/6)",
-            "Away total goals (last 6)": "FAIL (11)"
+            "Away total goals (last 6)": "FAIL (11)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
           },
           "is_perfect": false,
           "prob": 16.4,
@@ -1755,7 +842,7 @@
           "kelly": 0.0
         },
         "under": {
-          "score": 7,
+          "score": 9,
           "passed": [
             "Home under 2.5 (last 3)",
             "Home has 0-goal side (last 3)",
@@ -1763,7 +850,9 @@
             "Away blanked (last 3)",
             "Home scored avg (last 6)",
             "Home conceded avg (last 6)",
-            "Away conceded avg (last 6)"
+            "Away conceded avg (last 6)",
+            "Home under 2.5 overall (6)",
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "PASS (3/3 under 2.5)",
@@ -1773,81 +862,20 @@
             "Home scored avg (last 6)": "PASS (HS=0.83 <= 1.2)",
             "Home conceded avg (last 6)": "PASS (HC=0.33 <= 1.2)",
             "Away scored avg (last 6)": "FAIL (AS=1.17 > 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=0.67 <= 1.0)"
+            "Away conceded avg (last 6)": "PASS (AC=0.67 <= 1.0)",
+            "Home under 2.5 overall (6)": "PASS (5/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (4/6 under 2.5)"
           },
           "is_perfect": false,
           "prob": 83.6,
           "confidence": "HIGH",
-          "kelly": 1.44
+          "kelly": 2.3
         },
         "poisson": {
           "home_lambda": 0.7,
           "away_lambda": 0.69,
           "over25_prob": 16.4,
           "under25_prob": 83.6
-        }
-      },
-      {
-        "match": {
-          "league": "Ecuador Liga Pro",
-          "home": "Delfin",
-          "away": "Emelec",
-          "home_team_id": "7512",
-          "away_team_id": "3787",
-          "date": "2026-07-05",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 0,
-          "passed": [],
-          "details": {
-            "Home total goals (last 3)": "FAIL (5)",
-            "Home over 2.5 (last 3)": "FAIL (1/3)",
-            "Away total goals (last 3)": "FAIL (3)",
-            "Away last match goals": "FAIL (0)",
-            "Away scored (last 3)": "FAIL (1/3)",
-            "Away over 2.5 (last 3)": "FAIL (0/3)",
-            "Home over 2.5 (last 6)": "FAIL (1/6)",
-            "Home total goals (last 6)": "FAIL (7)",
-            "Away over 2.5 (last 6)": "FAIL (0/6)",
-            "Away total goals (last 6)": "FAIL (9)"
-          },
-          "is_perfect": false,
-          "prob": 13.4,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 7,
-          "passed": [
-            "Home under 2.5 (last 3)",
-            "Home has 0-goal side (last 3)",
-            "Away under 2.5 (last 3)",
-            "Away blanked (last 3)",
-            "Home scored avg (last 6)",
-            "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (3/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (2/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "PASS (HS=0.50 <= 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=0.67 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=0.33 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=1.17 > 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 86.6,
-          "confidence": "HIGH",
-          "kelly": 1.59
-        },
-        "poisson": {
-          "home_lambda": 0.75,
-          "away_lambda": 0.51,
-          "over25_prob": 13.4,
-          "under25_prob": 86.6
         }
       },
       {
@@ -1875,7 +903,8 @@
             "Home over 2.5 (last 6)": "FAIL (1/6)",
             "Home total goals (last 6)": "FAIL (9)",
             "Away over 2.5 (last 6)": "FAIL (2/6)",
-            "Away total goals (last 6)": "FAIL (13)"
+            "Away total goals (last 6)": "FAIL (13)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
           },
           "is_perfect": false,
           "prob": 26.1,
@@ -1883,7 +912,7 @@
           "kelly": 0.0
         },
         "under": {
-          "score": 7,
+          "score": 9,
           "passed": [
             "Home under 2.5 (last 3)",
             "Home has 0-goal side (last 3)",
@@ -1891,7 +920,9 @@
             "Away blanked (last 3)",
             "Home scored avg (last 6)",
             "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
+            "Away scored avg (last 6)",
+            "Home under 2.5 overall (6)",
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
@@ -1901,83 +932,20 @@
             "Home scored avg (last 6)": "PASS (HS=1.00 <= 1.2)",
             "Home conceded avg (last 6)": "PASS (HC=0.50 <= 1.2)",
             "Away scored avg (last 6)": "PASS (AS=0.50 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=1.67 > 1.0)"
+            "Away conceded avg (last 6)": "FAIL (AC=1.67 > 1.0)",
+            "Home under 2.5 overall (6)": "PASS (4/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (5/6 under 2.5)"
           },
           "is_perfect": false,
           "prob": 73.9,
           "confidence": "HIGH",
-          "kelly": 0.97
+          "kelly": 1.55
         },
         "poisson": {
           "home_lambda": 1.25,
           "away_lambda": 0.52,
           "over25_prob": 26.1,
           "under25_prob": 73.9
-        }
-      },
-      {
-        "match": {
-          "league": "Argentina Primera Nacional",
-          "home": "Patronato",
-          "away": "San Martin de Tucuman",
-          "home_team_id": "7653",
-          "away_team_id": "7450",
-          "date": "2026-07-05",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 1,
-          "passed": [
-            "Away last match goals"
-          ],
-          "details": {
-            "Home total goals (last 3)": "FAIL (4)",
-            "Home over 2.5 (last 3)": "FAIL (0/3)",
-            "Away total goals (last 3)": "FAIL (6)",
-            "Away last match goals": "PASS (2)",
-            "Away scored (last 3)": "FAIL (1/3)",
-            "Away over 2.5 (last 3)": "FAIL (0/3)",
-            "Home over 2.5 (last 6)": "FAIL (1/6)",
-            "Home total goals (last 6)": "FAIL (9)",
-            "Away over 2.5 (last 6)": "FAIL (0/6)",
-            "Away total goals (last 6)": "FAIL (11)"
-          },
-          "is_perfect": false,
-          "prob": 21.9,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 7,
-          "passed": [
-            "Home under 2.5 (last 3)",
-            "Home has 0-goal side (last 3)",
-            "Away under 2.5 (last 3)",
-            "Away blanked (last 3)",
-            "Home scored avg (last 6)",
-            "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "PASS (3/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (3/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (2/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "PASS (HS=1.00 <= 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=0.50 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=0.50 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=1.33 > 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 78.1,
-          "confidence": "HIGH",
-          "kelly": 1.17
-        },
-        "poisson": {
-          "home_lambda": 1.09,
-          "away_lambda": 0.52,
-          "over25_prob": 21.9,
-          "under25_prob": 78.1
         }
       },
       {
@@ -2007,7 +975,8 @@
             "Home over 2.5 (last 6)": "FAIL (2/6)",
             "Home total goals (last 6)": "FAIL (12)",
             "Away over 2.5 (last 6)": "FAIL (1/6)",
-            "Away total goals (last 6)": "FAIL (7)"
+            "Away total goals (last 6)": "FAIL (7)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
           },
           "is_perfect": false,
           "prob": 18.1,
@@ -2015,7 +984,7 @@
           "kelly": 0.0
         },
         "under": {
-          "score": 7,
+          "score": 9,
           "passed": [
             "Home has 0-goal side (last 3)",
             "Away under 2.5 (last 3)",
@@ -2023,7 +992,9 @@
             "Home scored avg (last 6)",
             "Home conceded avg (last 6)",
             "Away scored avg (last 6)",
-            "Away conceded avg (last 6)"
+            "Away conceded avg (last 6)",
+            "Home under 2.5 overall (6)",
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
@@ -2033,12 +1004,14 @@
             "Home scored avg (last 6)": "PASS (HS=1.00 <= 1.2)",
             "Home conceded avg (last 6)": "PASS (HC=1.00 <= 1.2)",
             "Away scored avg (last 6)": "PASS (AS=0.17 <= 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=1.00 <= 1.0)"
+            "Away conceded avg (last 6)": "PASS (AC=1.00 <= 1.0)",
+            "Home under 2.5 overall (6)": "PASS (4/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (4/6 under 2.5)"
           },
           "is_perfect": false,
           "prob": 81.9,
           "confidence": "HIGH",
-          "kelly": 1.36
+          "kelly": 2.17
         },
         "poisson": {
           "home_lambda": 0.93,
@@ -2050,39 +1023,38 @@
       {
         "match": {
           "league": "Argentina Primera Nacional",
-          "home": "San Martin de San Juan",
-          "away": "Chacarita",
-          "home_team_id": "7448",
-          "away_team_id": "3732",
+          "home": "Patronato",
+          "away": "San Martin de Tucuman",
+          "home_team_id": "7653",
+          "away_team_id": "7450",
           "date": "2026-07-05",
           "status": "Scheduled"
         },
         "over": {
-          "score": 3,
+          "score": 1,
           "passed": [
-            "Home total goals (last 3)",
-            "Away total goals (last 3)",
             "Away last match goals"
           ],
           "details": {
-            "Home total goals (last 3)": "PASS (7)",
-            "Home over 2.5 (last 3)": "FAIL (1/3)",
-            "Away total goals (last 3)": "PASS (9)",
+            "Home total goals (last 3)": "FAIL (4)",
+            "Home over 2.5 (last 3)": "FAIL (0/3)",
+            "Away total goals (last 3)": "FAIL (6)",
             "Away last match goals": "PASS (2)",
             "Away scored (last 3)": "FAIL (1/3)",
-            "Away over 2.5 (last 3)": "FAIL (1/3)",
-            "Home over 2.5 (last 6)": "FAIL (2/6)",
-            "Home total goals (last 6)": "FAIL (11)",
-            "Away over 2.5 (last 6)": "FAIL (1/6)",
-            "Away total goals (last 6)": "FAIL (12)"
+            "Away over 2.5 (last 3)": "FAIL (0/3)",
+            "Home over 2.5 (last 6)": "FAIL (1/6)",
+            "Home total goals (last 6)": "FAIL (9)",
+            "Away over 2.5 (last 6)": "FAIL (0/6)",
+            "Away total goals (last 6)": "FAIL (11)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
           },
           "is_perfect": false,
-          "prob": 28.3,
+          "prob": 21.9,
           "confidence": "LOW",
           "kelly": 0.0
         },
         "under": {
-          "score": 7,
+          "score": 9,
           "passed": [
             "Home under 2.5 (last 3)",
             "Home has 0-goal side (last 3)",
@@ -2090,235 +1062,36 @@
             "Away blanked (last 3)",
             "Home scored avg (last 6)",
             "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (2/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "PASS (HS=1.17 <= 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=0.67 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=0.50 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=1.50 > 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 71.7,
-          "confidence": "HIGH",
-          "kelly": 0.86
-        },
-        "poisson": {
-          "home_lambda": 1.27,
-          "away_lambda": 0.58,
-          "over25_prob": 28.3,
-          "under25_prob": 71.7
-        }
-      }
-    ],
-    "weak": [
-      {
-        "match": {
-          "league": "Finland League",
-          "home": "FC Lahti",
-          "away": "Gnistan",
-          "home_team_id": "3546",
-          "away_team_id": "7960",
-          "date": "2026-07-04",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 5,
-          "passed": [
-            "Home total goals (last 3)",
-            "Home over 2.5 (last 3)",
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (10)",
-            "Home over 2.5 (last 3)": "PASS (2/3)",
-            "Away total goals (last 3)": "PASS (7)",
-            "Away last match goals": "PASS (2)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "FAIL (1/3)",
-            "Home over 2.5 (last 6)": "FAIL (3/6)",
-            "Home total goals (last 6)": "FAIL (17)",
-            "Away over 2.5 (last 6)": "FAIL (1/6)",
-            "Away total goals (last 6)": "FAIL (12)"
-          },
-          "is_perfect": false,
-          "prob": 40.7,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 6,
-          "passed": [
-            "Home has 0-goal side (last 3)",
-            "Away under 2.5 (last 3)",
-            "Away blanked (last 3)",
-            "Home conceded avg (last 6)",
             "Away scored avg (last 6)",
-            "Away conceded avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=1.83 > 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=1.00 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=1.00 <= 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=1.00 <= 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 59.3,
-          "confidence": "HIGH",
-          "kelly": 5.71
-        },
-        "poisson": {
-          "home_lambda": 1.32,
-          "away_lambda": 0.99,
-          "over25_prob": 40.7,
-          "under25_prob": 59.3
-        }
-      },
-      {
-        "match": {
-          "league": "World Cup",
-          "home": "Colombia",
-          "away": "Ghana",
-          "home_team_id": "613",
-          "away_team_id": "3116",
-          "date": "2026-07-04",
-          "status": "Completed"
-        },
-        "over": {
-          "score": 2,
-          "passed": [
-            "Away last match goals",
-            "Away scored (last 3)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "FAIL (3)",
-            "Home over 2.5 (last 3)": "FAIL (0/3)",
-            "Away total goals (last 3)": "FAIL (5)",
-            "Away last match goals": "PASS (3)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "FAIL (1/3)",
-            "Home over 2.5 (last 6)": "FAIL (3/6)",
-            "Home total goals (last 6)": "FAIL (14)",
-            "Away over 2.5 (last 6)": "FAIL (3/6)",
-            "Away total goals (last 6)": "FAIL (16)"
-          },
-          "is_perfect": false,
-          "prob": 44.8,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 6,
-          "passed": [
-            "Home under 2.5 (last 3)",
-            "Home has 0-goal side (last 3)",
-            "Away under 2.5 (last 3)",
-            "Away blanked (last 3)",
-            "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
+            "Home under 2.5 overall (6)",
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "PASS (3/3 under 2.5)",
             "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=1.33 > 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=1.00 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=0.67 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=2.00 > 1.0)"
+            "Away under 2.5 (last 3)": "PASS (3/3 under 2.5)",
+            "Away blanked (last 3)": "PASS (2/3 away games with 0 scored)",
+            "Home scored avg (last 6)": "PASS (HS=1.00 <= 1.2)",
+            "Home conceded avg (last 6)": "PASS (HC=0.50 <= 1.2)",
+            "Away scored avg (last 6)": "PASS (AS=0.50 <= 1.0)",
+            "Away conceded avg (last 6)": "FAIL (AC=1.33 > 1.0)",
+            "Home under 2.5 overall (6)": "PASS (6/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (6/6 under 2.5)"
           },
           "is_perfect": false,
-          "prob": 55.2,
-          "confidence": "MEDIUM",
-          "kelly": 1.25
+          "prob": 78.1,
+          "confidence": "HIGH",
+          "kelly": 1.87
         },
         "poisson": {
-          "home_lambda": 1.66,
-          "away_lambda": 0.81,
-          "over25_prob": 44.8,
-          "under25_prob": 55.2
+          "home_lambda": 1.09,
+          "away_lambda": 0.52,
+          "over25_prob": 21.9,
+          "under25_prob": 78.1
         }
-      },
-      {
-        "match": {
-          "league": "Belarus League",
-          "home": "Vitebsk",
-          "away": "Dnepr Mogilev",
-          "home_team_id": "4832",
-          "away_team_id": "3046",
-          "date": "2026-07-04",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 7,
-          "passed": [
-            "Home total goals (last 3)",
-            "Home over 2.5 (last 3)",
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 6)",
-            "Away total goals (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (8)",
-            "Home over 2.5 (last 3)": "PASS (2/3)",
-            "Away total goals (last 3)": "PASS (8)",
-            "Away last match goals": "PASS (2)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "FAIL (1/3)",
-            "Home over 2.5 (last 6)": "FAIL (2/6)",
-            "Home total goals (last 6)": "FAIL (13)",
-            "Away over 2.5 (last 6)": "PASS (4/6)",
-            "Away total goals (last 6)": "PASS (20)"
-          },
-          "is_perfect": false,
-          "prob": 50.6,
-          "confidence": "LOW",
-          "kelly": 0.6
-        },
-        "under": {
-          "score": 6,
-          "passed": [
-            "Home has 0-goal side (last 3)",
-            "Away under 2.5 (last 3)",
-            "Away blanked (last 3)",
-            "Home scored avg (last 6)",
-            "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "PASS (HS=1.17 <= 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=1.00 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=1.00 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=2.33 > 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 49.4,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "poisson": {
-          "home_lambda": 1.71,
-          "away_lambda": 0.99,
-          "over25_prob": 50.6,
-          "under25_prob": 49.4
-        }
-      },
+      }
+    ],
+    "weak": [
       {
         "match": {
           "league": "Korean K-League 1",
@@ -2327,7 +1100,7 @@
           "home_team_id": "6413",
           "away_team_id": "7478",
           "date": "2026-07-04",
-          "status": "Scheduled"
+          "status": "Completed"
         },
         "over": {
           "score": 5,
@@ -2348,7 +1121,8 @@
             "Home over 2.5 (last 6)": "PASS (4/6)",
             "Home total goals (last 6)": "PASS (18)",
             "Away over 2.5 (last 6)": "FAIL (1/6)",
-            "Away total goals (last 6)": "FAIL (7)"
+            "Away total goals (last 6)": "FAIL (7)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
           },
           "is_perfect": false,
           "prob": 25.1,
@@ -2356,14 +1130,16 @@
           "kelly": 0.0
         },
         "under": {
-          "score": 6,
+          "score": 8,
           "passed": [
             "Home has 0-goal side (last 3)",
             "Away under 2.5 (last 3)",
             "Away blanked (last 3)",
             "Home conceded avg (last 6)",
             "Away scored avg (last 6)",
-            "Away conceded avg (last 6)"
+            "Away conceded avg (last 6)",
+            "Home under 2.5 overall (6)",
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
@@ -2373,7 +1149,9 @@
             "Home scored avg (last 6)": "FAIL (HS=2.17 > 1.2)",
             "Home conceded avg (last 6)": "PASS (HC=0.83 <= 1.2)",
             "Away scored avg (last 6)": "PASS (AS=1.00 <= 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=0.17 <= 1.0)"
+            "Away conceded avg (last 6)": "PASS (AC=0.17 <= 1.0)",
+            "Home under 2.5 overall (6)": "PASS (4/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (5/6 under 2.5)"
           },
           "is_perfect": false,
           "prob": 74.9,
@@ -2389,70 +1167,207 @@
       },
       {
         "match": {
-          "league": "Ecuador Liga Pro",
-          "home": "Libertad Ecu",
-          "away": "Leones",
-          "home_team_id": "7858",
-          "away_team_id": "8430",
+          "league": "Korean K-League 1",
+          "home": "Daejeon Hana Citizen",
+          "away": "Bucheon",
+          "home_team_id": "7534",
+          "away_team_id": "3778",
           "date": "2026-07-04",
-          "status": "Scheduled"
+          "status": "Completed"
         },
         "over": {
-          "score": 5,
-          "passed": [
-            "Home total goals (last 3)",
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)"
-          ],
+          "score": 0,
+          "passed": [],
           "details": {
-            "Home total goals (last 3)": "PASS (7)",
+            "Home total goals (last 3)": "FAIL (5)",
             "Home over 2.5 (last 3)": "FAIL (1/3)",
-            "Away total goals (last 3)": "PASS (8)",
-            "Away last match goals": "PASS (3)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "PASS (2/3)",
-            "Home over 2.5 (last 6)": "FAIL (3/6)",
-            "Home total goals (last 6)": "FAIL (14)",
-            "Away over 2.5 (last 6)": "FAIL (3/6)",
-            "Away total goals (last 6)": "FAIL (13)"
+            "Away total goals (last 3)": "FAIL (5)",
+            "Away last match goals": "FAIL (1)",
+            "Away scored (last 3)": "FAIL (1/3)",
+            "Away over 2.5 (last 3)": "FAIL (1/3)",
+            "Home over 2.5 (last 6)": "FAIL (1/6)",
+            "Home total goals (last 6)": "FAIL (9)",
+            "Away over 2.5 (last 6)": "FAIL (1/6)",
+            "Away total goals (last 6)": "FAIL (7)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
           },
           "is_perfect": false,
-          "prob": 36.4,
+          "prob": 12.9,
           "confidence": "LOW",
           "kelly": 0.0
         },
         "under": {
-          "score": 6,
+          "score": 8,
           "passed": [
             "Home under 2.5 (last 3)",
             "Home has 0-goal side (last 3)",
+            "Away under 2.5 (last 3)",
             "Away blanked (last 3)",
             "Home scored avg (last 6)",
-            "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
+            "Away scored avg (last 6)",
+            "Away conceded avg (last 6)",
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
             "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "PASS (HS=1.17 <= 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=1.17 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=0.67 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=1.50 > 1.0)"
+            "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
+            "Away blanked (last 3)": "PASS (2/3 away games with 0 scored)",
+            "Home scored avg (last 6)": "PASS (HS=0.17 <= 1.2)",
+            "Home conceded avg (last 6)": "FAIL (HC=1.33 > 1.2)",
+            "Away scored avg (last 6)": "PASS (AS=0.33 <= 1.0)",
+            "Away conceded avg (last 6)": "PASS (AC=0.83 <= 1.0)",
+            "Home under 2.5 overall (6)": "FAIL (3/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (6/6 under 2.5)"
           },
           "is_perfect": false,
-          "prob": 63.6,
+          "prob": 87.1,
           "confidence": "HIGH",
-          "kelly": 10.39
+          "kelly": 35.96
         },
         "poisson": {
-          "home_lambda": 1.27,
-          "away_lambda": 0.88,
-          "over25_prob": 36.4,
-          "under25_prob": 63.6
+          "home_lambda": 0.5,
+          "away_lambda": 0.74,
+          "over25_prob": 12.9,
+          "under25_prob": 87.1
+        }
+      },
+      {
+        "match": {
+          "league": "Korean K-League 1",
+          "home": "Anyang",
+          "away": "Pohang S",
+          "home_team_id": "7540",
+          "away_team_id": "1807",
+          "date": "2026-07-04",
+          "status": "Completed"
+        },
+        "over": {
+          "score": 3,
+          "passed": [
+            "Home total goals (last 3)",
+            "Away last match goals",
+            "Away scored (last 3)"
+          ],
+          "details": {
+            "Home total goals (last 3)": "PASS (7)",
+            "Home over 2.5 (last 3)": "FAIL (1/3)",
+            "Away total goals (last 3)": "FAIL (5)",
+            "Away last match goals": "PASS (2)",
+            "Away scored (last 3)": "PASS (2/3)",
+            "Away over 2.5 (last 3)": "FAIL (0/3)",
+            "Home over 2.5 (last 6)": "FAIL (1/6)",
+            "Home total goals (last 6)": "FAIL (12)",
+            "Away over 2.5 (last 6)": "FAIL (1/6)",
+            "Away total goals (last 6)": "FAIL (13)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
+          },
+          "is_perfect": false,
+          "prob": 33.1,
+          "confidence": "LOW",
+          "kelly": 0.0
+        },
+        "under": {
+          "score": 8,
+          "passed": [
+            "Home under 2.5 (last 3)",
+            "Home has 0-goal side (last 3)",
+            "Away under 2.5 (last 3)",
+            "Away blanked (last 3)",
+            "Home scored avg (last 6)",
+            "Home conceded avg (last 6)",
+            "Away conceded avg (last 6)",
+            "Away under 2.5 overall (6)"
+          ],
+          "details": {
+            "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
+            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
+            "Away under 2.5 (last 3)": "PASS (3/3 under 2.5)",
+            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
+            "Home scored avg (last 6)": "PASS (HS=0.83 <= 1.2)",
+            "Home conceded avg (last 6)": "PASS (HC=1.17 <= 1.2)",
+            "Away scored avg (last 6)": "FAIL (AS=1.17 > 1.0)",
+            "Away conceded avg (last 6)": "PASS (AC=1.00 <= 1.0)",
+            "Home under 2.5 overall (6)": "FAIL (3/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (5/6 under 2.5)"
+          },
+          "is_perfect": false,
+          "prob": 66.9,
+          "confidence": "HIGH",
+          "kelly": 13.98
+        },
+        "poisson": {
+          "home_lambda": 0.85,
+          "away_lambda": 1.18,
+          "over25_prob": 33.1,
+          "under25_prob": 66.9
+        }
+      },
+      {
+        "match": {
+          "league": "Argentina Primera Nacional",
+          "home": "Colegiales",
+          "away": "Gimnasia y Tiro",
+          "home_team_id": "8168",
+          "away_team_id": "8010",
+          "date": "2026-07-04",
+          "status": "Completed"
+        },
+        "over": {
+          "score": 0,
+          "passed": [],
+          "details": {
+            "Home total goals (last 3)": "FAIL (6)",
+            "Home over 2.5 (last 3)": "FAIL (1/3)",
+            "Away total goals (last 3)": "FAIL (3)",
+            "Away last match goals": "FAIL (0)",
+            "Away scored (last 3)": "FAIL (1/3)",
+            "Away over 2.5 (last 3)": "FAIL (0/3)",
+            "Home over 2.5 (last 6)": "FAIL (2/6)",
+            "Home total goals (last 6)": "FAIL (15)",
+            "Away over 2.5 (last 6)": "FAIL (1/6)",
+            "Away total goals (last 6)": "FAIL (9)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
+          },
+          "is_perfect": false,
+          "prob": 32.9,
+          "confidence": "LOW",
+          "kelly": 0.0
+        },
+        "under": {
+          "score": 8,
+          "passed": [
+            "Home under 2.5 (last 3)",
+            "Home has 0-goal side (last 3)",
+            "Away under 2.5 (last 3)",
+            "Away blanked (last 3)",
+            "Home conceded avg (last 6)",
+            "Away scored avg (last 6)",
+            "Home under 2.5 overall (6)",
+            "Away under 2.5 overall (6)"
+          ],
+          "details": {
+            "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
+            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
+            "Away under 2.5 (last 3)": "PASS (3/3 under 2.5)",
+            "Away blanked (last 3)": "PASS (2/3 away games with 0 scored)",
+            "Home scored avg (last 6)": "FAIL (HS=2.00 > 1.2)",
+            "Home conceded avg (last 6)": "PASS (HC=0.50 <= 1.2)",
+            "Away scored avg (last 6)": "PASS (AS=0.33 <= 1.0)",
+            "Away conceded avg (last 6)": "FAIL (AC=1.17 > 1.0)",
+            "Home under 2.5 overall (6)": "PASS (4/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (6/6 under 2.5)"
+          },
+          "is_perfect": false,
+          "prob": 67.1,
+          "confidence": "HIGH",
+          "kelly": 14.2
+        },
+        "poisson": {
+          "home_lambda": 1.52,
+          "away_lambda": 0.5,
+          "over25_prob": 32.9,
+          "under25_prob": 67.1
         }
       },
       {
@@ -2463,7 +1378,7 @@
           "home_team_id": "7456",
           "away_team_id": "8167",
           "date": "2026-07-04",
-          "status": "Scheduled"
+          "status": "Completed"
         },
         "over": {
           "score": 4,
@@ -2483,7 +1398,8 @@
             "Home over 2.5 (last 6)": "FAIL (1/6)",
             "Home total goals (last 6)": "FAIL (9)",
             "Away over 2.5 (last 6)": "FAIL (2/6)",
-            "Away total goals (last 6)": "FAIL (9)"
+            "Away total goals (last 6)": "FAIL (9)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
           },
           "is_perfect": false,
           "prob": 15.2,
@@ -2491,14 +1407,16 @@
           "kelly": 0.0
         },
         "under": {
-          "score": 6,
+          "score": 8,
           "passed": [
             "Home under 2.5 (last 3)",
             "Home has 0-goal side (last 3)",
             "Away blanked (last 3)",
             "Home scored avg (last 6)",
             "Home conceded avg (last 6)",
-            "Away conceded avg (last 6)"
+            "Away conceded avg (last 6)",
+            "Home under 2.5 overall (6)",
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
@@ -2508,7 +1426,9 @@
             "Home scored avg (last 6)": "PASS (HS=1.17 <= 1.2)",
             "Home conceded avg (last 6)": "PASS (HC=0.33 <= 1.2)",
             "Away scored avg (last 6)": "FAIL (AS=1.17 > 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=0.33 <= 1.0)"
+            "Away conceded avg (last 6)": "PASS (AC=0.33 <= 1.0)",
+            "Home under 2.5 overall (6)": "PASS (5/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (4/6 under 2.5)"
           },
           "is_perfect": false,
           "prob": 84.8,
@@ -2524,402 +1444,141 @@
       },
       {
         "match": {
-          "league": "Argentina Primera Nacional",
-          "home": "Colegiales",
-          "away": "Gimnasia y Tiro",
-          "home_team_id": "8168",
-          "away_team_id": "8010",
-          "date": "2026-07-04",
+          "league": "Ecuador Liga Pro",
+          "home": "Delfin",
+          "away": "Emelec",
+          "home_team_id": "7512",
+          "away_team_id": "3787",
+          "date": "2026-07-05",
           "status": "Scheduled"
         },
         "over": {
           "score": 0,
           "passed": [],
           "details": {
-            "Home total goals (last 3)": "FAIL (6)",
+            "Home total goals (last 3)": "FAIL (5)",
             "Home over 2.5 (last 3)": "FAIL (1/3)",
             "Away total goals (last 3)": "FAIL (3)",
             "Away last match goals": "FAIL (0)",
             "Away scored (last 3)": "FAIL (1/3)",
             "Away over 2.5 (last 3)": "FAIL (0/3)",
-            "Home over 2.5 (last 6)": "FAIL (2/6)",
-            "Home total goals (last 6)": "FAIL (15)",
-            "Away over 2.5 (last 6)": "FAIL (1/6)",
-            "Away total goals (last 6)": "FAIL (9)"
+            "Home over 2.5 (last 6)": "FAIL (1/6)",
+            "Home total goals (last 6)": "FAIL (7)",
+            "Away over 2.5 (last 6)": "FAIL (0/6)",
+            "Away total goals (last 6)": "FAIL (9)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
           },
           "is_perfect": false,
-          "prob": 32.9,
+          "prob": 13.4,
           "confidence": "LOW",
           "kelly": 0.0
         },
         "under": {
-          "score": 6,
+          "score": 8,
           "passed": [
             "Home under 2.5 (last 3)",
             "Home has 0-goal side (last 3)",
             "Away under 2.5 (last 3)",
             "Away blanked (last 3)",
+            "Home scored avg (last 6)",
             "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
+            "Away scored avg (last 6)",
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
             "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
             "Away under 2.5 (last 3)": "PASS (3/3 under 2.5)",
             "Away blanked (last 3)": "PASS (2/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=2.00 > 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=0.50 <= 1.2)",
+            "Home scored avg (last 6)": "PASS (HS=0.50 <= 1.2)",
+            "Home conceded avg (last 6)": "PASS (HC=0.67 <= 1.2)",
             "Away scored avg (last 6)": "PASS (AS=0.33 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=1.17 > 1.0)"
+            "Away conceded avg (last 6)": "FAIL (AC=1.17 > 1.0)",
+            "Home under 2.5 overall (6)": "FAIL (3/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (6/6 under 2.5)"
           },
           "is_perfect": false,
-          "prob": 67.1,
+          "prob": 86.6,
           "confidence": "HIGH",
-          "kelly": 14.2
+          "kelly": 35.42
         },
         "poisson": {
-          "home_lambda": 1.52,
-          "away_lambda": 0.5,
-          "over25_prob": 32.9,
-          "under25_prob": 67.1
+          "home_lambda": 0.75,
+          "away_lambda": 0.51,
+          "over25_prob": 13.4,
+          "under25_prob": 86.6
         }
       },
       {
         "match": {
           "league": "Argentina Primera Nacional",
-          "home": "Nueva Chicago",
-          "away": "Guemes",
-          "home_team_id": "3639",
-          "away_team_id": "7467",
-          "date": "2026-07-04",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 6,
-          "passed": [
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)",
-            "Away over 2.5 (last 6)",
-            "Away total goals (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "FAIL (4)",
-            "Home over 2.5 (last 3)": "FAIL (0/3)",
-            "Away total goals (last 3)": "PASS (12)",
-            "Away last match goals": "PASS (5)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "PASS (2/3)",
-            "Home over 2.5 (last 6)": "FAIL (2/6)",
-            "Home total goals (last 6)": "FAIL (11)",
-            "Away over 2.5 (last 6)": "PASS (4/6)",
-            "Away total goals (last 6)": "PASS (20)"
-          },
-          "is_perfect": false,
-          "prob": 45.1,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 6,
-          "passed": [
-            "Home under 2.5 (last 3)",
-            "Home has 0-goal side (last 3)",
-            "Away blanked (last 3)",
-            "Home scored avg (last 6)",
-            "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "PASS (3/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "PASS (HS=1.00 <= 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=0.83 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=1.00 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=2.33 > 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 54.9,
-          "confidence": "MEDIUM",
-          "kelly": 0.92
-        },
-        "poisson": {
-          "home_lambda": 1.58,
-          "away_lambda": 0.9,
-          "over25_prob": 45.1,
-          "under25_prob": 54.9
-        }
-      },
-      {
-        "match": {
-          "league": "Ecuador Liga Pro",
-          "home": "Barcelona de G",
-          "away": "Deportivo Cuenca",
-          "home_team_id": "3785",
-          "away_team_id": "7513",
+          "home": "San Martin de San Juan",
+          "away": "Chacarita",
+          "home_team_id": "7448",
+          "away_team_id": "3732",
           "date": "2026-07-05",
           "status": "Scheduled"
         },
         "over": {
-          "score": 3,
+          "score": 4,
           "passed": [
+            "Home total goals (last 3)",
             "Away total goals (last 3)",
-            "Away scored (last 3)",
-            "Home over 2.5 (last 6)"
+            "Away last match goals",
+            "Overall goal activity (6)"
           ],
           "details": {
-            "Home total goals (last 3)": "FAIL (6)",
+            "Home total goals (last 3)": "PASS (7)",
             "Home over 2.5 (last 3)": "FAIL (1/3)",
-            "Away total goals (last 3)": "PASS (7)",
-            "Away last match goals": "FAIL (1)",
-            "Away scored (last 3)": "PASS (3/3)",
+            "Away total goals (last 3)": "PASS (9)",
+            "Away last match goals": "PASS (2)",
+            "Away scored (last 3)": "FAIL (1/3)",
             "Away over 2.5 (last 3)": "FAIL (1/3)",
-            "Home over 2.5 (last 6)": "PASS (4/6)",
-            "Home total goals (last 6)": "FAIL (15)",
+            "Home over 2.5 (last 6)": "FAIL (2/6)",
+            "Home total goals (last 6)": "FAIL (11)",
             "Away over 2.5 (last 6)": "FAIL (1/6)",
-            "Away total goals (last 6)": "FAIL (11)"
+            "Away total goals (last 6)": "FAIL (12)",
+            "Overall goal activity (6)": "PASS (home scored each)"
           },
           "is_perfect": false,
-          "prob": 33.1,
+          "prob": 28.3,
           "confidence": "LOW",
           "kelly": 0.0
         },
         "under": {
-          "score": 6,
+          "score": 8,
           "passed": [
             "Home under 2.5 (last 3)",
             "Home has 0-goal side (last 3)",
             "Away under 2.5 (last 3)",
+            "Away blanked (last 3)",
+            "Home scored avg (last 6)",
             "Home conceded avg (last 6)",
             "Away scored avg (last 6)",
-            "Away conceded avg (last 6)"
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
             "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
             "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Away blanked (last 3)": "FAIL (0/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=1.67 > 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=0.83 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=1.00 <= 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=0.83 <= 1.0)"
+            "Away blanked (last 3)": "PASS (2/3 away games with 0 scored)",
+            "Home scored avg (last 6)": "PASS (HS=1.17 <= 1.2)",
+            "Home conceded avg (last 6)": "PASS (HC=0.67 <= 1.2)",
+            "Away scored avg (last 6)": "PASS (AS=0.50 <= 1.0)",
+            "Away conceded avg (last 6)": "FAIL (AC=1.50 > 1.0)",
+            "Home under 2.5 overall (6)": "FAIL (2/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (5/6 under 2.5)"
           },
           "is_perfect": false,
-          "prob": 66.9,
+          "prob": 71.7,
           "confidence": "HIGH",
-          "kelly": 13.98
+          "kelly": 19.2
         },
         "poisson": {
-          "home_lambda": 1.13,
-          "away_lambda": 0.9,
-          "over25_prob": 33.1,
-          "under25_prob": 66.9
-        }
-      },
-      {
-        "match": {
-          "league": "Ecuador Liga Pro",
-          "home": "Macara",
-          "away": "LDU Quito",
-          "home_team_id": "7517",
-          "away_team_id": "5043",
-          "date": "2026-07-05",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 6,
-          "passed": [
-            "Home total goals (last 3)",
-            "Home over 2.5 (last 3)",
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Home over 2.5 (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (9)",
-            "Home over 2.5 (last 3)": "PASS (3/3)",
-            "Away total goals (last 3)": "PASS (8)",
-            "Away last match goals": "PASS (2)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "FAIL (1/3)",
-            "Home over 2.5 (last 6)": "PASS (4/6)",
-            "Home total goals (last 6)": "FAIL (15)",
-            "Away over 2.5 (last 6)": "FAIL (1/6)",
-            "Away total goals (last 6)": "FAIL (12)"
-          },
-          "is_perfect": false,
-          "prob": 36.7,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 6,
-          "passed": [
-            "Home has 0-goal side (last 3)",
-            "Away under 2.5 (last 3)",
-            "Away blanked (last 3)",
-            "Home conceded avg (last 6)",
-            "Away scored avg (last 6)",
-            "Away conceded avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (0/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=1.33 > 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=1.17 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=1.00 <= 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=1.00 <= 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 63.3,
-          "confidence": "HIGH",
-          "kelly": 10.06
-        },
-        "poisson": {
-          "home_lambda": 1.08,
-          "away_lambda": 1.08,
-          "over25_prob": 36.7,
-          "under25_prob": 63.3
-        }
-      },
-      {
-        "match": {
-          "league": "Korean K-League 1",
-          "home": "Gimcheon Sangmu",
-          "away": "Jeju United",
-          "home_team_id": "7535",
-          "away_team_id": "5200",
-          "date": "2026-07-05",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 4,
-          "passed": [
-            "Home total goals (last 3)",
-            "Home over 2.5 (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (9)",
-            "Home over 2.5 (last 3)": "PASS (3/3)",
-            "Away total goals (last 3)": "FAIL (5)",
-            "Away last match goals": "PASS (3)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "FAIL (1/3)",
-            "Home over 2.5 (last 6)": "FAIL (3/6)",
-            "Home total goals (last 6)": "FAIL (15)",
-            "Away over 2.5 (last 6)": "FAIL (1/6)",
-            "Away total goals (last 6)": "FAIL (10)"
-          },
-          "is_perfect": false,
-          "prob": 34.5,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 6,
-          "passed": [
-            "Home has 0-goal side (last 3)",
-            "Away under 2.5 (last 3)",
-            "Away blanked (last 3)",
-            "Home scored avg (last 6)",
-            "Away scored avg (last 6)",
-            "Away conceded avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (0/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "PASS (HS=0.67 <= 1.2)",
-            "Home conceded avg (last 6)": "FAIL (HC=1.83 > 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=1.00 <= 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=0.67 <= 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 65.5,
-          "confidence": "HIGH",
-          "kelly": 12.46
-        },
-        "poisson": {
-          "home_lambda": 0.64,
-          "away_lambda": 1.44,
-          "over25_prob": 34.5,
-          "under25_prob": 65.5
-        }
-      },
-      {
-        "match": {
-          "league": "Argentina Primera Nacional",
-          "home": "Deportivo Madryn",
-          "away": "Colon Santa Fe",
-          "home_team_id": "7646",
-          "away_team_id": "7649",
-          "date": "2026-07-05",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 4,
-          "passed": [
-            "Home total goals (last 3)",
-            "Home over 2.5 (last 3)",
-            "Away scored (last 3)",
-            "Home over 2.5 (last 6)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (7)",
-            "Home over 2.5 (last 3)": "PASS (2/3)",
-            "Away total goals (last 3)": "FAIL (6)",
-            "Away last match goals": "FAIL (1)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "FAIL (1/3)",
-            "Home over 2.5 (last 6)": "PASS (4/6)",
-            "Home total goals (last 6)": "FAIL (14)",
-            "Away over 2.5 (last 6)": "FAIL (1/6)",
-            "Away total goals (last 6)": "FAIL (12)"
-          },
-          "is_perfect": false,
-          "prob": 34.2,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 6,
-          "passed": [
-            "Home has 0-goal side (last 3)",
-            "Away under 2.5 (last 3)",
-            "Away blanked (last 3)",
-            "Home conceded avg (last 6)",
-            "Away scored avg (last 6)",
-            "Away conceded avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=1.33 > 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=1.00 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=1.00 <= 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=1.00 <= 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 65.8,
-          "confidence": "HIGH",
-          "kelly": 12.78
-        },
-        "poisson": {
-          "home_lambda": 1.08,
-          "away_lambda": 0.99,
-          "over25_prob": 34.2,
-          "under25_prob": 65.8
+          "home_lambda": 1.27,
+          "away_lambda": 0.58,
+          "over25_prob": 28.3,
+          "under25_prob": 71.7
         }
       },
       {
@@ -2947,7 +1606,8 @@
             "Home over 2.5 (last 6)": "FAIL (2/6)",
             "Home total goals (last 6)": "FAIL (12)",
             "Away over 2.5 (last 6)": "FAIL (3/6)",
-            "Away total goals (last 6)": "FAIL (17)"
+            "Away total goals (last 6)": "FAIL (17)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
           },
           "is_perfect": false,
           "prob": 42.8,
@@ -2955,14 +1615,16 @@
           "kelly": 0.0
         },
         "under": {
-          "score": 6,
+          "score": 8,
           "passed": [
             "Home under 2.5 (last 3)",
             "Home has 0-goal side (last 3)",
             "Away under 2.5 (last 3)",
             "Away blanked (last 3)",
             "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
+            "Away scored avg (last 6)",
+            "Home under 2.5 overall (6)",
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
@@ -2972,7 +1634,9 @@
             "Home scored avg (last 6)": "FAIL (HS=1.33 > 1.2)",
             "Home conceded avg (last 6)": "PASS (HC=0.67 <= 1.2)",
             "Away scored avg (last 6)": "PASS (AS=0.83 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=2.00 > 1.0)"
+            "Away conceded avg (last 6)": "FAIL (AC=2.00 > 1.0)",
+            "Home under 2.5 overall (6)": "PASS (4/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (5/6 under 2.5)"
           },
           "is_perfect": false,
           "prob": 57.2,
@@ -3013,7 +1677,8 @@
             "Home over 2.5 (last 6)": "FAIL (1/6)",
             "Home total goals (last 6)": "FAIL (11)",
             "Away over 2.5 (last 6)": "FAIL (2/6)",
-            "Away total goals (last 6)": "FAIL (14)"
+            "Away total goals (last 6)": "FAIL (14)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
           },
           "is_perfect": false,
           "prob": 32.1,
@@ -3021,14 +1686,16 @@
           "kelly": 0.0
         },
         "under": {
-          "score": 6,
+          "score": 8,
           "passed": [
             "Home under 2.5 (last 3)",
             "Home has 0-goal side (last 3)",
             "Away under 2.5 (last 3)",
             "Home scored avg (last 6)",
             "Home conceded avg (last 6)",
-            "Away scored avg (last 6)"
+            "Away scored avg (last 6)",
+            "Home under 2.5 overall (6)",
+            "Away under 2.5 overall (6)"
           ],
           "details": {
             "Home under 2.5 (last 3)": "PASS (3/3 under 2.5)",
@@ -3038,7 +1705,9 @@
             "Home scored avg (last 6)": "PASS (HS=0.83 <= 1.2)",
             "Home conceded avg (last 6)": "PASS (HC=1.00 <= 1.2)",
             "Away scored avg (last 6)": "PASS (AS=1.00 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=1.33 > 1.0)"
+            "Away conceded avg (last 6)": "FAIL (AC=1.33 > 1.0)",
+            "Home under 2.5 overall (6)": "PASS (4/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (4/6 under 2.5)"
           },
           "is_perfect": false,
           "prob": 67.9,
@@ -3050,74 +1719,6 @@
           "away_lambda": 0.99,
           "over25_prob": 32.1,
           "under25_prob": 67.9
-        }
-      },
-      {
-        "match": {
-          "league": "Ecuador Liga Pro",
-          "home": "Orense",
-          "away": "Tecnico Universitario",
-          "home_team_id": "7521",
-          "away_team_id": "7518",
-          "date": "2026-07-07",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 5,
-          "passed": [
-            "Home total goals (last 3)",
-            "Away total goals (last 3)",
-            "Away last match goals",
-            "Away scored (last 3)",
-            "Away over 2.5 (last 3)"
-          ],
-          "details": {
-            "Home total goals (last 3)": "PASS (7)",
-            "Home over 2.5 (last 3)": "FAIL (1/3)",
-            "Away total goals (last 3)": "PASS (7)",
-            "Away last match goals": "PASS (3)",
-            "Away scored (last 3)": "PASS (2/3)",
-            "Away over 2.5 (last 3)": "PASS (2/3)",
-            "Home over 2.5 (last 6)": "FAIL (3/6)",
-            "Home total goals (last 6)": "FAIL (15)",
-            "Away over 2.5 (last 6)": "FAIL (2/6)",
-            "Away total goals (last 6)": "FAIL (11)"
-          },
-          "is_perfect": false,
-          "prob": 34.0,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 6,
-          "passed": [
-            "Home under 2.5 (last 3)",
-            "Home has 0-goal side (last 3)",
-            "Away blanked (last 3)",
-            "Home conceded avg (last 6)",
-            "Away scored avg (last 6)",
-            "Away conceded avg (last 6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "FAIL (1/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (1/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=1.50 > 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=1.00 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=0.83 <= 1.0)",
-            "Away conceded avg (last 6)": "PASS (AC=1.00 <= 1.0)"
-          },
-          "is_perfect": false,
-          "prob": 66.0,
-          "confidence": "HIGH",
-          "kelly": 13.0
-        },
-        "poisson": {
-          "home_lambda": 1.16,
-          "away_lambda": 0.9,
-          "over25_prob": 34.0,
-          "under25_prob": 66.0
         }
       }
     ]
