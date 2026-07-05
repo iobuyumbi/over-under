@@ -19,6 +19,37 @@ HISTORY_FILE = "prediction_history.json"
 SETTLED_RESULTS = frozenset({"win", "loss", "push"})
 MEDIUM = "MEDIUM"
 
+# User-facing label helpers
+PICK_TIER_PREMIUM = "Premium picks"
+PICK_TIER_STRONG = "Solid picks"
+PICK_TIER_VALUE = "Watchlist"
+
+
+def format_confidence_label(confidence):
+    """Turn model confidence into readable report text."""
+    mapping = {
+        "HIGH": "High confidence",
+        "MEDIUM": "Medium confidence",
+        "LOW": "Low confidence",
+        "perfect": "Premium",
+        "qualified": "Solid",
+        "close": "Watchlist",
+    }
+    text = str(confidence or "N/A")
+    return mapping.get(text, mapping.get(text.upper(), text))
+
+
+def format_result_badge(result):
+    """Short result label for settled picks."""
+    normalized = str(result or "").lower()
+    return {"win": "Win", "loss": "Loss", "push": "Push"}.get(normalized, str(result or "Pending"))
+
+
+def format_result_tag(result):
+    """Bracket tag for results summaries."""
+    normalized = str(result or "").lower()
+    return {"win": "WIN", "loss": "LOSS", "push": "PUSH"}.get(normalized, "PENDING")
+
 # Flagged regions with match-integrity concerns.
 # - New predictions are blocked (fixtures filtered before analysis).
 # - Historical results in prediction_history.json stay for audit.
@@ -425,12 +456,12 @@ def format_yesterday_line(pick, market_label):
     score = pick.get("final_score", "")
 
     if result in SETTLED_RESULTS:
-        line = f"{market_label}: {home} vs {away} - {result.capitalize()}"
+        line = f"{home} vs {away} · {market_label} · {format_result_badge(result)}"
         if score:
             line += f" ({score})"
         return line
     if pick.get("result") == "pending" and pick_is_overdue(pick):
-        return f"{market_label}: {home} vs {away} - Pending"
+        return f"{home} vs {away} · {market_label} · Pending"
     return None
 
 
@@ -442,9 +473,10 @@ def format_pick_result_lines(pick, market_label):
     score = pick.get("final_score", "")
 
     if result in SETTLED_RESULTS and score:
+        tag = format_result_tag(result)
         lines = [
-            f"[WIN] {home} vs {away}",
-            f"   {market_label} -> {result.upper()} ({score})",
+            f"[{tag}] {home} vs {away}",
+            f"   {market_label} — {format_result_badge(result)} ({score})",
         ]
         safer = format_safer_result_line(market_label, score)
         if safer:
@@ -453,7 +485,7 @@ def format_pick_result_lines(pick, market_label):
         return lines
 
     if pick.get("result") == "pending" and pick_is_overdue(pick):
-        return [f"[PENDING] {market_label}: {home} vs {away}", ""]
+        return [f"[PENDING] {home} vs {away} · {market_label}", ""]
 
     return []
 
@@ -525,8 +557,8 @@ def append_yesterday_section(lines, prediction_type, detailed=False):
     if not yesterday_results:
         return
 
-    lines.append("YESTERDAY'S RESULTS")
-    lines.append(f"({yesterday_date})")
+    lines.append("YESTERDAY")
+    lines.append(f"Date: {yesterday_date}")
     lines.append("")
     header = format_yesterday_header(yesterday_summary)
     if header:
@@ -544,7 +576,7 @@ def append_yesterday_section(lines, prediction_type, detailed=False):
     lines.append("")
     lines.append("---")
     lines.append("")
-    lines.append("TODAY'S PICKS")
+    lines.append("TODAY")
     lines.append("")
 
 
@@ -552,7 +584,7 @@ def format_yesterday_header(summary):
     """Build a one-line record summary for daily reports.""" 
     settled = summary["wins"] + summary["losses"] + summary["pushes"] 
     if settled: 
-        line = f"Record: {summary['wins']}W-{summary['losses']}L-{summary['pushes']}P" 
+        line = f"Yesterday: {summary['wins']}W-{summary['losses']}L-{summary['pushes']}P" 
         if summary["pending"]: 
             line += f" ({summary['pending']} pending)" 
         return line 
@@ -622,7 +654,7 @@ def format_safer_result_line(primary_market, score_str):
     result = compute_safer_result(market_key, score_str)
     if result is None:
         return None
-    return f"   Safer: {label} -> {result.upper()} ({score_str})"
+    return f"   Safer pick · {label} — {format_result_badge(result)} ({score_str})"
 
 
 def format_vip_rule_summary(details, score, max_score):
@@ -649,12 +681,12 @@ def format_vip_extra_lines(stake_pct, odds, score, max_score, *,
                            home_strength=None, away_strength=None,
                            home_lambda=None, away_lambda=None):
     """VIP extras on top of the free-channel pick summary."""
-    lines = [f"Stake: {stake_pct:.1f}% at odds {odds}"]
+    lines = [f"Suggested stake: {stake_pct:.1f}% @ {odds}"]
     if home_strength is not None and away_strength is not None:
-        lines.append(f"Strength: home {home_strength} vs away {away_strength}")
+        lines.append(f"Team strength — Home {home_strength} · Away {away_strength}")
     if home_lambda is not None and away_lambda is not None:
-        lines.append(f"Expected goals: {home_lambda} - {away_lambda}")
-    lines.append(f"Rule score: {score}/{max_score}")
+        lines.append(f"xG forecast — {home_lambda}–{away_lambda}")
+    lines.append(f"Form checks passed: {score}/{max_score}")
     return lines
 
 
@@ -887,7 +919,7 @@ def generate_monthly_report(year, month):
     report.append("MONTHLY PERFORMANCE REPORT") 
     report.append(f"{month_name}") 
     report.append("") 
-    report.append("HOME WIN PREDICTIONS") 
+    report.append("Home win picks") 
     report.append(f"Total picks: {hw_stats['total']}") 
     report.append(f"Wins: {hw_stats['wins']}") 
     report.append(f"Losses: {hw_stats['losses']}") 
@@ -1039,7 +1071,7 @@ def generate_weekly_report():
     report.append("WEEKLY PERFORMANCE REPORT") 
     report.append(f"{week_ago.strftime('%Y-%m-%d')} to {today.strftime('%Y-%m-%d')}") 
     report.append("") 
-    report.append("HOME WIN PREDICTIONS") 
+    report.append("Home win picks") 
     report.append(f"Total picks: {hw_stats['total']}") 
     report.append(f"Wins: {hw_stats['wins']}") 
     report.append(f"Losses: {hw_stats['losses']}") 

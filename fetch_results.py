@@ -30,6 +30,8 @@ from prediction_tracker import (
     resolve_pick_result,
     is_blocked_pick,
     format_pick_result_lines,
+    format_result_badge,
+    format_result_tag,
 )
 
 # =============================================================================
@@ -677,7 +679,8 @@ def write_selected_results_report(dates_to_check, history, dry_run=False):
     with open(SELECTED_RESULTS_REPORT, "w", encoding="utf-8") as f:
         yesterday_str, yesterday_lines = build_yesterday_results_block(history)
         if yesterday_lines:
-            f.write(f"\n{mode}YESTERDAY ({yesterday_str})\n")
+            f.write(f"\n{mode}YESTERDAY\n")
+            f.write(f"Date: {yesterday_str}\n")
             f.write("-" * 30 + "\n")
             for line in yesterday_lines:
                 f.write(f"{line}\n")
@@ -699,16 +702,17 @@ def write_selected_results_report(dates_to_check, history, dry_run=False):
             for item in settled:
                 result = resolve_pick_result(
                     {"result": item["result"], "final_score": item["score"]}
-                ).upper()
-                f.write(f"[WIN] {item['home_team']} vs {item['away_team']}\n")
-                f.write(f"   {item['prediction']} -> {result} ({item['score']})\n")
+                )
+                tag = format_result_tag(result)
+                f.write(f"[{tag}] {item['home_team']} vs {item['away_team']}\n")
+                f.write(f"   {item['prediction']} — {format_result_badge(result)} ({item['score']})\n")
                 safer_line = format_safer_result_line(item["prediction"], item["score"])
                 if safer_line:
                     f.write(f"{safer_line}\n")
                 f.write("\n")
 
             if unmatched:
-                f.write(f"[WARN] Unmatched: {len(unmatched)}\n")
+                f.write(f"Still unmatched: {len(unmatched)}\n")
                 for item in unmatched[:5]:
                     f.write(f"   - {item}\n")
                 if len(unmatched) > 5:

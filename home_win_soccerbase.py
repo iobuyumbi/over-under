@@ -27,8 +27,12 @@ from prediction_tracker import (
     record_predictions,
     format_vip_extra_lines,
     format_pick_block,
+    format_confidence_label,
     is_blocked_fixture,
     append_yesterday_section,
+    PICK_TIER_PREMIUM,
+    PICK_TIER_STRONG,
+    PICK_TIER_VALUE,
 )
 
 # =============================================================================
@@ -584,7 +588,7 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
 
     # Clean report (mobile-friendly)
     lines = []
-    lines.append("HOME WIN PICKS")
+    lines.append("Home win picks")
     lines.append("")
     
     if len(included_dates) > 1:
@@ -597,7 +601,7 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
     append_yesterday_section(lines, "home_win", detailed=detailed)
     
     if included_perfect:
-        lines.append("  PREMIUM PICKS")
+        lines.append(f"  {PICK_TIER_PREMIUM}")
         lines.append("")
         for i, item in enumerate(included_perfect, 1):
             m = item["match"]
@@ -610,12 +614,12 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
                 )
             lines.extend(format_pick_block(
                 i, m["home"], m["away"], m["date"],
-                f"{p['confidence']} ({p['home_win_prob']}%)",
+                f"{format_confidence_label(p['confidence'])} ({p['home_win_prob']}%)",
                 extra,
             ))
         
     if included_qualified:
-        lines.append("  STRONG PICKS")
+        lines.append(f"  {PICK_TIER_STRONG}")
         lines.append("")
         for i, item in enumerate(included_qualified, 1):
             m = item["match"]
@@ -628,12 +632,12 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
                 )
             lines.extend(format_pick_block(
                 i, m["home"], m["away"], m["date"],
-                f"{p['confidence']} ({p['home_win_prob']}%)",
+                f"{format_confidence_label(p['confidence'])} ({p['home_win_prob']}%)",
                 extra,
             ))
         
     if included_close:
-        lines.append("  VALUE PICKS")
+        lines.append(f"  {PICK_TIER_VALUE}")
         lines.append("")
         for i, item in enumerate(included_close, 1):
             m = item["match"]
@@ -646,7 +650,7 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
                 )
             lines.extend(format_pick_block(
                 i, m["home"], m["away"], m["date"],
-                f"{p['confidence']} ({p['home_win_prob']}%)",
+                f"{format_confidence_label(p['confidence'])} ({p['home_win_prob']}%)",
                 extra,
             ))
 
