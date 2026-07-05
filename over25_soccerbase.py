@@ -25,7 +25,17 @@ from fake_useragent import UserAgent
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Import prediction tracker
-from prediction_tracker import record_predictions, format_vip_extra_lines, format_pick_block, is_blocked_fixture, append_yesterday_section
+from prediction_tracker import (
+    record_predictions,
+    format_vip_extra_lines,
+    format_pick_block,
+    format_confidence_label,
+    is_blocked_fixture,
+    append_yesterday_section,
+    PICK_TIER_PREMIUM,
+    PICK_TIER_STRONG,
+    PICK_TIER_VALUE,
+)
 
 # =============================================================================
 # CONFIGURATION
@@ -836,7 +846,7 @@ def _append_ou_pick(lines, idx, item, side, odds, detailed):
         )
     lines.extend(format_pick_block(
         idx, m["home"], m["away"], m["date"],
-        f"{tgt['confidence']} ({p[prob_key]}%)",
+        f"{format_confidence_label(tgt['confidence'])} ({p[prob_key]}%)",
         extra,
     ))
 
@@ -855,7 +865,7 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
     lines = []
-    lines.append("OVER/UNDER 2.5 PICKS")
+    lines.append("Over/under 2.5 picks")
     lines.append("")
     
     if len(included_dates) > 1:
@@ -869,7 +879,7 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     
     # Over 2.5 section
     if included_over:
-        lines.append("OVER 2.5 GOALS")
+        lines.append("Over 2.5 goals")
         lines.append("")
         
         # Group over picks
@@ -878,17 +888,17 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
         included_over_close = [p for p in included_over if p in over_close]
         
         if included_over_perfect:
-            lines.append("  PREMIUM PICKS")
+            lines.append(f"  {PICK_TIER_PREMIUM}")
             lines.append("")
             for i, item in enumerate(included_over_perfect, 1):
                 _append_ou_pick(lines, i, item, "over", odds_over, detailed)
         
         if included_over_qualified:
             if not detailed and not included_over_perfect:
-                lines.append("  PREMIUM PICKS")
+                lines.append(f"  {PICK_TIER_STRONG}")
                 lines.append("")
             if detailed:
-                lines.append("  STRONG PICKS")
+                lines.append(f"  {PICK_TIER_STRONG}")
                 lines.append("")
             start_idx = len(included_over_perfect) + 1
             for i, item in enumerate(included_over_qualified, start_idx):
@@ -896,7 +906,7 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
         
         if included_over_close:
             if detailed:
-                lines.append("  VALUE PICKS")
+                lines.append(f"  {PICK_TIER_VALUE}")
                 lines.append("")
             start_idx = len(included_over_perfect) + len(included_over_qualified) + 1
             for i, item in enumerate(included_over_close, start_idx):
@@ -904,7 +914,7 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     
     # Under 2.5 section
     if included_under:
-        lines.append("UNDER 2.5 GOALS")
+        lines.append("Under 2.5 goals")
         lines.append("")
         
         # Group under picks
@@ -913,17 +923,17 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
         included_under_close = [p for p in included_under if p in under_close]
         
         if included_under_perfect:
-            lines.append("  PREMIUM PICKS")
+            lines.append(f"  {PICK_TIER_PREMIUM}")
             lines.append("")
             for i, item in enumerate(included_under_perfect, 1):
                 _append_ou_pick(lines, i, item, "under", odds_under, detailed)
         
         if included_under_qualified:
             if not detailed and not included_under_perfect:
-                lines.append("  PREMIUM PICKS")
+                lines.append(f"  {PICK_TIER_STRONG}")
                 lines.append("")
             if detailed:
-                lines.append("  STRONG PICKS")
+                lines.append(f"  {PICK_TIER_STRONG}")
                 lines.append("")
             start_idx = len(included_under_perfect) + 1
             for i, item in enumerate(included_under_qualified, start_idx):
@@ -931,7 +941,7 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
         
         if included_under_close:
             if detailed:
-                lines.append("  VALUE PICKS")
+                lines.append(f"  {PICK_TIER_VALUE}")
                 lines.append("")
             start_idx = len(included_under_perfect) + len(included_under_qualified) + 1
             for i, item in enumerate(included_under_close, start_idx):
