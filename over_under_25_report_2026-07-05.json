@@ -16,7 +16,7 @@
       "home_over25_max": 3,
       "away_over25_max": 3
     },
-    "generated_at": "2026-07-05T01:03:49.446231"
+    "generated_at": "2026-07-05T04:54:27.344253"
   },
   "over": {
     "perfect": [],
@@ -741,6 +741,75 @@
       {
         "match": {
           "league": "Argentina Primera Nacional",
+          "home": "Deportivo Maipu",
+          "away": "Agropecuario",
+          "home_team_id": "7473",
+          "away_team_id": "7469",
+          "date": "2026-07-05",
+          "status": "Scheduled"
+        },
+        "over": {
+          "score": 1,
+          "passed": [
+            "Away last match goals"
+          ],
+          "details": {
+            "Home total goals (last 3)": "FAIL (6)",
+            "Home over 2.5 (last 3)": "FAIL (1/3)",
+            "Away total goals (last 3)": "FAIL (5)",
+            "Away last match goals": "PASS (2)",
+            "Away scored (last 3)": "FAIL (1/3)",
+            "Away over 2.5 (last 3)": "FAIL (1/3)",
+            "Home over 2.5 (last 6)": "FAIL (2/6)",
+            "Home total goals (last 6)": "FAIL (12)",
+            "Away over 2.5 (last 6)": "FAIL (3/6)",
+            "Away total goals (last 6)": "FAIL (17)",
+            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
+          },
+          "is_perfect": false,
+          "prob": 42.8,
+          "confidence": "LOW",
+          "kelly": 0.0
+        },
+        "under": {
+          "score": 8,
+          "passed": [
+            "Home under 2.5 (last 3)",
+            "Home has 0-goal side (last 3)",
+            "Away under 2.5 (last 3)",
+            "Away blanked (last 3)",
+            "Home conceded avg (last 6)",
+            "Away scored avg (last 6)",
+            "Home under 2.5 overall (6)",
+            "Away under 2.5 overall (6)"
+          ],
+          "details": {
+            "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
+            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
+            "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
+            "Away blanked (last 3)": "PASS (2/3 away games with 0 scored)",
+            "Home scored avg (last 6)": "FAIL (HS=1.33 > 1.2)",
+            "Home conceded avg (last 6)": "PASS (HC=0.67 <= 1.2)",
+            "Away scored avg (last 6)": "PASS (AS=0.83 <= 1.0)",
+            "Away conceded avg (last 6)": "FAIL (AC=2.00 > 1.0)",
+            "Home under 2.5 overall (6)": "PASS (4/6 under 2.5)",
+            "Away under 2.5 overall (6)": "PASS (5/6 under 2.5)"
+          },
+          "is_perfect": false,
+          "prob": 57.2,
+          "confidence": "MEDIUM",
+          "kelly": 3.42
+        },
+        "poisson": {
+          "home_lambda": 1.66,
+          "away_lambda": 0.73,
+          "over25_prob": 42.8,
+          "under25_prob": 57.2
+        }
+      },
+      {
+        "match": {
+          "league": "Argentina Primera Nacional",
           "home": "Central Norte",
           "away": "San Miguel",
           "home_team_id": "8169",
@@ -807,75 +876,6 @@
           "away_lambda": 0.99,
           "over25_prob": 32.1,
           "under25_prob": 67.9
-        }
-      },
-      {
-        "match": {
-          "league": "Argentina Primera Nacional",
-          "home": "Deportivo Maipu",
-          "away": "Agropecuario",
-          "home_team_id": "7473",
-          "away_team_id": "7469",
-          "date": "2026-07-05",
-          "status": "Scheduled"
-        },
-        "over": {
-          "score": 1,
-          "passed": [
-            "Away last match goals"
-          ],
-          "details": {
-            "Home total goals (last 3)": "FAIL (6)",
-            "Home over 2.5 (last 3)": "FAIL (1/3)",
-            "Away total goals (last 3)": "FAIL (5)",
-            "Away last match goals": "PASS (2)",
-            "Away scored (last 3)": "FAIL (1/3)",
-            "Away over 2.5 (last 3)": "FAIL (1/3)",
-            "Home over 2.5 (last 6)": "FAIL (2/6)",
-            "Home total goals (last 6)": "FAIL (12)",
-            "Away over 2.5 (last 6)": "FAIL (3/6)",
-            "Away total goals (last 6)": "FAIL (17)",
-            "Overall goal activity (6)": "FAIL (neither team scored/conceded in all 6)"
-          },
-          "is_perfect": false,
-          "prob": 42.8,
-          "confidence": "LOW",
-          "kelly": 0.0
-        },
-        "under": {
-          "score": 8,
-          "passed": [
-            "Home under 2.5 (last 3)",
-            "Home has 0-goal side (last 3)",
-            "Away under 2.5 (last 3)",
-            "Away blanked (last 3)",
-            "Home conceded avg (last 6)",
-            "Away scored avg (last 6)",
-            "Home under 2.5 overall (6)",
-            "Away under 2.5 overall (6)"
-          ],
-          "details": {
-            "Home under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Home has 0-goal side (last 3)": "PASS (at least one 0-goal side)",
-            "Away under 2.5 (last 3)": "PASS (2/3 under 2.5)",
-            "Away blanked (last 3)": "PASS (2/3 away games with 0 scored)",
-            "Home scored avg (last 6)": "FAIL (HS=1.33 > 1.2)",
-            "Home conceded avg (last 6)": "PASS (HC=0.67 <= 1.2)",
-            "Away scored avg (last 6)": "PASS (AS=0.83 <= 1.0)",
-            "Away conceded avg (last 6)": "FAIL (AC=2.00 > 1.0)",
-            "Home under 2.5 overall (6)": "PASS (4/6 under 2.5)",
-            "Away under 2.5 overall (6)": "PASS (5/6 under 2.5)"
-          },
-          "is_perfect": false,
-          "prob": 57.2,
-          "confidence": "MEDIUM",
-          "kelly": 3.42
-        },
-        "poisson": {
-          "home_lambda": 1.66,
-          "away_lambda": 0.73,
-          "over25_prob": 42.8,
-          "under25_prob": 57.2
         }
       }
     ]
