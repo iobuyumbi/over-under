@@ -1,0 +1,62 @@
+WEEKLY PERFORMANCE REPORT
+2026-06-28 to 2026-07-05
+
+HOME WIN PREDICTIONS
+Total picks: 10
+Wins: 5
+Losses: 2
+Pushes: 0
+Pending: 0
+Win rate: 71.4%
+
+Performance by confidence:
+  close: 4/5 wins (80.0%)
+  qualified: 1/2 wins (50.0%)
+
+DOUBLE CHANCE (HOME OR DRAW)
+Total picks: 10
+Wins: 5
+Losses: 2
+Pending: 0
+Win rate: 71.4%
+
+OVER 2.5 GOALS
+Total picks: 13
+Wins: 6
+Losses: 6
+Pushes: 0
+Pending: 0
+Win rate: 50.0%
+
+Performance by confidence:
+  close: 5/10 wins (50.0%)
+  qualified: 1/2 wins (50.0%)
+
+OVER 1.5 GOALS
+Total picks: 13
+Wins: 9
+Losses: 3
+Pending: 0
+Win rate: 75.0%
+
+UNDER 2.5 GOALS
+Total picks: 10
+Wins: 1
+Losses: 3
+Pushes: 0
+Pending: 0
+Win rate: 25.0%
+
+Performance by confidence:
+  close: 1/4 wins (25.0%)
+
+UNDER 3.5 GOALS
+Total picks: 10
+Wins: 2
+Losses: 2
+Pending: 0
+Win rate: 50.0%
+
+---
+For informational purposes only
+Gamble responsibly
