@@ -1,0 +1,17 @@
+{
+  "metadata": {
+    "scanned_window": [
+      "2026-07-06",
+      "2026-07-07",
+      "2026-07-08",
+      "2026-07-09"
+    ],
+    "bankroll": 1000.0,
+    "odds": 2.8,
+    "max_exposure": 0.25,
+    "generated_at": "2026-07-06T05:09:29.064088"
+  },
+  "perfect": [],
+  "qualified": [],
+  "close_calls": []
+}
