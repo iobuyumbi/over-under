@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "scanned_window": [
+      "2026-07-07",
+      "2026-07-08",
+      "2026-07-09",
+      "2026-07-10"
+    ],
+    "bankroll": 1000.0,
+    "odds": 2.8,
+    "max_exposure": 0.25,
+    "generated_at": "2026-07-07T04:48:51.678510"
+  },
+  "perfect": [],
+  "qualified": [
+    {
+      "match": {
+        "league": "Belarus League",
+        "home": "Isloch Minsk",
+        "away": "Bate Borisov",
+        "home_team_id": "6234",
+        "away_team_id": "3032",
+        "date": "2026-07-10",
+        "status": "Completed"
+      },
+      "score": 10,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals scored",
+        "Away wins",
+        "Home overall form (5)",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (5/6 No Losses)",
+        "Home goals scored": "PASS (14 GF)",
+        "Home goals conceded": "PASS (3 GA)",
+        "Home wins": "PASS (5/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (3/6 Losses)",
+        "Away goals conceded": "FAIL (7)",
+        "Away goals scored": "PASS (2 GF)",
+        "Away wins": "PASS (0/6 Wins)",
+        "Home overall form (5)": "PASS (4W-0L in 5)",
+        "Away overall form (5)": "PASS (0W-3L in 5)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.717,
+        "away_strength": 0.175,
+        "home_win_prob": 89.7,
+        "confidence": "HIGH"
+      },
+      "kelly": 25.0
+    }
+  ],
+  "close_calls": []
+}
