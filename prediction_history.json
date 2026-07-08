@@ -251,6 +251,16 @@
       "confidence": "qualified",
       "result": "pending",
       "recorded_at": "2026-07-07T04:48:51.678817"
+    },
+    {
+      "date": "2026-07-11",
+      "type": "home_win",
+      "league": "Finland League",
+      "home_team": "Gnistan",
+      "away_team": "Mariehamn",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-08T04:20:17.206595"
     }
   ],
   "over_under": [
@@ -938,8 +948,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-04T05:30:14.655093"
+      "result": "loss",
+      "recorded_at": "2026-07-04T05:30:14.655093",
+      "updated_at": "2026-07-08T04:08:37.593926",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-10",
@@ -964,6 +977,42 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-07T04:46:34.561720"
+    },
+    {
+      "date": "2026-07-11",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "San Telmo",
+      "away_team": "Chaco For Ever",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-08T04:16:47.595959"
+    },
+    {
+      "date": "2026-07-11",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "All Boys",
+      "away_team": "Almirante Brown",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-08T04:16:47.596456"
+    },
+    {
+      "date": "2026-07-11",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Los Andes",
+      "away_team": "Ciudad de Bolivar",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-08T04:16:47.596925"
     }
   ]
 }
