@@ -261,6 +261,36 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-08T04:20:17.206595"
+    },
+    {
+      "date": "2026-07-12",
+      "type": "home_win",
+      "league": "Ecuador Liga Pro",
+      "home_team": "LDU Quito",
+      "away_team": "Libertad Ecu",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-09T04:55:21.318636"
+    },
+    {
+      "date": "2026-07-12",
+      "type": "home_win",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Gimnasia de Jujuy",
+      "away_team": "Chacarita",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-09T04:55:21.319243"
+    },
+    {
+      "date": "2026-07-12",
+      "type": "home_win",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Godoy Cruz",
+      "away_team": "Defensores de Belgrano",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-09T04:55:21.319777"
     }
   ],
   "over_under": [
@@ -1013,6 +1043,66 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-08T04:16:47.596925"
+    },
+    {
+      "date": "2026-07-10",
+      "type": "over_under",
+      "league": "Belarus League",
+      "home_team": "ML Vitebsk",
+      "away_team": "Belshina",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-09T04:51:14.415815"
+    },
+    {
+      "date": "2026-07-12",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Agropecuario",
+      "away_team": "Temperley",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-09T04:51:14.416444"
+    },
+    {
+      "date": "2026-07-12",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Gimnasia y Tiro",
+      "away_team": "Patronato",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-09T04:51:14.416947"
+    },
+    {
+      "date": "2026-07-12",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Racing Cordoba",
+      "away_team": "Acassuso",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-09T04:51:14.417356"
+    },
+    {
+      "date": "2026-07-12",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "San Martin de Tucuman",
+      "away_team": "Almagro",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-09T04:51:14.417812"
     }
   ]
 }
