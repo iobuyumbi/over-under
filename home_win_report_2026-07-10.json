@@ -1,0 +1,242 @@
+{
+  "metadata": {
+    "scanned_window": [
+      "2026-07-10",
+      "2026-07-11",
+      "2026-07-12",
+      "2026-07-13"
+    ],
+    "bankroll": 1000.0,
+    "odds": 2.8,
+    "max_exposure": 0.25,
+    "generated_at": "2026-07-10T04:54:46.787965"
+  },
+  "perfect": [],
+  "qualified": [
+    {
+      "match": {
+        "league": "Belarus League",
+        "home": "Isloch Minsk",
+        "away": "Bate Borisov",
+        "home_team_id": "6234",
+        "away_team_id": "3032",
+        "date": "2026-07-10",
+        "status": "Completed"
+      },
+      "score": 10,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals scored",
+        "Away wins",
+        "Home overall form (5)",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (5/6 No Losses)",
+        "Home goals scored": "PASS (14 GF)",
+        "Home goals conceded": "PASS (3 GA)",
+        "Home wins": "PASS (5/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (2/6 Losses)",
+        "Away goals conceded": "FAIL (7)",
+        "Away goals scored": "PASS (3 GF)",
+        "Away wins": "PASS (0/6 Wins)",
+        "Home overall form (5)": "PASS (4W-0L in 5)",
+        "Away overall form (5)": "PASS (0W-3L in 5)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.717,
+        "away_strength": 0.175,
+        "home_win_prob": 89.7,
+        "confidence": "HIGH"
+      },
+      "kelly": 5.52
+    },
+    {
+      "match": {
+        "league": "Ecuador Liga Pro",
+        "home": "LDU Quito",
+        "away": "Libertad Ecu",
+        "home_team_id": "5043",
+        "away_team_id": "7858",
+        "date": "2026-07-12",
+        "status": "Scheduled"
+      },
+      "score": 10,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals conceded",
+        "Away wins",
+        "Home overall form (5)",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (6/6 No Losses)",
+        "Home goals scored": "PASS (11 GF)",
+        "Home goals conceded": "PASS (3 GA)",
+        "Home wins": "PASS (5/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (4/6 Losses)",
+        "Away goals conceded": "PASS (12 GA)",
+        "Away goals scored": "FAIL (6)",
+        "Away wins": "PASS (1/6 Wins)",
+        "Home overall form (5)": "PASS (3W-1L in 5)",
+        "Away overall form (5)": "PASS (1W-3L in 5)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.717,
+        "away_strength": 0.283,
+        "home_win_prob": 85.0,
+        "confidence": "HIGH"
+      },
+      "kelly": 5.03
+    },
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Gimnasia de Jujuy",
+        "away": "Chacarita",
+        "home_team_id": "682",
+        "away_team_id": "3732",
+        "date": "2026-07-12",
+        "status": "Scheduled"
+      },
+      "score": 10,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals scored",
+        "Away wins",
+        "Home overall form (5)",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (6/6 No Losses)",
+        "Home goals scored": "PASS (16 GF)",
+        "Home goals conceded": "PASS (3 GA)",
+        "Home wins": "PASS (5/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (4/6 Losses)",
+        "Away goals conceded": "FAIL (8)",
+        "Away goals scored": "PASS (3 GF)",
+        "Away wins": "PASS (1/6 Wins)",
+        "Home overall form (5)": "PASS (3W-1L in 5)",
+        "Away overall form (5)": "PASS (1W-3L in 5)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.717,
+        "away_strength": 0.283,
+        "home_win_prob": 85.0,
+        "confidence": "HIGH"
+      },
+      "kelly": 5.03
+    }
+  ],
+  "close_calls": [
+    {
+      "match": {
+        "league": "Finland League",
+        "home": "Gnistan",
+        "away": "Mariehamn",
+        "home_team_id": "7960",
+        "away_team_id": "4365",
+        "date": "2026-07-11",
+        "status": "Scheduled"
+      },
+      "score": 9,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home wins",
+        "Away losses",
+        "Away goals conceded",
+        "Away goals scored",
+        "Away wins",
+        "Home overall form (5)",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (5/6 No Losses)",
+        "Home goals scored": "PASS (12 GF)",
+        "Home goals conceded": "FAIL (6)",
+        "Home wins": "PASS (4/6 Wins)",
+        "Home recent form": "FAIL (1/2)",
+        "Away losses": "PASS (5/6 Losses)",
+        "Away goals conceded": "PASS (12 GA)",
+        "Away goals scored": "PASS (2 GF)",
+        "Away wins": "PASS (0/6 Wins)",
+        "Home overall form (5)": "PASS (2W-1L in 5)",
+        "Away overall form (5)": "PASS (0W-5L in 5)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.608,
+        "away_strength": 0.175,
+        "home_win_prob": 85.0,
+        "confidence": "HIGH"
+      },
+      "kelly": 5.03
+    },
+    {
+      "match": {
+        "league": "Argentina Primera Nacional",
+        "home": "Godoy Cruz",
+        "away": "Defensores de Belgrano",
+        "home_team_id": "7650",
+        "away_team_id": "7459",
+        "date": "2026-07-12",
+        "status": "Scheduled"
+      },
+      "score": 9,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals scored",
+        "Away wins",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (6/6 No Losses)",
+        "Home goals scored": "PASS (12 GF)",
+        "Home goals conceded": "PASS (4 GA)",
+        "Home wins": "PASS (4/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (4/6 Losses)",
+        "Away goals conceded": "FAIL (8)",
+        "Away goals scored": "PASS (4 GF)",
+        "Away wins": "PASS (1/6 Wins)",
+        "Home overall form (5)": "FAIL (1W-4L in 5)",
+        "Away overall form (5)": "PASS (2W-2L in 5)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.608,
+        "away_strength": 0.283,
+        "home_win_prob": 78.6,
+        "confidence": "HIGH"
+      },
+      "kelly": 4.38
+    }
+  ]
+}
