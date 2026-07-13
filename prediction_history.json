@@ -272,8 +272,11 @@
       "home_team": "LDU Quito",
       "away_team": "Libertad Ecu",
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-09T04:55:21.318636"
+      "result": "loss",
+      "recorded_at": "2026-07-09T04:55:21.318636",
+      "updated_at": "2026-07-13T04:24:13.413623",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-12",
@@ -282,8 +285,11 @@
       "home_team": "Gimnasia de Jujuy",
       "away_team": "Chacarita",
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-09T04:55:21.319243"
+      "result": "loss",
+      "recorded_at": "2026-07-09T04:55:21.319243",
+      "updated_at": "2026-07-13T04:24:13.414341",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-12",
@@ -292,8 +298,21 @@
       "home_team": "Godoy Cruz",
       "away_team": "Defensores de Belgrano",
       "confidence": "close",
+      "result": "win",
+      "recorded_at": "2026-07-09T04:55:21.319777",
+      "updated_at": "2026-07-13T04:24:13.415150",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
+    },
+    {
+      "date": "2026-07-16",
+      "type": "home_win",
+      "league": "Brazilian Serie A",
+      "home_team": "Vitoria",
+      "away_team": "Vasco",
+      "confidence": "close",
       "result": "pending",
-      "recorded_at": "2026-07-09T04:55:21.319777"
+      "recorded_at": "2026-07-13T04:44:37.162316"
     }
   ],
   "over_under": [
@@ -1080,8 +1099,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-09T04:51:14.416444"
+      "result": "win",
+      "recorded_at": "2026-07-09T04:51:14.416444",
+      "updated_at": "2026-07-13T04:24:13.415868",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-12",
@@ -1092,8 +1114,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-09T04:51:14.416947"
+      "result": "win",
+      "recorded_at": "2026-07-09T04:51:14.416947",
+      "updated_at": "2026-07-13T04:24:13.416690",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-12",
@@ -1104,8 +1129,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-09T04:51:14.417356"
+      "result": "loss",
+      "recorded_at": "2026-07-09T04:51:14.417356",
+      "updated_at": "2026-07-13T04:24:13.417456",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-12",
@@ -1116,8 +1144,23 @@
       "prediction": "under",
       "prob": null,
       "confidence": "close",
+      "result": "loss",
+      "recorded_at": "2026-07-09T04:51:14.417812",
+      "updated_at": "2026-07-13T04:24:13.418350",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
+    },
+    {
+      "date": "2026-07-16",
+      "type": "over_under",
+      "league": "Brazilian Serie A",
+      "home_team": "Botafogo",
+      "away_team": "Santos",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
       "result": "pending",
-      "recorded_at": "2026-07-09T04:51:14.417812"
+      "recorded_at": "2026-07-13T04:41:45.090479"
     }
   ]
 }
