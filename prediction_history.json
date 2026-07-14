@@ -313,6 +313,16 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-13T04:44:37.162316"
+    },
+    {
+      "date": "2026-07-17",
+      "type": "home_win",
+      "league": "MLS",
+      "home_team": "St. Louis City SC",
+      "away_team": "Kansas City",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-14T04:03:27.502562"
     }
   ],
   "over_under": [
@@ -1161,6 +1171,90 @@
       "confidence": "qualified",
       "result": "pending",
       "recorded_at": "2026-07-13T04:41:45.090479"
+    },
+    {
+      "date": "2026-07-17",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "St. Louis City SC",
+      "away_team": "Kansas City",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-14T03:59:37.016751"
+    },
+    {
+      "date": "2026-07-17",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Chicago",
+      "away_team": "Vancouver W",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-14T03:59:37.017265"
+    },
+    {
+      "date": "2026-07-17",
+      "type": "over_under",
+      "league": "Mexican Primera Apertura",
+      "home_team": "Cajamarca",
+      "away_team": "Juan Pablo II College",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-14T03:59:37.017765"
+    },
+    {
+      "date": "2026-07-17",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Albion FC",
+      "away_team": "Juventud de Las Piedras",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-14T03:59:37.018228"
+    },
+    {
+      "date": "2026-07-17",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Almirante Brown",
+      "away_team": "Estudiantes Caseros",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-14T03:59:37.018683"
+    },
+    {
+      "date": "2026-07-17",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Deportivo Maipu",
+      "away_team": "San Martin de Tucuman",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-14T03:59:37.019180"
+    },
+    {
+      "date": "2026-07-17",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Nueva Chicago",
+      "away_team": "Agropecuario",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-14T03:59:37.019670"
     }
   ]
 }
