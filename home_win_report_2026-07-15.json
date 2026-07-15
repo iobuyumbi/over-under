@@ -1,0 +1,238 @@
+{
+  "metadata": {
+    "scanned_window": [
+      "2026-07-15",
+      "2026-07-16",
+      "2026-07-17",
+      "2026-07-18"
+    ],
+    "bankroll": 1000.0,
+    "odds": 2.8,
+    "max_exposure": 0.25,
+    "generated_at": "2026-07-15T04:08:27.943510"
+  },
+  "perfect": [],
+  "qualified": [],
+  "close_calls": [
+    {
+      "match": {
+        "league": "Brazilian Serie A",
+        "home": "Vitoria",
+        "away": "Vasco",
+        "home_team_id": "4004",
+        "away_team_id": "1126",
+        "date": "2026-07-16",
+        "status": "Scheduled"
+      },
+      "score": 9,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals conceded",
+        "Away wins",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (6/6 No Losses)",
+        "Home goals scored": "PASS (11 GF)",
+        "Home goals conceded": "PASS (1 GA)",
+        "Home wins": "PASS (5/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (2/6 Losses)",
+        "Away goals conceded": "PASS (12 GA)",
+        "Away goals scored": "FAIL (8)",
+        "Away wins": "PASS (0/6 Wins)",
+        "Home overall form (5)": "FAIL (2W-2L in 5)",
+        "Away overall form (5)": "PASS (1W-3L in 5)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.717,
+        "away_strength": 0.175,
+        "home_win_prob": 89.7,
+        "confidence": "HIGH"
+      },
+      "kelly": 7.44
+    },
+    {
+      "match": {
+        "league": "MLS",
+        "home": "St. Louis City SC",
+        "away": "Kansas City",
+        "home_team_id": "2371",
+        "away_team_id": "2952",
+        "date": "2026-07-17",
+        "status": "Scheduled"
+      },
+      "score": 9,
+      "passed": [
+        "Home goals scored",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals conceded",
+        "Away goals scored",
+        "Away wins",
+        "Home overall form (5)",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "FAIL (4/6)",
+        "Home goals scored": "PASS (11 GF)",
+        "Home goals conceded": "FAIL (7)",
+        "Home wins": "PASS (3/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (4/6 Losses)",
+        "Away goals conceded": "PASS (19 GA)",
+        "Away goals scored": "PASS (5 GF)",
+        "Away wins": "PASS (2/6 Wins)",
+        "Home overall form (5)": "PASS (3W-1L in 5)",
+        "Away overall form (5)": "PASS (2W-2L in 5)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.5,
+        "away_strength": 0.392,
+        "home_win_prob": 60.6,
+        "confidence": "MEDIUM"
+      },
+      "kelly": 3.43
+    },
+    {
+      "match": {
+        "league": "Norwegian Tippeligaen",
+        "home": "Molde",
+        "away": "Brann",
+        "home_team_id": "1679",
+        "away_team_id": "1003",
+        "date": "2026-07-18",
+        "status": "Scheduled"
+      },
+      "score": 9,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals conceded",
+        "Away wins",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (5/6 No Losses)",
+        "Home goals scored": "PASS (14 GF)",
+        "Home goals conceded": "PASS (4 GA)",
+        "Home wins": "PASS (5/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (3/6 Losses)",
+        "Away goals conceded": "PASS (10 GA)",
+        "Away goals scored": "FAIL (15)",
+        "Away wins": "PASS (2/6 Wins)",
+        "Home overall form (5)": "FAIL (2W-2L in 5)",
+        "Away overall form (5)": "PASS (2W-3L in 5)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.717,
+        "away_strength": 0.392,
+        "home_win_prob": 78.6,
+        "confidence": "HIGH"
+      },
+      "kelly": 5.91
+    },
+    {
+      "match": {
+        "league": "MLS",
+        "home": "Nashville MLS",
+        "away": "Atlanta U",
+        "home_team_id": "7081",
+        "away_team_id": "6428",
+        "date": "2026-07-18",
+        "status": "Scheduled"
+      },
+      "score": 9,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals scored",
+        "Away wins",
+        "Home overall form (5)",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (5/6 No Losses)",
+        "Home goals scored": "PASS (11 GF)",
+        "Home goals conceded": "FAIL (8)",
+        "Home wins": "PASS (3/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (4/6 Losses)",
+        "Away goals conceded": "FAIL (9)",
+        "Away goals scored": "PASS (3 GF)",
+        "Away wins": "PASS (1/6 Wins)",
+        "Home overall form (5)": "PASS (3W-1L in 5)",
+        "Away overall form (5)": "PASS (2W-2L in 5)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.5,
+        "away_strength": 0.283,
+        "home_win_prob": 70.4,
+        "confidence": "HIGH"
+      },
+      "kelly": 4.78
+    },
+    {
+      "match": {
+        "league": "Korean K-League 1",
+        "home": "Gangwon",
+        "away": "Gimcheon Sangmu",
+        "home_team_id": "7478",
+        "away_team_id": "7535",
+        "date": "2026-07-18",
+        "status": "Scheduled"
+      },
+      "score": 9,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away wins",
+        "Home overall form (5)",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (5/6 No Losses)",
+        "Home goals scored": "PASS (10 GF)",
+        "Home goals conceded": "PASS (4 GA)",
+        "Home wins": "PASS (3/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (2/6 Losses)",
+        "Away goals conceded": "FAIL (8)",
+        "Away goals scored": "FAIL (9)",
+        "Away wins": "PASS (2/6 Wins)",
+        "Home overall form (5)": "PASS (3W-0L in 5)",
+        "Away overall form (5)": "PASS (0W-2L in 5)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.5,
+        "away_strength": 0.392,
+        "home_win_prob": 60.6,
+        "confidence": "MEDIUM"
+      },
+      "kelly": 3.43
+    }
+  ]
+}

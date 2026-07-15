@@ -323,6 +323,36 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-14T04:03:27.502562"
+    },
+    {
+      "date": "2026-07-18",
+      "type": "home_win",
+      "league": "Norwegian Tippeligaen",
+      "home_team": "Molde",
+      "away_team": "Brann",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-15T04:08:27.944035"
+    },
+    {
+      "date": "2026-07-18",
+      "type": "home_win",
+      "league": "MLS",
+      "home_team": "Nashville MLS",
+      "away_team": "Atlanta U",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-15T04:08:27.944345"
+    },
+    {
+      "date": "2026-07-18",
+      "type": "home_win",
+      "league": "Korean K-League 1",
+      "home_team": "Gangwon",
+      "away_team": "Gimcheon Sangmu",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-15T04:08:27.944902"
     }
   ],
   "over_under": [
@@ -1255,6 +1285,66 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-14T03:59:37.019670"
+    },
+    {
+      "date": "2026-07-18",
+      "type": "over_under",
+      "league": "Swedish Superettan",
+      "home_team": "Ostersunds FK",
+      "away_team": "Landskrona BoIS",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-15T04:03:38.467528"
+    },
+    {
+      "date": "2026-07-18",
+      "type": "over_under",
+      "league": "Norwegian Tippeligaen",
+      "home_team": "Molde",
+      "away_team": "Brann",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-15T04:03:38.468299"
+    },
+    {
+      "date": "2026-07-18",
+      "type": "over_under",
+      "league": "Mexican Primera Apertura",
+      "home_team": "FC Juarez",
+      "away_team": "Puebla",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-15T04:03:38.468786"
+    },
+    {
+      "date": "2026-07-18",
+      "type": "over_under",
+      "league": "Korean K-League 2",
+      "home_team": "Suwon FC",
+      "away_team": "Seoul E-Land",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-15T04:03:38.469314"
+    },
+    {
+      "date": "2026-07-18",
+      "type": "over_under",
+      "league": "Swedish Superettan",
+      "home_team": "Osters",
+      "away_team": "IK Brage",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-15T04:03:38.469812"
     }
   ]
 }
