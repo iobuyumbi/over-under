@@ -353,6 +353,16 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-15T04:08:27.944902"
+    },
+    {
+      "date": "2026-07-19",
+      "type": "home_win",
+      "league": "Korean K-League 2",
+      "home_team": "Suwon Samsung",
+      "away_team": "Paju Frontier",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-16T04:12:24.141138"
     }
   ],
   "over_under": [
@@ -1345,6 +1355,30 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-15T04:03:38.469812"
+    },
+    {
+      "date": "2026-07-19",
+      "type": "over_under",
+      "league": "Korean K-League 2",
+      "home_team": "Cheongju",
+      "away_team": "Cheonan City",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-16T04:07:09.634747"
+    },
+    {
+      "date": "2026-07-19",
+      "type": "over_under",
+      "league": "Swedish Superettan",
+      "home_team": "Cerro",
+      "away_team": "Racing Club M",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-16T04:07:09.635384"
     }
   ]
 }
