@@ -311,8 +311,11 @@
       "home_team": "Vitoria",
       "away_team": "Vasco",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-13T04:44:37.162316"
+      "result": "win",
+      "recorded_at": "2026-07-13T04:44:37.162316",
+      "updated_at": "2026-07-17T03:54:41.140516",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-17",
@@ -363,6 +366,36 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-16T04:12:24.141138"
+    },
+    {
+      "date": "2026-07-20",
+      "type": "home_win",
+      "league": "Bulgarian League",
+      "home_team": "Alianza Lima",
+      "away_team": "Sport Huancayo",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-17T04:11:28.909772"
+    },
+    {
+      "date": "2026-07-20",
+      "type": "home_win",
+      "league": "Finland League",
+      "home_team": "TPS Turku",
+      "away_team": "Ilves Tampere",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-17T04:11:28.910035"
+    },
+    {
+      "date": "2026-07-20",
+      "type": "home_win",
+      "league": "Ecuador Liga Pro",
+      "home_team": "Independiente d V",
+      "away_team": "Emelec",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-17T04:11:28.910637"
     }
   ],
   "over_under": [
@@ -1209,8 +1242,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-13T04:41:45.090479"
+      "result": "win",
+      "recorded_at": "2026-07-13T04:41:45.090479",
+      "updated_at": "2026-07-17T03:54:41.141218",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-17",
@@ -1379,6 +1415,54 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-16T04:07:09.635384"
+    },
+    {
+      "date": "2026-07-20",
+      "type": "over_under",
+      "league": "Bulgarian League",
+      "home_team": "Alianza Lima",
+      "away_team": "Sport Huancayo",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-17T04:06:37.151496"
+    },
+    {
+      "date": "2026-07-20",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "San Martin de San Juan",
+      "away_team": "Tristan Suarez",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-17T04:06:37.152125"
+    },
+    {
+      "date": "2026-07-20",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Chacarita",
+      "away_team": "Guemes",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-17T04:06:37.152685"
+    },
+    {
+      "date": "2026-07-20",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Acassuso",
+      "away_team": "San Telmo",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-17T04:06:37.153247"
     }
   ]
 }
