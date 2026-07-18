@@ -324,8 +324,11 @@
       "home_team": "St. Louis City SC",
       "away_team": "Kansas City",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-14T04:03:27.502562"
+      "result": "win",
+      "recorded_at": "2026-07-14T04:03:27.502562",
+      "updated_at": "2026-07-18T03:48:19.681493",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-18",
@@ -1257,8 +1260,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-14T03:59:37.016751"
+      "result": "win",
+      "recorded_at": "2026-07-14T03:59:37.016751",
+      "updated_at": "2026-07-18T03:48:19.681944",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-17",
@@ -1281,8 +1287,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-14T03:59:37.017765"
+      "result": "win",
+      "recorded_at": "2026-07-14T03:59:37.017765",
+      "updated_at": "2026-07-18T03:48:19.683410",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-17",
@@ -1293,8 +1302,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-14T03:59:37.018228"
+      "result": "loss",
+      "recorded_at": "2026-07-14T03:59:37.018228",
+      "updated_at": "2026-07-18T03:48:19.684014",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-17",
@@ -1305,8 +1317,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-14T03:59:37.018683"
+      "result": "win",
+      "recorded_at": "2026-07-14T03:59:37.018683",
+      "updated_at": "2026-07-18T03:48:19.684525",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-17",
@@ -1317,8 +1332,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-14T03:59:37.019180"
+      "result": "win",
+      "recorded_at": "2026-07-14T03:59:37.019180",
+      "updated_at": "2026-07-18T03:48:19.685079",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-17",
@@ -1329,8 +1347,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-14T03:59:37.019670"
+      "result": "win",
+      "recorded_at": "2026-07-14T03:59:37.019670",
+      "updated_at": "2026-07-18T03:48:19.685628",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-18",
@@ -1463,6 +1484,18 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-17T04:06:37.153247"
+    },
+    {
+      "date": "2026-07-21",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Almagro",
+      "away_team": "Gimnasia y Tiro",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-18T04:00:34.146738"
     }
   ]
 }
