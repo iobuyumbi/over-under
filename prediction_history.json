@@ -337,8 +337,11 @@
       "home_team": "Molde",
       "away_team": "Brann",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-15T04:08:27.944035"
+      "result": "loss",
+      "recorded_at": "2026-07-15T04:08:27.944035",
+      "updated_at": "2026-07-19T04:16:37.000667",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-18",
@@ -347,8 +350,11 @@
       "home_team": "Nashville MLS",
       "away_team": "Atlanta U",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-15T04:08:27.944345"
+      "result": "win",
+      "recorded_at": "2026-07-15T04:08:27.944345",
+      "updated_at": "2026-07-19T04:16:37.001571",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-18",
@@ -357,8 +363,11 @@
       "home_team": "Gangwon",
       "away_team": "Gimcheon Sangmu",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-15T04:08:27.944902"
+      "result": "win",
+      "recorded_at": "2026-07-15T04:08:27.944902",
+      "updated_at": "2026-07-19T04:16:37.002592",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-19",
@@ -399,6 +408,16 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-17T04:11:28.910637"
+    },
+    {
+      "date": "2026-07-22",
+      "type": "home_win",
+      "league": "Ecuador Liga Pro",
+      "home_team": "Independiente d V",
+      "away_team": "Tecnico Universitario",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-19T04:30:31.307116"
     }
   ],
   "over_under": [
@@ -1362,8 +1381,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-15T04:03:38.467528"
+      "result": "loss",
+      "recorded_at": "2026-07-15T04:03:38.467528",
+      "updated_at": "2026-07-19T04:16:37.003811",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-18",
@@ -1374,8 +1396,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-15T04:03:38.468299"
+      "result": "win",
+      "recorded_at": "2026-07-15T04:03:38.468299",
+      "updated_at": "2026-07-19T04:16:37.004367",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-18",
@@ -1386,8 +1411,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-15T04:03:38.468786"
+      "result": "loss",
+      "recorded_at": "2026-07-15T04:03:38.468786",
+      "updated_at": "2026-07-19T04:16:37.005311",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-18",
@@ -1398,8 +1426,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-15T04:03:38.469314"
+      "result": "win",
+      "recorded_at": "2026-07-15T04:03:38.469314",
+      "updated_at": "2026-07-19T04:16:37.006340",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-18",
@@ -1410,8 +1441,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-15T04:03:38.469812"
+      "result": "win",
+      "recorded_at": "2026-07-15T04:03:38.469812",
+      "updated_at": "2026-07-19T04:16:37.007483",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-19",
