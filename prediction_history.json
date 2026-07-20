@@ -376,8 +376,11 @@
       "home_team": "Suwon Samsung",
       "away_team": "Paju Frontier",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-16T04:12:24.141138"
+      "result": "loss",
+      "recorded_at": "2026-07-16T04:12:24.141138",
+      "updated_at": "2026-07-20T04:29:53.115754",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-20",
@@ -418,6 +421,26 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-19T04:30:31.307116"
+    },
+    {
+      "date": "2026-07-22",
+      "type": "home_win",
+      "league": "Ecuador Liga Pro",
+      "home_team": "Independiente d V",
+      "away_team": "Tecnico Universitario",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-20T04:46:56.412576"
+    },
+    {
+      "date": "2026-07-23",
+      "type": "home_win",
+      "league": "Brazilian Serie A",
+      "home_team": "Botafogo",
+      "away_team": "Vitoria",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-20T04:46:56.412831"
     }
   ],
   "over_under": [
@@ -1456,8 +1479,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-16T04:07:09.634747"
+      "result": "loss",
+      "recorded_at": "2026-07-16T04:07:09.634747",
+      "updated_at": "2026-07-20T04:29:53.116438",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-19",
@@ -1530,6 +1556,126 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-18T04:00:34.146738"
+    },
+    {
+      "date": "2026-07-23",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Inter Miami CF",
+      "away_team": "Chicago",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-20T04:41:36.559660"
+    },
+    {
+      "date": "2026-07-23",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Kansas City",
+      "away_team": "Minnesota U",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-20T04:41:36.560285"
+    },
+    {
+      "date": "2026-07-23",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Portland Timb.",
+      "away_team": "Dallas",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-20T04:41:36.560866"
+    },
+    {
+      "date": "2026-07-23",
+      "type": "over_under",
+      "league": "Brazilian Serie A",
+      "home_team": "Botafogo",
+      "away_team": "Vitoria",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-20T04:41:36.561441"
+    },
+    {
+      "date": "2026-07-23",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Cincinnati",
+      "away_team": "Vancouver W",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-20T04:41:36.561973"
+    },
+    {
+      "date": "2026-07-23",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Nashville MLS",
+      "away_team": "Montreal Imp",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-20T04:41:36.562516"
+    },
+    {
+      "date": "2026-07-23",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "San Jose",
+      "away_team": "Orlando City",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-20T04:41:36.563086"
+    },
+    {
+      "date": "2026-07-23",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Colorado",
+      "away_team": "San Diego",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-20T04:41:36.563645"
+    },
+    {
+      "date": "2026-07-23",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Los Angeles FC",
+      "away_team": "Real Salt Lake",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-20T04:41:36.564164"
+    },
+    {
+      "date": "2026-07-23",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Austin FC",
+      "away_team": "Seattle",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-20T04:41:36.564754"
     }
   ]
 }
