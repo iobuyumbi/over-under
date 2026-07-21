@@ -1,0 +1,108 @@
+{
+  "metadata": {
+    "scanned_window": [
+      "2026-07-21",
+      "2026-07-22",
+      "2026-07-23",
+      "2026-07-24"
+    ],
+    "bankroll": 1000.0,
+    "odds": 2.8,
+    "max_exposure": 0.25,
+    "generated_at": "2026-07-21T04:27:42.320361"
+  },
+  "perfect": [],
+  "qualified": [
+    {
+      "match": {
+        "league": "Ecuador Liga Pro",
+        "home": "Independiente d V",
+        "away": "Tecnico Universitario",
+        "home_team_id": "5124",
+        "away_team_id": "7518",
+        "date": "2026-07-22",
+        "status": "Scheduled"
+      },
+      "score": 10,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals scored",
+        "Away wins",
+        "Home overall form (5)",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (5/6 No Losses)",
+        "Home goals scored": "PASS (18 GF)",
+        "Home goals conceded": "PASS (5 GA)",
+        "Home wins": "PASS (5/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (5/6 Losses)",
+        "Away goals conceded": "FAIL (8)",
+        "Away goals scored": "PASS (4 GF)",
+        "Away wins": "PASS (1/6 Wins)",
+        "Home overall form (5)": "PASS (5W-0L in 5)",
+        "Away overall form (5)": "PASS (2W-3L in 5)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.717,
+        "away_strength": 0.283,
+        "home_win_prob": 85.0,
+        "confidence": "HIGH"
+      },
+      "kelly": 13.37
+    },
+    {
+      "match": {
+        "league": "Brazilian Serie A",
+        "home": "Botafogo",
+        "away": "Vitoria",
+        "home_team_id": "2255",
+        "away_team_id": "4004",
+        "date": "2026-07-23",
+        "status": "Scheduled"
+      },
+      "score": 10,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals conceded",
+        "Away goals scored",
+        "Away wins",
+        "Home overall form (5)",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (5/6 No Losses)",
+        "Home goals scored": "PASS (13 GF)",
+        "Home goals conceded": "FAIL (10)",
+        "Home wins": "PASS (3/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (4/6 Losses)",
+        "Away goals conceded": "PASS (14 GA)",
+        "Away goals scored": "PASS (5 GF)",
+        "Away wins": "PASS (0/6 Wins)",
+        "Home overall form (5)": "PASS (2W-1L in 5)",
+        "Away overall form (5)": "PASS (2W-2L in 5)"
+      },
+      "is_perfect": false,
+      "model": {
+        "home_strength": 0.5,
+        "away_strength": 0.175,
+        "home_win_prob": 78.6,
+        "confidence": "HIGH"
+      },
+      "kelly": 11.63
+    }
+  ],
+  "close_calls": []
+}
