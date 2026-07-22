@@ -450,6 +450,56 @@
       "confidence": "qualified",
       "result": "pending",
       "recorded_at": "2026-07-20T04:46:56.412831"
+    },
+    {
+      "date": "2026-07-25",
+      "type": "home_win",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Deportivo Recoleta",
+      "away_team": "Sp. San Lorenzo",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-22T04:28:11.586986"
+    },
+    {
+      "date": "2026-07-25",
+      "type": "home_win",
+      "league": "Chile Primera",
+      "home_team": "Colo-Colo",
+      "away_team": "Deportes Limache",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-22T04:28:11.587531"
+    },
+    {
+      "date": "2026-07-25",
+      "type": "home_win",
+      "league": "Chile Primera",
+      "home_team": "Coquimbo Unido",
+      "away_team": "Universidad de Concepcion",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-22T04:28:11.587690"
+    },
+    {
+      "date": "2026-07-25",
+      "type": "home_win",
+      "league": "Mexican Primera Apertura",
+      "home_team": "Tijuana",
+      "away_team": "Leon",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-22T04:28:11.626368"
+    },
+    {
+      "date": "2026-07-25",
+      "type": "home_win",
+      "league": "Brazilian Serie A",
+      "home_team": "Paranaense",
+      "away_team": "Internacional",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-22T04:28:11.626824"
     }
   ],
   "over_under": [
@@ -1712,6 +1762,78 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-21T04:22:06.161965"
+    },
+    {
+      "date": "2026-07-25",
+      "type": "over_under",
+      "league": "Korean K-League 2",
+      "home_team": "Daegu",
+      "away_team": "Suwon FC",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-22T04:21:03.386595"
+    },
+    {
+      "date": "2026-07-25",
+      "type": "over_under",
+      "league": "Chile Primera",
+      "home_team": "Colo-Colo",
+      "away_team": "Deportes Limache",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-22T04:21:03.387158"
+    },
+    {
+      "date": "2026-07-25",
+      "type": "over_under",
+      "league": "Chile Primera",
+      "home_team": "Huachipato",
+      "away_team": "Cobresal",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-22T04:21:03.422856"
+    },
+    {
+      "date": "2026-07-25",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Newell's OB",
+      "away_team": "Talleres de Cordoba",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-22T04:21:03.423272"
+    },
+    {
+      "date": "2026-07-25",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "San Martin de Tucuman",
+      "away_team": "Temperley",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-22T04:21:03.423638"
+    },
+    {
+      "date": "2026-07-25",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Tristan Suarez",
+      "away_team": "Chacarita",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-22T04:21:03.424014"
     }
   ]
 }
