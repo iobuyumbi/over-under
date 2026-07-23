@@ -428,8 +428,11 @@
       "home_team": "Independiente d V",
       "away_team": "Tecnico Universitario",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-19T04:30:31.307116"
+      "result": "win",
+      "recorded_at": "2026-07-19T04:30:31.307116",
+      "updated_at": "2026-07-23T04:08:59.438741",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-22",
@@ -438,8 +441,11 @@
       "home_team": "Independiente d V",
       "away_team": "Tecnico Universitario",
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-20T04:46:56.412576"
+      "result": "win",
+      "recorded_at": "2026-07-20T04:46:56.412576",
+      "updated_at": "2026-07-23T04:08:59.439216",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-23",
@@ -500,6 +506,86 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-22T04:28:11.626824"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "home_win",
+      "league": "Swedish Allsvenskan",
+      "home_team": "GAIS",
+      "away_team": "Halmstads",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:37:55.841544"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "home_win",
+      "league": "Brazilian Serie A",
+      "home_team": "Flamengo",
+      "away_team": "Sao Paulo",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:37:55.842319"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "home_win",
+      "league": "Ecuador Liga Pro",
+      "home_team": "Melgar",
+      "away_team": "Sporting Cristal",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:37:55.843026"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "home_win",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Gimnasia de Jujuy",
+      "away_team": "Guemes",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:37:55.843276"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "home_win",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Godoy Cruz",
+      "away_team": "Central Norte",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:37:55.843897"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "home_win",
+      "league": "Norwegian Tippeligaen",
+      "home_team": "Sarpsborg",
+      "away_team": "HamKam",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:37:55.844593"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "home_win",
+      "league": "Mexican Primera Apertura",
+      "home_team": "Tigres",
+      "away_team": "Atletico San Luis",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:37:55.845249"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "home_win",
+      "league": "Mexican Primera Apertura",
+      "home_team": "Millonarios",
+      "away_team": "Atletico Bucaramanga",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:37:55.845496"
     }
   ],
   "over_under": [
@@ -1834,6 +1920,234 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-22T04:21:03.424014"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "Swedish Allsvenskan",
+      "home_team": "IK Sirius",
+      "away_team": "IFK Goth'burg",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.822508"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "New York City",
+      "away_team": "Chicago",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.823274"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "San Diego",
+      "away_team": "Dallas",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.823886"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Portland Timb.",
+      "away_team": "Real Salt Lake",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.824511"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "Ecuador Liga Pro",
+      "home_team": "Melgar",
+      "away_team": "Sporting Cristal",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.825115"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "Swedish Superettan",
+      "home_team": "Sundsvall",
+      "away_team": "Falkenbergs FF",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.825696"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "San Jose",
+      "away_team": "LA Galaxy",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.826406"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Los Angeles FC",
+      "away_team": "Kansas City",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.826983"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "Mexican Primera Apertura",
+      "home_team": "Tigres",
+      "away_team": "Atletico San Luis",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.827597"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "Chile Primera",
+      "home_team": "Univ Catolica",
+      "away_team": "La Serena",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.828219"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "Chile Primera",
+      "home_team": "Nublense",
+      "away_team": "Palestino",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.828800"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Olimpia",
+      "away_team": "Libertad",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.829402"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "Ecuador Liga Pro",
+      "home_team": "Lanus",
+      "away_team": "San Lorenzo",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.830047"
+    },
+    {
+      "date": "2026-07-25",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Cerro",
+      "away_team": "Racing Club M",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.830656"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "Ecuador Liga Pro",
+      "home_team": "Deportivo Riestra",
+      "away_team": "Boca Juniors",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.831289"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "All Boys",
+      "away_team": "Defensores de Belgrano",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.831879"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Quilmes",
+      "away_team": "Colegiales",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.832501"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Ferrocarril Midland",
+      "away_team": "Patronato",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.833175"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Racing Cordoba",
+      "away_team": "San Telmo",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-23T04:29:08.833784"
     }
   ]
 }
