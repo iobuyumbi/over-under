@@ -454,8 +454,11 @@
       "home_team": "Botafogo",
       "away_team": "Vitoria",
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-20T04:46:56.412831"
+      "result": "loss",
+      "recorded_at": "2026-07-20T04:46:56.412831",
+      "updated_at": "2026-07-24T04:00:51.541124",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-25",
@@ -586,6 +589,26 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-23T04:37:55.845496"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "home_win",
+      "league": "Swedish Allsvenskan",
+      "home_team": "GAIS",
+      "away_team": "Halmstads",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-24T04:30:05.134033"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "home_win",
+      "league": "Finland League",
+      "home_team": "HJK Helsinki",
+      "away_team": "TPS Turku",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-24T04:30:05.134494"
     }
   ],
   "over_under": [
@@ -1714,8 +1737,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-20T04:41:36.559660"
+      "result": "win",
+      "recorded_at": "2026-07-20T04:41:36.559660",
+      "updated_at": "2026-07-24T04:00:51.542613",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-23",
@@ -1726,8 +1752,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-20T04:41:36.560285"
+      "result": "win",
+      "recorded_at": "2026-07-20T04:41:36.560285",
+      "updated_at": "2026-07-24T04:00:51.544359",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-23",
@@ -1738,8 +1767,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-20T04:41:36.560866"
+      "result": "win",
+      "recorded_at": "2026-07-20T04:41:36.560866",
+      "updated_at": "2026-07-24T04:00:51.546110",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-23",
@@ -1750,8 +1782,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-20T04:41:36.561441"
+      "result": "loss",
+      "recorded_at": "2026-07-20T04:41:36.561441",
+      "updated_at": "2026-07-24T04:00:51.547458",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-23",
@@ -1762,8 +1797,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-20T04:41:36.561973"
+      "result": "win",
+      "recorded_at": "2026-07-20T04:41:36.561973",
+      "updated_at": "2026-07-24T04:00:51.548522",
+      "final_score": "4-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-23",
@@ -1774,8 +1812,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-20T04:41:36.562516"
+      "result": "loss",
+      "recorded_at": "2026-07-20T04:41:36.562516",
+      "updated_at": "2026-07-24T04:00:51.549677",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-23",
@@ -1786,8 +1827,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-20T04:41:36.563086"
+      "result": "win",
+      "recorded_at": "2026-07-20T04:41:36.563086",
+      "updated_at": "2026-07-24T04:00:51.550837",
+      "final_score": "0-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-23",
@@ -1798,8 +1842,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-20T04:41:36.563645"
+      "result": "loss",
+      "recorded_at": "2026-07-20T04:41:36.563645",
+      "updated_at": "2026-07-24T04:00:51.552758",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-23",
@@ -1810,8 +1857,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-20T04:41:36.564164"
+      "result": "win",
+      "recorded_at": "2026-07-20T04:41:36.564164",
+      "updated_at": "2026-07-24T04:00:51.554901",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-23",
@@ -1822,8 +1872,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-20T04:41:36.564754"
+      "result": "loss",
+      "recorded_at": "2026-07-20T04:41:36.564754",
+      "updated_at": "2026-07-24T04:00:51.556493",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-24",
@@ -2148,6 +2201,90 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-23T04:29:08.833784"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "San Diego",
+      "away_team": "Dallas",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-24T04:21:48.624113"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "San Jose",
+      "away_team": "LA Galaxy",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-24T04:21:48.624530"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Los Angeles FC",
+      "away_team": "Kansas City",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-24T04:21:48.624785"
+    },
+    {
+      "date": "2026-07-27",
+      "type": "over_under",
+      "league": "Swedish Superettan",
+      "home_team": "Osters",
+      "away_team": "Varbergs Bois",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-24T04:21:48.625037"
+    },
+    {
+      "date": "2026-07-27",
+      "type": "over_under",
+      "league": "Swedish Allsvenskan",
+      "home_team": "Hacken",
+      "away_team": "AIK Solna",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-24T04:21:48.625805"
+    },
+    {
+      "date": "2026-07-26",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Cerro",
+      "away_team": "Racing Club M",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-24T04:21:48.626541"
+    },
+    {
+      "date": "2026-07-27",
+      "type": "over_under",
+      "league": "Ecuador Liga Pro",
+      "home_team": "Guayaquil City",
+      "away_team": "Universidad Catolica",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-24T04:21:48.627184"
     }
   ]
 }
