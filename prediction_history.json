@@ -609,6 +609,16 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-24T04:30:05.134494"
+    },
+    {
+      "date": "2026-07-28",
+      "type": "home_win",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Atlanta",
+      "away_team": "Almagro",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-25T04:27:20.496736"
     }
   ],
   "over_under": [
@@ -1887,8 +1897,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-21T04:22:06.161251"
+      "result": "loss",
+      "recorded_at": "2026-07-21T04:22:06.161251",
+      "updated_at": "2026-07-25T03:56:54.027222",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-24",
@@ -1899,8 +1912,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-21T04:22:06.161965"
+      "result": "win",
+      "recorded_at": "2026-07-21T04:22:06.161965",
+      "updated_at": "2026-07-25T03:56:54.028416",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-25",
@@ -2285,6 +2301,18 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-24T04:21:48.627184"
+    },
+    {
+      "date": "2026-07-28",
+      "type": "over_under",
+      "league": "Swedish Superettan",
+      "home_team": "Rubio Nu",
+      "away_team": "Sportivo Ameliano",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-25T04:18:49.711851"
     }
   ]
 }
