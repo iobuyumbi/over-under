@@ -467,8 +467,11 @@
       "home_team": "Deportivo Recoleta",
       "away_team": "Sp. San Lorenzo",
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-22T04:28:11.586986"
+      "result": "loss",
+      "recorded_at": "2026-07-22T04:28:11.586986",
+      "updated_at": "2026-07-26T04:21:33.136778",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-25",
@@ -477,8 +480,11 @@
       "home_team": "Colo-Colo",
       "away_team": "Deportes Limache",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-22T04:28:11.587531"
+      "result": "win",
+      "recorded_at": "2026-07-22T04:28:11.587531",
+      "updated_at": "2026-07-26T04:21:33.138295",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-25",
@@ -497,8 +503,11 @@
       "home_team": "Tijuana",
       "away_team": "Leon",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-22T04:28:11.626368"
+      "result": "win",
+      "recorded_at": "2026-07-22T04:28:11.626368",
+      "updated_at": "2026-07-26T04:21:33.142253",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-25",
@@ -507,8 +516,11 @@
       "home_team": "Paranaense",
       "away_team": "Internacional",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-22T04:28:11.626824"
+      "result": "win",
+      "recorded_at": "2026-07-22T04:28:11.626824",
+      "updated_at": "2026-07-26T04:21:33.144192",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-26",
@@ -619,6 +631,26 @@
       "confidence": "qualified",
       "result": "pending",
       "recorded_at": "2026-07-25T04:27:20.496736"
+    },
+    {
+      "date": "2026-07-29",
+      "type": "home_win",
+      "league": "Brazilian Serie A",
+      "home_team": "Argentinos Jun",
+      "away_team": "Estudiantes de Rio Cuarto",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-26T04:43:58.824029"
+    },
+    {
+      "date": "2026-07-29",
+      "type": "home_win",
+      "league": "Brazilian Serie A",
+      "home_team": "Mirassol",
+      "away_team": "Remo",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-26T04:43:58.824864"
     }
   ],
   "over_under": [
@@ -1927,8 +1959,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-22T04:21:03.386595"
+      "result": "win",
+      "recorded_at": "2026-07-22T04:21:03.386595",
+      "updated_at": "2026-07-26T04:21:33.145775",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-25",
@@ -1939,8 +1974,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-22T04:21:03.387158"
+      "result": "win",
+      "recorded_at": "2026-07-22T04:21:03.387158",
+      "updated_at": "2026-07-26T04:21:33.147275",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-25",
@@ -1951,8 +1989,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-22T04:21:03.422856"
+      "result": "win",
+      "recorded_at": "2026-07-22T04:21:03.422856",
+      "updated_at": "2026-07-26T04:21:33.148819",
+      "final_score": "3-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-25",
@@ -1963,8 +2004,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-22T04:21:03.423272"
+      "result": "win",
+      "recorded_at": "2026-07-22T04:21:03.423272",
+      "updated_at": "2026-07-26T04:21:33.150314",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-25",
@@ -1975,8 +2019,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-22T04:21:03.423638"
+      "result": "loss",
+      "recorded_at": "2026-07-22T04:21:03.423638",
+      "updated_at": "2026-07-26T04:21:33.152368",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-25",
@@ -1987,8 +2034,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-22T04:21:03.424014"
+      "result": "win",
+      "recorded_at": "2026-07-22T04:21:03.424014",
+      "updated_at": "2026-07-26T04:21:33.154183",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-26",
@@ -2313,6 +2363,18 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-25T04:18:49.711851"
+    },
+    {
+      "date": "2026-07-29",
+      "type": "over_under",
+      "league": "Brazilian Serie A",
+      "home_team": "Sp Luqueno",
+      "away_team": "Sportivo Trinidense",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-26T04:37:51.506128"
     }
   ]
 }
