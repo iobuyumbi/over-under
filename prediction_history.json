@@ -681,6 +681,16 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-26T04:43:58.824864"
+    },
+    {
+      "date": "2026-07-31",
+      "type": "home_win",
+      "league": "Norwegian Tippeligaen",
+      "home_team": "Bodo Glimt",
+      "away_team": "Lillestrom",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-28T04:12:53.068510"
     }
   ],
   "over_under": [
@@ -2406,8 +2416,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-24T04:21:48.625037"
+      "result": "win",
+      "recorded_at": "2026-07-24T04:21:48.625037",
+      "updated_at": "2026-07-28T03:54:21.863039",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-27",
@@ -2418,8 +2431,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-24T04:21:48.625805"
+      "result": "loss",
+      "recorded_at": "2026-07-24T04:21:48.625805",
+      "updated_at": "2026-07-28T03:54:21.863345",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-26",
@@ -2445,8 +2461,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-24T04:21:48.627184"
+      "result": "win",
+      "recorded_at": "2026-07-24T04:21:48.627184",
+      "updated_at": "2026-07-28T03:54:21.863931",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-28",
@@ -2495,6 +2514,30 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-27T04:44:33.067594"
+    },
+    {
+      "date": "2026-07-31",
+      "type": "over_under",
+      "league": "Swedish Superettan",
+      "home_team": "Montevideo City Torque",
+      "away_team": "Montevideo W",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-28T04:08:05.866484"
+    },
+    {
+      "date": "2026-07-31",
+      "type": "over_under",
+      "league": "Belarus League",
+      "home_team": "Bate Borisov",
+      "away_team": "Neman Grodno",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-28T04:08:05.867332"
     }
   ]
 }
