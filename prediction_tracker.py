@@ -70,6 +70,16 @@ BLOCKED_REGIONS = (
             "kerry fc", "st patrick", "st patricks",
         ),
     },
+    {
+        "name": "Argentina Primera Nacional",
+        "league_keywords": (
+            "argentina primera nacional",
+            "primera nacional",
+            "argentina national b",
+            "nacional b",
+        ),
+        "team_keywords": (),
+    },
 )
 
 
