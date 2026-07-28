@@ -309,7 +309,64 @@ HW_TIER_SOLID_CUTOFF = 0.53
 HW_MIN_MODEL_PROB = 0.55
 HW_MIN_STRENGTH_GAP = 0.12
 
+_HW_HALFLIFE = 3.0
+
+_HW_WEAK_ROI_LEAGUE_KEYWORDS = (
+    "swedish allsvenskan",
+    "allsvenskan",
+    "belarus",
+    "k-league 1",
+    "k league 1",
+    "korean k-league 1",
+    "league of ireland",
+    "fai cup",
+    "mexican primera apertura",
+    "brazilian serie a",
+)
+_HW_WEAK_ROI_MULTIPLIER = 0.82
+
+_HW_REGRESSION_WIN_STREAK = 5
+_HW_REGRESSION_PENALTY = 0.08
+
 _HW_LEAGUE_BASELINE_CACHE = {}
+
+
+def _hw_is_weak_roi(league_name):
+    n = str(league_name or "").strip().lower()
+    return any(k in n for k in _HW_WEAK_ROI_LEAGUE_KEYWORDS)
+
+
+def _hw_weighted_win_rate(form, halflife=_HW_HALFLIFE):
+    """Exponential-decay weighted win rate.  form[0] is most recent."""
+    if not form:
+        return 0.5, 0.0
+    w = 0.0
+    w_wins = 0.0
+    for idx, m in enumerate(form):
+        wt = 0.5 ** (idx / halflife)
+        w += wt
+        if m.get("result") == "W":
+            w_wins += wt
+    if w <= 0:
+        return 0.5, 0.0
+    return w_wins / w, w
+
+
+def _hw_win_streak(form):
+    n = 0
+    for m in form or []:
+        if m.get("result") == "W":
+            n += 1
+        else:
+            break
+    return n
+
+
+def _hw_regression_penalty(home_form, away_form):
+    h_streak = _hw_win_streak(home_form or [])
+    if h_streak >= _HW_REGRESSION_WIN_STREAK:
+        return 1.0 - _HW_REGRESSION_PENALTY
+    return 1.0
 
 
 def _hw_load_league_baselines():
@@ -511,18 +568,17 @@ def apply_home_win_algorithm(home_data_6, away_data_6, home_overall_5=None, away
 def get_team_strength(form_data, is_home=True, league_name=None):
     """
     Shrinkage estimator for team strength based on win rate.
-    Blends observed win rate with per-league baseline to prevent overfitting.
-    Applies extra shrinkage when form data is thin.
+    Blends exponential-decay weighted win rate with per-league baselines.
+    Extra shrinkage on thin form data.
     """
     baseline = _hw_league_baseline(league_name or "") if is_home else (1.0 - _hw_league_baseline(league_name or ""))
 
-    if not form_data:
+    sample = (form_data or [])[:6]
+    if not sample:
         return round(baseline, 3)
 
-    sample = form_data[:6]
     n = len(sample)
-    wins = sum(1 for m in sample if m["result"] == "W")
-    win_rate = wins / n
+    win_rate, eff_weight = _hw_weighted_win_rate(sample)
 
     adaptive_shrinkage = SHRINKAGE_WEIGHT
     if n < HW_MIN_DATA_GAMES:
@@ -653,10 +709,16 @@ def process_single_match(match, target_date, default_odds=2.8):
         score = len(passed)
         gate_passes = hw_model_gate_passes(home_strength, away_strength, home_win_prob)
 
-        qualifies = score >= MAX_HOME_WIN_SCORE - 2 and gate_passes
+        weak_league = _hw_is_weak_roi(league_name)
+        min_score = MAX_HOME_WIN_SCORE - 1 if weak_league else MAX_HOME_WIN_SCORE - 2
+        qualifies = score >= min_score and gate_passes
+
+        league_mult = _HW_WEAK_ROI_MULTIPLIER if weak_league else 1.0
+        reg_mult = _hw_regression_penalty(home_form, away_form)
+        final_mult = data_mult * league_mult * reg_mult
 
         conf_score = hw_compute_confidence_score(
-            score, MAX_HOME_WIN_SCORE, home_win_prob, default_odds, data_mult
+            score, MAX_HOME_WIN_SCORE, home_win_prob, default_odds, final_mult
         )
         tier = hw_tier_from_confidence(conf_score, gate_passes) if qualifies else None
 
@@ -666,6 +728,10 @@ def process_single_match(match, target_date, default_odds=2.8):
         kelly_half = calculate_kelly(home_win_prob / 100, default_odds)
         if not qualifies:
             kelly_half = 0.0
+
+        regressions = []
+        if reg_mult < 1.0:
+            regressions.append("home win streak")
 
         return {
             "status": "success",
@@ -686,7 +752,14 @@ def process_single_match(match, target_date, default_odds=2.8):
                 },
                 "gate_passed": gate_passes,
                 "data_mult": round(data_mult, 2),
+                "weak_league_mult": round(league_mult, 2),
+                "regression_mult": round(reg_mult, 2),
+                "min_score_threshold": min_score,
                 "kelly": round(kelly_half * 100, 2),
+                "guards": {
+                    "weak_roi_league": weak_league,
+                    "regression_penalty_applied": regressions,
+                },
             }
         }
     except Exception as e:

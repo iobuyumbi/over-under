@@ -649,7 +649,121 @@ _WEIGHT_EDGE = 0.20
 _TIER_PREMIUM_CUTOFF = 0.62
 _TIER_SOLID_CUTOFF = 0.54
 
+_MIN_FORM_HALFLIFE = 3.0
+
+_WEAK_ROI_LEAGUE_KEYWORDS = (
+    "swedish allsvenskan",
+    "allsvenskan",
+    "belarus",
+    "k-league 1",
+    "k league 1",
+    "korean k-league 1",
+    "league of ireland",
+    "fai cup",
+    "mexican primera apertura",
+    "brazilian serie a",
+)
+_WEAK_ROI_MULTIPLIER = 0.82
+_WEAK_ROI_OVER_LAMBDA_BOOST = 0.30
+_WEAK_ROI_UNDER_LAMBDA_REDUCTION = 0.20
+
+_REGRESSION_OVER_STREAK = 5
+_REGRESSION_UNDER_STREAK = 5
+_REGRESSION_PENALTY = 0.08
+
 _LEAGUE_BASELINE_CACHE = {}
+
+
+def _exponential_form_averages(form_tuples, halflife=_MIN_FORM_HALFLIFE):
+    """Weighted average of (gf, ga) with exponential decay.
+
+    form_tuples[0] is the most recent match (weight=1.0); each older match
+    is multiplied by 0.5 ** (n / halflife) for match index n going back.
+    Returns (weighted_gf_per_game, weighted_ga_per_game, effective_sample_weight).
+    """
+    if not form_tuples:
+        return 0.0, 0.0, 0.0
+    w_sum = 0.0
+    gf_sum = 0.0
+    ga_sum = 0.0
+    for idx, (gf, ga) in enumerate(form_tuples):
+        w = 0.5 ** (idx / halflife)
+        w_sum += w
+        gf_sum += w * gf
+        ga_sum += w * ga
+    if w_sum <= 0:
+        return 0.0, 0.0, 0.0
+    return gf_sum / w_sum, ga_sum / w_sum, w_sum
+
+
+def _is_weak_roi_league(league_name):
+    name = str(league_name or "").strip().lower()
+    return any(k in name for k in _WEAK_ROI_LEAGUE_KEYWORDS)
+
+
+def _over_streak_count(form_tuples):
+    """How many of the most recent form games were consecutively Over 2.5?"""
+    n = 0
+    for gf, ga in form_tuples:
+        if gf + ga > 2.5:
+            n += 1
+        else:
+            break
+    return n
+
+
+def _under_streak_count(form_tuples):
+    n = 0
+    for gf, ga in form_tuples:
+        if gf + ga < 2.5:
+            n += 1
+        else:
+            break
+    return n
+
+
+def regression_penalty(home_6, away_6, side):
+    """0..1 multiplicative penalty applied to confidence score; 1.0 = no penalty."""
+    if side == "over":
+        h_streak = _over_streak_count(home_6 or [])
+        a_streak = _over_streak_count(away_6 or [])
+        if max(h_streak, a_streak) >= _REGRESSION_OVER_STREAK:
+            return 1.0 - _REGRESSION_PENALTY
+    elif side == "under":
+        h_streak = _under_streak_count(home_6 or [])
+        a_streak = _under_streak_count(away_6 or [])
+        if max(h_streak, a_streak) >= _REGRESSION_UNDER_STREAK:
+            return 1.0 - _REGRESSION_PENALTY
+    return 1.0
+
+
+def _chaos_rule_over(home_6, away_6):
+    """Both sides concede heavily: 85% of their matches involve goals against.
+
+    Returns True if BOTH teams conceded on average >= 1.2 goals/game in 6-game
+    form. This is the 'chaotic open game' signal independent of who scores.
+    """
+    if len(home_6 or []) < 4 or len(away_6 or []) < 4:
+        return False
+    hc = sum(ga for _, ga in home_6) / max(len(home_6), 1)
+    ac = sum(ga for _, ga in away_6) / max(len(away_6), 1)
+    return hc >= 1.2 and ac >= 1.2
+
+
+def _compact_rule_under(home_6, away_6):
+    """Both sides attack AND defense are stingy.
+
+    Returns True if BOTH teams scored <= 1.0/game AND conceded <= 0.9/game
+    average over their form window.
+    """
+    if len(home_6 or []) < 4 or len(away_6 or []) < 4:
+        return False
+    hs = sum(gf for gf, _ in home_6) / max(len(home_6), 1)
+    hc = sum(ga for _, ga in home_6) / max(len(home_6), 1)
+    as_ = sum(gf for gf, _ in away_6) / max(len(away_6), 1)
+    ac = sum(ga for _, ga in away_6) / max(len(away_6), 1)
+    return hs <= 1.0 and hc <= 0.9 and as_ <= 1.0 and ac <= 0.9
+
 
 
 def poisson_pmf(k, lam):
@@ -778,34 +892,43 @@ def _league_baselines(league_name):
 def get_match_lambdas(home_6, away_6, league_name=None):
     """
     Calculate cross-matched Poisson lambdas.
-    Home attack is adjusted by away defense weakness, and vice versa.
 
-    Uses per-league baselines when available, else falls back to the global
-    shrinkage defaults.
+    Uses exponential-decay weighted form averages (recent games count ~3x more
+    than games from 6 weeks back) plus per-league baselines from history.
+    Weak-ROI leagues have baselines nudged to make the combined-lambda gate
+    harder to satisfy on the historically unprofitable side.
     """
     bl = _league_baselines(league_name or "")
     home_baseline_attack, away_baseline_attack, home_baseline_defense, away_baseline_defense = bl
 
-    n_home = max(len(home_6), 1)
-    n_away = max(len(away_6), 1)
-    h_scored_avg = sum(gf for gf, _ in home_6) / n_home if home_6 else home_baseline_attack
-    h_conceded_avg = sum(ga for _, ga in home_6) / n_home if home_6 else away_baseline_attack
+    weak_league = _is_weak_roi_league(league_name)
 
-    a_scored_avg = sum(gf for gf, _ in away_6) / n_away if away_6 else away_baseline_attack
-    a_conceded_avg = sum(ga for _, ga in away_6) / n_away if away_6 else home_baseline_attack
+    n_home = max(len(home_6 or []), 1)
+    n_away = max(len(away_6 or []), 1)
+
+    h_gf_avg, h_ga_avg, _ = _exponential_form_averages(home_6 or [])
+    if not (home_6 or []):
+        h_gf_avg, h_ga_avg = home_baseline_attack, away_baseline_defense
+    a_gf_avg, a_ga_avg, _ = _exponential_form_averages(away_6 or [])
+    if not (away_6 or []):
+        a_gf_avg, a_ga_avg = away_baseline_attack, home_baseline_defense
 
     adaptive_shrinkage = SHRINKAGE_WEIGHT
-    if len(home_6) < _MIN_DATA_GAMES or len(away_6) < _MIN_DATA_GAMES:
+    if len(home_6 or []) < _MIN_DATA_GAMES or len(away_6 or []) < _MIN_DATA_GAMES:
         adaptive_shrinkage = max(0.45, SHRINKAGE_WEIGHT - 0.15)
 
-    h_attack = adaptive_shrinkage * h_scored_avg + (1 - adaptive_shrinkage) * home_baseline_attack
-    h_defense = adaptive_shrinkage * h_conceded_avg + (1 - adaptive_shrinkage) * away_baseline_defense
+    h_attack = adaptive_shrinkage * h_gf_avg + (1 - adaptive_shrinkage) * home_baseline_attack
+    h_defense = adaptive_shrinkage * h_ga_avg + (1 - adaptive_shrinkage) * away_baseline_defense
 
-    a_attack = adaptive_shrinkage * a_scored_avg + (1 - adaptive_shrinkage) * away_baseline_attack
-    a_defense = adaptive_shrinkage * a_conceded_avg + (1 - adaptive_shrinkage) * home_baseline_defense
+    a_attack = adaptive_shrinkage * a_gf_avg + (1 - adaptive_shrinkage) * away_baseline_attack
+    a_defense = adaptive_shrinkage * a_ga_avg + (1 - adaptive_shrinkage) * home_baseline_defense
 
     home_lambda = h_attack * (a_defense / max(0.5, home_baseline_attack))
     away_lambda = a_attack * (h_defense / max(0.5, away_baseline_attack))
+
+    if weak_league:
+        home_lambda -= _WEAK_ROI_OVER_LAMBDA_BOOST / 2.0
+        away_lambda -= _WEAK_ROI_OVER_LAMBDA_BOOST / 2.0
 
     return (
         round(max(0.5, min(3.8, home_lambda)), 2),
@@ -913,6 +1036,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         )
 
         over_score = len(over_passed) if over_passed else 0
+        if _chaos_rule_over(home_6, away_6):
+            over_score += 1
 
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
@@ -936,14 +1061,18 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         under_is_perfect = under3_perfect and under6_perfect and under_overall_perfect
 
         under_score = len(under_passed) if under_passed else 0
+        if _compact_rule_under(home_6, away_6):
+            under_score += 1
 
         home_lambda, away_lambda = get_match_lambdas(home_6, away_6, league_name=league_name)
 
         over_gate = lambda_gate_passes(home_lambda, away_lambda, "over")
         under_gate = lambda_gate_passes(home_lambda, away_lambda, "under")
 
-        over_qualifies = bool(over_passed) and over_score >= MAX_OVER_SCORE - 3 and over_gate
-        under_qualifies = bool(under_passed) and under_score >= MAX_UNDER_SCORE - 2 and under_gate
+        over_min_score = MAX_OVER_SCORE - 2 if _is_weak_roi_league(league_name) else MAX_OVER_SCORE - 3
+        under_min_score = MAX_UNDER_SCORE - 1 if _is_weak_roi_league(league_name) else MAX_UNDER_SCORE - 2
+        over_qualifies = bool(over_passed) and over_score >= over_min_score and over_gate
+        under_qualifies = bool(under_passed) and under_score >= under_min_score and under_gate
 
         if over_qualifies or under_qualifies:
             over25_prob_pct = calculate_poisson_over25(home_lambda, away_lambda)
@@ -971,11 +1100,18 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             else "LOW"
         )
 
+        league_mult = _WEAK_ROI_MULTIPLIER if _is_weak_roi_league(league_name) else 1.0
+        over_regression_penalty = regression_penalty(home_6, away_6, "over")
+        under_regression_penalty = regression_penalty(home_6, away_6, "under")
+
+        over_final_mult = data_mult * league_mult * over_regression_penalty
+        under_final_mult = data_mult * league_mult * under_regression_penalty
+
         over_conf_score = compute_confidence_score(
-            over_score, MAX_OVER_SCORE, over25_prob_pct, default_odds_over, data_mult
+            over_score, MAX_OVER_SCORE, over25_prob_pct, default_odds_over, over_final_mult
         )
         under_conf_score = compute_confidence_score(
-            under_score, MAX_UNDER_SCORE, under25_prob_pct, default_odds_under, data_mult
+            under_score, MAX_UNDER_SCORE, under25_prob_pct, default_odds_under, under_final_mult
         )
 
         over_tier = tier_from_confidence(over_conf_score, "over", home_lambda, away_lambda)
@@ -990,6 +1126,12 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         if not under_qualifies:
             under_tier = None
             under_kelly = 0.0
+
+        regressions = []
+        if over_regression_penalty < 1.0:
+            regressions.append("over streak")
+        if under_regression_penalty < 1.0:
+            regressions.append("under streak")
 
         return {
             "status": "success",
@@ -1007,6 +1149,9 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "kelly": round(over_kelly * 100, 2),
                     "gate_passed": over_gate,
                     "data_mult": round(data_mult, 2),
+                    "weak_league_mult": round(league_mult, 2),
+                    "regression_mult": round(over_regression_penalty, 2),
+                    "min_score_threshold": over_min_score,
                 },
                 "under": {
                     "score": under_score,
@@ -1020,6 +1165,9 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "kelly": round(under_kelly * 100, 2),
                     "gate_passed": under_gate,
                     "data_mult": round(data_mult, 2),
+                    "weak_league_mult": round(league_mult, 2),
+                    "regression_mult": round(under_regression_penalty, 2),
+                    "min_score_threshold": under_min_score,
                 },
                 "poisson": {
                     "home_lambda": home_lambda,
@@ -1027,7 +1175,13 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "combined_lambda": round(home_lambda + away_lambda, 2),
                     "over25_prob": over25_prob_pct,
                     "under25_prob": under25_prob_pct,
-                }
+                },
+                "guards": {
+                    "weak_roi_league": _is_weak_roi_league(league_name),
+                    "chaos_rule_over": _chaos_rule_over(home_6, away_6),
+                    "compact_rule_under": _compact_rule_under(home_6, away_6),
+                    "regression_penalty_applied": regressions,
+                },
             }
         }
     except Exception as e:
