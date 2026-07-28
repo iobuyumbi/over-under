@@ -110,15 +110,17 @@ jobs:
           TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
 
       - name: Commit updated results
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "github-actions[bot]"
-          author_email: "github-actions[bot]@users.noreply.github.com"
-          message: "Update prediction history with results"
-          pull: "--rebase --autostash"
-          add: |
-            prediction_history.json
-            manual_results.csv
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash origin main
+          git add prediction_history.json manual_results.csv
+          if git diff --cached --quiet; then
+            echo "No result changes to commit."
+          else
+            git commit -m "Update prediction history with results"
+            git push origin main
+          fi
 
   daily-predictions:
     runs-on: ubuntu-latest
@@ -195,26 +197,23 @@ jobs:
             fi
           } > combined_vip.txt
 
-      - name: Stage prediction report files
+      - name: Commit predictions and reports
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash origin main
           shopt -s nullglob
           files=(over_under_25_report_*.json home_win_report_*.json over_under_vip_report_*.txt home_win_vip_report_*.txt)
           if [ ${#files[@]} -gt 0 ]; then
             git add "${files[@]}"
           fi
-          git add manual_results.csv
-
-      - name: Commit predictions and reports
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "github-actions[bot]"
-          author_email: "github-actions[bot]@users.noreply.github.com"
-          message: "Daily update: predictions and results"
-          pull: "--rebase --autostash"
-          add: |
-            prediction_history.json
-            manual_results.csv
-            README.md
+          git add prediction_history.json manual_results.csv README.md
+          if git diff --cached --quiet; then
+            echo "No prediction/report changes to commit."
+          else
+            git commit -m "Daily update: predictions and results"
+            git push origin main
+          fi
 
       - name: Send public email
         uses: dawidd6/action-send-mail@v3
@@ -312,26 +311,23 @@ jobs:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
-      - name: Stage weekly report files
+      - name: Commit weekly report
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash origin main
           shopt -s nullglob
           files=(weekly_report_*.txt weekly_report_*.json)
           if [ ${#files[@]} -gt 0 ]; then
             git add "${files[@]}"
           fi
-          git add manual_results.csv
-
-      - name: Commit weekly report
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "github-actions[bot]"
-          author_email: "github-actions[bot]@users.noreply.github.com"
-          message: "Weekly performance report"
-          pull: "--rebase --autostash"
-          add: |
-            prediction_history.json
-            manual_results.csv
-            README.md
+          git add prediction_history.json manual_results.csv README.md
+          if git diff --cached --quiet; then
+            echo "No weekly report changes to commit."
+          else
+            git commit -m "Weekly performance report"
+            git push origin main
+          fi
 
       - name: Send weekly report to Telegram
         if: always()
@@ -404,25 +400,23 @@ jobs:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
-      - name: Stage monthly report files
+      - name: Commit monthly report
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash origin main
           shopt -s nullglob
           files=(monthly_report_*.txt monthly_report_*.json)
           if [ ${#files[@]} -gt 0 ]; then
             git add "${files[@]}"
           fi
-          git add manual_results.csv
-
-      - name: Commit monthly report
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "github-actions[bot]"
-          author_email: "github-actions[bot]@users.noreply.github.com"
-          message: "Monthly performance report"
-          pull: "--rebase --autostash"
-          add: |
-            prediction_history.json
-            manual_results.csv
+          git add prediction_history.json manual_results.csv
+          if git diff --cached --quiet; then
+            echo "No monthly report changes to commit."
+          else
+            git commit -m "Monthly performance report"
+            git push origin main
+          fi
 
       - name: Send monthly report to Telegram
         if: always()
