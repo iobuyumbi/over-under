@@ -1,0 +1,48 @@
+{
+  "blocked_regions": [
+    {
+      "name": "Ireland",
+      "reason": "Match-integrity concerns",
+      "league_keywords": [
+        "ireland",
+        "fai cup",
+        "irish"
+      ],
+      "team_keywords": [
+        "finn harps",
+        "drogheda",
+        "bray",
+        "derry city",
+        "waterford",
+        "bohemians",
+        "cork city",
+        "dundalk",
+        "athlone",
+        "wexford",
+        "longford",
+        "ucd",
+        "shelbourne",
+        "shamrock",
+        "sligo rovers",
+        "galway united",
+        "limerick",
+        "treaty united",
+        "cobh ramblers",
+        "kerry fc",
+        "st patrick",
+        "st patricks"
+      ]
+    },
+    {
+      "name": "Argentina Primera Nacional",
+      "reason": "Match-integrity concerns",
+      "league_keywords": [
+        "argentina primera nacional",
+        "primera nacional",
+        "argentina national b",
+        "nacional b"
+      ],
+      "team_keywords": []
+    }
+  ]
+}
