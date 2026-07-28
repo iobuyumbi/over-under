@@ -15,9 +15,11 @@ import time
 import random
 import math
 import logging
+import os
 import sqlite3
 import hashlib
 from datetime import datetime, timedelta
+from collections import defaultdict
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
@@ -627,64 +629,233 @@ def apply_under_overall_checks(home_overall_6, away_overall_6):
 
 
 # =============================================================================
-# POISSON MODEL
+# POISSON MODEL (with Dixon-Coles correction)
 # =============================================================================
+DIXON_COLES_RHO = -0.13
+
+_MIN_DATA_GAMES = 5
+_MIN_COMBINED_LAMBDA_OVER = 3.00
+_MAX_COMBINED_LAMBDA_UNDER = 2.30
+_PREMIUM_COMBINED_LAMBDA_OVER = 3.30
+_PREMIUM_COMBINED_LAMBDA_UNDER = 2.00
+
+IMPLIED_ODDS_OVER = 1.95
+IMPLIED_ODDS_UNDER = 1.85
+
+_WEIGHT_RULES = 0.40
+_WEIGHT_MODEL = 0.40
+_WEIGHT_EDGE = 0.20
+
+_TIER_PREMIUM_CUTOFF = 0.62
+_TIER_SOLID_CUTOFF = 0.54
+
+_LEAGUE_BASELINE_CACHE = {}
+
+
 def poisson_pmf(k, lam):
     if lam <= 0:
         return 0.0
     return (math.exp(-lam) * (lam ** k)) / math.factorial(k)
 
 
+def _dixon_coles_tau(h, a, lh, la, rho):
+    if (h, a) == (0, 0):
+        return max(0.01, 1.0 - rho * lh * la)
+    if (h, a) == (1, 0):
+        return 1.0 + rho * la
+    if (h, a) == (0, 1):
+        return 1.0 + rho * lh
+    if (h, a) == (1, 1):
+        return 1.0 - rho
+    return 1.0
+
+
 def calculate_poisson_over25(home_lambda, away_lambda, max_goals=10):
     over_prob = 0.0
+    total = 0.0
     for h in range(max_goals + 1):
         for a in range(max_goals + 1):
+            joint = poisson_pmf(h, home_lambda) * poisson_pmf(a, away_lambda)
+            if joint <= 0:
+                continue
+            tau = _dixon_coles_tau(h, a, home_lambda, away_lambda, DIXON_COLES_RHO)
+            p = joint * tau
+            total += p
             if h + a > 2:
-                over_prob += poisson_pmf(h, home_lambda) * poisson_pmf(a, away_lambda)
+                over_prob += p
+    if total > 0:
+        over_prob /= total
     return round(over_prob * 100, 1)
 
 
 def calculate_poisson_under25(home_lambda, away_lambda, max_goals=10):
-    """Under 2.5 = 1 - Over 2.5 probability"""
     over_prob = calculate_poisson_over25(home_lambda, away_lambda, max_goals) / 100.0
     return round((1.0 - over_prob) * 100, 1)
 
 
+def _load_league_baselines():
+    """Compute per-league home/away goals baselines from prediction_history settled picks.
+
+    Falls back to global defaults if a league has < 5 settled matches or the file
+    is missing. Returns a dict: league_name -> (h_att, a_att, h_def, a_def)
+    """
+    if _LEAGUE_BASELINE_CACHE:
+        return _LEAGUE_BASELINE_CACHE
+    default = (1.45, 1.20, 1.35, 1.25)
+    history_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), HISTORY_FILE_FALLBACK)
+    if not os.path.exists(history_path):
+        _LEAGUE_BASELINE_CACHE["_default"] = default
+        return _LEAGUE_BASELINE_CACHE
+    try:
+        with open(history_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        _LEAGUE_BASELINE_CACHE["_default"] = default
+        return _LEAGUE_BASELINE_CACHE
+    league_stats = defaultdict(lambda: {"h_gf": 0.0, "h_ga": 0.0, "a_gf": 0.0, "a_ga": 0.0, "n": 0})
+    for market in ("home_win", "over_under"):
+        for row in data.get(market, []) or []:
+            score = row.get("final_score") or row.get("result_source")
+            final_score = row.get("final_score")
+            if not final_score or "-" not in str(final_score):
+                continue
+            try:
+                hg, ag = str(final_score).split("-", 1)
+                hg = int(hg.strip())
+                ag = int(ag.strip())
+            except ValueError:
+                continue
+            lg = row.get("league", "")
+            if not lg:
+                continue
+            s = league_stats[lg]
+            s["h_gf"] += hg
+            s["h_ga"] += ag
+            s["a_gf"] += ag
+            s["a_ga"] += hg
+            s["n"] += 1
+    global_h_gf = sum(s["h_gf"] for s in league_stats.values())
+    global_h_ga = sum(s["h_ga"] for s in league_stats.values())
+    global_a_gf = sum(s["a_gf"] for s in league_stats.values())
+    global_a_ga = sum(s["a_ga"] for s in league_stats.values())
+    global_n = max(1, sum(s["n"] for s in league_stats.values()))
+    fallback = (
+        global_h_gf / global_n,
+        global_a_gf / global_n,
+        global_h_ga / global_n,
+        global_a_ga / global_n,
+    )
+    if not all(fallback) or fallback[0] < 0.6 or fallback[0] > 2.5:
+        fallback = default
+    _LEAGUE_BASELINE_CACHE["_default"] = fallback
+    for lg, s in league_stats.items():
+        n = s["n"]
+        if n < 5:
+            _LEAGUE_BASELINE_CACHE[lg] = fallback
+            continue
+        ha = s["h_gf"] / n
+        aa = s["a_gf"] / n
+        hd = s["h_ga"] / n
+        ad = s["a_ga"] / n
+        if ha < 0.5 or aa < 0.4 or hd < 0.4 or ad < 0.4:
+            _LEAGUE_BASELINE_CACHE[lg] = fallback
+            continue
+        _LEAGUE_BASELINE_CACHE[lg] = (ha, aa, hd, ad)
+    return _LEAGUE_BASELINE_CACHE
+
+
+HISTORY_FILE_FALLBACK = "prediction_history.json"
+
+
+def _league_baselines(league_name):
+    cache = _load_league_baselines()
+    return cache.get(league_name, cache.get("_default", (1.45, 1.20, 1.35, 1.25)))
+
+
 # =============================================================================
-# EXPECTED GOALS (Shrinkage Estimator)
+# EXPECTED GOALS (Shrinkage Estimator, per-league baselines)
 # =============================================================================
-def get_match_lambdas(home_6, away_6):
+def get_match_lambdas(home_6, away_6, league_name=None):
     """
     Calculate cross-matched Poisson lambdas.
     Home attack is adjusted by away defense weakness, and vice versa.
+
+    Uses per-league baselines when available, else falls back to the global
+    shrinkage defaults.
     """
-    home_baseline_attack = 1.45
-    away_baseline_attack = 1.20
-    home_baseline_defense = 1.35  # avg goals home team concedes
-    away_baseline_defense = 1.25  # avg goals away team concedes
+    bl = _league_baselines(league_name or "")
+    home_baseline_attack, away_baseline_attack, home_baseline_defense, away_baseline_defense = bl
 
-    # Raw averages from form data
-    h_scored_avg = sum(gf for gf, _ in home_6) / max(len(home_6), 1) if home_6 else home_baseline_attack
-    h_conceded_avg = sum(ga for _, ga in home_6) / max(len(home_6), 1) if home_6 else away_baseline_attack
+    n_home = max(len(home_6), 1)
+    n_away = max(len(away_6), 1)
+    h_scored_avg = sum(gf for gf, _ in home_6) / n_home if home_6 else home_baseline_attack
+    h_conceded_avg = sum(ga for _, ga in home_6) / n_home if home_6 else away_baseline_attack
 
-    a_scored_avg = sum(gf for gf, _ in away_6) / max(len(away_6), 1) if away_6 else away_baseline_attack
-    a_conceded_avg = sum(ga for _, ga in away_6) / max(len(away_6), 1) if away_6 else home_baseline_attack
+    a_scored_avg = sum(gf for gf, _ in away_6) / n_away if away_6 else away_baseline_attack
+    a_conceded_avg = sum(ga for _, ga in away_6) / n_away if away_6 else home_baseline_attack
 
-    # Shrinkage: blend raw average with league baseline
-    h_attack = SHRINKAGE_WEIGHT * h_scored_avg + (1 - SHRINKAGE_WEIGHT) * home_baseline_attack
-    h_defense = SHRINKAGE_WEIGHT * h_conceded_avg + (1 - SHRINKAGE_WEIGHT) * away_baseline_defense
+    adaptive_shrinkage = SHRINKAGE_WEIGHT
+    if len(home_6) < _MIN_DATA_GAMES or len(away_6) < _MIN_DATA_GAMES:
+        adaptive_shrinkage = max(0.45, SHRINKAGE_WEIGHT - 0.15)
 
-    a_attack = SHRINKAGE_WEIGHT * a_scored_avg + (1 - SHRINKAGE_WEIGHT) * away_baseline_attack
-    a_defense = SHRINKAGE_WEIGHT * a_conceded_avg + (1 - SHRINKAGE_WEIGHT) * home_baseline_defense
+    h_attack = adaptive_shrinkage * h_scored_avg + (1 - adaptive_shrinkage) * home_baseline_attack
+    h_defense = adaptive_shrinkage * h_conceded_avg + (1 - adaptive_shrinkage) * away_baseline_defense
 
-    # Cross-multiply: attack strength × opponent defense weakness
-    home_lambda = h_attack * (a_defense / home_baseline_attack)
-    away_lambda = a_attack * (h_defense / away_baseline_attack)
+    a_attack = adaptive_shrinkage * a_scored_avg + (1 - adaptive_shrinkage) * away_baseline_attack
+    a_defense = adaptive_shrinkage * a_conceded_avg + (1 - adaptive_shrinkage) * home_baseline_defense
+
+    home_lambda = h_attack * (a_defense / max(0.5, home_baseline_attack))
+    away_lambda = a_attack * (h_defense / max(0.5, away_baseline_attack))
 
     return (
         round(max(0.5, min(3.8, home_lambda)), 2),
-        round(max(0.5, min(3.8, away_lambda)), 2)
+        round(max(0.5, min(3.8, away_lambda)), 2),
     )
+
+
+def data_volume_penalty(home_6, away_6):
+    """Return a 0..1 multiplier. 1.0 = full data, <1.0 = thin-data penalty."""
+    n = min(len(home_6 or []), len(away_6 or []))
+    if n >= _MIN_DATA_GAMES:
+        return 1.0
+    if n >= 4:
+        return 0.92
+    if n >= 3:
+        return 0.80
+    return 0.60
+
+
+def lambda_gate_passes(home_lambda, away_lambda, side):
+    combined = home_lambda + away_lambda
+    if side == "over":
+        return combined >= _MIN_COMBINED_LAMBDA_OVER
+    if side == "under":
+        return combined <= _MAX_COMBINED_LAMBDA_UNDER
+    return True
+
+
+def compute_confidence_score(rule_score, max_score, model_prob_pct, decimal_odds, data_mult=1.0):
+    """Weighted 0..1 confidence score combining rules, Poisson probability and value edge."""
+    rule_component = max(0.0, min(1.0, (rule_score / max(max_score, 1))))
+    model_component = max(0.0, min(1.0, (model_prob_pct / 100.0)))
+    implied = 1.0 / max(1.05, decimal_odds)
+    edge_component = max(0.0, min(1.0, ((model_prob_pct / 100.0) - implied) + 0.5))
+    raw = _WEIGHT_RULES * rule_component + _WEIGHT_MODEL * model_component + _WEIGHT_EDGE * edge_component
+    return max(0.0, min(1.0, raw * data_mult))
+
+
+def tier_from_confidence(score, side, home_lambda, away_lambda):
+    combined = home_lambda + away_lambda
+    premium_ok = False
+    if side == "over" and combined >= _PREMIUM_COMBINED_LAMBDA_OVER:
+        premium_ok = True
+    elif side == "under" and combined <= _PREMIUM_COMBINED_LAMBDA_UNDER:
+        premium_ok = True
+    if score >= _TIER_PREMIUM_CUTOFF and premium_ok:
+        return "perfect"
+    if score >= _TIER_SOLID_CUTOFF:
+        return "qualified"
+    return "close"
 
 
 # =============================================================================
@@ -726,7 +897,8 @@ def apply_portfolio_kelly(recommendations, bet_type, bankroll, max_exposure=MAX_
 # =============================================================================
 def process_single_match(match, target_date, default_odds_over=2.0, default_odds_under=1.85):
     try:
-        # Fetch form data
+        league_name = match.get("league", "")
+
         home_3 = get_team_form(match["home_team_id"], True, 3, target_date)
         away_3 = get_team_form(match["away_team_id"], False, 3, target_date)
         home_6 = get_team_form(match["home_team_id"], True, 6, target_date)
@@ -734,20 +906,20 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         home_overall_6 = get_team_overall_form(match["home_team_id"], 6, target_date)
         away_overall_6 = get_team_overall_form(match["away_team_id"], 6, target_date)
 
-        # --- OVER 2.5 ANALYSIS ---
+        data_mult = data_volume_penalty(home_6, away_6)
+
         over_passed, over_failed, over_details, over_is_perfect = apply_over_algorithm(
             home_3, away_3, home_6, away_6, home_overall_6, away_overall_6
         )
 
         over_score = len(over_passed) if over_passed else 0
 
-        # --- UNDER 2.5 ANALYSIS ---
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
             under3_passed, under3_failed, under3_details, under3_perfect = [], [], {}, False
         else:
             under3_passed, under3_failed, under3_details, under3_perfect = under3_result
-            
+
         under6_result = apply_under_6game_checks(home_6, away_6)
         if under6_result[0] is None:
             under6_passed, under6_failed, under6_details, under6_perfect = [], [], {}, False
@@ -758,7 +930,6 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             apply_under_overall_checks(home_overall_6, away_overall_6)
         )
 
-        # Merge 3-game, 6-game venue, and overall Under results
         under_passed = under3_passed + under6_passed + under_overall_passed
         under_failed = under3_failed + under6_failed + under_overall_failed
         under_details = {**under3_details, **under6_details, **under_overall_details}
@@ -766,10 +937,25 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
 
         under_score = len(under_passed) if under_passed else 0
 
-        # --- POISSON PROBABILITIES ---
-        home_lambda, away_lambda = get_match_lambdas(home_6, away_6)
-        over25_prob_pct = calculate_poisson_over25(home_lambda, away_lambda)
-        under25_prob_pct = calculate_poisson_under25(home_lambda, away_lambda)
+        home_lambda, away_lambda = get_match_lambdas(home_6, away_6, league_name=league_name)
+
+        over_gate = lambda_gate_passes(home_lambda, away_lambda, "over")
+        under_gate = lambda_gate_passes(home_lambda, away_lambda, "under")
+
+        over_qualifies = bool(over_passed) and over_score >= MAX_OVER_SCORE - 3 and over_gate
+        under_qualifies = bool(under_passed) and under_score >= MAX_UNDER_SCORE - 2 and under_gate
+
+        if over_qualifies or under_qualifies:
+            over25_prob_pct = calculate_poisson_over25(home_lambda, away_lambda)
+            under25_prob_pct = calculate_poisson_under25(home_lambda, away_lambda)
+        else:
+            combined = home_lambda + away_lambda
+            if combined > 2.5:
+                over25_prob_pct = round(max(50.0, 50.0 + (combined - 2.5) * 15), 1)
+                under25_prob_pct = round(100.0 - over25_prob_pct, 1)
+            else:
+                under25_prob_pct = round(max(50.0, 50.0 + (2.5 - combined) * 15), 1)
+                over25_prob_pct = round(100.0 - under25_prob_pct, 1)
 
         over25_prob = over25_prob_pct / 100.0
         under25_prob = under25_prob_pct / 100.0
@@ -785,9 +971,25 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             else "LOW"
         )
 
-        # --- KELLY STAKES ---
+        over_conf_score = compute_confidence_score(
+            over_score, MAX_OVER_SCORE, over25_prob_pct, default_odds_over, data_mult
+        )
+        under_conf_score = compute_confidence_score(
+            under_score, MAX_UNDER_SCORE, under25_prob_pct, default_odds_under, data_mult
+        )
+
+        over_tier = tier_from_confidence(over_conf_score, "over", home_lambda, away_lambda)
+        under_tier = tier_from_confidence(under_conf_score, "under", home_lambda, away_lambda)
+
         over_kelly = calculate_kelly(over25_prob, default_odds_over, use_half=True)
         under_kelly = calculate_kelly(under25_prob, default_odds_under, use_half=True)
+
+        if not over_qualifies:
+            over_tier = None
+            over_kelly = 0.0
+        if not under_qualifies:
+            under_tier = None
+            under_kelly = 0.0
 
         return {
             "status": "success",
@@ -798,24 +1000,33 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "passed": over_passed,
                     "details": over_details,
                     "is_perfect": over_is_perfect,
+                    "tier": over_tier,
+                    "confidence_score": round(over_conf_score * 100, 1),
                     "prob": over25_prob_pct,
                     "confidence": over_confidence,
-                    "kelly": round(over_kelly * 100, 2)
+                    "kelly": round(over_kelly * 100, 2),
+                    "gate_passed": over_gate,
+                    "data_mult": round(data_mult, 2),
                 },
                 "under": {
                     "score": under_score,
                     "passed": under_passed,
                     "details": under_details,
                     "is_perfect": under_is_perfect,
+                    "tier": under_tier,
+                    "confidence_score": round(under_conf_score * 100, 1),
                     "prob": under25_prob_pct,
                     "confidence": under_confidence,
-                    "kelly": round(under_kelly * 100, 2)
+                    "kelly": round(under_kelly * 100, 2),
+                    "gate_passed": under_gate,
+                    "data_mult": round(data_mult, 2),
                 },
                 "poisson": {
                     "home_lambda": home_lambda,
                     "away_lambda": away_lambda,
+                    "combined_lambda": round(home_lambda + away_lambda, 2),
                     "over25_prob": over25_prob_pct,
-                    "under25_prob": under25_prob_pct
+                    "under25_prob": under25_prob_pct,
                 }
             }
         }
@@ -1060,28 +1271,24 @@ def main():
                 elif res["status"] == "success":
                     data = res["data"]
 
-                    # Over 2.5 categorization
-                    over_score = data["over"]["score"]
-                    if over_score == MAX_OVER_SCORE:
-                        if data["over"]["is_perfect"]:
-                            over_perfect.append(data)
-                        else:
-                            over_qualified.append(data)
-                    elif over_score >= MAX_OVER_SCORE - 1:
+                    over_tier = data["over"]["tier"]
+                    if over_tier == "perfect":
+                        over_perfect.append(data)
+                    elif over_tier == "qualified":
+                        over_qualified.append(data)
+                    elif over_tier == "close":
                         over_close.append(data)
-                    elif over_score >= MAX_OVER_SCORE - 3:
+                    elif data["over"]["score"] >= max(1, MAX_OVER_SCORE - 3):
                         over_weak.append(data)
 
-                    # Under 2.5 categorization
-                    under_score = data["under"]["score"]
-                    if under_score == MAX_UNDER_SCORE:
-                        if data["under"]["is_perfect"]:
-                            under_perfect.append(data)
-                        else:
-                            under_qualified.append(data)
-                    elif under_score >= MAX_UNDER_SCORE - 1:
+                    under_tier = data["under"]["tier"]
+                    if under_tier == "perfect":
+                        under_perfect.append(data)
+                    elif under_tier == "qualified":
+                        under_qualified.append(data)
+                    elif under_tier == "close":
                         under_close.append(data)
-                    elif under_score >= MAX_UNDER_SCORE - 2:
+                    elif data["under"]["score"] >= max(1, MAX_UNDER_SCORE - 2):
                         under_weak.append(data)
 
         # Early exit only if BOTH markets have sufficient matches
@@ -1156,25 +1363,25 @@ def main():
     # Record predictions for tracking
     try:
         ou_picks = []
-        # Record over picks
         for pick in included_over:
+            tier = pick["over"].get("tier") or ("perfect" if pick in over_perfect else ("qualified" if pick in over_qualified else "close"))
             ou_picks.append({
                 "league": pick["match"]["league"],
                 "home": pick["match"]["home"],
                 "away": pick["match"]["away"],
                 "date": pick["match"]["date"],
                 "prediction": "over",
-                "confidence": "perfect" if pick in over_perfect else ("qualified" if pick in over_qualified else "close")
+                "confidence": tier,
             })
-        # Record under picks
         for pick in included_under:
+            tier = pick["under"].get("tier") or ("perfect" if pick in under_perfect else ("qualified" if pick in under_qualified else "close"))
             ou_picks.append({
                 "league": pick["match"]["league"],
                 "home": pick["match"]["home"],
                 "away": pick["match"]["away"],
                 "date": pick["match"]["date"],
                 "prediction": "under",
-                "confidence": "perfect" if pick in under_perfect else ("qualified" if pick in under_qualified else "close")
+                "confidence": tier,
             })
         stats = record_predictions(base_date, [], ou_picks)
         if stats["added"]:
