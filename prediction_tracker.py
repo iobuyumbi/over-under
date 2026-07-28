@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO) 
  
 HISTORY_FILE = "prediction_history.json" 
+BLACKLIST_FILE = "blacklist.json"
 SETTLED_RESULTS = frozenset({"win", "loss", "push"})
 MEDIUM = "MEDIUM"
 
@@ -50,37 +51,75 @@ def format_result_tag(result):
     normalized = str(result or "").lower()
     return {"win": "WIN", "loss": "LOSS", "push": "PUSH"}.get(normalized, "PENDING")
 
-# Flagged regions with match-integrity concerns.
-# - New predictions are blocked (fixtures filtered before analysis).
-# - Historical results in prediction_history.json stay for audit.
-# To add a region: copy the Ireland block and set league_keywords + team_keywords.
-BLOCKED_REGIONS = (
+
+DEFAULT_BLOCKED_REGIONS = (
     {
         "name": "Ireland",
-        "league_keywords": (
+        "reason": "Match-integrity concerns",
+        "league_keywords": [
             "ireland",
             "fai cup",
             "irish",
-        ),
-        "team_keywords": (
+        ],
+        "team_keywords": [
             "finn harps", "drogheda", "bray", "derry city", "waterford",
             "bohemians", "cork city", "dundalk", "athlone", "wexford",
             "longford", "ucd", "shelbourne", "shamrock", "sligo rovers",
             "galway united", "limerick", "treaty united", "cobh ramblers",
             "kerry fc", "st patrick", "st patricks",
-        ),
+        ],
     },
     {
         "name": "Argentina Primera Nacional",
-        "league_keywords": (
+        "reason": "Match-integrity concerns",
+        "league_keywords": [
             "argentina primera nacional",
             "primera nacional",
             "argentina national b",
             "nacional b",
-        ),
-        "team_keywords": (),
+        ],
+        "team_keywords": [],
     },
 )
+
+
+def _load_blocked_regions():
+    """Load blocked regions from blacklist.json, falling back to defaults if missing or malformed.
+
+    - Loads from keys "blocked_regions" (current standard) or "blocked_leagues" (proposed
+    format) so either key name is supported.
+    """
+    blacklist_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), BLACKLIST_FILE)
+    if not os.path.exists(blacklist_path):
+        logger.info("blacklist.json not found, using default blocked regions")
+        return list(DEFAULT_BLOCKED_REGIONS)
+    try:
+        with open(blacklist_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except (json.JSONDecodeError, OSError) as exc:
+        logger.warning("Failed to parse blacklist.json (%s), using default blocked regions", exc)
+        return list(DEFAULT_BLOCKED_REGIONS)
+    regions = data.get("blocked_regions") or data.get("blocked_leagues")
+    if not isinstance(regions, list) or not regions:
+        logger.warning("blacklist.json has no valid blocked_regions list, using defaults")
+        return list(DEFAULT_BLOCKED_REGIONS)
+    normalized = []
+    for region in regions:
+        if not isinstance(region, dict):
+            continue
+        normalized.append({
+            "name": region.get("name", "Unnamed"),
+            "league_keywords": list(region.get("league_keywords", []) or []),
+            "team_keywords": list(region.get("team_keywords", []) or []),
+        })
+    if not normalized:
+        logger.warning("blacklist.json had no valid region entries, using defaults")
+        return list(DEFAULT_BLOCKED_REGIONS)
+    logger.info("Loaded %d blocked region(s) from blacklist.json", len(normalized))
+    return normalized
+
+
+BLOCKED_REGIONS = _load_blocked_regions()
 
 
 def _normalize_label(value):
