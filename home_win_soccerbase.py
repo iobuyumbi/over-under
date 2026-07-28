@@ -13,9 +13,11 @@ import time
 import random
 import math
 import logging
+import os
 import sqlite3
 import hashlib
 from datetime import datetime, timedelta
+from collections import defaultdict
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
@@ -298,6 +300,65 @@ def parse_date(date_str):
 
 MAX_HOME_WIN_SCORE = 11
 
+HW_MIN_DATA_GAMES = 5
+HW_WEIGHT_RULES = 0.40
+HW_WEIGHT_MODEL = 0.40
+HW_WEIGHT_EDGE = 0.20
+HW_TIER_PREMIUM_CUTOFF = 0.62
+HW_TIER_SOLID_CUTOFF = 0.53
+HW_MIN_MODEL_PROB = 0.55
+HW_MIN_STRENGTH_GAP = 0.12
+
+_HW_LEAGUE_BASELINE_CACHE = {}
+
+
+def _hw_load_league_baselines():
+    """Compute per-league home win rate baselines from prediction_history settled picks.
+
+    Returns dict: league_name -> baseline_home_win_rate (0..1).
+    Falls back to 0.50 for leagues with < 5 settled matches or if the history file
+    is missing/invalid.
+    """
+    if _HW_LEAGUE_BASELINE_CACHE:
+        return _HW_LEAGUE_BASELINE_CACHE
+    default = 0.50
+    history_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "prediction_history.json")
+    if not os.path.exists(history_path):
+        _HW_LEAGUE_BASELINE_CACHE["_default"] = default
+        return _HW_LEAGUE_BASELINE_CACHE
+    try:
+        with open(history_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        _HW_LEAGUE_BASELINE_CACHE["_default"] = default
+        return _HW_LEAGUE_BASELINE_CACHE
+    league_stats = defaultdict(lambda: {"hw": 0, "n": 0})
+    for row in data.get("home_win", []) or []:
+        result = row.get("result")
+        lg = row.get("league", "")
+        if not lg:
+            continue
+        league_stats[lg]["n"] += 1
+        if result == "win":
+            league_stats[lg]["hw"] += 1
+    global_hw = sum(s["hw"] for s in league_stats.values())
+    global_n = max(1, sum(s["n"] for s in league_stats.values()))
+    fallback = max(0.35, min(0.65, global_hw / global_n))
+    _HW_LEAGUE_BASELINE_CACHE["_default"] = fallback
+    for lg, s in league_stats.items():
+        n = s["n"]
+        if n < 5:
+            _HW_LEAGUE_BASELINE_CACHE[lg] = fallback
+            continue
+        rate = s["hw"] / n
+        _HW_LEAGUE_BASELINE_CACHE[lg] = max(0.35, min(0.65, rate))
+    return _HW_LEAGUE_BASELINE_CACHE
+
+
+def _hw_league_baseline(league_name):
+    cache = _hw_load_league_baselines()
+    return cache.get(league_name, cache.get("_default", 0.50))
+
 
 def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
     all_matches = fetch_soccerbase_team_results(team_id)
@@ -445,32 +506,76 @@ def apply_home_win_algorithm(home_data_6, away_data_6, home_overall_5=None, away
 
 
 # =============================================================================
-# STRENGTH MODEL (Shrinkage Estimator)
+# STRENGTH MODEL (Shrinkage Estimator, per-league baselines)
 # =============================================================================
-def get_team_strength(form_data, is_home=True):
+def get_team_strength(form_data, is_home=True, league_name=None):
     """
     Shrinkage estimator for team strength based on win rate.
-    Blends observed win rate with league baseline to prevent overfitting.
+    Blends observed win rate with per-league baseline to prevent overfitting.
+    Applies extra shrinkage when form data is thin.
     """
-    baseline = 0.50  # League average win rate
+    baseline = _hw_league_baseline(league_name or "") if is_home else (1.0 - _hw_league_baseline(league_name or ""))
 
     if not form_data:
-        return baseline
+        return round(baseline, 3)
 
     sample = form_data[:6]
     n = len(sample)
     wins = sum(1 for m in sample if m["result"] == "W")
     win_rate = wins / n
 
-    strength = SHRINKAGE_WEIGHT * win_rate + (1 - SHRINKAGE_WEIGHT) * baseline
+    adaptive_shrinkage = SHRINKAGE_WEIGHT
+    if n < HW_MIN_DATA_GAMES:
+        adaptive_shrinkage = max(0.45, SHRINKAGE_WEIGHT - 0.15)
+
+    strength = adaptive_shrinkage * win_rate + (1 - adaptive_shrinkage) * baseline
     return round(max(0.1, min(0.95, strength)), 3)
 
 
+def hw_data_volume_penalty(home_form, away_form, home_overall, away_overall):
+    n = min(
+        len(home_form or []),
+        len(away_form or []),
+        len(home_overall or []),
+        len(away_overall or []),
+    )
+    if n >= HW_MIN_DATA_GAMES:
+        return 1.0
+    if n >= 4:
+        return 0.90
+    if n >= 3:
+        return 0.78
+    return 0.55
+
+
+def hw_model_gate_passes(home_strength, away_strength, model_prob_pct):
+    strength_gap_ok = (home_strength - away_strength) >= HW_MIN_STRENGTH_GAP
+    prob_ok = (model_prob_pct / 100.0) >= HW_MIN_MODEL_PROB
+    return strength_gap_ok and prob_ok
+
+
+def hw_compute_confidence_score(rule_score, max_score, model_prob_pct, decimal_odds, data_mult=1.0):
+    rule_component = max(0.0, min(1.0, rule_score / max(max_score, 1)))
+    model_component = max(0.0, min(1.0, model_prob_pct / 100.0))
+    implied = 1.0 / max(1.05, decimal_odds)
+    edge_component = max(0.0, min(1.0, (model_prob_pct / 100.0 - implied) + 0.5))
+    raw = (
+        HW_WEIGHT_RULES * rule_component
+        + HW_WEIGHT_MODEL * model_component
+        + HW_WEIGHT_EDGE * edge_component
+    )
+    return max(0.0, min(1.0, raw * data_mult))
+
+
+def hw_tier_from_confidence(score, gate_passes):
+    if score >= HW_TIER_PREMIUM_CUTOFF and gate_passes:
+        return "perfect"
+    if score >= HW_TIER_SOLID_CUTOFF:
+        return "qualified"
+    return "close"
+
+
 def calculate_home_win_prob(home_strength, away_strength):
-    """
-    Logistic probability model.
-    diff > 0 favors home, diff < 0 favors away.
-    """
     diff = home_strength - away_strength
     prob = 1.0 / (1.0 + math.exp(-4.0 * diff))
     return round(prob * 100, 1)
@@ -523,6 +628,7 @@ def apply_portfolio_kelly(recommendations, bankroll, max_exposure=MAX_TOTAL_EXPO
 # =============================================================================
 def process_single_match(match, target_date, default_odds=2.8):
     try:
+        league_name = match.get("league", "")
         home_form = get_team_form(match["home_team_id"], True, 6, target_date)
         away_form = get_team_form(match["away_team_id"], False, 6, target_date)
         home_overall_5 = get_team_overall_form(match["home_team_id"], 5, target_date)
@@ -531,19 +637,35 @@ def process_single_match(match, target_date, default_odds=2.8):
         if len(home_form) < 6 or len(away_form) < 6:
             return {"status": "insufficient"}
 
+        data_mult = hw_data_volume_penalty(home_form, away_form, home_overall_5, away_overall_5)
+
         passed, failed, details, is_perfect = apply_home_win_algorithm(
             home_form, away_form, home_overall_5, away_overall_5
         )
         if passed is None:
             return {"status": "insufficient"}
 
-        home_strength = get_team_strength(home_form, True)
-        away_strength = get_team_strength(away_form, False)
+        home_strength = get_team_strength(home_form, True, league_name=league_name)
+        away_strength = get_team_strength(away_form, False, league_name=league_name)
         home_win_prob = calculate_home_win_prob(home_strength, away_strength)
         confidence = get_confidence(home_win_prob)
 
         score = len(passed)
+        gate_passes = hw_model_gate_passes(home_strength, away_strength, home_win_prob)
+
+        qualifies = score >= MAX_HOME_WIN_SCORE - 2 and gate_passes
+
+        conf_score = hw_compute_confidence_score(
+            score, MAX_HOME_WIN_SCORE, home_win_prob, default_odds, data_mult
+        )
+        tier = hw_tier_from_confidence(conf_score, gate_passes) if qualifies else None
+
+        if not qualifies:
+            tier = None
+
         kelly_half = calculate_kelly(home_win_prob / 100, default_odds)
+        if not qualifies:
+            kelly_half = 0.0
 
         return {
             "status": "success",
@@ -553,13 +675,18 @@ def process_single_match(match, target_date, default_odds=2.8):
                 "passed": passed,
                 "details": details,
                 "is_perfect": is_perfect,
+                "tier": tier,
+                "confidence_score": round(conf_score * 100, 1),
                 "model": {
                     "home_strength": home_strength,
                     "away_strength": away_strength,
+                    "strength_gap": round(home_strength - away_strength, 3),
                     "home_win_prob": home_win_prob,
-                    "confidence": confidence
+                    "confidence": confidence,
                 },
-                "kelly": round(kelly_half * 100, 2)
+                "gate_passed": gate_passes,
+                "data_mult": round(data_mult, 2),
+                "kelly": round(kelly_half * 100, 2),
             }
         }
     except Exception as e:
@@ -754,14 +881,14 @@ def main():
                     pass
                 elif res["status"] == "success":
                     data = res["data"]
-                    if data["score"] == MAX_HOME_WIN_SCORE:
-                        if data["is_perfect"]:
-                            perfect.append(data)
-                        else:
-                            qualified.append(data)
-                    elif data["score"] == MAX_HOME_WIN_SCORE - 1:
+                    tier = data.get("tier")
+                    if tier == "perfect":
+                        perfect.append(data)
+                    elif tier == "qualified":
                         qualified.append(data)
-                    elif data["score"] == MAX_HOME_WIN_SCORE - 2:
+                    elif tier == "close":
+                        close_calls.append(data)
+                    elif data["score"] >= MAX_HOME_WIN_SCORE - 2:
                         close_calls.append(data)
 
         if len(perfect) + len(qualified) >= 12:
@@ -810,12 +937,17 @@ def main():
     try:
         hw_picks = []
         for pick in included_perfect + included_qualified + included_close:
+            tier = pick.get("tier") or (
+                "perfect" if pick in included_perfect else (
+                    "qualified" if pick in included_qualified else "close"
+                )
+            )
             hw_picks.append({
                 "league": pick["match"]["league"],
                 "home": pick["match"]["home"],
                 "away": pick["match"]["away"],
                 "date": pick["match"]["date"],
-                "confidence": "perfect" if pick in included_perfect else ("qualified" if pick in included_qualified else "close")
+                "confidence": tier,
             })
         stats = record_predictions(base_date, hw_picks, [])
         if stats["added"]:
