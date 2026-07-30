@@ -672,8 +672,11 @@
       "home_team": "Argentinos Jun",
       "away_team": "Estudiantes de Rio Cuarto",
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-26T04:43:58.824029"
+      "result": "win",
+      "recorded_at": "2026-07-26T04:43:58.824029",
+      "updated_at": "2026-07-30T03:49:49.911031",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-29",
@@ -682,8 +685,11 @@
       "home_team": "Mirassol",
       "away_team": "Remo",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-26T04:43:58.824864"
+      "result": "win",
+      "recorded_at": "2026-07-26T04:43:58.824864",
+      "updated_at": "2026-07-30T03:49:49.911989",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-31",
@@ -702,8 +708,11 @@
       "home_team": "Argentinos Jun",
       "away_team": "Estudiantes de Rio Cuarto",
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-07-29T04:25:44.099826"
+      "result": "win",
+      "recorded_at": "2026-07-29T04:25:44.099826",
+      "updated_at": "2026-07-30T03:49:49.912509",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-31",
@@ -764,6 +773,76 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-29T04:25:44.102853"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "home_win",
+      "league": "MLS",
+      "home_team": "Inter Miami CF",
+      "away_team": "Columbus Crew",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-30T04:23:27.167142"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "home_win",
+      "league": "MLS",
+      "home_team": "St. Louis City SC",
+      "away_team": "Real Salt Lake",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-30T04:23:27.168066"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "home_win",
+      "league": "Mexican Primera Apertura",
+      "home_team": "Alianza Lima",
+      "away_team": "Alianza Atletico",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-30T04:23:27.168938"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "home_win",
+      "league": "Chile Primera",
+      "home_team": "Univ de Chile",
+      "away_team": "Huachipato",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-30T04:23:27.169823"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "home_win",
+      "league": "Ecuador Liga Pro",
+      "home_team": "Independiente d V",
+      "away_team": "Deportivo Cuenca",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-30T04:23:27.170686"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "home_win",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Olimpia",
+      "away_team": "Rubio Nu",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-30T04:23:27.171545"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "home_win",
+      "league": "Mexican Primera Apertura",
+      "home_team": "Cusco",
+      "away_team": "UTC Cajamarca",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-07-30T04:23:27.172394"
     }
   ],
   "over_under": [
@@ -2564,8 +2643,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-26T04:37:51.506128"
+      "result": "win",
+      "recorded_at": "2026-07-26T04:37:51.506128",
+      "updated_at": "2026-07-30T03:49:49.913060",
+      "final_score": "1-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-30",
@@ -2720,8 +2802,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-29T04:18:23.379119"
+      "result": "win",
+      "recorded_at": "2026-07-29T04:18:23.379119",
+      "updated_at": "2026-07-30T03:49:49.913616",
+      "final_score": "1-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-01",
@@ -2842,6 +2927,18 @@
       "confidence": "perfect",
       "result": "pending",
       "recorded_at": "2026-07-29T04:18:23.384029"
+    },
+    {
+      "date": "2026-08-01",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Patronato",
+      "away_team": "Quilmes",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-30T04:09:25.165026"
     }
   ]
 }
