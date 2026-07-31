@@ -843,6 +843,16 @@
       "confidence": "close",
       "result": "pending",
       "recorded_at": "2026-07-30T04:23:27.172394"
+    },
+    {
+      "date": "2026-08-03",
+      "type": "home_win",
+      "league": "Ecuador Liga Pro",
+      "home_team": "Leones",
+      "away_team": "Barcelona de G",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:49:06.889761"
     }
   ],
   "over_under": [
@@ -2658,8 +2668,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-27T04:44:33.066693"
+      "result": "loss",
+      "recorded_at": "2026-07-27T04:44:33.066693",
+      "updated_at": "2026-07-31T04:16:09.764053",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-30",
@@ -2670,8 +2683,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-27T04:44:33.067594"
+      "result": "loss",
+      "recorded_at": "2026-07-27T04:44:33.067594",
+      "updated_at": "2026-07-31T04:16:09.765269",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-31",
@@ -2841,8 +2857,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-07-29T04:18:23.380568"
+      "result": "loss",
+      "recorded_at": "2026-07-29T04:18:23.380568",
+      "updated_at": "2026-07-31T04:16:09.766453",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-30",
@@ -2853,8 +2872,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-07-29T04:18:23.380833"
+      "result": "win",
+      "recorded_at": "2026-07-29T04:18:23.380833",
+      "updated_at": "2026-07-31T04:16:09.767660",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-31",
@@ -2939,6 +2961,306 @@
       "confidence": "perfect",
       "result": "pending",
       "recorded_at": "2026-07-30T04:09:25.165026"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Norwegian Tippeligaen",
+      "home_team": "Aalesund",
+      "away_team": "Tromso",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.503723"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Vancouver W",
+      "away_team": "Los Angeles FC",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.504680"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "NY Red Bulls",
+      "away_team": "Orlando City",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.505518"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Inter Miami CF",
+      "away_team": "Columbus Crew",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.506339"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Cincinnati",
+      "away_team": "San Jose",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.506659"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Chicago",
+      "away_team": "Charlotte FC",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.507492"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Kansas City",
+      "away_team": "Houston",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.508332"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Colorado",
+      "away_team": "Austin FC",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.509145"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "LA Galaxy",
+      "away_team": "Dallas",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.509952"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Mexican Primera Apertura",
+      "home_team": "Alianza Lima",
+      "away_team": "Alianza Atletico",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.510760"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Mexican Primera Apertura",
+      "home_team": "Cusco",
+      "away_team": "UTC Cajamarca",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.511068"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Mexican Primera Apertura",
+      "home_team": "Atletico Junior",
+      "away_team": "Millonarios",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.511384"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Korean K-League 2",
+      "home_team": "Busan IPark",
+      "away_team": "Seoul E-Land",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.512170"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Belarus League",
+      "home_team": "Dinamo Brest",
+      "away_team": "Belshina",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.512985"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "St. Louis City SC",
+      "away_team": "Real Salt Lake",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.513785"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Swedish Superettan",
+      "home_team": "Nordic United",
+      "away_team": "Ljungskile",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.514094"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "MLS",
+      "home_team": "Montreal Imp",
+      "away_team": "New England",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.514934"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Mexican Primera Apertura",
+      "home_team": "Racing Club",
+      "away_team": "Tigre",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.515745"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Mexican Primera Apertura",
+      "home_team": "Aldosivi",
+      "away_team": "Gimnasia La Plata",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.516541"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Korean K-League 2",
+      "home_team": "Jeonnam Dragons",
+      "away_team": "Paju Frontier",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.517365"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Chacarita",
+      "away_team": "Agropecuario",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.518192"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Almirante Brown",
+      "away_team": "Racing Cordoba",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.518992"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Deportivo Maipu",
+      "away_team": "Atlanta",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.519841"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Temperley",
+      "away_team": "Gimnasia y Tiro",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.520678"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Argentina Primera Nacional",
+      "home_team": "Olimpia",
+      "away_team": "Rubio Nu",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-07-31T04:38:05.521495"
     }
   ]
 }
