@@ -698,8 +698,11 @@
       "home_team": "Bodo Glimt",
       "away_team": "Lillestrom",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-07-28T04:12:53.068510"
+      "result": "win",
+      "recorded_at": "2026-07-28T04:12:53.068510",
+      "updated_at": "2026-08-01T04:17:07.507503",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-29",
@@ -721,8 +724,11 @@
       "home_team": "Bodo Glimt",
       "away_team": "Lillestrom",
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-07-29T04:25:44.100132"
+      "result": "win",
+      "recorded_at": "2026-07-29T04:25:44.100132",
+      "updated_at": "2026-08-01T04:17:07.507852",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-01",
@@ -853,6 +859,16 @@
       "confidence": "perfect",
       "result": "pending",
       "recorded_at": "2026-07-31T04:49:06.889761"
+    },
+    {
+      "date": "2026-08-04",
+      "type": "home_win",
+      "league": "Ecuador Liga Pro",
+      "home_team": "LDU Quito",
+      "away_team": "Delfin",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-08-01T04:49:30.753338"
     }
   ],
   "over_under": [
@@ -2698,8 +2714,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-07-28T04:08:05.866484"
+      "result": "loss",
+      "recorded_at": "2026-07-28T04:08:05.866484",
+      "updated_at": "2026-08-01T04:17:07.508724",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-07-31",
@@ -2722,8 +2741,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-07-29T04:18:23.372220"
+      "result": "win",
+      "recorded_at": "2026-07-29T04:18:23.372220",
+      "updated_at": "2026-08-01T04:17:07.509604",
+      "final_score": "0-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-01",
@@ -3261,6 +3283,30 @@
       "confidence": "qualified",
       "result": "pending",
       "recorded_at": "2026-07-31T04:38:05.521495"
+    },
+    {
+      "date": "2026-08-01",
+      "type": "over_under",
+      "league": "Swedish Superettan",
+      "home_team": "Ostersunds FK",
+      "away_team": "Osters",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-08-01T04:38:45.247589"
+    },
+    {
+      "date": "2026-08-02",
+      "type": "over_under",
+      "league": "Norwegian Tippeligaen",
+      "home_team": "Aalesund",
+      "away_team": "Tromso",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-08-01T04:38:45.248132"
     }
   ]
 }
