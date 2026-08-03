@@ -1,0 +1,171 @@
+
+[DRY RUN] 2026-07-01
+------------------------------
+[WIN] Mexico vs Ecuador
+   Home Win -> WIN (2-0)
+   Safer: Double Chance (Home or Draw) -> WIN (2-0)
+
+
+[DRY RUN] 2026-06-30
+------------------------------
+[WIN] France vs Sweden
+   Home Win -> WIN (3-0)
+   Safer: Double Chance (Home or Draw) -> WIN (3-0)
+
+[WIN] France vs Sweden
+   Over 2.5 -> WIN (3-0)
+   Safer: Over 1.5 Goals -> WIN (3-0)
+
+
+[DRY RUN] 2026-06-29
+------------------------------
+[WIN] Germany vs Paraguay
+   Over 2.5 -> LOSS (1-1)
+   Safer: Over 1.5 Goals -> WIN (1-1)
+
+
+[DRY RUN] 2026-06-27
+------------------------------
+[WIN] TPS Turku vs FF Jaro
+   Home Win -> WIN (3-2)
+   Safer: Double Chance (Home or Draw) -> WIN (3-2)
+
+[WIN] Varbergs Bois vs Osters
+   Over 2.5 -> WIN (2-1)
+   Safer: Over 1.5 Goals -> WIN (2-1)
+
+[WIN] Nordic United vs IK Oddevold
+   Over 2.5 -> WIN (3-3)
+   Safer: Over 1.5 Goals -> WIN (3-3)
+
+[WIN] Torpedo Zh vs Bate Borisov
+   Under 2.5 -> LOSS (3-0)
+   Safer: Under 3.5 Goals -> WIN (3-0)
+
+
+[DRY RUN] 2026-06-26
+------------------------------
+[WIN] Cork City vs Bray
+   Home Win -> WIN (2-0)
+   Safer: Double Chance (Home or Draw) -> WIN (2-0)
+
+[WIN] Senegal vs Iraq
+   Home Win -> WIN (5-0)
+   Safer: Double Chance (Home or Draw) -> WIN (5-0)
+
+[WIN] Cork City vs Bray
+   Over 2.5 -> LOSS (2-0)
+   Safer: Over 1.5 Goals -> WIN (2-0)
+
+[WIN] IK Brage vs Falkenbergs FF
+   Over 2.5 -> WIN (2-4)
+   Safer: Over 1.5 Goals -> WIN (2-4)
+
+[WIN] Norway vs France
+   Over 2.5 -> WIN (1-4)
+   Safer: Over 1.5 Goals -> WIN (1-4)
+
+[WIN] Tunisia vs Netherlands
+   Over 2.5 -> WIN (1-3)
+   Safer: Over 1.5 Goals -> WIN (1-3)
+
+[WIN] Dundalk vs Waterford
+   Over 2.5 -> WIN (2-3)
+   Safer: Over 1.5 Goals -> WIN (2-3)
+
+
+[DRY RUN] 2026-06-15
+------------------------------
+[WIN] Ivory Coast vs Ecuador
+   Home Win -> WIN (1-0)
+   Safer: Double Chance (Home or Draw) -> WIN (1-0)
+
+[WIN] Sundsvall vs Osters
+   Over 2.5 -> WIN (0-4)
+   Safer: Over 1.5 Goals -> WIN (0-4)
+
+[WIN] Ivory Coast vs Ecuador
+   Under 2.5 -> WIN (1-0)
+   Safer: Under 3.5 Goals -> WIN (1-0)
+
+
+[DRY RUN] 2026-06-14
+------------------------------
+[WIN] Gimnasia de Jujuy vs San Martin de San Juan
+   Home Win -> WIN (2-1)
+   Safer: Double Chance (Home or Draw) -> WIN (2-1)
+
+[WIN] Temperley vs Guemes
+   Over 2.5 -> WIN (4-1)
+   Safer: Over 1.5 Goals -> WIN (4-1)
+
+[WIN] Almirante Brown vs Godoy Cruz
+   Under 2.5 -> WIN (1-0)
+   Safer: Under 3.5 Goals -> WIN (1-0)
+
+[WIN] Ferro Carril Oeste vs Acassuso
+   Under 2.5 -> LOSS (2-1)
+   Safer: Under 3.5 Goals -> WIN (2-1)
+
+[WIN] Central Norte vs San Telmo
+   Under 2.5 -> WIN (0-0)
+   Safer: Under 3.5 Goals -> WIN (0-0)
+
+[WIN] Patronato vs Atletico Rafaela
+   Under 2.5 -> WIN (0-0)
+   Safer: Under 3.5 Goals -> WIN (0-0)
+
+
+[DRY RUN] 2026-06-13
+------------------------------
+[WIN] Coquimbo Unido vs O'Higgins
+   Home Win -> PUSH (0-0)
+   Safer: Double Chance (Home or Draw) -> WIN (0-0)
+
+[WIN] Colo-Colo vs Cobresal
+   Home Win -> WIN (3-0)
+   Safer: Double Chance (Home or Draw) -> WIN (3-0)
+
+[WIN] Quilmes vs Gimnasia y Tiro
+   Home Win -> WIN (1-0)
+   Safer: Double Chance (Home or Draw) -> WIN (1-0)
+
+[WIN] Coquimbo Unido vs O'Higgins
+   Over 2.5 -> LOSS (0-0)
+   Safer: Over 1.5 Goals -> LOSS (0-0)
+
+[WIN] Colo-Colo vs Cobresal
+   Over 2.5 -> WIN (3-0)
+   Safer: Over 1.5 Goals -> WIN (3-0)
+
+[WIN] Ferrocarril Midland vs Atlanta
+   Under 2.5 -> LOSS (1-2)
+   Safer: Under 3.5 Goals -> WIN (1-2)
+
+[WIN] Nueva Chicago vs Chacarita
+   Under 2.5 -> WIN (2-0)
+   Safer: Under 3.5 Goals -> WIN (2-0)
+
+[WIN] Almagro vs Agropecuario
+   Under 2.5 -> LOSS (2-1)
+   Safer: Under 3.5 Goals -> WIN (2-1)
+
+[WIN] Quilmes vs Gimnasia y Tiro
+   Under 2.5 -> WIN (1-0)
+   Safer: Under 3.5 Goals -> WIN (1-0)
+
+[WIN] Audax Italiano vs La Serena
+   Over 2.5 -> LOSS (1-1)
+   Safer: Over 1.5 Goals -> WIN (1-1)
+
+[WIN] USA vs Paraguay
+   Over 2.5 -> WIN (4-1)
+   Safer: Over 1.5 Goals -> WIN (4-1)
+
+
+[DRY RUN] 2026-06-01
+------------------------------
+[WIN] Palestino vs Audax Italiano
+   Home Win -> PUSH (0-0)
+   Safer: Double Chance (Home or Draw) -> WIN (0-0)
+
