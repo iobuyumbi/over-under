@@ -549,6 +549,22 @@ def get_yesterday_results(prediction_type=None, detailed=False):
     results = []
     summary = {"wins": 0, "losses": 0, "pushes": 0, "pending": 0}
 
+    def report_hw_key(pick):
+        return (
+            pick.get("date", "")[:10],
+            pick.get("home_team", pick.get("home")),
+            pick.get("away_team", pick.get("away")),
+            "home_win",
+        )
+
+    def report_ou_key(pick):
+        return (
+            pick.get("date", "")[:10],
+            pick.get("home_team", pick.get("home")),
+            pick.get("away_team", pick.get("away")),
+            str(pick.get("prediction", "over")).lower(),
+        )
+
     def tally(result):
         if result == "win":
             summary["wins"] += 1
@@ -574,18 +590,22 @@ def get_yesterday_results(prediction_type=None, detailed=False):
                 results.append(line)
 
     if prediction_type in (None, "home_win"):
-        for pick in history["home_win"]:
-            if pick.get("date", "")[:10] != yesterday:
-                continue
+        yesterday_hw = [
+            pick for pick in history["home_win"]
+            if pick.get("date", "")[:10] == yesterday
+        ]
+        for pick in dedupe_predictions(yesterday_hw, report_hw_key):
             append_pick(pick, "Home Win" if detailed else "HOME WIN")
 
     if prediction_type in (None, "over_under"):
-        for pick in history["over_under"]:
-            if pick.get("date", "")[:10] != yesterday:
-                continue
+        yesterday_ou = [
+            pick for pick in history["over_under"]
+            if pick.get("date", "")[:10] == yesterday
+        ]
+        for pick in dedupe_predictions(yesterday_ou, report_ou_key):
             market = (
                 "Over 2.5"
-                if pick.get("prediction", "over").lower() in ("over", "over 2.5")
+                if str(pick.get("prediction", "over")).lower() in ("over", "over 2.5")
                 else "Under 2.5"
             )
             if not detailed:
@@ -620,7 +640,6 @@ def append_yesterday_section(lines, prediction_type, detailed=False):
     else:
         for line in yesterday_results:
             lines.append(f"  {line}")
-            lines.append("")
 
     lines.append("")
     lines.append("---")
