@@ -1,0 +1,131 @@
+{
+  "home_win": {
+    "total": 19,
+    "wins": 13,
+    "losses": 5,
+    "pushes": 0,
+    "pending": 0,
+    "decisions": 18,
+    "win_rate": 72.22222222222221,
+    "by_confidence": {
+      "qualified": {
+        "wins": 1,
+        "losses": 1,
+        "pushes": 0,
+        "pending": 0,
+        "decisions": 2,
+        "win_rate": 50.0
+      },
+      "close": {
+        "wins": 3,
+        "losses": 1,
+        "pushes": 0,
+        "pending": 0,
+        "decisions": 4,
+        "win_rate": 75.0
+      },
+      "perfect": {
+        "wins": 9,
+        "losses": 3,
+        "pushes": 0,
+        "pending": 0,
+        "decisions": 12,
+        "win_rate": 75.0
+      }
+    }
+  },
+  "double_chance": {
+    "total": 19,
+    "wins": 15,
+    "losses": 3,
+    "pending": 0,
+    "decisions": 18,
+    "win_rate": 83.33333333333334
+  },
+  "over": {
+    "total": 42,
+    "wins": 22,
+    "losses": 13,
+    "pushes": 0,
+    "pending": 0,
+    "decisions": 35,
+    "win_rate": 62.857142857142854,
+    "by_confidence": {
+      "qualified": {
+        "wins": 5,
+        "losses": 5,
+        "pushes": 0,
+        "pending": 0,
+        "decisions": 10,
+        "win_rate": 50.0
+      },
+      "close": {
+        "wins": 1,
+        "losses": 1,
+        "pushes": 0,
+        "pending": 0,
+        "decisions": 2,
+        "win_rate": 50.0
+      },
+      "perfect": {
+        "wins": 16,
+        "losses": 7,
+        "pushes": 0,
+        "pending": 0,
+        "decisions": 23,
+        "win_rate": 69.56521739130434
+      }
+    }
+  },
+  "over_1_5": {
+    "total": 42,
+    "wins": 27,
+    "losses": 8,
+    "pending": 0,
+    "decisions": 35,
+    "win_rate": 77.14285714285715
+  },
+  "under": {
+    "total": 25,
+    "wins": 6,
+    "losses": 13,
+    "pushes": 0,
+    "pending": 3,
+    "decisions": 19,
+    "win_rate": 31.57894736842105,
+    "by_confidence": {
+      "close": {
+        "wins": 2,
+        "losses": 1,
+        "pushes": 0,
+        "pending": 1,
+        "decisions": 3,
+        "win_rate": 66.66666666666666
+      },
+      "perfect": {
+        "wins": 4,
+        "losses": 10,
+        "pushes": 0,
+        "pending": 2,
+        "decisions": 14,
+        "win_rate": 28.57142857142857
+      },
+      "qualified": {
+        "wins": 0,
+        "losses": 2,
+        "pushes": 0,
+        "pending": 0,
+        "decisions": 2,
+        "win_rate": 0.0
+      }
+    }
+  },
+  "under_3_5": {
+    "total": 25,
+    "wins": 12,
+    "losses": 7,
+    "pending": 3,
+    "decisions": 19,
+    "win_rate": 63.1578947368421
+  }
+}
