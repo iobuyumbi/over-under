@@ -893,8 +893,11 @@
       "home_team": "Leones",
       "away_team": "Barcelona de G",
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-07-31T04:49:06.889761"
+      "result": "loss",
+      "recorded_at": "2026-07-31T04:49:06.889761",
+      "updated_at": "2026-08-04T03:57:13.768675",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-04",
@@ -915,6 +918,26 @@
       "confidence": "perfect",
       "result": "pending",
       "recorded_at": "2026-08-02T04:40:53.316447"
+    },
+    {
+      "date": "2026-08-07",
+      "type": "home_win",
+      "league": "Swedish Superettan",
+      "home_team": "Ostersunds FK",
+      "away_team": "Sundsvall",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-08-04T04:16:57.666995"
+    },
+    {
+      "date": "2026-08-07",
+      "type": "home_win",
+      "league": "Swedish Superettan",
+      "home_team": "Sport Huancayo",
+      "away_team": "Los Chankas",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-08-04T04:16:57.668155"
     }
   ],
   "over_under": [
@@ -3501,8 +3524,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-03T04:33:14.437838"
+      "result": "win",
+      "recorded_at": "2026-08-03T04:33:14.437838",
+      "updated_at": "2026-08-04T03:57:13.768950",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-03",
@@ -3513,8 +3539,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-03T04:33:14.438892"
+      "result": "loss",
+      "recorded_at": "2026-08-03T04:33:14.438892",
+      "updated_at": "2026-08-04T03:57:13.769528",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-03",
@@ -3525,8 +3554,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-03T04:33:14.439813"
+      "result": "win",
+      "recorded_at": "2026-08-03T04:33:14.439813",
+      "updated_at": "2026-08-04T03:57:13.770185",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-03",
@@ -3537,8 +3569,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-03T04:33:14.440751"
+      "result": "win",
+      "recorded_at": "2026-08-03T04:33:14.440751",
+      "updated_at": "2026-08-04T03:57:13.770941",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-04",
@@ -3585,8 +3620,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-08-03T04:33:14.444539"
+      "result": "win",
+      "recorded_at": "2026-08-03T04:33:14.444539",
+      "updated_at": "2026-08-04T03:57:13.771212",
+      "final_score": "6-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-03",
@@ -3597,8 +3635,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-08-03T04:33:14.445503"
+      "result": "loss",
+      "recorded_at": "2026-08-03T04:33:14.445503",
+      "updated_at": "2026-08-04T03:57:13.771498",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-03",
@@ -3609,8 +3650,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-08-03T04:33:14.446465"
+      "result": "win",
+      "recorded_at": "2026-08-03T04:33:14.446465",
+      "updated_at": "2026-08-04T03:57:13.772050",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-05",
@@ -3645,8 +3689,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-03T04:33:14.449383"
+      "result": "win",
+      "recorded_at": "2026-08-03T04:33:14.449383",
+      "updated_at": "2026-08-04T03:57:13.772595",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-03",
@@ -3693,8 +3740,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-08-03T04:33:14.453288"
+      "result": "win",
+      "recorded_at": "2026-08-03T04:33:14.453288",
+      "updated_at": "2026-08-04T03:57:13.773684",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-04",
@@ -3731,6 +3781,66 @@
       "confidence": "qualified",
       "result": "pending",
       "recorded_at": "2026-08-03T04:33:14.455041"
+    },
+    {
+      "date": "2026-08-05",
+      "type": "over_under",
+      "league": "Scottish Highland League",
+      "home_team": "Caracas",
+      "away_team": "Deportivo La Guaira",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-08-04T04:12:23.766314"
+    },
+    {
+      "date": "2026-08-07",
+      "type": "over_under",
+      "league": "Korean K-League 2",
+      "home_team": "Gyeongnam",
+      "away_team": "Daegu",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-08-04T04:12:23.766758"
+    },
+    {
+      "date": "2026-08-07",
+      "type": "over_under",
+      "league": "Korean K-League 2",
+      "home_team": "Hwaseong",
+      "away_team": "Seoul E-Land",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-08-04T04:12:23.767783"
+    },
+    {
+      "date": "2026-08-07",
+      "type": "over_under",
+      "league": "Swedish Superettan",
+      "home_team": "Sport Huancayo",
+      "away_team": "Los Chankas",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-08-04T04:12:23.768803"
+    },
+    {
+      "date": "2026-08-04",
+      "type": "over_under",
+      "league": "Ecuador Liga Pro",
+      "home_team": "LDU Quito",
+      "away_team": "Delfin",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-08-04T04:12:23.769802"
     }
   ]
 }
