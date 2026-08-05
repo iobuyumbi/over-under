@@ -1,0 +1,299 @@
+{
+  "metadata": {
+    "scanned_window": [
+      "2026-08-05",
+      "2026-08-06",
+      "2026-08-07",
+      "2026-08-08"
+    ],
+    "bankroll": 1000.0,
+    "odds": 2.8,
+    "max_exposure": 0.25,
+    "generated_at": "2026-08-05T04:33:26.038955"
+  },
+  "perfect": [
+    {
+      "match": {
+        "league": "Swedish Superettan",
+        "home": "Ostersunds FK",
+        "away": "Sundsvall",
+        "home_team_id": "1941",
+        "away_team_id": "3309",
+        "date": "2026-08-07",
+        "status": "Scheduled"
+      },
+      "score": 10,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals conceded",
+        "Away goals scored",
+        "Away wins",
+        "Home overall form (5)",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (5/6 No Losses)",
+        "Home goals scored": "PASS (10 GF)",
+        "Home goals conceded": "FAIL (7)",
+        "Home wins": "PASS (4/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (5/6 Losses)",
+        "Away goals conceded": "PASS (15 GA)",
+        "Away goals scored": "PASS (4 GF)",
+        "Away wins": "PASS (1/6 Wins)",
+        "Home overall form (5)": "PASS (3W-1L in 5)",
+        "Away overall form (5)": "PASS (0W-5L in 5)"
+      },
+      "is_perfect": false,
+      "tier": "perfect",
+      "confidence_score": 91.2,
+      "model": {
+        "home_strength": 0.699,
+        "away_strength": 0.222,
+        "strength_gap": 0.477,
+        "home_win_prob": 87.1,
+        "confidence": "HIGH"
+      },
+      "gate_passed": true,
+      "data_mult": 1.0,
+      "weak_league_mult": 1.0,
+      "regression_mult": 1.0,
+      "min_score_threshold": 9,
+      "kelly": 5.06,
+      "guards": {
+        "weak_roi_league": false,
+        "regression_penalty_applied": []
+      }
+    },
+    {
+      "match": {
+        "league": "Swedish Superettan",
+        "home": "Sport Huancayo",
+        "away": "Los Chankas",
+        "home_team_id": "7548",
+        "away_team_id": "8012",
+        "date": "2026-08-07",
+        "status": "Scheduled"
+      },
+      "score": 9,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals conceded",
+        "Away goals scored",
+        "Away wins",
+        "Home overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (6/6 No Losses)",
+        "Home goals scored": "PASS (12 GF)",
+        "Home goals conceded": "FAIL (6)",
+        "Home wins": "PASS (4/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (4/6 Losses)",
+        "Away goals conceded": "PASS (14 GA)",
+        "Away goals scored": "PASS (4 GF)",
+        "Away wins": "PASS (0/6 Wins)",
+        "Home overall form (5)": "PASS (4W-1L in 5)",
+        "Away overall form (5)": "FAIL (3W-2L in 5)"
+      },
+      "is_perfect": false,
+      "tier": "perfect",
+      "confidence_score": 88.5,
+      "model": {
+        "home_strength": 0.666,
+        "away_strength": 0.132,
+        "strength_gap": 0.534,
+        "home_win_prob": 89.4,
+        "confidence": "HIGH"
+      },
+      "gate_passed": true,
+      "data_mult": 1.0,
+      "weak_league_mult": 1.0,
+      "regression_mult": 1.0,
+      "min_score_threshold": 9,
+      "kelly": 5.28,
+      "guards": {
+        "weak_roi_league": false,
+        "regression_penalty_applied": []
+      }
+    },
+    {
+      "match": {
+        "league": "Japanese J1 League",
+        "home": "Sanf Hiroshima",
+        "away": "JEF United",
+        "home_team_id": "2981",
+        "away_team_id": "382",
+        "date": "2026-08-08",
+        "status": "Scheduled"
+      },
+      "score": 9,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away goals conceded",
+        "Away wins",
+        "Home overall form (5)",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (6/6 No Losses)",
+        "Home goals scored": "PASS (12 GF)",
+        "Home goals conceded": "FAIL (6)",
+        "Home wins": "PASS (4/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (4/6 Losses)",
+        "Away goals conceded": "PASS (11 GA)",
+        "Away goals scored": "FAIL (8)",
+        "Away wins": "PASS (1/6 Wins)",
+        "Home overall form (5)": "PASS (5W-0L in 5)",
+        "Away overall form (5)": "PASS (0W-4L in 5)"
+      },
+      "is_perfect": false,
+      "tier": "perfect",
+      "confidence_score": 87.1,
+      "model": {
+        "home_strength": 0.699,
+        "away_strength": 0.245,
+        "strength_gap": 0.454,
+        "home_win_prob": 86.0,
+        "confidence": "HIGH"
+      },
+      "gate_passed": true,
+      "data_mult": 1.0,
+      "weak_league_mult": 1.0,
+      "regression_mult": 1.0,
+      "min_score_threshold": 9,
+      "kelly": 4.95,
+      "guards": {
+        "weak_roi_league": false,
+        "regression_penalty_applied": []
+      }
+    },
+    {
+      "match": {
+        "league": "Swedish Superettan",
+        "home": "Norrkoping",
+        "away": "IK Brage",
+        "home_team_id": "1841",
+        "away_team_id": "1356",
+        "date": "2026-08-08",
+        "status": "Scheduled"
+      },
+      "score": 9,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home goals conceded",
+        "Home wins",
+        "Home recent form",
+        "Away losses",
+        "Away wins",
+        "Home overall form (5)",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (5/6 No Losses)",
+        "Home goals scored": "PASS (10 GF)",
+        "Home goals conceded": "PASS (2 GA)",
+        "Home wins": "PASS (4/6 Wins)",
+        "Home recent form": "PASS (Won Last 2)",
+        "Away losses": "PASS (3/6 Losses)",
+        "Away goals conceded": "FAIL (9)",
+        "Away goals scored": "FAIL (9)",
+        "Away wins": "PASS (1/6 Wins)",
+        "Home overall form (5)": "PASS (4W-1L in 5)",
+        "Away overall form (5)": "PASS (2W-2L in 5)"
+      },
+      "is_perfect": false,
+      "tier": "perfect",
+      "confidence_score": 88.1,
+      "model": {
+        "home_strength": 0.699,
+        "away_strength": 0.189,
+        "strength_gap": 0.51,
+        "home_win_prob": 88.5,
+        "confidence": "HIGH"
+      },
+      "gate_passed": true,
+      "data_mult": 1.0,
+      "weak_league_mult": 1.0,
+      "regression_mult": 1.0,
+      "min_score_threshold": 9,
+      "kelly": 5.2,
+      "guards": {
+        "weak_roi_league": false,
+        "regression_penalty_applied": []
+      }
+    },
+    {
+      "match": {
+        "league": "Swedish Superettan",
+        "home": "Santa Fe",
+        "away": "Boyaca Chico",
+        "home_team_id": "5597",
+        "away_team_id": "7504",
+        "date": "2026-08-08",
+        "status": "Scheduled"
+      },
+      "score": 9,
+      "passed": [
+        "Home form (no losses)",
+        "Home goals scored",
+        "Home wins",
+        "Away losses",
+        "Away goals conceded",
+        "Away goals scored",
+        "Away wins",
+        "Home overall form (5)",
+        "Away overall form (5)"
+      ],
+      "details": {
+        "Home form (no losses)": "PASS (6/6 No Losses)",
+        "Home goals scored": "PASS (13 GF)",
+        "Home goals conceded": "FAIL (6)",
+        "Home wins": "PASS (3/6 Wins)",
+        "Home recent form": "FAIL (1/2)",
+        "Away losses": "PASS (6/6 Losses)",
+        "Away goals conceded": "PASS (21 GA)",
+        "Away goals scored": "PASS (0 GF)",
+        "Away wins": "PASS (0/6 Wins)",
+        "Home overall form (5)": "PASS (2W-1L in 5)",
+        "Away overall form (5)": "PASS (2W-3L in 5)"
+      },
+      "is_perfect": false,
+      "tier": "perfect",
+      "confidence_score": 84.5,
+      "model": {
+        "home_strength": 0.505,
+        "away_strength": 0.132,
+        "strength_gap": 0.373,
+        "home_win_prob": 81.6,
+        "confidence": "HIGH"
+      },
+      "gate_passed": true,
+      "data_mult": 1.0,
+      "weak_league_mult": 1.0,
+      "regression_mult": 1.0,
+      "min_score_threshold": 9,
+      "kelly": 4.52,
+      "guards": {
+        "weak_roi_league": false,
+        "regression_penalty_applied": []
+      }
+    }
+  ],
+  "qualified": [],
+  "close_calls": []
+}
