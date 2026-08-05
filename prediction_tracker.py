@@ -21,9 +21,9 @@ SETTLED_RESULTS = frozenset({"win", "loss", "push"})
 MEDIUM = "MEDIUM"
 
 # User-facing label helpers
-PICK_TIER_PREMIUM = "Premium picks"
-PICK_TIER_STRONG = "Solid picks"
-PICK_TIER_VALUE = "Watchlist"
+PICK_TIER_PREMIUM = "🔥 Premium picks"
+PICK_TIER_STRONG = "✅ Solid picks"
+PICK_TIER_VALUE = "👀 Watchlist"
 
 
 def format_confidence_label(confidence):
@@ -43,13 +43,17 @@ def format_confidence_label(confidence):
 def format_result_badge(result):
     """Short result label for settled picks."""
     normalized = str(result or "").lower()
-    return {"win": "Win", "loss": "Loss", "push": "Push"}.get(normalized, str(result or "Pending"))
+    return {
+        "win": "✅ Win",
+        "loss": "❌ Loss",
+        "push": "➖ Push",
+    }.get(normalized, "⏳ Pending")
 
 
 def format_result_tag(result):
     """Bracket tag for results summaries."""
     normalized = str(result or "").lower()
-    return {"win": "WIN", "loss": "LOSS", "push": "PUSH"}.get(normalized, "PENDING")
+    return {"win": "✅", "loss": "❌", "push": "➖"}.get(normalized, "⏳")
 
 
 DEFAULT_BLOCKED_REGIONS = (
@@ -722,7 +726,7 @@ def append_yesterday_section(lines, prediction_type, detailed=False):
     if not yesterday_results:
         return
 
-    lines.append("YESTERDAY")
+    lines.append("📌 YESTERDAY")
     lines.append(f"Date: {yesterday_date}")
     lines.append("")
     header = format_yesterday_header(yesterday_summary)
@@ -734,13 +738,17 @@ def append_yesterday_section(lines, prediction_type, detailed=False):
         for line in yesterday_results:
             lines.append(line)
     else:
-        for line in yesterday_results:
+        max_lines = 8
+        for line in yesterday_results[:max_lines]:
             lines.append(f"  {line}")
+        remaining = len(yesterday_results) - max_lines
+        if remaining > 0:
+            lines.append(f"  ...and {remaining} more")
 
     lines.append("")
     lines.append("---")
     lines.append("")
-    lines.append("TODAY")
+    lines.append("📅 TODAY")
     lines.append("")
 
 
@@ -748,12 +756,12 @@ def format_yesterday_header(summary):
     """Build a one-line record summary for daily reports.""" 
     settled = summary["wins"] + summary["losses"] + summary["pushes"] 
     if settled: 
-        line = f"Yesterday: {summary['wins']}W-{summary['losses']}L-{summary['pushes']}P" 
+        line = f"📊 Record: {summary['wins']}W-{summary['losses']}L-{summary['pushes']}P" 
         if summary["pending"]: 
             line += f" ({summary['pending']} pending)" 
         return line 
     if summary["pending"]: 
-        return f"Pending: {summary['pending']}" 
+        return f"⏳ Pending: {summary['pending']}" 
     return None
 
 

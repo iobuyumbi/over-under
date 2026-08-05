@@ -788,7 +788,7 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
 
     # Clean report (mobile-friendly)
     lines = []
-    lines.append("Home win picks")
+    lines.append("🏠 Home Win picks")
     lines.append("")
     
     if len(included_dates) > 1:
@@ -899,18 +899,27 @@ def main():
         action="store_true",
         help="Clear the SQLite cache before running"
     )
+    parser.add_argument(
+        "--days",
+        type=int,
+        default=None,
+        help="Number of days to scan starting from the date (default: 4, weekends: 6)"
+    )
     args = parser.parse_args()
 
     if args.clear_cache:
         cache.clear()
 
     start_date = datetime.strptime(args.date, "%Y-%m-%d")
+    scan_days = args.days
+    if scan_days is None:
+        scan_days = 6 if start_date.weekday() >= 4 else 4
     perfect, qualified, close_calls = [], [], []
     scanned_dates = []
 
     print(f"Starting Home Win analysis from {args.date}...")
 
-    for day_offset in range(4):
+    for day_offset in range(scan_days):
         current_date = start_date + timedelta(days=day_offset)
         date_str = current_date.strftime("%Y-%m-%d")
         scanned_dates.append(date_str)
@@ -963,10 +972,6 @@ def main():
                         close_calls.append(data)
                     elif data["score"] >= MAX_HOME_WIN_SCORE - 2:
                         close_calls.append(data)
-
-        if len(perfect) + len(qualified) >= 12:
-            logger.info("Reached target of 12+ qualifying matches. Stopping scan.")
-            break
 
     # Apply portfolio Kelly cap
     all_recs = perfect + qualified + close_calls

@@ -1230,7 +1230,7 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
     lines = []
-    lines.append("Over/under 2.5 picks")
+    lines.append("⚽️ Over/Under 2.5 picks")
     lines.append("")
     
     if len(included_dates) > 1:
@@ -1244,7 +1244,7 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     
     # Over 2.5 section
     if included_over:
-        lines.append("Over 2.5 goals")
+        lines.append("🟢 Over 2.5 goals")
         lines.append("")
         
         # Group over picks
@@ -1279,7 +1279,7 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     
     # Under 2.5 section
     if included_under:
-        lines.append("Under 2.5 goals")
+        lines.append("🔵 Under 2.5 goals")
         lines.append("")
         
         # Group under picks
@@ -1362,12 +1362,21 @@ def main():
         action="store_true",
         help="Clear the SQLite cache before running"
     )
+    parser.add_argument(
+        "--days",
+        type=int,
+        default=None,
+        help="Number of days to scan starting from the date (default: 4, weekends: 6)"
+    )
     args = parser.parse_args()
 
     if args.clear_cache:
         cache.clear()
 
     start_date = datetime.strptime(args.date, "%Y-%m-%d")
+    scan_days = args.days
+    if scan_days is None:
+        scan_days = 6 if start_date.weekday() >= 4 else 4
 
     # Over 2.5 buckets
     over_perfect, over_qualified, over_close, over_weak = [], [], [], []
@@ -1378,7 +1387,7 @@ def main():
 
     print(f"Starting Over/Under 2.5 analysis from {args.date}...")
 
-    for day_offset in range(4):
+    for day_offset in range(scan_days):
         current_date = start_date + timedelta(days=day_offset)
         date_str = current_date.strftime("%Y-%m-%d")
         scanned_dates.append(date_str)
@@ -1444,17 +1453,6 @@ def main():
                         under_close.append(data)
                     elif data["under"]["score"] >= max(1, MAX_UNDER_SCORE - 2):
                         under_weak.append(data)
-
-        # Early exit only if BOTH markets have sufficient matches
-        over_total = len(over_perfect) + len(over_qualified)
-        under_total = len(under_perfect) + len(under_qualified)
-
-        if over_total >= 12 and under_total >= 8:
-            logger.info(f"Reached targets: Over={over_total}, Under={under_total}. Stopping scan.")
-            break
-        elif over_total >= 15:
-            logger.info(f"Over market saturated ({over_total}). Continuing scan for Under matches.")
-            # Don't break - keep scanning for Under value
 
     # Apply portfolio Kelly cap separately for Over and Under
     apply_portfolio_kelly(over_perfect + over_qualified + over_close, "over", args.bankroll, MAX_TOTAL_EXPOSURE / 2)
