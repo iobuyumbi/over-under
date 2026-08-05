@@ -115,11 +115,104 @@ def _load_blocked_regions():
     if not normalized:
         logger.warning("blacklist.json had no valid region entries, using defaults")
         return list(DEFAULT_BLOCKED_REGIONS)
+
+    existing_names = {str(region.get("name", "")).strip().lower() for region in normalized}
+    for region in DEFAULT_BLOCKED_REGIONS:
+        name = str(region.get("name", "")).strip().lower()
+        if name and name not in existing_names:
+            normalized.append({
+                "name": region.get("name", "Unnamed"),
+                "league_keywords": list(region.get("league_keywords", []) or []),
+                "team_keywords": list(region.get("team_keywords", []) or []),
+            })
+            existing_names.add(name)
+
     logger.info("Loaded %d blocked region(s) from blacklist.json", len(normalized))
     return normalized
 
 
 BLOCKED_REGIONS = _load_blocked_regions()
+
+_AUTO_BLOCK_POOR_LEAGUES = str(os.getenv("AUTO_BLOCK_POOR_LEAGUES", "1")).strip().lower() not in {"0", "false", "no"}
+_AUTO_BLOCK_LEAGUE_WINDOW_DAYS = int(os.getenv("AUTO_BLOCK_LEAGUE_WINDOW_DAYS", "120"))
+_AUTO_BLOCK_LEAGUE_MIN_DECIDED = int(os.getenv("AUTO_BLOCK_LEAGUE_MIN_DECIDED", "10"))
+_AUTO_BLOCK_LEAGUE_MAX_WIN_RATE = float(os.getenv("AUTO_BLOCK_LEAGUE_MAX_WIN_RATE", "0.50"))
+_AUTO_BLOCK_LEAGUE_MIN_DECIDED_LOW_SAMPLE = int(os.getenv("AUTO_BLOCK_LEAGUE_MIN_DECIDED_LOW_SAMPLE", "3"))
+_AUTO_BLOCK_LEAGUE_MAX_WIN_RATE_LOW_SAMPLE = float(os.getenv("AUTO_BLOCK_LEAGUE_MAX_WIN_RATE_LOW_SAMPLE", "0.35"))
+_POOR_LEAGUE_KEYWORDS_CACHE = None
+
+
+def _parse_pick_date(value):
+    if not value:
+        return None
+    text = str(value).strip()
+    if len(text) >= 10:
+        text = text[:10]
+    try:
+        return datetime.strptime(text, "%Y-%m-%d").date()
+    except ValueError:
+        return None
+
+
+def _get_poor_league_keywords():
+    global _POOR_LEAGUE_KEYWORDS_CACHE
+    if _POOR_LEAGUE_KEYWORDS_CACHE is not None:
+        return _POOR_LEAGUE_KEYWORDS_CACHE
+
+    if not _AUTO_BLOCK_POOR_LEAGUES:
+        _POOR_LEAGUE_KEYWORDS_CACHE = frozenset()
+        return _POOR_LEAGUE_KEYWORDS_CACHE
+
+    history = load_history()
+    cutoff = datetime.now().date() - timedelta(days=max(0, _AUTO_BLOCK_LEAGUE_WINDOW_DAYS))
+    stats = defaultdict(lambda: {"win": 0, "loss": 0, "push": 0})
+
+    for section in ("home_win", "over_under"):
+        for pick in history.get(section, []) or []:
+            league = pick.get("league")
+            if not league:
+                continue
+            pick_date = _parse_pick_date(pick.get("date"))
+            if pick_date and pick_date < cutoff:
+                continue
+            result = resolve_pick_result(pick)
+            normalized_result = str(result or "").strip().lower()
+            if normalized_result not in SETTLED_RESULTS:
+                continue
+            stats[league][normalized_result] += 1
+
+    poor = set()
+    details = []
+    for league, counter in stats.items():
+        decided = counter["win"] + counter["loss"]
+        win_rate = counter["win"] / decided if decided else 0.0
+        if (
+            decided >= _AUTO_BLOCK_LEAGUE_MIN_DECIDED and win_rate < _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE
+        ) or (
+            decided >= _AUTO_BLOCK_LEAGUE_MIN_DECIDED_LOW_SAMPLE
+            and win_rate < _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE_LOW_SAMPLE
+        ):
+            keyword = _normalize_label(league)
+            if keyword:
+                poor.add(keyword)
+                details.append((win_rate, decided, league))
+
+    poor_frozen = frozenset(poor)
+    _POOR_LEAGUE_KEYWORDS_CACHE = poor_frozen
+    if poor_frozen:
+        details.sort(key=lambda item: (item[0], -item[1], str(item[2])))
+        preview = ", ".join(str(name) for _, __, name in details[:5])
+        logger.info(
+            "Auto-blocking %d poor-performing league(s) based on last %d days (min=%d@%.0f%%, low_sample=%d@%.0f%%). Example: %s",
+            len(poor_frozen),
+            _AUTO_BLOCK_LEAGUE_WINDOW_DAYS,
+            _AUTO_BLOCK_LEAGUE_MIN_DECIDED,
+            _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE * 100.0,
+            _AUTO_BLOCK_LEAGUE_MIN_DECIDED_LOW_SAMPLE,
+            _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE_LOW_SAMPLE * 100.0,
+            preview,
+        )
+    return poor_frozen
 
 
 def _normalize_label(value):
@@ -133,6 +226,9 @@ def is_blocked_league(league):
         return False
     for region in BLOCKED_REGIONS:
         if any(keyword in normalized for keyword in region["league_keywords"]):
+            return True
+    for keyword in _get_poor_league_keywords():
+        if keyword and keyword in normalized:
             return True
     return False
 
