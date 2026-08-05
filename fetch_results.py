@@ -671,7 +671,7 @@ def build_yesterday_results_block(history):
 
 
 def write_selected_results_report(dates_to_check, history, dry_run=False):
-    """Rebuild the full selected-results report from history for the date window."""
+    """Rebuild selected-results report from history for the date window."""
     today_str = datetime.now().strftime("%Y-%m-%d")
     yesterday_str = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
     mode = "[DRY RUN] " if dry_run else ""
@@ -679,11 +679,15 @@ def write_selected_results_report(dates_to_check, history, dry_run=False):
     with open(SELECTED_RESULTS_REPORT, "w", encoding="utf-8") as f:
         yesterday_str, yesterday_lines = build_yesterday_results_block(history)
         if yesterday_lines:
-            f.write(f"\n{mode}YESTERDAY\n")
+            f.write(f"\n{mode}📌 YESTERDAY\n")
             f.write(f"Date: {yesterday_str}\n")
             f.write("-" * 30 + "\n")
-            for line in yesterday_lines:
+            max_lines = 20
+            for line in yesterday_lines[:max_lines]:
                 f.write(f"{line}\n")
+            remaining = len(yesterday_lines) - max_lines
+            if remaining > 0:
+                f.write(f"...and {remaining} more\n")
 
         for date_str in dates_to_check:
             if date_str == yesterday_str:
@@ -693,25 +697,35 @@ def write_selected_results_report(dates_to_check, history, dry_run=False):
             unmatched = collect_unmatched_pending_for_date(history, date_str)
             if not settled and not unmatched:
                 continue
-            if not settled and date_str >= today_str:
+            if date_str == today_str:
+                if settled:
+                    f.write(f"\n{mode}📅 TODAY\n")
+                    f.write(f"Date: {date_str}\n")
+                    f.write("-" * 30 + "\n")
+                    for item in settled:
+                        result = resolve_pick_result(
+                            {"result": item["result"], "final_score": item["score"]}
+                        )
+                        tag = format_result_tag(result)
+                        f.write(f"[{tag}] {item['home_team']} vs {item['away_team']}\n")
+                        f.write(f"   {item['prediction']} — {format_result_badge(result)} ({item['score']})\n")
+                        safer_line = format_safer_result_line(item["prediction"], item["score"])
+                        if safer_line:
+                            f.write(f"{safer_line}\n")
+                        f.write("\n")
+
+                if unmatched and settled:
+                    f.write(f"Still unmatched: {len(unmatched)}\n")
+                    for item in unmatched[:5]:
+                        f.write(f"   - {item}\n")
+                    if len(unmatched) > 5:
+                        f.write(f"   ...and {len(unmatched) - 5} more\n")
                 continue
 
-            f.write(f"\n{mode}{date_str}\n")
-            f.write("-" * 30 + "\n")
-
-            for item in settled:
-                result = resolve_pick_result(
-                    {"result": item["result"], "final_score": item["score"]}
-                )
-                tag = format_result_tag(result)
-                f.write(f"[{tag}] {item['home_team']} vs {item['away_team']}\n")
-                f.write(f"   {item['prediction']} — {format_result_badge(result)} ({item['score']})\n")
-                safer_line = format_safer_result_line(item["prediction"], item["score"])
-                if safer_line:
-                    f.write(f"{safer_line}\n")
-                f.write("\n")
-
-            if unmatched:
+            if unmatched and date_str < today_str:
+                f.write(f"\n{mode}⏳ MISSING SCORES\n")
+                f.write(f"Date: {date_str}\n")
+                f.write("-" * 30 + "\n")
                 f.write(f"Still unmatched: {len(unmatched)}\n")
                 for item in unmatched[:5]:
                     f.write(f"   - {item}\n")

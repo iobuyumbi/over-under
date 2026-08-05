@@ -1,2 +1,14 @@
 __pycache__/
 *.pyc
+*.pyo
+*.backup.py
+results_cache.db
+selected_results_report.txt
+home_win_report_*.json
+home_win_vip_report_*.txt
+over_under_25_report_*.json
+over_under_vip_report_*.txt
+weekly_report_*.json
+weekly_report_*.txt
+monthly_report_*.json
+monthly_report_*.txt
