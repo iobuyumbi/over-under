@@ -69,6 +69,19 @@ def _print_top(stats, *, header, min_settled=1, limit=20):
         print("  " + _format_row(label, counter))
 
 
+def _print_bottom(stats, *, header, min_settled=1, limit=20):
+    rows = []
+    for label, counter in stats.items():
+        settled = _settled(counter)
+        if settled < min_settled:
+            continue
+        rows.append((settled, _win_rate(counter), str(label), counter))
+    rows.sort(key=lambda item: (item[1], -item[0], item[2]))
+    print("\n" + header)
+    for _, __, label, counter in rows[:limit]:
+        print("  " + _format_row(label, counter))
+
+
 def _filter_stats(stats, pattern):
     regex = re.compile(pattern, re.IGNORECASE)
     return {k: v for k, v in stats.items() if regex.search(str(k))}
@@ -103,6 +116,12 @@ def main():
         _print_top(
             by_league,
             header="By league (sorted by volume)",
+            min_settled=args.min_settled,
+            limit=args.top,
+        )
+        _print_bottom(
+            by_league,
+            header="Worst leagues (sorted by win rate)",
             min_settled=args.min_settled,
             limit=args.top,
         )
