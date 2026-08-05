@@ -906,8 +906,11 @@
       "home_team": "LDU Quito",
       "away_team": "Delfin",
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-01T04:49:30.753338"
+      "result": "win",
+      "recorded_at": "2026-08-01T04:49:30.753338",
+      "updated_at": "2026-08-05T03:52:55.888451",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-04",
@@ -916,8 +919,11 @@
       "home_team": "Carabobo FC",
       "away_team": "Trujillanos",
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-02T04:40:53.316447"
+      "result": "win",
+      "recorded_at": "2026-08-02T04:40:53.316447",
+      "updated_at": "2026-08-05T03:52:55.888948",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-07",
@@ -938,6 +944,36 @@
       "confidence": "perfect",
       "result": "pending",
       "recorded_at": "2026-08-04T04:16:57.668155"
+    },
+    {
+      "date": "2026-08-08",
+      "type": "home_win",
+      "league": "Japanese J1 League",
+      "home_team": "Sanf Hiroshima",
+      "away_team": "JEF United",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-08-05T04:33:26.039947"
+    },
+    {
+      "date": "2026-08-08",
+      "type": "home_win",
+      "league": "Swedish Superettan",
+      "home_team": "Norrkoping",
+      "away_team": "IK Brage",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-08-05T04:33:26.041186"
+    },
+    {
+      "date": "2026-08-08",
+      "type": "home_win",
+      "league": "Swedish Superettan",
+      "home_team": "Santa Fe",
+      "away_team": "Boyaca Chico",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-08-05T04:33:26.042257"
     }
   ],
   "over_under": [
@@ -3584,8 +3620,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-03T04:33:14.441705"
+      "result": "loss",
+      "recorded_at": "2026-08-03T04:33:14.441705",
+      "updated_at": "2026-08-05T03:52:55.889481",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-04",
@@ -3596,8 +3635,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-03T04:33:14.442636"
+      "result": "win",
+      "recorded_at": "2026-08-03T04:33:14.442636",
+      "updated_at": "2026-08-05T03:52:55.890028",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-06",
@@ -3755,8 +3797,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-08-03T04:33:14.453711"
+      "result": "loss",
+      "recorded_at": "2026-08-03T04:33:14.453711",
+      "updated_at": "2026-08-05T03:52:55.890454",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-04",
@@ -3767,8 +3812,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-08-03T04:33:14.454097"
+      "result": "loss",
+      "recorded_at": "2026-08-03T04:33:14.454097",
+      "updated_at": "2026-08-05T03:52:55.890931",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-06",
@@ -3839,8 +3887,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-04T04:12:23.769802"
+      "result": "loss",
+      "recorded_at": "2026-08-04T04:12:23.769802",
+      "updated_at": "2026-08-05T03:52:55.891334",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     }
   ]
 }
