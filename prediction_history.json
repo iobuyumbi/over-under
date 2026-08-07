@@ -3839,8 +3839,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-08-03T04:33:14.455041"
+      "result": "loss",
+      "recorded_at": "2026-08-03T04:33:14.455041",
+      "updated_at": "2026-08-07T20:26:41.465779",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-05",
