@@ -932,8 +932,11 @@
       "home_team": "Ostersunds FK",
       "away_team": "Sundsvall",
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-04T04:16:57.666995"
+      "result": "win",
+      "recorded_at": "2026-08-04T04:16:57.666995",
+      "updated_at": "2026-08-08T20:14:57.093608",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-07",
@@ -942,8 +945,11 @@
       "home_team": "Sport Huancayo",
       "away_team": "Los Chankas",
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-04T04:16:57.668155"
+      "result": "loss",
+      "recorded_at": "2026-08-04T04:16:57.668155",
+      "updated_at": "2026-08-08T20:14:57.094622",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-08",
@@ -4126,8 +4132,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-04T04:12:23.766758"
+      "result": "loss",
+      "recorded_at": "2026-08-04T04:12:23.766758",
+      "updated_at": "2026-08-08T20:14:57.095439",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-07",
@@ -4138,8 +4147,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-04T04:12:23.767783"
+      "result": "loss",
+      "recorded_at": "2026-08-04T04:12:23.767783",
+      "updated_at": "2026-08-08T20:14:57.096323",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-07",
@@ -4150,8 +4162,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-08-04T04:12:23.768803"
+      "result": "loss",
+      "recorded_at": "2026-08-04T04:12:23.768803",
+      "updated_at": "2026-08-08T20:14:57.097303",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-04",
