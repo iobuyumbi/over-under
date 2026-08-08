@@ -49,7 +49,7 @@ REQUEST_DELAY_MIN = 2.5
 REQUEST_DELAY_MAX = 5.0
 MAX_TOTAL_EXPOSURE = 0.25
 SHRINKAGE_WEIGHT = 0.60
-MAX_OVER_SCORE = 11
+MAX_OVER_SCORE = 13
 MAX_UNDER_SCORE = 10
 
 # Under 2.5 thresholds (from over25tips.com official algorithm)
@@ -380,6 +380,14 @@ def _count_under_25_overall(form):
     return sum(1 for gf, ga in form[:6] if gf + ga < 2.5)
 
 
+BTTS_MIN_6 = 3
+
+
+def _count_btts(form):
+    """Count matches in form where both teams scored (gf>0 AND ga>0 from team's view)."""
+    return sum(1 for gf, ga in form[:6] if gf >= 1 and ga >= 1)
+
+
 # =============================================================================
 # OVER 2.5 ALGORITHM (10-Check Rules + Overall Form)
 # =============================================================================
@@ -482,6 +490,39 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, aw
     else:
         failed.append("Overall goal activity (6)")
         details["Overall goal activity (6)"] = "FAIL (neither team scored/conceded in all 6)"
+        is_perfect = False
+
+    # BTTS rules: both teams scored in >=3 of last 6 (home: 6 home games, away: 6 away games)
+    if len(home_6) >= 6:
+        h_btts = _count_btts(home_6)
+        if h_btts >= BTTS_MIN_6:
+            passed.append("Home BTTS (last 6 home)")
+            details["Home BTTS (last 6 home)"] = f"PASS ({h_btts}/6)"
+            if h_btts < 6:
+                is_perfect = False
+        else:
+            failed.append("Home BTTS (last 6 home)")
+            details["Home BTTS (last 6 home)"] = f"FAIL ({h_btts}/6)"
+            is_perfect = False
+    else:
+        failed.append("Home BTTS (last 6 home)")
+        details["Home BTTS (last 6 home)"] = f"FAIL (only {len(home_6)}/6 home matches)"
+        is_perfect = False
+
+    if len(away_6) >= 6:
+        a_btts = _count_btts(away_6)
+        if a_btts >= BTTS_MIN_6:
+            passed.append("Away BTTS (last 6 away)")
+            details["Away BTTS (last 6 away)"] = f"PASS ({a_btts}/6)"
+            if a_btts < 6:
+                is_perfect = False
+        else:
+            failed.append("Away BTTS (last 6 away)")
+            details["Away BTTS (last 6 away)"] = f"FAIL ({a_btts}/6)"
+            is_perfect = False
+    else:
+        failed.append("Away BTTS (last 6 away)")
+        details["Away BTTS (last 6 away)"] = f"FAIL (only {len(away_6)}/6 away matches)"
         is_perfect = False
 
     return passed, failed, details, is_perfect
@@ -1039,6 +1080,13 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         if _chaos_rule_over(home_6, away_6):
             over_score += 1
 
+        home_btts_6 = _count_btts(home_6)
+        away_btts_6 = _count_btts(away_6)
+        btts_gate = (
+            len(home_6) >= 6 and home_btts_6 >= BTTS_MIN_6 and
+            len(away_6) >= 6 and away_btts_6 >= BTTS_MIN_6
+        )
+
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
             under3_passed, under3_failed, under3_details, under3_perfect = [], [], {}, False
@@ -1071,7 +1119,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
 
         over_min_score = MAX_OVER_SCORE - 2 if _is_weak_roi_league(league_name) else MAX_OVER_SCORE - 3
         under_min_score = MAX_UNDER_SCORE - 1 if _is_weak_roi_league(league_name) else MAX_UNDER_SCORE - 2
-        over_qualifies = bool(over_passed) and over_score >= over_min_score and over_gate
+        over_qualifies = bool(over_passed) and over_score >= over_min_score and over_gate and btts_gate
         under_qualifies = bool(under_passed) and under_score >= under_min_score and under_gate
 
         if over_qualifies or under_qualifies:
@@ -1148,6 +1196,9 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "confidence": over_confidence,
                     "kelly": round(over_kelly * 100, 2),
                     "gate_passed": over_gate,
+                    "btts_gate_passed": btts_gate,
+                    "home_btts_6": home_btts_6,
+                    "away_btts_6": away_btts_6,
                     "data_mult": round(data_mult, 2),
                     "weak_league_mult": round(league_mult, 2),
                     "regression_mult": round(over_regression_penalty, 2),
@@ -1180,6 +1231,9 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "weak_roi_league": _is_weak_roi_league(league_name),
                     "chaos_rule_over": _chaos_rule_over(home_6, away_6),
                     "compact_rule_under": _compact_rule_under(home_6, away_6),
+                    "btts_gate_passed": btts_gate,
+                    "home_btts_6": home_btts_6,
+                    "away_btts_6": away_btts_6,
                     "regression_penalty_applied": regressions,
                 },
             }

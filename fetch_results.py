@@ -27,6 +27,7 @@ from prediction_tracker import (
     get_pending_predictions,
     pick_is_due,
     pick_is_overdue,
+    pick_is_stale_pending,
     resolve_pick_result,
     is_blocked_pick,
     format_pick_result_lines,
@@ -626,19 +627,19 @@ def collect_settled_picks_for_date(history, date_str):
 
 
 def collect_unmatched_pending_for_date(history, date_str):
-    """Past-date picks still pending after settlement (missing scores)."""
+    """Past-date picks still pending after settlement (missing scores). Stale (>3d) hidden."""
     unmatched = []
     for pick in history.get("home_win", []):
         if pick.get("date", "")[:10] != date_str:
             continue
-        if pick.get("result") == "pending" and pick_is_overdue(pick):
+        if pick.get("result") == "pending" and pick_is_overdue(pick) and not pick_is_stale_pending(pick):
             home = pick.get("home_team", pick.get("home"))
             away = pick.get("away_team", pick.get("away"))
             unmatched.append(f"HW: {home} vs {away}")
     for pick in history.get("over_under", []):
         if pick.get("date", "")[:10] != date_str:
             continue
-        if pick.get("result") == "pending" and pick_is_overdue(pick):
+        if pick.get("result") == "pending" and pick_is_overdue(pick) and not pick_is_stale_pending(pick):
             home = pick.get("home_team", pick.get("home"))
             away = pick.get("away_team", pick.get("away"))
             unmatched.append(f"OU: {home} vs {away}")
@@ -759,8 +760,9 @@ def collect_settlement_dates(days_back, history=None):
 
 
 def append_still_pending_report(history):
-    """Note past-date picks that remain pending after a settlement run."""
+    """Note past-date picks that remain pending after a settlement run. Stale (>3d) hidden."""
     pending = get_pending_predictions()
+    pending = [p for p in pending if not pick_is_stale_pending(p)]
     if not pending:
         return
 

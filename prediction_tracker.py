@@ -583,18 +583,48 @@ def pick_is_due(pick):
     return pick_date <= datetime.now().date()
 
 
+PENDING_HIDE_AFTER_DAYS = 3
+
+
+def _pick_date_obj(pick):
+    try:
+        return datetime.strptime(pick.get("date", "")[:10], "%Y-%m-%d").date()
+    except ValueError:
+        return None
+
+
 def pick_is_overdue(pick):
     """True when the fixture date is before today (should have a final score)."""
-    try:
-        pick_date = datetime.strptime(pick["date"][:10], "%Y-%m-%d").date()
-    except ValueError:
+    pick_date = _pick_date_obj(pick)
+    if pick_date is None:
         return False
     return pick_date < datetime.now().date()
 
 
+def _pick_days_old(pick):
+    pick_date = _pick_date_obj(pick)
+    if pick_date is None:
+        return None
+    return (datetime.now().date() - pick_date).days
+
+
+def pick_is_stale_pending(pick, days=PENDING_HIDE_AFTER_DAYS):
+    """True when a pending pick is older than N days (hide from reports)."""
+    if pick.get("result") != "pending":
+        return False
+    age = _pick_days_old(pick)
+    if age is None:
+        return False
+    return age > days
+
+
 def count_report_pending(pick):
-    """Pending for performance reports: only unsettled past fixtures."""
-    return pick.get("result") == "pending" and pick_is_overdue(pick)
+    """Pending for performance reports: unsettled past fixtures, excluding stale ones."""
+    if pick.get("result") != "pending":
+        return False
+    if not pick_is_overdue(pick):
+        return False
+    return not pick_is_stale_pending(pick)
 
 
 def format_yesterday_line(pick, market_label):
@@ -609,7 +639,7 @@ def format_yesterday_line(pick, market_label):
         if score:
             line += f" ({score})"
         return line
-    if pick.get("result") == "pending" and pick_is_overdue(pick):
+    if pick.get("result") == "pending" and pick_is_overdue(pick) and not pick_is_stale_pending(pick):
         return f"{home} vs {away} · {market_label} · Pending"
     return None
 
@@ -633,7 +663,7 @@ def format_pick_result_lines(pick, market_label):
         lines.append("")
         return lines
 
-    if pick.get("result") == "pending" and pick_is_overdue(pick):
+    if pick.get("result") == "pending" and pick_is_overdue(pick) and not pick_is_stale_pending(pick):
         return [f"[PENDING] {home} vs {away} · {market_label}", ""]
 
     return []
@@ -677,7 +707,7 @@ def get_yesterday_results(prediction_type=None, detailed=False):
         result = resolve_pick_result(pick)
         if result in SETTLED_RESULTS:
             tally(result)
-        elif pick.get("result") == "pending" and pick_is_overdue(pick):
+        elif pick.get("result") == "pending" and pick_is_overdue(pick) and not pick_is_stale_pending(pick):
             summary["pending"] += 1
         else:
             return
