@@ -3,6 +3,8 @@ __pycache__/
 *.pyo
 *.backup.py
 results_cache.db
+soccerbase_cache.db
+soccerbase_cache_home.db
 selected_results_report.txt
 home_win_report_*.json
 home_win_vip_report_*.txt
