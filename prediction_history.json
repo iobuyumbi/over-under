@@ -4948,8 +4948,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:37.700616"
+      "result": "loss",
+      "recorded_at": "2026-08-05T13:50:37.700616",
+      "updated_at": "2026-08-13T20:27:43.076770",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-15",
@@ -5212,8 +5215,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:38.902415"
+      "result": "loss",
+      "recorded_at": "2026-08-05T13:50:38.902415",
+      "updated_at": "2026-08-13T20:27:43.077124",
+      "final_score": "0-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-13",
