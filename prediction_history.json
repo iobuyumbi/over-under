@@ -5230,8 +5230,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:39.050889"
+      "result": "win",
+      "recorded_at": "2026-08-05T13:50:39.050889",
+      "updated_at": "2026-08-14T20:19:32.414120",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-15",
