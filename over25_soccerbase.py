@@ -50,7 +50,7 @@ REQUEST_DELAY_MAX = 5.0
 MAX_TOTAL_EXPOSURE = 0.25
 SHRINKAGE_WEIGHT = 0.60
 MAX_OVER_SCORE = 13
-MAX_UNDER_SCORE = 10
+MAX_UNDER_SCORE = 12
 
 # Under 2.5 thresholds (from over25tips.com official algorithm)
 UNDER_HOME_SCORED_CAP = 1.2      # Max avg goals scored by home team in last 6 home
@@ -387,11 +387,17 @@ def _count_under_25_overall(form):
 
 
 BTTS_MIN_6 = 3
+NON_BTTS_MIN_6 = 3
 
 
 def _count_btts(form):
     """Count matches in form where both teams scored (gf>0 AND ga>0 from team's view)."""
     return sum(1 for gf, ga in form[:6] if gf >= 1 and ga >= 1)
+
+
+def _count_non_btts(form):
+    """Count matches in form where at least one team blanked (gf=0 OR ga=0) — opposite of BTTS."""
+    return sum(1 for gf, ga in form[:6] if gf == 0 or ga == 0)
 
 
 def _btts_gate_passes(home_6, away_6):
@@ -629,11 +635,21 @@ def apply_under_6game_checks(home_6, away_6):
     6-game average checks for Under 2.5 (supplementary to 3-game rules).
     These are NOT part of the official over25tips.com algorithm but add
     statistical rigor for classification tiers.
+
+    Added UC5/UC6 (non-BTTS / clean-sheet games): direct opposite of Over's BTTS checks.
+    A match where at least one team blanked (gf=0 OR ga=0) is the statistical
+    complement of a BTTS match and strongly correlates with Under 2.5 outcomes.
     """
     passed, failed, details = [], [], {}
     is_perfect = True
 
-    if len(home_6) >= 6 and len(away_6) >= 6:
+    home_6 = home_6 or []
+    away_6 = away_6 or []
+
+    h_len = min(len(home_6), 6)
+    a_len = min(len(away_6), 6)
+
+    if h_len >= 6 and a_len >= 6:
         # Home scored average <= 1.2
         hs = sum(gf for gf, _ in home_6) / 6
         if hs <= 1.2:
@@ -661,8 +677,54 @@ def apply_under_6game_checks(home_6, away_6):
             passed.append("Away conceded avg (last 6)"); details["Away conceded avg (last 6)"] = f"PASS (AC={a_c:.2f} <= 1.0)"
         else:
             failed.append("Away conceded avg (last 6)"); details["Away conceded avg (last 6)"] = f"FAIL (AC={a_c:.2f} > 1.0)"; is_perfect = False
+
+        # Non-BTTS 6-game (home): at least NON_BTTS_MIN_6 matches where one team blanked (opposite of Over BTTS)
+        h_non_btts = _count_non_btts(home_6)
+        if h_non_btts >= NON_BTTS_MIN_6:
+            passed.append("Home non-BTTS (last 6 home)")
+            details["Home non-BTTS (last 6 home)"] = f"PASS ({h_non_btts}/6 blanked matches)"
+            if h_non_btts < 6:
+                is_perfect = False
+        else:
+            failed.append("Home non-BTTS (last 6 home)")
+            details["Home non-BTTS (last 6 home)"] = f"FAIL ({h_non_btts}/6 blanked matches < {NON_BTTS_MIN_6})"
+            is_perfect = False
+
+        # Non-BTTS 6-game (away): at least NON_BTTS_MIN_6 matches where one team blanked
+        a_non_btts = _count_non_btts(away_6)
+        if a_non_btts >= NON_BTTS_MIN_6:
+            passed.append("Away non-BTTS (last 6 away)")
+            details["Away non-BTTS (last 6 away)"] = f"PASS ({a_non_btts}/6 blanked matches)"
+            if a_non_btts < 6:
+                is_perfect = False
+        else:
+            failed.append("Away non-BTTS (last 6 away)")
+            details["Away non-BTTS (last 6 away)"] = f"FAIL ({a_non_btts}/6 blanked matches < {NON_BTTS_MIN_6})"
+            is_perfect = False
     else:
-        details["UC1-4"] = "SKIPPED (need 6 games each)"
+        # Thin-data pass: proportional non-BTTS check on what's available (min 3 games, >=50% non-BTTS)
+        details["UC1-4"] = f"SKIPPED-THIN ({h_len}/{a_len} 6-game averages)"
+        if h_len >= 3:
+            h_non_btts = _count_non_btts(home_6)
+            h_min = max(2, round(h_len * 0.5))
+            if h_non_btts >= h_min:
+                passed.append("Home non-BTTS (last 6 home)")
+                details["Home non-BTTS (last 6 home)"] = f"PASS-THIN ({h_non_btts}/{h_len} >= {h_min})"
+            else:
+                failed.append("Home non-BTTS (last 6 home)")
+                details["Home non-BTTS (last 6 home)"] = f"FAIL-THIN ({h_non_btts}/{h_len} < {h_min})"
+                is_perfect = False
+
+        if a_len >= 3:
+            a_non_btts = _count_non_btts(away_6)
+            a_min = max(2, round(a_len * 0.5))
+            if a_non_btts >= a_min:
+                passed.append("Away non-BTTS (last 6 away)")
+                details["Away non-BTTS (last 6 away)"] = f"PASS-THIN ({a_non_btts}/{a_len} >= {a_min})"
+            else:
+                failed.append("Away non-BTTS (last 6 away)")
+                details["Away non-BTTS (last 6 away)"] = f"FAIL-THIN ({a_non_btts}/{a_len} < {a_min})"
+                is_perfect = False
 
     return passed, failed, details, is_perfect
 
