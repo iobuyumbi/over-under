@@ -1,37 +1,4 @@
 {
-  "blocked_regions": [
-    {
-      "name": "Ireland",
-      "reason": "Match-integrity concerns + only 1/3 (33%) settled wins across all markets; blocked pending more data",
-      "league_keywords": [
-        "ireland",
-        "fai cup",
-        "irish"
-      ],
-      "team_keywords": [
-        "finn harps",
-        "drogheda",
-        "bray",
-        "derry city",
-        "waterford",
-        "bohemians",
-        "cork city",
-        "dundalk",
-        "athlone",
-        "wexford",
-        "longford",
-        "ucd",
-        "shelbourne",
-        "shamrock",
-        "sligo rovers",
-        "galway united",
-        "limerick",
-        "treaty united",
-        "cobh ramblers",
-        "kerry fc",
-        "st patrick",
-        "st patricks"
-      ]
-    }
-  ]
+  "_notice": "Static blocking disabled by default (auto-only mode). Populate blocked_regions below with {name, league_keywords[], team_keywords[]} entries ONLY if you want hard bans regardless of performance history.",
+  "blocked_regions": []
 }
