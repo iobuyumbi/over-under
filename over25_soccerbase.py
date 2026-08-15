@@ -417,6 +417,21 @@ def _btts_gate_passes(home_6, away_6):
     return h_ok and a_ok
 
 
+def _non_btts_gate_passes(home_6, away_6):
+    """Mirror of BTTS gate: both sides need ≥3 non-BTTS (one team blanked) in venue 6."""
+    h_nb = _count_non_btts(home_6)
+    a_nb = _count_non_btts(away_6)
+    h_len = min(len(home_6), 6)
+    a_len = min(len(away_6), 6)
+    if h_len >= 6 and a_len >= 6:
+        return h_nb >= NON_BTTS_MIN_6 and a_nb >= NON_BTTS_MIN_6
+    h_min = max(1, round(h_len * 0.5))
+    a_min = max(1, round(a_len * 0.5))
+    h_ok = (h_len >= 6 and h_nb >= NON_BTTS_MIN_6) or (h_len < 6 and h_len >= 3 and h_nb >= h_min)
+    a_ok = (a_len >= 6 and a_nb >= NON_BTTS_MIN_6) or (a_len < 6 and a_len >= 3 and a_nb >= a_min)
+    return h_ok and a_ok
+
+
 # =============================================================================
 # OVER 2.5 ALGORITHM (10-Check Rules + Overall Form)
 # =============================================================================
@@ -1201,7 +1216,10 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
 
         home_btts_6 = _count_btts(home_6)
         away_btts_6 = _count_btts(away_6)
+        home_non_btts_6 = _count_non_btts(home_6)
+        away_non_btts_6 = _count_non_btts(away_6)
         btts_gate = _btts_gate_passes(home_6, away_6)
+        non_btts_gate = _non_btts_gate_passes(home_6, away_6)
 
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
@@ -1243,7 +1261,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         over_min_score = max(6, base_over_min - thin_data_gap)
         under_min_score = max(5, base_under_min - thin_data_gap)
         over_qualifies = bool(over_passed) and over_score >= over_min_score and over_gate and btts_gate
-        under_qualifies = bool(under_passed) and under_score >= under_min_score and under_gate
+        under_qualifies = bool(under_passed) and under_score >= under_min_score and under_gate and non_btts_gate
 
         if over_qualifies or under_qualifies:
             over25_prob_pct = calculate_poisson_over25(home_lambda, away_lambda)
@@ -1338,6 +1356,9 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "confidence": under_confidence,
                     "kelly": round(under_kelly * 100, 2),
                     "gate_passed": under_gate,
+                    "non_btts_gate_passed": non_btts_gate,
+                    "home_non_btts_6": home_non_btts_6,
+                    "away_non_btts_6": away_non_btts_6,
                     "data_mult": round(data_mult, 2),
                     "weak_league_mult": round(league_mult, 2),
                     "regression_mult": round(under_regression_penalty, 2),
@@ -1355,8 +1376,11 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "chaos_rule_over": _chaos_rule_over(home_6, away_6),
                     "compact_rule_under": _compact_rule_under(home_6, away_6),
                     "btts_gate_passed": btts_gate,
+                    "non_btts_gate_passed": non_btts_gate,
                     "home_btts_6": home_btts_6,
                     "away_btts_6": away_btts_6,
+                    "home_non_btts_6": home_non_btts_6,
+                    "away_non_btts_6": away_non_btts_6,
                     "regression_penalty_applied": regressions,
                 },
             }
