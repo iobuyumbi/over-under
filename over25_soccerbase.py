@@ -37,6 +37,8 @@ from prediction_tracker import (
     PICK_TIER_PREMIUM,
     PICK_TIER_STRONG,
     PICK_TIER_VALUE,
+    MARKET_OVER25,
+    MARKET_UNDER25,
 )
 
 # =============================================================================
@@ -1398,8 +1400,8 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     Build a clean, mobile-friendly report - both channels show all picks, free is simplified
     Returns: (report, base_date, included_over, included_under)
     """
-    included_over = [p for p in (over_perfect + over_qualified + over_close) if not is_blocked_fixture(p["match"])]
-    included_under = [p for p in (under_perfect + under_qualified + under_close) if not is_blocked_fixture(p["match"])]
+    included_over = [p for p in (over_perfect + over_qualified + over_close) if not is_blocked_fixture(p["match"], market=MARKET_OVER25)]
+    included_under = [p for p in (under_perfect + under_qualified + under_close) if not is_blocked_fixture(p["match"], market=MARKET_UNDER25)]
     included_dates = scanned_dates
     
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
@@ -1574,7 +1576,9 @@ def main():
         for f in fixtures:
             key = (f["home_team_id"], f["away_team_id"], f["league"])
             if key not in seen and f["home_team_id"] and f["away_team_id"]:
-                if is_blocked_fixture(f):
+                blocked_over = is_blocked_fixture(f, market=MARKET_OVER25)
+                blocked_under = is_blocked_fixture(f, market=MARKET_UNDER25)
+                if blocked_over and blocked_under:
                     blocked += 1
                     continue
                 if not args.scheduled or f["status"] == "Scheduled":
@@ -1582,7 +1586,7 @@ def main():
                     unique_fixtures.append(f)
 
         if blocked:
-            print(f"   Skipped {blocked} flagged-region fixtures on {date_str}")
+            print(f"   Skipped {blocked} fixtures blocked for both Over and Under on {date_str}")
 
         if not unique_fixtures:
             logger.info(f"No fixtures to process on {date_str}")
