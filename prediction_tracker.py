@@ -20,6 +20,16 @@ BLACKLIST_FILE = "blacklist.json"
 SETTLED_RESULTS = frozenset({"win", "loss", "push"})
 MEDIUM = "MEDIUM"
 
+MARKET_HOME_WIN = "home_win"
+MARKET_OVER25 = "over25"
+MARKET_UNDER25 = "under25"
+MARKET_BTTS_YES = "btts_yes"
+MARKET_BTTS_NO = "btts_no"
+SUPPORTED_MARKETS = frozenset({
+    MARKET_HOME_WIN, MARKET_OVER25, MARKET_UNDER25,
+    MARKET_BTTS_YES, MARKET_BTTS_NO,
+})
+
 # User-facing label helpers
 PICK_TIER_PREMIUM = "🔥 Premium picks"
 PICK_TIER_STRONG = "✅ Solid picks"
@@ -144,6 +154,129 @@ _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE = float(os.getenv("AUTO_BLOCK_LEAGUE_MAX_WIN_RAT
 _AUTO_BLOCK_LEAGUE_MIN_DECIDED_LOW_SAMPLE = int(os.getenv("AUTO_BLOCK_LEAGUE_MIN_DECIDED_LOW_SAMPLE", "3"))
 _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE_LOW_SAMPLE = float(os.getenv("AUTO_BLOCK_LEAGUE_MAX_WIN_RATE_LOW_SAMPLE", "0.35"))
 _POOR_LEAGUE_KEYWORDS_CACHE = None
+_POOR_LEAGUE_KEYWORDS_BY_MARKET_CACHE = None
+
+
+def _market_for_over_under_pick(pick):
+    """Derive a fine-grained market bucket from an over_under history pick."""
+    prediction = str(pick.get("prediction", "")).strip().lower()
+    if prediction == "over":
+        return MARKET_OVER25
+    if prediction == "under":
+        return MARKET_UNDER25
+    return None
+
+
+def _auto_block_threshold_hit(decided, win_rate):
+    return (
+        (decided >= _AUTO_BLOCK_LEAGUE_MIN_DECIDED and win_rate < _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE)
+        or (
+            decided >= _AUTO_BLOCK_LEAGUE_MIN_DECIDED_LOW_SAMPLE
+            and win_rate < _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE_LOW_SAMPLE
+        )
+    )
+
+
+def _compute_poor_league_tables():
+    """Compute (global_frozenset, {market: frozenset}) of blocked league keywords."""
+    if not _AUTO_BLOCK_POOR_LEAGUES:
+        empty = frozenset()
+        by_market = {m: empty for m in SUPPORTED_MARKETS}
+        return empty, by_market
+
+    history = load_history()
+    cutoff = datetime.now().date() - timedelta(days=max(0, _AUTO_BLOCK_LEAGUE_WINDOW_DAYS))
+
+    combined_stats = defaultdict(lambda: {"win": 0, "loss": 0, "push": 0})
+    per_market_stats = {
+        m: defaultdict(lambda: {"win": 0, "loss": 0, "push": 0}) for m in SUPPORTED_MARKETS
+    }
+
+    for pick in history.get("home_win", []) or []:
+        league = pick.get("league")
+        if not league:
+            continue
+        pick_date = _parse_pick_date(pick.get("date"))
+        if pick_date and pick_date < cutoff:
+            continue
+        result = resolve_pick_result(pick)
+        normalized_result = str(result or "").strip().lower()
+        if normalized_result not in SETTLED_RESULTS:
+            continue
+        combined_stats[league][normalized_result] += 1
+        per_market_stats[MARKET_HOME_WIN][league][normalized_result] += 1
+
+    for pick in history.get("over_under", []) or []:
+        league = pick.get("league")
+        if not league:
+            continue
+        pick_date = _parse_pick_date(pick.get("date"))
+        if pick_date and pick_date < cutoff:
+            continue
+        result = resolve_pick_result(pick)
+        normalized_result = str(result or "").strip().lower()
+        if normalized_result not in SETTLED_RESULTS:
+            continue
+        combined_stats[league][normalized_result] += 1
+        fine = _market_for_over_under_pick(pick)
+        if fine in per_market_stats:
+            per_market_stats[fine][league][normalized_result] += 1
+
+    def _reduce(stats_map):
+        poor = set()
+        details = []
+        for league, counter in stats_map.items():
+            decided = counter["win"] + counter["loss"]
+            win_rate = counter["win"] / decided if decided else 0.0
+            if _auto_block_threshold_hit(decided, win_rate):
+                keyword = _normalize_label(league)
+                if keyword:
+                    poor.add(keyword)
+                    details.append((win_rate, decided, league))
+        return poor, details
+
+    combined_poor, combined_details = _reduce(combined_stats)
+    combined_frozen = frozenset(combined_poor)
+    by_market_frozen = {}
+    for market in SUPPORTED_MARKETS:
+        poor_set, market_details = _reduce(per_market_stats[market])
+        by_market_frozen[market] = frozenset(poor_set)
+        if market_details:
+            market_details.sort(key=lambda item: (item[0], -item[1], str(item[2])))
+            preview = ", ".join(str(name) for _, __, name in market_details[:5])
+            logger.info(
+                "Auto-blocking %d poor-performing league(s) for market=%s based on last %d days (min=%d@%.0f%%, low_sample=%d@%.0f%%). Example: %s",
+                len(poor_set),
+                market,
+                _AUTO_BLOCK_LEAGUE_WINDOW_DAYS,
+                _AUTO_BLOCK_LEAGUE_MIN_DECIDED,
+                _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE * 100.0,
+                _AUTO_BLOCK_LEAGUE_MIN_DECIDED_LOW_SAMPLE,
+                _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE_LOW_SAMPLE * 100.0,
+                preview,
+            )
+
+    if combined_details:
+        combined_details.sort(key=lambda item: (item[0], -item[1], str(item[2])))
+        preview = ", ".join(str(name) for _, __, name in combined_details[:5])
+        logger.info(
+            "Auto-blocking %d poor-performing league(s) combined across markets based on last %d days (min=%d@%.0f%%, low_sample=%d@%.0f%%). Example: %s",
+            len(combined_frozen),
+            _AUTO_BLOCK_LEAGUE_WINDOW_DAYS,
+            _AUTO_BLOCK_LEAGUE_MIN_DECIDED,
+            _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE * 100.0,
+            _AUTO_BLOCK_LEAGUE_MIN_DECIDED_LOW_SAMPLE,
+            _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE_LOW_SAMPLE * 100.0,
+            preview,
+        )
+    return combined_frozen, by_market_frozen
+
+
+def _ensure_poor_cache():
+    global _POOR_LEAGUE_KEYWORDS_CACHE, _POOR_LEAGUE_KEYWORDS_BY_MARKET_CACHE
+    if _POOR_LEAGUE_KEYWORDS_CACHE is None or _POOR_LEAGUE_KEYWORDS_BY_MARKET_CACHE is None:
+        _POOR_LEAGUE_KEYWORDS_CACHE, _POOR_LEAGUE_KEYWORDS_BY_MARKET_CACHE = _compute_poor_league_tables()
+    return _POOR_LEAGUE_KEYWORDS_CACHE, _POOR_LEAGUE_KEYWORDS_BY_MARKET_CACHE
 
 
 def _parse_pick_date(value):
@@ -159,86 +292,61 @@ def _parse_pick_date(value):
 
 
 def _get_poor_league_keywords():
-    global _POOR_LEAGUE_KEYWORDS_CACHE
-    if _POOR_LEAGUE_KEYWORDS_CACHE is not None:
-        return _POOR_LEAGUE_KEYWORDS_CACHE
+    """Legacy combined (all-markets-mixed) poor-league keywords.
 
-    if not _AUTO_BLOCK_POOR_LEAGUES:
-        _POOR_LEAGUE_KEYWORDS_CACHE = frozenset()
-        return _POOR_LEAGUE_KEYWORDS_CACHE
+    Prefer _get_poor_league_keywords_for_market() when the caller knows the market.
+    """
+    combined, _ = _ensure_poor_cache()
+    return combined
 
-    history = load_history()
-    cutoff = datetime.now().date() - timedelta(days=max(0, _AUTO_BLOCK_LEAGUE_WINDOW_DAYS))
-    stats = defaultdict(lambda: {"win": 0, "loss": 0, "push": 0})
 
-    for section in ("home_win", "over_under"):
-        for pick in history.get(section, []) or []:
-            league = pick.get("league")
-            if not league:
-                continue
-            pick_date = _parse_pick_date(pick.get("date"))
-            if pick_date and pick_date < cutoff:
-                continue
-            result = resolve_pick_result(pick)
-            normalized_result = str(result or "").strip().lower()
-            if normalized_result not in SETTLED_RESULTS:
-                continue
-            stats[league][normalized_result] += 1
+def _get_poor_league_keywords_for_market(market):
+    """Return the per-market poor-league keyword set for the given market.
 
-    poor = set()
-    details = []
-    for league, counter in stats.items():
-        decided = counter["win"] + counter["loss"]
-        win_rate = counter["win"] / decided if decided else 0.0
-        if (
-            decided >= _AUTO_BLOCK_LEAGUE_MIN_DECIDED and win_rate < _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE
-        ) or (
-            decided >= _AUTO_BLOCK_LEAGUE_MIN_DECIDED_LOW_SAMPLE
-            and win_rate < _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE_LOW_SAMPLE
-        ):
-            keyword = _normalize_label(league)
-            if keyword:
-                poor.add(keyword)
-                details.append((win_rate, decided, league))
-
-    poor_frozen = frozenset(poor)
-    _POOR_LEAGUE_KEYWORDS_CACHE = poor_frozen
-    if poor_frozen:
-        details.sort(key=lambda item: (item[0], -item[1], str(item[2])))
-        preview = ", ".join(str(name) for _, __, name in details[:5])
-        logger.info(
-            "Auto-blocking %d poor-performing league(s) based on last %d days (min=%d@%.0f%%, low_sample=%d@%.0f%%). Example: %s",
-            len(poor_frozen),
-            _AUTO_BLOCK_LEAGUE_WINDOW_DAYS,
-            _AUTO_BLOCK_LEAGUE_MIN_DECIDED,
-            _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE * 100.0,
-            _AUTO_BLOCK_LEAGUE_MIN_DECIDED_LOW_SAMPLE,
-            _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE_LOW_SAMPLE * 100.0,
-            preview,
-        )
-    return poor_frozen
+    - market in SUPPORTED_MARKETS → that market's own auto-block set
+    - market is None (or unknown) → empty set (static blocklist still applies)
+    """
+    _, by_market = _ensure_poor_cache()
+    if market in by_market:
+        return by_market[market]
+    return frozenset()
 
 
 def _normalize_label(value):
     return str(value or "").strip().lower()
 
 
-def is_blocked_league(league):
-    """True when a league belongs to a flagged region."""
+def _market_keyword_match(normalized_league, keywords):
+    if not normalized_league or not keywords:
+        return False
+    for kw in keywords:
+        if kw and kw in normalized_league:
+            return True
+    return False
+
+
+def is_blocked_league(league, market=None):
+    """True when a league belongs to a flagged region (static) or auto-blocked for `market`.
+
+    Static blocklist always applies (integrity/region concerns). When `market` is provided,
+    the per-market auto-block set is also consulted. Otherwise the legacy combined
+    auto-block set is used for backward compatibility.
+    """
     normalized = _normalize_label(league)
     if not normalized:
         return False
     for region in BLOCKED_REGIONS:
         if any(keyword in normalized for keyword in region["league_keywords"]):
             return True
-    for keyword in _get_poor_league_keywords():
-        if keyword and keyword in normalized:
-            return True
-    return False
+    if market in SUPPORTED_MARKETS:
+        keywords = _get_poor_league_keywords_for_market(market)
+    else:
+        keywords = _get_poor_league_keywords()
+    return _market_keyword_match(normalized, keywords)
 
 
 def is_blocked_team(team_name):
-    """True when a club name matches a flagged region."""
+    """True when a club name matches a flagged region (static blocklist only)."""
     normalized = _normalize_label(team_name)
     if not normalized:
         return False
@@ -248,26 +356,56 @@ def is_blocked_team(team_name):
     return False
 
 
-def is_blocked_match(home, away, league=""):
-    """True when a fixture should be excluded from new predictions only."""
-    if is_blocked_league(league):
+def is_blocked_match(home, away, league="", market=None):
+    """True when a fixture should be excluded from new predictions for `market`.
+
+    Static blocking (team/league region) applies to all markets. Per-market
+    auto-blocking applies only when `market` is provided.
+    """
+    if is_blocked_league(league, market=market):
         return True
     return is_blocked_team(home) or is_blocked_team(away)
 
 
-def is_blocked_pick(pick):
+def is_blocked_pick(pick, market=None):
+    """True for existing history picks that should be ignored for the given market.
+
+    If `market` is omitted, we infer it from the pick itself: home_win section picks
+    are MARKET_HOME_WIN; over_under picks use prediction='over'/'under' to map to
+    MARKET_OVER25 / MARKET_UNDER25.
+    """
+    inferred = market
+    if inferred is None:
+        section = str(pick.get("type") or pick.get("section") or "").strip().lower()
+        if section == "home_win":
+            inferred = MARKET_HOME_WIN
+        elif section == "over_under":
+            inferred = _market_for_over_under_pick(pick)
+        else:
+            prediction = str(pick.get("prediction", "")).strip().lower()
+            if prediction == "over":
+                inferred = MARKET_OVER25
+            elif prediction == "under":
+                inferred = MARKET_UNDER25
     return is_blocked_match(
         pick.get("home_team", pick.get("home", "")),
         pick.get("away_team", pick.get("away", "")),
         pick.get("league", ""),
+        market=inferred,
     )
 
 
-def is_blocked_fixture(fixture):
+def is_blocked_fixture(fixture, market=None):
+    """True when a fixture should be excluded for the given market.
+
+    Typical market values: MARKET_HOME_WIN, MARKET_OVER25, MARKET_UNDER25,
+    MARKET_BTTS_YES, MARKET_BTTS_NO, or None (legacy combined auto-block).
+    """
     return is_blocked_match(
         fixture.get("home", fixture.get("home_team", "")),
         fixture.get("away", fixture.get("away_team", "")),
         fixture.get("league", ""),
+        market=market,
     )
  
  
@@ -406,6 +544,7 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None):
                 pick.get("home", pick.get("home_team", "")),
                 pick.get("away", pick.get("away_team", "")),
                 pick.get("league", ""),
+                market=MARKET_HOME_WIN,
             ):
                 skipped += 1
                 continue
@@ -431,10 +570,13 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None):
 
     if over_under_picks: 
         for pick in over_under_picks:
+            prediction = str(pick.get("prediction", "over")).strip().lower()
+            market = MARKET_OVER25 if prediction == "over" else MARKET_UNDER25
             if is_blocked_match(
                 pick.get("home", pick.get("home_team", "")),
                 pick.get("away", pick.get("away_team", "")),
                 pick.get("league", ""),
+                market=market,
             ):
                 skipped += 1
                 continue
