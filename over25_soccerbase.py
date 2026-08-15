@@ -363,16 +363,22 @@ def get_team_overall_form(team_id, num_matches=6, target_date_str=None):
 
 def _team_scored_every_match(form):
     sample = form[:6]
-    return len(sample) >= 6 and all(gf >= 1 for gf, _ in sample)
+    if len(sample) < 4:
+        return False
+    min_required = len(sample)
+    return all(gf >= 1 for gf, _ in sample[:min_required])
 
 
 def _team_conceded_every_match(form):
     sample = form[:6]
-    return len(sample) >= 6 and all(ga >= 1 for _, ga in sample)
+    if len(sample) < 4:
+        return False
+    min_required = len(sample)
+    return all(ga >= 1 for _, ga in sample[:min_required])
 
 
 def _team_active_goal_profile(form):
-    """Scored or conceded in every one of the last 6 overall matches."""
+    """Scored or conceded in every one of the last N matches (min 4 required)."""
     return _team_scored_every_match(form) or _team_conceded_every_match(form)
 
 
@@ -386,6 +392,21 @@ BTTS_MIN_6 = 3
 def _count_btts(form):
     """Count matches in form where both teams scored (gf>0 AND ga>0 from team's view)."""
     return sum(1 for gf, ga in form[:6] if gf >= 1 and ga >= 1)
+
+
+def _btts_gate_passes(home_6, away_6):
+    """BTTS gate with thin-data fallback: use proportional thresholds when <6 games available."""
+    h_btts = _count_btts(home_6)
+    a_btts = _count_btts(away_6)
+    h_len = min(len(home_6), 6)
+    a_len = min(len(away_6), 6)
+    if h_len >= 6 and a_len >= 6:
+        return h_btts >= BTTS_MIN_6 and a_btts >= BTTS_MIN_6
+    h_min = max(1, round(h_len * 0.5))
+    a_min = max(1, round(a_len * 0.5))
+    h_ok = (h_len >= 6 and h_btts >= BTTS_MIN_6) or (h_len < 6 and h_len >= 3 and h_btts >= h_min)
+    a_ok = (a_len >= 6 and a_btts >= BTTS_MIN_6) or (a_len < 6 and a_len >= 3 and a_btts >= a_min)
+    return h_ok and a_ok
 
 
 # =============================================================================
@@ -488,13 +509,19 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, aw
         passed.append("Overall goal activity (6)")
         details["Overall goal activity (6)"] = f"PASS ({', '.join(teams)})"
     else:
-        failed.append("Overall goal activity (6)")
-        details["Overall goal activity (6)"] = "FAIL (neither team scored/conceded in all 6)"
-        is_perfect = False
+        h_len = min(len(home_overall_6), 6)
+        a_len = min(len(away_overall_6), 6)
+        if h_len < 4 and a_len < 4:
+            details["Overall goal activity (6)"] = f"SKIPPED (only {h_len}/{a_len} overall matches)"
+        else:
+            failed.append("Overall goal activity (6)")
+            details["Overall goal activity (6)"] = f"FAIL (neither team had activity in all available: {h_len}/{a_len})"
+            is_perfect = False
 
-    # BTTS rules: both teams scored in >=3 of last 6 (home: 6 home games, away: 6 away games)
-    if len(home_6) >= 6:
-        h_btts = _count_btts(home_6)
+    # BTTS rules: both teams scored (home 6 home, away 6 away). Thin-data: use >=50% of available (min 3 games).
+    h_btts = _count_btts(home_6)
+    h_len = min(len(home_6), 6)
+    if h_len >= 6:
         if h_btts >= BTTS_MIN_6:
             passed.append("Home BTTS (last 6 home)")
             details["Home BTTS (last 6 home)"] = f"PASS ({h_btts}/6)"
@@ -504,13 +531,19 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, aw
             failed.append("Home BTTS (last 6 home)")
             details["Home BTTS (last 6 home)"] = f"FAIL ({h_btts}/6)"
             is_perfect = False
-    else:
-        failed.append("Home BTTS (last 6 home)")
-        details["Home BTTS (last 6 home)"] = f"FAIL (only {len(home_6)}/6 home matches)"
-        is_perfect = False
+    elif h_len >= 3:
+        h_min = max(1, round(h_len * 0.5))
+        if h_btts >= h_min:
+            passed.append("Home BTTS (last 6 home)")
+            details["Home BTTS (last 6 home)"] = f"PASS-THIN ({h_btts}/{h_len} >= {h_min})"
+        else:
+            failed.append("Home BTTS (last 6 home)")
+            details["Home BTTS (last 6 home)"] = f"FAIL-THIN ({h_btts}/{h_len} < {h_min})"
+            is_perfect = False
 
-    if len(away_6) >= 6:
-        a_btts = _count_btts(away_6)
+    a_btts = _count_btts(away_6)
+    a_len = min(len(away_6), 6)
+    if a_len >= 6:
         if a_btts >= BTTS_MIN_6:
             passed.append("Away BTTS (last 6 away)")
             details["Away BTTS (last 6 away)"] = f"PASS ({a_btts}/6)"
@@ -520,10 +553,15 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, aw
             failed.append("Away BTTS (last 6 away)")
             details["Away BTTS (last 6 away)"] = f"FAIL ({a_btts}/6)"
             is_perfect = False
-    else:
-        failed.append("Away BTTS (last 6 away)")
-        details["Away BTTS (last 6 away)"] = f"FAIL (only {len(away_6)}/6 away matches)"
-        is_perfect = False
+    elif a_len >= 3:
+        a_min = max(1, round(a_len * 0.5))
+        if a_btts >= a_min:
+            passed.append("Away BTTS (last 6 away)")
+            details["Away BTTS (last 6 away)"] = f"PASS-THIN ({a_btts}/{a_len} >= {a_min})"
+        else:
+            failed.append("Away BTTS (last 6 away)")
+            details["Away BTTS (last 6 away)"] = f"FAIL-THIN ({a_btts}/{a_len} < {a_min})"
+            is_perfect = False
 
     return passed, failed, details, is_perfect
 
@@ -630,11 +668,15 @@ def apply_under_6game_checks(home_6, away_6):
 
 
 def apply_under_overall_checks(home_overall_6, away_overall_6):
-    """Each team must have under 2.5 in at least 4 of last 6 overall matches."""
+    """Each team must have under 2.5 in at least 4 of last 6 overall matches. Thin-data fallback included."""
     passed, failed, details = [], [], {}
     is_perfect = True
 
-    if len(home_overall_6) >= 6:
+    home_overall_6 = home_overall_6 or []
+    away_overall_6 = away_overall_6 or []
+
+    h_len = min(len(home_overall_6), 6)
+    if h_len >= 6:
         h_under = _count_under_25_overall(home_overall_6)
         if h_under >= 4:
             passed.append("Home under 2.5 overall (6)")
@@ -645,12 +687,19 @@ def apply_under_overall_checks(home_overall_6, away_overall_6):
             failed.append("Home under 2.5 overall (6)")
             details["Home under 2.5 overall (6)"] = f"FAIL ({h_under}/6 under 2.5)"
             is_perfect = False
-    else:
-        failed.append("Home under 2.5 overall (6)")
-        details["Home under 2.5 overall (6)"] = f"FAIL (only {len(home_overall_6)}/6 matches)"
-        is_perfect = False
+    elif h_len >= 4:
+        h_under = _count_under_25_overall(home_overall_6)
+        h_min = max(2, round(h_len * 0.6))
+        if h_under >= h_min:
+            passed.append("Home under 2.5 overall (6)")
+            details["Home under 2.5 overall (6)"] = f"PASS-THIN ({h_under}/{h_len} >= {h_min})"
+        else:
+            failed.append("Home under 2.5 overall (6)")
+            details["Home under 2.5 overall (6)"] = f"FAIL-THIN ({h_under}/{h_len} < {h_min})"
+            is_perfect = False
 
-    if len(away_overall_6) >= 6:
+    a_len = min(len(away_overall_6), 6)
+    if a_len >= 6:
         a_under = _count_under_25_overall(away_overall_6)
         if a_under >= 4:
             passed.append("Away under 2.5 overall (6)")
@@ -661,10 +710,16 @@ def apply_under_overall_checks(home_overall_6, away_overall_6):
             failed.append("Away under 2.5 overall (6)")
             details["Away under 2.5 overall (6)"] = f"FAIL ({a_under}/6 under 2.5)"
             is_perfect = False
-    else:
-        failed.append("Away under 2.5 overall (6)")
-        details["Away under 2.5 overall (6)"] = f"FAIL (only {len(away_overall_6)}/6 matches)"
-        is_perfect = False
+    elif a_len >= 4:
+        a_under = _count_under_25_overall(away_overall_6)
+        a_min = max(2, round(a_len * 0.6))
+        if a_under >= a_min:
+            passed.append("Away under 2.5 overall (6)")
+            details["Away under 2.5 overall (6)"] = f"PASS-THIN ({a_under}/{a_len} >= {a_min})"
+        else:
+            failed.append("Away under 2.5 overall (6)")
+            details["Away under 2.5 overall (6)"] = f"FAIL-THIN ({a_under}/{a_len} < {a_min})"
+            is_perfect = False
 
     return passed, failed, details, is_perfect
 
@@ -1082,10 +1137,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
 
         home_btts_6 = _count_btts(home_6)
         away_btts_6 = _count_btts(away_6)
-        btts_gate = (
-            len(home_6) >= 6 and home_btts_6 >= BTTS_MIN_6 and
-            len(away_6) >= 6 and away_btts_6 >= BTTS_MIN_6
-        )
+        btts_gate = _btts_gate_passes(home_6, away_6)
 
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
@@ -1117,8 +1169,15 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         over_gate = lambda_gate_passes(home_lambda, away_lambda, "over")
         under_gate = lambda_gate_passes(home_lambda, away_lambda, "under")
 
-        over_min_score = MAX_OVER_SCORE - 2 if _is_weak_roi_league(league_name) else MAX_OVER_SCORE - 3
-        under_min_score = MAX_UNDER_SCORE - 1 if _is_weak_roi_league(league_name) else MAX_UNDER_SCORE - 2
+        data_quality_min = min(
+            len(home_6), len(away_6),
+            len(home_overall_6), len(away_overall_6)
+        )
+        thin_data_gap = max(0, 6 - data_quality_min)
+        base_over_min = MAX_OVER_SCORE - 3 if _is_weak_roi_league(league_name) else MAX_OVER_SCORE - 4
+        base_under_min = MAX_UNDER_SCORE - 2 if _is_weak_roi_league(league_name) else MAX_UNDER_SCORE - 3
+        over_min_score = max(6, base_over_min - thin_data_gap)
+        under_min_score = max(5, base_under_min - thin_data_gap)
         over_qualifies = bool(over_passed) and over_score >= over_min_score and over_gate and btts_gate
         under_qualifies = bool(under_passed) and under_score >= under_min_score and under_gate
 
@@ -1495,7 +1554,7 @@ def main():
                         over_qualified.append(data)
                     elif over_tier == "close":
                         over_close.append(data)
-                    elif data["over"]["score"] >= max(1, MAX_OVER_SCORE - 3):
+                    elif data["over"]["score"] >= max(1, MAX_OVER_SCORE - 4):
                         over_weak.append(data)
 
                     under_tier = data["under"]["tier"]
@@ -1505,7 +1564,7 @@ def main():
                         under_qualified.append(data)
                     elif under_tier == "close":
                         under_close.append(data)
-                    elif data["under"]["score"] >= max(1, MAX_UNDER_SCORE - 2):
+                    elif data["under"]["score"] >= max(1, MAX_UNDER_SCORE - 3):
                         under_weak.append(data)
 
     # Apply portfolio Kelly cap separately for Over and Under
