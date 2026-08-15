@@ -62,6 +62,11 @@ PREMIUM_COMBINED_LAMBDA_BTTS_NO = 2.20
 DEFAULT_ODDS_BTTS_YES = 1.90
 DEFAULT_ODDS_BTTS_NO = 1.85
 
+# over25tips.com official BTTS point algorithm (BetAndSkill / over25tips)
+MIN_O25TIPS_BTTS_YES_POINTS = 6.0
+MAX_O25TIPS_BTTS_NO_POINTS = 3.0
+_O25TIPS_FORM_WINDOW = 6
+
 _WEIGHT_RULES = 0.40
 _WEIGHT_MODEL = 0.40
 _WEIGHT_EDGE = 0.20
@@ -372,6 +377,93 @@ def _compact_btts_no_bonus(home_6, away_6):
     as_ = sum(gf for gf, _ in away_6) / max(len(away_6), 1)
     ac = sum(ga for _, ga in away_6) / max(len(away_6), 1)
     return hs <= 1.0 and hc <= 0.9 and as_ <= 1.0 and ac <= 0.9
+
+
+# =============================================================================
+# OVER25TIPS.COM BTTS POINT ALGORITHM (R1-R14)
+# https://www.over25tips.com/both-teams-to-score-tips/
+# =============================================================================
+def _o25tips_venue_points(form_venue):
+    """R3-R5 (home) or R8-R10 (away): goals-over-2 and 0-0 penalties on venue form."""
+    pts = 0.0
+    goals_over_2 = 0.0
+    conceded_over_2 = 0.0
+    nil_nil = 0
+    for gf, ga in form_venue[:_O25TIPS_FORM_WINDOW]:
+        if gf > 2:
+            goals_over_2 += (gf - 2) * 0.5
+        if ga > 2:
+            conceded_over_2 += (ga - 2) * 0.5
+        if gf == 0 and ga == 0:
+            nil_nil += 1
+    pts += goals_over_2 + conceded_over_2 - (nil_nil * 2)
+    return pts, {
+        "goals_over_2_bonus": round(goals_over_2, 1),
+        "conceded_over_2_bonus": round(conceded_over_2, 1),
+        "nil_nil_penalty": nil_nil * -2,
+    }
+
+
+def _o25tips_team_points(form_overall, form_venue, prefix):
+    """R1-R5 home or R6-R10 away team point block."""
+    overall_btts = sum(1 for gf, ga in form_overall[:_O25TIPS_FORM_WINDOW] if gf >= 1 and ga >= 1)
+    venue_btts = sum(1 for gf, ga in form_venue[:_O25TIPS_FORM_WINDOW] if gf >= 1 and ga >= 1)
+    venue_pts, venue_detail = _o25tips_venue_points(form_venue)
+    total = overall_btts + venue_btts + venue_pts
+    details = {
+        f"{prefix}_overall_btts": overall_btts,
+        f"{prefix}_venue_btts": venue_btts,
+        f"{prefix}_venue_extras": round(venue_pts, 1),
+        **{f"{prefix}_{k}": v for k, v in venue_detail.items()},
+        f"{prefix}_subtotal": round(total, 1),
+    }
+    return total, details
+
+
+def _o25tips_match_points(home_lambda, away_lambda):
+    """R11-R14: favourite context. Uses xG lambdas when match-winner odds are unavailable."""
+    if home_lambda <= 0 or away_lambda <= 0:
+        return 0.0, {"match_favourite_rule": "SKIPPED (no lambda)"}
+    ratio = away_lambda / home_lambda
+    points = 0.0
+    rule = "neutral"
+    if ratio >= 1.35:
+        points = -1.0
+        rule = "R14 away heavy favourite (-1)"
+    elif ratio >= 1.08:
+        points = 2.0
+        rule = "R11 away slight favourite (+2)"
+    elif ratio <= 0.74:
+        points = -2.0
+        rule = "R13 home heavy favourite (-2)"
+    elif ratio <= 0.92:
+        points = 1.0
+        rule = "R12 home slight favourite (+1)"
+    return points, {
+        "match_favourite_rule": rule,
+        "lambda_ratio_away_home": round(ratio, 2),
+        "match_points": points,
+    }
+
+
+def calculate_o25tips_btts_score(home_overall_6, home_6, away_overall_6, away_6,
+                                 home_lambda, away_lambda):
+    """Return (total_points, details_dict) per over25tips.com BTTS algorithm."""
+    home_overall_6 = home_overall_6 or []
+    home_6 = home_6 or []
+    away_overall_6 = away_overall_6 or []
+    away_6 = away_6 or []
+
+    hp, hdet = _o25tips_team_points(home_overall_6, home_6, "home")
+    ap, adet = _o25tips_team_points(away_overall_6, away_6, "away")
+    mp, mdet = _o25tips_match_points(home_lambda, away_lambda)
+
+    total = round(hp + ap + mp, 1)
+    details = {**hdet, **adet, **mdet}
+    details["o25tips_total"] = total
+    details["o25tips_yes_ok"] = total >= MIN_O25TIPS_BTTS_YES_POINTS
+    details["o25tips_no_ok"] = total <= MAX_O25TIPS_BTTS_NO_POINTS
+    return total, details
 
 
 # =============================================================================
@@ -857,13 +949,24 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         no_gate = lambda_gate_passes(home_lambda, away_lambda, "no")
         btts_gate = _btts_gate_passes(home_6, away_6)
         non_btts_gate = _non_btts_gate_passes(home_6, away_6)
+        o25tips_total, o25tips_details = calculate_o25tips_btts_score(
+            home_overall_6, home_6, away_overall_6, away_6, home_lambda, away_lambda
+        )
+        o25tips_yes_ok = o25tips_details["o25tips_yes_ok"]
+        o25tips_no_ok = o25tips_details["o25tips_no_ok"]
 
         weak = _is_weak_roi_league(league_name)
         thin_gap = max(0, 6 - min(len(home_6), len(away_6)))
         yes_min = max(7, (MAX_BTTS_YES_SCORE - 3 if weak else MAX_BTTS_YES_SCORE - 4) - thin_gap)
         no_min = max(6, (MAX_BTTS_NO_SCORE - 3 if weak else MAX_BTTS_NO_SCORE - 4) - thin_gap)
-        yes_qualifies = bool(yes_passed) and yes_score >= yes_min and yes_gate and btts_gate
-        no_qualifies = bool(no_passed) and no_score >= no_min and no_gate and non_btts_gate
+        yes_qualifies = (
+            bool(yes_passed) and yes_score >= yes_min and yes_gate
+            and btts_gate and o25tips_yes_ok
+        )
+        no_qualifies = (
+            bool(no_passed) and no_score >= no_min and no_gate
+            and non_btts_gate and o25tips_no_ok
+        )
 
         league_mult = _WEAK_ROI_MULTIPLIER if weak else 1.0
         final_mult = data_mult * league_mult
@@ -895,6 +998,8 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "kelly": round(yes_kelly * 100, 2),
                     "gate_passed": yes_gate,
                     "form_gate_passed": btts_gate,
+                    "o25tips_points": o25tips_total,
+                    "o25tips_passed": o25tips_yes_ok,
                     "min_score_threshold": yes_min,
                 },
                 "no": {
@@ -909,6 +1014,8 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "kelly": round(no_kelly * 100, 2),
                     "gate_passed": no_gate,
                     "form_gate_passed": non_btts_gate,
+                    "o25tips_points": o25tips_total,
+                    "o25tips_passed": o25tips_no_ok,
                     "min_score_threshold": no_min,
                 },
                 "poisson": {
@@ -918,6 +1025,7 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "btts_yes_prob": btts_yes_pct,
                     "btts_no_prob": btts_no_pct,
                 },
+                "o25tips": o25tips_details,
             },
         }
     except Exception as e:
