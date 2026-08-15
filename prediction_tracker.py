@@ -66,57 +66,28 @@ def format_result_tag(result):
     return {"win": "✅", "loss": "❌", "push": "➖"}.get(normalized, "⏳")
 
 
-DEFAULT_BLOCKED_REGIONS = (
-    {
-        "name": "Ireland",
-        "reason": "Match-integrity concerns",
-        "league_keywords": [
-            "ireland",
-            "fai cup",
-            "irish",
-        ],
-        "team_keywords": [
-            "finn harps", "drogheda", "bray", "derry city", "waterford",
-            "bohemians", "cork city", "dundalk", "athlone", "wexford",
-            "longford", "ucd", "shelbourne", "shamrock", "sligo rovers",
-            "galway united", "limerick", "treaty united", "cobh ramblers",
-            "kerry fc", "st patrick", "st patricks",
-        ],
-    },
-    {
-        "name": "Argentina Primera Nacional",
-        "reason": "Match-integrity concerns",
-        "league_keywords": [
-            "argentina primera nacional",
-            "primera nacional",
-            "argentina national b",
-            "nacional b",
-        ],
-        "team_keywords": [],
-    },
-)
+DEFAULT_BLOCKED_REGIONS = ()
 
 
 def _load_blocked_regions():
-    """Load blocked regions from blacklist.json, falling back to defaults if missing or malformed.
-
-    - Loads from keys "blocked_regions" (current standard) or "blocked_leagues" (proposed
-    format) so either key name is supported.
+    """Load blocked regions from blacklist.json. Static blocking is disabled by default
+    (auto-only mode). blacklist.json can still populate the list if user edits it, but
+    empty/missing returns no hard-coded blocks.
     """
     blacklist_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), BLACKLIST_FILE)
     if not os.path.exists(blacklist_path):
-        logger.info("blacklist.json not found, using default blocked regions")
-        return list(DEFAULT_BLOCKED_REGIONS)
+        logger.info("blacklist.json not found, static blocking disabled (auto-only mode)")
+        return []
     try:
         with open(blacklist_path, "r", encoding="utf-8") as f:
             data = json.load(f)
     except (json.JSONDecodeError, OSError) as exc:
-        logger.warning("Failed to parse blacklist.json (%s), using default blocked regions", exc)
-        return list(DEFAULT_BLOCKED_REGIONS)
+        logger.warning("Failed to parse blacklist.json (%s), static blocking disabled (auto-only mode)", exc)
+        return []
     regions = data.get("blocked_regions") or data.get("blocked_leagues")
     if not isinstance(regions, list) or not regions:
-        logger.warning("blacklist.json has no valid blocked_regions list, using defaults")
-        return list(DEFAULT_BLOCKED_REGIONS)
+        logger.info("blacklist.json has no blocked_regions, static blocking disabled (auto-only mode)")
+        return []
     normalized = []
     for region in regions:
         if not isinstance(region, dict):
@@ -127,20 +98,8 @@ def _load_blocked_regions():
             "team_keywords": list(region.get("team_keywords", []) or []),
         })
     if not normalized:
-        logger.warning("blacklist.json had no valid region entries, using defaults")
-        return list(DEFAULT_BLOCKED_REGIONS)
-
-    existing_names = {str(region.get("name", "")).strip().lower() for region in normalized}
-    for region in DEFAULT_BLOCKED_REGIONS:
-        name = str(region.get("name", "")).strip().lower()
-        if name and name not in existing_names:
-            normalized.append({
-                "name": region.get("name", "Unnamed"),
-                "league_keywords": list(region.get("league_keywords", []) or []),
-                "team_keywords": list(region.get("team_keywords", []) or []),
-            })
-            existing_names.add(name)
-
+        logger.info("blacklist.json had no valid region entries, static blocking disabled (auto-only mode)")
+        return []
     logger.info("Loaded %d blocked region(s) from blacklist.json", len(normalized))
     return normalized
 
@@ -164,6 +123,16 @@ def _market_for_over_under_pick(pick):
         return MARKET_OVER25
     if prediction == "under":
         return MARKET_UNDER25
+    return None
+
+
+def _market_for_btts_pick(pick):
+    """Derive a fine-grained market bucket from a btts history pick."""
+    prediction = str(pick.get("prediction", "")).strip().lower()
+    if prediction in ("yes", "btts_yes", "btts yes"):
+        return MARKET_BTTS_YES
+    if prediction in ("no", "btts_no", "btts no"):
+        return MARKET_BTTS_NO
     return None
 
 
@@ -219,6 +188,22 @@ def _compute_poor_league_tables():
             continue
         combined_stats[league][normalized_result] += 1
         fine = _market_for_over_under_pick(pick)
+        if fine in per_market_stats:
+            per_market_stats[fine][league][normalized_result] += 1
+
+    for pick in history.get("btts", []) or []:
+        league = pick.get("league")
+        if not league:
+            continue
+        pick_date = _parse_pick_date(pick.get("date"))
+        if pick_date and pick_date < cutoff:
+            continue
+        result = resolve_pick_result(pick)
+        normalized_result = str(result or "").strip().lower()
+        if normalized_result not in SETTLED_RESULTS:
+            continue
+        combined_stats[league][normalized_result] += 1
+        fine = _market_for_btts_pick(pick)
         if fine in per_market_stats:
             per_market_stats[fine][league][normalized_result] += 1
 
@@ -381,12 +366,18 @@ def is_blocked_pick(pick, market=None):
             inferred = MARKET_HOME_WIN
         elif section == "over_under":
             inferred = _market_for_over_under_pick(pick)
+        elif section == "btts":
+            inferred = _market_for_btts_pick(pick)
         else:
             prediction = str(pick.get("prediction", "")).strip().lower()
             if prediction == "over":
                 inferred = MARKET_OVER25
             elif prediction == "under":
                 inferred = MARKET_UNDER25
+            elif prediction in ("yes", "btts_yes"):
+                inferred = MARKET_BTTS_YES
+            elif prediction in ("no", "btts_no"):
+                inferred = MARKET_BTTS_NO
     return is_blocked_match(
         pick.get("home_team", pick.get("home", "")),
         pick.get("away_team", pick.get("away", "")),
@@ -424,6 +415,16 @@ def over_under_key(pick):
     )
 
 
+def btts_key(pick):
+    return (
+        pick["date"],
+        pick.get("home_team", pick.get("home")),
+        pick.get("away_team", pick.get("away")),
+        pick["prediction"],
+        pick["confidence"],
+    )
+
+
 def _pick_better(existing, new):
     """Prefer settled results; otherwise keep the most recent entry."""
     existing_settled = existing.get("result") in SETTLED_RESULTS
@@ -450,15 +451,19 @@ def dedupe_history(history=None, save=True):
     history = history or load_history()
     before_hw = len(history["home_win"])
     before_ou = len(history["over_under"])
+    before_btts = len(history.get("btts", []))
 
     history["home_win"] = dedupe_predictions(history["home_win"], home_win_key)
     history["over_under"] = dedupe_predictions(history["over_under"], over_under_key)
+    history["btts"] = dedupe_predictions(history.get("btts", []), btts_key)
 
     stats = {
         "home_win_removed": before_hw - len(history["home_win"]),
         "over_under_removed": before_ou - len(history["over_under"]),
+        "btts_removed": before_btts - len(history["btts"]),
         "home_win_remaining": len(history["home_win"]),
         "over_under_remaining": len(history["over_under"]),
+        "btts_remaining": len(history["btts"]),
     }
 
     if save:
@@ -516,13 +521,18 @@ def add_to_manual_results_csv(date_str, home_team, away_team):
 
 
 def load_history():
+    default = {"home_win": [], "over_under": [], "btts": [], "stats": {}}
     if os.path.exists(HISTORY_FILE):
         try:
-            with open(HISTORY_FILE, "r") as f:
-                return json.load(f)
-        except:
+            with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            for key, val in default.items():
+                if key not in data:
+                    data[key] = val if key != "stats" else {}
+            return data
+        except (OSError, json.JSONDecodeError):
             pass
-    return {"home_win": [], "over_under": [], "stats": {}} 
+    return default 
  
  
 def save_history(history): 
@@ -530,12 +540,13 @@ def save_history(history):
         json.dump(history, f, indent=2, default=str) 
  
  
-def record_predictions(date_str, home_win_picks=None, over_under_picks=None): 
-    """Record new predictions (called after running predictors)""" 
-    history = load_history() 
+def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btts_picks=None):
+    """Record new predictions (called after running predictors)"""
+    history = load_history()
     existing_hw = {home_win_key(p) for p in history["home_win"]}
     existing_ou = {over_under_key(p) for p in history["over_under"]}
-    added = 0 
+    existing_btts = {btts_key(p) for p in history.get("btts", [])}
+    added = 0
     skipped = 0
 
     if home_win_picks: 
@@ -602,6 +613,39 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None):
             # Add to manual_results.csv
             add_to_manual_results_csv(entry["date"], entry["home_team"], entry["away_team"])
 
+    if btts_picks:
+        for pick in btts_picks:
+            prediction = str(pick.get("prediction", "yes")).strip().lower()
+            market = MARKET_BTTS_YES if prediction in ("yes", "btts_yes") else MARKET_BTTS_NO
+            if is_blocked_match(
+                pick.get("home", pick.get("home_team", "")),
+                pick.get("away", pick.get("away_team", "")),
+                pick.get("league", ""),
+                market=market,
+            ):
+                skipped += 1
+                continue
+            entry = {
+                "date": pick.get("date", date_str),
+                "type": "btts",
+                "league": pick.get("league"),
+                "home_team": pick.get("home"),
+                "away_team": pick.get("away"),
+                "prediction": prediction,
+                "prob": pick.get("prob"),
+                "confidence": pick.get("confidence", MEDIUM),
+                "result": "pending",
+                "recorded_at": datetime.now().isoformat(),
+            }
+            key = btts_key(entry)
+            if key in existing_btts:
+                skipped += 1
+                continue
+            history["btts"].append(entry)
+            existing_btts.add(key)
+            added += 1
+            add_to_manual_results_csv(entry["date"], entry["home_team"], entry["away_team"])
+
     if added > 0: 
         save_history(history) 
         print(f"[OK] Recorded {added} new predictions for {date_str}") 
@@ -614,7 +658,12 @@ def update_result(date_str, home_team, away_team, result, prediction_type="over_
     history = load_history() 
     updated = 0 
  
-    picks = history["over_under"] if prediction_type == "over_under" else history["home_win"] 
+    if prediction_type == "over_under":
+        picks = history["over_under"]
+    elif prediction_type == "btts":
+        picks = history.get("btts", [])
+    else:
+        picks = history["home_win"] 
  
     for pick in picks: 
         pick_home = pick.get("home_team", pick.get("home"))
@@ -693,8 +742,9 @@ def get_pending_predictions(days_old=None, due_only=True):
     pending = []
     today = datetime.now().date()
 
-    for p_type in ["home_win", "over_under"]:
-        for idx, pick in enumerate(history[p_type]):
+    for p_type in ["home_win", "over_under", "btts"]:
+        section = history.get(p_type, []) if p_type == "btts" else history[p_type]
+        for idx, pick in enumerate(section):
             if pick["result"] != "pending":
                 continue
             date_str = pick["date"][:10]
@@ -884,6 +934,27 @@ def get_yesterday_results(prediction_type=None, detailed=False):
                 market = market.upper()
             append_pick(pick, market)
 
+    if prediction_type in (None, "btts"):
+        yesterday_btts = [
+            pick for pick in history.get("btts", [])
+            if pick.get("date", "")[:10] == yesterday
+        ]
+
+        def report_btts_key(pick):
+            return (
+                pick.get("date", "")[:10],
+                pick.get("home_team", pick.get("home")),
+                pick.get("away_team", pick.get("away")),
+                str(pick.get("prediction", "yes")).lower(),
+            )
+
+        for pick in dedupe_predictions(yesterday_btts, report_btts_key):
+            pred = str(pick.get("prediction", "yes")).lower()
+            market = "BTTS Yes" if pred in ("yes", "btts_yes") else "BTTS No"
+            if not detailed:
+                market = market.upper()
+            append_pick(pick, market)
+
     while results and results[-1] == "":
         results.pop()
 
@@ -986,6 +1057,10 @@ def safer_market_label(primary_market):
     if market in ("over", "over 2.5"):
         return "over_1_5", "Over 1.5 Goals"
     if market in ("under", "under 2.5"):
+        return "under_3_5", "Under 3.5 Goals"
+    if market in ("btts yes", "btts_yes", "yes"):
+        return "over_1_5", "Over 1.5 Goals"
+    if market in ("btts no", "btts_no", "no"):
         return "under_3_5", "Under 3.5 Goals"
     return None, None
 

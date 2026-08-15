@@ -573,6 +573,38 @@ def update_history_with_results(date_str, dry_run=False):
                 pick_away = pick.get("away_team", pick.get("away"))
                 unmatched.append(f"OU: {pick_home} vs {pick_away}")
 
+    for idx, pick in enumerate(history.get("btts", [])):
+        if pick["result"] == "pending" and pick["date"] == date_str and pick_is_due(pick):
+            match = find_matching_result(pick, results)
+            result = determine_btts_result(pick, [match]) if match else None
+            if result:
+                if not dry_run:
+                    history["btts"][idx]["result"] = result
+                    history["btts"][idx]["updated_at"] = datetime.now().isoformat()
+                    history["btts"][idx]["final_score"] = match["score"]
+                    history["btts"][idx]["result_source"] = match.get("source")
+                updated += 1
+                pick_home = pick.get("home_team", pick.get("home"))
+                pick_away = pick.get("away_team", pick.get("away"))
+                pred = str(pick.get("prediction", "yes")).lower()
+                market = "BTTS Yes" if pred in ("yes", "btts_yes") else "BTTS No"
+                settled.append({
+                    "type": "BTTS",
+                    "league": pick.get("league"),
+                    "home_team": pick_home,
+                    "away_team": pick_away,
+                    "prediction": market,
+                    "confidence": pick.get("confidence"),
+                    "score": match["score"],
+                    "result": result,
+                    "source": match.get("source"),
+                })
+                logger.info(f"[WIN] BTTS: {pick_home} vs {pick_away} = {match['score']} = {result}")
+            else:
+                pick_home = pick.get("home_team", pick.get("home"))
+                pick_away = pick.get("away_team", pick.get("away"))
+                unmatched.append(f"BTTS: {pick_home} vs {pick_away}")
+
     if updated > 0 and not dry_run:
         save_history(history)
         logger.info(f"Updated {updated} predictions!")
@@ -595,6 +627,9 @@ def pick_to_report_item(pick, ptype):
     away = pick.get("away_team", pick.get("away"))
     if ptype == "home_win":
         prediction = "Home Win"
+    elif ptype == "btts":
+        pred = str(pick.get("prediction", "yes")).lower()
+        prediction = "BTTS Yes" if pred in ("yes", "btts_yes") else "BTTS No"
     else:
         prediction = (
             "Over 2.5"
@@ -623,6 +658,11 @@ def collect_settled_picks_for_date(history, date_str):
             continue
         if pick.get("result") in ("win", "loss", "push") and pick.get("final_score"):
             items.append(pick_to_report_item(pick, "over_under"))
+    for pick in history.get("btts", []):
+        if pick.get("date", "")[:10] != date_str:
+            continue
+        if pick.get("result") in ("win", "loss", "push") and pick.get("final_score"):
+            items.append(pick_to_report_item(pick, "btts"))
     return items
 
 
@@ -643,6 +683,13 @@ def collect_unmatched_pending_for_date(history, date_str):
             home = pick.get("home_team", pick.get("home"))
             away = pick.get("away_team", pick.get("away"))
             unmatched.append(f"OU: {home} vs {away}")
+    for pick in history.get("btts", []):
+        if pick.get("date", "")[:10] != date_str:
+            continue
+        if pick.get("result") == "pending" and pick_is_overdue(pick) and not pick_is_stale_pending(pick):
+            home = pick.get("home_team", pick.get("home"))
+            away = pick.get("away_team", pick.get("away"))
+            unmatched.append(f"BTTS: {home} vs {away}")
     return unmatched
 
 
@@ -664,6 +711,13 @@ def build_yesterday_results_block(history):
             if pick.get("prediction", "over").lower() in ("over", "over 2.5")
             else "Under 2.5"
         )
+        lines.extend(format_pick_result_lines(pick, market))
+
+    for pick in history.get("btts", []):
+        if pick.get("date", "")[:10] != yesterday:
+            continue
+        pred = str(pick.get("prediction", "yes")).lower()
+        market = "BTTS Yes" if pred in ("yes", "btts_yes") else "BTTS No"
         lines.extend(format_pick_result_lines(pick, market))
 
     while lines and lines[-1] == "":
@@ -744,7 +798,7 @@ def collect_settlement_dates(days_back, history=None):
         dates.add((datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d"))
 
     today = datetime.now().date()
-    for ptype in ("home_win", "over_under"):
+    for ptype in ("home_win", "over_under", "btts"):
         for pick in history.get(ptype, []):
             if pick.get("result") != "pending":
                 continue
@@ -772,7 +826,14 @@ def append_still_pending_report(history):
         for pick in pending[:20]:
             home = pick.get("home_team", pick.get("home"))
             away = pick.get("away_team", pick.get("away"))
-            market = "HW" if pick.get("type") == "home_win" else "OU"
+            ptype = pick.get("type", "")
+            if ptype == "home_win":
+                market = "HW"
+            elif ptype == "btts":
+                pred = str(pick.get("prediction", "yes")).lower()
+                market = "BTTS-Y" if pred in ("yes", "btts_yes") else "BTTS-N"
+            else:
+                market = "OU"
             f.write(f"[PENDING] {market}: {home} vs {away} ({pick['date']})\n")
         if len(pending) > 20:
             f.write(f"   ...and {len(pending) - 20} more\n")
@@ -816,6 +877,22 @@ def determine_over_under_result(pick, results):
                     return "win" if total > 2 else "loss"
                 else:
                     return "win" if total < 3 else "loss"
+    return None
+
+
+def determine_btts_result(pick, results):
+    pick_home = pick.get("home_team", pick.get("home"))
+    pick_away = pick.get("away_team", pick.get("away"))
+    for match in results:
+        if (team_names_match(match["home_team"], pick_home) and
+                team_names_match(match["away_team"], pick_away)):
+            hg, ag = parse_score(match["score"])
+            if hg is not None and ag is not None:
+                btts_yes = hg >= 1 and ag >= 1
+                prediction = str(pick.get("prediction", "yes")).strip().lower()
+                if prediction in ("yes", "btts_yes"):
+                    return "win" if btts_yes else "loss"
+                return "win" if not btts_yes else "loss"
     return None
 
 # =============================================================================
@@ -910,6 +987,21 @@ def update_all_pending_results(days_back=7):
                     pick_home = pick.get("home_team", pick.get("home"))
                     pick_away = pick.get("away_team", pick.get("away"))
                     logger.info(f"Updated: {pick_home} vs {pick_away} → {result}")
+
+        for idx, pick in enumerate(history.get("btts", [])):
+            if pick["result"] == "pending" and pick["date"] == date_str:
+                match = find_matching_result(pick, results)
+                result = determine_btts_result(pick, [match]) if match else None
+                if result:
+                    history["btts"][idx]["result"] = result
+                    history["btts"][idx]["updated_at"] = datetime.now().isoformat()
+                    if match:
+                        history["btts"][idx]["final_score"] = match["score"]
+                        history["btts"][idx]["result_source"] = match.get("source")
+                    updated += 1
+                    pick_home = pick.get("home_team", pick.get("home"))
+                    pick_away = pick.get("away_team", pick.get("away"))
+                    logger.info(f"Updated BTTS: {pick_home} vs {pick_away} → {result}")
     
     if updated > 0:
         save_history(history)
