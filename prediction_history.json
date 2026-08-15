@@ -4513,8 +4513,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:35.712857"
+      "result": "win",
+      "recorded_at": "2026-08-05T13:50:35.712857",
+      "updated_at": "2026-08-15T20:09:09.564707",
+      "final_score": "3-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-15",
@@ -5422,5 +5425,7 @@
       "result": "pending",
       "recorded_at": "2026-08-05T13:50:40.594811"
     }
-  ]
+  ],
+  "btts": [],
+  "stats": {}
 }
