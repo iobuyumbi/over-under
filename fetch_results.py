@@ -732,17 +732,14 @@ def write_selected_results_report(dates_to_check, history, dry_run=False):
     mode = "[DRY RUN] " if dry_run else ""
 
     with open(SELECTED_RESULTS_REPORT, "w", encoding="utf-8") as f:
-        yesterday_str, yesterday_lines = build_yesterday_results_block(history)
-        if yesterday_lines:
-            f.write(f"\n{mode}📌 YESTERDAY\n")
-            f.write(f"Date: {yesterday_str}\n")
-            f.write("-" * 30 + "\n")
-            max_lines = 20
-            for line in yesterday_lines[:max_lines]:
+        from prediction_tracker import build_telegram_yesterday_block, format_compact_result_line, market_short_label
+
+        yesterday_block = build_telegram_yesterday_block(max_lines=15)
+        if yesterday_block:
+            f.write(f"{mode}📊 Results\n")
+            for line in yesterday_block:
                 f.write(f"{line}\n")
-            remaining = len(yesterday_lines) - max_lines
-            if remaining > 0:
-                f.write(f"...and {remaining} more\n")
+            f.write("\n")
 
         for date_str in dates_to_check:
             if date_str == yesterday_str:
@@ -752,40 +749,34 @@ def write_selected_results_report(dates_to_check, history, dry_run=False):
             unmatched = collect_unmatched_pending_for_date(history, date_str)
             if not settled and not unmatched:
                 continue
-            if date_str == today_str:
-                if settled:
-                    f.write(f"\n{mode}📅 TODAY\n")
-                    f.write(f"Date: {date_str}\n")
-                    f.write("-" * 30 + "\n")
-                    for item in settled:
-                        result = resolve_pick_result(
-                            {"result": item["result"], "final_score": item["score"]}
-                        )
-                        tag = format_result_tag(result)
-                        f.write(f"[{tag}] {item['home_team']} vs {item['away_team']}\n")
-                        f.write(f"   {item['prediction']} — {format_result_badge(result)} ({item['score']})\n")
-                        safer_line = format_safer_result_line(item["prediction"], item["score"])
-                        if safer_line:
-                            f.write(f"{safer_line}\n")
-                        f.write("\n")
 
-                if unmatched and settled:
-                    f.write(f"Still unmatched: {len(unmatched)}\n")
-                    for item in unmatched[:5]:
-                        f.write(f"   - {item}\n")
-                    if len(unmatched) > 5:
-                        f.write(f"   ...and {len(unmatched) - 5} more\n")
-                continue
+            if date_str == today_str and settled:
+                f.write(f"{mode}Today · {date_str}\n")
+                for item in settled:
+                    pick = {
+                        "home_team": item["home_team"],
+                        "away_team": item["away_team"],
+                        "final_score": item["score"],
+                        "result": item["result"],
+                    }
+                    market = item["prediction"]
+                    f.write(format_compact_result_line(pick, market) + "\n")
+                f.write("\n")
 
             if unmatched and date_str < today_str:
-                f.write(f"\n{mode}⏳ MISSING SCORES\n")
-                f.write(f"Date: {date_str}\n")
-                f.write("-" * 30 + "\n")
-                f.write(f"Still unmatched: {len(unmatched)}\n")
+                f.write(f"{mode}⏳ Missing · {date_str} ({len(unmatched)})\n")
                 for item in unmatched[:5]:
-                    f.write(f"   - {item}\n")
+                    f.write(f"{item}\n")
                 if len(unmatched) > 5:
-                    f.write(f"   ...and {len(unmatched) - 5} more\n")
+                    f.write(f"+{len(unmatched) - 5} more\n")
+                f.write("\n")
+
+            if date_str == today_str and unmatched and settled:
+                f.write(f"Pending: {len(unmatched)}\n")
+                for item in unmatched[:3]:
+                    f.write(f"{item}\n")
+                if len(unmatched) > 3:
+                    f.write(f"+{len(unmatched) - 3} more\n")
 
 
 def collect_settlement_dates(days_back, history=None):
@@ -821,9 +812,8 @@ def append_still_pending_report(history):
         return
 
     with open(SELECTED_RESULTS_REPORT, "a", encoding="utf-8") as f:
-        f.write("\nSTILL PENDING\n")
-        f.write("-" * 30 + "\n")
-        for pick in pending[:20]:
+        f.write("\n⏳ Still pending\n")
+        for pick in pending[:15]:
             home = pick.get("home_team", pick.get("home"))
             away = pick.get("away_team", pick.get("away"))
             ptype = pick.get("type", "")
@@ -831,12 +821,13 @@ def append_still_pending_report(history):
                 market = "HW"
             elif ptype == "btts":
                 pred = str(pick.get("prediction", "yes")).lower()
-                market = "BTTS-Y" if pred in ("yes", "btts_yes") else "BTTS-N"
+                market = "BTTS+" if pred in ("yes", "btts_yes") else "BTTS-"
             else:
-                market = "OU"
-            f.write(f"[PENDING] {market}: {home} vs {away} ({pick['date']})\n")
-        if len(pending) > 20:
-            f.write(f"   ...and {len(pending) - 20} more\n")
+                pred = str(pick.get("prediction", "over")).lower()
+                market = "O2.5" if pred == "over" else "U2.5"
+            f.write(f"⏳ {home} vs {away} · {market}\n")
+        if len(pending) > 15:
+            f.write(f"+{len(pending) - 15} more\n")
 
 def find_matching_result(pick, results):
     pick_home = pick.get("home_team", pick.get("home"))

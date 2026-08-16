@@ -29,6 +29,7 @@ from prediction_tracker import (
     record_predictions,
     format_vip_extra_lines,
     format_pick_block,
+    format_compact_pick_line,
     format_confidence_label,
     is_blocked_fixture,
     append_yesterday_section,
@@ -837,7 +838,7 @@ def process_single_match(match, target_date, default_odds=2.8):
 # =============================================================================
 # REPORTING
 # =============================================================================
-def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds, detailed=False):
+def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds, detailed=False, compact=False):
     """
     Build a clean, mobile-friendly report with all qualifying picks across scanned days.
     Returns: (report, base_date, included_perfect, included_qualified, included_close)
@@ -851,24 +852,28 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
 
     # Clean report (mobile-friendly)
     lines = []
-    lines.append("🏠 Home Win picks")
-    lines.append("")
-    
-    if len(included_dates) > 1:
-        lines.append(f"Dates: {included_dates[0]} to {included_dates[-1]}")
-    else:
-        lines.append(f"Date: {base_date}")
-    
-    lines.append("")
-    
-    append_yesterday_section(lines, "home_win", detailed=detailed)
-    
-    if included_perfect:
-        lines.append(f"  {PICK_TIER_PREMIUM}")
+    if not compact:
+        lines.append("🏠 Home Win picks")
         lines.append("")
-        for i, item in enumerate(included_perfect, 1):
+        if len(included_dates) > 1:
+            lines.append(f"Dates: {included_dates[0]} to {included_dates[-1]}")
+        else:
+            lines.append(f"Date: {base_date}")
+        lines.append("")
+        append_yesterday_section(lines, "home_win", detailed=detailed)
+
+    show_date = len(included_dates) > 1
+
+    def append_items(items, tier):
+        for item in items:
             m = item["match"]
             p = item["model"]
+            if compact:
+                lines.append(format_compact_pick_line(
+                    m["home"], m["away"], "HW", tier, p["home_win_prob"],
+                    m["date"] if show_date else None,
+                ))
+                continue
             extra = None
             if detailed:
                 extra = format_vip_extra_lines(
@@ -876,52 +881,34 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
                     home_strength=p["home_strength"], away_strength=p["away_strength"],
                 )
             lines.extend(format_pick_block(
-                i, m["home"], m["away"], m["date"],
-                f"{format_confidence_label(p['confidence'])} ({p['home_win_prob']}%)",
-                extra,
-            ))
-        
-    if included_qualified:
-        lines.append(f"  {PICK_TIER_STRONG}")
-        lines.append("")
-        for i, item in enumerate(included_qualified, 1):
-            m = item["match"]
-            p = item["model"]
-            extra = None
-            if detailed:
-                extra = format_vip_extra_lines(
-                    item["kelly"], odds, item["score"], MAX_HOME_WIN_SCORE,
-                    home_strength=p["home_strength"], away_strength=p["away_strength"],
-                )
-            lines.extend(format_pick_block(
-                i, m["home"], m["away"], m["date"],
-                f"{format_confidence_label(p['confidence'])} ({p['home_win_prob']}%)",
-                extra,
-            ))
-        
-    if included_close:
-        lines.append(f"  {PICK_TIER_VALUE}")
-        lines.append("")
-        for i, item in enumerate(included_close, 1):
-            m = item["match"]
-            p = item["model"]
-            extra = None
-            if detailed:
-                extra = format_vip_extra_lines(
-                    item["kelly"], odds, item["score"], MAX_HOME_WIN_SCORE,
-                    home_strength=p["home_strength"], away_strength=p["away_strength"],
-                )
-            lines.extend(format_pick_block(
-                i, m["home"], m["away"], m["date"],
+                1, m["home"], m["away"], m["date"],
                 f"{format_confidence_label(p['confidence'])} ({p['home_win_prob']}%)",
                 extra,
             ))
 
-    # Add disclaimer
-    lines.append("---")
-    lines.append("For informational purposes only")
-    lines.append("Gamble responsibly")
-    lines.append("")
+    if included_perfect:
+        if not compact:
+            lines.append(f"  {PICK_TIER_PREMIUM}")
+            lines.append("")
+        append_items(included_perfect, "perfect")
+
+    if included_qualified:
+        if not compact:
+            lines.append(f"  {PICK_TIER_STRONG}")
+            lines.append("")
+        append_items(included_qualified, "qualified")
+
+    if included_close:
+        if not compact:
+            lines.append(f"  {PICK_TIER_VALUE}")
+            lines.append("")
+        append_items(included_close, "close")
+
+    if not compact:
+        lines.append("---")
+        lines.append("For informational purposes only")
+        lines.append("Gamble responsibly")
+        lines.append("")
 
     report = "\n".join(lines)
     return report, base_date, included_perfect, included_qualified, included_close
@@ -1044,6 +1031,9 @@ def main():
     free_report, base_date, included_perfect, included_qualified, included_close = build_report(
         perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=False
     )
+    telegram_report, _, _, _, _ = build_report(
+        perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=False, compact=True
+    )
     detailed_report, _, _, _, _ = build_report(
         perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=True
     )
@@ -1052,6 +1042,9 @@ def main():
     print("\n===EMAIL_START===")
     print(free_report)
     print("===EMAIL_END===")
+    print("\n===TELEGRAM_START===")
+    print(telegram_report.strip() or "— none")
+    print("===TELEGRAM_END===")
 
     # Save detailed report to file
     detailed_report_path = f"home_win_vip_report_{base_date}.txt"

@@ -28,6 +28,7 @@ from prediction_tracker import (
     record_predictions,
     format_vip_extra_lines,
     format_pick_block,
+    format_compact_pick_line,
     format_confidence_label,
     is_blocked_fixture,
     append_yesterday_section,
@@ -1036,13 +1037,18 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
 # =============================================================================
 # REPORTING
 # =============================================================================
-def _append_btts_pick(lines, idx, item, side, odds, detailed):
+def _append_btts_pick(lines, idx, item, side, odds, detailed, compact=False):
     m = item["match"]
     p = item["poisson"]
     tgt = item[side]
     prob_key = "btts_yes_prob" if side == "yes" else "btts_no_prob"
-    label = "BTTS Yes" if side == "yes" else "BTTS No"
+    label = "BTTS+" if side == "yes" else "BTTS-"
     max_score = MAX_BTTS_YES_SCORE + 1 if side == "yes" else MAX_BTTS_NO_SCORE + 1
+    if compact:
+        lines.append(format_compact_pick_line(
+            m["home"], m["away"], label, tgt.get("tier"), p[prob_key], m.get("date"),
+        ))
+        return
     extra = None
     if detailed:
         extra = format_vip_extra_lines(
@@ -1051,14 +1057,14 @@ def _append_btts_pick(lines, idx, item, side, odds, detailed):
         )
     lines.extend(format_pick_block(
         idx, m["home"], m["away"], m["date"],
-        f"{label} · {format_confidence_label(tgt['confidence'])} ({p[prob_key]}%)",
+        f"{'BTTS Yes' if side == 'yes' else 'BTTS No'} · {format_confidence_label(tgt['confidence'])} ({p[prob_key]}%)",
         extra,
     ))
 
 
 def build_report(yes_perfect, yes_qualified, yes_close,
                  no_perfect, no_qualified, no_close,
-                 scanned_dates, odds_yes, odds_no, detailed=False):
+                 scanned_dates, odds_yes, odds_no, detailed=False, compact=False):
     included_yes = [
         p for p in (yes_perfect + yes_qualified + yes_close)
         if not is_blocked_fixture(p["match"], market=MARKET_BTTS_YES)
@@ -1069,69 +1075,85 @@ def build_report(yes_perfect, yes_qualified, yes_close,
     ]
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
-    lines = ["⚽️ BTTS picks", ""]
-    if len(scanned_dates) > 1:
-        lines.append(f"Dates: {scanned_dates[0]} to {scanned_dates[-1]}")
-    else:
-        lines.append(f"Date: {base_date}")
-    lines.append("")
-    append_yesterday_section(lines, "btts", detailed=detailed)
+    lines = []
+    if not compact:
+        lines.append("⚽️ BTTS picks")
+        lines.append("")
+        if len(scanned_dates) > 1:
+            lines.append(f"Dates: {scanned_dates[0]} to {scanned_dates[-1]}")
+        else:
+            lines.append(f"Date: {base_date}")
+        lines.append("")
+        append_yesterday_section(lines, "btts", detailed=detailed)
 
     if included_yes:
-        lines.append("🟢 BTTS Yes")
-        lines.append("")
+        if compact:
+            lines.append("BTTS+")
+        else:
+            lines.append("🟢 BTTS Yes")
+            lines.append("")
         y_perfect = [p for p in included_yes if p in yes_perfect]
         y_qualified = [p for p in included_yes if p in yes_qualified]
         y_close = [p for p in included_yes if p in yes_close]
         idx = 1
         if y_perfect:
-            lines.append(f"  {PICK_TIER_PREMIUM}")
-            lines.append("")
+            if not compact:
+                lines.append(f"  {PICK_TIER_PREMIUM}")
+                lines.append("")
             for item in y_perfect:
-                _append_btts_pick(lines, idx, item, "yes", odds_yes, detailed)
+                _append_btts_pick(lines, idx, item, "yes", odds_yes, detailed, compact)
                 idx += 1
         if y_qualified:
-            lines.append(f"  {PICK_TIER_STRONG}")
-            lines.append("")
+            if not compact:
+                lines.append(f"  {PICK_TIER_STRONG}")
+                lines.append("")
             for item in y_qualified:
-                _append_btts_pick(lines, idx, item, "yes", odds_yes, detailed)
+                _append_btts_pick(lines, idx, item, "yes", odds_yes, detailed, compact)
                 idx += 1
         if y_close:
-            if detailed:
+            if not compact and detailed:
                 lines.append(f"  {PICK_TIER_VALUE}")
                 lines.append("")
             for item in y_close:
-                _append_btts_pick(lines, idx, item, "yes", odds_yes, detailed)
+                _append_btts_pick(lines, idx, item, "yes", odds_yes, detailed, compact)
                 idx += 1
+        if compact:
+            lines.append("")
 
     if included_no:
-        lines.append("🔴 BTTS No")
-        lines.append("")
+        if compact:
+            lines.append("BTTS-")
+        else:
+            lines.append("🔴 BTTS No")
+            lines.append("")
         n_perfect = [p for p in included_no if p in no_perfect]
         n_qualified = [p for p in included_no if p in no_qualified]
         n_close = [p for p in included_no if p in no_close]
         idx = 1
         if n_perfect:
-            lines.append(f"  {PICK_TIER_PREMIUM}")
-            lines.append("")
+            if not compact:
+                lines.append(f"  {PICK_TIER_PREMIUM}")
+                lines.append("")
             for item in n_perfect:
-                _append_btts_pick(lines, idx, item, "no", odds_no, detailed)
+                _append_btts_pick(lines, idx, item, "no", odds_no, detailed, compact)
                 idx += 1
         if n_qualified:
-            lines.append(f"  {PICK_TIER_STRONG}")
-            lines.append("")
+            if not compact:
+                lines.append(f"  {PICK_TIER_STRONG}")
+                lines.append("")
             for item in n_qualified:
-                _append_btts_pick(lines, idx, item, "no", odds_no, detailed)
+                _append_btts_pick(lines, idx, item, "no", odds_no, detailed, compact)
                 idx += 1
         if n_close:
-            if detailed:
+            if not compact and detailed:
                 lines.append(f"  {PICK_TIER_VALUE}")
                 lines.append("")
             for item in n_close:
-                _append_btts_pick(lines, idx, item, "no", odds_no, detailed)
+                _append_btts_pick(lines, idx, item, "no", odds_no, detailed, compact)
                 idx += 1
 
-    lines.extend(["---", "For informational purposes only", "Gamble responsibly", ""])
+    if not compact:
+        lines.extend(["---", "For informational purposes only", "Gamble responsibly", ""])
     return "\n".join(lines), base_date, included_yes, included_no
 
 
@@ -1225,6 +1247,11 @@ def main():
         no_perfect, no_qualified, no_close,
         scanned_dates, args.odds_yes, args.odds_no, detailed=False,
     )
+    telegram_report, _, _, _ = build_report(
+        yes_perfect, yes_qualified, yes_close,
+        no_perfect, no_qualified, no_close,
+        scanned_dates, args.odds_yes, args.odds_no, detailed=False, compact=True,
+    )
     detailed_report, _, _, _ = build_report(
         yes_perfect, yes_qualified, yes_close,
         no_perfect, no_qualified, no_close,
@@ -1234,6 +1261,9 @@ def main():
     print("\n===EMAIL_START===")
     print(free_report)
     print("===EMAIL_END===")
+    print("\n===TELEGRAM_START===")
+    print(telegram_report.strip() or "— none")
+    print("===TELEGRAM_END===")
 
     vip_path = f"btts_vip_report_{base_date}.txt"
     with open(vip_path, "w", encoding="utf-8") as f:
