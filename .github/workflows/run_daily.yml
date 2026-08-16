@@ -92,7 +92,7 @@ jobs:
           else:
               report = "No selected-match result report was generated."
 
-          message = f"SELECTED MATCH RESULTS\nDays checked: {days}\n\n{report}"
+          message = f"📊 Results\n\n{report}" if report else "📊 Results\n\nNo updates."
           chunks = [message[i:i + 3900] for i in range(0, len(message), 3900)]
 
           for chat_id in filter(None, chats):
@@ -173,6 +173,15 @@ jobs:
         run: |
           python btts_soccerbase.py > btts_output.txt 2> btts_errors.txt || true
           sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' btts_output.txt | sed '1d;$d' > btts_body.txt
+
+      - name: Build Telegram daily message
+        run: |
+          DATE="${{ steps.over-under.outputs.date }}"
+          python build_telegram_daily.py --date "$DATE" \
+            --ou-output output.txt \
+            --btts-output btts_output.txt \
+            --hw-output hw_output.txt \
+            --out telegram_daily.txt
 
       - name: Build free and VIP reports
         run: |
@@ -277,10 +286,10 @@ jobs:
               print("Skipping Telegram: missing bot token or public chat id.")
               raise SystemExit(0)
 
-          free_report = read_file("combined_free.txt")
+          free_report = read_file("telegram_daily.txt") or read_file("combined_free.txt")
           vip_report = read_file("combined_vip.txt")
 
-          send(free_channel, f"DAILY PREDICTIONS ({date})\n\n{free_report}")
+          send(free_channel, free_report)
           send(vip_channel, vip_report)
           PY
         env:
