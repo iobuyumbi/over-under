@@ -245,11 +245,16 @@ def fetch_soccerbase_team_results(team_id):
             try:
                 gf_h, gf_a = map(int, score.split("-"))
                 home_link = cells[3].find("a", href=lambda h: h and "team_id=" in h)
+                away_link = cells[5].find("a", href=lambda h: h and "team_id=" in h)
                 if not home_link:
                     continue
                 home_id_in_row = home_link["href"].split("team_id=")[1].split("&")[0]
+                away_id_in_row = None
+                if away_link:
+                    away_id_in_row = away_link["href"].split("team_id=")[1].split("&")[0]
 
                 is_home = str(home_id_in_row) == str(team_id)
+                opponent_team_id = away_id_in_row if is_home else home_id_in_row
                 gf = gf_h if is_home else gf_a
                 ga = gf_a if is_home else gf_h
                 result = "W" if gf > ga else "D" if gf == ga else "L"
@@ -259,7 +264,8 @@ def fetch_soccerbase_team_results(team_id):
 
                 matches.append({
                     "gf": gf, "ga": ga, "is_home": is_home,
-                    "result": result, "date_str": date_str
+                    "result": result, "date_str": date_str,
+                    "opponent_team_id": opponent_team_id,
                 })
             except Exception:
                 continue
@@ -323,13 +329,62 @@ _HW_WEAK_ROI_LEAGUE_KEYWORDS = (
     "fai cup",
     "mexican primera apertura",
     "brazilian serie a",
+    "mls",
 )
 _HW_WEAK_ROI_MULTIPLIER = 0.82
 
 _HW_REGRESSION_WIN_STREAK = 5
 _HW_REGRESSION_PENALTY = 0.08
+_HW_H2H_MIN_MEETINGS = 2
+_HW_H2H_MAX_LOOKBACK = 6
 
 _HW_LEAGUE_BASELINE_CACHE = {}
+
+
+def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=_HW_H2H_MAX_LOOKBACK):
+    """Recent meetings between these sides, merged from both teams' result pages."""
+    collected = {}
+    for team_id, opponent_id in (
+        (home_team_id, away_team_id),
+        (away_team_id, home_team_id),
+    ):
+        for match in fetch_soccerbase_team_results(team_id):
+            if str(match.get("opponent_team_id") or "") != str(opponent_id):
+                continue
+            match_date = match.get("date_str")
+            if target_date_str and match_date and match_date >= target_date_str:
+                continue
+            key = (match_date, match.get("gf"), match.get("ga"), bool(match.get("is_home")))
+            if key in collected:
+                continue
+            if str(team_id) == str(home_team_id):
+                perspective = dict(match)
+            else:
+                flipped_result = {"W": "L", "L": "W", "D": "D"}.get(match.get("result"), match.get("result"))
+                perspective = {
+                    **match,
+                    "gf": match.get("ga"),
+                    "ga": match.get("gf"),
+                    "result": flipped_result,
+                    "is_home": not match.get("is_home"),
+                }
+            collected[key] = perspective
+    meetings = sorted(collected.values(), key=lambda m: m.get("date_str") or "", reverse=True)
+    return meetings[:limit]
+
+
+def _h2h_home_win_blocked(home_team_id, away_team_id, target_date_str=None):
+    """Block home-win when the home side is winless in recent H2H (bogey opponent)."""
+    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str)
+    if not meetings:
+        return False, meetings
+    home_wins = sum(1 for m in meetings if m.get("result") == "W")
+    away_wins = sum(1 for m in meetings if m.get("result") == "L")
+    if len(meetings) >= _HW_H2H_MIN_MEETINGS and home_wins == 0 and away_wins >= 1:
+        return True, meetings
+    if len(meetings) == 1 and meetings[0].get("is_home") and meetings[0].get("result") == "L":
+        return True, meetings
+    return False, meetings
 
 
 def _hw_is_weak_roi(league_name):
@@ -624,8 +679,8 @@ def hw_compute_confidence_score(rule_score, max_score, model_prob_pct, decimal_o
     return max(0.0, min(1.0, raw * data_mult))
 
 
-def hw_tier_from_confidence(score, gate_passes):
-    if score >= HW_TIER_PREMIUM_CUTOFF and gate_passes:
+def hw_tier_from_confidence(score, gate_passes, is_perfect=True):
+    if score >= HW_TIER_PREMIUM_CUTOFF and gate_passes and is_perfect:
         return "perfect"
     if score >= HW_TIER_SOLID_CUTOFF:
         return "qualified"
@@ -709,10 +764,13 @@ def process_single_match(match, target_date, default_odds=2.8):
 
         score = len(passed)
         gate_passes = hw_model_gate_passes(home_strength, away_strength, home_win_prob)
+        h2h_blocked, h2h_meetings = _h2h_home_win_blocked(
+            match["home_team_id"], match["away_team_id"], target_date
+        )
 
         weak_league = _hw_is_weak_roi(league_name)
         min_score = MAX_HOME_WIN_SCORE - 1 if weak_league else MAX_HOME_WIN_SCORE - 2
-        qualifies = score >= min_score and gate_passes
+        qualifies = score >= min_score and gate_passes and not h2h_blocked
 
         league_mult = _HW_WEAK_ROI_MULTIPLIER if weak_league else 1.0
         reg_mult = _hw_regression_penalty(home_form, away_form)
@@ -721,7 +779,7 @@ def process_single_match(match, target_date, default_odds=2.8):
         conf_score = hw_compute_confidence_score(
             score, MAX_HOME_WIN_SCORE, home_win_prob, default_odds, final_mult
         )
-        tier = hw_tier_from_confidence(conf_score, gate_passes) if qualifies else None
+        tier = hw_tier_from_confidence(conf_score, gate_passes, is_perfect) if qualifies else None
 
         if not qualifies:
             tier = None
@@ -733,6 +791,8 @@ def process_single_match(match, target_date, default_odds=2.8):
         regressions = []
         if reg_mult < 1.0:
             regressions.append("home win streak")
+        if h2h_blocked:
+            regressions.append("h2h bogey (home winless in recent meetings)")
 
         return {
             "status": "success",
@@ -752,6 +812,8 @@ def process_single_match(match, target_date, default_odds=2.8):
                     "confidence": confidence,
                 },
                 "gate_passed": gate_passes,
+                "h2h_blocked": h2h_blocked,
+                "h2h_meetings": len(h2h_meetings),
                 "data_mult": round(data_mult, 2),
                 "weak_league_mult": round(league_mult, 2),
                 "regression_mult": round(reg_mult, 2),
