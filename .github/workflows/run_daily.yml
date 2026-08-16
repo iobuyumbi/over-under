@@ -169,15 +169,25 @@ jobs:
           python home_win_soccerbase.py > hw_output.txt 2> hw_errors.txt || true
           sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d' > hw_body.txt
 
+      - name: Run BTTS predictor
+        run: |
+          python btts_soccerbase.py > btts_output.txt 2> btts_errors.txt || true
+          sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' btts_output.txt | sed '1d;$d' > btts_body.txt
+
       - name: Build free and VIP reports
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
 
           # Free channel: simplified EMAIL body only (never VIP report files)
           {
-            cat over25_body.txt
+            echo "━━━ OVER / UNDER 2.5 ━━━"
+            if [ -s over25_body.txt ]; then cat over25_body.txt; else echo "No qualifying picks today."; fi
             echo ""
-            cat hw_body.txt
+            echo "━━━ BTTS (YES / NO) ━━━"
+            if [ -s btts_body.txt ]; then cat btts_body.txt; else echo "No qualifying BTTS picks today."; fi
+            echo ""
+            echo "━━━ HOME WIN ━━━"
+            if [ -s hw_body.txt ]; then cat hw_body.txt; else echo "No qualifying home win picks today."; fi
           } > combined_free.txt
 
           # VIP channel: full detail from VIP report files
@@ -188,6 +198,12 @@ jobs:
               cat "over_under_vip_report_$DATE.txt"
             else
               echo "Over/Under report unavailable."
+            fi
+            echo ""
+            if [ -f "btts_vip_report_$DATE.txt" ]; then
+              cat "btts_vip_report_$DATE.txt"
+            else
+              echo "BTTS report unavailable."
             fi
             echo ""
             if [ -f "home_win_vip_report_$DATE.txt" ]; then
@@ -203,7 +219,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git pull --rebase --autostash origin main
           shopt -s nullglob
-          files=(over_under_25_report_*.json home_win_report_*.json over_under_vip_report_*.txt home_win_vip_report_*.txt)
+          files=(over_under_25_report_*.json home_win_report_*.json btts_report_*.json over_under_vip_report_*.txt home_win_vip_report_*.txt btts_vip_report_*.txt)
           if [ ${#files[@]} -gt 0 ]; then
             git add "${files[@]}"
           fi
