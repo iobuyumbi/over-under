@@ -31,6 +31,7 @@ from prediction_tracker import (
     record_predictions,
     format_vip_extra_lines,
     format_pick_block,
+    format_compact_pick_line,
     format_confidence_label,
     is_blocked_fixture,
     append_yesterday_section,
@@ -1509,13 +1510,19 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
 # =============================================================================
 # REPORTING
 # =============================================================================
-def _append_ou_pick(lines, idx, item, side, odds, detailed):
+def _append_ou_pick(lines, idx, item, side, odds, detailed, compact=False):
     """Append one over/under pick with consistent spacing."""
     m = item["match"]
     p = item["poisson"]
     tgt = item[side]
     prob_key = "over25_prob" if side == "over" else "under25_prob"
     max_score = MAX_OVER_SCORE if side == "over" else MAX_UNDER_SCORE
+    market = "O2.5" if side == "over" else "U2.5"
+    if compact:
+        lines.append(format_compact_pick_line(
+            m["home"], m["away"], market, tgt.get("tier"), p[prob_key], m.get("date"),
+        ))
+        return
     extra = None
     if detailed:
         extra = format_vip_extra_lines(
@@ -1531,7 +1538,7 @@ def _append_ou_pick(lines, idx, item, side, odds, detailed):
 
 def build_report(over_perfect, over_qualified, over_close, over_weak,
                under_perfect, under_qualified, under_close, under_weak,
-               scanned_dates, bankroll, odds_over, odds_under, detailed=False):
+               scanned_dates, bankroll, odds_over, odds_under, detailed=False, compact=False):
     """
     Build a clean, mobile-friendly report - both channels show all picks, free is simplified
     Returns: (report, base_date, included_over, included_under)
@@ -1543,93 +1550,93 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
     lines = []
-    lines.append("⚽️ Over/Under 2.5 picks")
-    lines.append("")
-    
-    if len(included_dates) > 1:
-        lines.append(f"Dates: {included_dates[0]} to {included_dates[-1]}")
-    else:
-        lines.append(f"Date: {base_date}")
-    
-    lines.append("")
-    
-    append_yesterday_section(lines, "over_under", detailed=detailed)
+    if not compact:
+        lines.append("⚽️ Over/Under 2.5 picks")
+        lines.append("")
+        if len(included_dates) > 1:
+            lines.append(f"Dates: {included_dates[0]} to {included_dates[-1]}")
+        else:
+            lines.append(f"Date: {base_date}")
+        lines.append("")
+        append_yesterday_section(lines, "over_under", detailed=detailed)
     
     # Over 2.5 section
     if included_over:
-        lines.append("🟢 Over 2.5 goals")
-        lines.append("")
+        if compact:
+            lines.append("O2.5")
+        else:
+            lines.append("🟢 Over 2.5 goals")
+            lines.append("")
         
-        # Group over picks
         included_over_perfect = [p for p in included_over if p in over_perfect]
         included_over_qualified = [p for p in included_over if p in over_qualified]
         included_over_close = [p for p in included_over if p in over_close]
         
         if included_over_perfect:
-            lines.append(f"  {PICK_TIER_PREMIUM}")
-            lines.append("")
+            if not compact:
+                lines.append(f"  {PICK_TIER_PREMIUM}")
+                lines.append("")
             for i, item in enumerate(included_over_perfect, 1):
-                _append_ou_pick(lines, i, item, "over", odds_over, detailed)
+                _append_ou_pick(lines, i, item, "over", odds_over, detailed, compact)
         
         if included_over_qualified:
-            if not detailed and not included_over_perfect:
-                lines.append(f"  {PICK_TIER_STRONG}")
-                lines.append("")
-            if detailed:
+            if not compact:
                 lines.append(f"  {PICK_TIER_STRONG}")
                 lines.append("")
             start_idx = len(included_over_perfect) + 1
             for i, item in enumerate(included_over_qualified, start_idx):
-                _append_ou_pick(lines, i, item, "over", odds_over, detailed)
+                _append_ou_pick(lines, i, item, "over", odds_over, detailed, compact)
         
         if included_over_close:
-            if detailed:
+            if not compact and detailed:
                 lines.append(f"  {PICK_TIER_VALUE}")
                 lines.append("")
             start_idx = len(included_over_perfect) + len(included_over_qualified) + 1
             for i, item in enumerate(included_over_close, start_idx):
-                _append_ou_pick(lines, i, item, "over", odds_over, detailed)
+                _append_ou_pick(lines, i, item, "over", odds_over, detailed, compact)
+        if compact:
+            lines.append("")
     
     # Under 2.5 section
     if included_under:
-        lines.append("🔵 Under 2.5 goals")
-        lines.append("")
+        if compact:
+            lines.append("U2.5")
+        else:
+            lines.append("🔵 Under 2.5 goals")
+            lines.append("")
         
-        # Group under picks
         included_under_perfect = [p for p in included_under if p in under_perfect]
         included_under_qualified = [p for p in included_under if p in under_qualified]
         included_under_close = [p for p in included_under if p in under_close]
         
         if included_under_perfect:
-            lines.append(f"  {PICK_TIER_PREMIUM}")
-            lines.append("")
+            if not compact:
+                lines.append(f"  {PICK_TIER_PREMIUM}")
+                lines.append("")
             for i, item in enumerate(included_under_perfect, 1):
-                _append_ou_pick(lines, i, item, "under", odds_under, detailed)
+                _append_ou_pick(lines, i, item, "under", odds_under, detailed, compact)
         
         if included_under_qualified:
-            if not detailed and not included_under_perfect:
-                lines.append(f"  {PICK_TIER_STRONG}")
-                lines.append("")
-            if detailed:
+            if not compact:
                 lines.append(f"  {PICK_TIER_STRONG}")
                 lines.append("")
             start_idx = len(included_under_perfect) + 1
             for i, item in enumerate(included_under_qualified, start_idx):
-                _append_ou_pick(lines, i, item, "under", odds_under, detailed)
+                _append_ou_pick(lines, i, item, "under", odds_under, detailed, compact)
         
         if included_under_close:
-            if detailed:
+            if not compact and detailed:
                 lines.append(f"  {PICK_TIER_VALUE}")
                 lines.append("")
             start_idx = len(included_under_perfect) + len(included_under_qualified) + 1
             for i, item in enumerate(included_under_close, start_idx):
-                _append_ou_pick(lines, i, item, "under", odds_under, detailed)
+                _append_ou_pick(lines, i, item, "under", odds_under, detailed, compact)
 
-    # Disclaimer
-    lines.append("---")
-    lines.append("For informational purposes only")
-    lines.append("Gamble responsibly")
-    lines.append("")
+    if not compact:
+        lines.append("---")
+        lines.append("For informational purposes only")
+        lines.append("Gamble responsibly")
+        lines.append("")
 
     report = "\n".join(lines)
     return report, base_date, included_over, included_under
@@ -1779,6 +1786,11 @@ def main():
         under_perfect, under_qualified, under_close, under_weak,
         scanned_dates, args.bankroll, args.odds_over, args.odds_under, detailed=False
     )
+    telegram_report, _, _, _ = build_report(
+        over_perfect, over_qualified, over_close, over_weak,
+        under_perfect, under_qualified, under_close, under_weak,
+        scanned_dates, args.bankroll, args.odds_over, args.odds_under, detailed=False, compact=True
+    )
     detailed_report, _, _, _ = build_report(
         over_perfect, over_qualified, over_close, over_weak,
         under_perfect, under_qualified, under_close, under_weak,
@@ -1789,6 +1801,9 @@ def main():
     print("\n===EMAIL_START===")
     print(free_report)
     print("===EMAIL_END===")
+    print("\n===TELEGRAM_START===")
+    print(telegram_report.strip() or "— none")
+    print("===TELEGRAM_END===")
 
     # Save detailed report to file
     detailed_report_path = f"over_under_vip_report_{base_date}.txt"

@@ -35,6 +35,27 @@ PICK_TIER_PREMIUM = "🔥 Premium picks"
 PICK_TIER_STRONG = "✅ Solid picks"
 PICK_TIER_VALUE = "👀 Watchlist"
 
+TIER_ICON = {"perfect": "🔥", "qualified": "✅", "close": "👀", "Premium": "🔥", "Solid": "✅", "Watchlist": "👀"}
+MARKET_SHORT = {
+    "HOME WIN": "HW", "Home Win": "HW", "home_win": "HW",
+    "OVER 2.5": "O2.5", "Over 2.5": "O2.5", "over": "O2.5", "OVER": "O2.5",
+    "UNDER 2.5": "U2.5", "Under 2.5": "U2.5", "under": "U2.5", "UNDER": "U2.5",
+    "BTTS YES": "BTTS+", "BTTS Yes": "BTTS+", "yes": "BTTS+", "BTTS_YES": "BTTS+",
+    "BTTS NO": "BTTS−", "BTTS No": "BTTS−", "no": "BTTS−", "BTTS_NO": "BTTS−",
+}
+
+
+def market_short_label(market_label):
+    """Compact market code for Telegram (HW, O2.5, BTTS+, etc.)."""
+    text = str(market_label or "").strip()
+    return MARKET_SHORT.get(text, MARKET_SHORT.get(text.upper(), text))
+
+
+def tier_icon(tier_or_confidence):
+    """Single emoji for pick tier."""
+    key = str(tier_or_confidence or "").strip()
+    return TIER_ICON.get(key, TIER_ICON.get(key.lower(), ""))
+
 
 def format_confidence_label(confidence):
     """Turn model confidence into readable report text."""
@@ -66,7 +87,84 @@ def format_result_tag(result):
     return {"win": "✅", "loss": "❌", "push": "➖"}.get(normalized, "⏳")
 
 
-DEFAULT_BLOCKED_REGIONS = ()
+TIER_ICON = {
+    "perfect": "🔥",
+    "qualified": "✅",
+    "close": "👀",
+    "premium": "🔥",
+    "solid": "✅",
+    "watchlist": "👀",
+}
+
+
+def market_short_label(market_label):
+    """Short market code for compact Telegram lines."""
+    key = str(market_label or "").strip().lower()
+    mapping = {
+        "home win": "HW",
+        "over 2.5": "O2.5",
+        "over": "O2.5",
+        "under 2.5": "U2.5",
+        "under": "U2.5",
+        "btts yes": "BTTS+",
+        "btts_yes": "BTTS+",
+        "yes": "BTTS+",
+        "btts no": "BTTS-",
+        "btts_no": "BTTS-",
+        "no": "BTTS-",
+    }
+    return mapping.get(key, str(market_label or "").strip())
+
+
+def format_compact_pick_line(home, away, market, tier=None, prob=None, date=None):
+    """Single-line pick for Telegram."""
+    tier_key = str(tier or "").lower()
+    icon = TIER_ICON.get(tier_key, "")
+    short = market_short_label(market)
+    label = f"{icon} {home} vs {away}".strip()
+    parts = [label, short]
+    if prob is not None:
+        parts.append(f"{prob}%")
+    if date:
+        parts.append(str(date))
+    return " · ".join(parts)
+
+
+def format_compact_result_line(pick, market_label):
+    """Single-line settled result for Telegram."""
+    home = pick.get("home_team", pick.get("home"))
+    away = pick.get("away_team", pick.get("away"))
+    result = resolve_pick_result(pick)
+    score = pick.get("final_score", "")
+    tag = format_result_tag(result)
+    short = market_short_label(market_label)
+    line = f"{tag} {home} vs {away} · {short}"
+    if score:
+        line += f" {score}"
+    return line
+
+
+def build_telegram_yesterday_block(max_lines=12):
+    """One shared yesterday block for all Telegram messages."""
+    yesterday, results, summary = get_yesterday_results(
+        prediction_type=None, detailed=False, compact=True
+    )
+    if not results:
+        return []
+
+    lines = []
+    hdr = format_yesterday_header(summary)
+    title = f"Yesterday · {yesterday}"
+    if hdr:
+        clean = hdr.replace("📊 Record: ", "").replace("⏳ Pending: ", "")
+        title = f"{title} · {clean}"
+    lines.append(title)
+    for line in results[:max_lines]:
+        lines.append(line)
+    remaining = len(results) - max_lines
+    if remaining > 0:
+        lines.append(f"+{remaining} more")
+    return lines
 
 
 def _load_blocked_regions():
@@ -909,8 +1007,19 @@ def count_report_pending(pick):
     return not pick_is_stale_pending(pick)
 
 
-def format_yesterday_line(pick, market_label):
+def format_yesterday_line(pick, market_label, compact=False):
     """Compact one-line summary for daily prediction reports."""
+    if compact:
+        result = resolve_pick_result(pick)
+        if result in SETTLED_RESULTS:
+            return format_compact_result_line(pick, market_label)
+        if pick.get("result") == "pending" and pick_is_overdue(pick) and not pick_is_stale_pending(pick):
+            home = pick.get("home_team", pick.get("home"))
+            away = pick.get("away_team", pick.get("away"))
+            short = market_short_label(market_label)
+            return f"⏳ {home} vs {away} · {short}"
+        return None
+
     home = pick.get("home_team", pick.get("home"))
     away = pick.get("away_team", pick.get("away"))
     result = resolve_pick_result(pick)
@@ -926,8 +1035,19 @@ def format_yesterday_line(pick, market_label):
     return None
 
 
-def format_pick_result_lines(pick, market_label):
+def format_pick_result_lines(pick, market_label, compact=False):
     """Detailed result lines for one pick (matches selected-results style)."""
+    if compact:
+        result = resolve_pick_result(pick)
+        if result in SETTLED_RESULTS and pick.get("final_score"):
+            return [format_compact_result_line(pick, market_label)]
+        if pick.get("result") == "pending" and pick_is_overdue(pick) and not pick_is_stale_pending(pick):
+            home = pick.get("home_team", pick.get("home"))
+            away = pick.get("away_team", pick.get("away"))
+            short = market_short_label(market_label)
+            return [f"⏳ {home} vs {away} · {short}"]
+        return []
+
     home = pick.get("home_team", pick.get("home"))
     away = pick.get("away_team", pick.get("away"))
     result = resolve_pick_result(pick)
@@ -951,7 +1071,7 @@ def format_pick_result_lines(pick, market_label):
     return []
 
 
-def get_yesterday_results(prediction_type=None, detailed=False):
+def get_yesterday_results(prediction_type=None, detailed=False, compact=False):
     """Get yesterday's results for daily reports.
 
     Blocked regions are still included here so past results stay visible.
@@ -994,10 +1114,10 @@ def get_yesterday_results(prediction_type=None, detailed=False):
         else:
             return
 
-        if detailed:
+        if detailed and not compact:
             results.extend(format_pick_result_lines(pick, market_label))
         else:
-            line = format_yesterday_line(pick, market_label)
+            line = format_yesterday_line(pick, market_label, compact=compact)
             if line:
                 results.append(line)
 
