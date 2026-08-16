@@ -112,8 +112,31 @@ _AUTO_BLOCK_LEAGUE_MIN_DECIDED = int(os.getenv("AUTO_BLOCK_LEAGUE_MIN_DECIDED", 
 _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE = float(os.getenv("AUTO_BLOCK_LEAGUE_MAX_WIN_RATE", "0.50"))
 _AUTO_BLOCK_LEAGUE_MIN_DECIDED_LOW_SAMPLE = int(os.getenv("AUTO_BLOCK_LEAGUE_MIN_DECIDED_LOW_SAMPLE", "3"))
 _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE_LOW_SAMPLE = float(os.getenv("AUTO_BLOCK_LEAGUE_MAX_WIN_RATE_LOW_SAMPLE", "0.35"))
+# Known weak-ROI regions: bucket variants (e.g. "League of Ireland" + "Div 1") for auto-block stats.
+_WEAK_ROI_LEAGUE_KEYWORDS = (
+    "ireland",
+    "irish",
+    "fai cup",
+    "allsvenskan",
+    "superettan",
+    "belarus",
+    "k-league",
+    "k league",
+    "mexican primera",
+    "brazilian serie a",
+    "mls",
+    "ecuador",
+    "argentina",
+    "chile",
+)
+_AUTO_BLOCK_WEAK_ROI_REGIONS = str(os.getenv("AUTO_BLOCK_WEAK_ROI_REGIONS", "1")).strip().lower() not in {"0", "false", "no"}
+_WEAK_ROI_MIN_DECIDED_TO_ALLOW = int(os.getenv("WEAK_ROI_MIN_DECIDED_TO_ALLOW", "5"))
+_WEAK_ROI_MIN_WIN_RATE_TO_ALLOW = float(os.getenv("WEAK_ROI_MIN_WIN_RATE_TO_ALLOW", "0.60"))
+_AUTO_BLOCK_WEAK_ROI_MIN_DECIDED = int(os.getenv("AUTO_BLOCK_WEAK_ROI_MIN_DECIDED", "3"))
+_AUTO_BLOCK_WEAK_ROI_MAX_WIN_RATE = float(os.getenv("AUTO_BLOCK_WEAK_ROI_MAX_WIN_RATE", "0.50"))
 _POOR_LEAGUE_KEYWORDS_CACHE = None
 _POOR_LEAGUE_KEYWORDS_BY_MARKET_CACHE = None
+_BUCKET_STATS_BY_MARKET_CACHE = None
 
 
 def _market_for_over_under_pick(pick):
@@ -136,7 +159,25 @@ def _market_for_btts_pick(pick):
     return None
 
 
-def _auto_block_threshold_hit(decided, win_rate):
+def _league_bucket_key(league):
+    """Collapse weak-ROI league name variants into one bucket keyword."""
+    normalized = _normalize_label(league)
+    if not normalized:
+        return ""
+    for kw in _WEAK_ROI_LEAGUE_KEYWORDS:
+        if kw in normalized:
+            return kw
+    return normalized
+
+
+def _is_weak_roi_bucket_key(key):
+    return key in _WEAK_ROI_LEAGUE_KEYWORDS
+
+
+def _auto_block_threshold_hit(decided, win_rate, is_weak_roi_bucket=False):
+    if is_weak_roi_bucket and decided >= _AUTO_BLOCK_WEAK_ROI_MIN_DECIDED:
+        if win_rate < _AUTO_BLOCK_WEAK_ROI_MAX_WIN_RATE:
+            return True
     return (
         (decided >= _AUTO_BLOCK_LEAGUE_MIN_DECIDED and win_rate < _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE)
         or (
@@ -146,13 +187,30 @@ def _auto_block_threshold_hit(decided, win_rate):
     )
 
 
-def _compute_poor_league_tables():
-    """Compute (global_frozenset, {market: frozenset}) of blocked league keywords."""
-    if not _AUTO_BLOCK_POOR_LEAGUES:
-        empty = frozenset()
-        by_market = {m: empty for m in SUPPORTED_MARKETS}
-        return empty, by_market
+def _weak_roi_blocks_market(league, market):
+    """Block weak-ROI leagues until they prove profitable on this market."""
+    if not _AUTO_BLOCK_WEAK_ROI_REGIONS or market not in SUPPORTED_MARKETS:
+        return False
+    normalized = _normalize_label(league)
+    if not normalized:
+        return False
+    bucket = None
+    for kw in _WEAK_ROI_LEAGUE_KEYWORDS:
+        if kw in normalized:
+            bucket = kw
+            break
+    if not bucket:
+        return False
+    bucket_stats = _ensure_bucket_stats().get(market, {}).get(bucket, {})
+    decided = bucket_stats.get("win", 0) + bucket_stats.get("loss", 0)
+    if decided < _WEAK_ROI_MIN_DECIDED_TO_ALLOW:
+        return True
+    win_rate = bucket_stats.get("win", 0) / decided
+    return win_rate < _WEAK_ROI_MIN_WIN_RATE_TO_ALLOW
 
+
+def _compute_poor_league_tables():
+    """Compute (global_frozenset, {market: frozenset}, bucket_stats_by_market)."""
     history = load_history()
     cutoff = datetime.now().date() - timedelta(days=max(0, _AUTO_BLOCK_LEAGUE_WINDOW_DAYS))
 
@@ -172,8 +230,11 @@ def _compute_poor_league_tables():
         normalized_result = str(result or "").strip().lower()
         if normalized_result not in SETTLED_RESULTS:
             continue
-        combined_stats[league][normalized_result] += 1
-        per_market_stats[MARKET_HOME_WIN][league][normalized_result] += 1
+        bucket = _league_bucket_key(league)
+        if not bucket:
+            continue
+        combined_stats[bucket][normalized_result] += 1
+        per_market_stats[MARKET_HOME_WIN][bucket][normalized_result] += 1
 
     for pick in history.get("over_under", []) or []:
         league = pick.get("league")
@@ -186,10 +247,13 @@ def _compute_poor_league_tables():
         normalized_result = str(result or "").strip().lower()
         if normalized_result not in SETTLED_RESULTS:
             continue
-        combined_stats[league][normalized_result] += 1
+        bucket = _league_bucket_key(league)
+        if not bucket:
+            continue
+        combined_stats[bucket][normalized_result] += 1
         fine = _market_for_over_under_pick(pick)
         if fine in per_market_stats:
-            per_market_stats[fine][league][normalized_result] += 1
+            per_market_stats[fine][bucket][normalized_result] += 1
 
     for pick in history.get("btts", []) or []:
         league = pick.get("league")
@@ -202,23 +266,35 @@ def _compute_poor_league_tables():
         normalized_result = str(result or "").strip().lower()
         if normalized_result not in SETTLED_RESULTS:
             continue
-        combined_stats[league][normalized_result] += 1
+        bucket = _league_bucket_key(league)
+        if not bucket:
+            continue
+        combined_stats[bucket][normalized_result] += 1
         fine = _market_for_btts_pick(pick)
         if fine in per_market_stats:
-            per_market_stats[fine][league][normalized_result] += 1
+            per_market_stats[fine][bucket][normalized_result] += 1
 
     def _reduce(stats_map):
         poor = set()
         details = []
-        for league, counter in stats_map.items():
+        for bucket, counter in stats_map.items():
             decided = counter["win"] + counter["loss"]
             win_rate = counter["win"] / decided if decided else 0.0
-            if _auto_block_threshold_hit(decided, win_rate):
-                keyword = _normalize_label(league)
+            if _auto_block_threshold_hit(decided, win_rate, is_weak_roi_bucket=_is_weak_roi_bucket_key(bucket)):
+                keyword = _normalize_label(bucket)
                 if keyword:
                     poor.add(keyword)
-                    details.append((win_rate, decided, league))
+                    details.append((win_rate, decided, bucket))
         return poor, details
+
+    bucket_stats_by_market = {
+        market: {bucket: dict(counter) for bucket, counter in stats_map.items()}
+        for market, stats_map in per_market_stats.items()
+    }
+
+    if not _AUTO_BLOCK_POOR_LEAGUES:
+        empty = frozenset()
+        return empty, {m: empty for m in SUPPORTED_MARKETS}, bucket_stats_by_market
 
     combined_poor, combined_details = _reduce(combined_stats)
     combined_frozen = frozenset(combined_poor)
@@ -254,14 +330,26 @@ def _compute_poor_league_tables():
             _AUTO_BLOCK_LEAGUE_MAX_WIN_RATE_LOW_SAMPLE * 100.0,
             preview,
         )
-    return combined_frozen, by_market_frozen
+    return combined_frozen, by_market_frozen, bucket_stats_by_market
 
 
 def _ensure_poor_cache():
-    global _POOR_LEAGUE_KEYWORDS_CACHE, _POOR_LEAGUE_KEYWORDS_BY_MARKET_CACHE
-    if _POOR_LEAGUE_KEYWORDS_CACHE is None or _POOR_LEAGUE_KEYWORDS_BY_MARKET_CACHE is None:
-        _POOR_LEAGUE_KEYWORDS_CACHE, _POOR_LEAGUE_KEYWORDS_BY_MARKET_CACHE = _compute_poor_league_tables()
+    global _POOR_LEAGUE_KEYWORDS_CACHE, _POOR_LEAGUE_KEYWORDS_BY_MARKET_CACHE, _BUCKET_STATS_BY_MARKET_CACHE
+    if (
+        _POOR_LEAGUE_KEYWORDS_CACHE is None
+        or _POOR_LEAGUE_KEYWORDS_BY_MARKET_CACHE is None
+        or _BUCKET_STATS_BY_MARKET_CACHE is None
+    ):
+        combined, by_market, bucket_stats = _compute_poor_league_tables()
+        _POOR_LEAGUE_KEYWORDS_CACHE = combined
+        _POOR_LEAGUE_KEYWORDS_BY_MARKET_CACHE = by_market
+        _BUCKET_STATS_BY_MARKET_CACHE = bucket_stats
     return _POOR_LEAGUE_KEYWORDS_CACHE, _POOR_LEAGUE_KEYWORDS_BY_MARKET_CACHE
+
+
+def _ensure_bucket_stats():
+    _ensure_poor_cache()
+    return _BUCKET_STATS_BY_MARKET_CACHE or {}
 
 
 def _parse_pick_date(value):
@@ -323,6 +411,8 @@ def is_blocked_league(league, market=None):
     for region in BLOCKED_REGIONS:
         if any(keyword in normalized for keyword in region["league_keywords"]):
             return True
+    if market in SUPPORTED_MARKETS and _weak_roi_blocks_market(league, market):
+        return True
     if market in SUPPORTED_MARKETS:
         keywords = _get_poor_league_keywords_for_market(market)
     else:
