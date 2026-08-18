@@ -312,7 +312,7 @@ def parse_date(date_str):
 
 MAX_HOME_WIN_SCORE = 11
 
-HW_MIN_DATA_GAMES = 5
+HW_MIN_DATA_GAMES = 3
 HW_WEIGHT_RULES = 0.40
 HW_WEIGHT_MODEL = 0.40
 HW_WEIGHT_EDGE = 0.20
@@ -339,9 +339,11 @@ _HW_WEAK_ROI_LEAGUE_KEYWORDS = (
 _HW_WEAK_ROI_MULTIPLIER = 0.82
 
 _HW_REGRESSION_WIN_STREAK = 5
-_HW_REGRESSION_PENALTY = 0.08
+_REGRESSION_PENALTY = 0.08
 _HW_H2H_MIN_MEETINGS = 2
 _HW_H2H_MAX_LOOKBACK = 6
+_HW_H2H_AWAY_WIN_RATIO = 2.0
+_HW_H2H_MIN_AWAY_WINS_FOR_ADVANTAGE = 2
 
 _HW_LEAGUE_BASELINE_CACHE = {}
 
@@ -379,17 +381,26 @@ def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=_HW
 
 
 def _h2h_home_win_blocked(home_team_id, away_team_id, target_date_str=None):
-    """Block home-win when the home side is winless in recent H2H (bogey opponent)."""
+    """Block home-win when H2H is unfavourable.
+
+    Triggers when:
+      (a) home side is winless in recent H2H with >=1 away win (bogey opponent), OR
+      (b) away team has a clear H2H advantage: >=2 away wins AND away wins >= 2x home wins.
+    """
     meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str)
     if not meetings:
-        return False, meetings
+        return False, meetings, "none"
     home_wins = sum(1 for m in meetings if m.get("result") == "W")
     away_wins = sum(1 for m in meetings if m.get("result") == "L")
     if len(meetings) >= _HW_H2H_MIN_MEETINGS and home_wins == 0 and away_wins >= 1:
-        return True, meetings
+        return True, meetings, "home_winless"
     if len(meetings) == 1 and meetings[0].get("is_home") and meetings[0].get("result") == "L":
-        return True, meetings
-    return False, meetings
+        return True, meetings, "single_home_loss"
+    if (len(meetings) >= _HW_H2H_MIN_MEETINGS
+            and away_wins >= _HW_H2H_MIN_AWAY_WINS_FOR_ADVANTAGE
+            and away_wins >= _HW_H2H_AWAY_WIN_RATIO * max(1, home_wins)):
+        return True, meetings, "away_h2h_advantage"
+    return False, meetings, "ok"
 
 
 def _hw_is_weak_roi(league_name):
@@ -428,6 +439,18 @@ def _hw_regression_penalty(home_form, away_form):
     if h_streak >= _HW_REGRESSION_WIN_STREAK:
         return 1.0 - _HW_REGRESSION_PENALTY
     return 1.0
+
+
+def _thin_count(needed, of_window, available):
+    if available >= of_window:
+        return needed
+    return max(1, int(needed * available / of_window))
+
+
+def _thin_total(goal_sum, of_window, available):
+    if available >= of_window:
+        return goal_sum
+    return max(1, int(goal_sum * available / of_window))
 
 
 def _hw_load_league_baselines():
@@ -521,73 +544,89 @@ def _form_record_summary(form):
 # HOME WIN ALGORITHM (11 Checks - Official Rules + Overall Form)
 # =============================================================================
 def apply_home_win_algorithm(home_data_6, away_data_6, home_overall_5=None, away_overall_5=None):
-    if len(home_data_6) < 6 or len(away_data_6) < 6:
+    if len(home_data_6) < 4 or len(away_data_6) < 4:
         return None, None, {"error": "Insufficient data"}, False
 
     passed, failed, details = [], [], {}
     is_perfect = True
 
+    hn = min(len(home_data_6), 6)
+    an = min(len(away_data_6), 6)
+    home_win = home_data_6[:hn]
+    away_win = away_data_6[:an]
+
     # Home Checks
-    home_not_lost = sum(1 for m in home_data_6 if m["result"] != "L")
-    if home_not_lost >= 5:
-        passed.append("Home form (no losses)"); details["Home form (no losses)"] = f"PASS ({home_not_lost}/6 No Losses)"
-        if home_not_lost < 6:
+    home_not_lost = sum(1 for m in home_win if m["result"] != "L")
+    hnl_need = _thin_count(5, 6, hn)
+    if home_not_lost >= hnl_need:
+        passed.append("Home form (no losses)"); details["Home form (no losses)"] = f"PASS ({home_not_lost}/{hn} No Losses >= {hnl_need})"
+        if home_not_lost < hn:
             is_perfect = False
     else:
-        failed.append("Home form (no losses)"); details["Home form (no losses)"] = f"FAIL ({home_not_lost}/6)"; is_perfect = False
+        failed.append("Home form (no losses)"); details["Home form (no losses)"] = f"FAIL ({home_not_lost}/{hn} < {hnl_need})"; is_perfect = False
 
-    home_gf = sum(m["gf"] for m in home_data_6)
-    if home_gf >= 10:
-        passed.append("Home goals scored"); details["Home goals scored"] = f"PASS ({home_gf} GF)"
+    home_gf = sum(m["gf"] for m in home_win)
+    hgf_need = _thin_total(10, 6, hn)
+    if home_gf >= hgf_need:
+        passed.append("Home goals scored"); details["Home goals scored"] = f"PASS ({home_gf} GF >= {hgf_need})"
     else:
-        failed.append("Home goals scored"); details["Home goals scored"] = f"FAIL ({home_gf})"; is_perfect = False
+        failed.append("Home goals scored"); details["Home goals scored"] = f"FAIL ({home_gf} < {hgf_need})"; is_perfect = False
 
-    home_ga = sum(m["ga"] for m in home_data_6)
-    if home_ga <= 5:
-        passed.append("Home goals conceded"); details["Home goals conceded"] = f"PASS ({home_ga} GA)"
+    home_ga = sum(m["ga"] for m in home_win)
+    hga_cap = _thin_total(5, 6, hn)
+    if home_ga <= hga_cap:
+        passed.append("Home goals conceded"); details["Home goals conceded"] = f"PASS ({home_ga} GA <= {hga_cap})"
     else:
-        failed.append("Home goals conceded"); details["Home goals conceded"] = f"FAIL ({home_ga})"; is_perfect = False
+        failed.append("Home goals conceded"); details["Home goals conceded"] = f"FAIL ({home_ga} > {hga_cap})"; is_perfect = False
 
-    home_wins = sum(1 for m in home_data_6 if m["result"] == "W")
-    if home_wins >= 3:
-        passed.append("Home wins"); details["Home wins"] = f"PASS ({home_wins}/6 Wins)"
+    home_wins = sum(1 for m in home_win if m["result"] == "W")
+    hw_need = _thin_count(3, 6, hn)
+    if home_wins >= hw_need:
+        passed.append("Home wins"); details["Home wins"] = f"PASS ({home_wins}/{hn} Wins >= {hw_need})"
     else:
-        failed.append("Home wins"); details["Home wins"] = f"FAIL ({home_wins})"; is_perfect = False
+        failed.append("Home wins"); details["Home wins"] = f"FAIL ({home_wins} < {hw_need})"; is_perfect = False
 
-    last_2_wins = sum(1 for m in home_data_6[:2] if m["result"] == "W")
-    if last_2_wins == 2:
-        passed.append("Home recent form"); details["Home recent form"] = "PASS (Won Last 2)"
+    last_n = min(2, hn)
+    last_n_wins = sum(1 for m in home_win[:last_n] if m["result"] == "W")
+    lr_need = max(1, round(last_n * 0.8))
+    if last_n_wins >= lr_need:
+        passed.append("Home recent form"); details["Home recent form"] = f"PASS (Won {last_n_wins}/{last_n} >= {lr_need})"
     else:
-        failed.append("Home recent form"); details["Home recent form"] = f"FAIL ({last_2_wins}/2)"; is_perfect = False
+        failed.append("Home recent form"); details["Home recent form"] = f"FAIL ({last_n_wins}/{last_n} < {lr_need})"; is_perfect = False
 
     # Away Checks
-    away_losses = sum(1 for m in away_data_6 if m["result"] == "L")
-    if away_losses >= 2:
-        passed.append("Away losses"); details["Away losses"] = f"PASS ({away_losses}/6 Losses)"
+    away_losses = sum(1 for m in away_win if m["result"] == "L")
+    al_need = _thin_count(2, 6, an)
+    if away_losses >= al_need:
+        passed.append("Away losses"); details["Away losses"] = f"PASS ({away_losses}/{an} Losses >= {al_need})"
     else:
-        failed.append("Away losses"); details["Away losses"] = f"FAIL ({away_losses})"; is_perfect = False
+        failed.append("Away losses"); details["Away losses"] = f"FAIL ({away_losses} < {al_need})"; is_perfect = False
 
-    away_ga = sum(m["ga"] for m in away_data_6)
-    if away_ga >= 10:
-        passed.append("Away goals conceded"); details["Away goals conceded"] = f"PASS ({away_ga} GA)"
+    away_ga = sum(m["ga"] for m in away_win)
+    aga_need = _thin_total(10, 6, an)
+    if away_ga >= aga_need:
+        passed.append("Away goals conceded"); details["Away goals conceded"] = f"PASS ({away_ga} GA >= {aga_need})"
     else:
-        failed.append("Away goals conceded"); details["Away goals conceded"] = f"FAIL ({away_ga})"; is_perfect = False
+        failed.append("Away goals conceded"); details["Away goals conceded"] = f"FAIL ({away_ga} < {aga_need})"; is_perfect = False
 
-    away_gf = sum(m["gf"] for m in away_data_6)
-    if away_gf <= 5:
-        passed.append("Away goals scored"); details["Away goals scored"] = f"PASS ({away_gf} GF)"
+    away_gf = sum(m["gf"] for m in away_win)
+    agf_cap = _thin_total(5, 6, an)
+    if away_gf <= agf_cap:
+        passed.append("Away goals scored"); details["Away goals scored"] = f"PASS ({away_gf} GF <= {agf_cap})"
     else:
-        failed.append("Away goals scored"); details["Away goals scored"] = f"FAIL ({away_gf})"; is_perfect = False
+        failed.append("Away goals scored"); details["Away goals scored"] = f"FAIL ({away_gf} > {agf_cap})"; is_perfect = False
 
-    away_wins = sum(1 for m in away_data_6 if m["result"] == "W")
-    if away_wins <= 2:
-        passed.append("Away wins"); details["Away wins"] = f"PASS ({away_wins}/6 Wins)"
+    away_wins = sum(1 for m in away_win if m["result"] == "W")
+    aw_cap = _thin_count(2, 6, an)
+    if away_wins <= aw_cap:
+        passed.append("Away wins"); details["Away wins"] = f"PASS ({away_wins}/{an} Wins <= {aw_cap})"
     else:
-        failed.append("Away wins"); details["Away wins"] = f"FAIL ({away_wins})"; is_perfect = False
+        failed.append("Away wins"); details["Away wins"] = f"FAIL ({away_wins} > {aw_cap})"; is_perfect = False
 
-    # Overall form (last 5, home or away combined)
+    # Overall form (last 5, home or away combined) — thin-data fallback for 2+ matches
     home_overall_5 = home_overall_5 or []
-    if len(home_overall_5) >= 5:
+    ho_n = min(len(home_overall_5), 5)
+    if ho_n >= 5:
         hw, hl, _ = _form_record_summary(home_overall_5[:5])
         home_overall_ok = hl <= 1 or (hl == 2 and hw == 3)
         if home_overall_ok:
@@ -599,13 +638,24 @@ def apply_home_win_algorithm(home_data_6, away_data_6, home_overall_5=None, away
             failed.append("Home overall form (5)")
             details["Home overall form (5)"] = f"FAIL ({hw}W-{hl}L in 5)"
             is_perfect = False
+    elif ho_n >= 2:
+        hw, hl, _ = _form_record_summary(home_overall_5[:ho_n])
+        losses_cap = max(1, round(ho_n * 0.4))
+        home_overall_ok = hl <= losses_cap
+        if home_overall_ok:
+            passed.append("Home overall form (5)")
+            details["Home overall form (5)"] = f"PASS-THIN ({hw}W-{hl}L in {ho_n}, HL <= {losses_cap})"
+            is_perfect = False
+        else:
+            failed.append("Home overall form (5)")
+            details["Home overall form (5)"] = f"FAIL-THIN ({hw}W-{hl}L in {ho_n}, HL > {losses_cap})"
+            is_perfect = False
     else:
-        failed.append("Home overall form (5)")
-        details["Home overall form (5)"] = f"FAIL (only {len(home_overall_5)}/5 matches)"
-        is_perfect = False
+        details["Home overall form (5)"] = f"SKIPPED (only {ho_n}/5 matches)"
 
     away_overall_5 = away_overall_5 or []
-    if len(away_overall_5) >= 5:
+    ao_n = min(len(away_overall_5), 5)
+    if ao_n >= 5:
         aw, al, _ = _form_record_summary(away_overall_5[:5])
         away_overall_ok = al >= 2 and aw <= 2
         if away_overall_ok:
@@ -615,10 +665,21 @@ def apply_home_win_algorithm(home_data_6, away_data_6, home_overall_5=None, away
             failed.append("Away overall form (5)")
             details["Away overall form (5)"] = f"FAIL ({aw}W-{al}L in 5)"
             is_perfect = False
+    elif ao_n >= 2:
+        aw, al, _ = _form_record_summary(away_overall_5[:ao_n])
+        losses_need = max(1, round(ao_n * 0.4))
+        wins_cap = max(1, round(ao_n * 0.4))
+        away_overall_ok = al >= losses_need and aw <= wins_cap
+        if away_overall_ok:
+            passed.append("Away overall form (5)")
+            details["Away overall form (5)"] = f"PASS-THIN ({aw}W-{al}L in {ao_n}, AL >= {losses_need}, AW <= {wins_cap})"
+            is_perfect = False
+        else:
+            failed.append("Away overall form (5)")
+            details["Away overall form (5)"] = f"FAIL-THIN ({aw}W-{al}L in {ao_n}, AL >= {losses_need}, AW <= {wins_cap})"
+            is_perfect = False
     else:
-        failed.append("Away overall form (5)")
-        details["Away overall form (5)"] = f"FAIL (only {len(away_overall_5)}/5 matches)"
-        is_perfect = False
+        details["Away overall form (5)"] = f"SKIPPED (only {ao_n}/5 matches)"
 
     return passed, failed, details, is_perfect
 
@@ -662,7 +723,9 @@ def hw_data_volume_penalty(home_form, away_form, home_overall, away_overall):
         return 0.90
     if n >= 3:
         return 0.78
-    return 0.55
+    if n >= 2:
+        return 0.65
+    return 0.50
 
 
 def hw_model_gate_passes(home_strength, away_strength, model_prob_pct):
@@ -751,7 +814,7 @@ def process_single_match(match, target_date, default_odds=2.8):
         home_overall_5 = get_team_overall_form(match["home_team_id"], 5, target_date)
         away_overall_5 = get_team_overall_form(match["away_team_id"], 5, target_date)
 
-        if len(home_form) < 6 or len(away_form) < 6:
+        if len(home_form) < 4 or len(away_form) < 4:
             return {"status": "insufficient"}
 
         data_mult = hw_data_volume_penalty(home_form, away_form, home_overall_5, away_overall_5)
@@ -769,7 +832,7 @@ def process_single_match(match, target_date, default_odds=2.8):
 
         score = len(passed)
         gate_passes = hw_model_gate_passes(home_strength, away_strength, home_win_prob)
-        h2h_blocked, h2h_meetings = _h2h_home_win_blocked(
+        h2h_blocked, h2h_meetings, h2h_reason = _h2h_home_win_blocked(
             match["home_team_id"], match["away_team_id"], target_date
         )
 
@@ -797,7 +860,7 @@ def process_single_match(match, target_date, default_odds=2.8):
         if reg_mult < 1.0:
             regressions.append("home win streak")
         if h2h_blocked:
-            regressions.append("h2h bogey (home winless in recent meetings)")
+            regressions.append(f"h2h {h2h_reason} (home winless/bogey or away h2h advantage)")
 
         return {
             "status": "success",

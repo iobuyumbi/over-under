@@ -421,6 +421,18 @@ def _count_under25(form):
     return sum(1 for gf, ga in form[:6] if gf + ga < 2.5)
 
 
+def _thin_count(needed, of_window, available):
+    if available >= of_window:
+        return needed
+    return max(1, int(needed * available / of_window))
+
+
+def _thin_total(goal_sum, of_window, available):
+    if available >= of_window:
+        return goal_sum
+    return max(1, int(goal_sum * available / of_window))
+
+
 def _venue_over_gate_passes(home_6, away_6):
     """Hard gate: at least one side has ≥3/6 over 2.5 at venue (OR logic)."""
     h_over = _count_over25(home_6)
@@ -429,10 +441,10 @@ def _venue_over_gate_passes(home_6, away_6):
     a_len = min(len(away_6), 6)
     if h_len >= 6 and a_len >= 6:
         return h_over >= 3 or a_over >= 3
-    h_min = max(2, round(h_len * 0.5))
-    a_min = max(2, round(a_len * 0.5))
-    h_ok = h_len >= 3 and h_over >= h_min
-    a_ok = a_len >= 3 and a_over >= a_min
+    h_min = max(1, round(h_len * 0.5))
+    a_min = max(1, round(a_len * 0.5))
+    h_ok = h_len >= 2 and h_over >= h_min
+    a_ok = a_len >= 2 and a_over >= a_min
     return h_ok or a_ok
 
 
@@ -446,9 +458,9 @@ def _high_scoring_blocks_under(home_6, away_6):
         return True
     if a_len >= 6 and a_over >= 4:
         return True
-    if h_len >= 3 and h_over >= max(3, round(h_len * 0.67)):
+    if h_len >= 2 and h_over >= max(2, round(h_len * 0.67)):
         return True
-    if a_len >= 3 and a_over >= max(3, round(a_len * 0.67)):
+    if a_len >= 2 and a_over >= max(2, round(a_len * 0.67)):
         return True
     return False
 
@@ -474,8 +486,8 @@ def _btts_gate_passes(home_6, away_6):
         return h_btts >= BTTS_MIN_6 or a_btts >= BTTS_MIN_6
     h_min = max(1, round(h_len * 0.5))
     a_min = max(1, round(a_len * 0.5))
-    h_ok = (h_len >= 6 and h_btts >= BTTS_MIN_6) or (h_len < 6 and h_len >= 3 and h_btts >= h_min)
-    a_ok = (a_len >= 6 and a_btts >= BTTS_MIN_6) or (a_len < 6 and a_len >= 3 and a_btts >= a_min)
+    h_ok = (h_len >= 6 and h_btts >= BTTS_MIN_6) or (h_len < 6 and h_len >= 2 and h_btts >= h_min)
+    a_ok = (a_len >= 6 and a_btts >= BTTS_MIN_6) or (a_len < 6 and a_len >= 2 and a_btts >= a_min)
     return h_ok or a_ok
 
 
@@ -489,39 +501,97 @@ def _non_btts_gate_passes(home_6, away_6):
         return h_nb >= NON_BTTS_MIN_6 or a_nb >= NON_BTTS_MIN_6
     h_min = max(1, round(h_len * 0.5))
     a_min = max(1, round(a_len * 0.5))
-    h_ok = (h_len >= 6 and h_nb >= NON_BTTS_MIN_6) or (h_len < 6 and h_len >= 3 and h_nb >= h_min)
-    a_ok = (a_len >= 6 and a_nb >= NON_BTTS_MIN_6) or (a_len < 6 and a_len >= 3 and a_nb >= a_min)
+    h_ok = (h_len >= 6 and h_nb >= NON_BTTS_MIN_6) or (h_len < 6 and h_len >= 2 and h_nb >= h_min)
+    a_ok = (a_len >= 6 and a_nb >= NON_BTTS_MIN_6) or (a_len < 6 and a_len >= 2 and a_nb >= a_min)
     return h_ok or a_ok
+
+
+def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=_OU_H2H_MAX_LOOKBACK):
+    """Recent meetings between these sides, merged from both teams' result pages."""
+    collected = {}
+    for team_id, opponent_id in (
+        (home_team_id, away_team_id),
+        (away_team_id, home_team_id),
+    ):
+        for match in fetch_soccerbase_team_results(team_id):
+            if str(match.get("opponent_team_id") or "") != str(opponent_id):
+                continue
+            match_date = match.get("date_str")
+            if target_date_str and match_date and match_date >= target_date_str:
+                continue
+            key = (match_date, match.get("gf"), match.get("ga"), bool(match.get("is_home")))
+            if key in collected:
+                continue
+            if str(team_id) == str(home_team_id):
+                perspective = dict(match)
+            else:
+                perspective = {
+                    **match,
+                    "gf": match.get("ga"),
+                    "ga": match.get("gf"),
+                    "is_home": not match.get("is_home"),
+                }
+            collected[key] = perspective
+    meetings = sorted(collected.values(), key=lambda m: m.get("date_str") or "", reverse=True)
+    return meetings[:limit]
+
+
+def _h2h_over_blocked(home_team_id, away_team_id, target_date_str=None):
+    """Block Over 2.5 when recent H2H games are consistently low-scoring.
+
+    Blocks if >=3 H2H meetings AND <=33% went Over 2.5 (bogey low-scoring matchup).
+    """
+    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str)
+    if len(meetings) < _OU_H2H_MIN_MEETINGS:
+        return False, meetings
+    over_count = sum(1 for m in meetings if m.get("total", m.get("gf", 0) + m.get("ga", 0)) > 2.5)
+    rate = over_count / len(meetings)
+    return rate <= _OU_H2H_OVER_BLOCK_RATE, meetings
+
+
+def _h2h_under_blocked(home_team_id, away_team_id, target_date_str=None):
+    """Block Under 2.5 when recent H2H games are consistently high-scoring.
+
+    Blocks if >=3 H2H meetings AND >=67% went Over 2.5 (bogey high-scoring matchup).
+    """
+    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str)
+    if len(meetings) < _OU_H2H_MIN_MEETINGS:
+        return False, meetings
+    over_count = sum(1 for m in meetings if m.get("total", m.get("gf", 0) + m.get("ga", 0)) > 2.5)
+    rate = over_count / len(meetings)
+    return rate >= _OU_H2H_UNDER_BLOCK_RATE, meetings
 
 
 # =============================================================================
 # OVER 2.5 ALGORITHM (10-Check Rules + Overall Form)
 # =============================================================================
 def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, away_overall_6=None):
-    if len(home_3) < 3 or len(away_3) < 3:
+    if len(home_3) < 2 or len(away_3) < 2:
         return None, None, {"error": "Insufficient data"}, False
 
     passed, failed, details = [], [], {}
     is_perfect = True
 
+    hn3, an3 = len(home_3), len(away_3)
+
     # Home 3-game
     h_total_3 = sum(gf + ga for gf, ga in home_3)
-    if h_total_3 >= 7:
+    if h_total_3 >= _thin_total(7, 3, hn3):
         passed.append("Home total goals (last 3)"); details["Home total goals (last 3)"] = f"PASS ({h_total_3})"
     else:
         failed.append("Home total goals (last 3)"); details["Home total goals (last 3)"] = f"FAIL ({h_total_3})"; is_perfect = False
 
     h_over_3 = sum(1 for gf, ga in home_3 if gf + ga > 2.5)
-    if h_over_3 >= 2:
-        passed.append("Home over 2.5 (last 3)"); details["Home over 2.5 (last 3)"] = f"PASS ({h_over_3}/3)"
-        if h_over_3 < 3:
+    if h_over_3 >= _thin_count(2, 3, hn3):
+        passed.append("Home over 2.5 (last 3)"); details["Home over 2.5 (last 3)"] = f"PASS ({h_over_3}/{hn3})"
+        if h_over_3 < hn3:
             is_perfect = False
     else:
-        failed.append("Home over 2.5 (last 3)"); details["Home over 2.5 (last 3)"] = f"FAIL ({h_over_3}/3)"; is_perfect = False
+        failed.append("Home over 2.5 (last 3)"); details["Home over 2.5 (last 3)"] = f"FAIL ({h_over_3}/{hn3})"; is_perfect = False
 
     # Away 3-game
     a_total_3 = sum(gf + ga for gf, ga in away_3)
-    if a_total_3 >= 7:
+    if a_total_3 >= _thin_total(7, 3, an3):
         passed.append("Away total goals (last 3)"); details["Away total goals (last 3)"] = f"PASS ({a_total_3})"
     else:
         failed.append("Away total goals (last 3)"); details["Away total goals (last 3)"] = f"FAIL ({a_total_3})"; is_perfect = False
@@ -533,20 +603,20 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, aw
         failed.append("Away last match goals"); details["Away last match goals"] = f"FAIL ({prev_a_total})"; is_perfect = False
 
     a_scored = sum(1 for gf, _ in away_3 if gf > 0)
-    if a_scored >= 2:
-        passed.append("Away scored (last 3)"); details["Away scored (last 3)"] = f"PASS ({a_scored}/3)"
-        if a_scored < 3:
+    if a_scored >= _thin_count(2, 3, an3):
+        passed.append("Away scored (last 3)"); details["Away scored (last 3)"] = f"PASS ({a_scored}/{an3})"
+        if a_scored < an3:
             is_perfect = False
     else:
-        failed.append("Away scored (last 3)"); details["Away scored (last 3)"] = f"FAIL ({a_scored}/3)"; is_perfect = False
+        failed.append("Away scored (last 3)"); details["Away scored (last 3)"] = f"FAIL ({a_scored}/{an3})"; is_perfect = False
 
     a_over_3 = sum(1 for gf, ga in away_3 if gf + ga > 2.5)
-    if a_over_3 >= 2:
-        passed.append("Away over 2.5 (last 3)"); details["Away over 2.5 (last 3)"] = f"PASS ({a_over_3}/3)"
-        if a_over_3 < 3:
+    if a_over_3 >= _thin_count(2, 3, an3):
+        passed.append("Away over 2.5 (last 3)"); details["Away over 2.5 (last 3)"] = f"PASS ({a_over_3}/{an3})"
+        if a_over_3 < an3:
             is_perfect = False
     else:
-        failed.append("Away over 2.5 (last 3)"); details["Away over 2.5 (last 3)"] = f"FAIL ({a_over_3}/3)"; is_perfect = False
+        failed.append("Away over 2.5 (last 3)"); details["Away over 2.5 (last 3)"] = f"FAIL ({a_over_3}/{an3})"; is_perfect = False
 
     # 6-game checks (proportional fallback when <6 venue games available)
     h_len = min(len(home_6), 6)
@@ -562,9 +632,9 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, aw
             passed.append("Home total goals (last 6)"); details["Home total goals (last 6)"] = f"PASS ({h_total_6})"
         else:
             failed.append("Home total goals (last 6)"); details["Home total goals (last 6)"] = f"FAIL ({h_total_6})"; is_perfect = False
-    elif h_len >= 3:
+    elif h_len >= 2:
         h_over_6 = sum(1 for gf, ga in home_6 if gf + ga > 2.5)
-        h_min = max(2, round(h_len * 0.67))
+        h_min = max(1, round(h_len * 0.67))
         if h_over_6 >= h_min:
             passed.append("Home over 2.5 (last 6)"); details["Home over 2.5 (last 6)"] = f"PASS-THIN ({h_over_6}/{h_len} >= {h_min})"
             is_perfect = False
@@ -572,7 +642,7 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, aw
             failed.append("Home over 2.5 (last 6)"); details["Home over 2.5 (last 6)"] = f"FAIL-THIN ({h_over_6}/{h_len} < {h_min})"; is_perfect = False
 
         h_total_6 = sum(gf + ga for gf, ga in home_6)
-        h_total_min = max(9, round(h_len * 3))
+        h_total_min = max(6, round(h_len * 3))
         if h_total_6 >= h_total_min:
             passed.append("Home total goals (last 6)"); details["Home total goals (last 6)"] = f"PASS-THIN ({h_total_6} >= {h_total_min})"
             is_perfect = False
@@ -592,9 +662,9 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, aw
             passed.append("Away total goals (last 6)"); details["Away total goals (last 6)"] = f"PASS ({a_total_6})"
         else:
             failed.append("Away total goals (last 6)"); details["Away total goals (last 6)"] = f"FAIL ({a_total_6})"; is_perfect = False
-    elif a_len >= 3:
+    elif a_len >= 2:
         a_over_6 = sum(1 for gf, ga in away_6 if gf + ga > 2.5)
-        a_min = max(2, round(a_len * 0.67))
+        a_min = max(1, round(a_len * 0.67))
         if a_over_6 >= a_min:
             passed.append("Away over 2.5 (last 6)"); details["Away over 2.5 (last 6)"] = f"PASS-THIN ({a_over_6}/{a_len} >= {a_min})"
             is_perfect = False
@@ -602,7 +672,7 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, aw
             failed.append("Away over 2.5 (last 6)"); details["Away over 2.5 (last 6)"] = f"FAIL-THIN ({a_over_6}/{a_len} < {a_min})"; is_perfect = False
 
         a_total_6 = sum(gf + ga for gf, ga in away_6)
-        a_total_min = max(9, round(a_len * 3))
+        a_total_min = max(6, round(a_len * 3))
         if a_total_6 >= a_total_min:
             passed.append("Away total goals (last 6)"); details["Away total goals (last 6)"] = f"PASS-THIN ({a_total_6} >= {a_total_min})"
             is_perfect = False
@@ -630,14 +700,14 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, aw
     else:
         h_len = min(len(home_overall_6), 6)
         a_len = min(len(away_overall_6), 6)
-        if h_len < 4 and a_len < 4:
+        if h_len < 2 and a_len < 2:
             details["Overall goal activity (6)"] = f"SKIPPED (only {h_len}/{a_len} overall matches)"
         else:
             failed.append("Overall goal activity (6)")
             details["Overall goal activity (6)"] = f"FAIL (neither team had activity in all available: {h_len}/{a_len})"
             is_perfect = False
 
-    # BTTS rules: both teams scored (home 6 home, away 6 away). Thin-data: use >=50% of available (min 3 games).
+    # BTTS rules: both teams scored (home 6 home, away 6 away). Thin-data: use >=50% of available (min 2 games).
     h_btts = _count_btts(home_6)
     h_len = min(len(home_6), 6)
     if h_len >= 6:
@@ -650,7 +720,7 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, aw
             failed.append("Home BTTS (last 6 home)")
             details["Home BTTS (last 6 home)"] = f"FAIL ({h_btts}/6)"
             is_perfect = False
-    elif h_len >= 3:
+    elif h_len >= 2:
         h_min = max(1, round(h_len * 0.5))
         if h_btts >= h_min:
             passed.append("Home BTTS (last 6 home)")
@@ -672,7 +742,7 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, aw
             failed.append("Away BTTS (last 6 away)")
             details["Away BTTS (last 6 away)"] = f"FAIL ({a_btts}/6)"
             is_perfect = False
-    elif a_len >= 3:
+    elif a_len >= 2:
         a_min = max(1, round(a_len * 0.5))
         if a_btts >= a_min:
             passed.append("Away BTTS (last 6 away)")
@@ -700,21 +770,23 @@ def apply_under_algorithm(home_3, away_3):
     - Last three away games must be under 2.5 in at least two of three.
     - The AWAY team must not have scored in at least one of the last three away games.
     """
-    if len(home_3) < 3 or len(away_3) < 3:
+    if len(home_3) < 2 or len(away_3) < 2:
         return None, None, {"error": "Insufficient data"}, False
 
     passed, failed, details = [], [], {}
     is_perfect = True
 
+    hn3, an3 = len(home_3), len(away_3)
+
     # --- 3-GAME HOME CHECKS ---
     # At least 2 of 3 home games under 2.5
     h_under_3 = sum(1 for gf, ga in home_3 if gf + ga < 2.5)
-    if h_under_3 >= 2:
-        passed.append("Home under 2.5 (last 3)"); details["Home under 2.5 (last 3)"] = f"PASS ({h_under_3}/3 under 2.5)"
-        if h_under_3 < 3:
+    if h_under_3 >= _thin_count(2, 3, hn3):
+        passed.append("Home under 2.5 (last 3)"); details["Home under 2.5 (last 3)"] = f"PASS ({h_under_3}/{hn3} under 2.5)"
+        if h_under_3 < hn3:
             is_perfect = False
     else:
-        failed.append("Home under 2.5 (last 3)"); details["Home under 2.5 (last 3)"] = f"FAIL ({h_under_3}/3 under 2.5)"; is_perfect = False
+        failed.append("Home under 2.5 (last 3)"); details["Home under 2.5 (last 3)"] = f"FAIL ({h_under_3}/{hn3} under 2.5)"; is_perfect = False
 
     # At least one score line has 0 goals in the 3 home games
     h_has_zero = any(gf == 0 or ga == 0 for gf, ga in home_3)
@@ -726,19 +798,19 @@ def apply_under_algorithm(home_3, away_3):
     # --- 3-GAME AWAY CHECKS ---
     # At least 2 of 3 away games under 2.5
     a_under_3 = sum(1 for gf, ga in away_3 if gf + ga < 2.5)
-    if a_under_3 >= 2:
-        passed.append("Away under 2.5 (last 3)"); details["Away under 2.5 (last 3)"] = f"PASS ({a_under_3}/3 under 2.5)"
-        if a_under_3 < 3:
+    if a_under_3 >= _thin_count(2, 3, an3):
+        passed.append("Away under 2.5 (last 3)"); details["Away under 2.5 (last 3)"] = f"PASS ({a_under_3}/{an3} under 2.5)"
+        if a_under_3 < an3:
             is_perfect = False
     else:
-        failed.append("Away under 2.5 (last 3)"); details["Away under 2.5 (last 3)"] = f"FAIL ({a_under_3}/3 under 2.5)"; is_perfect = False
+        failed.append("Away under 2.5 (last 3)"); details["Away under 2.5 (last 3)"] = f"FAIL ({a_under_3}/{an3} under 2.5)"; is_perfect = False
 
     # Away team did NOT score in at least 1 of last 3 away games
     a_blanked = sum(1 for gf, _ in away_3 if gf == 0)
-    if a_blanked >= 1:
-        passed.append("Away blanked (last 3)"); details["Away blanked (last 3)"] = f"PASS ({a_blanked}/3 away games with 0 scored)"
+    if a_blanked >= _thin_count(1, 3, an3):
+        passed.append("Away blanked (last 3)"); details["Away blanked (last 3)"] = f"PASS ({a_blanked}/{an3} away games with 0 scored)"
     else:
-        failed.append("Away blanked (last 3)"); details["Away blanked (last 3)"] = f"FAIL ({a_blanked}/3 away games with 0 scored)"; is_perfect = False
+        failed.append("Away blanked (last 3)"); details["Away blanked (last 3)"] = f"FAIL ({a_blanked}/{an3} away games with 0 scored)"; is_perfect = False
 
     return passed, failed, details, is_perfect
 
@@ -815,11 +887,11 @@ def apply_under_6game_checks(home_6, away_6):
             details["Away non-BTTS (last 6 away)"] = f"FAIL ({a_non_btts}/6 blanked matches < {NON_BTTS_MIN_6})"
             is_perfect = False
     else:
-        # Thin-data pass: proportional non-BTTS check on what's available (min 3 games, >=50% non-BTTS)
+        # Thin-data pass: proportional non-BTTS check on what's available (min 2 games, >=50% non-BTTS)
         details["UC1-4"] = f"SKIPPED-THIN ({h_len}/{a_len} 6-game averages)"
-        if h_len >= 3:
+        if h_len >= 2:
             h_non_btts = _count_non_btts(home_6)
-            h_min = max(2, round(h_len * 0.5))
+            h_min = max(1, round(h_len * 0.5))
             if h_non_btts >= h_min:
                 passed.append("Home non-BTTS (last 6 home)")
                 details["Home non-BTTS (last 6 home)"] = f"PASS-THIN ({h_non_btts}/{h_len} >= {h_min})"
@@ -828,9 +900,9 @@ def apply_under_6game_checks(home_6, away_6):
                 details["Home non-BTTS (last 6 home)"] = f"FAIL-THIN ({h_non_btts}/{h_len} < {h_min})"
                 is_perfect = False
 
-        if a_len >= 3:
+        if a_len >= 2:
             a_non_btts = _count_non_btts(away_6)
-            a_min = max(2, round(a_len * 0.5))
+            a_min = max(1, round(a_len * 0.5))
             if a_non_btts >= a_min:
                 passed.append("Away non-BTTS (last 6 away)")
                 details["Away non-BTTS (last 6 away)"] = f"PASS-THIN ({a_non_btts}/{a_len} >= {a_min})"
@@ -862,9 +934,9 @@ def apply_under_overall_checks(home_overall_6, away_overall_6):
             failed.append("Home under 2.5 overall (6)")
             details["Home under 2.5 overall (6)"] = f"FAIL ({h_under}/6 under 2.5)"
             is_perfect = False
-    elif h_len >= 4:
+    elif h_len >= 2:
         h_under = _count_under_25_overall(home_overall_6)
-        h_min = max(2, round(h_len * 0.6))
+        h_min = max(1, round(h_len * 0.6))
         if h_under >= h_min:
             passed.append("Home under 2.5 overall (6)")
             details["Home under 2.5 overall (6)"] = f"PASS-THIN ({h_under}/{h_len} >= {h_min})"
@@ -885,9 +957,9 @@ def apply_under_overall_checks(home_overall_6, away_overall_6):
             failed.append("Away under 2.5 overall (6)")
             details["Away under 2.5 overall (6)"] = f"FAIL ({a_under}/6 under 2.5)"
             is_perfect = False
-    elif a_len >= 4:
+    elif a_len >= 2:
         a_under = _count_under_25_overall(away_overall_6)
-        a_min = max(2, round(a_len * 0.6))
+        a_min = max(1, round(a_len * 0.6))
         if a_under >= a_min:
             passed.append("Away under 2.5 overall (6)")
             details["Away under 2.5 overall (6)"] = f"PASS-THIN ({a_under}/{a_len} >= {a_min})"
@@ -945,6 +1017,11 @@ _WEAK_ROI_UNDER_LAMBDA_REDUCTION = 0.20
 _REGRESSION_OVER_STREAK = 5
 _REGRESSION_UNDER_STREAK = 5
 _REGRESSION_PENALTY = 0.08
+
+_OU_H2H_MAX_LOOKBACK = 6
+_OU_H2H_MIN_MEETINGS = 3
+_OU_H2H_OVER_BLOCK_RATE = 0.33
+_OU_H2H_UNDER_BLOCK_RATE = 0.67
 
 _LEAGUE_BASELINE_CACHE = {}
 
@@ -1018,7 +1095,7 @@ def _chaos_rule_over(home_6, away_6):
     Returns True if BOTH teams conceded on average >= 1.2 goals/game in 6-game
     form. This is the 'chaotic open game' signal independent of who scores.
     """
-    if len(home_6 or []) < 4 or len(away_6 or []) < 4:
+    if len(home_6 or []) < 2 or len(away_6 or []) < 2:
         return False
     hc = sum(ga for _, ga in home_6) / max(len(home_6), 1)
     ac = sum(ga for _, ga in away_6) / max(len(away_6), 1)
@@ -1031,7 +1108,7 @@ def _compact_rule_under(home_6, away_6):
     Returns True if BOTH teams scored <= 1.0/game AND conceded <= 0.9/game
     average over their form window.
     """
-    if len(home_6 or []) < 4 or len(away_6 or []) < 4:
+    if len(home_6 or []) < 2 or len(away_6 or []) < 2:
         return False
     hs = sum(gf for gf, _ in home_6) / max(len(home_6), 1)
     hc = sum(ga for _, ga in home_6) / max(len(home_6), 1)
@@ -1323,6 +1400,12 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         venue_over_gate = _venue_over_gate_passes(home_6, away_6)
         high_scoring_under_block = _high_scoring_blocks_under(home_6, away_6)
         recent_cold_over_block = _recent_cold_blocks_over(home_3, away_3)
+        h2h_over_blocked, h2h_over_meetings = _h2h_over_blocked(
+            match["home_team_id"], match["away_team_id"], target_date
+        )
+        h2h_under_blocked, h2h_under_meetings = _h2h_under_blocked(
+            match["home_team_id"], match["away_team_id"], target_date
+        )
 
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
@@ -1366,10 +1449,12 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         over_qualifies = (
             bool(over_passed) and over_score >= over_min_score and over_gate
             and btts_gate and venue_over_gate and not recent_cold_over_block
+            and not h2h_over_blocked
         )
         under_qualifies = (
             bool(under_passed) and under_score >= under_min_score and under_gate
             and non_btts_gate and not high_scoring_under_block
+            and not h2h_under_blocked
         )
 
         if over_qualifies or under_qualifies:
@@ -1434,6 +1519,10 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append("recent cold scoring form")
         if high_scoring_under_block:
             regressions.append("high-scoring venue form")
+        if h2h_over_blocked:
+            regressions.append(f"h2h low-scoring bogey ({len(h2h_over_meetings)} meetings)")
+        if h2h_under_blocked:
+            regressions.append(f"h2h high-scoring bogey ({len(h2h_under_meetings)} meetings)")
 
         return {
             "status": "success",
@@ -1453,6 +1542,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "btts_gate_passed": btts_gate,
                     "venue_over_gate_passed": venue_over_gate,
                     "recent_cold_blocked": recent_cold_over_block,
+                    "h2h_blocked": h2h_over_blocked,
+                    "h2h_meetings": len(h2h_over_meetings),
                     "home_btts_6": home_btts_6,
                     "away_btts_6": away_btts_6,
                     "data_mult": round(data_mult, 2),
@@ -1473,6 +1564,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "gate_passed": under_gate,
                     "non_btts_gate_passed": non_btts_gate,
                     "high_scoring_blocked": high_scoring_under_block,
+                    "h2h_blocked": h2h_under_blocked,
+                    "h2h_meetings": len(h2h_under_meetings),
                     "home_non_btts_6": home_non_btts_6,
                     "away_non_btts_6": away_non_btts_6,
                     "data_mult": round(data_mult, 2),
@@ -1494,6 +1587,10 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "btts_gate_passed": btts_gate,
                     "non_btts_gate_passed": non_btts_gate,
                     "high_scoring_blocked": high_scoring_under_block,
+                    "h2h_over_blocked": h2h_over_blocked,
+                    "h2h_under_blocked": h2h_under_blocked,
+                    "h2h_over_meetings": len(h2h_over_meetings),
+                    "h2h_under_meetings": len(h2h_under_meetings),
                     "home_btts_6": home_btts_6,
                     "away_btts_6": away_btts_6,
                     "home_non_btts_6": home_non_btts_6,
