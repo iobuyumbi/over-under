@@ -87,6 +87,12 @@ _WEAK_ROI_LEAGUE_KEYWORDS = (
     "mexican primera apertura", "brazilian serie a",
 )
 _WEAK_ROI_MULTIPLIER = 0.82
+
+_BTTS_H2H_MAX_LOOKBACK = 6
+_BTTS_H2H_MIN_MEETINGS = 3
+_BTTS_H2H_YES_BLOCK_RATE = 0.33
+_BTTS_H2H_NO_BLOCK_RATE = 0.67
+
 _LEAGUE_BASELINE_CACHE = {}
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -254,18 +260,26 @@ def fetch_soccerbase_team_results(team_id):
             except ValueError:
                 continue
             home_link = cells[3].find("a", href=lambda h: h and "team_id=" in h)
+            away_link = cells[5].find("a", href=lambda h: h and "team_id=" in h)
             if not home_link:
                 continue
             try:
                 home_id_in_row = home_link["href"].split("team_id=")[1].split("&")[0]
+                away_id_in_row = None
+                if away_link:
+                    away_id_in_row = away_link["href"].split("team_id=")[1].split("&")[0]
             except (KeyError, IndexError):
                 continue
             is_home = str(home_id_in_row) == str(team_id)
+            opponent_team_id = away_id_in_row if is_home else home_id_in_row
             gf = gf_h if is_home else gf_a
             ga = gf_a if is_home else gf_h
             date_match = re.search(r"(\d{4}-\d{2}-\d{2})", str(cells[1]))
             date_str = date_match.group(1) if date_match else None
-            matches.append({"gf": gf, "ga": ga, "is_home": is_home, "date_str": date_str})
+            matches.append({
+                "gf": gf, "ga": ga, "is_home": is_home, "date_str": date_str,
+                "opponent_team_id": opponent_team_id,
+            })
     matches.sort(key=lambda x: x.get("date_str") or "0000-00-00", reverse=True)
     return matches
 
@@ -336,6 +350,24 @@ def _count_failed_to_score(form):
     return sum(1 for gf, _ in form[:6] if gf == 0)
 
 
+def _thin_count(needed, of_window, available):
+    """Scale a 'need N of window' count threshold to available samples.
+
+    Exact thresholds when available >= of_window; same pass-rate otherwise
+    (integer floor, minimum 1). Used by early-season thin-data rules.
+    """
+    if available >= of_window:
+        return needed
+    return max(1, int(needed * available / of_window))
+
+
+def _thin_total(goal_sum, of_window, available):
+    """Scale a total-goals threshold (goal_sum across of_window games) down."""
+    if available >= of_window:
+        return goal_sum
+    return max(1, int(goal_sum * available / of_window))
+
+
 def _btts_gate_passes(home_6, away_6):
     h_btts = _count_btts(home_6)
     a_btts = _count_btts(away_6)
@@ -345,8 +377,8 @@ def _btts_gate_passes(home_6, away_6):
         return h_btts >= BTTS_MIN_6 and a_btts >= BTTS_MIN_6
     h_min = max(1, round(h_len * 0.5))
     a_min = max(1, round(a_len * 0.5))
-    h_ok = (h_len >= 6 and h_btts >= BTTS_MIN_6) or (h_len < 6 and h_len >= 3 and h_btts >= h_min)
-    a_ok = (a_len >= 6 and a_btts >= BTTS_MIN_6) or (a_len < 6 and a_len >= 3 and a_btts >= a_min)
+    h_ok = (h_len >= 6 and h_btts >= BTTS_MIN_6) or (h_len >= 2 and h_btts >= h_min)
+    a_ok = (a_len >= 6 and a_btts >= BTTS_MIN_6) or (a_len >= 2 and a_btts >= a_min)
     return h_ok and a_ok
 
 
@@ -359,14 +391,14 @@ def _non_btts_gate_passes(home_6, away_6):
         return h_nb >= NON_BTTS_MIN_6 and a_nb >= NON_BTTS_MIN_6
     h_min = max(1, round(h_len * 0.5))
     a_min = max(1, round(a_len * 0.5))
-    h_ok = (h_len >= 6 and h_nb >= NON_BTTS_MIN_6) or (h_len < 6 and h_len >= 3 and h_nb >= h_min)
-    a_ok = (a_len >= 6 and a_nb >= NON_BTTS_MIN_6) or (a_len < 6 and a_len >= 3 and a_nb >= a_min)
+    h_ok = (h_len >= 6 and h_nb >= NON_BTTS_MIN_6) or (h_len >= 2 and h_nb >= h_min)
+    a_ok = (a_len >= 6 and a_nb >= NON_BTTS_MIN_6) or (a_len >= 2 and a_nb >= a_min)
     return h_ok and a_ok
 
 
 def _chaos_btts_bonus(home_6, away_6):
     """Both sides concede >= 1.2/game — leaky defences favour BTTS Yes."""
-    if len(home_6 or []) < 4 or len(away_6 or []) < 4:
+    if len(home_6 or []) < 2 or len(away_6 or []) < 2:
         return False
     hc = sum(ga for _, ga in home_6) / max(len(home_6), 1)
     ac = sum(ga for _, ga in away_6) / max(len(away_6), 1)
@@ -375,13 +407,69 @@ def _chaos_btts_bonus(home_6, away_6):
 
 def _compact_btts_no_bonus(home_6, away_6):
     """Both sides stingy in attack and defence — favours BTTS No."""
-    if len(home_6 or []) < 4 or len(away_6 or []) < 4:
+    if len(home_6 or []) < 2 or len(away_6 or []) < 2:
         return False
     hs = sum(gf for gf, _ in home_6) / max(len(home_6), 1)
     hc = sum(ga for _, ga in home_6) / max(len(home_6), 1)
     as_ = sum(gf for gf, _ in away_6) / max(len(away_6), 1)
     ac = sum(ga for _, ga in away_6) / max(len(away_6), 1)
     return hs <= 1.0 and hc <= 0.9 and as_ <= 1.0 and ac <= 0.9
+
+
+def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=_BTTS_H2H_MAX_LOOKBACK):
+    """Recent meetings between these sides, merged from both teams' result pages."""
+    collected = {}
+    for team_id, opponent_id in (
+        (home_team_id, away_team_id),
+        (away_team_id, home_team_id),
+    ):
+        for match in fetch_soccerbase_team_results(team_id):
+            if str(match.get("opponent_team_id") or "") != str(opponent_id):
+                continue
+            match_date = match.get("date_str")
+            if target_date_str and match_date and match_date >= target_date_str:
+                continue
+            key = (match_date, match.get("gf"), match.get("ga"), bool(match.get("is_home")))
+            if key in collected:
+                continue
+            if str(team_id) == str(home_team_id):
+                perspective = dict(match)
+            else:
+                perspective = {
+                    **match,
+                    "gf": match.get("ga"),
+                    "ga": match.get("gf"),
+                    "is_home": not match.get("is_home"),
+                }
+            collected[key] = perspective
+    meetings = sorted(collected.values(), key=lambda m: m.get("date_str") or "", reverse=True)
+    return meetings[:limit]
+
+
+def _h2h_btts_yes_blocked(home_team_id, away_team_id, target_date_str=None):
+    """Block BTTS Yes when recent H2H games are consistently non-BTTS.
+
+    Blocks if >=3 H2H meetings AND <=33% had both teams score (bogey non-BTTS matchup).
+    """
+    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str)
+    if len(meetings) < _BTTS_H2H_MIN_MEETINGS:
+        return False, meetings
+    btts_count = sum(1 for m in meetings if m.get("gf", 0) >= 1 and m.get("ga", 0) >= 1)
+    rate = btts_count / len(meetings)
+    return rate <= _BTTS_H2H_YES_BLOCK_RATE, meetings
+
+
+def _h2h_btts_no_blocked(home_team_id, away_team_id, target_date_str=None):
+    """Block BTTS No when recent H2H games are consistently BTTS.
+
+    Blocks if >=3 H2H meetings AND >=67% had both teams score (bogey BTTS matchup).
+    """
+    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str)
+    if len(meetings) < _BTTS_H2H_MIN_MEETINGS:
+        return False, meetings
+    btts_count = sum(1 for m in meetings if m.get("gf", 0) >= 1 and m.get("ga", 0) >= 1)
+    rate = btts_count / len(meetings)
+    return rate >= _BTTS_H2H_NO_BLOCK_RATE, meetings
 
 
 # =============================================================================
@@ -475,55 +563,58 @@ def calculate_o25tips_btts_score(home_overall_6, home_6, away_overall_6, away_6,
 # BTTS ALGORITHMS
 # =============================================================================
 def apply_btts_yes_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, away_overall_6=None):
-    if len(home_3) < 3 or len(away_3) < 3:
+    if len(home_3) < 2 or len(away_3) < 2:
         return None, None, {"error": "Insufficient data"}, False
     passed, failed, details = [], [], {}
     is_perfect = True
 
+    hn3, an3 = len(home_3), len(away_3)
     h_btts_3 = sum(1 for gf, ga in home_3 if gf >= 1 and ga >= 1)
-    if h_btts_3 >= 2:
-        passed.append("Home BTTS (last 3)"); details["Home BTTS (last 3)"] = f"PASS ({h_btts_3}/3)"
+    if h_btts_3 >= _thin_count(2, 3, hn3):
+        passed.append("Home BTTS (last 3)"); details["Home BTTS (last 3)"] = f"PASS ({h_btts_3}/{hn3})"
+        if h_btts_3 < hn3:
+            is_perfect = False
     else:
-        failed.append("Home BTTS (last 3)"); details["Home BTTS (last 3)"] = f"FAIL ({h_btts_3}/3)"; is_perfect = False
+        failed.append("Home BTTS (last 3)"); details["Home BTTS (last 3)"] = f"FAIL ({h_btts_3}/{hn3})"; is_perfect = False
 
     a_btts_3 = sum(1 for gf, ga in away_3 if gf >= 1 and ga >= 1)
-    if a_btts_3 >= 2:
-        passed.append("Away BTTS (last 3)"); details["Away BTTS (last 3)"] = f"PASS ({a_btts_3}/3)"
+    if a_btts_3 >= _thin_count(2, 3, an3):
+        passed.append("Away BTTS (last 3)"); details["Away BTTS (last 3)"] = f"PASS ({a_btts_3}/{an3})"
     else:
-        failed.append("Away BTTS (last 3)"); details["Away BTTS (last 3)"] = f"FAIL ({a_btts_3}/3)"; is_perfect = False
+        failed.append("Away BTTS (last 3)"); details["Away BTTS (last 3)"] = f"FAIL ({a_btts_3}/{an3})"; is_perfect = False
 
     h_scored_3 = sum(1 for gf, _ in home_3 if gf >= 1)
-    if h_scored_3 >= 3:
-        passed.append("Home scored (last 3)"); details["Home scored (last 3)"] = f"PASS ({h_scored_3}/3)"
+    if h_scored_3 >= _thin_count(3, 3, hn3):
+        passed.append("Home scored (last 3)"); details["Home scored (last 3)"] = f"PASS ({h_scored_3}/{hn3})"
     else:
-        failed.append("Home scored (last 3)"); details["Home scored (last 3)"] = f"FAIL ({h_scored_3}/3)"; is_perfect = False
+        failed.append("Home scored (last 3)"); details["Home scored (last 3)"] = f"FAIL ({h_scored_3}/{hn3})"; is_perfect = False
 
     a_scored_3 = sum(1 for gf, _ in away_3 if gf >= 1)
-    if a_scored_3 >= 3:
-        passed.append("Away scored (last 3)"); details["Away scored (last 3)"] = f"PASS ({a_scored_3}/3)"
+    if a_scored_3 >= _thin_count(3, 3, an3):
+        passed.append("Away scored (last 3)"); details["Away scored (last 3)"] = f"PASS ({a_scored_3}/{an3})"
     else:
-        failed.append("Away scored (last 3)"); details["Away scored (last 3)"] = f"FAIL ({a_scored_3}/3)"; is_perfect = False
+        failed.append("Away scored (last 3)"); details["Away scored (last 3)"] = f"FAIL ({a_scored_3}/{an3})"; is_perfect = False
 
     h_conceded_3 = sum(1 for _, ga in home_3 if ga >= 1)
-    if h_conceded_3 >= 3:
-        passed.append("Home conceded (last 3)"); details["Home conceded (last 3)"] = f"PASS ({h_conceded_3}/3)"
+    if h_conceded_3 >= _thin_count(3, 3, hn3):
+        passed.append("Home conceded (last 3)"); details["Home conceded (last 3)"] = f"PASS ({h_conceded_3}/{hn3})"
     else:
-        failed.append("Home conceded (last 3)"); details["Home conceded (last 3)"] = f"FAIL ({h_conceded_3}/3)"; is_perfect = False
+        failed.append("Home conceded (last 3)"); details["Home conceded (last 3)"] = f"FAIL ({h_conceded_3}/{hn3})"; is_perfect = False
 
     a_conceded_3 = sum(1 for _, ga in away_3 if ga >= 1)
-    if a_conceded_3 >= 3:
-        passed.append("Away conceded (last 3)"); details["Away conceded (last 3)"] = f"PASS ({a_conceded_3}/3)"
+    if a_conceded_3 >= _thin_count(3, 3, an3):
+        passed.append("Away conceded (last 3)"); details["Away conceded (last 3)"] = f"PASS ({a_conceded_3}/{an3})"
     else:
-        failed.append("Away conceded (last 3)"); details["Away conceded (last 3)"] = f"FAIL ({a_conceded_3}/3)"; is_perfect = False
+        failed.append("Away conceded (last 3)"); details["Away conceded (last 3)"] = f"FAIL ({a_conceded_3}/{an3})"; is_perfect = False
 
     h_total_3 = sum(gf + ga for gf, ga in home_3)
-    if h_total_3 >= 5:
+    if h_total_3 >= _thin_total(5, 3, hn3):
         passed.append("Home total goals (last 3)"); details["Home total goals (last 3)"] = f"PASS ({h_total_3})"
     else:
         failed.append("Home total goals (last 3)"); details["Home total goals (last 3)"] = f"FAIL ({h_total_3})"; is_perfect = False
 
     a_total_3 = sum(gf + ga for gf, ga in away_3)
-    if a_total_3 >= 5:
+    if a_total_3 >= _thin_total(5, 3, an3):
         passed.append("Away total goals (last 3)"); details["Away total goals (last 3)"] = f"PASS ({a_total_3})"
     else:
         failed.append("Away total goals (last 3)"); details["Away total goals (last 3)"] = f"FAIL ({a_total_3})"; is_perfect = False
@@ -537,7 +628,7 @@ def apply_btts_yes_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None
         passed.append("Home BTTS (last 6)"); details["Home BTTS (last 6)"] = f"PASS ({h_btts_6}/6)"
         if h_btts_6 < 6:
             is_perfect = False
-    elif h_len >= 3 and h_btts_6 >= max(1, round(h_len * 0.5)):
+    elif h_len >= 2 and h_btts_6 >= max(1, round(h_len * 0.5)):
         passed.append("Home BTTS (last 6)"); details["Home BTTS (last 6)"] = f"PASS-THIN ({h_btts_6}/{h_len})"
     else:
         failed.append("Home BTTS (last 6)"); details["Home BTTS (last 6)"] = f"FAIL ({h_btts_6}/{h_len})"; is_perfect = False
@@ -546,7 +637,7 @@ def apply_btts_yes_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None
         passed.append("Away BTTS (last 6)"); details["Away BTTS (last 6)"] = f"PASS ({a_btts_6}/6)"
         if a_btts_6 < 6:
             is_perfect = False
-    elif a_len >= 3 and a_btts_6 >= max(1, round(a_len * 0.5)):
+    elif a_len >= 2 and a_btts_6 >= max(1, round(a_len * 0.5)):
         passed.append("Away BTTS (last 6)"); details["Away BTTS (last 6)"] = f"PASS-THIN ({a_btts_6}/{a_len})"
     else:
         failed.append("Away BTTS (last 6)"); details["Away BTTS (last 6)"] = f"FAIL ({a_btts_6}/{a_len})"; is_perfect = False
@@ -554,7 +645,7 @@ def apply_btts_yes_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None
     h_scored_6 = sum(1 for gf, _ in home_6[:6] if gf >= 1)
     if h_len >= 6 and h_scored_6 >= 4:
         passed.append("Home scored (last 6)"); details["Home scored (last 6)"] = f"PASS ({h_scored_6}/6)"
-    elif h_len >= 3 and h_scored_6 >= max(2, round(h_len * 0.66)):
+    elif h_len >= 2 and h_scored_6 >= max(1, round(h_len * 0.66)):
         passed.append("Home scored (last 6)"); details["Home scored (last 6)"] = f"PASS-THIN ({h_scored_6}/{h_len})"
     else:
         failed.append("Home scored (last 6)"); details["Home scored (last 6)"] = f"FAIL ({h_scored_6}/{h_len})"; is_perfect = False
@@ -562,7 +653,7 @@ def apply_btts_yes_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None
     a_scored_6 = sum(1 for gf, _ in away_6[:6] if gf >= 1)
     if a_len >= 6 and a_scored_6 >= 4:
         passed.append("Away scored (last 6)"); details["Away scored (last 6)"] = f"PASS ({a_scored_6}/6)"
-    elif a_len >= 3 and a_scored_6 >= max(2, round(a_len * 0.66)):
+    elif a_len >= 2 and a_scored_6 >= max(1, round(a_len * 0.66)):
         passed.append("Away scored (last 6)"); details["Away scored (last 6)"] = f"PASS-THIN ({a_scored_6}/{a_len})"
     else:
         failed.append("Away scored (last 6)"); details["Away scored (last 6)"] = f"FAIL ({a_scored_6}/{a_len})"; is_perfect = False
@@ -570,7 +661,7 @@ def apply_btts_yes_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None
     h_conceded_6 = sum(1 for _, ga in home_6[:6] if ga >= 1)
     if h_len >= 6 and h_conceded_6 >= 4:
         passed.append("Home conceded (last 6)"); details["Home conceded (last 6)"] = f"PASS ({h_conceded_6}/6)"
-    elif h_len >= 3 and h_conceded_6 >= max(2, round(h_len * 0.66)):
+    elif h_len >= 2 and h_conceded_6 >= max(1, round(h_len * 0.66)):
         passed.append("Home conceded (last 6)"); details["Home conceded (last 6)"] = f"PASS-THIN ({h_conceded_6}/{h_len})"
     else:
         failed.append("Home conceded (last 6)"); details["Home conceded (last 6)"] = f"FAIL ({h_conceded_6}/{h_len})"; is_perfect = False
@@ -578,7 +669,7 @@ def apply_btts_yes_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None
     a_conceded_6 = sum(1 for _, ga in away_6[:6] if ga >= 1)
     if a_len >= 6 and a_conceded_6 >= 4:
         passed.append("Away conceded (last 6)"); details["Away conceded (last 6)"] = f"PASS ({a_conceded_6}/6)"
-    elif a_len >= 3 and a_conceded_6 >= max(2, round(a_len * 0.66)):
+    elif a_len >= 2 and a_conceded_6 >= max(1, round(a_len * 0.66)):
         passed.append("Away conceded (last 6)"); details["Away conceded (last 6)"] = f"PASS-THIN ({a_conceded_6}/{a_len})"
     else:
         failed.append("Away conceded (last 6)"); details["Away conceded (last 6)"] = f"FAIL ({a_conceded_6}/{a_len})"; is_perfect = False
@@ -586,7 +677,7 @@ def apply_btts_yes_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None
     h_cs = _count_clean_sheets(home_6)
     if h_len >= 6 and h_cs <= 2:
         passed.append("Home clean sheet cap (6)"); details["Home clean sheet cap (6)"] = f"PASS ({h_cs}/6 CS)"
-    elif h_len >= 3 and h_cs <= max(1, round(h_len * 0.33)):
+    elif h_len >= 2 and h_cs <= max(0, round(h_len * 0.33)):
         passed.append("Home clean sheet cap (6)"); details["Home clean sheet cap (6)"] = f"PASS-THIN ({h_cs}/{h_len})"
     else:
         failed.append("Home clean sheet cap (6)"); details["Home clean sheet cap (6)"] = f"FAIL ({h_cs}/{h_len})"; is_perfect = False
@@ -594,7 +685,7 @@ def apply_btts_yes_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None
     a_cs = _count_clean_sheets(away_6)
     if a_len >= 6 and a_cs <= 2:
         passed.append("Away clean sheet cap (6)"); details["Away clean sheet cap (6)"] = f"PASS ({a_cs}/6 CS)"
-    elif a_len >= 3 and a_cs <= max(1, round(a_len * 0.33)):
+    elif a_len >= 2 and a_cs <= max(0, round(a_len * 0.33)):
         passed.append("Away clean sheet cap (6)"); details["Away clean sheet cap (6)"] = f"PASS-THIN ({a_cs}/{a_len})"
     else:
         failed.append("Away clean sheet cap (6)"); details["Away clean sheet cap (6)"] = f"FAIL ({a_cs}/{a_len})"; is_perfect = False
@@ -615,55 +706,56 @@ def apply_btts_yes_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None
 
 
 def apply_btts_no_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, away_overall_6=None):
-    if len(home_3) < 3 or len(away_3) < 3:
+    if len(home_3) < 2 or len(away_3) < 2:
         return None, None, {"error": "Insufficient data"}, False
     passed, failed, details = [], [], {}
     is_perfect = True
 
+    hn3, an3 = len(home_3), len(away_3)
     h_nb_3 = sum(1 for gf, ga in home_3 if gf == 0 or ga == 0)
-    if h_nb_3 >= 2:
-        passed.append("Home non-BTTS (last 3)"); details["Home non-BTTS (last 3)"] = f"PASS ({h_nb_3}/3)"
+    if h_nb_3 >= _thin_count(2, 3, hn3):
+        passed.append("Home non-BTTS (last 3)"); details["Home non-BTTS (last 3)"] = f"PASS ({h_nb_3}/{hn3})"
     else:
-        failed.append("Home non-BTTS (last 3)"); details["Home non-BTTS (last 3)"] = f"FAIL ({h_nb_3}/3)"; is_perfect = False
+        failed.append("Home non-BTTS (last 3)"); details["Home non-BTTS (last 3)"] = f"FAIL ({h_nb_3}/{hn3})"; is_perfect = False
 
     a_nb_3 = sum(1 for gf, ga in away_3 if gf == 0 or ga == 0)
-    if a_nb_3 >= 2:
-        passed.append("Away non-BTTS (last 3)"); details["Away non-BTTS (last 3)"] = f"PASS ({a_nb_3}/3)"
+    if a_nb_3 >= _thin_count(2, 3, an3):
+        passed.append("Away non-BTTS (last 3)"); details["Away non-BTTS (last 3)"] = f"PASS ({a_nb_3}/{an3})"
     else:
-        failed.append("Away non-BTTS (last 3)"); details["Away non-BTTS (last 3)"] = f"FAIL ({a_nb_3}/3)"; is_perfect = False
+        failed.append("Away non-BTTS (last 3)"); details["Away non-BTTS (last 3)"] = f"FAIL ({a_nb_3}/{an3})"; is_perfect = False
 
     h_blanked_3 = sum(1 for gf, _ in home_3 if gf == 0)
-    if h_blanked_3 >= 1:
-        passed.append("Home blanked (last 3)"); details["Home blanked (last 3)"] = f"PASS ({h_blanked_3}/3)"
+    if h_blanked_3 >= _thin_count(1, 3, hn3):
+        passed.append("Home blanked (last 3)"); details["Home blanked (last 3)"] = f"PASS ({h_blanked_3}/{hn3})"
     else:
-        failed.append("Home blanked (last 3)"); details["Home blanked (last 3)"] = f"FAIL ({h_blanked_3}/3)"; is_perfect = False
+        failed.append("Home blanked (last 3)"); details["Home blanked (last 3)"] = f"FAIL ({h_blanked_3}/{hn3})"; is_perfect = False
 
     a_blanked_3 = sum(1 for gf, _ in away_3 if gf == 0)
-    if a_blanked_3 >= 1:
-        passed.append("Away blanked (last 3)"); details["Away blanked (last 3)"] = f"PASS ({a_blanked_3}/3)"
+    if a_blanked_3 >= _thin_count(1, 3, an3):
+        passed.append("Away blanked (last 3)"); details["Away blanked (last 3)"] = f"PASS ({a_blanked_3}/{an3})"
     else:
-        failed.append("Away blanked (last 3)"); details["Away blanked (last 3)"] = f"FAIL ({a_blanked_3}/3)"; is_perfect = False
+        failed.append("Away blanked (last 3)"); details["Away blanked (last 3)"] = f"FAIL ({a_blanked_3}/{an3})"; is_perfect = False
 
     h_cs_3 = sum(1 for _, ga in home_3 if ga == 0)
-    if h_cs_3 >= 1:
-        passed.append("Home clean sheet (last 3)"); details["Home clean sheet (last 3)"] = f"PASS ({h_cs_3}/3)"
+    if h_cs_3 >= _thin_count(1, 3, hn3):
+        passed.append("Home clean sheet (last 3)"); details["Home clean sheet (last 3)"] = f"PASS ({h_cs_3}/{hn3})"
     else:
-        failed.append("Home clean sheet (last 3)"); details["Home clean sheet (last 3)"] = f"FAIL ({h_cs_3}/3)"; is_perfect = False
+        failed.append("Home clean sheet (last 3)"); details["Home clean sheet (last 3)"] = f"FAIL ({h_cs_3}/{hn3})"; is_perfect = False
 
     a_cs_3 = sum(1 for _, ga in away_3 if ga == 0)
-    if a_cs_3 >= 1:
-        passed.append("Away clean sheet (last 3)"); details["Away clean sheet (last 3)"] = f"PASS ({a_cs_3}/3)"
+    if a_cs_3 >= _thin_count(1, 3, an3):
+        passed.append("Away clean sheet (last 3)"); details["Away clean sheet (last 3)"] = f"PASS ({a_cs_3}/{an3})"
     else:
-        failed.append("Away clean sheet (last 3)"); details["Away clean sheet (last 3)"] = f"FAIL ({a_cs_3}/3)"; is_perfect = False
+        failed.append("Away clean sheet (last 3)"); details["Away clean sheet (last 3)"] = f"FAIL ({a_cs_3}/{an3})"; is_perfect = False
 
     h_total_3 = sum(gf + ga for gf, ga in home_3)
-    if h_total_3 <= 6:
+    if h_total_3 <= _thin_total(6, 3, hn3):
         passed.append("Home total goals cap (last 3)"); details["Home total goals cap (last 3)"] = f"PASS ({h_total_3})"
     else:
         failed.append("Home total goals cap (last 3)"); details["Home total goals cap (last 3)"] = f"FAIL ({h_total_3})"; is_perfect = False
 
     a_total_3 = sum(gf + ga for gf, ga in away_3)
-    if a_total_3 <= 6:
+    if a_total_3 <= _thin_total(6, 3, an3):
         passed.append("Away total goals cap (last 3)"); details["Away total goals cap (last 3)"] = f"PASS ({a_total_3})"
     else:
         failed.append("Away total goals cap (last 3)"); details["Away total goals cap (last 3)"] = f"FAIL ({a_total_3})"; is_perfect = False
@@ -675,34 +767,34 @@ def apply_btts_no_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None,
 
     if h_len >= 6 and h_nb_6 >= NON_BTTS_MIN_6:
         passed.append("Home non-BTTS (last 6)"); details["Home non-BTTS (last 6)"] = f"PASS ({h_nb_6}/6)"
-    elif h_len >= 3 and h_nb_6 >= max(1, round(h_len * 0.5)):
+    elif h_len >= 2 and h_nb_6 >= max(1, round(h_len * 0.5)):
         passed.append("Home non-BTTS (last 6)"); details["Home non-BTTS (last 6)"] = f"PASS-THIN ({h_nb_6}/{h_len})"
     else:
         failed.append("Home non-BTTS (last 6)"); details["Home non-BTTS (last 6)"] = f"FAIL ({h_nb_6}/{h_len})"; is_perfect = False
 
     if a_len >= 6 and a_nb_6 >= NON_BTTS_MIN_6:
         passed.append("Away non-BTTS (last 6)"); details["Away non-BTTS (last 6)"] = f"PASS ({a_nb_6}/6)"
-    elif a_len >= 3 and a_nb_6 >= max(1, round(a_len * 0.5)):
+    elif a_len >= 2 and a_nb_6 >= max(1, round(a_len * 0.5)):
         passed.append("Away non-BTTS (last 6)"); details["Away non-BTTS (last 6)"] = f"PASS-THIN ({a_nb_6}/{a_len})"
     else:
         failed.append("Away non-BTTS (last 6)"); details["Away non-BTTS (last 6)"] = f"FAIL ({a_nb_6}/{a_len})"; is_perfect = False
 
     h_under_3 = sum(1 for gf, ga in home_3 if gf + ga < 2.5)
-    if h_under_3 >= 2:
-        passed.append("Home under 2.5 (last 3)"); details["Home under 2.5 (last 3)"] = f"PASS ({h_under_3}/3)"
+    if h_under_3 >= _thin_count(2, 3, hn3):
+        passed.append("Home under 2.5 (last 3)"); details["Home under 2.5 (last 3)"] = f"PASS ({h_under_3}/{hn3})"
     else:
-        failed.append("Home under 2.5 (last 3)"); details["Home under 2.5 (last 3)"] = f"FAIL ({h_under_3}/3)"; is_perfect = False
+        failed.append("Home under 2.5 (last 3)"); details["Home under 2.5 (last 3)"] = f"FAIL ({h_under_3}/{hn3})"; is_perfect = False
 
     a_under_3 = sum(1 for gf, ga in away_3 if gf + ga < 2.5)
-    if a_under_3 >= 2:
-        passed.append("Away under 2.5 (last 3)"); details["Away under 2.5 (last 3)"] = f"PASS ({a_under_3}/3)"
+    if a_under_3 >= _thin_count(2, 3, an3):
+        passed.append("Away under 2.5 (last 3)"); details["Away under 2.5 (last 3)"] = f"PASS ({a_under_3}/{an3})"
     else:
-        failed.append("Away under 2.5 (last 3)"); details["Away under 2.5 (last 3)"] = f"FAIL ({a_under_3}/3)"; is_perfect = False
+        failed.append("Away under 2.5 (last 3)"); details["Away under 2.5 (last 3)"] = f"FAIL ({a_under_3}/{an3})"; is_perfect = False
 
     h_cs_6 = _count_clean_sheets(home_6)
     if h_len >= 6 and h_cs_6 >= 2:
         passed.append("Home clean sheets (last 6)"); details["Home clean sheets (last 6)"] = f"PASS ({h_cs_6}/6)"
-    elif h_len >= 3 and h_cs_6 >= 1:
+    elif h_len >= 2 and h_cs_6 >= max(1, round(h_len * 0.33)):
         passed.append("Home clean sheets (last 6)"); details["Home clean sheets (last 6)"] = f"PASS-THIN ({h_cs_6}/{h_len})"
     else:
         failed.append("Home clean sheets (last 6)"); details["Home clean sheets (last 6)"] = f"FAIL ({h_cs_6}/{h_len})"; is_perfect = False
@@ -710,7 +802,7 @@ def apply_btts_no_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None,
     a_failed_6 = _count_failed_to_score(away_6)
     if a_len >= 6 and a_failed_6 >= 2:
         passed.append("Away failed to score (last 6)"); details["Away failed to score (last 6)"] = f"PASS ({a_failed_6}/6)"
-    elif a_len >= 3 and a_failed_6 >= 1:
+    elif a_len >= 2 and a_failed_6 >= max(1, round(a_len * 0.33)):
         passed.append("Away failed to score (last 6)"); details["Away failed to score (last 6)"] = f"PASS-THIN ({a_failed_6}/{a_len})"
     else:
         failed.append("Away failed to score (last 6)"); details["Away failed to score (last 6)"] = f"FAIL ({a_failed_6}/{a_len})"; is_perfect = False
@@ -928,7 +1020,7 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         home_overall_6 = get_team_overall_form(match["home_team_id"], 6, target_date)
         away_overall_6 = get_team_overall_form(match["away_team_id"], 6, target_date)
 
-        if len(home_3) < 3 or len(away_3) < 3:
+        if len(home_3) < 2 or len(away_3) < 2:
             return {"status": "insufficient"}
 
         data_mult = data_volume_penalty(home_6, away_6)
@@ -954,6 +1046,12 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         no_gate = lambda_gate_passes(home_lambda, away_lambda, "no")
         btts_gate = _btts_gate_passes(home_6, away_6)
         non_btts_gate = _non_btts_gate_passes(home_6, away_6)
+        h2h_btts_yes_blocked, h2h_btts_yes_meetings = _h2h_btts_yes_blocked(
+            match["home_team_id"], match["away_team_id"], target_date
+        )
+        h2h_btts_no_blocked, h2h_btts_no_meetings = _h2h_btts_no_blocked(
+            match["home_team_id"], match["away_team_id"], target_date
+        )
         o25tips_total, o25tips_details = calculate_o25tips_btts_score(
             home_overall_6, home_6, away_overall_6, away_6, home_lambda, away_lambda
         )
@@ -967,10 +1065,12 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         yes_qualifies = (
             bool(yes_passed) and yes_score >= yes_min and yes_gate
             and btts_gate and o25tips_yes_ok
+            and not h2h_btts_yes_blocked
         )
         no_qualifies = (
             bool(no_passed) and no_score >= no_min and no_gate
             and non_btts_gate and o25tips_no_ok
+            and not h2h_btts_no_blocked
         )
 
         league_mult = _WEAK_ROI_MULTIPLIER if weak else 1.0
@@ -986,6 +1086,12 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
 
         yes_confidence = "HIGH" if btts_yes_pct >= 58 else "MEDIUM" if btts_yes_pct >= 52 else "LOW"
         no_confidence = "HIGH" if btts_no_pct >= 58 else "MEDIUM" if btts_no_pct >= 52 else "LOW"
+
+        regressions = []
+        if h2h_btts_yes_blocked:
+            regressions.append(f"h2h non-btts bogey ({len(h2h_btts_yes_meetings)} meetings)")
+        if h2h_btts_no_blocked:
+            regressions.append(f"h2h btts bogey ({len(h2h_btts_no_meetings)} meetings)")
 
         return {
             "status": "success",
@@ -1003,6 +1109,8 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "kelly": round(yes_kelly * 100, 2),
                     "gate_passed": yes_gate,
                     "form_gate_passed": btts_gate,
+                    "h2h_blocked": h2h_btts_yes_blocked,
+                    "h2h_meetings": len(h2h_btts_yes_meetings),
                     "o25tips_points": o25tips_total,
                     "o25tips_passed": o25tips_yes_ok,
                     "min_score_threshold": yes_min,
@@ -1019,6 +1127,8 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "kelly": round(no_kelly * 100, 2),
                     "gate_passed": no_gate,
                     "form_gate_passed": non_btts_gate,
+                    "h2h_blocked": h2h_btts_no_blocked,
+                    "h2h_meetings": len(h2h_btts_no_meetings),
                     "o25tips_points": o25tips_total,
                     "o25tips_passed": o25tips_no_ok,
                     "min_score_threshold": no_min,
@@ -1031,6 +1141,18 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "btts_no_prob": btts_no_pct,
                 },
                 "o25tips": o25tips_details,
+                "guards": {
+                    "weak_roi_league": weak,
+                    "chaos_btts_bonus": _chaos_btts_bonus(home_6, away_6),
+                    "compact_btts_no_bonus": _compact_btts_no_bonus(home_6, away_6),
+                    "btts_gate_passed": btts_gate,
+                    "non_btts_gate_passed": non_btts_gate,
+                    "h2h_btts_yes_blocked": h2h_btts_yes_blocked,
+                    "h2h_btts_no_blocked": h2h_btts_no_blocked,
+                    "h2h_btts_yes_meetings": len(h2h_btts_yes_meetings),
+                    "h2h_btts_no_meetings": len(h2h_btts_no_meetings),
+                    "regression_penalty_applied": regressions,
+                },
             },
         }
     except Exception as e:
