@@ -4,6 +4,7 @@
 import argparse
 import re
 import sys
+import textwrap
 from datetime import datetime
 
 from prediction_tracker import build_telegram_yesterday_block
@@ -25,28 +26,51 @@ def read_telegram_section(path):
         return ""
 
 
+def _clean_body(body):
+    if not body:
+        return ""
+    cleaned_lines = []
+    for raw in (body or "").splitlines():
+        line = raw.rstrip()
+        if not line.strip():
+            cleaned_lines.append("")
+        else:
+            cleaned_lines.append(line.lstrip())
+    # Drop leading/trailing empty runs
+    while cleaned_lines and not cleaned_lines[0]:
+        cleaned_lines.pop(0)
+    while cleaned_lines and not cleaned_lines[-1]:
+        cleaned_lines.pop()
+    return "\n".join(cleaned_lines)
+
+
 def build_daily_message(date, ou_body, btts_body, hw_body):
-    lines = [f"📅 Picks · {date}"]
+    lines = [f"📅 Daily Soccer Picks · {date}"]
 
     yesterday = build_telegram_yesterday_block()
     if yesterday:
-        lines.append("")
-        lines.extend(yesterday)
+        lines.append("───────────")
+        lines.append(f"📊 {yesterday[0]}")
+        for line in yesterday[1:]:
+            lines.append(line)
 
     sections = [
-        ("O/U 2.5", ou_body),
-        ("BTTS", btts_body),
-        ("Home Win", hw_body),
+        ("⚽️ OVER / UNDER 2.5", ou_body),
+        ("🎯 BTTS (YES / NO)", btts_body),
+        ("🏠 HOME WIN", hw_body),
     ]
+    emitted_market = False
     for title, body in sections:
-        lines.append("")
+        clean = _clean_body(body)
+        if not clean or clean in ("— none", "- none", "none"):
+            continue
+        lines.append("───────────")
         lines.append(title)
-        if body and body.strip() and body.strip() != "— none":
-            lines.append(body.strip())
-        else:
-            lines.append("— none")
+        lines.append(clean)
+        emitted_market = True
 
-    lines.append("")
+    if emitted_market:
+        lines.append("───────────")
     lines.append("Info only · gamble responsibly")
     return "\n".join(lines).strip()
 

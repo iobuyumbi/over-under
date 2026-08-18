@@ -36,6 +36,10 @@ from prediction_tracker import (
     PICK_TIER_PREMIUM,
     PICK_TIER_STRONG,
     PICK_TIER_VALUE,
+    COMPACT_TIER_HEADER_PREMIUM,
+    COMPACT_TIER_HEADER_STRONG,
+    COMPACT_TIER_HEADER_WATCH,
+    MARKET_SECTION_DIVIDER,
     MARKET_HOME_WIN,
 )
 
@@ -869,10 +873,10 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
             m = item["match"]
             p = item["model"]
             if compact:
-                lines.append(format_compact_pick_line(
-                    m["home"], m["away"], "HW", tier, p["home_win_prob"],
-                    m["date"] if show_date else None,
-                ))
+                lines.append(f"  {format_compact_pick_line(
+                    m['home'], m['away'], 'HW', tier, p['home_win_prob'],
+                    m['date'] if show_date else None,
+                )}")
                 continue
             extra = None
             if detailed:
@@ -886,23 +890,33 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
                 extra,
             ))
 
-    if included_perfect:
-        if not compact:
+    if compact:
+        groups = [
+            (COMPACT_TIER_HEADER_PREMIUM, included_perfect),
+            (COMPACT_TIER_HEADER_STRONG, included_qualified),
+            (COMPACT_TIER_HEADER_WATCH, included_close),
+        ]
+        for tier_header, items in groups:
+            if not items:
+                continue
+            lines.append(f"  {tier_header}")
+            append_items(items, tier_header.split()[1].lower() if tier_header.split()[1].lower() in
+                         ("perfect", "qualified", "close") else (
+                             "perfect" if "Premium" in tier_header else
+                             "qualified" if "Solid" in tier_header else "close"))
+    else:
+        if included_perfect:
             lines.append(f"  {PICK_TIER_PREMIUM}")
             lines.append("")
-        append_items(included_perfect, "perfect")
-
-    if included_qualified:
-        if not compact:
+            append_items(included_perfect, "perfect")
+        if included_qualified:
             lines.append(f"  {PICK_TIER_STRONG}")
             lines.append("")
-        append_items(included_qualified, "qualified")
-
-    if included_close:
-        if not compact:
+            append_items(included_qualified, "qualified")
+        if included_close:
             lines.append(f"  {PICK_TIER_VALUE}")
             lines.append("")
-        append_items(included_close, "close")
+            append_items(included_close, "close")
 
     if not compact:
         lines.append("---")

@@ -5,7 +5,10 @@ __pycache__/
 results_cache.db
 soccerbase_cache.db
 soccerbase_cache_home.db
+soccerbase_cache_btts.db
 selected_results_report.txt
+telegram_preview.txt
+_smoke_preview.py
 home_win_report_*.json
 home_win_vip_report_*.txt
 over_under_25_report_*.json

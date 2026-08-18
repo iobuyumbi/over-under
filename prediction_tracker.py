@@ -35,7 +35,12 @@ PICK_TIER_PREMIUM = "🔥 Premium picks"
 PICK_TIER_STRONG = "✅ Solid picks"
 PICK_TIER_VALUE = "👀 Watchlist"
 
+COMPACT_TIER_HEADER_PREMIUM = "🔥 Premium"
+COMPACT_TIER_HEADER_STRONG = "✅ Solid"
+COMPACT_TIER_HEADER_WATCH = "👀 Watchlist"
+
 TIER_ICON = {"perfect": "🔥", "qualified": "✅", "close": "👀", "Premium": "🔥", "Solid": "✅", "Watchlist": "👀"}
+MARKET_SECTION_DIVIDER = "───────────"
 MARKET_SHORT = {
     "HOME WIN": "HW", "Home Win": "HW", "home_win": "HW",
     "OVER 2.5": "O2.5", "Over 2.5": "O2.5", "over": "O2.5", "OVER": "O2.5",
@@ -116,12 +121,17 @@ def market_short_label(market_label):
     return mapping.get(key, str(market_label or "").strip())
 
 
-def format_compact_pick_line(home, away, market, tier=None, prob=None, date=None):
-    """Single-line pick for Telegram."""
-    tier_key = str(tier or "").lower()
-    icon = TIER_ICON.get(tier_key, "")
+def format_compact_pick_line(home, away, market, tier=None, prob=None, date=None, *, show_tier_icon=False):
+    """Single-line pick for Telegram. Per-pick tier icon is disabled by default - keep
+    the icon only on the tier group header (🔥 Premium / ✅ Solid / 👀 Watchlist) to
+    avoid visual noise on long new-season match lists."""
     short = market_short_label(market)
-    label = f"{icon} {home} vs {away}".strip()
+    label = f"{home} vs {away}"
+    if show_tier_icon:
+        tier_key = str(tier or "").lower()
+        icon = TIER_ICON.get(tier_key, "")
+        if icon:
+            label = f"{icon} {label}"
     parts = [label, short]
     if prob is not None:
         parts.append(f"{prob}%")

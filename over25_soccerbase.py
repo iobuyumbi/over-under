@@ -38,6 +38,10 @@ from prediction_tracker import (
     PICK_TIER_PREMIUM,
     PICK_TIER_STRONG,
     PICK_TIER_VALUE,
+    COMPACT_TIER_HEADER_PREMIUM,
+    COMPACT_TIER_HEADER_STRONG,
+    COMPACT_TIER_HEADER_WATCH,
+    MARKET_SECTION_DIVIDER,
     MARKET_OVER25,
     MARKET_UNDER25,
 )
@@ -1559,80 +1563,99 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
             lines.append(f"Date: {base_date}")
         lines.append("")
         append_yesterday_section(lines, "over_under", detailed=detailed)
-    
-    # Over 2.5 section
-    if included_over:
-        if compact:
-            lines.append("O2.5")
-        else:
-            lines.append("🟢 Over 2.5 goals")
+    else:
+        def _append_compact_tier_group(tiers_items, side_label):
+            has_group = False
+            for tier_header, items in tiers_items:
+                if not items:
+                    continue
+                if not has_group:
+                    lines.append(f"▸ {side_label}")
+                    has_group = True
+                lines.append(f"  {tier_header}")
+                for item in items:
+                    lines.append(f"  {format_compact_pick_line(
+                        item['match']['home'], item['match']['away'],
+                        'over' if side_label == 'OVER 2.5' else 'under',
+                        (item['over'] if side_label == 'OVER 2.5' else item['under']).get('tier'),
+                        (item['poisson']['over25_prob'] if side_label == 'OVER 2.5' else item['poisson']['under25_prob']),
+                        item['match'].get('date'),
+                    )}")
+            return has_group
+
+        over_perfect_tier = [p for p in included_over if p in over_perfect]
+        over_strong_tier = [p for p in included_over if p in over_qualified]
+        over_watch_tier = [p for p in included_over if p in over_close]
+        under_perfect_tier = [p for p in included_under if p in under_perfect]
+        under_strong_tier = [p for p in included_under if p in under_qualified]
+        under_watch_tier = [p for p in included_under if p in under_close]
+
+        any_over = _append_compact_tier_group([
+            (COMPACT_TIER_HEADER_PREMIUM, over_perfect_tier),
+            (COMPACT_TIER_HEADER_STRONG, over_strong_tier),
+            (COMPACT_TIER_HEADER_WATCH, over_watch_tier),
+        ], "OVER 2.5")
+        if any_over and (under_perfect_tier or under_strong_tier or under_watch_tier):
             lines.append("")
-        
-        included_over_perfect = [p for p in included_over if p in over_perfect]
-        included_over_qualified = [p for p in included_over if p in over_qualified]
-        included_over_close = [p for p in included_over if p in over_close]
-        
-        if included_over_perfect:
-            if not compact:
-                lines.append(f"  {PICK_TIER_PREMIUM}")
-                lines.append("")
-            for i, item in enumerate(included_over_perfect, 1):
-                _append_ou_pick(lines, i, item, "over", odds_over, detailed, compact)
-        
-        if included_over_qualified:
-            if not compact:
-                lines.append(f"  {PICK_TIER_STRONG}")
-                lines.append("")
-            start_idx = len(included_over_perfect) + 1
-            for i, item in enumerate(included_over_qualified, start_idx):
-                _append_ou_pick(lines, i, item, "over", odds_over, detailed, compact)
-        
-        if included_over_close:
-            if not compact and detailed:
-                lines.append(f"  {PICK_TIER_VALUE}")
-                lines.append("")
-            start_idx = len(included_over_perfect) + len(included_over_qualified) + 1
-            for i, item in enumerate(included_over_close, start_idx):
-                _append_ou_pick(lines, i, item, "over", odds_over, detailed, compact)
-        if compact:
-            lines.append("")
-    
-    # Under 2.5 section
-    if included_under:
-        if compact:
-            lines.append("U2.5")
-        else:
-            lines.append("🔵 Under 2.5 goals")
-            lines.append("")
-        
-        included_under_perfect = [p for p in included_under if p in under_perfect]
-        included_under_qualified = [p for p in included_under if p in under_qualified]
-        included_under_close = [p for p in included_under if p in under_close]
-        
-        if included_under_perfect:
-            if not compact:
-                lines.append(f"  {PICK_TIER_PREMIUM}")
-                lines.append("")
-            for i, item in enumerate(included_under_perfect, 1):
-                _append_ou_pick(lines, i, item, "under", odds_under, detailed, compact)
-        
-        if included_under_qualified:
-            if not compact:
-                lines.append(f"  {PICK_TIER_STRONG}")
-                lines.append("")
-            start_idx = len(included_under_perfect) + 1
-            for i, item in enumerate(included_under_qualified, start_idx):
-                _append_ou_pick(lines, i, item, "under", odds_under, detailed, compact)
-        
-        if included_under_close:
-            if not compact and detailed:
-                lines.append(f"  {PICK_TIER_VALUE}")
-                lines.append("")
-            start_idx = len(included_under_perfect) + len(included_under_qualified) + 1
-            for i, item in enumerate(included_under_close, start_idx):
-                _append_ou_pick(lines, i, item, "under", odds_under, detailed, compact)
+        _append_compact_tier_group([
+            (COMPACT_TIER_HEADER_PREMIUM, under_perfect_tier),
+            (COMPACT_TIER_HEADER_STRONG, under_strong_tier),
+            (COMPACT_TIER_HEADER_WATCH, under_watch_tier),
+        ], "UNDER 2.5")
 
     if not compact:
+        # Over 2.5 section (full detail)
+        if included_over:
+            lines.append("🟢 Over 2.5 goals")
+            lines.append("")
+            included_over_perfect = [p for p in included_over if p in over_perfect]
+            included_over_qualified = [p for p in included_over if p in over_qualified]
+            included_over_close = [p for p in included_over if p in over_close]
+            if included_over_perfect:
+                lines.append(f"  {PICK_TIER_PREMIUM}")
+                lines.append("")
+                for i, item in enumerate(included_over_perfect, 1):
+                    _append_ou_pick(lines, i, item, "over", odds_over, detailed, compact)
+            if included_over_qualified:
+                lines.append(f"  {PICK_TIER_STRONG}")
+                lines.append("")
+                start_idx = len(included_over_perfect) + 1
+                for i, item in enumerate(included_over_qualified, start_idx):
+                    _append_ou_pick(lines, i, item, "over", odds_over, detailed, compact)
+            if included_over_close:
+                if detailed:
+                    lines.append(f"  {PICK_TIER_VALUE}")
+                    lines.append("")
+                start_idx = len(included_over_perfect) + len(included_over_qualified) + 1
+                for i, item in enumerate(included_over_close, start_idx):
+                    _append_ou_pick(lines, i, item, "over", odds_over, detailed, compact)
+
+        # Under 2.5 section (full detail)
+        if included_under:
+            lines.append("🔵 Under 2.5 goals")
+            lines.append("")
+            included_under_perfect = [p for p in included_under if p in under_perfect]
+            included_under_qualified = [p for p in included_under if p in under_qualified]
+            included_under_close = [p for p in included_under if p in under_close]
+            if included_under_perfect:
+                lines.append(f"  {PICK_TIER_PREMIUM}")
+                lines.append("")
+                for i, item in enumerate(included_under_perfect, 1):
+                    _append_ou_pick(lines, i, item, "under", odds_under, detailed, compact)
+            if included_under_qualified:
+                lines.append(f"  {PICK_TIER_STRONG}")
+                lines.append("")
+                start_idx = len(included_under_perfect) + 1
+                for i, item in enumerate(included_under_qualified, start_idx):
+                    _append_ou_pick(lines, i, item, "under", odds_under, detailed, compact)
+            if included_under_close:
+                if detailed:
+                    lines.append(f"  {PICK_TIER_VALUE}")
+                    lines.append("")
+                start_idx = len(included_under_perfect) + len(included_under_qualified) + 1
+                for i, item in enumerate(included_under_close, start_idx):
+                    _append_ou_pick(lines, i, item, "under", odds_under, detailed, compact)
+
         lines.append("---")
         lines.append("For informational purposes only")
         lines.append("Gamble responsibly")
