@@ -1246,8 +1246,11 @@
       "home_team": "Velez Sarsfield",
       "away_team": "Defensa y Justicia",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-08-05T12:21:51.042781"
+      "result": "loss",
+      "recorded_at": "2026-08-05T12:21:51.042781",
+      "updated_at": "2026-08-18T20:09:50.106708",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-18",
@@ -4837,8 +4840,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:36.583027"
+      "result": "loss",
+      "recorded_at": "2026-08-05T13:50:36.583027",
+      "updated_at": "2026-08-18T20:09:50.107325",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-20",
@@ -5398,8 +5404,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:39.251280"
+      "result": "win",
+      "recorded_at": "2026-08-05T13:50:39.251280",
+      "updated_at": "2026-08-18T20:09:50.107893",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-17",
@@ -5410,8 +5419,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:39.330869"
+      "result": "win",
+      "recorded_at": "2026-08-05T13:50:39.330869",
+      "updated_at": "2026-08-18T20:09:50.108565",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-17",
@@ -5422,8 +5434,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:39.414607"
+      "result": "loss",
+      "recorded_at": "2026-08-05T13:50:39.414607",
+      "updated_at": "2026-08-18T20:09:50.109117",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-18",
