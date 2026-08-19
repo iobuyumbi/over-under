@@ -1203,8 +1203,11 @@
       "home_team": "Palestino",
       "away_team": "Huachipato",
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T12:21:50.975115"
+      "result": "win",
+      "recorded_at": "2026-08-05T12:21:50.975115",
+      "updated_at": "2026-08-19T02:11:28.006811",
+      "final_score": "5-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-19",
@@ -1279,8 +1282,11 @@
       "home_team": "Necaxa",
       "away_team": "Leon",
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-08-05T12:21:51.094611"
+      "result": "loss",
+      "recorded_at": "2026-08-05T12:21:51.094611",
+      "updated_at": "2026-08-19T02:11:28.008563",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-15",
@@ -5185,8 +5191,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:38.328990"
+      "result": "loss",
+      "recorded_at": "2026-08-05T13:50:38.328990",
+      "updated_at": "2026-08-19T02:11:28.009185",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-08",
