@@ -340,7 +340,7 @@ _HW_WEAK_ROI_LEAGUE_KEYWORDS = (
 _HW_WEAK_ROI_MULTIPLIER = 0.82
 
 _HW_REGRESSION_WIN_STREAK = 5
-_REGRESSION_PENALTY = 0.08
+_HW_REGRESSION_PENALTY = 0.08
 _HW_H2H_MIN_MEETINGS = 2
 _HW_H2H_MAX_LOOKBACK = 6
 _HW_H2H_AWAY_WIN_RATIO = 2.0
@@ -1146,13 +1146,17 @@ def main():
         }, f, indent=2, default=str)
 
     # Record predictions for tracking
+    # IMPORTANT: Use original tier buckets (not build_report's included_*) so
+    # statistically-blocked leagues are still recorded with published=false.
+    # record_predictions() handles the published flag internally via
+    # is_statistical_block_only() and fully skips only static/integrity blocks.
     try:
         hw_picks = []
-        for pick in included_perfect + included_qualified + included_close:
+        all_hw = perfect + qualified + close_calls
+        for pick in all_hw:
             tier = pick.get("tier") or (
-                "perfect" if pick in included_perfect else (
-                    "qualified" if pick in included_qualified else "close"
-                )
+                "perfect" if pick in perfect else
+                "qualified" if pick in qualified else "close"
             )
             hw_picks.append({
                 "league": pick["match"]["league"],

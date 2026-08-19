@@ -1962,10 +1962,18 @@ def main():
         }, f, indent=2, default=str)
 
     # Record predictions for tracking
+    # IMPORTANT: Use original tier buckets (not build_report's included_*) so
+    # statistically-blocked leagues are still recorded with published=false.
+    # record_predictions() handles the published flag internally via
+    # is_statistical_block_only() and fully skips only static/integrity blocks.
     try:
         ou_picks = []
-        for pick in included_over:
-            tier = pick["over"].get("tier") or ("perfect" if pick in over_perfect else ("qualified" if pick in over_qualified else "close"))
+        all_over = over_perfect + over_qualified + over_close
+        for pick in all_over:
+            tier = pick["over"].get("tier") or (
+                "perfect" if pick in over_perfect else
+                "qualified" if pick in over_qualified else "close"
+            )
             ou_picks.append({
                 "league": pick["match"]["league"],
                 "home": pick["match"]["home"],
@@ -1974,8 +1982,12 @@ def main():
                 "prediction": "over",
                 "confidence": tier,
             })
-        for pick in included_under:
-            tier = pick["under"].get("tier") or ("perfect" if pick in under_perfect else ("qualified" if pick in under_qualified else "close"))
+        all_under = under_perfect + under_qualified + under_close
+        for pick in all_under:
+            tier = pick["under"].get("tier") or (
+                "perfect" if pick in under_perfect else
+                "qualified" if pick in under_qualified else "close"
+            )
             ou_picks.append({
                 "league": pick["match"]["league"],
                 "home": pick["match"]["home"],
