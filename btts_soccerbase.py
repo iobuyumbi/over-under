@@ -1437,8 +1437,16 @@ def main():
 
     try:
         btts_picks = []
-        for pick in included_yes:
-            tier = pick["yes"].get("tier") or "close"
+        # IMPORTANT: Use original tier buckets (not build_report's included_*) so
+        # statistically-blocked leagues are still recorded with published=false.
+        # record_predictions() handles the published flag internally via
+        # is_statistical_block_only() and fully skips only static/integrity blocks.
+        all_yes = yes_perfect + yes_qualified + yes_close
+        for pick in all_yes:
+            tier = pick["yes"].get("tier") or (
+                "perfect" if pick in yes_perfect else
+                "qualified" if pick in yes_qualified else "close"
+            )
             btts_picks.append({
                 "league": pick["match"]["league"],
                 "home": pick["match"]["home"],
@@ -1448,8 +1456,12 @@ def main():
                 "confidence": tier,
                 "prob": pick["poisson"]["btts_yes_prob"],
             })
-        for pick in included_no:
-            tier = pick["no"].get("tier") or "close"
+        all_no = no_perfect + no_qualified + no_close
+        for pick in all_no:
+            tier = pick["no"].get("tier") or (
+                "perfect" if pick in no_perfect else
+                "qualified" if pick in no_qualified else "close"
+            )
             btts_picks.append({
                 "league": pick["match"]["league"],
                 "home": pick["match"]["home"],
