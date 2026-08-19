@@ -506,6 +506,11 @@ def _non_btts_gate_passes(home_6, away_6):
     return h_ok or a_ok
 
 
+_OU_H2H_MAX_LOOKBACK = 6
+_OU_H2H_MIN_MEETINGS = 3
+_OU_H2H_OVER_BLOCK_RATE = 0.33
+_OU_H2H_UNDER_BLOCK_RATE = 0.67
+
 def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=_OU_H2H_MAX_LOOKBACK):
     """Recent meetings between these sides, merged from both teams' result pages."""
     collected = {}
@@ -1017,11 +1022,6 @@ _WEAK_ROI_UNDER_LAMBDA_REDUCTION = 0.20
 _REGRESSION_OVER_STREAK = 5
 _REGRESSION_UNDER_STREAK = 5
 _REGRESSION_PENALTY = 0.08
-
-_OU_H2H_MAX_LOOKBACK = 6
-_OU_H2H_MIN_MEETINGS = 3
-_OU_H2H_OVER_BLOCK_RATE = 0.33
-_OU_H2H_UNDER_BLOCK_RATE = 0.67
 
 _LEAGUE_BASELINE_CACHE = {}
 
