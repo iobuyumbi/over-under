@@ -32,6 +32,7 @@ from prediction_tracker import (
     format_compact_pick_line,
     format_confidence_label,
     is_blocked_fixture,
+    is_static_blocked_fixture,
     append_yesterday_section,
     PICK_TIER_PREMIUM,
     PICK_TIER_STRONG,
@@ -1058,7 +1059,7 @@ def main():
         for f in fixtures:
             key = (f["home_team_id"], f["away_team_id"], f["league"])
             if key not in seen and f["home_team_id"] and f["away_team_id"]:
-                if is_blocked_fixture(f, market=MARKET_HOME_WIN):
+                if is_static_blocked_fixture(f):
                     blocked += 1
                     continue
                 if not args.scheduled or f["status"] == "Scheduled":
@@ -1066,7 +1067,7 @@ def main():
                     unique_fixtures.append(f)
 
         if blocked:
-            print(f"   Skipped {blocked} fixtures blocked for Home Win on {date_str}")
+            print(f"   Skipped {blocked} statically-blocked fixtures (integrity/region) on {date_str}")
 
         if not unique_fixtures:
             logger.info(f"No fixtures to process on {date_str}")
