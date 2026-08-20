@@ -59,18 +59,13 @@ def build_daily_message(date, ou_body, btts_body, hw_body):
         ("🎯 BTTS (YES / NO)", btts_body),
         ("🏠 HOME WIN", hw_body),
     ]
-    emitted_market = False
     for title, body in sections:
-        clean = _clean_body(body)
-        if not clean or clean in ("— none", "- none", "none"):
-            continue
+        clean = _clean_body(body) or "— none"
         lines.append("───────────")
         lines.append(title)
         lines.append(clean)
-        emitted_market = True
 
-    if emitted_market:
-        lines.append("───────────")
+    lines.append("───────────")
     lines.append("Info only · gamble responsibly")
     return "\n".join(lines).strip()
 

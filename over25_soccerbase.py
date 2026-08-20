@@ -11,6 +11,7 @@ import requests
 import json
 import re
 import argparse
+import sys
 import time
 import random
 import math
@@ -1640,28 +1641,31 @@ def _append_ou_pick(lines, idx, item, side, odds, detailed, compact=False):
 
 def build_report(over_perfect, over_qualified, over_close, over_weak,
                under_perfect, under_qualified, under_close, under_weak,
-               scanned_dates, bankroll, odds_over, odds_under, detailed=False, compact=False):
+               scanned_dates, bankroll, odds_over, odds_under, detailed=False, compact=False,
+               include_yesterday=True, include_header=True, include_footer=True):
     """
     Build a clean, mobile-friendly report - both channels show all picks, free is simplified
     Returns: (report, base_date, included_over, included_under)
     """
-    included_over = [p for p in (over_perfect + over_qualified + over_close) if not is_blocked_fixture(p["match"], market=MARKET_OVER25)]
-    included_under = [p for p in (under_perfect + under_qualified + under_close) if not is_blocked_fixture(p["match"], market=MARKET_UNDER25)]
+    included_over = [p for p in (over_perfect + over_qualified + over_close) if not is_static_blocked_fixture(p["match"])]
+    included_under = [p for p in (under_perfect + under_qualified + under_close) if not is_static_blocked_fixture(p["match"])]
     included_dates = scanned_dates
     
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
     lines = []
     if not compact:
-        lines.append("⚽️ Over/Under 2.5 picks")
-        lines.append("")
-        if len(included_dates) > 1:
-            lines.append(f"Dates: {included_dates[0]} to {included_dates[-1]}")
-        else:
-            lines.append(f"Date: {base_date}")
-        lines.append("")
-        append_yesterday_section(lines, "over_under", detailed=detailed)
-    else:
+        if include_header:
+            lines.append("⚽️ Over/Under 2.5 picks")
+            lines.append("")
+            if len(included_dates) > 1:
+                lines.append(f"Dates: {included_dates[0]} to {included_dates[-1]}")
+            else:
+                lines.append(f"Date: {base_date}")
+            lines.append("")
+            if include_yesterday:
+                append_yesterday_section(lines, "over_under", detailed=detailed)
+    elif compact:
         def _append_compact_tier_group(tiers_items, side_label):
             has_group = False
             for tier_header, items in tiers_items:
@@ -1754,18 +1758,25 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                 for i, item in enumerate(included_under_close, start_idx):
                     _append_ou_pick(lines, i, item, "under", odds_under, detailed, compact)
 
-        lines.append("---")
-        lines.append("For informational purposes only")
-        lines.append("Gamble responsibly")
-        lines.append("")
+        if include_footer:
+            lines.append("---")
+            lines.append("For informational purposes only")
+            lines.append("Gamble responsibly")
+            lines.append("")
 
-    report = "\n".join(lines)
+    report = "\n".join(lines).strip()
+    if not report:
+        report = "— none"
     return report, base_date, included_over, included_under
 
 # =============================================================================
 # MAIN
 # =============================================================================
 def main():
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except (AttributeError, OSError):
+        pass
     parser = argparse.ArgumentParser(
         description="Over/Under 2.5 Goals Predictor with Unified Analysis"
     )
@@ -1908,7 +1919,9 @@ def main():
     telegram_report, _, _, _ = build_report(
         over_perfect, over_qualified, over_close, over_weak,
         under_perfect, under_qualified, under_close, under_weak,
-        scanned_dates, args.bankroll, args.odds_over, args.odds_under, detailed=False, compact=True
+        scanned_dates, args.bankroll, args.odds_over, args.odds_under,
+        detailed=False, compact=False,
+        include_yesterday=False, include_header=False, include_footer=False,
     )
     detailed_report, _, _, _ = build_report(
         over_perfect, over_qualified, over_close, over_weak,
