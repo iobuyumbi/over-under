@@ -157,7 +157,7 @@ def format_compact_result_line(pick, market_label):
 def build_telegram_yesterday_block(max_lines=12):
     """One shared yesterday block for all Telegram messages."""
     yesterday, results, summary = get_yesterday_results(
-        prediction_type=None, detailed=False, compact=True
+        prediction_type=None, detailed=False, compact=False
     )
     if not results:
         return []
@@ -787,32 +787,25 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
     """Record new predictions (called after running predictors).
 
     Static/integrity blocks (BLOCKED_REGIONS team/league) are fully skipped.
-    Statistical auto-blocks (weak ROI, poor-league win rates) are still
-    recorded with ``published=false`` so they can feed future auto-block
-    statistics — a pure track-only record that won't appear in publication
-    reports (``is_blocked_fixture`` / ``is_blocked_match`` already exclude
-    them from publication).
+    Statistical auto-blocks are still recorded and published so tips remain
+    visible while backtests refine the auto-block lists.
     """
     history = load_history()
     existing_hw = {home_win_key(p) for p in history["home_win"]}
     existing_ou = {over_under_key(p) for p in history["over_under"]}
     existing_btts = {btts_key(p) for p in history.get("btts", [])}
     added = 0
-    track_only_added = 0
     skipped = 0
 
-    def _pick_blocking(pick, market):
+    def _is_static_block(pick):
         h = pick.get("home", pick.get("home_team", ""))
         a = pick.get("away", pick.get("away_team", ""))
         l = pick.get("league", "")
-        static = is_static_blocked_match(h, a, l)
-        stat_only = (not static) and is_statistical_block_only(h, a, l, market)
-        return static, stat_only
+        return is_static_blocked_match(h, a, l)
 
     if home_win_picks:
         for pick in home_win_picks:
-            static_block, stat_block_only = _pick_blocking(pick, MARKET_HOME_WIN)
-            if static_block:
+            if _is_static_block(pick):
                 skipped += 1
                 continue
             entry = {
@@ -824,7 +817,7 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
                 "confidence": pick.get("confidence", MEDIUM),
                 "result": "pending",
                 "recorded_at": datetime.now().isoformat(),
-                "published": not stat_block_only,
+                "published": True,
             }
             key = home_win_key(entry)
             if key in existing_hw:
@@ -833,17 +826,12 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
             history["home_win"].append(entry)
             existing_hw.add(key)
             added += 1
-            if stat_block_only:
-                track_only_added += 1
             # Add to manual_results.csv
             add_to_manual_results_csv(entry["date"], entry["home_team"], entry["away_team"])
 
     if over_under_picks:
         for pick in over_under_picks:
-            prediction = str(pick.get("prediction", "over")).strip().lower()
-            market = MARKET_OVER25 if prediction == "over" else MARKET_UNDER25
-            static_block, stat_block_only = _pick_blocking(pick, market)
-            if static_block:
+            if _is_static_block(pick):
                 skipped += 1
                 continue
             entry = {
@@ -857,7 +845,7 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
                 "confidence": pick.get("confidence", MEDIUM),
                 "result": "pending",
                 "recorded_at": datetime.now().isoformat(),
-                "published": not stat_block_only,
+                "published": True,
             }
             key = over_under_key(entry)
             if key in existing_ou:
@@ -866,19 +854,15 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
             history["over_under"].append(entry)
             existing_ou.add(key)
             added += 1
-            if stat_block_only:
-                track_only_added += 1
             # Add to manual_results.csv
             add_to_manual_results_csv(entry["date"], entry["home_team"], entry["away_team"])
 
     if btts_picks:
         for pick in btts_picks:
-            prediction = str(pick.get("prediction", "yes")).strip().lower()
-            market = MARKET_BTTS_YES if prediction in ("yes", "btts_yes") else MARKET_BTTS_NO
-            static_block, stat_block_only = _pick_blocking(pick, market)
-            if static_block:
+            if _is_static_block(pick):
                 skipped += 1
                 continue
+            prediction = str(pick.get("prediction", "yes")).strip().lower()
             entry = {
                 "date": pick.get("date", date_str),
                 "type": "btts",
@@ -890,7 +874,7 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
                 "confidence": pick.get("confidence", MEDIUM),
                 "result": "pending",
                 "recorded_at": datetime.now().isoformat(),
-                "published": not stat_block_only,
+                "published": True,
             }
             key = btts_key(entry)
             if key in existing_btts:
@@ -899,18 +883,13 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
             history["btts"].append(entry)
             existing_btts.add(key)
             added += 1
-            if stat_block_only:
-                track_only_added += 1
             add_to_manual_results_csv(entry["date"], entry["home_team"], entry["away_team"])
 
     if added > 0:
         save_history(history)
-        msg = f"[OK] Recorded {added} new predictions for {date_str}"
-        if track_only_added:
-            msg += f" ({track_only_added} track-only / not published)"
-        print(msg)
+        print(f"[OK] Recorded {added} new predictions for {date_str}")
 
-    return {"added": added, "skipped": skipped, "track_only": track_only_added}
+    return {"added": added, "skipped": skipped}
  
  
 def update_result(date_str, home_team, away_team, result, prediction_type="over_under"): 
@@ -1146,10 +1125,7 @@ def format_pick_result_lines(pick, market_label, compact=False):
 def get_yesterday_results(prediction_type=None, detailed=False, compact=False):
     """Get yesterday's results for daily reports.
 
-    Blocked regions are still included here so past results stay visible,
-    but picks recorded as track-only (``published=false``) are skipped from
-    the report line-items and record tally — they were never shared publicly
-    and shouldn't inflate/skew the visible performance record shown to users.
+    Blocked regions are still included here so past results stay visible.
     """
     history = load_history()
     yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
@@ -1180,12 +1156,7 @@ def get_yesterday_results(prediction_type=None, detailed=False, compact=False):
         elif result == "push":
             summary["pushes"] += 1
 
-    def _track_only(pick):
-        return pick.get("published") is False
-
     def append_pick(pick, market_label):
-        if _track_only(pick):
-            return
         result = resolve_pick_result(pick)
         if result in SETTLED_RESULTS:
             tally(result)

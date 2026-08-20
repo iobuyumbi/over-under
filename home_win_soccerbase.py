@@ -9,6 +9,7 @@ import requests
 import json
 import re
 import argparse
+import sys
 import time
 import random
 import math
@@ -906,21 +907,22 @@ def process_single_match(match, target_date, default_odds=2.8):
 # =============================================================================
 # REPORTING
 # =============================================================================
-def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds, detailed=False, compact=False):
+def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds, detailed=False, compact=False,
+                 include_yesterday=True, include_header=True, include_footer=True):
     """
     Build a clean, mobile-friendly report with all qualifying picks across scanned days.
     Returns: (report, base_date, included_perfect, included_qualified, included_close)
     """
-    included_perfect = [p for p in perfect if not is_blocked_fixture(p["match"], market=MARKET_HOME_WIN)]
-    included_qualified = [p for p in qualified if not is_blocked_fixture(p["match"], market=MARKET_HOME_WIN)]
-    included_close = [p for p in close_calls if not is_blocked_fixture(p["match"], market=MARKET_HOME_WIN)]
+    included_perfect = [p for p in perfect if not is_static_blocked_fixture(p["match"])]
+    included_qualified = [p for p in qualified if not is_static_blocked_fixture(p["match"])]
+    included_close = [p for p in close_calls if not is_static_blocked_fixture(p["match"])]
     included_dates = scanned_dates
 
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
     # Clean report (mobile-friendly)
     lines = []
-    if not compact:
+    if not compact and include_header:
         lines.append("🏠 Home Win picks")
         lines.append("")
         if len(included_dates) > 1:
@@ -928,7 +930,8 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
         else:
             lines.append(f"Date: {base_date}")
         lines.append("")
-        append_yesterday_section(lines, "home_win", detailed=detailed)
+        if include_yesterday:
+            append_yesterday_section(lines, "home_win", detailed=detailed)
 
     show_date = len(included_dates) > 1
 
@@ -982,13 +985,15 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
             lines.append("")
             append_items(included_close, "close")
 
-    if not compact:
+    if not compact and include_footer:
         lines.append("---")
         lines.append("For informational purposes only")
         lines.append("Gamble responsibly")
         lines.append("")
 
-    report = "\n".join(lines)
+    report = "\n".join(lines).strip()
+    if not report:
+        report = "— none"
     return report, base_date, included_perfect, included_qualified, included_close
 
 
@@ -996,6 +1001,10 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
 # MAIN
 # =============================================================================
 def main():
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except (AttributeError, OSError):
+        pass
     parser = argparse.ArgumentParser(
         description="Home Win Predictor with Strength Model + Kelly"
     )
@@ -1110,7 +1119,9 @@ def main():
         perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=False
     )
     telegram_report, _, _, _, _ = build_report(
-        perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=False, compact=True
+        perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds,
+        detailed=False, compact=False,
+        include_yesterday=False, include_header=False, include_footer=False,
     )
     detailed_report, _, _, _, _ = build_report(
         perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=True

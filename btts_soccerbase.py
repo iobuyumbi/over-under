@@ -9,6 +9,7 @@ import requests
 import json
 import re
 import argparse
+import sys
 import time
 import random
 import math
@@ -1191,28 +1192,31 @@ def _append_btts_pick(lines, idx, item, side, odds, detailed, compact=False):
 
 def build_report(yes_perfect, yes_qualified, yes_close,
                  no_perfect, no_qualified, no_close,
-                 scanned_dates, odds_yes, odds_no, detailed=False, compact=False):
+                 scanned_dates, odds_yes, odds_no, detailed=False, compact=False,
+                 include_yesterday=True, include_header=True, include_footer=True):
     included_yes = [
         p for p in (yes_perfect + yes_qualified + yes_close)
-        if not is_blocked_fixture(p["match"], market=MARKET_BTTS_YES)
+        if not is_static_blocked_fixture(p["match"])
     ]
     included_no = [
         p for p in (no_perfect + no_qualified + no_close)
-        if not is_blocked_fixture(p["match"], market=MARKET_BTTS_NO)
+        if not is_static_blocked_fixture(p["match"])
     ]
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
     lines = []
     if not compact:
-        lines.append("⚽️ BTTS picks")
-        lines.append("")
-        if len(scanned_dates) > 1:
-            lines.append(f"Dates: {scanned_dates[0]} to {scanned_dates[-1]}")
-        else:
-            lines.append(f"Date: {base_date}")
-        lines.append("")
-        append_yesterday_section(lines, "btts", detailed=detailed)
-    else:
+        if include_header:
+            lines.append("⚽️ BTTS picks")
+            lines.append("")
+            if len(scanned_dates) > 1:
+                lines.append(f"Dates: {scanned_dates[0]} to {scanned_dates[-1]}")
+            else:
+                lines.append(f"Date: {base_date}")
+            lines.append("")
+            if include_yesterday:
+                append_yesterday_section(lines, "btts", detailed=detailed)
+    elif compact:
         def _append_compact_tier_group(tiers_items, side_label, market_name, prob_key_name):
             has_group = False
             for tier_header, items in tiers_items:
@@ -1307,14 +1311,23 @@ def build_report(yes_perfect, yes_qualified, yes_close,
                     _append_btts_pick(lines, idx, item, "no", odds_no, detailed, compact)
                     idx += 1
 
-        lines.extend(["---", "For informational purposes only", "Gamble responsibly", ""])
-    return "\n".join(lines), base_date, included_yes, included_no
+        if include_footer:
+            lines.extend(["---", "For informational purposes only", "Gamble responsibly", ""])
+
+    report = "\n".join(lines).strip()
+    if not report:
+        report = "— none"
+    return report, base_date, included_yes, included_no
 
 
 # =============================================================================
 # MAIN
 # =============================================================================
 def main():
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except (AttributeError, OSError):
+        pass
     parser = argparse.ArgumentParser(description="BTTS Yes/No Predictor")
     parser.add_argument("date", nargs="?", default=datetime.now().strftime("%Y-%m-%d"))
     parser.add_argument("--scheduled", action="store_true")
@@ -1402,7 +1415,9 @@ def main():
     telegram_report, _, _, _ = build_report(
         yes_perfect, yes_qualified, yes_close,
         no_perfect, no_qualified, no_close,
-        scanned_dates, args.odds_yes, args.odds_no, detailed=False, compact=True,
+        scanned_dates, args.odds_yes, args.odds_no,
+        detailed=False, compact=False,
+        include_yesterday=False, include_header=False, include_footer=False,
     )
     detailed_report, _, _, _ = build_report(
         yes_perfect, yes_qualified, yes_close,
