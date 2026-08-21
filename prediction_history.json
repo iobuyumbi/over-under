@@ -1226,8 +1226,11 @@
       "home_team": "Portland Timb.",
       "away_team": "San Diego",
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T12:21:51.010176"
+      "result": "win",
+      "recorded_at": "2026-08-05T12:21:51.010176",
+      "updated_at": "2026-08-21T02:16:56.240833",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-09",
@@ -4861,8 +4864,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:36.618959"
+      "result": "win",
+      "recorded_at": "2026-08-05T13:50:36.618959",
+      "updated_at": "2026-08-21T02:16:56.241763",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-20",
@@ -4873,8 +4879,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:36.683247"
+      "result": "win",
+      "recorded_at": "2026-08-05T13:50:36.683247",
+      "updated_at": "2026-08-21T02:16:56.242682",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-20",
@@ -4885,8 +4894,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:36.782465"
+      "result": "win",
+      "recorded_at": "2026-08-05T13:50:36.782465",
+      "updated_at": "2026-08-21T02:16:56.243484",
+      "final_score": "0-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-20",
@@ -4897,8 +4909,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:36.884258"
+      "result": "win",
+      "recorded_at": "2026-08-05T13:50:36.884258",
+      "updated_at": "2026-08-21T02:16:56.244331",
+      "final_score": "3-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-20",
@@ -4909,8 +4924,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:36.966025"
+      "result": "win",
+      "recorded_at": "2026-08-05T13:50:36.966025",
+      "updated_at": "2026-08-21T02:16:56.245225",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-20",
@@ -4921,8 +4939,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:37.032072"
+      "result": "win",
+      "recorded_at": "2026-08-05T13:50:37.032072",
+      "updated_at": "2026-08-21T02:16:56.246109",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-20",
@@ -4933,8 +4954,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:37.136762"
+      "result": "loss",
+      "recorded_at": "2026-08-05T13:50:37.136762",
+      "updated_at": "2026-08-21T02:16:56.247142",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-21",
@@ -5179,8 +5203,11 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:38.295777"
+      "result": "win",
+      "recorded_at": "2026-08-05T13:50:38.295777",
+      "updated_at": "2026-08-21T02:16:56.248070",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-18",
@@ -5470,8 +5497,11 @@
       "prediction": "under",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
-      "recorded_at": "2026-08-05T13:50:39.615447"
+      "result": "win",
+      "recorded_at": "2026-08-05T13:50:39.615447",
+      "updated_at": "2026-08-21T02:16:56.249157",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-21",
