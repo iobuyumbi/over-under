@@ -31,8 +31,7 @@ from prediction_tracker import (
     format_pick_block,
     format_compact_pick_line,
     format_confidence_label,
-    is_blocked_fixture,
-    is_static_blocked_fixture,
+    describe_pick_categories,
     append_yesterday_section,
     PICK_TIER_PREMIUM,
     PICK_TIER_STRONG,
@@ -1170,11 +1169,13 @@ def _append_btts_pick(lines, idx, item, side, odds, detailed, compact=False):
     p = item["poisson"]
     tgt = item[side]
     prob_key = "btts_yes_prob" if side == "yes" else "btts_no_prob"
-    label = "BTTS+" if side == "yes" else "BTTS-"
+    label = "BTTS Yes" if side == "yes" else "BTTS No"
+    market = MARKET_BTTS_YES if side == "yes" else MARKET_BTTS_NO
     max_score = MAX_BTTS_YES_SCORE + 1 if side == "yes" else MAX_BTTS_NO_SCORE + 1
     if compact:
         lines.append(format_compact_pick_line(
-            m["home"], m["away"], label, tgt.get("tier"), p[prob_key], m.get("date"),
+            m["home"], m["away"], "BTTS+" if side == "yes" else "BTTS-",
+            tgt.get("tier"), p[prob_key], m.get("date"),
         ))
         return
     extra = None
@@ -1183,10 +1184,18 @@ def _append_btts_pick(lines, idx, item, side, odds, detailed, compact=False):
             tgt["kelly"], odds, tgt["score"], max_score,
             home_lambda=p["home_lambda"], away_lambda=p["away_lambda"],
         )
+    categories = describe_pick_categories(
+        m["home"], m["away"], m.get("league", ""),
+        market=market,
+        tier=tgt.get("tier"),
+        weak_roi_league=bool((item.get("guards") or {}).get("weak_roi_league")),
+    )
     lines.extend(format_pick_block(
         idx, m["home"], m["away"], m["date"],
-        f"{'BTTS Yes' if side == 'yes' else 'BTTS No'} · {format_confidence_label(tgt['confidence'])} ({p[prob_key]}%)",
+        f"{label} · {format_confidence_label(tgt['confidence'])} ({p[prob_key]}%)",
         extra,
+        league=m.get("league"),
+        categories=categories,
     ))
 
 
@@ -1194,14 +1203,8 @@ def build_report(yes_perfect, yes_qualified, yes_close,
                  no_perfect, no_qualified, no_close,
                  scanned_dates, odds_yes, odds_no, detailed=False, compact=False,
                  include_yesterday=True, include_header=True, include_footer=True):
-    included_yes = [
-        p for p in (yes_perfect + yes_qualified + yes_close)
-        if not is_static_blocked_fixture(p["match"])
-    ]
-    included_no = [
-        p for p in (no_perfect + no_qualified + no_close)
-        if not is_static_blocked_fixture(p["match"])
-    ]
+    included_yes = list(yes_perfect + yes_qualified + yes_close)
+    included_no = list(no_perfect + no_qualified + no_close)
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
     lines = []
@@ -1258,6 +1261,7 @@ def build_report(yes_perfect, yes_qualified, yes_close,
 
     if not compact:
         if included_yes:
+            lines.append("")
             lines.append("🟢 BTTS Yes")
             lines.append("")
             y_perfect = [p for p in included_yes if p in yes_perfect]
@@ -1285,6 +1289,7 @@ def build_report(yes_perfect, yes_qualified, yes_close,
                     idx += 1
 
         if included_no:
+            lines.append("")
             lines.append("🔴 BTTS No")
             lines.append("")
             n_perfect = [p for p in included_no if p in no_perfect]
@@ -1354,19 +1359,14 @@ def main():
         date_str = (start_date + timedelta(days=day_offset)).strftime("%Y-%m-%d")
         scanned_dates.append(date_str)
         fixtures = fetch_soccerbase_fixtures(date_str)
-        seen, unique_fixtures, blocked = set(), [], 0
+        seen, unique_fixtures = set(), []
         for f in fixtures:
             key = (f["home_team_id"], f["away_team_id"], f["league"])
             if key in seen or not f["home_team_id"] or not f["away_team_id"]:
                 continue
-            if is_static_blocked_fixture(f):
-                blocked += 1
-                continue
             if not args.scheduled or f["status"] == "Scheduled":
                 seen.add(key)
                 unique_fixtures.append(f)
-        if blocked:
-            print(f"   Skipped {blocked} statically-blocked fixtures (integrity/region) on {date_str}")
         if not unique_fixtures:
             continue
         print(f"   Processing {len(unique_fixtures)} matches on {date_str}...")

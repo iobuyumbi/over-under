@@ -34,8 +34,7 @@ from prediction_tracker import (
     format_pick_block,
     format_compact_pick_line,
     format_confidence_label,
-    is_blocked_fixture,
-    is_static_blocked_fixture,
+    describe_pick_categories,
     append_yesterday_section,
     PICK_TIER_PREMIUM,
     PICK_TIER_STRONG,
@@ -1620,10 +1619,12 @@ def _append_ou_pick(lines, idx, item, side, odds, detailed, compact=False):
     tgt = item[side]
     prob_key = "over25_prob" if side == "over" else "under25_prob"
     max_score = MAX_OVER_SCORE if side == "over" else MAX_UNDER_SCORE
-    market = "O2.5" if side == "over" else "U2.5"
+    market_label = "Over 2.5" if side == "over" else "Under 2.5"
+    market = MARKET_OVER25 if side == "over" else MARKET_UNDER25
     if compact:
         lines.append(format_compact_pick_line(
-            m["home"], m["away"], market, tgt.get("tier"), p[prob_key], m.get("date"),
+            m["home"], m["away"], "O2.5" if side == "over" else "U2.5",
+            tgt.get("tier"), p[prob_key], m.get("date"),
         ))
         return
     extra = None
@@ -1632,10 +1633,18 @@ def _append_ou_pick(lines, idx, item, side, odds, detailed, compact=False):
             tgt["kelly"], odds, tgt["score"], max_score,
             home_lambda=p["home_lambda"], away_lambda=p["away_lambda"],
         )
+    categories = describe_pick_categories(
+        m["home"], m["away"], m.get("league", ""),
+        market=market,
+        tier=tgt.get("tier"),
+        weak_roi_league=bool((item.get("guards") or {}).get("weak_roi_league")),
+    )
     lines.extend(format_pick_block(
         idx, m["home"], m["away"], m["date"],
-        f"{format_confidence_label(tgt['confidence'])} ({p[prob_key]}%)",
+        f"{market_label} · {format_confidence_label(tgt['confidence'])} ({p[prob_key]}%)",
         extra,
+        league=m.get("league"),
+        categories=categories,
     ))
 
 
@@ -1647,8 +1656,8 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     Build a clean, mobile-friendly report - both channels show all picks, free is simplified
     Returns: (report, base_date, included_over, included_under)
     """
-    included_over = [p for p in (over_perfect + over_qualified + over_close) if not is_static_blocked_fixture(p["match"])]
-    included_under = [p for p in (under_perfect + under_qualified + under_close) if not is_static_blocked_fixture(p["match"])]
+    included_over = list(over_perfect + over_qualified + over_close)
+    included_under = list(under_perfect + under_qualified + under_close)
     included_dates = scanned_dates
     
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
@@ -1708,6 +1717,7 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     if not compact:
         # Over 2.5 section (full detail)
         if included_over:
+            lines.append("")
             lines.append("🟢 Over 2.5 goals")
             lines.append("")
             included_over_perfect = [p for p in included_over if p in over_perfect]
@@ -1734,6 +1744,7 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
 
         # Under 2.5 section (full detail)
         if included_under:
+            lines.append("")
             lines.append("🔵 Under 2.5 goals")
             lines.append("")
             included_under_perfect = [p for p in included_under if p in under_perfect]
@@ -1847,19 +1858,12 @@ def main():
         fixtures = fetch_soccerbase_fixtures(date_str)
         seen = set()
         unique_fixtures = []
-        blocked = 0
         for f in fixtures:
             key = (f["home_team_id"], f["away_team_id"], f["league"])
             if key not in seen and f["home_team_id"] and f["away_team_id"]:
-                if is_static_blocked_fixture(f):
-                    blocked += 1
-                    continue
                 if not args.scheduled or f["status"] == "Scheduled":
                     seen.add(key)
                     unique_fixtures.append(f)
-
-        if blocked:
-            print(f"   Skipped {blocked} statically-blocked fixtures (integrity/region) on {date_str}")
 
         if not unique_fixtures:
             logger.info(f"No fixtures to process on {date_str}")

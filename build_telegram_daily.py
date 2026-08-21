@@ -31,26 +31,22 @@ def _clean_body(body):
         return ""
     cleaned_lines = []
     for raw in (body or "").splitlines():
-        line = raw.rstrip()
-        if not line.strip():
-            cleaned_lines.append("")
-        else:
-            cleaned_lines.append(line.lstrip())
-    # Drop leading/trailing empty runs
-    while cleaned_lines and not cleaned_lines[0]:
+        cleaned_lines.append(raw.rstrip())
+    while cleaned_lines and not cleaned_lines[0].strip():
         cleaned_lines.pop(0)
-    while cleaned_lines and not cleaned_lines[-1]:
+    while cleaned_lines and not cleaned_lines[-1].strip():
         cleaned_lines.pop()
     return "\n".join(cleaned_lines)
 
 
 def build_daily_message(date, ou_body, btts_body, hw_body):
-    lines = [f"📅 Daily Soccer Picks · {date}"]
+    lines = [f"📅 Daily Soccer Picks · {date}", ""]
 
     yesterday = build_telegram_yesterday_block()
     if yesterday:
         lines.append("───────────")
         lines.append(f"📊 {yesterday[0]}")
+        lines.append("")
         for line in yesterday[1:]:
             lines.append(line)
 
@@ -61,10 +57,13 @@ def build_daily_message(date, ou_body, btts_body, hw_body):
     ]
     for title, body in sections:
         clean = _clean_body(body) or "— none"
+        lines.append("")
         lines.append("───────────")
         lines.append(title)
+        lines.append("")
         lines.append(clean)
 
+    lines.append("")
     lines.append("───────────")
     lines.append("Info only · gamble responsibly")
     return "\n".join(lines).strip()
