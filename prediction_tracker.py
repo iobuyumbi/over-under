@@ -169,8 +169,12 @@ def build_telegram_yesterday_block(max_lines=12):
         clean = hdr.replace("📊 Record: ", "").replace("⏳ Pending: ", "")
         title = f"{title} · {clean}"
     lines.append(title)
+    lines.append("")
     for line in results[:max_lines]:
         lines.append(line)
+        lines.append("")
+    while lines and not lines[-1].strip():
+        lines.pop()
     remaining = len(results) - max_lines
     if remaining > 0:
         lines.append(f"+{remaining} more")
@@ -641,6 +645,37 @@ def is_statistical_block_only(home, away, league, market):
     if is_static_blocked_match(home, away, league):
         return False
     return bool(market in SUPPORTED_MARKETS and is_blocked_league(league, market=market))
+
+
+def describe_pick_categories(home, away, league, market=None, tier=None, weak_roi_league=False):
+    """Human-readable category notes for a tip (shown instead of hiding picks)."""
+    categories = []
+
+    tier_text = format_confidence_label(tier)
+    if tier_text and str(tier or "").strip():
+        icon = tier_icon(tier)
+        label = f"{icon} {tier_text}".strip() if icon else tier_text
+        categories.append(f"Tier: {label}")
+
+    if weak_roi_league:
+        categories.append("League type: weak-ROI region (extra model caution)")
+
+    if market in SUPPORTED_MARKETS and is_statistical_block_only(home, away, league, market):
+        if _weak_roi_blocks_market(league, market):
+            categories.append("Auto-flag: weak ROI history on this market")
+        else:
+            categories.append("Auto-flag: poor league win rate on this market")
+
+    if is_static_blocked_match(home, away, league):
+        if _is_static_blocked_league(league):
+            categories.append("Integrity note: league matches blocklist")
+        if is_blocked_team(home) or is_blocked_team(away):
+            categories.append("Integrity note: team matches blocklist")
+
+    if not categories:
+        categories.append("Standard pick — no extra flags")
+
+    return categories
  
  
 def home_win_key(pick):
@@ -786,9 +821,8 @@ def save_history(history):
 def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btts_picks=None):
     """Record new predictions (called after running predictors).
 
-    Static/integrity blocks (BLOCKED_REGIONS team/league) are fully skipped.
-    Statistical auto-blocks are still recorded and published so tips remain
-    visible while backtests refine the auto-block lists.
+    All qualifying picks are recorded and published. Category flags in reports
+    explain tier, weak-ROI leagues, and auto-block signals instead of hiding tips.
     """
     history = load_history()
     existing_hw = {home_win_key(p) for p in history["home_win"]}
@@ -797,17 +831,8 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
     added = 0
     skipped = 0
 
-    def _is_static_block(pick):
-        h = pick.get("home", pick.get("home_team", ""))
-        a = pick.get("away", pick.get("away_team", ""))
-        l = pick.get("league", "")
-        return is_static_blocked_match(h, a, l)
-
     if home_win_picks:
         for pick in home_win_picks:
-            if _is_static_block(pick):
-                skipped += 1
-                continue
             entry = {
                 "date": pick.get("date", date_str),
                 "type": "home_win",
@@ -831,9 +856,6 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
 
     if over_under_picks:
         for pick in over_under_picks:
-            if _is_static_block(pick):
-                skipped += 1
-                continue
             entry = {
                 "date": pick.get("date", date_str),
                 "type": "over_under",
@@ -859,9 +881,6 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
 
     if btts_picks:
         for pick in btts_picks:
-            if _is_static_block(pick):
-                skipped += 1
-                continue
             prediction = str(pick.get("prediction", "yes")).strip().lower()
             entry = {
                 "date": pick.get("date", date_str),
@@ -1059,7 +1078,7 @@ def count_report_pending(pick):
 
 
 def format_yesterday_line(pick, market_label, compact=False):
-    """Compact one-line summary for daily prediction reports."""
+    """Summary line for daily prediction reports."""
     if compact:
         result = resolve_pick_result(pick)
         if result in SETTLED_RESULTS:
@@ -1073,16 +1092,24 @@ def format_yesterday_line(pick, market_label, compact=False):
 
     home = pick.get("home_team", pick.get("home"))
     away = pick.get("away_team", pick.get("away"))
+    pick_date = str(pick.get("date", ""))[:10]
     result = resolve_pick_result(pick)
     score = pick.get("final_score", "")
 
     if result in SETTLED_RESULTS:
-        line = f"{home} vs {away} · {market_label} · {format_result_badge(result)}"
+        line = f"{home} vs {away}"
+        if pick_date:
+            line += f" · {pick_date}"
+        line += f" · {market_label} · {format_result_badge(result)}"
         if score:
             line += f" ({score})"
         return line
     if pick.get("result") == "pending" and pick_is_overdue(pick) and not pick_is_stale_pending(pick):
-        return f"{home} vs {away} · {market_label} · Pending"
+        line = f"{home} vs {away}"
+        if pick_date:
+            line += f" · {pick_date}"
+        line += f" · {market_label} · Pending"
+        return line
     return None
 
 
@@ -1370,12 +1397,20 @@ def format_vip_extra_lines(stake_pct, odds, score, max_score, *,
     return lines
 
 
-def format_pick_block(idx, home, away, date, summary, extra_lines=None):
-    """One pick with consistent spacing for free and VIP reports."""
+def format_pick_block(idx, home, away, date, summary, extra_lines=None, league=None, categories=None):
+    """One pick with readable spacing for free, VIP, and Telegram reports."""
     lines = [
-        f"  {idx}. {home} vs {away} ({date})",
-        f"     {summary}",
+        "",
+        f"  {idx}. {home} vs {away}",
+        f"     Date: {date}",
     ]
+    if league:
+        lines.append(f"     League: {league}")
+    lines.append(f"     Pick: {summary}")
+    if categories:
+        lines.append("     Category:")
+        for note in categories:
+            lines.append(f"       • {note}")
     if extra_lines:
         for line in extra_lines:
             lines.append(f"     {line}")
