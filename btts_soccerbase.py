@@ -32,6 +32,8 @@ from prediction_tracker import (
     format_compact_pick_line,
     format_confidence_label,
     describe_pick_categories,
+    filter_pick_items_by_date,
+    write_telegram_section,
     append_yesterday_section,
     PICK_TIER_PREMIUM,
     PICK_TIER_STRONG,
@@ -1204,12 +1206,19 @@ def _append_btts_pick(lines, idx, item, side, odds, detailed, compact=False):
 def build_report(yes_perfect, yes_qualified, yes_close,
                  no_perfect, no_qualified, no_close,
                  scanned_dates, odds_yes, odds_no, detailed=False, compact=False,
-                 include_yesterday=True, include_header=True, include_footer=True):
+                 include_yesterday=True, include_header=True, include_footer=True,
+                 report_date=None):
     included_yes = list(yes_perfect + yes_qualified + yes_close)
     included_no = list(no_perfect + no_qualified + no_close)
+    if report_date:
+        included_yes = filter_pick_items_by_date(included_yes, report_date)
+        included_no = filter_pick_items_by_date(included_no, report_date)
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
     lines = []
+    if report_date and not include_header and not compact:
+        lines.append(f"📅 Picks for {report_date}")
+        lines.append("")
     if not compact:
         if include_header:
             lines.append("⚽️ BTTS picks")
@@ -1343,6 +1352,11 @@ def main():
     parser.add_argument("--odds-no", type=float, default=DEFAULT_ODDS_BTTS_NO)
     parser.add_argument("--clear-cache", action="store_true")
     parser.add_argument("--days", type=int, default=None)
+    parser.add_argument(
+        "--publish-date",
+        default=None,
+        help="Date for Telegram daily picks (default: today). Filters Telegram output only.",
+    )
     args = parser.parse_args()
 
     if args.clear_cache:
@@ -1414,12 +1428,14 @@ def main():
         no_perfect, no_qualified, no_close,
         scanned_dates, args.odds_yes, args.odds_no, detailed=False,
     )
+    publish_date = args.publish_date or datetime.now().strftime("%Y-%m-%d")
     telegram_report, _, _, _ = build_report(
         yes_perfect, yes_qualified, yes_close,
         no_perfect, no_qualified, no_close,
         scanned_dates, args.odds_yes, args.odds_no,
         detailed=False, compact=False,
         include_yesterday=False, include_header=False, include_footer=False,
+        report_date=publish_date,
     )
     detailed_report, _, _, _ = build_report(
         yes_perfect, yes_qualified, yes_close,
@@ -1430,9 +1446,7 @@ def main():
     print("\n===EMAIL_START===")
     print(free_report)
     print("===EMAIL_END===")
-    print("\n===TELEGRAM_START===")
-    print(telegram_report.strip() or "— none")
-    print("===TELEGRAM_END===")
+    write_telegram_section(telegram_report, "btts_telegram.txt")
 
     vip_path = f"btts_vip_report_{base_date}.txt"
     with open(vip_path, "w", encoding="utf-8") as f:
