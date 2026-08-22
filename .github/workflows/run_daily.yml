@@ -160,27 +160,29 @@ jobs:
         id: over-under
         run: |
           DATE=$(date +'%Y-%m-%d')
-          python over25_soccerbase.py > output.txt 2> errors.txt || true
+          python over25_soccerbase.py --publish-date "$DATE" > output.txt 2> errors.txt || true
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
           sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d' > over25_body.txt
 
       - name: Run Home Win predictor
         run: |
-          python home_win_soccerbase.py > hw_output.txt 2> hw_errors.txt || true
+          DATE="${{ steps.over-under.outputs.date }}"
+          python home_win_soccerbase.py --publish-date "$DATE" > hw_output.txt 2> hw_errors.txt || true
           sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d' > hw_body.txt
 
       - name: Run BTTS predictor
         run: |
-          python btts_soccerbase.py > btts_output.txt 2> btts_errors.txt || true
+          DATE="${{ steps.over-under.outputs.date }}"
+          python btts_soccerbase.py --publish-date "$DATE" > btts_output.txt 2> btts_errors.txt || true
           sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' btts_output.txt | sed '1d;$d' > btts_body.txt
 
       - name: Build Telegram daily message
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
           python build_telegram_daily.py --date "$DATE" \
-            --ou-output output.txt \
-            --btts-output btts_output.txt \
-            --hw-output hw_output.txt \
+            --ou-output ou_telegram.txt \
+            --btts-output btts_telegram.txt \
+            --hw-output hw_telegram.txt \
             --out telegram_daily.txt
 
       - name: Build free and VIP reports
