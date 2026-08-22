@@ -21,7 +21,9 @@ def read_telegram_section(path):
         return ""
     try:
         with open(path, "r", encoding="utf-8", errors="replace") as f:
-            return extract_marker(f.read(), "===TELEGRAM_START===", "===TELEGRAM_END===")
+            content = f.read()
+        extracted = extract_marker(content, "===TELEGRAM_START===", "===TELEGRAM_END===")
+        return extracted if extracted else content.strip()
     except OSError:
         return ""
 
@@ -72,9 +74,9 @@ def build_daily_message(date, ou_body, btts_body, hw_body):
 def main():
     parser = argparse.ArgumentParser(description="Build compact Telegram daily message")
     parser.add_argument("--date", default=datetime.now().strftime("%Y-%m-%d"))
-    parser.add_argument("--ou-output", default="output.txt")
-    parser.add_argument("--btts-output", default="btts_output.txt")
-    parser.add_argument("--hw-output", default="hw_output.txt")
+    parser.add_argument("--ou-output", default="ou_telegram.txt")
+    parser.add_argument("--btts-output", default="btts_telegram.txt")
+    parser.add_argument("--hw-output", default="hw_telegram.txt")
     parser.add_argument("--out", default="telegram_daily.txt")
     args = parser.parse_args()
 

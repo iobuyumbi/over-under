@@ -35,7 +35,11 @@ from prediction_tracker import (
     format_compact_pick_line,
     format_confidence_label,
     describe_pick_categories,
+    filter_pick_items_by_date,
+    write_telegram_section,
     append_yesterday_section,
+    format_vip_banner,
+    format_vip_summary,
     PICK_TIER_PREMIUM,
     PICK_TIER_STRONG,
     PICK_TIER_VALUE,
@@ -1631,9 +1635,20 @@ def _append_ou_pick(lines, idx, item, side, odds, detailed, compact=False):
         return
     extra = None
     if detailed:
+        h2h_blocked_flag = tgt.get("h2h_blocked")
+        h2h_n = tgt.get("h2h_meetings", 0)
+        h2h_note = None
+        if h2h_blocked_flag and h2h_n:
+            h2h_note = f"qualifies with H2H bogey flag raised ({h2h_n} meetings)"
+        elif h2h_n and h2h_n >= 3:
+            h2h_note = f"{h2h_n} H2H meetings logged"
         extra = format_vip_extra_lines(
             tgt["kelly"], odds, tgt["score"], max_score,
             home_lambda=p["home_lambda"], away_lambda=p["away_lambda"],
+            model_prob=p[prob_key],
+            market=market,
+            h2h_note=h2h_note,
+            rule_details=tgt.get("details"),
         )
     categories = describe_pick_categories(
         m["home"], m["away"], m.get("league", ""),
@@ -1653,19 +1668,28 @@ def _append_ou_pick(lines, idx, item, side, odds, detailed, compact=False):
 def build_report(over_perfect, over_qualified, over_close, over_weak,
                under_perfect, under_qualified, under_close, under_weak,
                scanned_dates, bankroll, odds_over, odds_under, detailed=False, compact=False,
-               include_yesterday=True, include_header=True, include_footer=True):
+               include_yesterday=True, include_header=True, include_footer=True,
+               report_date=None):
     """
     Build a clean, mobile-friendly report - both channels show all picks, free is simplified
     Returns: (report, base_date, included_over, included_under)
     """
     included_over = list(over_perfect + over_qualified + over_close)
     included_under = list(under_perfect + under_qualified + under_close)
+    if report_date:
+        included_over = filter_pick_items_by_date(included_over, report_date)
+        included_under = filter_pick_items_by_date(included_under, report_date)
     included_dates = scanned_dates
     
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
     lines = []
+    if report_date and not include_header and not compact:
+        lines.append(f"📅 Picks for {report_date}")
+        lines.append("")
     if not compact:
+        if detailed and include_header:
+            lines.extend(format_vip_banner("Over / Under 2.5", base_date, included_dates))
         if include_header:
             lines.append("⚽️ Over/Under 2.5 picks")
             lines.append("")
@@ -1772,6 +1796,15 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
                     _append_ou_pick(lines, i, item, "under", odds_under, detailed, compact)
 
         if include_footer:
+            if detailed:
+                lines.extend(format_vip_summary(
+                    "OVER 2.5  ·  Pick summary",
+                    over_perfect, over_qualified, over_close,
+                ))
+                lines.extend(format_vip_summary(
+                    "UNDER 2.5  ·  Pick summary",
+                    under_perfect, under_qualified, under_close,
+                ))
             lines.append("---")
             lines.append("For informational purposes only")
             lines.append("Gamble responsibly")
@@ -1832,6 +1865,11 @@ def main():
         type=int,
         default=None,
         help="Number of days to scan starting from the date (default: 4, weekends: 6)"
+    )
+    parser.add_argument(
+        "--publish-date",
+        default=None,
+        help="Date for Telegram daily picks (default: today). Filters Telegram output only.",
     )
     args = parser.parse_args()
 
@@ -1922,12 +1960,14 @@ def main():
         under_perfect, under_qualified, under_close, under_weak,
         scanned_dates, args.bankroll, args.odds_over, args.odds_under, detailed=False
     )
+    publish_date = args.publish_date or datetime.now().strftime("%Y-%m-%d")
     telegram_report, _, _, _ = build_report(
         over_perfect, over_qualified, over_close, over_weak,
         under_perfect, under_qualified, under_close, under_weak,
         scanned_dates, args.bankroll, args.odds_over, args.odds_under,
         detailed=False, compact=False,
         include_yesterday=False, include_header=False, include_footer=False,
+        report_date=publish_date,
     )
     detailed_report, _, _, _ = build_report(
         over_perfect, over_qualified, over_close, over_weak,
@@ -1939,9 +1979,7 @@ def main():
     print("\n===EMAIL_START===")
     print(free_report)
     print("===EMAIL_END===")
-    print("\n===TELEGRAM_START===")
-    print(telegram_report.strip() or "— none")
-    print("===TELEGRAM_END===")
+    write_telegram_section(telegram_report, "ou_telegram.txt")
 
     # Save detailed report to file
     detailed_report_path = f"over_under_vip_report_{base_date}.txt"

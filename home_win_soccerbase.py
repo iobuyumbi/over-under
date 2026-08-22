@@ -33,7 +33,11 @@ from prediction_tracker import (
     format_compact_pick_line,
     format_confidence_label,
     describe_pick_categories,
+    filter_pick_items_by_date,
+    write_telegram_section,
     append_yesterday_section,
+    format_vip_banner,
+    format_vip_summary,
     PICK_TIER_PREMIUM,
     PICK_TIER_STRONG,
     PICK_TIER_VALUE,
@@ -903,7 +907,7 @@ def process_single_match(match, target_date, default_odds=2.8):
 # REPORTING
 # =============================================================================
 def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds, detailed=False, compact=False,
-                 include_yesterday=True, include_header=True, include_footer=True):
+                 include_yesterday=True, include_header=True, include_footer=True, report_date=None):
     """
     Build a clean, mobile-friendly report with all qualifying picks across scanned days.
     Returns: (report, base_date, included_perfect, included_qualified, included_close)
@@ -911,22 +915,32 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
     included_perfect = list(perfect)
     included_qualified = list(qualified)
     included_close = list(close_calls)
+    if report_date:
+        included_perfect = filter_pick_items_by_date(included_perfect, report_date)
+        included_qualified = filter_pick_items_by_date(included_qualified, report_date)
+        included_close = filter_pick_items_by_date(included_close, report_date)
     included_dates = scanned_dates
 
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
 
     # Clean report (mobile-friendly)
     lines = []
-    if not compact and include_header:
-        lines.append("🏠 Home Win picks")
+    if report_date and not include_header and not compact:
+        lines.append(f"📅 Picks for {report_date}")
         lines.append("")
-        if len(included_dates) > 1:
-            lines.append(f"Dates: {included_dates[0]} to {included_dates[-1]}")
-        else:
-            lines.append(f"Date: {base_date}")
-        lines.append("")
-        if include_yesterday:
-            append_yesterday_section(lines, "home_win", detailed=detailed)
+    if not compact:
+        if detailed and include_header:
+            lines.extend(format_vip_banner("Home Win", base_date, included_dates))
+        if include_header:
+            lines.append("🏠 Home Win picks")
+            lines.append("")
+            if len(included_dates) > 1:
+                lines.append(f"Dates: {included_dates[0]} to {included_dates[-1]}")
+            else:
+                lines.append(f"Date: {base_date}")
+            lines.append("")
+            if include_yesterday:
+                append_yesterday_section(lines, "home_win", detailed=detailed)
 
     show_date = len(included_dates) > 1
 
@@ -945,9 +959,20 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
                 continue
             extra = None
             if detailed:
+                h2h_blocked_flag = item.get("h2h_blocked")
+                h2h_n = item.get("h2h_meetings", 0)
+                h2h_note = None
+                if h2h_blocked_flag and h2h_n:
+                    h2h_note = f"qualifies with H2H bogey flag raised ({h2h_n} meetings)"
+                elif h2h_n and h2h_n >= 2:
+                    h2h_note = f"{h2h_n} H2H meetings logged"
                 extra = format_vip_extra_lines(
                     item["kelly"], odds, item["score"], MAX_HOME_WIN_SCORE,
                     home_strength=p["home_strength"], away_strength=p["away_strength"],
+                    model_prob=p["home_win_prob"],
+                    market=MARKET_HOME_WIN,
+                    h2h_note=h2h_note,
+                    rule_details=item.get("details"),
                 )
             categories = describe_pick_categories(
                 m["home"], m["away"], m.get("league", ""),
@@ -995,6 +1020,11 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
             append_items(included_close, "close")
 
     if not compact and include_footer:
+        if detailed:
+            lines.extend(format_vip_summary(
+                "HOME WIN  ·  Pick summary",
+                perfect, qualified, close_calls,
+            ))
         lines.append("---")
         lines.append("For informational purposes only")
         lines.append("Gamble responsibly")
@@ -1050,6 +1080,11 @@ def main():
         type=int,
         default=None,
         help="Number of days to scan starting from the date (default: 4, weekends: 6)"
+    )
+    parser.add_argument(
+        "--publish-date",
+        default=None,
+        help="Date for Telegram daily picks (default: today). Filters Telegram output only.",
     )
     args = parser.parse_args()
 
@@ -1120,10 +1155,12 @@ def main():
     free_report, base_date, included_perfect, included_qualified, included_close = build_report(
         perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=False
     )
+    publish_date = args.publish_date or datetime.now().strftime("%Y-%m-%d")
     telegram_report, _, _, _, _ = build_report(
         perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds,
         detailed=False, compact=False,
         include_yesterday=False, include_header=False, include_footer=False,
+        report_date=publish_date,
     )
     detailed_report, _, _, _, _ = build_report(
         perfect, qualified, close_calls, scanned_dates, args.bankroll, args.odds, detailed=True
@@ -1133,9 +1170,8 @@ def main():
     print("\n===EMAIL_START===")
     print(free_report)
     print("===EMAIL_END===")
-    print("\n===TELEGRAM_START===")
-    print(telegram_report.strip() or "— none")
-    print("===TELEGRAM_END===")
+    from prediction_tracker import write_telegram_section
+    telegram_body = write_telegram_section(telegram_report, "hw_telegram.txt")
 
     # Save detailed report to file
     detailed_report_path = f"home_win_vip_report_{base_date}.txt"

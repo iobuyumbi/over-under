@@ -121,6 +121,29 @@ def market_short_label(market_label):
     return mapping.get(key, str(market_label or "").strip())
 
 
+def pick_item_date(item):
+    """Match date (YYYY-MM-DD) from a predictor result item."""
+    match = item.get("match") or {}
+    return str(match.get("date", ""))[:10]
+
+
+def filter_pick_items_by_date(items, target_date):
+    """Keep only picks whose fixture falls on target_date."""
+    if not target_date:
+        return list(items)
+    td = str(target_date)[:10]
+    return [p for p in items if pick_item_date(p) == td]
+
+
+def write_telegram_section(body, path):
+    """Persist Telegram section body for build_telegram_daily.py (CI-safe)."""
+    text = (body or "").strip() or "— none"
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(text)
+        f.write("\n")
+    return text
+
+
 def format_compact_pick_line(home, away, market, tier=None, prob=None, date=None, *, show_tier_icon=False):
     """Single-line pick for Telegram. Per-pick tier icon is disabled by default - keep
     the icon only on the tier group header (🔥 Premium / ✅ Solid / 👀 Watchlist) to
@@ -1415,16 +1438,82 @@ def format_vip_rule_summary(details, score, max_score):
     return lines
 
 
+def format_vip_banner(channel_label, base_date, scanned_dates):
+    """Distinctive VIP-only header banner placed above the report content."""
+    width = 46
+    bar = "═" * width
+    today_only = len(scanned_dates) == 1
+    window_line = (
+        f"  Window: {scanned_dates[0]} → {scanned_dates[-1]}  "
+        if not today_only else f"  Date:   {base_date}  "
+    )
+    channel_line = f"  Channel: {channel_label}  "
+    tag = "  ♟  VIP · DEEP ANALYSIS REPORT  "
+    pad_left = (width - len(tag) - 2) // 2
+    pad_right = width - len(tag) - 2 - pad_left
+    return [
+        "",
+        "╔" + bar + "╗",
+        "║" + " " * pad_left + tag + " " * pad_right + "║",
+        "╠" + bar + "╣",
+        "║" + channel_line + " " * max(0, width - len(channel_line)) + "║",
+        "║" + window_line + " " * max(0, width - len(window_line)) + "║",
+        "╚" + bar + "╝",
+        "",
+    ]
+
+
+def format_vip_summary(title, perfect, qualified, close, *, label_premium=None, label_strong=None, label_value=None):
+    """End-of-report pick-count summary block shown only in VIP reports."""
+    label_premium = label_premium or "Premium (perfect)"
+    label_strong = label_strong or "Solid (qualified)"
+    label_value = label_value or "Value (close)"
+    total = len(perfect) + len(qualified) + len(close)
+
+    def row(label, n, w=24):
+        left = f"  {label}"
+        right = f"{n}"
+        pad = "·" * max(1, w - len(left) - len(right))
+        return left + " " + pad + " " + right
+
+    lines = ["", "┌" + ("─" * 38) + "┐", f"│  {title:<36}│"]
+    if total == 0:
+        lines.append("│  (no qualifying picks today)       │")
+    else:
+        lines.append(f"│  {row(label_premium, len(perfect))}  │")
+        lines.append(f"│  {row(label_strong, len(qualified))}  │")
+        lines.append(f"│  {row(label_value, len(close))}  │")
+        lines.append("│" + (" " * 4) + ("─" * 30) + (" " * 4) + "│")
+        total_line = f"  TOTAL PICKS  ········  {total}"
+        lines.append(f"│{total_line:<38}│")
+    lines.append("└" + ("─" * 38) + "┘")
+    lines.append("")
+    return lines
+
+
 def format_vip_extra_lines(stake_pct, odds, score, max_score, *,
                            home_strength=None, away_strength=None,
-                           home_lambda=None, away_lambda=None):
+                           home_lambda=None, away_lambda=None,
+                           model_prob=None, market=None,
+                           h2h_note=None, rule_details=None):
     """VIP extras on top of the free-channel pick summary."""
     lines = [f"Suggested stake: {stake_pct:.1f}% @ {odds}"]
+    if model_prob and odds and odds > 1.01:
+        win_p = float(model_prob) / 100.0 if model_prob > 1.5 else float(model_prob)
+        ev = win_p * (float(odds) - 1.0) - (1.0 - win_p)
+        ev_label = f"EV: +{ev * 100:.1f}c/$" if ev >= 0 else f"EV: {ev * 100:.1f}c/$"
+        edge = win_p * float(odds) - 1.0
+        lines.append(f"Value — {ev_label}  ·  Edge {edge * 100:+.1f}%")
     if home_strength is not None and away_strength is not None:
         lines.append(f"Team strength — Home {home_strength} · Away {away_strength}")
     if home_lambda is not None and away_lambda is not None:
         lines.append(f"xG forecast — {home_lambda}–{away_lambda}")
-    lines.append(f"Form checks passed: {score}/{max_score}")
+    if h2h_note:
+        lines.append(f"H2H note: {h2h_note}")
+    if rule_details:
+        lines.extend(format_vip_rule_summary(rule_details, score, max_score))
+    else:
+        lines.append(f"Form checks passed: {score}/{max_score}")
     return lines
 
 
@@ -1445,7 +1534,6 @@ def format_pick_block(idx, home, away, date, summary, extra_lines=None, league=N
     if extra_lines:
         for line in extra_lines:
             lines.append(f"     {line}")
-    lines.append("")
     return lines
 
 
