@@ -959,9 +959,11 @@ def data_volume_penalty(home_6, away_6):
     if n >= _MIN_DATA_GAMES:
         return 1.0
     if n >= 4:
-        return 0.92
+        return 0.95
     if n >= 3:
-        return 0.80
+        return 0.86
+    if n >= 2:
+        return 0.75
     return 0.60
 
 
