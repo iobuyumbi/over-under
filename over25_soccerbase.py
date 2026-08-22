@@ -983,7 +983,7 @@ def apply_under_overall_checks(home_overall_6, away_overall_6):
 DIXON_COLES_RHO = -0.13
 
 _MIN_DATA_GAMES = 5
-_MIN_COMBINED_LAMBDA_OVER = 3.00
+_MIN_COMBINED_LAMBDA_OVER = 2.75
 _MAX_COMBINED_LAMBDA_UNDER = 2.15
 _PREMIUM_COMBINED_LAMBDA_OVER = 3.30
 _PREMIUM_COMBINED_LAMBDA_UNDER = 2.00
@@ -1295,10 +1295,12 @@ def data_volume_penalty(home_6, away_6):
     if n >= _MIN_DATA_GAMES:
         return 1.0
     if n >= 4:
-        return 0.92
+        return 0.97
     if n >= 3:
-        return 0.80
-    return 0.60
+        return 0.90
+    if n >= 2:
+        return 0.82
+    return 0.70
 
 
 def lambda_gate_passes(home_lambda, away_lambda, side):

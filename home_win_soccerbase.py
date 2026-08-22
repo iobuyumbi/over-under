@@ -545,7 +545,7 @@ def _form_record_summary(form):
 # HOME WIN ALGORITHM (11 Checks - Official Rules + Overall Form)
 # =============================================================================
 def apply_home_win_algorithm(home_data_6, away_data_6, home_overall_5=None, away_overall_5=None):
-    if len(home_data_6) < 4 or len(away_data_6) < 4:
+    if len(home_data_6) < HW_MIN_DATA_GAMES or len(away_data_6) < HW_MIN_DATA_GAMES:
         return None, None, {"error": "Insufficient data"}, False
 
     passed, failed, details = [], [], {}
@@ -720,12 +720,8 @@ def hw_data_volume_penalty(home_form, away_form, home_overall, away_overall):
     )
     if n >= HW_MIN_DATA_GAMES:
         return 1.0
-    if n >= 4:
-        return 0.90
-    if n >= 3:
-        return 0.78
     if n >= 2:
-        return 0.65
+        return 0.72
     return 0.50
 
 
@@ -815,7 +811,7 @@ def process_single_match(match, target_date, default_odds=2.8):
         home_overall_5 = get_team_overall_form(match["home_team_id"], 5, target_date)
         away_overall_5 = get_team_overall_form(match["away_team_id"], 5, target_date)
 
-        if len(home_form) < 4 or len(away_form) < 4:
+        if len(home_form) < HW_MIN_DATA_GAMES or len(away_form) < HW_MIN_DATA_GAMES:
             return {"status": "insufficient"}
 
         data_mult = hw_data_volume_penalty(home_form, away_form, home_overall_5, away_overall_5)

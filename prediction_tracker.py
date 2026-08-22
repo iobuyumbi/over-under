@@ -300,7 +300,14 @@ def _auto_block_threshold_hit(decided, win_rate, is_weak_roi_bucket=False):
 
 
 def _weak_roi_blocks_market(league, market):
-    """Block weak-ROI leagues until they prove profitable on this market."""
+    """Block weak-ROI leagues until they prove profitable on this market.
+
+    Season-start safety: with less than the minimum decided evidence we
+    CANNOT block — doing so creates a self-fulfilling invisibility loop
+    where every match for Allsvenskan, MLS, Mexico, Argentina, etc. is
+    hidden from the start and history never accumulates. Return False
+    (allow) until settled data exists.
+    """
     if not _AUTO_BLOCK_WEAK_ROI_REGIONS or market not in SUPPORTED_MARKETS:
         return False
     normalized = _normalize_label(league)
@@ -316,7 +323,7 @@ def _weak_roi_blocks_market(league, market):
     bucket_stats = _ensure_bucket_stats().get(market, {}).get(bucket, {})
     decided = bucket_stats.get("win", 0) + bucket_stats.get("loss", 0)
     if decided < _WEAK_ROI_MIN_DECIDED_TO_ALLOW:
-        return True
+        return False
     win_rate = bucket_stats.get("win", 0) / decided
     return win_rate < _WEAK_ROI_MIN_WIN_RATE_TO_ALLOW
 
@@ -821,8 +828,10 @@ def save_history(history):
 def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btts_picks=None):
     """Record new predictions (called after running predictors).
 
-    All qualifying picks are recorded and published. Category flags in reports
-    explain tier, weak-ROI leagues, and auto-block signals instead of hiding tips.
+    - Static/integrity blocked picks are fully skipped (not tracked).
+    - Statistical-only blocks (weak ROI / poor win-rate) are recorded with
+      published=False so they accumulate history data for auto-unblock.
+    - Everything else is recorded with published=True (visible reports).
     """
     history = load_history()
     existing_hw = {home_win_key(p) for p in history["home_win"]}
@@ -833,16 +842,23 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
 
     if home_win_picks:
         for pick in home_win_picks:
+            home = pick.get("home", pick.get("home_team", ""))
+            away = pick.get("away", pick.get("away_team", ""))
+            league = pick.get("league", "")
+            if is_static_blocked_match(home, away, league):
+                skipped += 1
+                continue
+            published = not is_statistical_block_only(home, away, league, MARKET_HOME_WIN)
             entry = {
                 "date": pick.get("date", date_str),
                 "type": "home_win",
                 "league": pick.get("league"),
-                "home_team": pick.get("home"),
-                "away_team": pick.get("away"),
+                "home_team": home,
+                "away_team": away,
                 "confidence": pick.get("confidence", MEDIUM),
                 "result": "pending",
                 "recorded_at": datetime.now().isoformat(),
-                "published": True,
+                "published": published,
             }
             key = home_win_key(entry)
             if key in existing_hw:
@@ -851,23 +867,31 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
             history["home_win"].append(entry)
             existing_hw.add(key)
             added += 1
-            # Add to manual_results.csv
             add_to_manual_results_csv(entry["date"], entry["home_team"], entry["away_team"])
 
     if over_under_picks:
         for pick in over_under_picks:
+            home = pick.get("home", pick.get("home_team", ""))
+            away = pick.get("away", pick.get("away_team", ""))
+            league = pick.get("league", "")
+            if is_static_blocked_match(home, away, league):
+                skipped += 1
+                continue
+            prediction = str(pick.get("prediction", "over")).strip().lower()
+            market = MARKET_OVER25 if prediction == "over" else MARKET_UNDER25
+            published = not is_statistical_block_only(home, away, league, market)
             entry = {
                 "date": pick.get("date", date_str),
                 "type": "over_under",
                 "league": pick.get("league"),
-                "home_team": pick.get("home"),
-                "away_team": pick.get("away"),
-                "prediction": pick.get("prediction", "over"),
+                "home_team": home,
+                "away_team": away,
+                "prediction": prediction,
                 "prob": pick.get("prob", pick.get("over25_prob")),
                 "confidence": pick.get("confidence", MEDIUM),
                 "result": "pending",
                 "recorded_at": datetime.now().isoformat(),
-                "published": True,
+                "published": published,
             }
             key = over_under_key(entry)
             if key in existing_ou:
@@ -876,24 +900,31 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
             history["over_under"].append(entry)
             existing_ou.add(key)
             added += 1
-            # Add to manual_results.csv
             add_to_manual_results_csv(entry["date"], entry["home_team"], entry["away_team"])
 
     if btts_picks:
         for pick in btts_picks:
+            home = pick.get("home", pick.get("home_team", ""))
+            away = pick.get("away", pick.get("away_team", ""))
+            league = pick.get("league", "")
+            if is_static_blocked_match(home, away, league):
+                skipped += 1
+                continue
             prediction = str(pick.get("prediction", "yes")).strip().lower()
+            market = MARKET_BTTS_YES if prediction == "yes" else MARKET_BTTS_NO
+            published = not is_statistical_block_only(home, away, league, market)
             entry = {
                 "date": pick.get("date", date_str),
                 "type": "btts",
                 "league": pick.get("league"),
-                "home_team": pick.get("home"),
-                "away_team": pick.get("away"),
+                "home_team": home,
+                "away_team": away,
                 "prediction": prediction,
                 "prob": pick.get("prob"),
                 "confidence": pick.get("confidence", MEDIUM),
                 "result": "pending",
                 "recorded_at": datetime.now().isoformat(),
-                "published": True,
+                "published": published,
             }
             key = btts_key(entry)
             if key in existing_btts:
