@@ -59,6 +59,12 @@ REQUEST_DELAY_MAX = 5.0
 MAX_TOTAL_EXPOSURE = 0.25
 SHRINKAGE_WEIGHT = 0.65
 
+if os.getenv("CI"):
+    MAX_WORKERS = 1
+    REQUEST_DELAY_MIN = 5.0
+    REQUEST_DELAY_MAX = 12.0
+    logger.info("CI environment detected: throttling to 1 worker, longer delays")
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
@@ -170,6 +176,15 @@ def fetch(url, use_cache=True):
         response = session.get(url, headers=get_random_headers(), timeout=20)
         response.raise_for_status()
         data = response.text
+
+        lower = data.lower()
+        if any(x in lower for x in ("captcha", "verify you are human", "access denied", "blocked")):
+            logger.error(f"BLOCKED by {url[:80]} — possible captcha")
+            return None
+        if len(data) < 1500:
+            logger.error(f"SUSPICIOUS short page ({len(data)} bytes) for {url[:80]}")
+            return None
+
         if use_cache:
             cache.set(url, data)
         return data
