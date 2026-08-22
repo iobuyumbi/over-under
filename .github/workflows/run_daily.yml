@@ -147,6 +147,16 @@ jobs:
       - name: Sync with latest main
         run: git pull --rebase origin main
 
+      - name: Restore Soccerbase cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            soccerbase_cache.db
+            soccerbase_cache_home.db
+            soccerbase_cache_btts.db
+          key: soccerbase-cache-${{ github.run_id }}
+          restore-keys: soccerbase-cache-
+
       - name: Fetch recent results before publishing
         run: |
           python fetch_results.py --days 3 2>&1 | tee fetch_output_automated.txt
@@ -175,6 +185,38 @@ jobs:
           DATE="${{ steps.over-under.outputs.date }}"
           python btts_soccerbase.py --publish-date "$DATE" > btts_output.txt 2> btts_errors.txt || true
           sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' btts_output.txt | sed '1d;$d' > btts_body.txt
+
+      - name: Debug predictor output
+        if: always()
+        run: |
+          echo "=== Over/Under body size ==="
+          wc -c over25_body.txt || true
+          echo "=== Home Win body size ==="
+          wc -c hw_body.txt || true
+          echo "=== BTTS body size ==="
+          wc -c btts_body.txt || true
+          echo ""
+          echo "=== Over/Under Errors ==="
+          cat errors.txt 2>/dev/null || echo "(none)"
+          echo ""
+          echo "=== Home Win Errors ==="
+          cat hw_errors.txt 2>/dev/null || echo "(none)"
+          echo ""
+          echo "=== BTTS Errors ==="
+          cat btts_errors.txt 2>/dev/null || echo "(none)"
+
+      - name: Upload predictor logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: predictor-logs-${{ github.run_id }}
+          path: |
+            output.txt
+            hw_output.txt
+            btts_output.txt
+            errors.txt
+            hw_errors.txt
+            btts_errors.txt
 
       - name: Build Telegram daily message
         run: |
