@@ -249,6 +249,25 @@ def team_names_match(name1, name2):
 # =============================================================================
 # SCORE PARSING
 # =============================================================================
+POSTPONED_MARKER = "POSTPONED"
+_POSTPONED_TOKENS = frozenset({"p-p", "pp", "p.p.", "abd", "abandoned", "cancelled", "canceled", "suspended"})
+
+
+def is_postponed(score_str):
+    """Return True if score text looks like a postponed / voided match marker."""
+    if not score_str:
+        return False
+    text = score_str.strip().lower()
+    if not text:
+        return False
+    if "postponed" in text or "void" in text:
+        return True
+    cleaned = re.sub(r"[^a-z0-9.]", "", text)
+    if cleaned in _POSTPONED_TOKENS:
+        return True
+    return False
+
+
 def parse_score(score_str):
     if not score_str:
         return None, None
@@ -320,31 +339,43 @@ def fetch_api_football(date_str):
     if cached:
         return cached
 
+    postponed_statuses = {"PST", "CANC", "ABD", "SUSP", "WO", "AWD", "BT"}
+    matches = []
     try:
         url = "https://v3.football.api-sports.io/fixtures"
         headers = {
             "x-rapidapi-key": API_FOOTBALL_KEY,
             "x-rapidapi-host": "v3.football.api-sports.io",
         }
-        params = {"date": date_str, "status": "FT"}
-
-        resp = requests.get(url, headers=headers, params=params, timeout=30)
-        resp.raise_for_status()
-        data = resp.json()
-
-        matches = []
-        for fixture in data.get("response", []):
-            home = fixture["teams"]["home"]["name"]
-            away = fixture["teams"]["away"]["name"]
-            gh = fixture["goals"]["home"]
-            ga = fixture["goals"]["away"]
-            if gh is not None and ga is not None:
-                matches.append({
-                    "home_team": home,
-                    "away_team": away,
-                    "score": f"{gh}-{ga}",
-                    "source": "api-football"
-                })
+        for status_param in ("FT", "PST-CANC-ABD-SUSP-WO-AWD-BT"):
+            params = {"date": date_str, "status": status_param}
+            try:
+                resp = requests.get(url, headers=headers, params=params, timeout=30)
+                resp.raise_for_status()
+            except Exception:
+                continue
+            data = resp.json()
+            for fixture in data.get("response", []):
+                status_short = (fixture.get("fixture", {}).get("status", {}) or {}).get("short", "")
+                home = fixture["teams"]["home"]["name"]
+                away = fixture["teams"]["away"]["name"]
+                if status_short in postponed_statuses:
+                    matches.append({
+                        "home_team": home,
+                        "away_team": away,
+                        "score": POSTPONED_MARKER,
+                        "source": "api-football",
+                    })
+                    continue
+                gh = fixture["goals"]["home"]
+                ga = fixture["goals"]["away"]
+                if gh is not None and ga is not None:
+                    matches.append({
+                        "home_team": home,
+                        "away_team": away,
+                        "score": f"{gh}-{ga}",
+                        "source": "api-football"
+                    })
 
         logger.info(f"[API-Football] Found {len(matches)} matches")
         set_cache(cache_key, matches)
@@ -352,7 +383,7 @@ def fetch_api_football(date_str):
 
     except Exception as e:
         logger.error(f"[API-Football] Error: {e}")
-        return []
+        return matches or []
 
 # =============================================================================
 # SOURCE 3: MANUAL OVERRIDE (CSV/JSON FILE)
@@ -441,11 +472,23 @@ def fetch_soccerbase_results(date_str):
                     continue
 
                 home = re.sub(r"\s*\d+.*$", "", cells[3].get_text(strip=True)).strip()
-                score = cells[4].get_text(" ", strip=True)
+                score_raw = cells[4].get_text(" ", strip=True)
                 away = re.sub(r"\s*\d+.*$", "", cells[5].get_text(strip=True)).strip()
-                hg, ag = parse_score(score)
 
-                if home and away and hg is not None and ag is not None:
+                if not home or not away:
+                    continue
+
+                if is_postponed(score_raw):
+                    matches.append({
+                        "home_team": home,
+                        "away_team": away,
+                        "score": POSTPONED_MARKER,
+                        "source": "soccerbase",
+                    })
+                    continue
+
+                hg, ag = parse_score(score_raw)
+                if hg is not None and ag is not None:
                     matches.append({
                         "home_team": home,
                         "away_team": away,
@@ -844,6 +887,8 @@ def determine_home_win_result(pick, results):
     for match in results:
         if (team_names_match(match["home_team"], pick_home) and
                 team_names_match(match["away_team"], pick_away)):
+            if match["score"] == POSTPONED_MARKER:
+                return "push"
             hg, ag = parse_score(match["score"])
             if hg is not None and ag is not None:
                 if hg > ag:
@@ -860,6 +905,8 @@ def determine_over_under_result(pick, results):
     for match in results:
         if (team_names_match(match["home_team"], pick_home) and
                 team_names_match(match["away_team"], pick_away)):
+            if match["score"] == POSTPONED_MARKER:
+                return "push"
             hg, ag = parse_score(match["score"])
             if hg is not None and ag is not None:
                 total = hg + ag
@@ -877,6 +924,8 @@ def determine_btts_result(pick, results):
     for match in results:
         if (team_names_match(match["home_team"], pick_home) and
                 team_names_match(match["away_team"], pick_away)):
+            if match["score"] == POSTPONED_MARKER:
+                return "push"
             hg, ag = parse_score(match["score"])
             if hg is not None and ag is not None:
                 btts_yes = hg >= 1 and ag >= 1
