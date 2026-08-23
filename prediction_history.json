@@ -1616,9 +1616,12 @@
       "home_team": "Sanf Hiroshima",
       "away_team": "Kawasaki F",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-20T12:12:45.767820",
-      "published": true
+      "published": true,
+      "updated_at": "2026-08-23T02:17:41.113265",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-01",
@@ -1935,9 +1938,12 @@
       "home_team": "Universidad Catolica",
       "away_team": "Manta",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-20T12:12:46.120437",
-      "published": true
+      "published": true,
+      "updated_at": "2026-08-23T02:17:41.117371",
+      "final_score": "5-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-06-10",
