@@ -588,6 +588,52 @@ def _h2h_under_blocked(home_team_id, away_team_id, target_date_str=None):
     return rate >= _OU_H2H_UNDER_BLOCK_RATE, meetings
 
 
+def _h2h_over_blocked_2game(home_team_id, away_team_id, target_date_str=None):
+    """Relaxed H2H veto for Over 2.5: if only 2 recent meetings exist and BOTH
+    were low-scoring (<=2 total goals), block. Catches derby tightness that
+    the 3-meeting minimum would otherwise miss (e.g. Deveronvale vs Forres).
+    """
+    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str, limit=2)
+    if len(meetings) == 2:
+        low_scoring = sum(
+            1 for m in meetings
+            if m.get("total", m.get("gf", 0) + m.get("ga", 0)) <= 2
+        )
+        if low_scoring == 2:
+            return True, meetings
+    return False, meetings
+
+
+def _scoring_drought_veto_over(home_3, away_3):
+    """Block Over 2.5 if EITHER team failed to score in BOTH of their last 2
+    venue games. Prevents picks where one attack is completely cold.
+
+    Catches cases like:
+      - Vasas 0-1 Puskas       (Vasas home blank in last 2)
+      - Gainsborough 0-1 Bury  (Gainsborough home blank in last 2)
+      - Tigres 2-0 Atlante     (Atlante away blank in last 2)
+    """
+    if len(home_3 or []) >= 2 and all(gf == 0 for gf, _ in home_3[:2]):
+        return True, "home_scoring_drought_2"
+    if len(away_3 or []) >= 2 and all(gf == 0 for gf, _ in away_3[:2]):
+        return True, "away_scoring_drought_2"
+    return False, None
+
+
+def _defensive_wall_veto_over(home_3, away_3):
+    """Block Over 2.5 if EITHER team kept a clean sheet in BOTH of their last
+    2 venue games. Prevents picks where one defence is completely impenetrable.
+
+    Catches cases like Tigres 2-0 Atlante (Tigres home defence posted 0 GA
+    in consecutive games, so Atlante's attack faced an in-form wall).
+    """
+    if len(home_3 or []) >= 2 and all(ga == 0 for _, ga in home_3[:2]):
+        return True, "home_defensive_wall_2"
+    if len(away_3 or []) >= 2 and all(ga == 0 for _, ga in away_3[:2]):
+        return True, "away_defensive_wall_2"
+    return False, None
+
+
 # =============================================================================
 # OVER 2.5 ALGORITHM (10-Check Rules + Overall Form)
 # =============================================================================
@@ -1426,9 +1472,14 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         h2h_over_blocked, h2h_over_meetings = _h2h_over_blocked(
             match["home_team_id"], match["away_team_id"], target_date
         )
+        h2h_over_blocked_2, h2h_over_meetings_2 = _h2h_over_blocked_2game(
+            match["home_team_id"], match["away_team_id"], target_date
+        )
         h2h_under_blocked, h2h_under_meetings = _h2h_under_blocked(
             match["home_team_id"], match["away_team_id"], target_date
         )
+        scoring_drought_veto, scoring_drought_reason = _scoring_drought_veto_over(home_3, away_3)
+        defensive_wall_veto, defensive_wall_reason = _defensive_wall_veto_over(home_3, away_3)
 
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
@@ -1472,7 +1523,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         over_qualifies = (
             bool(over_passed) and over_score >= over_min_score and over_gate
             and btts_gate and venue_over_gate and not recent_cold_over_block
-            and not h2h_over_blocked
+            and not h2h_over_blocked and not h2h_over_blocked_2
+            and not scoring_drought_veto and not defensive_wall_veto
         )
         under_qualifies = (
             bool(under_passed) and under_score >= under_min_score and under_gate
@@ -1544,8 +1596,14 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append("high-scoring venue form")
         if h2h_over_blocked:
             regressions.append(f"h2h low-scoring bogey ({len(h2h_over_meetings)} meetings)")
+        if h2h_over_blocked_2:
+            regressions.append(f"h2h 2-game low-scoring bogey ({len(h2h_over_meetings_2)} meetings)")
         if h2h_under_blocked:
             regressions.append(f"h2h high-scoring bogey ({len(h2h_under_meetings)} meetings)")
+        if scoring_drought_veto:
+            regressions.append(f"scoring drought ({scoring_drought_reason})")
+        if defensive_wall_veto:
+            regressions.append(f"defensive wall ({defensive_wall_reason})")
 
         return {
             "status": "success",
@@ -1566,7 +1624,13 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "venue_over_gate_passed": venue_over_gate,
                     "recent_cold_blocked": recent_cold_over_block,
                     "h2h_blocked": h2h_over_blocked,
+                    "h2h_blocked_2game": h2h_over_blocked_2,
                     "h2h_meetings": len(h2h_over_meetings),
+                    "h2h_meetings_2game": len(h2h_over_meetings_2),
+                    "scoring_drought_veto": scoring_drought_veto,
+                    "scoring_drought_reason": scoring_drought_reason,
+                    "defensive_wall_veto": defensive_wall_veto,
+                    "defensive_wall_reason": defensive_wall_reason,
                     "home_btts_6": home_btts_6,
                     "away_btts_6": away_btts_6,
                     "data_mult": round(data_mult, 2),
@@ -1611,13 +1675,20 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "non_btts_gate_passed": non_btts_gate,
                     "high_scoring_blocked": high_scoring_under_block,
                     "h2h_over_blocked": h2h_over_blocked,
+                    "h2h_over_blocked_2game": h2h_over_blocked_2,
                     "h2h_under_blocked": h2h_under_blocked,
                     "h2h_over_meetings": len(h2h_over_meetings),
+                    "h2h_over_meetings_2game": len(h2h_over_meetings_2),
                     "h2h_under_meetings": len(h2h_under_meetings),
                     "home_btts_6": home_btts_6,
                     "away_btts_6": away_btts_6,
                     "home_non_btts_6": home_non_btts_6,
                     "away_non_btts_6": away_non_btts_6,
+                    "scoring_drought_veto": scoring_drought_veto,
+                    "scoring_drought_reason": scoring_drought_reason,
+                    "defensive_wall_veto": defensive_wall_veto,
+                    "defensive_wall_reason": defensive_wall_reason,
+                    "recent_cold_blocked": recent_cold_over_block,
                     "regression_penalty_applied": regressions,
                 },
             }
