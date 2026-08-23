@@ -1,4 +1,49 @@
 {
-  "_notice": "Static blocking disabled by default (auto-only mode). Populate blocked_regions below with {name, league_keywords[], team_keywords[]} entries ONLY if you want hard bans regardless of performance history.",
-  "blocked_regions": []
+  "_notice": "Hard blocks apply regardless of performance history. Add a region with name, league_keywords, and optional team_keywords to blacklist another competition.",
+  "blocked_regions": [
+    {
+      "name": "Ireland",
+      "reason": "Match-integrity concerns",
+      "league_keywords": [
+        "ireland",
+        "fai cup",
+        "irish"
+      ],
+      "team_keywords": [
+        "finn harps",
+        "drogheda",
+        "bray",
+        "derry city",
+        "waterford",
+        "bohemians",
+        "cork city",
+        "dundalk",
+        "athlone",
+        "wexford",
+        "longford",
+        "ucd",
+        "shelbourne",
+        "shamrock",
+        "sligo rovers",
+        "galway united",
+        "limerick",
+        "treaty united",
+        "cobh ramblers",
+        "kerry fc",
+        "st patrick",
+        "st patricks"
+      ]
+    },
+    {
+      "name": "Argentina Primera Nacional",
+      "reason": "Match-integrity concerns",
+      "league_keywords": [
+        "argentina primera nacional",
+        "primera nacional",
+        "argentina national b",
+        "nacional b"
+      ],
+      "team_keywords": []
+    }
+  ]
 }
