@@ -169,21 +169,24 @@ jobs:
       - name: Run Over/Under predictor
         id: over-under
         run: |
-          DATE=$(date +'%Y-%m-%d')
-          python over25_soccerbase.py --publish-date "$DATE" > output.txt 2> errors.txt || true
+          DATE="$(TZ=Africa/Nairobi date +'%Y-%m-%d')"
+          python over25_soccerbase.py --publish-date "$DATE" > output.txt 2> errors.txt
+          test -f ou_telegram.txt
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
           sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d' > over25_body.txt
 
       - name: Run Home Win predictor
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
-          python home_win_soccerbase.py --publish-date "$DATE" > hw_output.txt 2> hw_errors.txt || true
+          python home_win_soccerbase.py --publish-date "$DATE" > hw_output.txt 2> hw_errors.txt
+          test -f hw_telegram.txt
           sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d' > hw_body.txt
 
       - name: Run BTTS predictor
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
-          python btts_soccerbase.py --publish-date "$DATE" > btts_output.txt 2> btts_errors.txt || true
+          python btts_soccerbase.py --publish-date "$DATE" > btts_output.txt 2> btts_errors.txt
+          test -f btts_telegram.txt
           sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' btts_output.txt | sed '1d;$d' > btts_body.txt
 
       - name: Debug predictor output
@@ -217,6 +220,9 @@ jobs:
             errors.txt
             hw_errors.txt
             btts_errors.txt
+            ou_telegram.txt
+            hw_telegram.txt
+            btts_telegram.txt
 
       - name: Build Telegram daily message
         run: |
@@ -226,6 +232,14 @@ jobs:
             --btts-output btts_telegram.txt \
             --hw-output hw_telegram.txt \
             --out telegram_daily.txt
+
+      - name: Upload Telegram message
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: telegram-message-${{ github.run_id }}
+          path: telegram_daily.txt
+          if-no-files-found: warn
 
       - name: Build free and VIP reports
         run: |
@@ -299,7 +313,7 @@ jobs:
           from: ${{ secrets.EMAIL_USERNAME }}
 
       - name: Send Telegram free and VIP messages
-        if: always()
+        if: success()
         run: |
           python - <<'PY'
           import os
