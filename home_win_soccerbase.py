@@ -730,6 +730,22 @@ def get_team_strength(form_data, is_home=True, league_name=None):
     return round(max(0.1, min(0.95, strength)), 3)
 
 
+def _away_strength_veto(home_strength, away_strength):
+    """Block Home Win if away team is significantly stronger.
+
+    Even with good home form, a historically dominant away side
+    can hold the home team to a draw or steal a win.
+    Triggers on either a 1.4x strength ratio or a 0.4 absolute gap.
+    """
+    if away_strength <= 0 or home_strength <= 0:
+        return False, None
+    if away_strength > home_strength * 1.4:
+        return True, f"away_strength_{away_strength:.2f}_vs_home_{home_strength:.2f}"
+    if away_strength > home_strength + 0.4:
+        return True, f"away_strength_gap_{away_strength - home_strength:.2f}"
+    return False, None
+
+
 def hw_data_volume_penalty(home_form, away_form, home_overall, away_overall):
     n = min(
         len(home_form or []),
@@ -851,10 +867,11 @@ def process_single_match(match, target_date, default_odds=2.8):
         h2h_blocked, h2h_meetings, h2h_reason = _h2h_home_win_blocked(
             match["home_team_id"], match["away_team_id"], target_date
         )
+        away_strength_veto, away_strength_reason = _away_strength_veto(home_strength, away_strength)
 
         weak_league = _hw_is_weak_roi(league_name)
         min_score = MAX_HOME_WIN_SCORE - 1 if weak_league else MAX_HOME_WIN_SCORE - 2
-        qualifies = score >= min_score and gate_passes and not h2h_blocked
+        qualifies = score >= min_score and gate_passes and not h2h_blocked and not away_strength_veto
 
         league_mult = _HW_WEAK_ROI_MULTIPLIER if weak_league else 1.0
         reg_mult = _hw_regression_penalty(home_form, away_form)
@@ -877,6 +894,8 @@ def process_single_match(match, target_date, default_odds=2.8):
             regressions.append("home win streak")
         if h2h_blocked:
             regressions.append(f"h2h {h2h_reason} (home winless/bogey or away h2h advantage)")
+        if away_strength_veto:
+            regressions.append(f"away strength veto ({away_strength_reason})")
 
         return {
             "status": "success",
@@ -898,6 +917,8 @@ def process_single_match(match, target_date, default_odds=2.8):
                 "gate_passed": gate_passes,
                 "h2h_blocked": h2h_blocked,
                 "h2h_meetings": len(h2h_meetings),
+                "away_strength_veto": away_strength_veto,
+                "away_strength_reason": away_strength_reason,
                 "data_mult": round(data_mult, 2),
                 "weak_league_mult": round(league_mult, 2),
                 "regression_mult": round(reg_mult, 2),
@@ -905,6 +926,10 @@ def process_single_match(match, target_date, default_odds=2.8):
                 "kelly": round(kelly_half * 100, 2),
                 "guards": {
                     "weak_roi_league": weak_league,
+                    "away_strength_veto": away_strength_veto,
+                    "away_strength_reason": away_strength_reason,
+                    "home_strength": round(home_strength, 3),
+                    "away_strength": round(away_strength, 3),
                     "regression_penalty_applied": regressions,
                 },
             }
