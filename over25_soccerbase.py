@@ -650,6 +650,54 @@ def _under_defensive_leak_veto(home_3, away_3):
     return False, None
 
 
+def _over_btts_participation_gate(home_3, away_3):
+    """Block Over 2.5 if either team failed to score in 2+ of their last 3
+    venue games. Over needs both attacks firing regularly; a side that
+    blanks 2/3 caps the game in 0-1 / 1-0 / 1-1 territory.
+    """
+    if len(home_3 or []) >= 3:
+        home_blanks = sum(1 for gf, _ in home_3 if gf == 0)
+        if home_blanks >= 2:
+            return True, f"home_blanked_{home_blanks}_of_3"
+    if len(away_3 or []) >= 3:
+        away_blanks = sum(1 for gf, _ in away_3 if gf == 0)
+        if away_blanks >= 2:
+            return True, f"away_blanked_{away_blanks}_of_3"
+    return False, None
+
+
+def _over_leak_participation_gate(home_3, away_3):
+    """Block Over 2.5 if either team kept a clean sheet in 2+ of their last 3
+    venue games. Over needs both defenses leaking; a side that locks down
+    2/3 makes the game 1-0 / 2-0 territory.
+    """
+    if len(home_3 or []) >= 3:
+        home_walls = sum(1 for _, ga in home_3 if ga == 0)
+        if home_walls >= 2:
+            return True, f"home_wall_{home_walls}_of_3"
+    if len(away_3 or []) >= 3:
+        away_walls = sum(1 for _, ga in away_3 if ga == 0)
+        if away_walls >= 2:
+            return True, f"away_wall_{away_walls}_of_3"
+    return False, None
+
+
+def _combined_low_event_veto(home_3, away_3):
+    """Block Over 2.5 if BOTH teams have been consistently low-scoring.
+
+    Even if neither side hits the extreme 2/2 drought/wall veto, two
+    mediocre attacks facing two solid defenses almost never reach 3+ goals.
+    Triggers when both sides' last 2 venue games sum to <=5 goals each
+    (i.e. both averaging <=2.5 goals per game combined).
+    """
+    if len(home_3 or []) >= 2 and len(away_3 or []) >= 2:
+        home_total = sum(gf + ga for gf, ga in home_3[:2])
+        away_total = sum(gf + ga for gf, ga in away_3[:2])
+        if home_total <= 5 and away_total <= 5:
+            return True, f"combined_low_event_h{home_total}_a{away_total}"
+    return False, None
+
+
 # =============================================================================
 # OVER 2.5 ALGORITHM (10-Check Rules + Overall Form)
 # =============================================================================
@@ -1497,6 +1545,9 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         scoring_drought_veto, scoring_drought_reason = _scoring_drought_veto_over(home_3, away_3)
         defensive_wall_veto, defensive_wall_reason = _defensive_wall_veto_over(home_3, away_3)
         under_leak_veto, under_leak_reason = _under_defensive_leak_veto(home_3, away_3)
+        over_btts_gate, over_btts_reason = _over_btts_participation_gate(home_3, away_3)
+        over_leak_gate, over_leak_reason = _over_leak_participation_gate(home_3, away_3)
+        over_low_event_veto, over_low_event_reason = _combined_low_event_veto(home_3, away_3)
 
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
@@ -1542,6 +1593,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             and btts_gate and venue_over_gate and not recent_cold_over_block
             and not h2h_over_blocked and not h2h_over_blocked_2
             and not scoring_drought_veto and not defensive_wall_veto
+            and not over_btts_gate and not over_leak_gate
+            and not over_low_event_veto
         )
         under_qualifies = (
             bool(under_passed) and under_score >= under_min_score and under_gate
@@ -1622,6 +1675,12 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append(f"scoring drought ({scoring_drought_reason})")
         if defensive_wall_veto:
             regressions.append(f"defensive wall ({defensive_wall_reason})")
+        if over_btts_gate:
+            regressions.append(f"bt participation gate ({over_btts_reason})")
+        if over_leak_gate:
+            regressions.append(f"leak participation gate ({over_leak_reason})")
+        if over_low_event_veto:
+            regressions.append(f"combined low event ({over_low_event_reason})")
         if under_leak_veto:
             regressions.append(f"under defensive leak ({under_leak_reason})")
 
@@ -1651,6 +1710,12 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "scoring_drought_reason": scoring_drought_reason,
                     "defensive_wall_veto": defensive_wall_veto,
                     "defensive_wall_reason": defensive_wall_reason,
+                    "btts_participation_gate": over_btts_gate,
+                    "btts_participation_reason": over_btts_reason,
+                    "leak_participation_gate": over_leak_gate,
+                    "leak_participation_reason": over_leak_reason,
+                    "low_event_veto": over_low_event_veto,
+                    "low_event_reason": over_low_event_reason,
                     "home_btts_6": home_btts_6,
                     "away_btts_6": away_btts_6,
                     "data_mult": round(data_mult, 2),
@@ -1710,6 +1775,12 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "scoring_drought_reason": scoring_drought_reason,
                     "defensive_wall_veto": defensive_wall_veto,
                     "defensive_wall_reason": defensive_wall_reason,
+                    "over_btts_participation_gate": over_btts_gate,
+                    "over_btts_participation_reason": over_btts_reason,
+                    "over_leak_participation_gate": over_leak_gate,
+                    "over_leak_participation_reason": over_leak_reason,
+                    "over_low_event_veto": over_low_event_veto,
+                    "over_low_event_reason": over_low_event_reason,
                     "under_defensive_leak_veto": under_leak_veto,
                     "under_defensive_leak_reason": under_leak_reason,
                     "recent_cold_blocked": recent_cold_over_block,
