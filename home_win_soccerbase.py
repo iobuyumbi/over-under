@@ -63,7 +63,7 @@ if os.getenv("CI"):
     MAX_WORKERS = 1
     REQUEST_DELAY_MIN = 5.0
     REQUEST_DELAY_MAX = 12.0
-    logger.info("CI environment detected: throttling to 1 worker, longer delays")
+    print("CI environment detected: throttling to 1 worker, longer delays")
 
 logging.basicConfig(
     level=logging.INFO,

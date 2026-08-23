@@ -66,7 +66,7 @@ if os.getenv("CI"):
     MAX_WORKERS = 1
     REQUEST_DELAY_MIN = 5.0
     REQUEST_DELAY_MAX = 12.0
-    logger.info("CI environment detected: throttling to 1 worker, longer delays")
+    print("CI environment detected: throttling to 1 worker, longer delays")
 
 MAX_OVER_SCORE = 13
 MAX_UNDER_SCORE = 12
@@ -349,7 +349,6 @@ def parse_date(date_str):
             continue
 
     # Try to extract any date-like pattern as last resort
-    import re
     match = re.search(r'(\d{4})[-/](\d{2})[-/](\d{2})', date_str)
     if match:
         try:

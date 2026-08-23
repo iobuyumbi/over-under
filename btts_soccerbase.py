@@ -61,7 +61,7 @@ if os.getenv("CI"):
     MAX_WORKERS = 1
     REQUEST_DELAY_MIN = 5.0
     REQUEST_DELAY_MAX = 12.0
-    logger.info("CI environment detected: throttling to 1 worker, longer delays")
+    print("CI environment detected: throttling to 1 worker, longer delays")
 
 MAX_BTTS_YES_SCORE = 14
 MAX_BTTS_NO_SCORE = 14
@@ -77,7 +77,7 @@ DEFAULT_ODDS_BTTS_YES = 1.90
 DEFAULT_ODDS_BTTS_NO = 1.85
 
 # over25tips.com official BTTS point algorithm (BetAndSkill / over25tips)
-MIN_O25TIPS_BTTS_YES_POINTS = 6.0
+MIN_O25TIPS_BTTS_YES_POINTS = 7.0
 MAX_O25TIPS_BTTS_NO_POINTS = 3.0
 _O25TIPS_FORM_WINDOW = 6
 
@@ -488,6 +488,86 @@ def _h2h_btts_no_blocked(home_team_id, away_team_id, target_date_str=None):
     btts_count = sum(1 for m in meetings if m.get("gf", 0) >= 1 and m.get("ga", 0) >= 1)
     rate = btts_count / len(meetings)
     return rate >= _BTTS_H2H_NO_BLOCK_RATE, meetings
+
+
+# =============================================================================
+# BTTS YES HARDENING GATES
+# =============================================================================
+
+def _scoring_drought_veto(home_3, away_3):
+    """Block BTTS Yes if EITHER team failed to score in BOTH of their last 2 venue games."""
+    if len(home_3 or []) >= 2 and all(gf == 0 for gf, _ in home_3[:2]):
+        return True, "home_scoring_drought_2"
+    if len(away_3 or []) >= 2 and all(gf == 0 for gf, _ in away_3[:2]):
+        return True, "away_scoring_drought_2"
+    return False, None
+
+
+def _defensive_wall_veto(home_3, away_3):
+    """Block BTTS Yes if EITHER team kept a clean sheet in BOTH of their last 2 venue games."""
+    if len(home_3 or []) >= 2 and all(ga == 0 for _, ga in home_3[:2]):
+        return True, "home_defensive_wall_2"
+    if len(away_3 or []) >= 2 and all(ga == 0 for _, ga in away_3[:2]):
+        return True, "away_defensive_wall_2"
+    return False, None
+
+
+def _lambda_mismatch_veto(home_lambda, away_lambda):
+    """Block BTTS Yes when one attack is expected to dominate the other.
+
+    BTTS requires both attacks to contribute. If one lambda is < 0.7 or the
+    ratio exceeds 2.5x, the match is likely one-sided.
+    """
+    if home_lambda <= 0 or away_lambda <= 0:
+        return False, None
+    lo, hi = sorted((home_lambda, away_lambda))
+    if hi / lo >= 2.5:
+        return True, f"lambda_ratio_{hi/lo:.1f}"
+    if lo < 0.7:
+        return True, f"weak_attack_lambda_{lo:.2f}"
+    return False, None
+
+
+def _defensive_permeability_check(home_6, away_6):
+    """Both teams must concede enough to suggest leaky defenses.
+
+    Returns (passed, failed, detail) tuples for scoring into BTTS Yes.
+    """
+    passed, failed, details = [], [], {}
+    if len(home_6 or []) >= 4:
+        hc = sum(ga for _, ga in home_6) / max(len(home_6), 1)
+        if hc >= 1.0:
+            passed.append("Home defence leaky")
+            details["Home defence leaky"] = f"PASS ({hc:.2f} GA/game)"
+        else:
+            failed.append("Home defence too solid")
+            details["Home defence too solid"] = f"FAIL ({hc:.2f} GA/game < 1.0)"
+    else:
+        details["Home defence leaky"] = f"SKIPPED ({len(home_6 or [])} games)"
+    if len(away_6 or []) >= 4:
+        ac = sum(ga for _, ga in away_6) / max(len(away_6), 1)
+        if ac >= 1.0:
+            passed.append("Away defence leaky")
+            details["Away defence leaky"] = f"PASS ({ac:.2f} GA/game)"
+        else:
+            failed.append("Away defence too solid")
+            details["Away defence too solid"] = f"FAIL ({ac:.2f} GA/game < 1.0)"
+    else:
+        details["Away defence leaky"] = f"SKIPPED ({len(away_6 or [])} games)"
+    return passed, failed, details
+
+
+def _h2h_btts_yes_blocked_2game(home_team_id, away_team_id, target_date_str=None):
+    """Relaxed H2H veto for BTTS Yes: if only 2 meetings exist and BOTH were non-BTTS, block.
+
+    Catches tight derby matchups where the 3-meeting minimum gate would otherwise miss.
+    """
+    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str, limit=2)
+    if len(meetings) == 2:
+        non_btts = sum(1 for m in meetings if m.get("gf", 0) == 0 or m.get("ga", 0) == 0)
+        if non_btts == 2:
+            return True, meetings
+    return False, meetings
 
 
 # =============================================================================
@@ -1069,6 +1149,9 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         h2h_btts_yes_blocked, h2h_btts_yes_meetings = _h2h_btts_yes_blocked(
             match["home_team_id"], match["away_team_id"], target_date
         )
+        h2h_btts_yes_blocked_2, h2h_btts_yes_meetings_2 = _h2h_btts_yes_blocked_2game(
+            match["home_team_id"], match["away_team_id"], target_date
+        )
         h2h_btts_no_blocked, h2h_btts_no_meetings = _h2h_btts_no_blocked(
             match["home_team_id"], match["away_team_id"], target_date
         )
@@ -1078,6 +1161,17 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         o25tips_yes_ok = o25tips_details["o25tips_yes_ok"]
         o25tips_no_ok = o25tips_details["o25tips_no_ok"]
 
+        drought_veto, drought_reason = _scoring_drought_veto(home_3, away_3)
+        wall_veto, wall_reason = _defensive_wall_veto(home_3, away_3)
+        mismatch_veto, mismatch_reason = _lambda_mismatch_veto(home_lambda, away_lambda)
+        perm_passed, perm_failed, perm_details = _defensive_permeability_check(home_6, away_6)
+
+        yes_passed = yes_passed + perm_passed
+        yes_details = {**yes_details, **perm_details}
+        yes_score = len(yes_passed)
+        if _chaos_btts_bonus(home_6, away_6):
+            yes_score += 1
+
         weak = _is_weak_roi_league(league_name)
         thin_gap = max(0, 6 - min(len(home_6), len(away_6)))
         yes_min = max(7, (MAX_BTTS_YES_SCORE - 3 if weak else MAX_BTTS_YES_SCORE - 4) - thin_gap)
@@ -1086,6 +1180,10 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             bool(yes_passed) and yes_score >= yes_min and yes_gate
             and btts_gate and o25tips_yes_ok
             and not h2h_btts_yes_blocked
+            and not h2h_btts_yes_blocked_2
+            and not drought_veto
+            and not wall_veto
+            and not mismatch_veto
         )
         no_qualifies = (
             bool(no_passed) and no_score >= no_min and no_gate
@@ -1110,6 +1208,14 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         regressions = []
         if h2h_btts_yes_blocked:
             regressions.append(f"h2h non-btts bogey ({len(h2h_btts_yes_meetings)} meetings)")
+        if h2h_btts_yes_blocked_2:
+            regressions.append(f"h2h 2-game non-btts bogey ({len(h2h_btts_yes_meetings_2)} meetings)")
+        if drought_veto:
+            regressions.append(f"scoring drought ({drought_reason})")
+        if wall_veto:
+            regressions.append(f"defensive wall ({wall_reason})")
+        if mismatch_veto:
+            regressions.append(f"attack mismatch ({mismatch_reason})")
         if h2h_btts_no_blocked:
             regressions.append(f"h2h btts bogey ({len(h2h_btts_no_meetings)} meetings)")
 
@@ -1130,7 +1236,15 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "gate_passed": yes_gate,
                     "form_gate_passed": btts_gate,
                     "h2h_blocked": h2h_btts_yes_blocked,
+                    "h2h_blocked_2game": h2h_btts_yes_blocked_2,
                     "h2h_meetings": len(h2h_btts_yes_meetings),
+                    "h2h_meetings_2game": len(h2h_btts_yes_meetings_2),
+                    "scoring_drought_veto": drought_veto,
+                    "scoring_drought_reason": drought_reason,
+                    "defensive_wall_veto": wall_veto,
+                    "defensive_wall_reason": wall_reason,
+                    "lambda_mismatch_veto": mismatch_veto,
+                    "lambda_mismatch_reason": mismatch_reason,
                     "o25tips_points": o25tips_total,
                     "o25tips_passed": o25tips_yes_ok,
                     "min_score_threshold": yes_min,
@@ -1168,9 +1282,17 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "btts_gate_passed": btts_gate,
                     "non_btts_gate_passed": non_btts_gate,
                     "h2h_btts_yes_blocked": h2h_btts_yes_blocked,
+                    "h2h_btts_yes_blocked_2game": h2h_btts_yes_blocked_2,
                     "h2h_btts_no_blocked": h2h_btts_no_blocked,
                     "h2h_btts_yes_meetings": len(h2h_btts_yes_meetings),
+                    "h2h_btts_yes_meetings_2game": len(h2h_btts_yes_meetings_2),
                     "h2h_btts_no_meetings": len(h2h_btts_no_meetings),
+                    "scoring_drought_veto": drought_veto,
+                    "scoring_drought_reason": drought_reason,
+                    "defensive_wall_veto": wall_veto,
+                    "defensive_wall_reason": wall_reason,
+                    "lambda_mismatch_veto": mismatch_veto,
+                    "lambda_mismatch_reason": mismatch_reason,
                     "regression_penalty_applied": regressions,
                 },
             },
