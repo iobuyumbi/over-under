@@ -633,6 +633,23 @@ def _defensive_wall_veto_over(home_3, away_3):
     return False, None
 
 
+def _under_defensive_leak_veto(home_3, away_3):
+    """Block Under 2.5 if EITHER team conceded 2+ goals in BOTH of their last
+    2 venue games. A 'defensive wall breakdown' means the team is leaking
+    goals at their venue — structurally unreliable for a low-scoring pick.
+
+    Catches cases like:
+      - CSKA 3-2 Lokomotiv   (both sides leaking 2+ recently)
+      - Slask 3-3 Widzew     (both sides leaking 2+ recently)
+      - Gimnasia LP 2-3 G M  (home conceded 3+ in prior venue games)
+    """
+    if len(home_3 or []) >= 2 and all(ga >= 2 for _, ga in home_3[:2]):
+        return True, "home_defensive_leak_2"
+    if len(away_3 or []) >= 2 and all(ga >= 2 for _, ga in away_3[:2]):
+        return True, "away_defensive_leak_2"
+    return False, None
+
+
 # =============================================================================
 # OVER 2.5 ALGORITHM (10-Check Rules + Overall Form)
 # =============================================================================
@@ -1479,6 +1496,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         )
         scoring_drought_veto, scoring_drought_reason = _scoring_drought_veto_over(home_3, away_3)
         defensive_wall_veto, defensive_wall_reason = _defensive_wall_veto_over(home_3, away_3)
+        under_leak_veto, under_leak_reason = _under_defensive_leak_veto(home_3, away_3)
 
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
@@ -1529,6 +1547,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             bool(under_passed) and under_score >= under_min_score and under_gate
             and non_btts_gate and not high_scoring_under_block
             and not h2h_under_blocked
+            and not under_leak_veto
         )
 
         if over_qualifies or under_qualifies:
@@ -1603,6 +1622,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append(f"scoring drought ({scoring_drought_reason})")
         if defensive_wall_veto:
             regressions.append(f"defensive wall ({defensive_wall_reason})")
+        if under_leak_veto:
+            regressions.append(f"under defensive leak ({under_leak_reason})")
 
         return {
             "status": "success",
@@ -1652,6 +1673,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "high_scoring_blocked": high_scoring_under_block,
                     "h2h_blocked": h2h_under_blocked,
                     "h2h_meetings": len(h2h_under_meetings),
+                    "defensive_leak_veto": under_leak_veto,
+                    "defensive_leak_reason": under_leak_reason,
                     "home_non_btts_6": home_non_btts_6,
                     "away_non_btts_6": away_non_btts_6,
                     "data_mult": round(data_mult, 2),
@@ -1687,6 +1710,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "scoring_drought_reason": scoring_drought_reason,
                     "defensive_wall_veto": defensive_wall_veto,
                     "defensive_wall_reason": defensive_wall_reason,
+                    "under_defensive_leak_veto": under_leak_veto,
+                    "under_defensive_leak_reason": under_leak_reason,
                     "recent_cold_blocked": recent_cold_over_block,
                     "regression_penalty_applied": regressions,
                 },
