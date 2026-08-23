@@ -34,6 +34,7 @@ from prediction_tracker import (
     format_confidence_label,
     describe_pick_categories,
     filter_pick_items_by_date,
+    is_static_blocked_fixture,
     write_telegram_section,
     append_yesterday_section,
     format_vip_banner,
@@ -60,10 +61,10 @@ MAX_TOTAL_EXPOSURE = 0.25
 SHRINKAGE_WEIGHT = 0.65
 
 if os.getenv("CI"):
-    MAX_WORKERS = 1
-    REQUEST_DELAY_MIN = 5.0
-    REQUEST_DELAY_MAX = 12.0
-    print("CI environment detected: throttling to 1 worker, longer delays")
+    MAX_WORKERS = 2
+    REQUEST_DELAY_MIN = 4.0
+    REQUEST_DELAY_MAX = 8.0
+    print("CI environment detected: throttling to 2 workers")
 
 logging.basicConfig(
     level=logging.INFO,
@@ -952,9 +953,9 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
     Build a clean, mobile-friendly report with all qualifying picks across scanned days.
     Returns: (report, base_date, included_perfect, included_qualified, included_close)
     """
-    included_perfect = list(perfect)
-    included_qualified = list(qualified)
-    included_close = list(close_calls)
+    included_perfect = [item for item in perfect if not is_static_blocked_fixture(item.get("match", {}))]
+    included_qualified = [item for item in qualified if not is_static_blocked_fixture(item.get("match", {}))]
+    included_close = [item for item in close_calls if not is_static_blocked_fixture(item.get("match", {}))]
     if report_date:
         included_perfect = filter_pick_items_by_date(included_perfect, report_date)
         included_qualified = filter_pick_items_by_date(included_qualified, report_date)
@@ -1166,7 +1167,7 @@ def main():
                 executor.submit(process_single_match, match, date_str, args.odds): match
                 for match in unique_fixtures
             }
-            for future in as_completed(futures, timeout=600):
+            for future in as_completed(futures):
                 try:
                     res = future.result(timeout=60)
                 except Exception as e:

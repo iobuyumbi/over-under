@@ -33,6 +33,7 @@ from prediction_tracker import (
     format_confidence_label,
     describe_pick_categories,
     filter_pick_items_by_date,
+    is_static_blocked_fixture,
     write_telegram_section,
     append_yesterday_section,
     PICK_TIER_PREMIUM,
@@ -58,10 +59,10 @@ MAX_TOTAL_EXPOSURE = 0.25
 SHRINKAGE_WEIGHT = 0.60
 
 if os.getenv("CI"):
-    MAX_WORKERS = 1
-    REQUEST_DELAY_MIN = 5.0
-    REQUEST_DELAY_MAX = 12.0
-    print("CI environment detected: throttling to 1 worker, longer delays")
+    MAX_WORKERS = 2
+    REQUEST_DELAY_MIN = 4.0
+    REQUEST_DELAY_MAX = 8.0
+    print("CI environment detected: throttling to 2 workers")
 
 MAX_BTTS_YES_SCORE = 14
 MAX_BTTS_NO_SCORE = 14
@@ -1345,8 +1346,14 @@ def build_report(yes_perfect, yes_qualified, yes_close,
                  scanned_dates, odds_yes, odds_no, detailed=False, compact=False,
                  include_yesterday=True, include_header=True, include_footer=True,
                  report_date=None):
-    included_yes = list(yes_perfect + yes_qualified + yes_close)
-    included_no = list(no_perfect + no_qualified + no_close)
+    included_yes = [
+        item for item in (yes_perfect + yes_qualified + yes_close)
+        if not is_static_blocked_fixture(item.get("match", {}))
+    ]
+    included_no = [
+        item for item in (no_perfect + no_qualified + no_close)
+        if not is_static_blocked_fixture(item.get("match", {}))
+    ]
     if report_date:
         included_yes = filter_pick_items_by_date(included_yes, report_date)
         included_no = filter_pick_items_by_date(included_no, report_date)
@@ -1529,7 +1536,7 @@ def main():
                 executor.submit(process_single_match, m, date_str, args.odds_yes, args.odds_no): m
                 for m in unique_fixtures
             }
-            for future in as_completed(futures, timeout=600):
+            for future in as_completed(futures):
                 try:
                     res = future.result(timeout=60)
                 except Exception as e:

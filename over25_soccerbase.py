@@ -36,6 +36,7 @@ from prediction_tracker import (
     format_confidence_label,
     describe_pick_categories,
     filter_pick_items_by_date,
+    is_static_blocked_fixture,
     write_telegram_section,
     append_yesterday_section,
     format_vip_banner,
@@ -63,10 +64,10 @@ MAX_TOTAL_EXPOSURE = 0.25
 SHRINKAGE_WEIGHT = 0.60
 
 if os.getenv("CI"):
-    MAX_WORKERS = 1
-    REQUEST_DELAY_MIN = 5.0
-    REQUEST_DELAY_MAX = 12.0
-    print("CI environment detected: throttling to 1 worker, longer delays")
+    MAX_WORKERS = 2
+    REQUEST_DELAY_MIN = 4.0
+    REQUEST_DELAY_MAX = 8.0
+    print("CI environment detected: throttling to 2 workers")
 
 MAX_OVER_SCORE = 13
 MAX_UNDER_SCORE = 12
@@ -1863,8 +1864,14 @@ def build_report(over_perfect, over_qualified, over_close, over_weak,
     Build a clean, mobile-friendly report - both channels show all picks, free is simplified
     Returns: (report, base_date, included_over, included_under)
     """
-    included_over = list(over_perfect + over_qualified + over_close)
-    included_under = list(under_perfect + under_qualified + under_close)
+    included_over = [
+        item for item in (over_perfect + over_qualified + over_close)
+        if not is_static_blocked_fixture(item.get("match", {}))
+    ]
+    included_under = [
+        item for item in (under_perfect + under_qualified + under_close)
+        if not is_static_blocked_fixture(item.get("match", {}))
+    ]
     if report_date:
         included_over = filter_pick_items_by_date(included_over, report_date)
         included_under = filter_pick_items_by_date(included_under, report_date)
@@ -2107,7 +2114,7 @@ def main():
                 ): match
                 for match in unique_fixtures
             }
-            for future in as_completed(futures, timeout=600):
+            for future in as_completed(futures):
                 try:
                     res = future.result(timeout=60)
                 except Exception as e:
