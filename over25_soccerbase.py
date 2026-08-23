@@ -683,18 +683,17 @@ def _over_leak_participation_gate(home_3, away_3):
 
 
 def _combined_low_event_veto(home_3, away_3):
-    """Block Over 2.5 if BOTH teams have been consistently low-scoring.
-
-    Even if neither side hits the extreme 2/2 drought/wall veto, two
-    mediocre attacks facing two solid defenses almost never reach 3+ goals.
-    Triggers when both sides' last 2 venue games sum to <=5 goals each
-    (i.e. both averaging <=2.5 goals per game combined).
+    """Block Over if EITHER team has been in low-scoring games recently.
+    
+    Over 2.5 needs BOTH attacks firing. If one side is consistently
+    low-event (even if not in a drought streak), the ceiling drops.
     """
     if len(home_3 or []) >= 2 and len(away_3 or []) >= 2:
         home_total = sum(gf + ga for gf, ga in home_3[:2])
         away_total = sum(gf + ga for gf, ga in away_3[:2])
-        if home_total <= 5 and away_total <= 5:
-            return True, f"combined_low_event_h{home_total}_a{away_total}"
+        # If EITHER side averages < 2.0 goals per game in last 2 venue matches, block
+        if home_total <= 4 or away_total <= 4:
+            return True, f"low_event_h{home_total}_a{away_total}"
     return False, None
 
 
@@ -1588,6 +1587,14 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         base_under_min = MAX_UNDER_SCORE - 2 if _is_weak_roi_league(league_name) else MAX_UNDER_SCORE - 3
         over_min_score = max(6, base_over_min - thin_data_gap)
         under_min_score = max(5, base_under_min - thin_data_gap)
+
+        # Early-season gate: if either team has fewer than 3 home games played,
+        # require a higher minimum score to compensate for thin data noise
+        early_season = len(home_6) < 3 or len(away_6) < 3
+        if early_season:
+            over_min_score += 1
+            under_min_score += 1
+
         over_qualifies = (
             bool(over_passed) and over_score >= over_min_score and over_gate
             and btts_gate and venue_over_gate and not recent_cold_over_block
