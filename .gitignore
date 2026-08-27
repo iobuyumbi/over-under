@@ -1,33 +1,62 @@
+# --- Python ---
 __pycache__/
 *.pyc
 *.pyo
 *.backup.py
+venv/
+.venv/
+env/
+*.egg-info/
+
+# --- Secrets & keys: NEVER commit these ---
+# If any of these are already tracked in git history, deleting them here is
+# NOT enough - they must be purged from history and the credentials rotated,
+# since anything ever pushed to GitHub must be treated as compromised even
+# after removal.
+.env
+.env.*
+api_key.txt
+*_key
+*_key.*
+*.pem
+*.ppk
+id_rsa*
+id_ed25519*
+*.key
+!requirements.txt
+
+# --- Caches / local DBs (regenerated at runtime) ---
+*.db
+soccerbase_cache*.db
 results_cache.db
-soccerbase_cache.db
-soccerbase_cache_home.db
-soccerbase_cache_btts.db
+
+# --- Logs & debug output ---
+*.log
+debug.log
+_diag_out.txt
+
+# --- Ad-hoc / dated output files (predictions, reports, telegram previews) ---
+# These are pipeline OUTPUT, not source. If you want prediction history
+# tracked in git, keep prediction_history.json (already handled explicitly
+# by the GitHub Actions workflow) rather than dozens of per-day snapshots.
+predictions_soccerbase_*.json
+predictions_*.json
+home_win_predictions_*.json
+*_report_*.json
+*_report_*.txt
+*_vip_report_*.txt
+*_telegram*.txt
+*_body.txt
+*_output*.txt
+*_errors.txt
+*_today*.txt
 selected_results_report.txt
-telegram_preview.txt
-fetch_*.log
-update_manual*.log
-btts.txt
-btts_errors.txt
-btts_report_*.json
-btts_telegram.txt
-btts_vip_report_*.txt
-hw.txt
-hw_errors.txt
-hw_telegram.txt
-ou.txt
-ou_errors.txt
-ou_telegram.txt
-telegram.txt
-_smoke_preview.py
-home_win_report_*.json
-home_win_vip_report_*.txt
-over_under_25_report_*.json
-over_under_vip_report_*.txt
-weekly_report_*.json
-weekly_report_*.txt
-monthly_report_*.json
-monthly_report_*.txt
+combined_free.txt
+combined_vip.txt
+telegram_daily.txt
+
+# --- OS / editor cruft ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

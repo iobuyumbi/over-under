@@ -5,25 +5,42 @@ HOME WIN PREDICTOR - PRODUCTION HARDENED v5
 11-check rule system | Shrinkage strength | Logistic prob | Portfolio Kelly | SQLite Cache
 """
 
-import requests
 import json
-import re
 import argparse
 import sys
-import time
-import random
 import math
 import logging
 import os
-import sqlite3
-import hashlib
 from datetime import datetime, timedelta
 from collections import defaultdict
-from bs4 import BeautifulSoup
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
-from fake_useragent import UserAgent
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# Shared scraping/caching/date/staking helpers (see utils.py) — do not
+# redefine Cache, fetch, parse_date, or calculate_kelly locally; that
+# copy-paste pattern is exactly what let this file and its siblings
+# (over25_soccerbase.py, btts_soccerbase.py) drift apart before.
+from utils import (
+    Cache,
+    build_session,
+    fetch as _shared_fetch,
+    parse_date,
+    calculate_kelly as _shared_calculate_kelly,
+    apply_portfolio_kelly as _shared_apply_portfolio_kelly,
+)
+
+# Shared Soccerbase fixture/results scraping (see scraping.py). NOTE: this
+# file's own get_team_form()/get_team_overall_form() below are NOT swapped
+# for scraping.py's versions — they return full match dicts (this file's
+# rule algorithm reads match["result"]) rather than the (gf, ga) tuples
+# over25/btts use, so the shapes don't match. Only the actual HTML
+# scraping (which returns dicts either way) is shared here.
+from scraping import (
+    fetch_soccerbase_fixtures as _shared_fetch_fixtures,
+    fetch_soccerbase_team_results as _shared_fetch_team_results,
+    _thin_count,
+    _thin_total,
+)
+
 
 # Import prediction tracker
 from prediction_tracker import (
@@ -72,264 +89,41 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Self-contained UserAgent - works offline, no remote dependency
-ua = UserAgent(
-    fallback="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-)
-
-HEADERS = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Referer": "https://www.google.com/",
-    "DNT": "1",
-    "Connection": "keep-alive",
-}
-
-retry_strategy = Retry(
-    total=4,
-    backoff_factor=1.5,
-    status_forcelist=[429, 500, 502, 503, 504]
-)
-adapter = HTTPAdapter(
-    max_retries=retry_strategy,
-    pool_connections=10,
-    pool_maxsize=10
-)
-session = requests.Session()
-session.mount("https://", adapter)
-session.mount("http://", adapter)
-
-
-# =============================================================================
-# CACHE LAYER
-# =============================================================================
-class Cache:
-    def __init__(self, db_path=CACHE_DB, ttl_hours=CACHE_TTL_HOURS):
-        self.db_path = db_path
-        self.ttl = timedelta(hours=ttl_hours)
-        self._init_db()
-
-    def _init_db(self):
-        with sqlite3.connect(self.db_path) as conn:
-            conn.execute("""
-                CREATE TABLE IF NOT EXISTS cache (
-                    key TEXT PRIMARY KEY,
-                    value TEXT,
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                )
-            """)
-            conn.execute("""
-                CREATE INDEX IF NOT EXISTS idx_created ON cache(created_at)
-            """)
-
-    def _make_key(self, url):
-        return hashlib.sha256(url.encode()).hexdigest()
-
-    def get(self, url):
-        key = self._make_key(url)
-        cutoff = (datetime.now() - self.ttl).isoformat()
-        with sqlite3.connect(self.db_path) as conn:
-            row = conn.execute(
-                "SELECT value FROM cache WHERE key = ? AND created_at > ?",
-                (key, cutoff)
-            ).fetchone()
-        return json.loads(row[0]) if row else None
-
-    def set(self, url, value):
-        key = self._make_key(url)
-        with sqlite3.connect(self.db_path) as conn:
-            conn.execute(
-                "INSERT OR REPLACE INTO cache (key, value) VALUES (?, ?)",
-                (key, json.dumps(value))
-            )
-
-    def clear(self):
-        with sqlite3.connect(self.db_path) as conn:
-            conn.execute("DELETE FROM cache")
-        logger.info("Cache cleared.")
-
-
-cache = Cache()
-
-
-# =============================================================================
-# HTTP HELPERS
-# =============================================================================
-def get_random_headers():
-    headers = HEADERS.copy()
-    headers["User-Agent"] = ua.random
-    return headers
-
-
-def random_delay():
-    time.sleep(random.uniform(REQUEST_DELAY_MIN, REQUEST_DELAY_MAX))
+# HTTP session + cache: implementation lives in utils.py and is shared
+# with the other two predictors. Build the session once per process.
+session = build_session()
+cache = Cache(db_path=CACHE_DB, ttl_hours=CACHE_TTL_HOURS)
 
 
 def fetch(url, use_cache=True):
-    if use_cache:
-        cached = cache.get(url)
-        if cached is not None:
-            logger.debug(f"Cache hit: {url[:80]}...")
-            return cached
-
-    random_delay()
-    try:
-        response = session.get(url, headers=get_random_headers(), timeout=20)
-        response.raise_for_status()
-        data = response.text
-
-        lower = data.lower()
-        if any(x in lower for x in ("captcha", "verify you are human", "access denied", "blocked")):
-            logger.error(f"BLOCKED by {url[:80]} — possible captcha")
-            return None
-        if len(data) < 1500:
-            logger.error(f"SUSPICIOUS short page ({len(data)} bytes) for {url[:80]}")
-            return None
-
-        if use_cache:
-            cache.set(url, data)
-        return data
-    except Exception as e:
-        logger.error(f"Fetch failed for {url[:80]}: {e}")
-        return None
+    """Thin wrapper binding the shared fetch() to this module's session/cache/delay config."""
+    return _shared_fetch(
+        url,
+        session=session,
+        cache=cache,
+        use_cache=use_cache,
+        min_delay=REQUEST_DELAY_MIN,
+        max_delay=REQUEST_DELAY_MAX,
+    )
 
 
 # =============================================================================
-# SCRAPING
+# SCRAPING (shared implementation in scraping.py)
 # =============================================================================
 def fetch_soccerbase_fixtures(date_str):
-    url = f"https://www.soccerbase.com/matches/results.sd?date={date_str}"
-    html = fetch(url)
-    if html is None:
-        return []
-
-    soup = BeautifulSoup(html, "html.parser")
-    matches = []
-
-    for table in soup.find_all("table", class_="listWithCards"):
-        current_league = "Unknown League"
-        for row in table.find_all("tr"):
-            league_link = row.find("a", href=lambda h: h and "comp_id=" in h)
-            if league_link:
-                current_league = league_link.get_text(strip=True)
-                continue
-
-            cells = row.find_all("td")
-            if len(cells) < 6:
-                continue
-
-            home_raw = cells[3].get_text(strip=True)
-            score_or_v = cells[4].get_text(strip=True)
-            away_raw = cells[5].get_text(strip=True)
-
-            home = re.sub(r"\s*\d+.*$", "", home_raw).strip()
-            away = re.sub(r"\s*\d+.*$", "", away_raw).strip()
-
-            if not home or not away:
-                continue
-
-            team_links = row.find_all("a", href=lambda h: h and "team_id=" in h)
-            if len(team_links) < 2:
-                continue
-
-            try:
-                home_id = team_links[0]["href"].split("team_id=")[1].split("&")[0]
-                away_id = team_links[1]["href"].split("team_id=")[1].split("&")[0]
-            except (KeyError, IndexError):
-                continue
-
-            matches.append({
-                "league": current_league,
-                "home": home,
-                "away": away,
-                "home_team_id": home_id,
-                "away_team_id": away_id,
-                "date": date_str,
-                "status": "Scheduled" if score_or_v.lower() == "v" else "Completed"
-            })
-    return matches
+    return _shared_fetch_fixtures(date_str, fetch)
 
 
 def fetch_soccerbase_team_results(team_id):
-    url = f"https://www.soccerbase.com/teams/team.sd?team_id={team_id}&teamTabs=results"
-    html = fetch(url)
-    if html is None:
-        return []
+    return _shared_fetch_team_results(team_id, fetch)
 
-    soup = BeautifulSoup(html, "html.parser")
-    matches = []
 
-    for table in soup.find_all("table", class_="soccerGrid"):
-        for row in table.find_all("tr")[2:]:
-            cells = row.find_all("td")
-            if len(cells) < 8:
-                continue
-            score = cells[4].get_text(strip=True)
-            if "-" not in score:
-                continue
-
-            try:
-                gf_h, gf_a = map(int, score.split("-"))
-                home_link = cells[3].find("a", href=lambda h: h and "team_id=" in h)
-                away_link = cells[5].find("a", href=lambda h: h and "team_id=" in h)
-                if not home_link:
-                    continue
-                home_id_in_row = home_link["href"].split("team_id=")[1].split("&")[0]
-                away_id_in_row = None
-                if away_link:
-                    away_id_in_row = away_link["href"].split("team_id=")[1].split("&")[0]
-
-                is_home = str(home_id_in_row) == str(team_id)
-                opponent_team_id = away_id_in_row if is_home else home_id_in_row
-                gf = gf_h if is_home else gf_a
-                ga = gf_a if is_home else gf_h
-                result = "W" if gf > ga else "D" if gf == ga else "L"
-
-                date_match = re.search(r"(\d{4}-\d{2}-\d{2})", str(cells[1]))
-                date_str = date_match.group(1) if date_match else None
-
-                matches.append({
-                    "gf": gf, "ga": ga, "is_home": is_home,
-                    "result": result, "date_str": date_str,
-                    "opponent_team_id": opponent_team_id,
-                })
-            except Exception:
-                continue
-
-    matches.sort(key=lambda x: x.get("date_str") or "0000-00-00", reverse=True)
-    return matches
 
 
 # =============================================================================
 # FORM & DATA HELPERS
 # =============================================================================
-def parse_date(date_str):
-    """
-    Parse date string with multiple format fallbacks.
-    Handles Soccerbase variations: 2026-06-15, 15-Jun-26, 2026/06/15, etc.
-    """
-    if not date_str:
-        return None
-
-    date_str = str(date_str).strip()
-
-    for fmt in ("%Y-%m-%d", "%d-%b-%y", "%d-%b-%Y", "%Y/%m/%d", "%d/%m/%Y", "%m/%d/%Y"):
-        try:
-            return datetime.strptime(date_str, fmt)
-        except (ValueError, TypeError):
-            continue
-
-    # Try to extract any date-like pattern as last resort
-    match = re.search(r'(\d{4})[-/](\d{2})[-/](\d{2})', date_str)
-    if match:
-        try:
-            return datetime.strptime(match.group(0), "%Y-%m-%d")
-        except ValueError:
-            pass
-
-    logger.warning(f"Could not parse date: {date_str}")
-    return None
-
+# parse_date() is imported from utils.py — do not redefine it locally.
 
 MAX_HOME_WIN_SCORE = 11
 
@@ -462,16 +256,7 @@ def _hw_regression_penalty(home_form, away_form):
     return 1.0
 
 
-def _thin_count(needed, of_window, available):
-    if available >= of_window:
-        return needed
-    return max(1, int(needed * available / of_window))
-
-
-def _thin_total(goal_sum, of_window, available):
-    if available >= of_window:
-        return goal_sum
-    return max(1, int(goal_sum * available / of_window))
+# _thin_count/_thin_total are imported from scraping.py — do not redefine locally.
 
 
 def _hw_load_league_baselines():
@@ -747,6 +532,43 @@ def _away_strength_veto(home_strength, away_strength):
     return False, None
 
 
+def _draw_risk_veto(home_data_6, away_data_6):
+    """Block Home Win when the away side scores consistently even if their
+    total-goal volume is low, AND the home defence isn't airtight enough
+    to compensate.
+
+    Added 2026-08-25 after a loss where the home team won 2-1... no —
+    drew 2-2: home scored plenty, but the away side matched them enough
+    to force a draw. apply_home_win_algorithm()'s "Away goals scored"
+    check caps the SUM of away goals over 6 games, which a team can pass
+    while still scoring in most individual matches (e.g. 1-1-0-1-1-0 = 4
+    total, well under a cap of 5, but scored in 4/6 games — a live,
+    frequent scoring threat, not a blunt one). Consistency of scoring is
+    a different signal than total volume and this closes that gap.
+
+    Only fires when the home defence ALSO isn't clearly elite (conceded
+    in more than 1 of the last 6), since an away side that scores often
+    against a genuinely airtight home defence is still low draw-risk.
+    """
+    away = (away_data_6 or [])[:6]
+    home = (home_data_6 or [])[:6]
+    if len(away) < 4 or len(home) < 4:
+        return False, None
+
+    away_scored_count = sum(1 for m in away if m.get("gf", 0) > 0)
+    away_scored_rate = away_scored_count / len(away)
+    if away_scored_rate < (4 / 6):
+        return False, None
+
+    home_conceded_count = sum(1 for m in home if m.get("ga", 0) > 0)
+    if home_conceded_count <= 1:
+        # Home defence is airtight enough to absorb a persistent-but-low-volume
+        # away attack; don't veto on scoring consistency alone.
+        return False, None
+
+    return True, f"away_scored_{away_scored_count}_of_{len(away)}_home_conceded_{home_conceded_count}_of_{len(home)}"
+
+
 def hw_data_volume_penalty(home_form, away_form, home_overall, away_overall):
     n = min(
         len(home_form or []),
@@ -806,34 +628,16 @@ def get_confidence(prob):
 # =============================================================================
 # KELLY CRITERION
 # =============================================================================
+# calculate_kelly/apply_portfolio_kelly logic itself is imported from
+# utils.py. These are thin wrappers that preserve this file's original
+# call signatures (market-specific default odds of 2.8; no bet_type
+# param since home-win recommendations aren't nested under "over"/"under").
 def calculate_kelly(prob, decimal_odds=2.8, use_half=True):
-    if prob <= 0.0 or decimal_odds <= 1.0:
-        return 0.0
-    kelly = (prob * decimal_odds - 1) / (decimal_odds - 1)
-    return max(0.0, kelly * 0.5 if use_half else kelly)
+    return _shared_calculate_kelly(prob, decimal_odds, use_half)
 
 
 def apply_portfolio_kelly(recommendations, bankroll, max_exposure=MAX_TOTAL_EXPOSURE):
-    """
-    Scale Kelly fractions so total exposure does not exceed max_exposure.
-    """
-    if not recommendations or bankroll <= 0:
-        return recommendations
-
-    total_kelly = sum(r["kelly"] / 100 for r in recommendations)
-    if total_kelly <= 0:
-        return recommendations
-
-    if total_kelly > max_exposure:
-        scale = max_exposure / total_kelly
-        for r in recommendations:
-            r["kelly"] = round(r["kelly"] * scale, 2)
-        logger.info(
-            f"Portfolio Kelly scaled by {scale:.3f} "
-            f"({total_kelly*100:.1f}% -> {max_exposure*100:.1f}% exposure)"
-        )
-
-    return recommendations
+    return _shared_apply_portfolio_kelly(recommendations, None, bankroll, max_exposure)
 
 
 # =============================================================================
@@ -869,10 +673,14 @@ def process_single_match(match, target_date, default_odds=2.8):
             match["home_team_id"], match["away_team_id"], target_date
         )
         away_strength_veto, away_strength_reason = _away_strength_veto(home_strength, away_strength)
+        draw_risk_veto, draw_risk_reason = _draw_risk_veto(home_form, away_form)
 
         weak_league = _hw_is_weak_roi(league_name)
         min_score = MAX_HOME_WIN_SCORE - 1 if weak_league else MAX_HOME_WIN_SCORE - 2
-        qualifies = score >= min_score and gate_passes and not h2h_blocked and not away_strength_veto
+        qualifies = (
+            score >= min_score and gate_passes and not h2h_blocked
+            and not away_strength_veto and not draw_risk_veto
+        )
 
         league_mult = _HW_WEAK_ROI_MULTIPLIER if weak_league else 1.0
         reg_mult = _hw_regression_penalty(home_form, away_form)
@@ -897,6 +705,8 @@ def process_single_match(match, target_date, default_odds=2.8):
             regressions.append(f"h2h {h2h_reason} (home winless/bogey or away h2h advantage)")
         if away_strength_veto:
             regressions.append(f"away strength veto ({away_strength_reason})")
+        if draw_risk_veto:
+            regressions.append(f"draw risk ({draw_risk_reason})")
 
         return {
             "status": "success",
@@ -920,6 +730,8 @@ def process_single_match(match, target_date, default_odds=2.8):
                 "h2h_meetings": len(h2h_meetings),
                 "away_strength_veto": away_strength_veto,
                 "away_strength_reason": away_strength_reason,
+                "draw_risk_veto": draw_risk_veto,
+                "draw_risk_reason": draw_risk_reason,
                 "data_mult": round(data_mult, 2),
                 "weak_league_mult": round(league_mult, 2),
                 "regression_mult": round(reg_mult, 2),
@@ -929,6 +741,8 @@ def process_single_match(match, target_date, default_odds=2.8):
                     "weak_roi_league": weak_league,
                     "away_strength_veto": away_strength_veto,
                     "away_strength_reason": away_strength_reason,
+                    "draw_risk_veto": draw_risk_veto,
+                    "draw_risk_reason": draw_risk_reason,
                     "home_strength": round(home_strength, 3),
                     "away_strength": round(away_strength, 3),
                     "regression_penalty_applied": regressions,

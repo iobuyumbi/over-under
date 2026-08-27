@@ -7,25 +7,41 @@ Under 2.5: Low-scoring mirror rules + overall under 2.5 in 4/6
 Shrinkage xG | Portfolio Kelly | SQLite Cache
 """
 
-import requests
 import json
-import re
 import argparse
 import sys
-import time
-import random
 import math
 import logging
 import os
-import sqlite3
-import hashlib
 from datetime import datetime, timedelta
 from collections import defaultdict
-from bs4 import BeautifulSoup
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
-from fake_useragent import UserAgent
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# Shared scraping/caching/date/staking helpers (see utils.py) — do not
+# redefine Cache, fetch, parse_date, or calculate_kelly locally; that
+# copy-paste pattern is exactly what previously let this file and its
+# siblings (home_win_soccerbase.py, btts_soccerbase.py) drift apart.
+from utils import (
+    Cache,
+    build_session,
+    fetch as _shared_fetch,
+    parse_date,
+    calculate_kelly,
+    apply_portfolio_kelly,
+)
+
+# Shared Soccerbase scraping/parsing (see scraping.py) — do not redefine
+# fetch_soccerbase_fixtures, fetch_soccerbase_team_results, get_team_form,
+# get_team_overall_form, or _thin_count/_thin_total locally; same
+# copy-paste-drift risk as the utils.py helpers above.
+from scraping import (
+    fetch_soccerbase_fixtures as _shared_fetch_fixtures,
+    fetch_soccerbase_team_results as _shared_fetch_team_results,
+    get_team_form as _shared_get_team_form,
+    get_team_overall_form as _shared_get_team_overall_form,
+    _thin_count,
+    _thin_total,
+)
 
 # Import prediction tracker
 from prediction_tracker import (
@@ -88,311 +104,47 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Self-contained UserAgent - works offline, no remote dependency
-ua = UserAgent(
-    fallback="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-)
-
-HEADERS = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Referer": "https://www.google.com/",
-    "DNT": "1",
-    "Connection": "keep-alive",
-}
-
-retry_strategy = Retry(
-    total=4,
-    backoff_factor=1.5,
-    status_forcelist=[429, 500, 502, 503, 504]
-)
-adapter = HTTPAdapter(
-    max_retries=retry_strategy,
-    pool_connections=10,
-    pool_maxsize=10
-)
-session = requests.Session()
-session.mount("https://", adapter)
-session.mount("http://", adapter)
-
-
-# =============================================================================
-# CACHE LAYER
-# =============================================================================
-class Cache:
-    def __init__(self, db_path=CACHE_DB, ttl_hours=CACHE_TTL_HOURS):
-        self.db_path = db_path
-        self.ttl = timedelta(hours=ttl_hours)
-        self._init_db()
-
-    def _init_db(self):
-        with sqlite3.connect(self.db_path) as conn:
-            conn.execute("""
-                CREATE TABLE IF NOT EXISTS cache (
-                    key TEXT PRIMARY KEY,
-                    value TEXT,
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                )
-            """)
-            conn.execute("""
-                CREATE INDEX IF NOT EXISTS idx_created ON cache(created_at)
-            """)
-
-    def _make_key(self, url):
-        return hashlib.sha256(url.encode()).hexdigest()
-
-    def get(self, url):
-        key = self._make_key(url)
-        cutoff = (datetime.now() - self.ttl).isoformat()
-        with sqlite3.connect(self.db_path) as conn:
-            row = conn.execute(
-                "SELECT value FROM cache WHERE key = ? AND created_at > ?",
-                (key, cutoff)
-            ).fetchone()
-        return json.loads(row[0]) if row else None
-
-    def set(self, url, value):
-        key = self._make_key(url)
-        with sqlite3.connect(self.db_path) as conn:
-            conn.execute(
-                "INSERT OR REPLACE INTO cache (key, value) VALUES (?, ?)",
-                (key, json.dumps(value))
-            )
-
-    def clear(self):
-        with sqlite3.connect(self.db_path) as conn:
-            conn.execute("DELETE FROM cache")
-        logger.info("Cache cleared.")
-
-
-cache = Cache()
-
-
-# =============================================================================
-# HTTP HELPERS
-# =============================================================================
-def get_random_headers():
-    headers = HEADERS.copy()
-    headers["User-Agent"] = ua.random
-    return headers
-
-
-def random_delay():
-    time.sleep(random.uniform(REQUEST_DELAY_MIN, REQUEST_DELAY_MAX))
+# HTTP session + cache: implementation lives in utils.py and is shared
+# with the other two predictors. Build the session once per process.
+session = build_session()
+cache = Cache(db_path=CACHE_DB, ttl_hours=CACHE_TTL_HOURS)
 
 
 def fetch(url, use_cache=True):
-    if use_cache:
-        cached = cache.get(url)
-        if cached is not None:
-            logger.debug(f"Cache hit: {url[:80]}...")
-            return cached
-
-    random_delay()
-    try:
-        response = session.get(url, headers=get_random_headers(), timeout=20)
-        response.raise_for_status()
-        data = response.text
-
-        lower = data.lower()
-        if any(x in lower for x in ("captcha", "verify you are human", "access denied", "blocked")):
-            logger.error(f"BLOCKED by {url[:80]} — possible captcha")
-            return None
-        if len(data) < 1500:
-            logger.error(f"SUSPICIOUS short page ({len(data)} bytes) for {url[:80]}")
-            return None
-
-        if use_cache:
-            cache.set(url, data)
-        return data
-    except Exception as e:
-        logger.error(f"Fetch failed for {url[:80]}: {e}")
-        return None
+    """Thin wrapper binding the shared fetch() to this module's session/cache/delay config."""
+    return _shared_fetch(
+        url,
+        session=session,
+        cache=cache,
+        use_cache=use_cache,
+        min_delay=REQUEST_DELAY_MIN,
+        max_delay=REQUEST_DELAY_MAX,
+    )
 
 
 # =============================================================================
-# SCRAPING
+# SCRAPING (shared implementation in scraping.py)
 # =============================================================================
 def fetch_soccerbase_fixtures(date_str):
-    url = f"https://www.soccerbase.com/matches/results.sd?date={date_str}"
-    html = fetch(url)
-    if html is None:
-        return []
-
-    soup = BeautifulSoup(html, "html.parser")
-    matches = []
-
-    tables = soup.find_all("table", class_="listWithCards")
-    if not tables:
-        logger.warning(f"No fixture tables found for {date_str}")
-        return matches
-
-    for table in tables:
-        current_league = "Unknown League"
-        for row in table.find_all("tr"):
-            league_link = row.find("a", href=lambda h: h and "comp_id=" in h)
-            if league_link:
-                current_league = league_link.get_text(strip=True)
-                continue
-
-            cells = row.find_all("td")
-            if len(cells) < 6:
-                continue
-
-            home_raw = cells[3].get_text(strip=True)
-            score_or_v = cells[4].get_text(strip=True)
-            away_raw = cells[5].get_text(strip=True)
-
-            home = re.sub(r"\s*\d+.*$", "", home_raw).strip()
-            away = re.sub(r"\s*\d+.*$", "", away_raw).strip()
-
-            if not home or not away:
-                continue
-
-            team_links = row.find_all("a", href=lambda h: h and "team_id=" in h)
-            if len(team_links) < 2:
-                continue
-
-            try:
-                home_id = team_links[0]["href"].split("team_id=")[1].split("&")[0]
-                away_id = team_links[1]["href"].split("team_id=")[1].split("&")[0]
-            except (KeyError, IndexError):
-                continue
-
-            matches.append({
-                "league": current_league,
-                "home": home,
-                "away": away,
-                "home_team_id": home_id,
-                "away_team_id": away_id,
-                "date": date_str,
-                "status": "Scheduled" if score_or_v.lower() == "v" else "Completed"
-            })
-
-    return matches
+    return _shared_fetch_fixtures(date_str, fetch)
 
 
 def fetch_soccerbase_team_results(team_id):
-    url = f"https://www.soccerbase.com/teams/team.sd?team_id={team_id}&teamTabs=results"
-    html = fetch(url)
-    if html is None:
-        return []
-
-    soup = BeautifulSoup(html, "html.parser")
-    matches = []
-
-    for table in soup.find_all("table", class_="soccerGrid"):
-        for row in table.find_all("tr")[2:]:
-            cells = row.find_all("td")
-            if len(cells) < 8:
-                continue
-
-            score = cells[4].get_text(strip=True)
-            if "-" not in score:
-                continue
-
-            try:
-                gf_h, gf_a = map(int, score.split("-"))
-            except ValueError:
-                continue
-
-            home_link = cells[3].find("a", href=lambda h: h and "team_id=" in h)
-            away_link = cells[5].find("a", href=lambda h: h and "team_id=" in h)
-            if not home_link:
-                continue
-
-            try:
-                home_id_in_row = home_link["href"].split("team_id=")[1].split("&")[0]
-                away_id_in_row = None
-                if away_link:
-                    away_id_in_row = away_link["href"].split("team_id=")[1].split("&")[0]
-            except (KeyError, IndexError):
-                continue
-
-            is_home = str(home_id_in_row) == str(team_id)
-            opponent_team_id = away_id_in_row if is_home else home_id_in_row
-            gf = gf_h if is_home else gf_a
-            ga = gf_a if is_home else gf_h
-
-            date_match = re.search(r"(\d{4}-\d{2}-\d{2})", str(cells[1]))
-            date_str = date_match.group(1) if date_match else None
-
-            matches.append({
-                "gf": gf,
-                "ga": ga,
-                "total": gf + ga,
-                "is_home": is_home,
-                "date_str": date_str,
-                "opponent_team_id": opponent_team_id,
-            })
-
-    matches.sort(key=lambda x: x.get("date_str") or "0000-00-00", reverse=True)
-    return matches
-
-
-# =============================================================================
-# FORM & DATA HELPERS
-# =============================================================================
-def parse_date(date_str):
-    """
-    Parse date string with multiple format fallbacks.
-    Handles Soccerbase variations: 2026-06-15, 15-Jun-26, 2026/06/15, etc.
-    """
-    if not date_str:
-        return None
-
-    date_str = str(date_str).strip()
-
-    for fmt in ("%Y-%m-%d", "%d-%b-%y", "%d-%b-%Y", "%Y/%m/%d", "%d/%m/%Y", "%m/%d/%Y"):
-        try:
-            return datetime.strptime(date_str, fmt)
-        except (ValueError, TypeError):
-            continue
-
-    # Try to extract any date-like pattern as last resort
-    match = re.search(r'(\d{4})[-/](\d{2})[-/](\d{2})', date_str)
-    if match:
-        try:
-            return datetime.strptime(match.group(0), "%Y-%m-%d")
-        except ValueError:
-            pass
-
-    logger.warning(f"Could not parse date: {date_str}")
-    return None
+    return _shared_fetch_team_results(team_id, fetch)
 
 
 def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
-    all_matches = fetch_soccerbase_team_results(team_id)
-    target_dt = parse_date(target_date_str) if target_date_str else None
-    form = []
-
-    for match in all_matches:
-        match_dt = parse_date(match.get("date_str"))
-        if target_dt and match_dt and match_dt >= target_dt:
-            continue
-        if match["is_home"] == is_home:
-            form.append((match["gf"], match["ga"]))
-            if len(form) >= num_matches:
-                break
-
-    return form
+    return _shared_get_team_form(
+        team_id, fetch_soccerbase_team_results, is_home, num_matches, target_date_str, parse_date
+    )
 
 
 def get_team_overall_form(team_id, num_matches=6, target_date_str=None):
     """Last N matches home or away combined as (gf, ga) tuples."""
-    all_matches = fetch_soccerbase_team_results(team_id)
-    target_dt = parse_date(target_date_str) if target_date_str else None
-    form = []
+    return _shared_get_team_overall_form(
+        team_id, fetch_soccerbase_team_results, num_matches, target_date_str, parse_date
+    )
 
-    for match in all_matches:
-        match_dt = parse_date(match.get("date_str"))
-        if target_dt and match_dt and match_dt >= target_dt:
-            continue
-        form.append((match["gf"], match["ga"]))
-        if len(form) >= num_matches:
-            break
-
-    return form
 
 
 def _team_scored_every_match(form):
@@ -442,16 +194,7 @@ def _count_under25(form):
     return sum(1 for gf, ga in form[:6] if gf + ga < 2.5)
 
 
-def _thin_count(needed, of_window, available):
-    if available >= of_window:
-        return needed
-    return max(1, int(needed * available / of_window))
-
-
-def _thin_total(goal_sum, of_window, available):
-    if available >= of_window:
-        return goal_sum
-    return max(1, int(goal_sum * available / of_window))
+# _thin_count/_thin_total are imported from scraping.py — do not redefine locally.
 
 
 def _venue_over_gate_passes(home_6, away_6):
@@ -651,6 +394,26 @@ def _under_defensive_leak_veto(home_3, away_3):
     return False, None
 
 
+def _recent_goal_shock_veto_under(home_3, away_3):
+    """Block Under 2.5 if either team's SINGLE most recent venue match was
+    a high-scoring game (3+ total goals) — regardless of how their other
+    recent games went.
+
+    Same principle as _recent_goalless_shock_veto() (Over 2.5) and
+    _recent_shutout_shock_veto() (BTTS Yes), applied to the Under 2.5
+    mirror-image failure mode: _under_defensive_leak_veto() above only
+    fires when BOTH of the last 2 venue games leaked 2+ goals, so a
+    single recent high-scoring shock game can get diluted out by an
+    older, tighter game and slip through. A team's most recent match is
+    a stronger live signal than a 2-game average.
+    """
+    if home_3 and (home_3[0][0] + home_3[0][1]) >= 3:
+        return True, "home_last_match_high_scoring"
+    if away_3 and (away_3[0][0] + away_3[0][1]) >= 3:
+        return True, "away_last_match_high_scoring"
+    return False, None
+
+
 def _over_btts_participation_gate(home_3, away_3):
     """Block Over 2.5 if either team failed to score in 2+ of their last 3
     venue games. Over needs both attacks firing regularly; a side that
@@ -698,6 +461,27 @@ def _combined_low_event_veto(home_3, away_3):
     return False, None
 
 
+def _recent_goalless_shock_veto(home_3, away_3):
+    """Block Over 2.5 if either team's SINGLE most recent venue match had
+    0 or 1 total goals — regardless of how their other recent games went.
+
+    Added 2026-08-25 after a 0/4 Over 2.5 day where 3 of the 4 losers
+    finished 1-0/0-1/0-1 (i.e. exactly 1 total goal). The existing
+    _recent_cold_blocks_over() only fires when BOTH of the last 2 venue
+    games were low-scoring, so a single near-goalless match immediately
+    before kickoff can be diluted out by an older, higher-scoring game
+    and slip through undetected. A team that just played a near-goalless
+    match is a stronger live signal of current attacking/defensive form
+    than a 2-game average — most-recent-form should be able to veto on
+    its own, not just contribute to an average.
+    """
+    if home_3 and (home_3[0][0] + home_3[0][1]) <= 1:
+        return True, "home_last_match_near_goalless"
+    if away_3 and (away_3[0][0] + away_3[0][1]) <= 1:
+        return True, "away_last_match_near_goalless"
+    return False, None
+
+
 # =============================================================================
 # OVER 2.5 ALGORITHM (10-Check Rules + Overall Form)
 # =============================================================================
@@ -716,6 +500,28 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, aw
         passed.append("Home total goals (last 3)"); details["Home total goals (last 3)"] = f"PASS ({h_total_3})"
     else:
         failed.append("Home total goals (last 3)"); details["Home total goals (last 3)"] = f"FAIL ({h_total_3})"; is_perfect = False
+
+    # Added 2026-08-25: mirrors "Away last match goals" below. The Away
+    # side already required its single most recent match to have >=2
+    # total goals, but Home had no equivalent check — meaning a home
+    # team could qualify for Over 2.5 coming off a near-goalless match
+    # as long as its other numbers averaged out. Closing that asymmetry.
+    prev_h_total = home_3[0][0] + home_3[0][1]
+    if prev_h_total >= 2:
+        passed.append("Home last match goals"); details["Home last match goals"] = f"PASS ({prev_h_total})"
+    else:
+        failed.append("Home last match goals"); details["Home last match goals"] = f"FAIL ({prev_h_total})"; is_perfect = False
+
+    # Added 2026-08-25: mirrors "Away scored (last 3)" below. Same gap —
+    # Away had an explicit participation check (scored in >=2/3 games)
+    # with no Home equivalent.
+    h_scored = sum(1 for gf, _ in home_3 if gf > 0)
+    if h_scored >= _thin_count(2, 3, hn3):
+        passed.append("Home scored (last 3)"); details["Home scored (last 3)"] = f"PASS ({h_scored}/{hn3})"
+        if h_scored < hn3:
+            is_perfect = False
+    else:
+        failed.append("Home scored (last 3)"); details["Home scored (last 3)"] = f"FAIL ({h_scored}/{hn3})"; is_perfect = False
 
     h_over_3 = sum(1 for gf, ga in home_3 if gf + ga > 2.5)
     if h_over_3 >= _thin_count(2, 3, hn3):
@@ -1466,38 +1272,14 @@ def tier_from_confidence(score, side, home_lambda, away_lambda, is_perfect=True)
     return "close"
 
 
-# =============================================================================
-# KELLY CRITERION
-# =============================================================================
-def calculate_kelly(prob, decimal_odds=2.0, use_half=True):
-    if prob <= 0.0 or decimal_odds <= 1.0:
-        return 0.0
-    kelly = (prob * decimal_odds - 1) / (decimal_odds - 1)
-    return max(0.0, kelly * 0.5 if use_half else kelly)
-
-
-def apply_portfolio_kelly(recommendations, bet_type, bankroll, max_exposure=MAX_TOTAL_EXPOSURE):
-    """
-    Scale Kelly fractions so total exposure does not exceed max_exposure.
-    bet_type: "over" or "under" — targets the correct nested dictionary.
-    """
-    if not recommendations or bankroll <= 0:
-        return recommendations
-
-    total_kelly = sum(r[bet_type]["kelly"] / 100 for r in recommendations)
-    if total_kelly <= 0:
-        return recommendations
-
-    if total_kelly > max_exposure:
-        scale = max_exposure / total_kelly
-        for r in recommendations:
-            r[bet_type]["kelly"] = round(r[bet_type]["kelly"] * scale, 2)
-        logger.info(
-            f"Portfolio Kelly ({bet_type}) scaled by {scale:.3f} "
-            f"({total_kelly*100:.1f}% -> {max_exposure*100:.1f}% exposure)"
-        )
-
-    return recommendations
+# Kelly-stake helpers (calculate_kelly, apply_portfolio_kelly) are imported
+# from utils.py at the top of this file — do not redefine them here.
+# NOTE: this predictor previously called calculate_kelly() with its own
+# default decimal_odds=2.0, while home_win/btts each used a different
+# market-appropriate default (2.8 / 1.90). Every call site in this file
+# already passes explicit odds, so this default was never actually used —
+# but if you add a new call site, pass decimal_odds explicitly rather than
+# relying on a default, since the "right" default differs per market.
 
 
 # =============================================================================
@@ -1545,9 +1327,11 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         scoring_drought_veto, scoring_drought_reason = _scoring_drought_veto_over(home_3, away_3)
         defensive_wall_veto, defensive_wall_reason = _defensive_wall_veto_over(home_3, away_3)
         under_leak_veto, under_leak_reason = _under_defensive_leak_veto(home_3, away_3)
+        under_goal_shock_veto, under_goal_shock_reason = _recent_goal_shock_veto_under(home_3, away_3)
         over_btts_gate, over_btts_reason = _over_btts_participation_gate(home_3, away_3)
         over_leak_gate, over_leak_reason = _over_leak_participation_gate(home_3, away_3)
         over_low_event_veto, over_low_event_reason = _combined_low_event_veto(home_3, away_3)
+        over_goalless_shock_veto, over_goalless_shock_reason = _recent_goalless_shock_veto(home_3, away_3)
 
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
@@ -1602,13 +1386,14 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             and not h2h_over_blocked and not h2h_over_blocked_2
             and not scoring_drought_veto and not defensive_wall_veto
             and not over_btts_gate and not over_leak_gate
-            and not over_low_event_veto
+            and not over_low_event_veto and not over_goalless_shock_veto
         )
         under_qualifies = (
             bool(under_passed) and under_score >= under_min_score and under_gate
             and non_btts_gate and not high_scoring_under_block
             and not h2h_under_blocked
             and not under_leak_veto
+            and not under_goal_shock_veto
         )
 
         if over_qualifies or under_qualifies:
@@ -1689,8 +1474,12 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append(f"leak participation gate ({over_leak_reason})")
         if over_low_event_veto:
             regressions.append(f"combined low event ({over_low_event_reason})")
+        if over_goalless_shock_veto:
+            regressions.append(f"recent goalless shock ({over_goalless_shock_reason})")
         if under_leak_veto:
             regressions.append(f"under defensive leak ({under_leak_reason})")
+        if under_goal_shock_veto:
+            regressions.append(f"under recent goal shock ({under_goal_shock_reason})")
 
         return {
             "status": "success",
@@ -1724,6 +1513,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "leak_participation_reason": over_leak_reason,
                     "low_event_veto": over_low_event_veto,
                     "low_event_reason": over_low_event_reason,
+                    "goalless_shock_veto": over_goalless_shock_veto,
+                    "goalless_shock_reason": over_goalless_shock_reason,
                     "home_btts_6": home_btts_6,
                     "away_btts_6": away_btts_6,
                     "data_mult": round(data_mult, 2),
@@ -1748,6 +1539,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "h2h_meetings": len(h2h_under_meetings),
                     "defensive_leak_veto": under_leak_veto,
                     "defensive_leak_reason": under_leak_reason,
+                    "goal_shock_veto": under_goal_shock_veto,
+                    "goal_shock_reason": under_goal_shock_reason,
                     "home_non_btts_6": home_non_btts_6,
                     "away_non_btts_6": away_non_btts_6,
                     "data_mult": round(data_mult, 2),
@@ -1789,8 +1582,12 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "over_leak_participation_reason": over_leak_reason,
                     "over_low_event_veto": over_low_event_veto,
                     "over_low_event_reason": over_low_event_reason,
+                    "over_goalless_shock_veto": over_goalless_shock_veto,
+                    "over_goalless_shock_reason": over_goalless_shock_reason,
                     "under_defensive_leak_veto": under_leak_veto,
                     "under_defensive_leak_reason": under_leak_reason,
+                    "under_goal_shock_veto": under_goal_shock_veto,
+                    "under_goal_shock_reason": under_goal_shock_reason,
                     "recent_cold_blocked": recent_cold_over_block,
                     "regression_penalty_applied": regressions,
                 },
