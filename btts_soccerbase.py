@@ -327,31 +327,18 @@ def _lambda_mismatch_veto(home_lambda, away_lambda):
     return False, None
 
 
-def _recent_shutout_shock_veto(home_3, away_3):
-    """Block BTTS Yes if either team's SINGLE most recent venue match saw
-    them fail to score OR keep a clean sheet — regardless of how their
-    other recent games went.
-
-    Added 2026-08-25 after a 1/5 BTTS Yes day where all 4 losers ended
-    with one side blanked (0-1, 1-0, 3-0, 0-1). The existing
-    _scoring_drought_veto()/_defensive_wall_veto() only fire when BOTH of
-    the last 2 venue games show the pattern, so a single very recent
-    shutout can be diluted out by an older game and slip through. A
-    team's most recent match is a stronger live signal than a 2-game
-    average and should be able to veto on its own.
-    """
-    if home_3:
-        gf, ga = home_3[0]
-        if gf == 0:
-            return True, "home_last_match_no_goals_for"
-        if ga == 0:
-            return True, "home_last_match_clean_sheet_against"
-    if away_3:
-        gf, ga = away_3[0]
-        if gf == 0:
-            return True, "away_last_match_no_goals_for"
-        if ga == 0:
-            return True, "away_last_match_clean_sheet_against"
+def _recent_shutout_shock_veto(home_3, away_3, home_overall_1, away_overall_1):
+    """Block BTTS Yes if a team blanked (scored 0) in their most recent match overall,
+    OR failed to score in their last venue match. We ignore clean-sheets-kept (ga==0)
+    because one good defensive game is not a reliable BTTS No signal."""
+    if home_3 and home_3[0][0] == 0:
+        return True, "home_last_venue_blank"
+    if away_3 and away_3[0][0] == 0:
+        return True, "away_last_venue_blank"
+    if home_overall_1 and home_overall_1[0][0] == 0:
+        return True, "home_last_match_blank"
+    if away_overall_1 and away_overall_1[0][0] == 0:
+        return True, "away_last_match_blank"
     return False, None
 
 
@@ -368,22 +355,6 @@ def _extended_scoring_drought_veto(home_3, away_3):
         blanks = sum(1 for gf, _ in away_3[:3] if gf == 0)
         if blanks >= 2:
             return True, f"away_scoring_blanks_{blanks}_of_3"
-    return False, None
-
-
-def _overall_last_match_scoring_veto(home_team_id, away_team_id, target_date_str=None):
-    """Block BTTS Yes if either team failed to score in their most recent match overall."""
-    home_overall_1 = get_team_overall_form(home_team_id, 1, target_date_str)
-    away_overall_1 = get_team_overall_form(away_team_id, 1, target_date_str)
-
-    if home_overall_1:
-        gf, _ = home_overall_1[0]
-        if gf == 0:
-            return True, "home_blank_last_match_overall"
-    if away_overall_1:
-        gf, _ = away_overall_1[0]
-        if gf == 0:
-            return True, "away_blank_last_match_overall"
     return False, None
 
 
@@ -406,7 +377,7 @@ def _cup_mismatch_veto(match, home_lambda, away_lambda):
     Detected by: 'Cup' in league name AND lambda mismatch >= 1.8.
     """
     league = str(match.get("league", "")).lower()
-    is_cup = "cup" in league or "trophy" in league or "shield" in league
+    is_cup = any(k in league for k in ("cup", "trophy", "shield", "challenge"))
     if not is_cup:
         return False, None
     if home_lambda <= 0 or away_lambda <= 0:
@@ -978,13 +949,13 @@ def compute_confidence_score(rule_score, max_score, model_prob_pct, decimal_odds
     return max(0.0, min(1.0, raw * data_mult))
 
 
-def tier_from_confidence(score, side, home_lambda, away_lambda):
+def tier_from_confidence(score, side, home_lambda, away_lambda, is_perfect=True):
     combined = home_lambda + away_lambda
     premium_ok = (
         (side == "yes" and combined >= PREMIUM_COMBINED_LAMBDA_BTTS_YES)
         or (side == "no" and combined <= PREMIUM_COMBINED_LAMBDA_BTTS_NO)
     )
-    if score >= _TIER_PREMIUM_CUTOFF and premium_ok:
+    if score >= _TIER_PREMIUM_CUTOFF and premium_ok and is_perfect:
         return "perfect"
     if score >= _TIER_SOLID_CUTOFF:
         return "qualified"
@@ -1060,11 +1031,12 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         drought_veto, drought_reason = _scoring_drought_veto(home_3, away_3)
         wall_veto, wall_reason = _defensive_wall_veto(home_3, away_3)
         mismatch_veto, mismatch_reason = _lambda_mismatch_veto(home_lambda, away_lambda)
-        shutout_shock_veto, shutout_shock_reason = _recent_shutout_shock_veto(home_3, away_3)
-        extended_drought_veto, extended_drought_reason = _extended_scoring_drought_veto(home_3, away_3)
-        overall_blank_veto, overall_blank_reason = _overall_last_match_scoring_veto(
-            match["home_team_id"], match["away_team_id"], target_date
+        home_overall_1 = get_team_overall_form(match["home_team_id"], 1, target_date)
+        away_overall_1 = get_team_overall_form(match["away_team_id"], 1, target_date)
+        shutout_shock_veto, shutout_shock_reason = _recent_shutout_shock_veto(
+            home_3, away_3, home_overall_1, away_overall_1
         )
+        extended_drought_veto, extended_drought_reason = _extended_scoring_drought_veto(home_3, away_3)
         min_attack_veto, min_attack_reason = _minimum_attack_rate_veto(home_3, away_3)
         cup_veto, cup_reason = _cup_mismatch_veto(match, home_lambda, away_lambda)
         cs_freq_veto, cs_freq_reason = _clean_sheet_frequency_veto(home_6, away_6)
@@ -1078,8 +1050,10 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
 
         weak = _is_weak_roi_league(league_name)
         thin_gap = max(0, 6 - min(len(home_6), len(away_6)))
-        yes_min = max(7, (MAX_BTTS_YES_SCORE - 3 if weak else MAX_BTTS_YES_SCORE - 4) - thin_gap)
-        no_min = max(6, (MAX_BTTS_NO_SCORE - 3 if weak else MAX_BTTS_NO_SCORE - 4) - thin_gap)
+        base_min_y = MAX_BTTS_YES_SCORE - 3 if weak else MAX_BTTS_YES_SCORE - 4
+        yes_min = max(9, base_min_y + thin_gap)
+        base_min_n = MAX_BTTS_NO_SCORE - 3 if weak else MAX_BTTS_NO_SCORE - 4
+        no_min = max(8, base_min_n + thin_gap)
         yes_qualifies = (
             bool(yes_passed) and yes_score >= yes_min and yes_gate
             and btts_gate and o25tips_yes_ok
@@ -1090,7 +1064,6 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             and not mismatch_veto
             and not shutout_shock_veto
             and not extended_drought_veto
-            and not overall_blank_veto
             and not min_attack_veto
             and not cup_veto
             and not cs_freq_veto
@@ -1101,13 +1074,28 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             and not h2h_btts_no_blocked
         )
 
+        min_venue = min(len(home_6 or []), len(away_6 or []))
+        if yes_qualifies and min_venue < 4:
+            home_reliable = (
+                len(home_3 or []) >= 3
+                and all(gf >= 1 for gf, _ in home_3)
+                and all(ga >= 1 for _, ga in home_3)
+            )
+            away_reliable = (
+                len(away_3 or []) >= 3
+                and all(gf >= 1 for gf, _ in away_3)
+                and all(ga >= 1 for _, ga in away_3)
+            )
+            if not (home_reliable and away_reliable):
+                yes_qualifies = False
+
         league_mult = _WEAK_ROI_MULTIPLIER if weak else 1.0
         final_mult = data_mult * league_mult
 
         yes_conf = compute_confidence_score(yes_score, MAX_BTTS_YES_SCORE + 1, btts_yes_pct, odds_yes, final_mult)
         no_conf = compute_confidence_score(no_score, MAX_BTTS_NO_SCORE + 1, btts_no_pct, odds_no, final_mult)
-        yes_tier = tier_from_confidence(yes_conf, "yes", home_lambda, away_lambda) if yes_qualifies else None
-        no_tier = tier_from_confidence(no_conf, "no", home_lambda, away_lambda) if no_qualifies else None
+        yes_tier = tier_from_confidence(yes_conf, "yes", home_lambda, away_lambda, yes_perfect) if yes_qualifies else None
+        no_tier = tier_from_confidence(no_conf, "no", home_lambda, away_lambda, no_perfect) if no_qualifies else None
 
         yes_kelly = calculate_kelly(btts_yes_pct / 100.0, odds_yes) if yes_qualifies else 0.0
         no_kelly = calculate_kelly(btts_no_pct / 100.0, odds_no) if no_qualifies else 0.0
@@ -1130,8 +1118,6 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             regressions.append(f"recent shutout shock ({shutout_shock_reason})")
         if extended_drought_veto:
             regressions.append(f"extended scoring drought ({extended_drought_reason})")
-        if overall_blank_veto:
-            regressions.append(f"overall last-match blank ({overall_blank_reason})")
         if min_attack_veto:
             regressions.append(f"minimum attack rate ({min_attack_reason})")
         if cup_veto:
