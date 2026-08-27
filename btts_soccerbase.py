@@ -106,10 +106,12 @@ _MIN_DATA_GAMES = 5
 _MIN_FORM_HALFLIFE = 3.0
 
 _WEAK_ROI_LEAGUE_KEYWORDS = (
-    "swedish allsvenskan", "allsvenskan", "belarus",
-    "k-league 1", "k league 1", "korean k-league 1",
-    "league of ireland", "fai cup",
-    "mexican primera apertura", "brazilian serie a",
+    "swedish allsvenskan", "allsvenskan", "superettan",
+    "belarus",
+    "k-league", "k league", "korean k-league",
+    "league of ireland", "irish", "fai cup",
+    "mexican primera", "brazilian serie a",
+    "mls", "ecuador", "argentina primera", "chile primera",
 )
 _WEAK_ROI_MULTIPLIER = 0.82
 
@@ -312,15 +314,15 @@ def _defensive_wall_veto(home_3, away_3):
 def _lambda_mismatch_veto(home_lambda, away_lambda):
     """Block BTTS Yes when one attack is expected to dominate the other.
 
-    BTTS requires both attacks to contribute. If one lambda is < 0.7 or the
-    ratio exceeds 2.5x, the match is likely one-sided.
+    BTTS requires both attacks to contribute. If one lambda is < 0.8 or the
+    ratio exceeds 2.0x, the match is likely one-sided.
     """
     if home_lambda <= 0 or away_lambda <= 0:
         return False, None
     lo, hi = sorted((home_lambda, away_lambda))
-    if hi / lo >= 2.5:
+    if hi / lo >= 2.0:
         return True, f"lambda_ratio_{hi/lo:.1f}"
-    if lo < 0.7:
+    if lo < 0.8:
         return True, f"weak_attack_lambda_{lo:.2f}"
     return False, None
 
@@ -350,6 +352,84 @@ def _recent_shutout_shock_veto(home_3, away_3):
             return True, "away_last_match_no_goals_for"
         if ga == 0:
             return True, "away_last_match_clean_sheet_against"
+    return False, None
+
+
+def _extended_scoring_drought_veto(home_3, away_3):
+    """Block BTTS Yes if EITHER team failed to score in 2+ of their last 3
+    venue games. The existing _scoring_drought_veto only catches a streak
+    of 2 consecutive blanks; this catches intermittent blanks too.
+    """
+    if len(home_3 or []) >= 3:
+        blanks = sum(1 for gf, _ in home_3[:3] if gf == 0)
+        if blanks >= 2:
+            return True, f"home_scoring_blanks_{blanks}_of_3"
+    if len(away_3 or []) >= 3:
+        blanks = sum(1 for gf, _ in away_3[:3] if gf == 0)
+        if blanks >= 2:
+            return True, f"away_scoring_blanks_{blanks}_of_3"
+    return False, None
+
+
+def _overall_last_match_scoring_veto(home_team_id, away_team_id, target_date_str=None):
+    """Block BTTS Yes if either team failed to score in their most recent match overall."""
+    home_overall_1 = get_team_overall_form(home_team_id, 1, target_date_str)
+    away_overall_1 = get_team_overall_form(away_team_id, 1, target_date_str)
+
+    if home_overall_1:
+        gf, _ = home_overall_1[0]
+        if gf == 0:
+            return True, "home_blank_last_match_overall"
+    if away_overall_1:
+        gf, _ = away_overall_1[0]
+        if gf == 0:
+            return True, "away_blank_last_match_overall"
+    return False, None
+
+
+def _minimum_attack_rate_veto(home_3, away_3):
+    """Block BTTS Yes if either team averages < 0.8 goals scored per venue game."""
+    if len(home_3 or []) >= 3:
+        avg = sum(gf for gf, _ in home_3) / len(home_3)
+        if avg < 0.8:
+            return True, f"home_attack_avg_{avg:.2f}"
+    if len(away_3 or []) >= 3:
+        avg = sum(gf for gf, _ in away_3) / len(away_3)
+        if avg < 0.8:
+            return True, f"away_attack_avg_{avg:.2f}"
+    return False, None
+
+
+def _cup_mismatch_veto(match, home_lambda, away_lambda):
+    """
+    Block BTTS Yes in cup matches with a clear tier gap.
+    Detected by: 'Cup' in league name AND lambda mismatch >= 1.8.
+    """
+    league = str(match.get("league", "")).lower()
+    is_cup = "cup" in league or "trophy" in league or "shield" in league
+    if not is_cup:
+        return False, None
+    if home_lambda <= 0 or away_lambda <= 0:
+        return False, None
+    lo, hi = sorted((home_lambda, away_lambda))
+    if hi / lo >= 1.8:
+        return True, f"cup_tier_mismatch_{hi/lo:.1f}x"
+    return False, None
+
+
+def _clean_sheet_frequency_veto(home_6, away_6):
+    """
+    Hard block: if either team has kept a clean sheet in 3+ of their last 6
+    venue games (requires full 6-game sample), BTTS Yes is unlikely.
+    """
+    if len(home_6 or []) >= 6:
+        cs = sum(1 for _, ga in home_6[:6] if ga == 0)
+        if cs >= 3:
+            return True, f"home_clean_sheets_{cs}_of_6"
+    if len(away_6 or []) >= 6:
+        cs = sum(1 for gf, _ in away_6[:6] if gf == 0)
+        if cs >= 3:
+            return True, f"away_clean_sheets_{cs}_of_6"
     return False, None
 
 
@@ -981,6 +1061,13 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         wall_veto, wall_reason = _defensive_wall_veto(home_3, away_3)
         mismatch_veto, mismatch_reason = _lambda_mismatch_veto(home_lambda, away_lambda)
         shutout_shock_veto, shutout_shock_reason = _recent_shutout_shock_veto(home_3, away_3)
+        extended_drought_veto, extended_drought_reason = _extended_scoring_drought_veto(home_3, away_3)
+        overall_blank_veto, overall_blank_reason = _overall_last_match_scoring_veto(
+            match["home_team_id"], match["away_team_id"], target_date
+        )
+        min_attack_veto, min_attack_reason = _minimum_attack_rate_veto(home_3, away_3)
+        cup_veto, cup_reason = _cup_mismatch_veto(match, home_lambda, away_lambda)
+        cs_freq_veto, cs_freq_reason = _clean_sheet_frequency_veto(home_6, away_6)
         perm_passed, perm_failed, perm_details = _defensive_permeability_check(home_6, away_6)
 
         yes_passed = yes_passed + perm_passed
@@ -1002,6 +1089,11 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             and not wall_veto
             and not mismatch_veto
             and not shutout_shock_veto
+            and not extended_drought_veto
+            and not overall_blank_veto
+            and not min_attack_veto
+            and not cup_veto
+            and not cs_freq_veto
         )
         no_qualifies = (
             bool(no_passed) and no_score >= no_min and no_gate
@@ -1036,6 +1128,16 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             regressions.append(f"attack mismatch ({mismatch_reason})")
         if shutout_shock_veto:
             regressions.append(f"recent shutout shock ({shutout_shock_reason})")
+        if extended_drought_veto:
+            regressions.append(f"extended scoring drought ({extended_drought_reason})")
+        if overall_blank_veto:
+            regressions.append(f"overall last-match blank ({overall_blank_reason})")
+        if min_attack_veto:
+            regressions.append(f"minimum attack rate ({min_attack_reason})")
+        if cup_veto:
+            regressions.append(f"cup tier mismatch ({cup_reason})")
+        if cs_freq_veto:
+            regressions.append(f"clean-sheet frequency ({cs_freq_reason})")
         if h2h_btts_no_blocked:
             regressions.append(f"h2h btts bogey ({len(h2h_btts_no_meetings)} meetings)")
 
@@ -1445,6 +1547,8 @@ def main():
                 "perfect" if pick in yes_perfect else
                 "qualified" if pick in yes_qualified else "close"
             )
+            mfr = str(pick.get("o25tips", {}).get("match_favourite_rule", ""))
+            favourite_skew = "R13" in mfr or "R14" in mfr or "heavy favourite" in mfr
             btts_picks.append({
                 "league": pick["match"]["league"],
                 "home": pick["match"]["home"],
@@ -1453,6 +1557,9 @@ def main():
                 "prediction": "yes",
                 "confidence": tier,
                 "prob": pick["poisson"]["btts_yes_prob"],
+                "home_lambda": pick["poisson"]["home_lambda"],
+                "away_lambda": pick["poisson"]["away_lambda"],
+                "favourite_skew": favourite_skew,
             })
         all_no = no_perfect + no_qualified + no_close
         for pick in all_no:
@@ -1460,6 +1567,8 @@ def main():
                 "perfect" if pick in no_perfect else
                 "qualified" if pick in no_qualified else "close"
             )
+            mfr = str(pick.get("o25tips", {}).get("match_favourite_rule", ""))
+            favourite_skew = "R13" in mfr or "R14" in mfr or "heavy favourite" in mfr
             btts_picks.append({
                 "league": pick["match"]["league"],
                 "home": pick["match"]["home"],
@@ -1468,6 +1577,9 @@ def main():
                 "prediction": "no",
                 "confidence": tier,
                 "prob": pick["poisson"]["btts_no_prob"],
+                "home_lambda": pick["poisson"]["home_lambda"],
+                "away_lambda": pick["poisson"]["away_lambda"],
+                "favourite_skew": favourite_skew,
             })
         stats = record_predictions(base_date, btts_picks=btts_picks)
         if stats["added"]:

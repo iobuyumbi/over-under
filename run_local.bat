@@ -5,40 +5,62 @@ if not defined RUN_DATE (
   for /f %%I in ('powershell -NoProfile -Command "Get-Date -Format yyyy-MM-dd"') do set "RUN_DATE=%%I"
 )
 echo Running pipeline for %RUN_DATE%...
+echo.
 
 echo === FETCH RESULTS ===
 python fetch_results.py --days 3
 if errorlevel 1 goto :error
+echo --- done ---
 
 echo.
 echo === UPDATE MANUAL (pending only, last 7 days) ===
 python update_manual_results.py
 if errorlevel 1 goto :error
+echo --- done ---
 
 echo.
 echo === OVER/UNDER 2.5 ===
 python over25_soccerbase.py --publish-date %RUN_DATE% > ou.txt 2> ou_errors.txt
 if errorlevel 1 goto :error
+echo --- done ---
 
 echo.
 echo === HOME WIN ===
 python home_win_soccerbase.py --publish-date %RUN_DATE% > hw.txt 2> hw_errors.txt
 if errorlevel 1 goto :error
+echo --- done ---
 
 echo.
 echo === BTTS ===
 python btts_soccerbase.py --publish-date %RUN_DATE% > btts.txt 2> btts_errors.txt
 if errorlevel 1 goto :error
+echo --- done ---
 
 echo.
 echo === TELEGRAM BUILD ===
 python build_telegram_daily.py --date %RUN_DATE% --ou-output ou.txt --btts-output btts.txt --hw-output hw.txt --out telegram.txt
 if errorlevel 1 goto :error
+echo --- done ---
 
 echo.
-echo Done! Check telegram.txt
+echo ============================================================
+echo              DAILY PREDICTIONS for %RUN_DATE%
+echo ============================================================
+echo.
+type telegram.txt
+echo.
+echo ============================================================
+echo  Files saved: ou.txt, hw.txt, btts.txt, telegram.txt
+echo  VIP reports: btts_vip_report_*.txt, over_under_vip_report_*.txt, home_win_vip_report_*.txt
+echo ============================================================
+pause
 exit /b 0
 
 :error
+echo.
+echo ############################################################
 echo Pipeline failed with exit code %errorlevel%.
+echo Check error files: ou_errors.txt, hw_errors.txt, btts_errors.txt
+echo ############################################################
+pause
 exit /b %errorlevel%
