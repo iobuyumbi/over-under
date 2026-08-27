@@ -1191,7 +1191,7 @@ def format_pick_result_lines(pick, market_label, compact=False):
             f"[{tag}] {home} vs {away}",
             f"   {market_label} — {format_result_badge(result)} ({score})",
         ]
-        safer = format_safer_result_line(market_label, score)
+        safer = format_safer_result_line(market_label, score, pick)
         if safer:
             lines.append(safer)
         lines.append("")
@@ -1391,8 +1391,14 @@ def compute_safer_result(market, score_str):
     return None
 
 
-def safer_market_label(primary_market):
-    """Map a primary prediction label to its safer companion market."""
+def safer_market_label(primary_market, pick=None):
+    """Map a primary prediction label to its safer companion market.
+
+    For BTTS No, suppresses the default Under 3.5 suggestion when the match
+    was a lopsided favourite blowout (high combined lambda but one side
+    tiny). In those games BTTS No wins cleanly, but goals still fly in from
+    the favourite, so Under 3.5 is not actually safer.
+    """
     market = (primary_market or "").lower()
     if market in ("home win", "home_win"):
         return "double_chance", "Double Chance (Home or Draw)"
@@ -1403,13 +1409,20 @@ def safer_market_label(primary_market):
     if market in ("btts yes", "btts_yes", "yes"):
         return "over_1_5", "Over 1.5 Goals"
     if market in ("btts no", "btts_no", "no"):
+        if pick:
+            hl = float(pick.get("home_lambda", 0) or 0)
+            al = float(pick.get("away_lambda", 0) or 0)
+            combined = hl + al
+            skew = bool(pick.get("favourite_skew", False))
+            if (combined > 2.5 and max(hl, al) > 2.0 and min(hl, al) < 0.8) or skew:
+                return None, None
         return "under_3_5", "Under 3.5 Goals"
     return None, None
 
 
-def format_safer_result_line(primary_market, score_str):
+def format_safer_result_line(primary_market, score_str, pick=None):
     """Format one safer-pick result line for reports."""
-    market_key, label = safer_market_label(primary_market)
+    market_key, label = safer_market_label(primary_market, pick)
     if not market_key:
         return None
     result = compute_safer_result(market_key, score_str)
