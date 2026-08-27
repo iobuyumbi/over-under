@@ -5,25 +5,40 @@ BTTS (BOTH TEAMS TO SCORE) PREDICTOR - STANDALONE v1
 BTTS Yes / BTTS No rule scoring | Poisson model | Portfolio Kelly | SQLite Cache
 """
 
-import requests
 import json
-import re
 import argparse
 import sys
-import time
-import random
 import math
 import logging
 import os
-import sqlite3
-import hashlib
 from datetime import datetime, timedelta
 from collections import defaultdict
-from bs4 import BeautifulSoup
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
-from fake_useragent import UserAgent
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# Shared scraping/caching/date/staking helpers (see utils.py) — do not
+# redefine Cache, fetch, parse_date, or calculate_kelly locally; that
+# copy-paste pattern is exactly what let this file and its siblings
+# (over25_soccerbase.py, home_win_soccerbase.py) drift apart before.
+from utils import (
+    Cache,
+    build_session,
+    fetch as _shared_fetch,
+    parse_date,
+    calculate_kelly as _shared_calculate_kelly,
+    apply_portfolio_kelly as _shared_apply_portfolio_kelly,
+)
+
+# Shared Soccerbase scraping/parsing (see scraping.py) — do not redefine
+# fetch_soccerbase_fixtures, fetch_soccerbase_team_results, get_team_form,
+# get_team_overall_form, or _thin_count/_thin_total locally.
+from scraping import (
+    fetch_soccerbase_fixtures as _shared_fetch_fixtures,
+    fetch_soccerbase_team_results as _shared_fetch_team_results,
+    get_team_form as _shared_get_team_form,
+    get_team_overall_form as _shared_get_team_overall_form,
+    _thin_count,
+    _thin_total,
+)
 
 from prediction_tracker import (
     record_predictions,
@@ -108,249 +123,45 @@ _LEAGUE_BASELINE_CACHE = {}
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-ua = UserAgent(
-    fallback="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-             "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-)
-HEADERS = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Referer": "https://www.google.com/",
-    "DNT": "1",
-    "Connection": "keep-alive",
-}
-retry_strategy = Retry(total=4, backoff_factor=1.5, status_forcelist=[429, 500, 502, 503, 504])
-adapter = HTTPAdapter(max_retries=retry_strategy, pool_connections=10, pool_maxsize=10)
-session = requests.Session()
-session.mount("https://", adapter)
-session.mount("http://", adapter)
-
-
-# =============================================================================
-# CACHE
-# =============================================================================
-class Cache:
-    def __init__(self, db_path=CACHE_DB, ttl_hours=CACHE_TTL_HOURS):
-        self.db_path = db_path
-        self.ttl = timedelta(hours=ttl_hours)
-        self._init_db()
-
-    def _init_db(self):
-        with sqlite3.connect(self.db_path) as conn:
-            conn.execute("""
-                CREATE TABLE IF NOT EXISTS cache (
-                    key TEXT PRIMARY KEY, value TEXT,
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                )
-            """)
-            conn.execute("CREATE INDEX IF NOT EXISTS idx_created ON cache(created_at)")
-
-    def _make_key(self, url):
-        return hashlib.sha256(url.encode()).hexdigest()
-
-    def get(self, url):
-        key = self._make_key(url)
-        cutoff = (datetime.now() - self.ttl).isoformat()
-        with sqlite3.connect(self.db_path) as conn:
-            row = conn.execute(
-                "SELECT value FROM cache WHERE key = ? AND created_at > ?",
-                (key, cutoff),
-            ).fetchone()
-        return json.loads(row[0]) if row else None
-
-    def set(self, url, value):
-        key = self._make_key(url)
-        with sqlite3.connect(self.db_path) as conn:
-            conn.execute(
-                "INSERT OR REPLACE INTO cache (key, value) VALUES (?, ?)",
-                (key, json.dumps(value)),
-            )
-
-    def clear(self):
-        with sqlite3.connect(self.db_path) as conn:
-            conn.execute("DELETE FROM cache")
-        logger.info("Cache cleared.")
-
-
-cache = Cache()
-
-
-def get_random_headers():
-    headers = HEADERS.copy()
-    headers["User-Agent"] = ua.random
-    return headers
-
-
-def random_delay():
-    time.sleep(random.uniform(REQUEST_DELAY_MIN, REQUEST_DELAY_MAX))
+# HTTP session + cache: implementation lives in utils.py and is shared
+# with the other two predictors. Build the session once per process.
+session = build_session()
+cache = Cache(db_path=CACHE_DB, ttl_hours=CACHE_TTL_HOURS)
 
 
 def fetch(url, use_cache=True):
-    if use_cache:
-        cached = cache.get(url)
-        if cached is not None:
-            return cached
-    random_delay()
-    try:
-        response = session.get(url, headers=get_random_headers(), timeout=20)
-        response.raise_for_status()
-        data = response.text
-
-        lower = data.lower()
-        if any(x in lower for x in ("captcha", "verify you are human", "access denied", "blocked")):
-            logger.error(f"BLOCKED by {url[:80]} — possible captcha")
-            return None
-        if len(data) < 1500:
-            logger.error(f"SUSPICIOUS short page ({len(data)} bytes) for {url[:80]}")
-            return None
-
-        if use_cache:
-            cache.set(url, data)
-        return data
-    except Exception as e:
-        logger.error(f"Fetch failed for {url[:80]}: {e}")
-        return None
+    """Thin wrapper binding the shared fetch() to this module's session/cache/delay config."""
+    return _shared_fetch(
+        url,
+        session=session,
+        cache=cache,
+        use_cache=use_cache,
+        min_delay=REQUEST_DELAY_MIN,
+        max_delay=REQUEST_DELAY_MAX,
+    )
 
 
 # =============================================================================
-# SCRAPING
+# SCRAPING (shared implementation in scraping.py)
 # =============================================================================
 def fetch_soccerbase_fixtures(date_str):
-    url = f"https://www.soccerbase.com/matches/results.sd?date={date_str}"
-    html = fetch(url)
-    if html is None:
-        return []
-    soup = BeautifulSoup(html, "html.parser")
-    matches = []
-    for table in soup.find_all("table", class_="listWithCards"):
-        current_league = "Unknown League"
-        for row in table.find_all("tr"):
-            league_link = row.find("a", href=lambda h: h and "comp_id=" in h)
-            if league_link:
-                current_league = league_link.get_text(strip=True)
-                continue
-            cells = row.find_all("td")
-            if len(cells) < 6:
-                continue
-            home_raw = cells[3].get_text(strip=True)
-            score_or_v = cells[4].get_text(strip=True)
-            away_raw = cells[5].get_text(strip=True)
-            home = re.sub(r"\s*\d+.*$", "", home_raw).strip()
-            away = re.sub(r"\s*\d+.*$", "", away_raw).strip()
-            if not home or not away:
-                continue
-            team_links = row.find_all("a", href=lambda h: h and "team_id=" in h)
-            if len(team_links) < 2:
-                continue
-            try:
-                home_id = team_links[0]["href"].split("team_id=")[1].split("&")[0]
-                away_id = team_links[1]["href"].split("team_id=")[1].split("&")[0]
-            except (KeyError, IndexError):
-                continue
-            matches.append({
-                "league": current_league,
-                "home": home,
-                "away": away,
-                "home_team_id": home_id,
-                "away_team_id": away_id,
-                "date": date_str,
-                "status": "Scheduled" if score_or_v.lower() == "v" else "Completed",
-            })
-    return matches
+    return _shared_fetch_fixtures(date_str, fetch)
 
 
 def fetch_soccerbase_team_results(team_id):
-    url = f"https://www.soccerbase.com/teams/team.sd?team_id={team_id}&teamTabs=results"
-    html = fetch(url)
-    if html is None:
-        return []
-    soup = BeautifulSoup(html, "html.parser")
-    matches = []
-    for table in soup.find_all("table", class_="soccerGrid"):
-        for row in table.find_all("tr")[2:]:
-            cells = row.find_all("td")
-            if len(cells) < 8:
-                continue
-            score = cells[4].get_text(strip=True)
-            if "-" not in score:
-                continue
-            try:
-                gf_h, gf_a = map(int, score.split("-"))
-            except ValueError:
-                continue
-            home_link = cells[3].find("a", href=lambda h: h and "team_id=" in h)
-            away_link = cells[5].find("a", href=lambda h: h and "team_id=" in h)
-            if not home_link:
-                continue
-            try:
-                home_id_in_row = home_link["href"].split("team_id=")[1].split("&")[0]
-                away_id_in_row = None
-                if away_link:
-                    away_id_in_row = away_link["href"].split("team_id=")[1].split("&")[0]
-            except (KeyError, IndexError):
-                continue
-            is_home = str(home_id_in_row) == str(team_id)
-            opponent_team_id = away_id_in_row if is_home else home_id_in_row
-            gf = gf_h if is_home else gf_a
-            ga = gf_a if is_home else gf_h
-            date_match = re.search(r"(\d{4}-\d{2}-\d{2})", str(cells[1]))
-            date_str = date_match.group(1) if date_match else None
-            matches.append({
-                "gf": gf, "ga": ga, "is_home": is_home, "date_str": date_str,
-                "opponent_team_id": opponent_team_id,
-            })
-    matches.sort(key=lambda x: x.get("date_str") or "0000-00-00", reverse=True)
-    return matches
-
-
-# =============================================================================
-# FORM HELPERS
-# =============================================================================
-def parse_date(date_str):
-    if not date_str:
-        return None
-    date_str = str(date_str).strip()
-    for fmt in ("%Y-%m-%d", "%d-%b-%y", "%d-%b-%Y", "%Y/%m/%d", "%d/%m/%Y", "%m/%d/%Y"):
-        try:
-            return datetime.strptime(date_str, fmt)
-        except (ValueError, TypeError):
-            continue
-    match = re.search(r"(\d{4})[-/](\d{2})[-/](\d{2})", date_str)
-    if match:
-        try:
-            return datetime.strptime(match.group(0).replace("/", "-")[:10], "%Y-%m-%d")
-        except ValueError:
-            pass
-    return None
+    return _shared_fetch_team_results(team_id, fetch)
 
 
 def get_team_form(team_id, is_home=True, num_matches=6, target_date_str=None):
-    all_matches = fetch_soccerbase_team_results(team_id)
-    target_dt = parse_date(target_date_str) if target_date_str else None
-    form = []
-    for match in all_matches:
-        match_dt = parse_date(match.get("date_str"))
-        if target_dt and match_dt and match_dt >= target_dt:
-            continue
-        if match["is_home"] == is_home:
-            form.append((match["gf"], match["ga"]))
-            if len(form) >= num_matches:
-                break
-    return form
+    return _shared_get_team_form(
+        team_id, fetch_soccerbase_team_results, is_home, num_matches, target_date_str, parse_date
+    )
 
 
 def get_team_overall_form(team_id, num_matches=6, target_date_str=None):
-    all_matches = fetch_soccerbase_team_results(team_id)
-    target_dt = parse_date(target_date_str) if target_date_str else None
-    form = []
-    for match in all_matches:
-        match_dt = parse_date(match.get("date_str"))
-        if target_dt and match_dt and match_dt >= target_dt:
-            continue
-        form.append((match["gf"], match["ga"]))
-        if len(form) >= num_matches:
-            break
-    return form
+    return _shared_get_team_overall_form(
+        team_id, fetch_soccerbase_team_results, num_matches, target_date_str, parse_date
+    )
 
 
 def _count_btts(form):
@@ -369,22 +180,7 @@ def _count_failed_to_score(form):
     return sum(1 for gf, _ in form[:6] if gf == 0)
 
 
-def _thin_count(needed, of_window, available):
-    """Scale a 'need N of window' count threshold to available samples.
-
-    Exact thresholds when available >= of_window; same pass-rate otherwise
-    (integer floor, minimum 1). Used by early-season thin-data rules.
-    """
-    if available >= of_window:
-        return needed
-    return max(1, int(needed * available / of_window))
-
-
-def _thin_total(goal_sum, of_window, available):
-    """Scale a total-goals threshold (goal_sum across of_window games) down."""
-    if available >= of_window:
-        return goal_sum
-    return max(1, int(goal_sum * available / of_window))
+# _thin_count/_thin_total are imported from scraping.py — do not redefine locally.
 
 
 def _btts_gate_passes(home_6, away_6):
@@ -526,6 +322,34 @@ def _lambda_mismatch_veto(home_lambda, away_lambda):
         return True, f"lambda_ratio_{hi/lo:.1f}"
     if lo < 0.7:
         return True, f"weak_attack_lambda_{lo:.2f}"
+    return False, None
+
+
+def _recent_shutout_shock_veto(home_3, away_3):
+    """Block BTTS Yes if either team's SINGLE most recent venue match saw
+    them fail to score OR keep a clean sheet — regardless of how their
+    other recent games went.
+
+    Added 2026-08-25 after a 1/5 BTTS Yes day where all 4 losers ended
+    with one side blanked (0-1, 1-0, 3-0, 0-1). The existing
+    _scoring_drought_veto()/_defensive_wall_veto() only fire when BOTH of
+    the last 2 venue games show the pattern, so a single very recent
+    shutout can be diluted out by an older game and slip through. A
+    team's most recent match is a stronger live signal than a 2-game
+    average and should be able to veto on its own.
+    """
+    if home_3:
+        gf, ga = home_3[0]
+        if gf == 0:
+            return True, "home_last_match_no_goals_for"
+        if ga == 0:
+            return True, "home_last_match_clean_sheet_against"
+    if away_3:
+        gf, ga = away_3[0]
+        if gf == 0:
+            return True, "away_last_match_no_goals_for"
+        if ga == 0:
+            return True, "away_last_match_clean_sheet_against"
     return False, None
 
 
@@ -1087,25 +911,16 @@ def tier_from_confidence(score, side, home_lambda, away_lambda):
     return "close"
 
 
+# calculate_kelly/apply_portfolio_kelly logic itself is imported from
+# utils.py. Thin wrappers below preserve this file's original call
+# signatures (market-specific default odds of 1.90; "side_key" here is
+# the same thing utils.py calls "bet_type" — a nested dict key).
 def calculate_kelly(prob, decimal_odds=1.90, use_half=True):
-    if prob <= 0.0 or decimal_odds <= 1.0:
-        return 0.0
-    kelly = (prob * decimal_odds - 1) / (decimal_odds - 1)
-    return max(0.0, kelly * 0.5 if use_half else kelly)
+    return _shared_calculate_kelly(prob, decimal_odds, use_half)
 
 
 def apply_portfolio_kelly(recommendations, side_key, bankroll, max_exposure=MAX_TOTAL_EXPOSURE):
-    if not recommendations or bankroll <= 0:
-        return recommendations
-    total_kelly = sum(r[side_key]["kelly"] / 100 for r in recommendations)
-    if total_kelly <= 0:
-        return recommendations
-    if total_kelly > max_exposure:
-        scale = max_exposure / total_kelly
-        for r in recommendations:
-            r[side_key]["kelly"] = round(r[side_key]["kelly"] * scale, 2)
-        logger.info(f"Portfolio Kelly ({side_key}) scaled by {scale:.3f}")
-    return recommendations
+    return _shared_apply_portfolio_kelly(recommendations, side_key, bankroll, max_exposure)
 
 
 # =============================================================================
@@ -1165,6 +980,7 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         drought_veto, drought_reason = _scoring_drought_veto(home_3, away_3)
         wall_veto, wall_reason = _defensive_wall_veto(home_3, away_3)
         mismatch_veto, mismatch_reason = _lambda_mismatch_veto(home_lambda, away_lambda)
+        shutout_shock_veto, shutout_shock_reason = _recent_shutout_shock_veto(home_3, away_3)
         perm_passed, perm_failed, perm_details = _defensive_permeability_check(home_6, away_6)
 
         yes_passed = yes_passed + perm_passed
@@ -1185,6 +1001,7 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             and not drought_veto
             and not wall_veto
             and not mismatch_veto
+            and not shutout_shock_veto
         )
         no_qualifies = (
             bool(no_passed) and no_score >= no_min and no_gate
@@ -1217,6 +1034,8 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             regressions.append(f"defensive wall ({wall_reason})")
         if mismatch_veto:
             regressions.append(f"attack mismatch ({mismatch_reason})")
+        if shutout_shock_veto:
+            regressions.append(f"recent shutout shock ({shutout_shock_reason})")
         if h2h_btts_no_blocked:
             regressions.append(f"h2h btts bogey ({len(h2h_btts_no_meetings)} meetings)")
 
@@ -1246,6 +1065,8 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "defensive_wall_reason": wall_reason,
                     "lambda_mismatch_veto": mismatch_veto,
                     "lambda_mismatch_reason": mismatch_reason,
+                    "shutout_shock_veto": shutout_shock_veto,
+                    "shutout_shock_reason": shutout_shock_reason,
                     "o25tips_points": o25tips_total,
                     "o25tips_passed": o25tips_yes_ok,
                     "min_score_threshold": yes_min,
@@ -1294,6 +1115,8 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "defensive_wall_reason": wall_reason,
                     "lambda_mismatch_veto": mismatch_veto,
                     "lambda_mismatch_reason": mismatch_reason,
+                    "shutout_shock_veto": shutout_shock_veto,
+                    "shutout_shock_reason": shutout_shock_reason,
                     "regression_penalty_applied": regressions,
                 },
             },
