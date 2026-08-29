@@ -3,7 +3,7 @@ name: Daily Soccer Predictions + Results
 on:
   schedule:
     - cron: "0 1 * * *"   # 4:00 AM EAT: daily predictions
-    - cron: "0 20 * * *"  # 11:00 PM EAT: settle recent results
+    - cron: "0 22 * * *"  # 1:00 AM EAT: settle recent results
     - cron: "0 3 * * 1"   # 6:00 AM EAT Mondays: weekly report
     - cron: "0 3 1 * *"   # 6:00 AM EAT on the 1st: monthly report
   workflow_dispatch:
@@ -35,7 +35,7 @@ concurrency:
 jobs:
   fetch-results:
     runs-on: ubuntu-latest
-    if: github.event.schedule == '0 20 * * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'results' || github.event.inputs.mode == 'all'))
+    if: github.event.schedule == '0 22 * * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'results' || github.event.inputs.mode == 'all'))
     steps:
       - uses: actions/checkout@v4
         with:
@@ -159,45 +159,47 @@ jobs:
 
       - name: Fetch recent results before publishing
         run: |
-          python fetch_results.py --days 3 2>&1 | tee fetch_output_automated.txt
-          python update_manual_results.py 2>&1 | tee update_manual_output.txt
-          python fetch_results.py --days 3 2>&1 | tee fetch_output.txt
+          python fetch_results.py --days 3 2>&1 | tee fetch_output_automated.txt || true
+          python update_manual_results.py 2>&1 | tee update_manual_output.txt || true
+          python fetch_results.py --days 3 2>&1 | tee fetch_output.txt || true
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
       - name: Run Over/Under predictor
         id: over-under
+        continue-on-error: true
         run: |
           DATE="$(TZ=Africa/Nairobi date +'%Y-%m-%d')"
-          python over25_soccerbase.py --publish-date "$DATE" > output.txt 2> errors.txt
-          test -f ou_telegram.txt
+          python over25_soccerbase.py --publish-date "$DATE" > output.txt 2> errors.txt || true
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
-          sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d' > over25_body.txt
+          sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d' > over25_body.txt || true
 
       - name: Run Home Win predictor
+        id: home-win
+        continue-on-error: true
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
-          python home_win_soccerbase.py --publish-date "$DATE" > hw_output.txt 2> hw_errors.txt
-          test -f hw_telegram.txt
-          sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d' > hw_body.txt
+          python home_win_soccerbase.py --publish-date "$DATE" > hw_output.txt 2> hw_errors.txt || true
+          sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d' > hw_body.txt || true
 
       - name: Run BTTS predictor
+        id: btts
+        continue-on-error: true
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
-          python btts_soccerbase.py --publish-date "$DATE" > btts_output.txt 2> btts_errors.txt
-          test -f btts_telegram.txt
-          sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' btts_output.txt | sed '1d;$d' > btts_body.txt
+          python btts_soccerbase.py --publish-date "$DATE" > btts_output.txt 2> btts_errors.txt || true
+          sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' btts_output.txt | sed '1d;$d' > btts_body.txt || true
 
       - name: Debug predictor output
         if: always()
         run: |
           echo "=== Over/Under body size ==="
-          wc -c over25_body.txt || true
+          wc -c over25_body.txt 2>/dev/null || echo "0"
           echo "=== Home Win body size ==="
-          wc -c hw_body.txt || true
+          wc -c hw_body.txt 2>/dev/null || echo "0"
           echo "=== BTTS body size ==="
-          wc -c btts_body.txt || true
+          wc -c btts_body.txt 2>/dev/null || echo "0"
           echo ""
           echo "=== Over/Under Errors ==="
           cat errors.txt 2>/dev/null || echo "(none)"
@@ -225,13 +227,14 @@ jobs:
             btts_telegram.txt
 
       - name: Build Telegram daily message
+        continue-on-error: true
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
           python build_telegram_daily.py --date "$DATE" \
             --ou-output ou_telegram.txt \
             --btts-output btts_telegram.txt \
             --hw-output hw_telegram.txt \
-            --out telegram_daily.txt
+            --out telegram_daily.txt || true
 
       - name: Upload Telegram message
         if: always()
@@ -242,6 +245,7 @@ jobs:
           if-no-files-found: warn
 
       - name: Build free and VIP reports
+        continue-on-error: true
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
 
@@ -281,6 +285,7 @@ jobs:
           } > combined_vip.txt
 
       - name: Commit predictions and reports
+        continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -313,7 +318,7 @@ jobs:
           from: ${{ secrets.EMAIL_USERNAME }}
 
       - name: Send Telegram free and VIP messages
-        if: success()
+        if: always()
         run: |
           python - <<'PY'
           import os
@@ -331,26 +336,37 @@ jobs:
               max_len = 3900
               chunks = [text[i:i + max_len] for i in range(0, len(text), max_len)]
               for chunk in chunks:
-                  requests.post(
-                      f"https://api.telegram.org/bot{token}/sendMessage",
-                      data={"chat_id": chat_id, "text": chunk},
-                      timeout=30,
-                  )
+                  try:
+                      r = requests.post(
+                          f"https://api.telegram.org/bot{token}/sendMessage",
+                          data={"chat_id": chat_id, "text": chunk},
+                          timeout=30,
+                      )
+                      print(f"Sent chunk to {chat_id}: {r.status_code}")
+                  except Exception as e:
+                      print(f"Failed to send to {chat_id}: {e}")
 
           token = os.getenv("TELEGRAM_BOT_TOKEN")
           free_channel = os.getenv("TELEGRAM_CHAT_ID")
           vip_channel = os.getenv("TELEGRAM_VIP_CHAT_ID")
           date = os.getenv("DATE")
 
-          if not token or not free_channel:
-              print("Skipping Telegram: missing bot token or public chat id.")
-              raise SystemExit(0)
+          if not token:
+              print("FATAL: TELEGRAM_BOT_TOKEN missing")
+              raise SystemExit(1)
+          if not free_channel:
+              print("FATAL: TELEGRAM_CHAT_ID missing")
+              raise SystemExit(1)
 
-          free_report = read_file("telegram_daily.txt") or read_file("combined_free.txt")
-          vip_report = read_file("combined_vip.txt")
+          free_report = read_file("telegram_daily.txt") or read_file("combined_free.txt") or f"⚠️ No predictions generated for {date}."
+          vip_report = read_file("combined_vip.txt") or f"⚠️ VIP report unavailable for {date}."
+
+          print(f"Free report length: {len(free_report)}")
+          print(f"VIP report length: {len(vip_report)}")
 
           send(free_channel, free_report)
-          send(vip_channel, vip_report)
+          if vip_channel:
+              send(vip_channel, vip_report)
           PY
         env:
           DATE: ${{ steps.over-under.outputs.date }}
@@ -385,18 +401,17 @@ jobs:
 
       - name: Settle results and generate weekly report
         id: report
+        continue-on-error: true
         run: |
-          python fetch_results.py --days 10
-          python update_manual_results.py
-          python fetch_results.py --days 10
+          python fetch_results.py --days 10 || true
+          python update_manual_results.py || true
+          python fetch_results.py --days 10 || true
           python generate_weekly_report.py
           REPORT_FILE=$(ls -t weekly_report_*.txt 2>/dev/null | head -1)
           echo "file=$REPORT_FILE" >> "$GITHUB_OUTPUT"
-        env:
-          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
       - name: Commit weekly report
+        continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -474,18 +489,17 @@ jobs:
 
       - name: Settle results and generate monthly report
         id: report
+        continue-on-error: true
         run: |
-          python fetch_results.py --days 35
-          python update_manual_results.py
-          python fetch_results.py --days 35
+          python fetch_results.py --days 35 || true
+          python update_manual_results.py || true
+          python fetch_results.py --days 35 || true
           python generate_monthly_report.py
           REPORT_FILE=$(ls -t monthly_report_*.txt 2>/dev/null | head -1)
           echo "file=$REPORT_FILE" >> "$GITHUB_OUTPUT"
-        env:
-          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
       - name: Commit monthly report
+        continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
