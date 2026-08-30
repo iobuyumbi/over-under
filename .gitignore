@@ -7,6 +7,8 @@ venv/
 .venv/
 env/
 *.egg-info/
+*.db
+soccerbase_cache*.db
 
 # --- Secrets & keys: NEVER commit these ---
 # If any of these are already tracked in git history, deleting them here is
