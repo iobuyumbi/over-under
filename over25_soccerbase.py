@@ -482,6 +482,126 @@ def _recent_goalless_shock_veto(home_3, away_3):
     return False, None
 
 
+def _under_blowout_risk_veto(home_lambda, away_lambda):
+    """Block Under 2.5 when one team is expected to dominate AND the
+    combined xG is still moderate-to-high. One-sided games often end
+    3-0, 4-0, etc. which kill Under 2.5 but can stay Under 3.5.
+
+    Added 2026-08-30 after Chaco For Ever 3-0 San Miguel — the Under
+    2.5 pick died on a one-sided blowout while the safer Under 3.5
+    survived. Averages hide single-game explosions from a dominant
+    favourite against a weak underdog.
+    """
+    if home_lambda <= 0 or away_lambda <= 0:
+        return False, None
+    combined = home_lambda + away_lambda
+    lo, hi = sorted((home_lambda, away_lambda))
+    if hi / lo >= 2.5 and combined >= 2.0:
+        return True, f"one_sided_blowout_{hi:.1f}_vs_{lo:.1f}"
+    return False, None
+
+
+def _under_peak_game_veto(home_6, away_6):
+    """Block Under 2.5 if either team had a 4+ goal game in their last 6
+    venue matches. Averages hide single-game explosions — a team with
+    goals 1,0,0,1,0,0 averages 0.33 but once conceded 3 in a blowout.
+
+    Added 2026-08-30 to prevent Under 2.5 picks from dying on hidden
+    high-scoring peaks that get diluted out by low-average runs.
+    """
+    for gf, ga in (home_6 or [])[:6]:
+        if gf + ga >= 4:
+            return True, f"home_peak_game_{gf}_{ga}"
+    for gf, ga in (away_6 or [])[:6]:
+        if gf + ga >= 4:
+            return True, f"away_peak_game_{gf}_{ga}"
+    return False, None
+
+
+def _derby_veto(match):
+    """Block Over 2.5 for known derby/rivalry matches.
+    Derbies are historically tighter, more defensive, and lower-scoring
+    due to the additional intensity, cards, and cautious tactics.
+
+    Added 2026-08-30 after Watford vs West Ham finished 1-0 (2 goals):
+    a London derby that passed all algorithm checks despite derby form
+    being historically lower-scoring than equivalent non-derby fixtures.
+    """
+    derby_pairs = {
+        ("watford", "west ham"), ("west ham", "watford"),
+        ("arsenal", "tottenham"), ("tottenham", "arsenal"),
+        ("chelsea", "arsenal"), ("arsenal", "chelsea"),
+        ("millwall", "west ham"), ("west ham", "millwall"),
+        ("chelsea", "tottenham"), ("tottenham", "chelsea"),
+        ("crystal palace", "brighton"), ("brighton", "crystal palace"),
+        ("southampton", "portsmouth"), ("portsmouth", "southampton"),
+        ("nottingham forest", "derby"), ("derby", "nottingham forest"),
+        ("liverpool", "everton"), ("everton", "liverpool"),
+        ("manchester united", "manchester city"), ("manchester city", "manchester united"),
+        ("celtic", "rangers"), ("rangers", "celtic"),
+        ("borussia dortmund", "schalke"), ("schalke", "borussia dortmund"),
+        ("real madrid", "barcelona"), ("barcelona", "real madrid"),
+        ("atletico madrid", "real madrid"), ("real madrid", "atletico madrid"),
+        ("inter", "ac milan"), ("ac milan", "inter"),
+        ("juventus", "torino"), ("torino", "juventus"),
+        ("lazio", "roma"), ("roma", "lazio"),
+        ("olympique lyon", "saint etienne"), ("saint etienne", "olympique lyon"),
+        ("marseille", "paris saint germain"), ("paris saint germain", "marseille"),
+        ("porto", "benfica"), ("benfica", "porto"),
+        ("ajax", "psv"), ("psv", "ajax"),
+        ("galatasaray", "fenerbahce"), ("fenerbahce", "galatasaray"),
+        ("panathinaikos", "olympiacos"), ("olympiacos", "panathinaikos"),
+    }
+    home = match.get("home", "").lower()
+    away = match.get("away", "").lower()
+    if (home, away) in derby_pairs:
+        return True, "derby_match"
+    return False, None
+
+
+def _early_season_penalty(match_date_str):
+    """Reduce confidence for very early-season fixtures (first 3 weeks of Aug).
+    Early-season form data is thin, teams are still finding rhythm, and
+    pre-season friendly data skews averages away from competitive reality.
+
+    Added 2026-08-30 after Watford vs West Ham loss: the Aug 29 fixture had
+    only 2-3 games of competitive data for both sides, which the algorithm
+    treated as equivalent to mid-season 6-game samples. Applied as a
+    confidence multiplier rather than a hard block, so early-season
+    fixtures can still qualify if every other signal is strong.
+    """
+    if not match_date_str:
+        return 1.0
+    try:
+        dt = datetime.strptime(match_date_str, "%Y-%m-%d")
+        if dt.month == 8 and dt.day <= 20:
+            return 0.85
+    except (ValueError, TypeError):
+        pass
+    return 1.0
+
+
+def _scoring_consistency_veto(home_6, away_6):
+    """Block Over 2.5 if EITHER team failed to score in 2+ of their last 3.
+    Goal averages hide burst scoring (e.g. 3,0,3,0,0,3 avg = 1.5 but the
+    team blanks half the time). Consistent scoring in recent games is a
+    more reliable signal than inflated averages from isolated hat-tricks.
+
+    Added 2026-08-30 after Watford vs West Ham: both teams had inconsistent
+    scoring patterns that passed 'avg goals > X' but the actual match was
+    a low-scoring affair where one side (or both) blanked.
+    """
+    if len(home_6 or []) >= 3:
+        blanks = sum(1 for gf, ga in home_6[:3] if gf == 0)
+        if blanks >= 2:
+            return True, f"home_inconsistent_{blanks}_blanks_in_3"
+    if len(away_6 or []) >= 3:
+        blanks = sum(1 for gf, ga in away_6[:3] if ga == 0)
+        if blanks >= 2:
+            return True, f"away_inconsistent_{blanks}_blanks_in_3"
+    return False, None
+
+
 # =============================================================================
 # OVER 2.5 ALGORITHM (10-Check Rules + Overall Form)
 # =============================================================================
@@ -1332,6 +1452,9 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         over_leak_gate, over_leak_reason = _over_leak_participation_gate(home_3, away_3)
         over_low_event_veto, over_low_event_reason = _combined_low_event_veto(home_3, away_3)
         over_goalless_shock_veto, over_goalless_shock_reason = _recent_goalless_shock_veto(home_3, away_3)
+        under_peak_game_veto, under_peak_game_reason = _under_peak_game_veto(home_6, away_6)
+        derby_veto, derby_reason = _derby_veto(match)
+        scoring_consistency_veto, scoring_consistency_reason = _scoring_consistency_veto(home_6, away_6)
 
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
@@ -1359,6 +1482,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             under_score += 1
 
         home_lambda, away_lambda = get_match_lambdas(home_6, away_6, league_name=league_name)
+        under_blowout_veto, under_blowout_reason = _under_blowout_risk_veto(home_lambda, away_lambda)
 
         over_gate = lambda_gate_passes(home_lambda, away_lambda, "over")
         under_gate = lambda_gate_passes(home_lambda, away_lambda, "under")
@@ -1387,6 +1511,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             and not scoring_drought_veto and not defensive_wall_veto
             and not over_btts_gate and not over_leak_gate
             and not over_low_event_veto and not over_goalless_shock_veto
+            and not derby_veto and not scoring_consistency_veto
         )
         under_qualifies = (
             bool(under_passed) and under_score >= under_min_score and under_gate
@@ -1394,6 +1519,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             and not h2h_under_blocked
             and not under_leak_veto
             and not under_goal_shock_veto
+            and not under_blowout_veto
+            and not under_peak_game_veto
         )
 
         if over_qualifies or under_qualifies:
@@ -1425,9 +1552,10 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         league_mult = _WEAK_ROI_MULTIPLIER if _is_weak_roi_league(league_name) else 1.0
         over_regression_penalty = regression_penalty(home_6, away_6, "over")
         under_regression_penalty = regression_penalty(home_6, away_6, "under")
+        early_mult = _early_season_penalty(match.get("date"))
 
-        over_final_mult = data_mult * league_mult * over_regression_penalty
-        under_final_mult = data_mult * league_mult * under_regression_penalty
+        over_final_mult = data_mult * league_mult * over_regression_penalty * early_mult
+        under_final_mult = data_mult * league_mult * under_regression_penalty * early_mult
 
         over_conf_score = compute_confidence_score(
             over_score, MAX_OVER_SCORE, over25_prob_pct, default_odds_over, over_final_mult
@@ -1480,6 +1608,16 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append(f"under defensive leak ({under_leak_reason})")
         if under_goal_shock_veto:
             regressions.append(f"under recent goal shock ({under_goal_shock_reason})")
+        if under_blowout_veto:
+            regressions.append(f"under blowout risk ({under_blowout_reason})")
+        if under_peak_game_veto:
+            regressions.append(f"under peak game veto ({under_peak_game_reason})")
+        if derby_veto:
+            regressions.append(f"derby match ({derby_reason})")
+        if scoring_consistency_veto:
+            regressions.append(f"scoring inconsistency ({scoring_consistency_reason})")
+        if early_mult < 1.0:
+            regressions.append(f"early-season penalty (x{early_mult})")
 
         return {
             "status": "success",
@@ -1515,6 +1653,11 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "low_event_reason": over_low_event_reason,
                     "goalless_shock_veto": over_goalless_shock_veto,
                     "goalless_shock_reason": over_goalless_shock_reason,
+                    "derby_veto": derby_veto,
+                    "derby_reason": derby_reason,
+                    "scoring_consistency_veto": scoring_consistency_veto,
+                    "scoring_consistency_reason": scoring_consistency_reason,
+                    "early_season_mult": round(early_mult, 2),
                     "home_btts_6": home_btts_6,
                     "away_btts_6": away_btts_6,
                     "data_mult": round(data_mult, 2),
@@ -1541,6 +1684,11 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "defensive_leak_reason": under_leak_reason,
                     "goal_shock_veto": under_goal_shock_veto,
                     "goal_shock_reason": under_goal_shock_reason,
+                    "blowout_risk_veto": under_blowout_veto,
+                    "blowout_risk_reason": under_blowout_reason,
+                    "peak_game_veto": under_peak_game_veto,
+                    "peak_game_reason": under_peak_game_reason,
+                    "early_season_mult": round(early_mult, 2),
                     "home_non_btts_6": home_non_btts_6,
                     "away_non_btts_6": away_non_btts_6,
                     "data_mult": round(data_mult, 2),
@@ -1588,6 +1736,15 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "under_defensive_leak_reason": under_leak_reason,
                     "under_goal_shock_veto": under_goal_shock_veto,
                     "under_goal_shock_reason": under_goal_shock_reason,
+                    "under_blowout_risk_veto": under_blowout_veto,
+                    "under_blowout_risk_reason": under_blowout_reason,
+                    "under_peak_game_veto": under_peak_game_veto,
+                    "under_peak_game_reason": under_peak_game_reason,
+                    "derby_veto": derby_veto,
+                    "derby_reason": derby_reason,
+                    "scoring_consistency_veto": scoring_consistency_veto,
+                    "scoring_consistency_reason": scoring_consistency_reason,
+                    "early_season_mult": round(early_mult, 2),
                     "recent_cold_blocked": recent_cold_over_block,
                     "regression_penalty_applied": regressions,
                 },

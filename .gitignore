@@ -7,8 +7,6 @@ venv/
 .venv/
 env/
 *.egg-info/
-*.db
-soccerbase_cache*.db
 
 # --- Secrets & keys: NEVER commit these ---
 # If any of these are already tracked in git history, deleting them here is
@@ -62,3 +60,41 @@ telegram_daily.txt
 Thumbs.db
 .vscode/
 .idea/
+
+# --- Local run output (NOT committed) ---
+# run_local.bat redirects each predictor's stdout to these files; the actual
+# per-market Telegram section files are *_telegram.txt which are also ephemeral
+# but are consumed by build_telegram_daily.py. The data files below are
+# machine-specific and must not be pushed.
+ou.txt
+hw.txt
+btts.txt
+telegram.txt
+*_telegram.txt
+_diag_out.txt
+_diag_err.txt
+soccerbase_cache*.zip
+
+# --- GitHub Actions self-hosted runner ---
+# NEVER commit a runner folder to git. It contains:
+#   - The .runner file with your repository URL + the runner registration token
+#     (expires after 1 hour but should still not be exposed)
+#   - .credentials and .credentials_rsaparams which hold the runner's
+#     long-lived OAuth access token for this repository
+#   - The run listener binaries and ~300MB of externals (Node runtime etc.)
+#
+# Best practice: keep the runner OUTSIDE your project entirely, e.g.
+#   Good: C:\Inno Project\actions-runner\   (sibling of over-under)
+#   Avoid: C:\Inno Project\over-under\actions-runner\  (inside repo)
+#
+# If you must keep it inside the repo for convenience, the lines below
+# will at least prevent git from ever staging it.
+actions-runner/
+_runner*/
+.runner
+.credentials
+.credentials_rsaparams
+*.service
+.diag/
+_work/
+

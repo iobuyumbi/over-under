@@ -38,9 +38,31 @@ echo --- done ---
 
 echo.
 echo === TELEGRAM BUILD ===
-python build_telegram_daily.py --date %RUN_DATE% --ou-output ou.txt --btts-output btts.txt --hw-output hw.txt --out telegram.txt
+python build_telegram_daily.py --date %RUN_DATE% --ou-output ou_telegram.txt --btts-output btts_telegram.txt --hw-output hw_telegram.txt --out telegram.txt
 if errorlevel 1 goto :error
 echo --- done ---
+
+echo.
+echo === LOCAL TELEGRAM SEND (optional, gated on env vars) ===
+if defined TELEGRAM_BOT_TOKEN (
+  if defined TELEGRAM_CHAT_ID (
+    echo   TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID set — sending...
+    set "DATE=%RUN_DATE%"
+    python send_local_telegram.py
+    if errorlevel 1 (
+      echo   WARNING: send_local_telegram.py returned non-zero (see above)
+    ) else (
+      echo   --- send complete ---
+    )
+  ) else (
+    echo   Skipping: TELEGRAM_CHAT_ID not set.
+  )
+) else (
+  echo   Skipping: TELEGRAM_BOT_TOKEN not set. To enable locally:
+  echo     set TELEGRAM_BOT_TOKEN=your_token_here
+  echo     set TELEGRAM_CHAT_ID=your_chat_id_here
+  echo     set TELEGRAM_VIP_CHAT_ID=optional_vip_chat_id
+)
 
 echo.
 echo ============================================================
@@ -51,7 +73,9 @@ type telegram.txt
 echo.
 echo ============================================================
 echo  Files saved: ou.txt, hw.txt, btts.txt, telegram.txt
+echo  Telegram sections: ou_telegram.txt, btts_telegram.txt, hw_telegram.txt
 echo  VIP reports: btts_vip_report_*.txt, over_under_vip_report_*.txt, home_win_vip_report_*.txt
+echo  To resend to Telegram: set TELEGRAM_BOT_TOKEN ^&^& set TELEGRAM_CHAT_ID ^&^& set DATE=%RUN_DATE% ^&^& python send_local_telegram.py
 echo ============================================================
 pause
 exit /b 0
