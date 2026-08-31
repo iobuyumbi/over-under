@@ -549,6 +549,14 @@ def _draw_risk_veto(home_data_6, away_data_6):
     Only fires when the home defence ALSO isn't clearly elite (conceded
     in more than 1 of the last 6), since an away side that scores often
     against a genuinely airtight home defence is still low draw-risk.
+
+    Tightened 2026-08-30 after Rapid Vienna 2-2 Hearts: lowered the away
+    scoring-rate threshold from 4/6 (67%) to 3/6 (50%) and the "airtight"
+    home-defence concession threshold from <=1/6 to <=2/6, since most
+    teams concede occasionally at home. The original 4/6 threshold was
+    too lenient — Hearts scored in 3/6 away games (50%) at 1 goal per
+    scored game, which was enough to earn a 2-2 draw against a home side
+    that conceded in 3+ of 6.
     """
     away = (away_data_6 or [])[:6]
     home = (home_data_6 or [])[:6]
@@ -557,16 +565,145 @@ def _draw_risk_veto(home_data_6, away_data_6):
 
     away_scored_count = sum(1 for m in away if m.get("gf", 0) > 0)
     away_scored_rate = away_scored_count / len(away)
-    if away_scored_rate < (4 / 6):
+    if away_scored_rate < 0.5:
         return False, None
 
     home_conceded_count = sum(1 for m in home if m.get("ga", 0) > 0)
-    if home_conceded_count <= 1:
-        # Home defence is airtight enough to absorb a persistent-but-low-volume
-        # away attack; don't veto on scoring consistency alone.
+    if home_conceded_count <= 2:
         return False, None
 
     return True, f"away_scored_{away_scored_count}_of_{len(away)}_home_conceded_{home_conceded_count}_of_{len(home)}"
+
+
+def _home_draw_streak_veto(home_data_6):
+    """Block Home Win if the home team has 2+ draws in their last 3 home games.
+
+    Draws are not losses, but they are not wins either — a draw-prone home
+    team is a Home Win trap. The "Home form (no losses)" rule treats a
+    draw as "not a loss", so a team with 1W-5D scores 5/6 on that check
+    and passes as "excellent form" despite only winning once in six.
+
+    Added 2026-08-30 after Boyaca Chico 0-0 Fortaleza CEIF: Boyaca Chico
+    was drawing frequently at home, passing all form checks but never
+    actually converting those "no loss" results into wins.
+    """
+    recent = (home_data_6 or [])[:3]
+    if len(recent) < 3:
+        return False, None
+    draws = sum(1 for m in recent if m.get("result") == "D")
+    if draws >= 2:
+        return True, f"home_draw_streak_{draws}_of_3"
+    return False, None
+
+
+def _away_clean_sheet_streak_veto(away_data_6):
+    """Block Home Win if away kept a clean sheet in 2+ of last 3 away games.
+
+    A team that doesn't concede away is hard to beat at home. A 0-0 or 1-0
+    draw trap is likely when the away defence has locked down 2 of their
+    last 3 on the road.
+
+    Added 2026-08-30 after Boyaca Chico 0-0 Fortaleza CEIF: Fortaleza had
+    kept clean sheets away, so Boyaca Chico couldn't break them down even
+    at home, resulting in a 0-0 that killed the Home Win pick while the
+    safer Double Chance (1X) survived.
+    """
+    recent = (away_data_6 or [])[:3]
+    if len(recent) < 3:
+        return False, None
+    cs = sum(1 for m in recent if m.get("ga", 0) == 0)
+    if cs >= 2:
+        return True, f"away_clean_sheet_streak_{cs}_of_3"
+    return False, None
+
+
+def _last_home_match_veto(home_data_6):
+    """Block Home Win if the home team did NOT win their most recent home game.
+    A 'safe' home win pick should be coming off a home victory — momentum matters.
+
+    Added 2026-08-30 after Alianza Lima vs Deportivo Garcilaso: a 'qualified' tier
+    Home Win pick lost because Alianza Lima had not won their last home game, yet
+    the form checks only looked at win-rate % not the actual last-match result.
+    """
+    if not home_data_6:
+        return False, None
+    last = home_data_6[0]
+    if last.get("result") != "W":
+        return True, f"last_home_not_win_{last.get('result')}"
+    return False, None
+
+
+def _overall_form_symmetry_veto(home_overall_5, home_overall_6, away_overall_5, away_overall_6):
+    """
+    Block Home Win unless home is good overall AND away is bad overall.
+
+    HOME (overall, last 5 or 6):
+      - Last 5: max 1 loss, win rate >= 50%
+      - Last 6: max 2 losses ONLY if wins >= 3 (i.e. 3W-1D-2L or better)
+
+    AWAY (overall, last 5 or 6):
+      - Win rate < 50%
+    """
+    home_ok = False
+
+    h6 = (home_overall_6 or [])[:6]
+    if len(h6) >= 5:
+        h6_wins = sum(1 for m in h6 if m.get("result") == "W")
+        h6_losses = sum(1 for m in h6 if m.get("result") == "L")
+        h6_draws = len(h6) - h6_wins - h6_losses
+        h6_win_rate = h6_wins / len(h6)
+
+        if h6_win_rate >= 0.5:
+            if h6_losses <= 1:
+                home_ok = True
+            elif h6_losses == 2 and h6_wins >= 3:
+                home_ok = True
+
+    if not home_ok:
+        h5 = (home_overall_5 or [])[:5]
+        if len(h5) >= 4:
+            h5_wins = sum(1 for m in h5 if m.get("result") == "W")
+            h5_losses = sum(1 for m in h5 if m.get("result") == "L")
+            h5_win_rate = h5_wins / len(h5)
+            if h5_losses <= 1 and h5_win_rate >= 0.5:
+                home_ok = True
+
+    if not home_ok:
+        h5 = (home_overall_5 or [])[:5]
+        h6 = (home_overall_6 or [])[:6]
+        h5_w = sum(1 for m in h5 if m.get("result") == "W")
+        h5_l = sum(1 for m in h5 if m.get("result") == "L")
+        h6_w = sum(1 for m in h6 if m.get("result") == "W")
+        h6_l = sum(1 for m in h6 if m.get("result") == "L")
+        return True, f"home_overall_weak_5g_{h5_w}W_{h5_l}L_6g_{h6_w}W_{h6_l}L"
+
+    away_ok = False
+
+    a6 = (away_overall_6 or [])[:6]
+    if len(a6) >= 5:
+        a6_wins = sum(1 for m in a6 if m.get("result") == "W")
+        a6_win_rate = a6_wins / len(a6)
+        if a6_win_rate < 0.5:
+            away_ok = True
+
+    if not away_ok:
+        a5 = (away_overall_5 or [])[:5]
+        if len(a5) >= 4:
+            a5_wins = sum(1 for m in a5 if m.get("result") == "W")
+            a5_win_rate = a5_wins / len(a5)
+            if a5_win_rate < 0.5:
+                away_ok = True
+
+    if not away_ok:
+        a5 = (away_overall_5 or [])[:5]
+        a6 = (away_overall_6 or [])[:6]
+        a5_w = sum(1 for m in a5 if m.get("result") == "W")
+        a5_l = sum(1 for m in a5 if m.get("result") == "L")
+        a6_w = sum(1 for m in a6 if m.get("result") == "W")
+        a6_l = sum(1 for m in a6 if m.get("result") == "L")
+        return True, f"away_overall_strong_5g_{a5_w}W_{a5_l}L_6g_{a6_w}W_{a6_l}L"
+
+    return False, None
 
 
 def hw_data_volume_penalty(home_form, away_form, home_overall, away_overall):
@@ -650,6 +787,8 @@ def process_single_match(match, target_date, default_odds=2.8):
         away_form = get_team_form(match["away_team_id"], False, 6, target_date)
         home_overall_5 = get_team_overall_form(match["home_team_id"], 5, target_date)
         away_overall_5 = get_team_overall_form(match["away_team_id"], 5, target_date)
+        home_overall_6 = get_team_overall_form(match["home_team_id"], 6, target_date)
+        away_overall_6 = get_team_overall_form(match["away_team_id"], 6, target_date)
 
         if len(home_form) < HW_MIN_DATA_GAMES or len(away_form) < HW_MIN_DATA_GAMES:
             return {"status": "insufficient"}
@@ -674,12 +813,20 @@ def process_single_match(match, target_date, default_odds=2.8):
         )
         away_strength_veto, away_strength_reason = _away_strength_veto(home_strength, away_strength)
         draw_risk_veto, draw_risk_reason = _draw_risk_veto(home_form, away_form)
+        draw_streak_veto, draw_streak_reason = _home_draw_streak_veto(home_form)
+        away_cs_streak_veto, away_cs_streak_reason = _away_clean_sheet_streak_veto(away_form)
+        last_home_veto, last_home_reason = _last_home_match_veto(home_form)
+        symmetry_veto, symmetry_reason = _overall_form_symmetry_veto(
+            home_overall_5, home_overall_6, away_overall_5, away_overall_6
+        )
 
         weak_league = _hw_is_weak_roi(league_name)
         min_score = MAX_HOME_WIN_SCORE - 1 if weak_league else MAX_HOME_WIN_SCORE - 2
         qualifies = (
             score >= min_score and gate_passes and not h2h_blocked
             and not away_strength_veto and not draw_risk_veto
+            and not draw_streak_veto and not away_cs_streak_veto
+            and not last_home_veto and not symmetry_veto
         )
 
         league_mult = _HW_WEAK_ROI_MULTIPLIER if weak_league else 1.0
@@ -707,6 +854,14 @@ def process_single_match(match, target_date, default_odds=2.8):
             regressions.append(f"away strength veto ({away_strength_reason})")
         if draw_risk_veto:
             regressions.append(f"draw risk ({draw_risk_reason})")
+        if draw_streak_veto:
+            regressions.append(f"home draw streak ({draw_streak_reason})")
+        if away_cs_streak_veto:
+            regressions.append(f"away clean sheet streak ({away_cs_streak_reason})")
+        if last_home_veto:
+            regressions.append(f"last home match not win ({last_home_reason})")
+        if symmetry_veto:
+            regressions.append(f"symmetry fail ({symmetry_reason})")
 
         return {
             "status": "success",
@@ -732,6 +887,14 @@ def process_single_match(match, target_date, default_odds=2.8):
                 "away_strength_reason": away_strength_reason,
                 "draw_risk_veto": draw_risk_veto,
                 "draw_risk_reason": draw_risk_reason,
+                "draw_streak_veto": draw_streak_veto,
+                "draw_streak_reason": draw_streak_reason,
+                "away_cs_streak_veto": away_cs_streak_veto,
+                "away_cs_streak_reason": away_cs_streak_reason,
+                "last_home_veto": last_home_veto,
+                "last_home_reason": last_home_reason,
+                "symmetry_veto": symmetry_veto,
+                "symmetry_reason": symmetry_reason,
                 "data_mult": round(data_mult, 2),
                 "weak_league_mult": round(league_mult, 2),
                 "regression_mult": round(reg_mult, 2),
@@ -743,6 +906,14 @@ def process_single_match(match, target_date, default_odds=2.8):
                     "away_strength_reason": away_strength_reason,
                     "draw_risk_veto": draw_risk_veto,
                     "draw_risk_reason": draw_risk_reason,
+                    "draw_streak_veto": draw_streak_veto,
+                    "draw_streak_reason": draw_streak_reason,
+                    "away_cs_streak_veto": away_cs_streak_veto,
+                    "away_cs_streak_reason": away_cs_streak_reason,
+                    "last_home_veto": last_home_veto,
+                    "last_home_reason": last_home_reason,
+                    "symmetry_veto": symmetry_veto,
+                    "symmetry_reason": symmetry_reason,
                     "home_strength": round(home_strength, 3),
                     "away_strength": round(away_strength, 3),
                     "regression_penalty_applied": regressions,
@@ -996,7 +1167,12 @@ def main():
                     if tier == "perfect":
                         perfect.append(data)
                     elif tier == "qualified":
-                        qualified.append(data)
+                        q_last_home_ok = not data.get("last_home_veto", False)
+                        q_draw_risk_ok = not data.get("draw_risk_veto", False)
+                        if q_last_home_ok and q_draw_risk_ok:
+                            qualified.append(data)
+                        else:
+                            close_calls.append(data)
                     elif tier == "close":
                         close_calls.append(data)
                     elif data["score"] >= MAX_HOME_WIN_SCORE - 2:

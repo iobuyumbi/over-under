@@ -404,6 +404,33 @@ def _clean_sheet_frequency_veto(home_6, away_6):
     return False, None
 
 
+def _non_league_reliability_veto(match, home_6, away_6):
+    """Block BTTS and Over in very low-tier English / non-league football.
+    Soccerbase coverage for the 7th tier and below is sparse and often
+    limited to 2-3 games per team — the thin-data fallbacks kick in but
+    the underlying sample is still too unreliable for predictions.
+
+    Added 2026-08-30 after Eastbourne vs Leatherhead (Isthmian League,
+    7th tier): both the Over 2.5 and BTTS Yes picks lost on a match
+    where the algorithm was running on ~3 games of venue data per team.
+    Working on thin-data fallbacks with 2-3 matches is gambling, not
+    statistical prediction.
+    """
+    league = str(match.get("league", "")).lower()
+    non_league_keywords = [
+        "isthmian", "southern league", "northern premier",
+        "national league south", "national league north",
+        "evostik", "pitching in", "betvictor", "southern prem",
+        "isthmian prem", "npl premier",
+    ]
+    is_non_league = any(k in league for k in non_league_keywords)
+    if not is_non_league:
+        return False, None
+    if len(home_6 or []) < 5 or len(away_6 or []) < 5:
+        return True, "non_league_thin_data"
+    return False, None
+
+
 def _defensive_permeability_check(home_6, away_6):
     """Both teams must concede enough to suggest leaky defenses.
 
@@ -1040,6 +1067,7 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         min_attack_veto, min_attack_reason = _minimum_attack_rate_veto(home_3, away_3)
         cup_veto, cup_reason = _cup_mismatch_veto(match, home_lambda, away_lambda)
         cs_freq_veto, cs_freq_reason = _clean_sheet_frequency_veto(home_6, away_6)
+        non_league_veto, non_league_reason = _non_league_reliability_veto(match, home_6, away_6)
         perm_passed, perm_failed, perm_details = _defensive_permeability_check(home_6, away_6)
 
         yes_passed = yes_passed + perm_passed
@@ -1067,11 +1095,13 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             and not min_attack_veto
             and not cup_veto
             and not cs_freq_veto
+            and not non_league_veto
         )
         no_qualifies = (
             bool(no_passed) and no_score >= no_min and no_gate
             and non_btts_gate and o25tips_no_ok
             and not h2h_btts_no_blocked
+            and not non_league_veto
         )
 
         min_venue = min(len(home_6 or []), len(away_6 or []))
@@ -1096,6 +1126,24 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         no_conf = compute_confidence_score(no_score, MAX_BTTS_NO_SCORE + 1, btts_no_pct, odds_no, final_mult)
         yes_tier = tier_from_confidence(yes_conf, "yes", home_lambda, away_lambda, yes_perfect) if yes_qualifies else None
         no_tier = tier_from_confidence(no_conf, "no", home_lambda, away_lambda, no_perfect) if no_qualifies else None
+
+        home_last_2_ok = True
+        away_last_2_ok = True
+        last_2_scored_reason = None
+        if yes_tier == "perfect":
+            if len(home_3 or []) >= 2:
+                home_last_2_scored = all(gf > 0 for gf, _ in home_3[:2])
+                if not home_last_2_scored:
+                    home_last_2_ok = False
+                    last_2_scored_reason = "home_blanked_in_last_2"
+            if len(away_3 or []) >= 2:
+                away_last_2_scored = all(gf > 0 for gf, _ in away_3[:2])
+                if not away_last_2_scored:
+                    away_last_2_ok = False
+                    last_2_scored_reason = ("away_blanked_in_last_2" if not last_2_scored_reason
+                                            else f"both_blanked_in_last_2")
+            if not (home_last_2_ok and away_last_2_ok):
+                yes_tier = "qualified"
 
         yes_kelly = calculate_kelly(btts_yes_pct / 100.0, odds_yes) if yes_qualifies else 0.0
         no_kelly = calculate_kelly(btts_no_pct / 100.0, odds_no) if no_qualifies else 0.0
@@ -1124,6 +1172,10 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             regressions.append(f"cup tier mismatch ({cup_reason})")
         if cs_freq_veto:
             regressions.append(f"clean-sheet frequency ({cs_freq_reason})")
+        if non_league_veto:
+            regressions.append(f"non-league thin data ({non_league_reason})")
+        if yes_tier == "qualified" and last_2_scored_reason:
+            regressions.append(f"perfect tier downgrade ({last_2_scored_reason})")
         if h2h_btts_no_blocked:
             regressions.append(f"h2h btts bogey ({len(h2h_btts_no_meetings)} meetings)")
 
@@ -1155,6 +1207,9 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "lambda_mismatch_reason": mismatch_reason,
                     "shutout_shock_veto": shutout_shock_veto,
                     "shutout_shock_reason": shutout_shock_reason,
+                    "non_league_veto": non_league_veto,
+                    "non_league_reason": non_league_reason,
+                    "perfect_tier_downgrade_reason": last_2_scored_reason,
                     "o25tips_points": o25tips_total,
                     "o25tips_passed": o25tips_yes_ok,
                     "min_score_threshold": yes_min,
@@ -1173,6 +1228,8 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "form_gate_passed": non_btts_gate,
                     "h2h_blocked": h2h_btts_no_blocked,
                     "h2h_meetings": len(h2h_btts_no_meetings),
+                    "non_league_veto": non_league_veto,
+                    "non_league_reason": non_league_reason,
                     "o25tips_points": o25tips_total,
                     "o25tips_passed": o25tips_no_ok,
                     "min_score_threshold": no_min,
@@ -1205,6 +1262,9 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "lambda_mismatch_reason": mismatch_reason,
                     "shutout_shock_veto": shutout_shock_veto,
                     "shutout_shock_reason": shutout_shock_reason,
+                    "non_league_veto": non_league_veto,
+                    "non_league_reason": non_league_reason,
+                    "perfect_tier_downgrade_reason": last_2_scored_reason,
                     "regression_penalty_applied": regressions,
                 },
             },

@@ -123,8 +123,13 @@ jobs:
           fi
 
   daily-predictions:
-    runs-on: ubuntu-latest
-    if: github.event.schedule == '0 1 * * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'predictions' || github.event.inputs.mode == 'all'))
+    runs-on: self-hosted
+    needs: fetch-results
+    if: |
+      always() &&
+      !cancelled() &&
+      (needs.fetch-results.result == 'success' || needs.fetch-results.result == 'skipped') &&
+      (github.event.schedule == '0 1 * * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'predictions' || github.event.inputs.mode == 'all')))
     steps:
       - uses: actions/checkout@v4
         with:
@@ -142,13 +147,6 @@ jobs:
       - name: Sync with latest main
         run: git pull --rebase origin main
 
-      - name: Download cache DBs from release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release download db-cache --pattern "*.db" --dir . 2>/dev/null || echo "No cache release yet — will build fresh"
-          ls -lh *.db 2>/dev/null || echo "No DB files present"
-
       - name: Fetch recent results before publishing
         run: |
           python fetch_results.py --days 3 2>&1 | tee fetch_output_automated.txt || true
@@ -162,7 +160,7 @@ jobs:
         id: over-under
         continue-on-error: true
         run: |
-          DATE="$(TZ=Africa/Nairobi date +'%Y-%m-%d')"
+          DATE="$(python -c "from datetime import datetime,timedelta; print((datetime.utcnow()+timedelta(hours=3)).strftime('%Y-%m-%d'))")"
           echo "Using publish date: $DATE"
           python over25_soccerbase.py --publish-date "$DATE" > output.txt 2> errors.txt || true
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
@@ -351,21 +349,8 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
 
-      - name: Upload updated cache DBs to release
-        if: always()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release view db-cache >/dev/null 2>&1 || \
-            gh release create db-cache --title "Soccerbase Cache" --notes "Auto-updated $(TZ=Africa/Nairobi date)"
-          for f in soccerbase_cache.db soccerbase_cache_home.db soccerbase_cache_btts.db; do
-            if [ -f "$f" ]; then
-              gh release upload db-cache "$f" --clobber 2>/dev/null || true
-            fi
-          done
-
   weekly-report:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: github.event.schedule == '0 3 * * 1' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'weekly' || github.event.inputs.mode == 'all'))
     steps:
       - uses: actions/checkout@v4
@@ -448,7 +433,7 @@ jobs:
           TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
 
   monthly-report:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: github.event.schedule == '0 3 1 * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'monthly' || github.event.inputs.mode == 'all'))
     steps:
       - uses: actions/checkout@v4
