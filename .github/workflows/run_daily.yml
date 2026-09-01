@@ -427,7 +427,7 @@ jobs:
               send(chat_id, report)
           PY
         env:
-          REPORT_FILE: ${{ report.outputs.file }}
+          REPORT_FILE: ${{ steps.report.outputs.file }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
@@ -505,7 +505,7 @@ jobs:
               send(chat_id, report)
           PY
         env:
-          REPORT_FILE: ${{ report.outputs.file }}
+          REPORT_FILE: ${{ steps.report.outputs.file }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
