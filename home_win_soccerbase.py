@@ -37,6 +37,7 @@ from utils import (
 from scraping import (
     fetch_soccerbase_fixtures as _shared_fetch_fixtures,
     fetch_soccerbase_team_results as _shared_fetch_team_results,
+    get_h2h_meetings as _shared_get_h2h_meetings,
     _thin_count,
     _thin_total,
 )
@@ -165,34 +166,9 @@ _HW_LEAGUE_BASELINE_CACHE = {}
 
 def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=_HW_H2H_MAX_LOOKBACK):
     """Recent meetings between these sides, merged from both teams' result pages."""
-    collected = {}
-    for team_id, opponent_id in (
-        (home_team_id, away_team_id),
-        (away_team_id, home_team_id),
-    ):
-        for match in fetch_soccerbase_team_results(team_id):
-            if str(match.get("opponent_team_id") or "") != str(opponent_id):
-                continue
-            match_date = match.get("date_str")
-            if target_date_str and match_date and match_date >= target_date_str:
-                continue
-            key = (match_date, match.get("gf"), match.get("ga"), bool(match.get("is_home")))
-            if key in collected:
-                continue
-            if str(team_id) == str(home_team_id):
-                perspective = dict(match)
-            else:
-                flipped_result = {"W": "L", "L": "W", "D": "D"}.get(match.get("result"), match.get("result"))
-                perspective = {
-                    **match,
-                    "gf": match.get("ga"),
-                    "ga": match.get("gf"),
-                    "result": flipped_result,
-                    "is_home": not match.get("is_home"),
-                }
-            collected[key] = perspective
-    meetings = sorted(collected.values(), key=lambda m: m.get("date_str") or "", reverse=True)
-    return meetings[:limit]
+    return _shared_get_h2h_meetings(
+        home_team_id, away_team_id, fetch_soccerbase_team_results, target_date_str, limit
+    )
 
 
 def _h2h_home_win_blocked(home_team_id, away_team_id, target_date_str=None):
@@ -644,63 +620,51 @@ def _overall_form_symmetry_veto(home_overall_5, home_overall_6, away_overall_5, 
     AWAY (overall, last 5 or 6):
       - Win rate < 50%
     """
+    h5 = (home_overall_5 or [])[:5]
+    h6 = (home_overall_6 or [])[:6]
+    h5_w = sum(1 for m in h5 if m.get("result") == "W")
+    h5_l = sum(1 for m in h5 if m.get("result") == "L")
+    h6_w = sum(1 for m in h6 if m.get("result") == "W")
+    h6_l = sum(1 for m in h6 if m.get("result") == "L")
+
     home_ok = False
 
-    h6 = (home_overall_6 or [])[:6]
     if len(h6) >= 5:
-        h6_wins = sum(1 for m in h6 if m.get("result") == "W")
-        h6_losses = sum(1 for m in h6 if m.get("result") == "L")
-        h6_draws = len(h6) - h6_wins - h6_losses
-        h6_win_rate = h6_wins / len(h6)
-
+        h6_win_rate = h6_w / len(h6)
         if h6_win_rate >= 0.5:
-            if h6_losses <= 1:
+            if h6_l <= 1:
                 home_ok = True
-            elif h6_losses == 2 and h6_wins >= 3:
-                home_ok = True
-
-    if not home_ok:
-        h5 = (home_overall_5 or [])[:5]
-        if len(h5) >= 4:
-            h5_wins = sum(1 for m in h5 if m.get("result") == "W")
-            h5_losses = sum(1 for m in h5 if m.get("result") == "L")
-            h5_win_rate = h5_wins / len(h5)
-            if h5_losses <= 1 and h5_win_rate >= 0.5:
+            elif h6_l == 2 and h6_w >= 3:
                 home_ok = True
 
+    if not home_ok and len(h5) >= 4:
+        h5_win_rate = h5_w / len(h5)
+        if h5_l <= 1 and h5_win_rate >= 0.5:
+            home_ok = True
+
     if not home_ok:
-        h5 = (home_overall_5 or [])[:5]
-        h6 = (home_overall_6 or [])[:6]
-        h5_w = sum(1 for m in h5 if m.get("result") == "W")
-        h5_l = sum(1 for m in h5 if m.get("result") == "L")
-        h6_w = sum(1 for m in h6 if m.get("result") == "W")
-        h6_l = sum(1 for m in h6 if m.get("result") == "L")
         return True, f"home_overall_weak_5g_{h5_w}W_{h5_l}L_6g_{h6_w}W_{h6_l}L"
+
+    a5 = (away_overall_5 or [])[:5]
+    a6 = (away_overall_6 or [])[:6]
+    a5_w = sum(1 for m in a5 if m.get("result") == "W")
+    a5_l = sum(1 for m in a5 if m.get("result") == "L")
+    a6_w = sum(1 for m in a6 if m.get("result") == "W")
+    a6_l = sum(1 for m in a6 if m.get("result") == "L")
 
     away_ok = False
 
-    a6 = (away_overall_6 or [])[:6]
     if len(a6) >= 5:
-        a6_wins = sum(1 for m in a6 if m.get("result") == "W")
-        a6_win_rate = a6_wins / len(a6)
+        a6_win_rate = a6_w / len(a6)
         if a6_win_rate < 0.5:
             away_ok = True
 
-    if not away_ok:
-        a5 = (away_overall_5 or [])[:5]
-        if len(a5) >= 4:
-            a5_wins = sum(1 for m in a5 if m.get("result") == "W")
-            a5_win_rate = a5_wins / len(a5)
-            if a5_win_rate < 0.5:
-                away_ok = True
+    if not away_ok and len(a5) >= 4:
+        a5_win_rate = a5_w / len(a5)
+        if a5_win_rate < 0.5:
+            away_ok = True
 
     if not away_ok:
-        a5 = (away_overall_5 or [])[:5]
-        a6 = (away_overall_6 or [])[:6]
-        a5_w = sum(1 for m in a5 if m.get("result") == "W")
-        a5_l = sum(1 for m in a5 if m.get("result") == "L")
-        a6_w = sum(1 for m in a6 if m.get("result") == "W")
-        a6_l = sum(1 for m in a6 if m.get("result") == "L")
         return True, f"away_overall_strong_5g_{a5_w}W_{a5_l}L_6g_{a6_w}W_{a6_l}L"
 
     return False, None

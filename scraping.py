@@ -207,3 +207,71 @@ def get_team_overall_form(team_id, results_fetcher, num_matches=6, target_date_s
             break
 
     return form
+
+
+def get_h2h_meetings(home_team_id, away_team_id, results_fetcher, target_date_str=None, limit=6):
+    """Recent meetings between these sides, merged from both teams' result pages.
+
+    Returns perspective dicts from the HOME team's viewpoint (gf = home goals,
+    ga = away goals, is_home = True means the home_team_id was at home).
+
+    Results are correctly flipped for result ("W"/"L"/"D") symmetry when
+    viewing from the home team's perspective — compatible with home_win's
+    result-based logic and harmless for engines that only read gf/ga.
+    """
+    collected = {}
+    for team_id, opponent_id in (
+        (home_team_id, away_team_id),
+        (away_team_id, home_team_id),
+    ):
+        for match in results_fetcher(team_id):
+            if str(match.get("opponent_team_id") or "") != str(opponent_id):
+                continue
+            match_date = match.get("date_str")
+            if target_date_str and match_date and match_date >= target_date_str:
+                continue
+            key = (match_date, match.get("gf"), match.get("ga"), bool(match.get("is_home")))
+            if key in collected:
+                continue
+            if str(team_id) == str(home_team_id):
+                perspective = dict(match)
+            else:
+                flipped_result = {"W": "L", "L": "W", "D": "D"}.get(
+                    match.get("result"), match.get("result")
+                )
+                perspective = {
+                    **match,
+                    "gf": match.get("ga"),
+                    "ga": match.get("gf"),
+                    "result": flipped_result,
+                    "is_home": not match.get("is_home"),
+                }
+            collected[key] = perspective
+    meetings = sorted(collected.values(), key=lambda m: m.get("date_str") or "", reverse=True)
+    return meetings[:limit]
+
+
+def _count_btts(form):
+    """Count matches in form where both teams scored (gf>0 AND ga>0 from team's view)."""
+    return sum(1 for gf, ga in form[:6] if gf >= 1 and ga >= 1)
+
+
+def _count_non_btts(form):
+    """Count matches in form where at least one team blanked (gf=0 OR ga=0)."""
+    return sum(1 for gf, ga in form[:6] if gf == 0 or ga == 0)
+
+
+def _count_over25(form):
+    return sum(1 for gf, ga in form[:6] if gf + ga > 2.5)
+
+
+def _count_under25(form):
+    return sum(1 for gf, ga in form[:6] if gf + ga < 2.5)
+
+
+def _count_clean_sheets(form):
+    return sum(1 for _, ga in form[:6] if ga == 0)
+
+
+def _count_failed_to_score(form):
+    return sum(1 for gf, _ in form[:6] if gf == 0)
