@@ -3866,6 +3866,17 @@
       "result": "pending",
       "recorded_at": "2026-08-30T13:14:09.145146",
       "published": true
+    },
+    {
+      "date": "2026-08-31",
+      "type": "home_win",
+      "league": "Croatian HNL",
+      "home_team": "Hajduk Split",
+      "away_team": "Loko. Zagreb",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-08-31T09:15:59.240504",
+      "published": true
     }
   ],
   "over_under": [
@@ -12109,6 +12120,19 @@
       "result": "pending",
       "recorded_at": "2026-08-30T13:10:12.532348",
       "published": false
+    },
+    {
+      "date": "2026-09-02",
+      "type": "over_under",
+      "league": "Scottish Premier",
+      "home_team": "Falkirk",
+      "away_team": "Rangers",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-08-31T09:06:04.543564",
+      "published": true
     }
   ],
   "btts": [
@@ -15180,6 +15204,45 @@
       "result": "pending",
       "recorded_at": "2026-08-30T13:21:38.223182",
       "published": false
+    },
+    {
+      "date": "2026-09-02",
+      "type": "btts",
+      "league": "Danish SAS Ligaen",
+      "home_team": "Aarhus",
+      "away_team": "Midtjylland",
+      "prediction": "yes",
+      "prob": 60.5,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-08-31T09:27:25.563838",
+      "published": true
+    },
+    {
+      "date": "2026-09-03",
+      "type": "btts",
+      "league": "Polish Ekstraklasa",
+      "home_team": "Rakow Czestochowa",
+      "away_team": "Gornik Zabrze",
+      "prediction": "yes",
+      "prob": 68.5,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-08-31T09:27:25.572260",
+      "published": true
+    },
+    {
+      "date": "2026-09-03",
+      "type": "btts",
+      "league": "Hungarian League",
+      "home_team": "Gyori ETO",
+      "away_team": "Ferencvaros",
+      "prediction": "yes",
+      "prob": 58.0,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-08-31T09:27:25.574282",
+      "published": true
     }
   ],
   "stats": {}
