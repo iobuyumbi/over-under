@@ -602,6 +602,66 @@ def _scoring_consistency_veto(home_6, away_6):
     return False, None
 
 
+def _overall_scoring_symmetry_veto(home_overall_6, away_overall_6):
+    """
+    Block Over 2.5 if EITHER team's OVERALL scoring is too weak.
+
+    Over 2.5 needs BOTH teams to score goals regularly across ALL matches,
+    not just at their venue. A team with poor overall scoring form will
+    drag the game under even if their venue form looks okay (e.g. Dagenham
+    vs Slough 2026-08-31, where Dagenham was decent at home but blanked
+    heavily in away/overall fixtures, killing the 3-1 Over-2.5 result).
+
+    HOME overall (last 6):
+      - Must average >= 1.2 goals scored per game overall
+      - OR have scored in >= 4 of last 6 overall matches
+
+    AWAY overall (last 6):
+      - Must average >= 1.0 goals scored per game overall
+      - OR have scored in >= 3 of last 6 overall matches
+
+    Thin-data fallback (3-5 games): proportional thresholds.
+    """
+    home_overall_6 = home_overall_6 or []
+    away_overall_6 = away_overall_6 or []
+
+    # --- HOME OVERALL CHECK ---
+    h_len = min(len(home_overall_6), 6)
+    if h_len >= 4:
+        h_gf_total = sum(gf for gf, _ in home_overall_6[:h_len])
+        h_gf_avg = h_gf_total / h_len
+        h_scored_in = sum(1 for gf, _ in home_overall_6[:h_len] if gf >= 1)
+
+        h_avg_ok = h_gf_avg >= 1.2
+        h_consistent_ok = h_scored_in >= max(3, round(h_len * 0.67))
+
+        if not h_avg_ok and not h_consistent_ok:
+            return True, f"home_overall_weak_{h_gf_avg:.1f}gpg_{h_scored_in}of{h_len}_scored"
+    elif h_len >= 2:
+        h_scored_in = sum(1 for gf, _ in home_overall_6[:h_len] if gf >= 1)
+        if h_scored_in < max(1, round(h_len * 0.5)):
+            return True, f"home_overall_thin_{h_scored_in}of{h_len}_scored"
+
+    # --- AWAY OVERALL CHECK ---
+    a_len = min(len(away_overall_6), 6)
+    if a_len >= 4:
+        a_gf_total = sum(gf for gf, _ in away_overall_6[:a_len])
+        a_gf_avg = a_gf_total / a_len
+        a_scored_in = sum(1 for gf, _ in away_overall_6[:a_len] if gf >= 1)
+
+        a_avg_ok = a_gf_avg >= 1.0
+        a_consistent_ok = a_scored_in >= max(3, round(a_len * 0.67))
+
+        if not a_avg_ok and not a_consistent_ok:
+            return True, f"away_overall_weak_{a_gf_avg:.1f}gpg_{a_scored_in}of{a_len}_scored"
+    elif a_len >= 2:
+        a_scored_in = sum(1 for gf, _ in away_overall_6[:a_len] if gf >= 1)
+        if a_scored_in < max(1, round(a_len * 0.5)):
+            return True, f"away_overall_thin_{a_scored_in}of{a_len}_scored"
+
+    return False, None
+
+
 # =============================================================================
 # OVER 2.5 ALGORITHM (10-Check Rules + Overall Form)
 # =============================================================================
@@ -1455,6 +1515,9 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         under_peak_game_veto, under_peak_game_reason = _under_peak_game_veto(home_6, away_6)
         derby_veto, derby_reason = _derby_veto(match)
         scoring_consistency_veto, scoring_consistency_reason = _scoring_consistency_veto(home_6, away_6)
+        overall_scoring_veto, overall_scoring_reason = _overall_scoring_symmetry_veto(
+            home_overall_6, away_overall_6
+        )
 
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
@@ -1512,6 +1575,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             and not over_btts_gate and not over_leak_gate
             and not over_low_event_veto and not over_goalless_shock_veto
             and not derby_veto and not scoring_consistency_veto
+            and not overall_scoring_veto
         )
         under_qualifies = (
             bool(under_passed) and under_score >= under_min_score and under_gate
@@ -1616,6 +1680,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append(f"derby match ({derby_reason})")
         if scoring_consistency_veto:
             regressions.append(f"scoring inconsistency ({scoring_consistency_reason})")
+        if overall_scoring_veto:
+            regressions.append(f"overall scoring weak ({overall_scoring_reason})")
         if early_mult < 1.0:
             regressions.append(f"early-season penalty (x{early_mult})")
 
@@ -1744,6 +1810,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "derby_reason": derby_reason,
                     "scoring_consistency_veto": scoring_consistency_veto,
                     "scoring_consistency_reason": scoring_consistency_reason,
+                    "overall_scoring_veto": overall_scoring_veto,
+                    "overall_scoring_reason": overall_scoring_reason,
                     "early_season_mult": round(early_mult, 2),
                     "recent_cold_blocked": recent_cold_over_block,
                     "regression_penalty_applied": regressions,

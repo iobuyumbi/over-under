@@ -431,6 +431,57 @@ def _non_league_reliability_veto(match, home_6, away_6):
     return False, None
 
 
+def _overall_btts_symmetry_veto(home_overall_6, away_overall_6, side):
+    """
+    Block BTTS pick if EITHER team's OVERALL form contradicts the prediction.
+
+    BTTS Yes: BOTH teams must have BTTS in >= 50% of their last 6 overall games.
+              A team that rarely sees BTTS in their overall matches will drag
+              the game under even if their venue form looks okay. Previously the
+              shared Overall BTTS activity check summed both teams together at
+              55% combined — a team with 0 BTTS in 6 could hide behind a partner
+              at 6/6. This is per-team enforcement.
+
+    BTTS No:  BOTH teams must have non-BTTS in >= 50% of their last 6 overall games.
+              If one team is regularly involved in BTTS games overall, BTTS No
+              is dangerous regardless of venue form.
+    """
+    home_overall_6 = home_overall_6 or []
+    away_overall_6 = away_overall_6 or []
+
+    if side == "yes":
+        h_len = min(len(home_overall_6), 6)
+        if h_len >= 4:
+            h_btts = sum(1 for gf, ga in home_overall_6[:h_len] if gf >= 1 and ga >= 1)
+            h_btts_rate = h_btts / h_len
+            if h_btts_rate < 0.5:
+                return True, f"home_overall_btts_weak_{h_btts}of{h_len}_{h_btts_rate:.0%}"
+
+        a_len = min(len(away_overall_6), 6)
+        if a_len >= 4:
+            a_btts = sum(1 for gf, ga in away_overall_6[:a_len] if gf >= 1 and ga >= 1)
+            a_btts_rate = a_btts / a_len
+            if a_btts_rate < 0.5:
+                return True, f"away_overall_btts_weak_{a_btts}of{a_len}_{a_btts_rate:.0%}"
+
+    elif side == "no":
+        h_len = min(len(home_overall_6), 6)
+        if h_len >= 4:
+            h_nb = sum(1 for gf, ga in home_overall_6[:h_len] if gf == 0 or ga == 0)
+            h_nb_rate = h_nb / h_len
+            if h_nb_rate < 0.5:
+                return True, f"home_overall_nonbtts_weak_{h_nb}of{h_len}_{h_nb_rate:.0%}"
+
+        a_len = min(len(away_overall_6), 6)
+        if a_len >= 4:
+            a_nb = sum(1 for gf, ga in away_overall_6[:a_len] if gf == 0 or ga == 0)
+            a_nb_rate = a_nb / a_len
+            if a_nb_rate < 0.5:
+                return True, f"away_overall_nonbtts_weak_{a_nb}of{a_len}_{a_nb_rate:.0%}"
+
+    return False, None
+
+
 def _defensive_permeability_check(home_6, away_6):
     """Both teams must concede enough to suggest leaky defenses.
 
@@ -1068,6 +1119,12 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         cup_veto, cup_reason = _cup_mismatch_veto(match, home_lambda, away_lambda)
         cs_freq_veto, cs_freq_reason = _clean_sheet_frequency_veto(home_6, away_6)
         non_league_veto, non_league_reason = _non_league_reliability_veto(match, home_6, away_6)
+        overall_btts_yes_veto, overall_btts_yes_reason = _overall_btts_symmetry_veto(
+            home_overall_6, away_overall_6, "yes"
+        )
+        overall_btts_no_veto, overall_btts_no_reason = _overall_btts_symmetry_veto(
+            home_overall_6, away_overall_6, "no"
+        )
         perm_passed, perm_failed, perm_details = _defensive_permeability_check(home_6, away_6)
 
         yes_passed = yes_passed + perm_passed
@@ -1096,12 +1153,14 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             and not cup_veto
             and not cs_freq_veto
             and not non_league_veto
+            and not overall_btts_yes_veto
         )
         no_qualifies = (
             bool(no_passed) and no_score >= no_min and no_gate
             and non_btts_gate and o25tips_no_ok
             and not h2h_btts_no_blocked
             and not non_league_veto
+            and not overall_btts_no_veto
         )
 
         min_venue = min(len(home_6 or []), len(away_6 or []))
@@ -1174,6 +1233,10 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             regressions.append(f"clean-sheet frequency ({cs_freq_reason})")
         if non_league_veto:
             regressions.append(f"non-league thin data ({non_league_reason})")
+        if overall_btts_yes_veto:
+            regressions.append(f"overall BTTS symmetry ({overall_btts_yes_reason})")
+        if overall_btts_no_veto:
+            regressions.append(f"overall non-BTTS symmetry ({overall_btts_no_reason})")
         if yes_tier == "qualified" and last_2_scored_reason:
             regressions.append(f"perfect tier downgrade ({last_2_scored_reason})")
         if h2h_btts_no_blocked:
@@ -1209,6 +1272,8 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "shutout_shock_reason": shutout_shock_reason,
                     "non_league_veto": non_league_veto,
                     "non_league_reason": non_league_reason,
+                    "overall_btts_yes_veto": overall_btts_yes_veto,
+                    "overall_btts_yes_reason": overall_btts_yes_reason,
                     "perfect_tier_downgrade_reason": last_2_scored_reason,
                     "o25tips_points": o25tips_total,
                     "o25tips_passed": o25tips_yes_ok,
@@ -1230,6 +1295,8 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "h2h_meetings": len(h2h_btts_no_meetings),
                     "non_league_veto": non_league_veto,
                     "non_league_reason": non_league_reason,
+                    "overall_btts_no_veto": overall_btts_no_veto,
+                    "overall_btts_no_reason": overall_btts_no_reason,
                     "o25tips_points": o25tips_total,
                     "o25tips_passed": o25tips_no_ok,
                     "min_score_threshold": no_min,
@@ -1264,6 +1331,10 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "shutout_shock_reason": shutout_shock_reason,
                     "non_league_veto": non_league_veto,
                     "non_league_reason": non_league_reason,
+                    "overall_btts_yes_veto": overall_btts_yes_veto,
+                    "overall_btts_yes_reason": overall_btts_yes_reason,
+                    "overall_btts_no_veto": overall_btts_no_veto,
+                    "overall_btts_no_reason": overall_btts_no_reason,
                     "perfect_tier_downgrade_reason": last_2_scored_reason,
                     "regression_penalty_applied": regressions,
                 },
