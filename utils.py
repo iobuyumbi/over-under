@@ -14,6 +14,7 @@ Import from here instead of redefining these helpers locally.
 import hashlib
 import json
 import logging
+import math
 import random
 import re
 import sqlite3
@@ -278,3 +279,36 @@ def apply_portfolio_kelly(recommendations, bet_type, bankroll, max_exposure):
         )
 
     return recommendations
+
+
+def exponential_form_averages(form_tuples, halflife=3.0):
+    """Weighted average of (gf, ga) with exponential decay.
+
+    form_tuples[0] is the most recent match (weight=1.0); each older match
+    is multiplied by 0.5 ** (n / halflife) for match index n going back.
+    Returns (weighted_gf_per_game, weighted_ga_per_game, effective_sample_weight).
+    """
+    if not form_tuples:
+        return 0.0, 0.0, 0.0
+    w_sum = gf_sum = ga_sum = 0.0
+    for idx, (gf, ga) in enumerate(form_tuples):
+        w = 0.5 ** (idx / halflife)
+        w_sum += w
+        gf_sum += w * gf
+        ga_sum += w * ga
+    if w_sum <= 0:
+        return 0.0, 0.0, 0.0
+    return gf_sum / w_sum, ga_sum / w_sum, w_sum
+
+
+def is_weak_roi_league(league_name, keywords):
+    """Return True if league_name matches any of the case-insensitive keywords."""
+    name = str(league_name or "").strip().lower()
+    return any(k in name for k in keywords)
+
+
+def poisson_pmf(k, lam):
+    """Poisson probability mass function: P(k | lam)."""
+    if lam <= 0:
+        return 0.0
+    return (math.exp(-lam) * (lam ** k)) / math.factorial(k)

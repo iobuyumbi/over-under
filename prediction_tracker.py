@@ -39,21 +39,25 @@ COMPACT_TIER_HEADER_PREMIUM = "🔥 Premium"
 COMPACT_TIER_HEADER_STRONG = "✅ Solid"
 COMPACT_TIER_HEADER_WATCH = "👀 Watchlist"
 
-TIER_ICON = {"perfect": "🔥", "qualified": "✅", "close": "👀", "Premium": "🔥", "Solid": "✅", "Watchlist": "👀"}
-MARKET_SECTION_DIVIDER = "───────────"
-MARKET_SHORT = {
-    "HOME WIN": "HW", "Home Win": "HW", "home_win": "HW",
-    "OVER 2.5": "O2.5", "Over 2.5": "O2.5", "over": "O2.5", "OVER": "O2.5",
-    "UNDER 2.5": "U2.5", "Under 2.5": "U2.5", "under": "U2.5", "UNDER": "U2.5",
-    "BTTS YES": "BTTS+", "BTTS Yes": "BTTS+", "yes": "BTTS+", "BTTS_YES": "BTTS+",
-    "BTTS NO": "BTTS−", "BTTS No": "BTTS−", "no": "BTTS−", "BTTS_NO": "BTTS−",
+TIER_ICON = {
+    "perfect": "🔥", "qualified": "✅", "close": "👀",
+    "premium": "🔥", "solid": "✅", "watchlist": "👀",
+    "Premium": "🔥", "Solid": "✅", "Watchlist": "👀",
 }
+MARKET_SECTION_DIVIDER = "───────────"
 
 
 def market_short_label(market_label):
-    """Compact market code for Telegram (HW, O2.5, BTTS+, etc.)."""
-    text = str(market_label or "").strip()
-    return MARKET_SHORT.get(text, MARKET_SHORT.get(text.upper(), text))
+    """Short market code for compact Telegram lines (HW, O2.5, BTTS+, etc.)."""
+    key = str(market_label or "").strip().lower().replace(" ", "_")
+    mapping = {
+        "home_win": "HW", "homewin": "HW",
+        "over_2.5": "O2.5", "over25": "O2.5", "over": "O2.5",
+        "under_2.5": "U2.5", "under25": "U2.5", "under": "U2.5",
+        "btts_yes": "BTTS+", "bttsyes": "BTTS+", "yes": "BTTS+",
+        "btts_no": "BTTS-", "bttsno": "BTTS-", "no": "BTTS-",
+    }
+    return mapping.get(key, str(market_label or "").strip())
 
 
 def tier_icon(tier_or_confidence):
@@ -90,35 +94,6 @@ def format_result_tag(result):
     """Bracket tag for results summaries."""
     normalized = str(result or "").lower()
     return {"win": "✅", "loss": "❌", "push": "➖"}.get(normalized, "⏳")
-
-
-TIER_ICON = {
-    "perfect": "🔥",
-    "qualified": "✅",
-    "close": "👀",
-    "premium": "🔥",
-    "solid": "✅",
-    "watchlist": "👀",
-}
-
-
-def market_short_label(market_label):
-    """Short market code for compact Telegram lines."""
-    key = str(market_label or "").strip().lower()
-    mapping = {
-        "home win": "HW",
-        "over 2.5": "O2.5",
-        "over": "O2.5",
-        "under 2.5": "U2.5",
-        "under": "U2.5",
-        "btts yes": "BTTS+",
-        "btts_yes": "BTTS+",
-        "yes": "BTTS+",
-        "btts no": "BTTS-",
-        "btts_no": "BTTS-",
-        "no": "BTTS-",
-    }
-    return mapping.get(key, str(market_label or "").strip())
 
 
 def pick_item_date(item):
@@ -1001,10 +976,10 @@ def get_performance_summary(days=30):
     history = load_history() 
     cutoff = datetime.now() - timedelta(days=days) 
     
-    stats = {"home_win": {}, "over_under": {}} 
- 
-    for ptype in ["home_win", "over_under"]: 
-        picks = history.get(ptype, []) 
+    stats = {"home_win": {}, "over_under": {}, "btts": {}}
+
+    for ptype in ["home_win", "over_under", "btts"]:
+        picks = history.get(ptype, [])
         wins = losses = pushes = pending = 0 
         recent = [p for p in picks if datetime.fromisoformat(p["date"]) >= cutoff] 
  

@@ -28,6 +28,9 @@ from utils import (
     parse_date,
     calculate_kelly,
     apply_portfolio_kelly,
+    exponential_form_averages as _shared_exponential_form_averages,
+    is_weak_roi_league as _shared_is_weak_roi_league,
+    poisson_pmf as _shared_poisson_pmf,
 )
 
 # Shared Soccerbase scraping/parsing (see scraping.py) — do not redefine
@@ -39,8 +42,13 @@ from scraping import (
     fetch_soccerbase_team_results as _shared_fetch_team_results,
     get_team_form as _shared_get_team_form,
     get_team_overall_form as _shared_get_team_overall_form,
+    get_h2h_meetings as _shared_get_h2h_meetings,
     _thin_count,
     _thin_total,
+    _count_btts,
+    _count_non_btts,
+    _count_over25,
+    _count_under25,
 )
 
 # Import prediction tracker
@@ -176,25 +184,9 @@ BTTS_MIN_6 = 3
 NON_BTTS_MIN_6 = 3
 
 
-def _count_btts(form):
-    """Count matches in form where both teams scored (gf>0 AND ga>0 from team's view)."""
-    return sum(1 for gf, ga in form[:6] if gf >= 1 and ga >= 1)
-
-
-def _count_non_btts(form):
-    """Count matches in form where at least one team blanked (gf=0 OR ga=0) — opposite of BTTS."""
-    return sum(1 for gf, ga in form[:6] if gf == 0 or ga == 0)
-
-
-def _count_over25(form):
-    return sum(1 for gf, ga in form[:6] if gf + ga > 2.5)
-
-
-def _count_under25(form):
-    return sum(1 for gf, ga in form[:6] if gf + ga < 2.5)
-
-
-# _thin_count/_thin_total are imported from scraping.py — do not redefine locally.
+# _thin_count/_thin_total and _count_* form helpers are imported from scraping.py —
+# do not redefine locally; this is exactly the copy-paste drift that the shared
+# module exists to prevent.
 
 
 def _venue_over_gate_passes(home_6, away_6):
@@ -275,34 +267,12 @@ _OU_H2H_MIN_MEETINGS = 3
 _OU_H2H_OVER_BLOCK_RATE = 0.33
 _OU_H2H_UNDER_BLOCK_RATE = 0.67
 
+
 def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=_OU_H2H_MAX_LOOKBACK):
     """Recent meetings between these sides, merged from both teams' result pages."""
-    collected = {}
-    for team_id, opponent_id in (
-        (home_team_id, away_team_id),
-        (away_team_id, home_team_id),
-    ):
-        for match in fetch_soccerbase_team_results(team_id):
-            if str(match.get("opponent_team_id") or "") != str(opponent_id):
-                continue
-            match_date = match.get("date_str")
-            if target_date_str and match_date and match_date >= target_date_str:
-                continue
-            key = (match_date, match.get("gf"), match.get("ga"), bool(match.get("is_home")))
-            if key in collected:
-                continue
-            if str(team_id) == str(home_team_id):
-                perspective = dict(match)
-            else:
-                perspective = {
-                    **match,
-                    "gf": match.get("ga"),
-                    "ga": match.get("gf"),
-                    "is_home": not match.get("is_home"),
-                }
-            collected[key] = perspective
-    meetings = sorted(collected.values(), key=lambda m: m.get("date_str") or "", reverse=True)
-    return meetings[:limit]
+    return _shared_get_h2h_meetings(
+        home_team_id, away_team_id, fetch_soccerbase_team_results, target_date_str, limit
+    )
 
 
 def _h2h_over_blocked(home_team_id, away_team_id, target_date_str=None):
@@ -1150,24 +1120,11 @@ def _exponential_form_averages(form_tuples, halflife=_MIN_FORM_HALFLIFE):
     is multiplied by 0.5 ** (n / halflife) for match index n going back.
     Returns (weighted_gf_per_game, weighted_ga_per_game, effective_sample_weight).
     """
-    if not form_tuples:
-        return 0.0, 0.0, 0.0
-    w_sum = 0.0
-    gf_sum = 0.0
-    ga_sum = 0.0
-    for idx, (gf, ga) in enumerate(form_tuples):
-        w = 0.5 ** (idx / halflife)
-        w_sum += w
-        gf_sum += w * gf
-        ga_sum += w * ga
-    if w_sum <= 0:
-        return 0.0, 0.0, 0.0
-    return gf_sum / w_sum, ga_sum / w_sum, w_sum
+    return _shared_exponential_form_averages(form_tuples, halflife)
 
 
 def _is_weak_roi_league(league_name):
-    name = str(league_name or "").strip().lower()
-    return any(k in name for k in _WEAK_ROI_LEAGUE_KEYWORDS)
+    return _shared_is_weak_roi_league(league_name, _WEAK_ROI_LEAGUE_KEYWORDS)
 
 
 def _over_streak_count(form_tuples):
@@ -1236,9 +1193,7 @@ def _compact_rule_under(home_6, away_6):
 
 
 def poisson_pmf(k, lam):
-    if lam <= 0:
-        return 0.0
-    return (math.exp(-lam) * (lam ** k)) / math.factorial(k)
+    return _shared_poisson_pmf(k, lam)
 
 
 def _dixon_coles_tau(h, a, lh, la, rho):
@@ -1276,6 +1231,9 @@ def calculate_poisson_under25(home_lambda, away_lambda, max_goals=10):
     return round((1.0 - over_prob) * 100, 1)
 
 
+HISTORY_FILE_FALLBACK = "prediction_history.json"
+
+
 def _load_league_baselines():
     """Compute per-league home/away goals baselines from prediction_history settled picks.
 
@@ -1298,7 +1256,6 @@ def _load_league_baselines():
     league_stats = defaultdict(lambda: {"h_gf": 0.0, "h_ga": 0.0, "a_gf": 0.0, "a_ga": 0.0, "n": 0})
     for market in ("home_win", "over_under"):
         for row in data.get(market, []) or []:
-            score = row.get("final_score") or row.get("result_source")
             final_score = row.get("final_score")
             if not final_score or "-" not in str(final_score):
                 continue
@@ -1345,9 +1302,6 @@ def _load_league_baselines():
             continue
         _LEAGUE_BASELINE_CACHE[lg] = (ha, aa, hd, ad)
     return _LEAGUE_BASELINE_CACHE
-
-
-HISTORY_FILE_FALLBACK = "prediction_history.json"
 
 
 def _league_baselines(league_name):

@@ -3656,9 +3656,12 @@
       "home_team": "Hajduk Split",
       "away_team": "Loko. Zagreb",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-30T03:54:00.867820",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.825576",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-01",
@@ -3725,9 +3728,12 @@
       "home_team": "St. Louis City SC",
       "away_team": "Dallas",
       "confidence": "close",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-30T03:54:01.053750",
-      "published": false
+      "published": false,
+      "updated_at": "2026-09-01T09:50:29.829115",
+      "final_score": "3-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -3736,9 +3742,12 @@
       "home_team": "Racing Club M",
       "away_team": "Albion FC",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-30T03:54:01.085731",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.835272",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-02",
@@ -3758,9 +3767,12 @@
       "home_team": "Racing Club M",
       "away_team": "Albion FC",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-30T13:14:09.070179",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.840807",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-04",
@@ -3874,8 +3886,22 @@
       "home_team": "Hajduk Split",
       "away_team": "Loko. Zagreb",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-31T09:15:59.240504",
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.842808",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
+    },
+    {
+      "date": "2026-09-04",
+      "type": "home_win",
+      "league": "Bulgarian League",
+      "home_team": "Arda",
+      "away_team": "Botev Plovdiv",
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-09-01T10:13:21.787352",
       "published": true
     }
   ],
@@ -11376,9 +11402,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:58.603395",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.842808",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11389,9 +11418,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:58.618428",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.843808",
+      "final_score": "4-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11402,9 +11434,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:58.632932",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.843808",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11415,9 +11450,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:58.649923",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.845311",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11428,9 +11466,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:58.663916",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.846339",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11441,9 +11482,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:58.677924",
-      "published": false
+      "published": false,
+      "updated_at": "2026-09-01T09:50:29.847825",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11454,9 +11498,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:58.693895",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.850395",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11467,9 +11514,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:58.708906",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.852944",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11480,9 +11530,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:58.725905",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.855446",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11493,9 +11546,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:58.740430",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.858002",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11506,9 +11562,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:58.754422",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.859005",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11519,9 +11578,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:58.771412",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.862082",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11532,9 +11594,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:58.785387",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.864060",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11545,9 +11610,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:58.801396",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.867598",
+      "final_score": "5-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11558,9 +11626,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:58.817371",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.870764",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11571,9 +11642,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:58.835344",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.873303",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11584,9 +11658,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:58.850334",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.875784",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11597,9 +11674,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:58.864326",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.877808",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11610,9 +11690,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:58.879319",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.880749",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11623,9 +11706,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:58.896309",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.887302",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11636,9 +11722,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:58.911299",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.890417",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11649,9 +11738,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:58.927824",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.891942",
+      "final_score": "5-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11662,9 +11754,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:58.942820",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.895990",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11688,9 +11783,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:58.973819",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.904098",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11701,9 +11799,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:58.988811",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.907679",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11714,9 +11815,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:59.004783",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.910692",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11727,9 +11831,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:59.021795",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.913220",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11740,9 +11847,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:59.035300",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.918793",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11753,9 +11863,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:59.052273",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.922360",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11766,9 +11879,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:59.066265",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.926397",
+      "final_score": "0-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11779,9 +11895,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:59.082268",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.929382",
+      "final_score": "0-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11792,9 +11911,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:59.096247",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.934425",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -11805,9 +11927,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:59.112236",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.939044",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-01",
@@ -11987,9 +12112,12 @@
       "prediction": "under",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:59.329886",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.943231",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-08-31",
@@ -12000,9 +12128,12 @@
       "prediction": "under",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-29T15:21:59.346194",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.946278",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-01",
@@ -12052,9 +12183,12 @@
       "prediction": "under",
       "prob": null,
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-08-29T15:21:59.417137",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.952824",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-01",
@@ -12132,6 +12266,32 @@
       "confidence": "qualified",
       "result": "pending",
       "recorded_at": "2026-08-31T09:06:04.543564",
+      "published": true
+    },
+    {
+      "date": "2026-09-04",
+      "type": "over_under",
+      "league": "Belgium League",
+      "home_team": "Lommel",
+      "away_team": "Club Brugge",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-09-01T10:05:37.527212",
+      "published": true
+    },
+    {
+      "date": "2026-09-04",
+      "type": "over_under",
+      "league": "Welsh Premier",
+      "home_team": "Briton Ferry Ath",
+      "away_team": "Airbus UK",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-09-01T10:05:37.535253",
       "published": true
     }
   ],
@@ -15071,9 +15231,12 @@
       "prediction": "yes",
       "prob": 65.4,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-30T04:12:58.807326",
-      "published": false
+      "published": false,
+      "updated_at": "2026-09-01T09:50:29.957887",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-01",
@@ -15162,9 +15325,12 @@
       "prediction": "no",
       "prob": 67.5,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-08-30T04:12:58.871834",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-01T09:50:29.960895",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-01",

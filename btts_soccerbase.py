@@ -26,6 +26,9 @@ from utils import (
     parse_date,
     calculate_kelly as _shared_calculate_kelly,
     apply_portfolio_kelly as _shared_apply_portfolio_kelly,
+    exponential_form_averages as _shared_exponential_form_averages,
+    is_weak_roi_league as _shared_is_weak_roi_league,
+    poisson_pmf as _shared_poisson_pmf,
 )
 
 # Shared Soccerbase scraping/parsing (see scraping.py) — do not redefine
@@ -36,8 +39,13 @@ from scraping import (
     fetch_soccerbase_team_results as _shared_fetch_team_results,
     get_team_form as _shared_get_team_form,
     get_team_overall_form as _shared_get_team_overall_form,
+    get_h2h_meetings as _shared_get_h2h_meetings,
     _thin_count,
     _thin_total,
+    _count_btts,
+    _count_non_btts,
+    _count_clean_sheets,
+    _count_failed_to_score,
 )
 
 from prediction_tracker import (
@@ -166,23 +174,9 @@ def get_team_overall_form(team_id, num_matches=6, target_date_str=None):
     )
 
 
-def _count_btts(form):
-    return sum(1 for gf, ga in form[:6] if gf >= 1 and ga >= 1)
-
-
-def _count_non_btts(form):
-    return sum(1 for gf, ga in form[:6] if gf == 0 or ga == 0)
-
-
-def _count_clean_sheets(form):
-    return sum(1 for _, ga in form[:6] if ga == 0)
-
-
-def _count_failed_to_score(form):
-    return sum(1 for gf, _ in form[:6] if gf == 0)
-
-
-# _thin_count/_thin_total are imported from scraping.py — do not redefine locally.
+# _thin_count/_thin_total and _count_* form helpers are imported from scraping.py —
+# do not redefine locally; this is exactly the copy-paste drift that the shared
+# module exists to prevent.
 
 
 def _btts_gate_passes(home_6, away_6):
@@ -235,32 +229,9 @@ def _compact_btts_no_bonus(home_6, away_6):
 
 def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=_BTTS_H2H_MAX_LOOKBACK):
     """Recent meetings between these sides, merged from both teams' result pages."""
-    collected = {}
-    for team_id, opponent_id in (
-        (home_team_id, away_team_id),
-        (away_team_id, home_team_id),
-    ):
-        for match in fetch_soccerbase_team_results(team_id):
-            if str(match.get("opponent_team_id") or "") != str(opponent_id):
-                continue
-            match_date = match.get("date_str")
-            if target_date_str and match_date and match_date >= target_date_str:
-                continue
-            key = (match_date, match.get("gf"), match.get("ga"), bool(match.get("is_home")))
-            if key in collected:
-                continue
-            if str(team_id) == str(home_team_id):
-                perspective = dict(match)
-            else:
-                perspective = {
-                    **match,
-                    "gf": match.get("ga"),
-                    "ga": match.get("gf"),
-                    "is_home": not match.get("is_home"),
-                }
-            collected[key] = perspective
-    meetings = sorted(collected.values(), key=lambda m: m.get("date_str") or "", reverse=True)
-    return meetings[:limit]
+    return _shared_get_h2h_meetings(
+        home_team_id, away_team_id, fetch_soccerbase_team_results, target_date_str, limit
+    )
 
 
 def _h2h_btts_yes_blocked(home_team_id, away_team_id, target_date_str=None):
@@ -878,22 +849,11 @@ def apply_btts_no_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None,
 # POISSON / LAMBDAS
 # =============================================================================
 def _exponential_form_averages(form_tuples, halflife=_MIN_FORM_HALFLIFE):
-    if not form_tuples:
-        return 0.0, 0.0, 0.0
-    w_sum = gf_sum = ga_sum = 0.0
-    for idx, (gf, ga) in enumerate(form_tuples):
-        w = 0.5 ** (idx / halflife)
-        w_sum += w
-        gf_sum += w * gf
-        ga_sum += w * ga
-    if w_sum <= 0:
-        return 0.0, 0.0, 0.0
-    return gf_sum / w_sum, ga_sum / w_sum, w_sum
+    return _shared_exponential_form_averages(form_tuples, halflife)
 
 
 def _is_weak_roi_league(league_name):
-    name = str(league_name or "").strip().lower()
-    return any(k in name for k in _WEAK_ROI_LEAGUE_KEYWORDS)
+    return _shared_is_weak_roi_league(league_name, _WEAK_ROI_LEAGUE_KEYWORDS)
 
 
 def _load_league_baselines():
@@ -980,9 +940,7 @@ def get_match_lambdas(home_6, away_6, league_name=None):
 
 
 def poisson_pmf(k, lam):
-    if lam <= 0:
-        return 0.0
-    return (math.exp(-lam) * (lam ** k)) / math.factorial(k)
+    return _shared_poisson_pmf(k, lam)
 
 
 def calculate_poisson_btts_yes(home_lambda, away_lambda):

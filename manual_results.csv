@@ -698,46 +698,46 @@ date,home_team,away_team,score
 2026-08-30,Viking,Aalesund,2-1
 2026-08-30,Viktoria Plzen,Synot,1-1
 2026-08-30,Widzew Lodz,Lech Poznan,2-3
-2026-08-31,AFC Emley,Guiseley,
-2026-08-31,Arda,Botev Vratsa,
-2026-08-31,Basingstoke,Bracknell,
-2026-08-31,Braintree,Farnborough,
+2026-08-31,AFC Emley,Guiseley,0-4
+2026-08-31,Arda,Botev Vratsa,2-0
+2026-08-31,Basingstoke,Bracknell,2-1
+2026-08-31,Braintree,Farnborough,0-2
 2026-08-31,Brentwood T,Maldon & T,
-2026-08-31,Bukovyna Chernivtsi,Dynamo Kyiv,
-2026-08-31,Buxton,Merthyr,
-2026-08-31,Carlisle,Scunthorpe,
-2026-08-31,Chichester C,Havant & W,
-2026-08-31,Chorley,Brackley,
-2026-08-31,Copenhagen,SonderjyskE,
-2026-08-31,Dag & Red,Slough,
-2026-08-31,Farnham Town,Torquay,
-2026-08-31,Folkestone,Hemel,
-2026-08-31,Hajduk Split,Loko. Zagreb,
-2026-08-31,Hanworth Villa,Chertsey Town,
-2026-08-31,Harborough T,Marine,
-2026-08-31,Harrogate,Gateshead,
-2026-08-31,Hyde,Bury,
-2026-08-31,King's Lynn,Scarborough A,
-2026-08-31,Lancaster,Workington,
-2026-08-31,Lewes,Eastbourne,
-2026-08-31,Macclesfield,Hebburn Town,
-2026-08-31,Monterrey,Atletico San Luis,
-2026-08-31,Plymouth P,Poole Town,
-2026-08-31,Racing Club M,Albion FC,
-2026-08-31,Radcliffe Boro,Darlington,
-2026-08-31,Ramsgate,AFC Whyteleafe,
-2026-08-31,Salisbury FC,Billericay,
-2026-08-31,Solihull M,Fylde,
-2026-08-31,South Shields,Spalding Utd,
-2026-08-31,Southport,Hereford,
-2026-08-31,St. Louis City SC,Dallas,
-2026-08-31,Stanway,Aveley,
-2026-08-31,Three Bridges,Carshalton,
-2026-08-31,Toluca,FC Juarez,
-2026-08-31,Tonbridge,Walton & H,
-2026-08-31,Uxbridge,Wimborne T,
-2026-08-31,Worksop,Oxford C,
-2026-08-31,Yeovil,Tamworth,
+2026-08-31,Bukovyna Chernivtsi,Dynamo Kyiv,3-0
+2026-08-31,Buxton,Merthyr,2-1
+2026-08-31,Carlisle,Scunthorpe,4-2
+2026-08-31,Chichester C,Havant & W,3-2
+2026-08-31,Chorley,Brackley,2-2
+2026-08-31,Copenhagen,SonderjyskE,3-1
+2026-08-31,Dag & Red,Slough,1-0
+2026-08-31,Farnham Town,Torquay,2-0
+2026-08-31,Folkestone,Hemel,2-0
+2026-08-31,Hajduk Split,Loko. Zagreb,2-0
+2026-08-31,Hanworth Villa,Chertsey Town,4-1
+2026-08-31,Harborough T,Marine,2-1
+2026-08-31,Harrogate,Gateshead,2-1
+2026-08-31,Hyde,Bury,2-1
+2026-08-31,King's Lynn,Scarborough A,3-1
+2026-08-31,Lancaster,Workington,0-3
+2026-08-31,Lewes,Eastbourne,1-0
+2026-08-31,Macclesfield,Hebburn Town,3-0
+2026-08-31,Monterrey,Atletico San Luis,1-3
+2026-08-31,Plymouth P,Poole Town,2-0
+2026-08-31,Racing Club M,Albion FC,1-0
+2026-08-31,Radcliffe Boro,Darlington,0-1
+2026-08-31,Ramsgate,AFC Whyteleafe,5-1
+2026-08-31,Salisbury FC,Billericay,1-0
+2026-08-31,Solihull M,Fylde,1-3
+2026-08-31,South Shields,Spalding Utd,1-1
+2026-08-31,Southport,Hereford,0-1
+2026-08-31,St. Louis City SC,Dallas,3-3
+2026-08-31,Stanway,Aveley,0-2
+2026-08-31,Three Bridges,Carshalton,3-2
+2026-08-31,Toluca,FC Juarez,4-0
+2026-08-31,Tonbridge,Walton & H,5-1
+2026-08-31,Uxbridge,Wimborne T,0-0
+2026-08-31,Worksop,Oxford C,0-1
+2026-08-31,Yeovil,Tamworth,3-2
 2026-09-01,Academia Puerto Cabello,Anzoategui,
 2026-09-01,Birmingham,Southampton,
 2026-09-01,Bromley,Leyton Orient,
@@ -763,6 +763,7 @@ date,home_team,away_team,score
 2026-09-02,Zamora FC,Deportivo Tachira,
 2026-09-03,Basel,FC Sion,
 2026-09-03,Copenhagen,Nordsjaelland,
+2026-09-03,Gyori ETO,Ferencvaros,
 2026-09-03,Hibernian,Hearts,
 2026-09-03,Isloch Minsk,Bate Borisov,
 2026-09-03,Rakow Czestochowa,Gornik Zabrze,
@@ -774,4 +775,6 @@ date,home_team,away_team,score
 2026-09-04,Nafta Lendava,NK Radomlje,
 2026-09-04,Sp. Rotterdam,PEC Zwolle,
 2026-09-04,Viborg,Lyngby,
-2026-09-03,Gyori ETO,Ferencvaros,
+2026-09-04,Lommel,Club Brugge,
+2026-09-04,Briton Ferry Ath,Airbus UK,
+2026-09-04,Arda,Botev Plovdiv,
