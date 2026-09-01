@@ -43,6 +43,15 @@ if errorlevel 1 goto :error
 echo --- done ---
 
 echo.
+echo === CURATED PICKS (research-calibrated filter) ===
+python curate_picks.py --date %RUN_DATE% --out-txt curated.txt --out-json curated.json
+if errorlevel 1 (
+  echo   WARNING: curate_picks.py returned non-zero (see above; optional step)
+) else (
+  echo   --- done (curated.txt + curated.json saved) ---
+)
+
+echo.
 echo === LOCAL TELEGRAM SEND (optional, gated on env vars) ===
 if defined TELEGRAM_BOT_TOKEN (
   if defined TELEGRAM_CHAT_ID (
@@ -72,7 +81,7 @@ echo.
 type telegram.txt
 echo.
 echo ============================================================
-echo  Files saved: ou.txt, hw.txt, btts.txt, telegram.txt
+echo  Files saved: ou.txt, hw.txt, btts.txt, telegram.txt, curated.txt, curated.json
 echo  Telegram sections: ou_telegram.txt, btts_telegram.txt, hw_telegram.txt
 echo  VIP reports: btts_vip_report_*.txt, over_under_vip_report_*.txt, home_win_vip_report_*.txt
 echo  To resend to Telegram: set TELEGRAM_BOT_TOKEN ^&^& set TELEGRAM_CHAT_ID ^&^& set DATE=%RUN_DATE% ^&^& python send_local_telegram.py
