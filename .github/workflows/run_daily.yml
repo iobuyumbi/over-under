@@ -104,7 +104,7 @@ jobs:
     runs-on: self-hosted
     defaults:
       run:
-        shell: pwsh
+        shell: powershell
     needs: fetch-results
     if: |
       always() &&
@@ -121,17 +121,17 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        shell: pwsh
+        shell: powershell
         run: |
           python -m pip install --upgrade pip
           if (Test-Path requirements.txt) { pip install -r requirements.txt }
 
       - name: Sync with latest main
-        shell: pwsh
+        shell: powershell
         run: git pull --rebase origin main
 
       - name: Fetch recent results before publishing
-        shell: pwsh
+        shell: powershell
         run: |
           & python fetch_results.py --days 3 *>&1 | Tee-Object -FilePath fetch_output_automated.txt
           if ($LASTEXITCODE -ne 0) { Write-Host "fetch_results (1st) warned: $LASTEXITCODE" }
@@ -146,7 +146,7 @@ jobs:
       - name: Run Over/Under predictor
         id: over-under
         continue-on-error: true
-        shell: pwsh
+        shell: powershell
         run: |
           $DATE = python -c "from datetime import datetime,timedelta; print((datetime.utcnow()+timedelta(hours=3)).strftime('%Y-%m-%d'))"
           Write-Host "Using publish date: $DATE"
@@ -170,7 +170,7 @@ jobs:
       - name: Run Home Win predictor
         id: home-win
         continue-on-error: true
-        shell: pwsh
+        shell: powershell
         run: |
           $DATE = "${{ steps.over-under.outputs.date }}"
           & python home_win_soccerbase.py --publish-date "$DATE" > hw_output.txt 2> hw_errors.txt
@@ -192,7 +192,7 @@ jobs:
       - name: Run BTTS predictor
         id: btts
         continue-on-error: true
-        shell: pwsh
+        shell: powershell
         run: |
           $DATE = "${{ steps.over-under.outputs.date }}"
           & python btts_soccerbase.py --publish-date "$DATE" > btts_output.txt 2> btts_errors.txt
@@ -213,7 +213,7 @@ jobs:
 
       - name: Debug predictor output
         if: always()
-        shell: pwsh
+        shell: powershell
         run: |
           Write-Host "=== Over/Under body size ==="
           if (Test-Path over25_body.txt) { (Get-Item over25_body.txt).Length } else { Write-Host "0" }
@@ -249,7 +249,7 @@ jobs:
 
       - name: Build Telegram daily message
         continue-on-error: true
-        shell: pwsh
+        shell: powershell
         run: |
           $DATE = "${{ steps.over-under.outputs.date }}"
           & python build_telegram_daily.py --date "$DATE" --ou-output ou_telegram.txt --btts-output btts_telegram.txt --hw-output hw_telegram.txt --out telegram_daily.txt
@@ -265,7 +265,7 @@ jobs:
 
       - name: Build free and VIP reports
         continue-on-error: true
-        shell: pwsh
+        shell: powershell
         run: |
           $DATE = "${{ steps.over-under.outputs.date }}"
           $free = @()
@@ -318,7 +318,7 @@ jobs:
 
       - name: Commit predictions and reports
         continue-on-error: true
-        shell: pwsh
+        shell: powershell
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -344,7 +344,7 @@ jobs:
 
       - name: Send Telegram free and VIP messages
         if: always()
-        shell: pwsh
+        shell: powershell
         run: python send_daily_telegram.py
         env:
           DATE: ${{ steps.over-under.outputs.date }}
@@ -356,7 +356,7 @@ jobs:
     runs-on: self-hosted
     defaults:
       run:
-        shell: pwsh
+        shell: powershell
     if: github.event.schedule == '0 3 * * 1' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'weekly' || github.event.inputs.mode == 'all'))
     steps:
       - uses: actions/checkout@v4
@@ -368,19 +368,19 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        shell: pwsh
+        shell: powershell
         run: |
           python -m pip install --upgrade pip
           if (Test-Path requirements.txt) { pip install -r requirements.txt }
 
       - name: Sync with latest main
-        shell: pwsh
+        shell: powershell
         run: git pull --rebase origin main
 
       - name: Settle results and generate weekly report
         id: report
         continue-on-error: true
-        shell: pwsh
+        shell: powershell
         run: |
           & python fetch_results.py --days 10
           if ($LASTEXITCODE -ne 0) { Write-Host "fetch_results(1) exited: $LASTEXITCODE" }
@@ -395,7 +395,7 @@ jobs:
 
       - name: Commit weekly report
         continue-on-error: true
-        shell: pwsh
+        shell: powershell
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -417,7 +417,7 @@ jobs:
 
       - name: Send weekly report to Telegram
         if: always()
-        shell: pwsh
+        shell: powershell
         run: python send_periodic_telegram.py
         env:
           REPORT_FILE: ${{ steps.report.outputs.file }}
@@ -429,7 +429,7 @@ jobs:
     runs-on: self-hosted
     defaults:
       run:
-        shell: pwsh
+        shell: powershell
     if: github.event.schedule == '0 3 1 * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'monthly' || github.event.inputs.mode == 'all'))
     steps:
       - uses: actions/checkout@v4
@@ -441,19 +441,19 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        shell: pwsh
+        shell: powershell
         run: |
           python -m pip install --upgrade pip
           if (Test-Path requirements.txt) { pip install -r requirements.txt }
 
       - name: Sync with latest main
-        shell: pwsh
+        shell: powershell
         run: git pull --rebase origin main
 
       - name: Settle results and generate monthly report
         id: report
         continue-on-error: true
-        shell: pwsh
+        shell: powershell
         run: |
           & python fetch_results.py --days 35
           if ($LASTEXITCODE -ne 0) { Write-Host "fetch_results(1) exited: $LASTEXITCODE" }
@@ -468,7 +468,7 @@ jobs:
 
       - name: Commit monthly report
         continue-on-error: true
-        shell: pwsh
+        shell: powershell
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -490,7 +490,7 @@ jobs:
 
       - name: Send monthly report to Telegram
         if: always()
-        shell: pwsh
+        shell: powershell
         run: python send_periodic_telegram.py
         env:
           REPORT_FILE: ${{ steps.report.outputs.file }}
