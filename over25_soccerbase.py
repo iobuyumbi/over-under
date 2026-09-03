@@ -632,6 +632,131 @@ def _overall_scoring_symmetry_veto(home_overall_6, away_overall_6):
     return False, None
 
 
+def _borderline_two_goal_cluster_veto(home_overall_6, away_overall_6):
+    """Block Over 2.5 when BOTH teams' recent overall matches cluster at
+    EXACTLY 2 total goals.
+
+    Aarhus vs Midtjylland (2026-09-02) finished 0-2 (2 goals) and Burnley vs
+    Middlesbrough finished 1-1 (2 goals) — both lost Over 2.5 by a single
+    goal. Poisson probabilities for "Over 2.5" on such matches are
+    misleading because most of the scoring probability mass sits RIGHT on
+    the boundary (2 goals), not above it. This veto catches that pattern.
+
+    Fire if COMBINED both teams have >= 50% of their recent overall matches
+    ending with TOTAL GOALS == 2, AND at least one team shows the pattern
+    strongly (>= 3 of 6 matches clustering at exactly 2).
+    """
+    h = home_overall_6 or []
+    a = away_overall_6 or []
+    h_len = min(len(h), 6)
+    a_len = min(len(a), 6)
+    if h_len < 4 or a_len < 4:
+        return False, None
+
+    h_at_2 = sum(1 for gf, ga in h[:h_len] if gf + ga == 2)
+    a_at_2 = sum(1 for gf, ga in a[:a_len] if gf + ga == 2)
+
+    combined_rate = (h_at_2 + a_at_2) / (h_len + a_len)
+    strong_cluster = h_at_2 >= max(3, round(h_len * 0.5)) or a_at_2 >= max(3, round(a_len * 0.5))
+
+    if combined_rate >= 0.5 and strong_cluster:
+        return True, f"cluster_at_2_h{h_at_2}of{h_len}_a{a_at_2}of{a_len}_{int(combined_rate*100)}pct"
+
+    return False, None
+
+
+def _severe_offensive_crisis_veto(home_6, away_6, home_overall_6, away_overall_6):
+    """Block Over 2.5 if EITHER team is in a severe scoring crisis.
+
+    Patterns caught:
+      * Team has <= 1 goal scored TOTAL in last 4 overall matches
+        (attack is basically dead — drags everything Under)
+      * HOME team specifically: 0 wins in last 5 overall AND 0 goals in
+        >= 2 of last 3 home matches (reigning-champ AGF Aarhus 2026-09-02:
+         0 wins from 6, failed to score at home, match ended 0-2.)
+    """
+    # --- Overall scoring crisis (both teams): <= 1 goal in last 4 overall ---
+    ho = home_overall_6 or []
+    ao = away_overall_6 or []
+    ho_len = min(len(ho), 4)
+    ao_len = min(len(ao), 4)
+
+    if ho_len >= 4:
+        ho_gf = sum(gf for gf, _ in ho[:ho_len])
+        if ho_gf <= 1:
+            return True, f"home_crisis_{ho_gf}goals_in_{ho_len}overall"
+
+    if ao_len >= 4:
+        ao_gf = sum(gf for gf, _ in ao[:ao_len])
+        if ao_gf <= 1:
+            return True, f"away_crisis_{ao_gf}goals_in_{ao_len}overall"
+
+    # --- Home winless + venue scoreless crisis ------------------------------
+    h6_len = min(len(home_6 or []), 5)
+    ho5_len = min(len(ho), 5)
+    if h6_len >= 3 and ho5_len >= 5:
+        home_overall_wins = 0
+        for gf, ga in ho[:ho5_len]:
+            if gf > ga:
+                home_overall_wins += 1
+        home_scoreless = 0
+        for gf, _ in (home_6 or [])[:3]:
+            if gf == 0:
+                home_scoreless += 1
+        if home_overall_wins == 0 and home_scoreless >= 2:
+            return True, (f"home_winless_crisis_{home_overall_wins}w_in_{ho5_len}_"
+                         f"{home_scoreless}scoreless_in_{min(3,h6_len)}home")
+
+    return False, None
+
+
+def _xg_imbalance_shutout_risk_veto(home_lambda, away_lambda,
+                                    home_overall_6, away_overall_6):
+    """Block Over 2.5 when one side's attack is so weak (low xG + weak
+    overall scoring form) that they are likely to be SHUT OUT, leaving
+    only the opponent's goals to reach the 2.5 threshold.
+
+    Pattern: Aarhus vs Midtjylland 2026-09-02 — xG 0.91 vs 2.88.
+    Home side had overall weak scoring form, was shut out (0-2 = 2 goals),
+    and Over 2.5 lost. If the "underdog" side's own attack can't
+    contribute, the total is capped by the favourite's scoring alone.
+
+    Trigger if:
+      * one lambda <= 1.0 (weak attack) AND that team has weak overall
+        scoring form (< 1.0 gpg AND scored in < 4/6 matches)
+      * AND the combined xG sum is < 4.0 (otherwise even a shutout may
+        still leave enough goals for Over)
+    """
+    if home_lambda <= 0 or away_lambda <= 0:
+        return False, None
+
+    ho = home_overall_6 or []
+    ao = away_overall_6 or []
+
+    def _weak_overall_form(team_overall):
+        n = min(len(team_overall), 6)
+        if n < 4:
+            return False
+        gf_total = sum(gf for gf, _ in team_overall[:n])
+        avg = gf_total / n
+        scored_in = sum(1 for gf, _ in team_overall[:n] if gf >= 1)
+        return avg < 1.0 and scored_in < max(3, round(n * 0.67))
+
+    combined_xg = home_lambda + away_lambda
+    home_risk = home_lambda <= 1.0 and _weak_overall_form(ho)
+    away_risk = away_lambda <= 1.0 and _weak_overall_form(ao)
+
+    if combined_xg < 4.0 and (home_risk or away_risk):
+        side = []
+        if home_risk:
+            side.append(f"home_l{home_lambda:.2f}")
+        if away_risk:
+            side.append(f"away_l{away_lambda:.2f}")
+        return True, f"shutout_risk_xg{combined_xg:.1f}_{'_'.join(side)}"
+
+    return False, None
+
+
 # =============================================================================
 # OVER 2.5 ALGORITHM (10-Check Rules + Overall Form)
 # =============================================================================
@@ -1472,6 +1597,12 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         overall_scoring_veto, overall_scoring_reason = _overall_scoring_symmetry_veto(
             home_overall_6, away_overall_6
         )
+        borderline_cluster_veto, borderline_cluster_reason = _borderline_two_goal_cluster_veto(
+            home_overall_6, away_overall_6
+        )
+        severe_crisis_veto, severe_crisis_reason = _severe_offensive_crisis_veto(
+            home_6, away_6, home_overall_6, away_overall_6
+        )
 
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
@@ -1500,6 +1631,9 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
 
         home_lambda, away_lambda = get_match_lambdas(home_6, away_6, league_name=league_name)
         under_blowout_veto, under_blowout_reason = _under_blowout_risk_veto(home_lambda, away_lambda)
+        xg_imbalance_veto, xg_imbalance_reason = _xg_imbalance_shutout_risk_veto(
+            home_lambda, away_lambda, home_overall_6, away_overall_6
+        )
 
         over_gate = lambda_gate_passes(home_lambda, away_lambda, "over")
         under_gate = lambda_gate_passes(home_lambda, away_lambda, "under")
@@ -1530,6 +1664,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             and not over_low_event_veto and not over_goalless_shock_veto
             and not derby_veto and not scoring_consistency_veto
             and not overall_scoring_veto
+            and not borderline_cluster_veto and not severe_crisis_veto
+            and not xg_imbalance_veto
         )
         under_qualifies = (
             bool(under_passed) and under_score >= under_min_score and under_gate
@@ -1636,6 +1772,12 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append(f"scoring inconsistency ({scoring_consistency_reason})")
         if overall_scoring_veto:
             regressions.append(f"overall scoring weak ({overall_scoring_reason})")
+        if borderline_cluster_veto:
+            regressions.append(f"2-goal boundary cluster ({borderline_cluster_reason})")
+        if severe_crisis_veto:
+            regressions.append(f"severe offensive crisis ({severe_crisis_reason})")
+        if xg_imbalance_veto:
+            regressions.append(f"xG imbalance shutout risk ({xg_imbalance_reason})")
         if early_mult < 1.0:
             regressions.append(f"early-season penalty (x{early_mult})")
 
@@ -1677,6 +1819,12 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "derby_reason": derby_reason,
                     "scoring_consistency_veto": scoring_consistency_veto,
                     "scoring_consistency_reason": scoring_consistency_reason,
+                    "borderline_cluster_veto": borderline_cluster_veto,
+                    "borderline_cluster_reason": borderline_cluster_reason,
+                    "severe_crisis_veto": severe_crisis_veto,
+                    "severe_crisis_reason": severe_crisis_reason,
+                    "xg_imbalance_veto": xg_imbalance_veto,
+                    "xg_imbalance_reason": xg_imbalance_reason,
                     "early_season_mult": round(early_mult, 2),
                     "home_btts_6": home_btts_6,
                     "away_btts_6": away_btts_6,
@@ -1766,6 +1914,12 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "scoring_consistency_reason": scoring_consistency_reason,
                     "overall_scoring_veto": overall_scoring_veto,
                     "overall_scoring_reason": overall_scoring_reason,
+                    "borderline_cluster_veto": borderline_cluster_veto,
+                    "borderline_cluster_reason": borderline_cluster_reason,
+                    "severe_crisis_veto": severe_crisis_veto,
+                    "severe_crisis_reason": severe_crisis_reason,
+                    "xg_imbalance_veto": xg_imbalance_veto,
+                    "xg_imbalance_reason": xg_imbalance_reason,
                     "early_season_mult": round(early_mult, 2),
                     "recent_cold_blocked": recent_cold_over_block,
                     "regression_penalty_applied": regressions,
