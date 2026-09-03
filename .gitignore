@@ -90,6 +90,7 @@ soccerbase_cache*.zip
 # If you must keep it inside the repo for convenience, the lines below
 # will at least prevent git from ever staging it.
 actions-runner/
+actions-runner-local/
 _runner*/
 .runner
 .credentials
