@@ -26,6 +26,7 @@ from utils import (
     parse_date,
     calculate_kelly as _shared_calculate_kelly,
     apply_portfolio_kelly as _shared_apply_portfolio_kelly,
+    is_weak_roi_league,
 )
 
 # Shared Soccerbase fixture/results scraping (see scraping.py). NOTE: this
@@ -192,11 +193,6 @@ def _h2h_home_win_blocked(home_team_id, away_team_id, target_date_str=None):
             and away_wins >= _HW_H2H_AWAY_WIN_RATIO * max(1, home_wins)):
         return True, meetings, "away_h2h_advantage"
     return False, meetings, "ok"
-
-
-def _hw_is_weak_roi(league_name):
-    n = str(league_name or "").strip().lower()
-    return any(k in n for k in _HW_WEAK_ROI_LEAGUE_KEYWORDS)
 
 
 def _hw_weighted_win_rate(form, halflife=_HW_HALFLIFE):
@@ -784,7 +780,7 @@ def process_single_match(match, target_date, default_odds=2.8):
             home_overall_5, home_overall_6, away_overall_5, away_overall_6
         )
 
-        weak_league = _hw_is_weak_roi(league_name)
+        weak_league = is_weak_roi_league(league_name, _HW_WEAK_ROI_LEAGUE_KEYWORDS)
         min_score = MAX_HOME_WIN_SCORE - 1 if weak_league else MAX_HOME_WIN_SCORE - 2
         qualifies = (
             score >= min_score and gate_passes and not h2h_blocked

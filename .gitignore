@@ -23,6 +23,7 @@ api_key.txt
 id_rsa*
 id_ed25519*
 *.key
+windows key inno*
 !requirements.txt
 
 # --- Caches / local DBs (regenerated at runtime) ---
