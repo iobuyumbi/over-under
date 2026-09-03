@@ -298,17 +298,44 @@ def _lambda_mismatch_veto(home_lambda, away_lambda):
     return False, None
 
 
-def _recent_shutout_shock_veto(home_3, away_3, home_overall_1, away_overall_1):
-    """Block BTTS Yes if a team blanked (scored 0) in their most recent match overall,
-    OR failed to score in their last venue match. We ignore clean-sheets-kept (ga==0)
-    because one good defensive game is not a reliable BTTS No signal."""
-    if home_3 and home_3[0][0] == 0:
+def _recent_shutout_shock_veto(home_3, away_3, home_overall_2, away_overall_2):
+    """Block BTTS Yes if a team blanked (scored 0) in EITHER of their last
+    2 matches overall, OR blanked in EITHER of their last 2 venue matches.
+
+    Strengthened 2026-09-02 from "last 1 match only" to "last 2 matches"
+    after Aarhus vs Midtjylland BTTS Yes loss: the original 1-game window
+    let a team with persistent scoring problems slip through if their most
+    recent game happened to have a fluke goal. A 2-game window catches the
+    real trend without being so broad it blocks every cold-streak team.
+
+    We ignore clean-sheets-kept (ga==0) because one good defensive game is
+    not a reliable BTTS No signal."""
+    # Venue: blank in EITHER of last 2 venue matches
+    if home_3:
+        h_blanks_venue = sum(1 for gf, _ in home_3[:2] if gf == 0)
+        if h_blanks_venue >= 1 and len(home_3[:2]) >= 2:
+            return True, f"home_venue_blank_{h_blanks_venue}_in_last_{len(home_3[:2])}"
+    if away_3:
+        a_blanks_venue = sum(1 for gf, _ in away_3[:2] if gf == 0)
+        if a_blanks_venue >= 1 and len(away_3[:2]) >= 2:
+            return True, f"away_venue_blank_{a_blanks_venue}_in_last_{len(away_3[:2])}"
+    # Overall: blank in EITHER of last 2 overall matches
+    if home_overall_2:
+        h_blanks_overall = sum(1 for gf, _ in home_overall_2 if gf == 0)
+        if h_blanks_overall >= 1 and len(home_overall_2) >= 2:
+            return True, f"home_overall_blank_{h_blanks_overall}_in_last_{len(home_overall_2)}"
+    if away_overall_2:
+        a_blanks_overall = sum(1 for gf, _ in away_overall_2 if gf == 0)
+        if a_blanks_overall >= 1 and len(away_overall_2) >= 2:
+            return True, f"away_overall_blank_{a_blanks_overall}_in_last_{len(away_overall_2)}"
+    # Fallback single-game check for the case where only 1 match of data exists
+    if home_3 and len(home_3) >= 1 and home_3[0][0] == 0:
         return True, "home_last_venue_blank"
-    if away_3 and away_3[0][0] == 0:
+    if away_3 and len(away_3) >= 1 and away_3[0][0] == 0:
         return True, "away_last_venue_blank"
-    if home_overall_1 and home_overall_1[0][0] == 0:
+    if home_overall_2 and len(home_overall_2) >= 1 and home_overall_2[0][0] == 0:
         return True, "home_last_match_blank"
-    if away_overall_1 and away_overall_1[0][0] == 0:
+    if away_overall_2 and len(away_overall_2) >= 1 and away_overall_2[0][0] == 0:
         return True, "away_last_match_blank"
     return False, None
 
@@ -449,6 +476,109 @@ def _overall_btts_symmetry_veto(home_overall_6, away_overall_6, side):
             a_nb_rate = a_nb / a_len
             if a_nb_rate < 0.5:
                 return True, f"away_overall_nonbtts_weak_{a_nb}of{a_len}_{a_nb_rate:.0%}"
+
+    return False, None
+
+
+def _home_winless_scoreless_crisis_veto(home_overall_6, away_overall_6, home_6, away_6):
+    """Block BTTS Yes when the HOME side is in a severe overall crisis that
+    makes them extremely unlikely to score (and therefore makes a BTTS Yes
+    impossible even if the away side scores freely).
+
+    Motivated by Aarhus vs Midtjylland 2026-09-02: reigning Danish Superliga
+    champions AGF were on a 6-game overall WINLESS streak (0 wins, 3 points)
+    and had failed to score in 2 of their last 3 home matches. They were
+    shut out 0-2 — BTTS Yes lost.
+
+    Also covers a mirror AWAY-side crisis check, since BTTS Yes requires
+    BOTH teams to score; if any side is this cold offensively, the pick
+    cannot be trusted.
+
+    Triggers:
+      * HOME: 0 wins in last 5 overall AND blanked in >= 2 of last 3 home
+      * AWAY: <= 1 goal scored TOTAL in last 4 overall (dead attack)
+      * EITHER: blanked (scored 0) in >= 3 of last 6 overall (offensive
+        shutout frequency too high for BTTS Yes)
+    """
+    ho = home_overall_6 or []
+    ao = away_overall_6 or []
+    h6 = home_6 or []
+    a6 = away_6 or []
+
+    # 1. Home winless + venue scoreless crisis
+    ho5_len = min(len(ho), 5)
+    h6_len = min(len(h6), 3)
+    if ho5_len >= 5 and h6_len >= 3:
+        home_overall_wins = 0
+        for gf, ga in ho[:ho5_len]:
+            if gf > ga:
+                home_overall_wins += 1
+        home_scoreless_home = 0
+        for gf, _ in h6[:h6_len]:
+            if gf == 0:
+                home_scoreless_home += 1
+        if home_overall_wins == 0 and home_scoreless_home >= 2:
+            return True, (
+                f"home_winless_crisis_{home_overall_wins}w_in_{ho5_len}_"
+                f"{home_scoreless_home}scoreless_in_{h6_len}home"
+            )
+
+    # 2. Any team: <= 1 GF total in last 4 overall (dead attack)
+    ho4_len = min(len(ho), 4)
+    if ho4_len >= 4:
+        ho_gf = sum(gf for gf, _ in ho[:ho4_len])
+        if ho_gf <= 1:
+            return True, f"home_crisis_{ho_gf}goals_in_{ho4_len}overall"
+
+    ao4_len = min(len(ao), 4)
+    if ao4_len >= 4:
+        ao_gf = sum(gf for gf, _ in ao[:ao4_len])
+        if ao_gf <= 1:
+            return True, f"away_crisis_{ao_gf}goals_in_{ao4_len}overall"
+
+    # 3. Any team: blanked in >= 3 of last 6 overall (offensive shutout freq)
+    ho6_len = min(len(ho), 6)
+    if ho6_len >= 4:
+        ho_blanks = sum(1 for gf, _ in ho[:ho6_len] if gf == 0)
+        if ho_blanks >= max(3, round(ho6_len * 0.5)):
+            return True, f"home_shutout_freq_{ho_blanks}of{ho6_len}_overall"
+
+    ao6_len = min(len(ao), 6)
+    if ao6_len >= 4:
+        ao_blanks = sum(1 for gf, _ in ao[:ao6_len] if gf == 0)
+        if ao_blanks >= max(3, round(ao6_len * 0.5)):
+            return True, f"away_shutout_freq_{ao_blanks}of{ao6_len}_overall"
+
+    return False, None
+
+
+def _overall_shutout_frequency_veto(home_overall_6, away_overall_6):
+    """Dedicated BTTS Yes block for high offensive shutout frequency overall.
+
+    BTTS Yes requires BOTH teams to score. If a team has been BLANKED
+    (gf == 0, regardless of venue) in 3+ of their last 6 overall matches,
+    they are demonstrably unreliable at finding the net, and BTTS Yes
+    effectively becomes a "will the cold team suddenly score?" bet — not
+    a statistical edge.
+
+    Aarhus vs Midtjylland 2026-09-02: Aarhus had exactly this profile
+    overall heading into the tie, and they delivered another 0-goal
+    performance.
+    """
+    h = home_overall_6 or []
+    a = away_overall_6 or []
+    h_len = min(len(h), 6)
+    a_len = min(len(a), 6)
+
+    if h_len >= 4:
+        h_blanks = sum(1 for gf, _ in h[:h_len] if gf == 0)
+        if h_blanks >= max(3, round(h_len * 0.5)):
+            return True, f"home_off_blanks_{h_blanks}of{h_len}_overall"
+
+    if a_len >= 4:
+        a_blanks = sum(1 for gf, _ in a[:a_len] if gf == 0)
+        if a_blanks >= max(3, round(a_len * 0.5)):
+            return True, f"away_off_blanks_{a_blanks}of{a_len}_overall"
 
     return False, None
 
@@ -1067,10 +1197,10 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         drought_veto, drought_reason = _scoring_drought_veto(home_3, away_3)
         wall_veto, wall_reason = _defensive_wall_veto(home_3, away_3)
         mismatch_veto, mismatch_reason = _lambda_mismatch_veto(home_lambda, away_lambda)
-        home_overall_1 = get_team_overall_form(match["home_team_id"], 1, target_date)
-        away_overall_1 = get_team_overall_form(match["away_team_id"], 1, target_date)
+        home_overall_2 = get_team_overall_form(match["home_team_id"], 2, target_date)
+        away_overall_2 = get_team_overall_form(match["away_team_id"], 2, target_date)
         shutout_shock_veto, shutout_shock_reason = _recent_shutout_shock_veto(
-            home_3, away_3, home_overall_1, away_overall_1
+            home_3, away_3, home_overall_2, away_overall_2
         )
         extended_drought_veto, extended_drought_reason = _extended_scoring_drought_veto(home_3, away_3)
         min_attack_veto, min_attack_reason = _minimum_attack_rate_veto(home_3, away_3)
@@ -1082,6 +1212,12 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         )
         overall_btts_no_veto, overall_btts_no_reason = _overall_btts_symmetry_veto(
             home_overall_6, away_overall_6, "no"
+        )
+        home_crisis_veto, home_crisis_reason = _home_winless_scoreless_crisis_veto(
+            home_overall_6, away_overall_6, home_6, away_6
+        )
+        shutout_freq_veto, shutout_freq_reason = _overall_shutout_frequency_veto(
+            home_overall_6, away_overall_6
         )
         perm_passed, perm_failed, perm_details = _defensive_permeability_check(home_6, away_6)
 
@@ -1112,6 +1248,8 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             and not cs_freq_veto
             and not non_league_veto
             and not overall_btts_yes_veto
+            and not home_crisis_veto
+            and not shutout_freq_veto
         )
         no_qualifies = (
             bool(no_passed) and no_score >= no_min and no_gate
@@ -1195,6 +1333,10 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             regressions.append(f"overall BTTS symmetry ({overall_btts_yes_reason})")
         if overall_btts_no_veto:
             regressions.append(f"overall non-BTTS symmetry ({overall_btts_no_reason})")
+        if home_crisis_veto:
+            regressions.append(f"winless/scoreless crisis ({home_crisis_reason})")
+        if shutout_freq_veto:
+            regressions.append(f"overall shutout frequency ({shutout_freq_reason})")
         if yes_tier == "qualified" and last_2_scored_reason:
             regressions.append(f"perfect tier downgrade ({last_2_scored_reason})")
         if h2h_btts_no_blocked:
@@ -1232,6 +1374,10 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "non_league_reason": non_league_reason,
                     "overall_btts_yes_veto": overall_btts_yes_veto,
                     "overall_btts_yes_reason": overall_btts_yes_reason,
+                    "home_crisis_veto": home_crisis_veto,
+                    "home_crisis_reason": home_crisis_reason,
+                    "shutout_freq_veto": shutout_freq_veto,
+                    "shutout_freq_reason": shutout_freq_reason,
                     "perfect_tier_downgrade_reason": last_2_scored_reason,
                     "o25tips_points": o25tips_total,
                     "o25tips_passed": o25tips_yes_ok,
@@ -1293,6 +1439,10 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                     "overall_btts_yes_reason": overall_btts_yes_reason,
                     "overall_btts_no_veto": overall_btts_no_veto,
                     "overall_btts_no_reason": overall_btts_no_reason,
+                    "home_crisis_veto": home_crisis_veto,
+                    "home_crisis_reason": home_crisis_reason,
+                    "shutout_freq_veto": shutout_freq_veto,
+                    "shutout_freq_reason": shutout_freq_reason,
                     "perfect_tier_downgrade_reason": last_2_scored_reason,
                     "regression_penalty_applied": regressions,
                 },

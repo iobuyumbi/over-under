@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-08-30
+✦ CURATED PICKS · 2026-09-02
   Input reports:
-    OU   → over_under_vip_report_2026-08-30.txt
-    BTTS → btts_vip_report_2026-08-30.txt
-    HW   → home_win_vip_report_2026-08-30.txt
+    OU   → over_under_vip_report_2026-09-02.txt
+    BTTS → btts_vip_report_2026-09-02.txt
+    HW   → home_win_vip_report_2026-09-02.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,64 +11,24 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-08-30)
+    • Today only (2026-09-02)
 
-━━━ OVER / UNDER 2.5  (11 accepted) ━━━
-   1. ✅ Royal Antwerp vs St. Truiden  (Belgium League)
-      Over 2.5 · High 95.0% · xG 2.93–3.38
-      Stake 0.3% @ 2.0  ·  EV +90.0c/$  ·  Edge +90.0%
-   2. ✅ St Gallen vs Thun  (Swiss Super League)
-      Over 2.5 · High 95.0% · xG 3.24–3.06
-      Stake 0.3% @ 2.0  ·  EV +90.0c/$  ·  Edge +90.0%
-   3. ✅ FC Sion vs Lugano  (Swiss Super League)
-      Over 2.5 · High 89.5% · xG 1.46–3.80
-      Stake 0.3% @ 2.0  ·  EV +79.0c/$  ·  Edge +79.0%
-   4. 🔥 LNZ Cherkasy vs NK Veres Livne  (Ukrainian League)
-      Under 2.5 · High 87.5% · xG 0.67–0.55
-      Stake 2.2% @ 1.85  ·  EV +61.9c/$  ·  Edge +61.9%
-   5. ✅ Cambuur vs FC Twente  (Netherlands League)
-      Over 2.5 · High 87.0% · xG 1.14–3.80
-      Stake 0.3% @ 2.0  ·  EV +74.0c/$  ·  Edge +74.0%
-   6. ✅ Widzew Lodz vs Lech Poznan  (Polish Ekstraklasa)
-      Over 2.5 · High 82.1% · xG 0.99–3.46
-      Stake 0.2% @ 2.0  ·  EV +64.2c/$  ·  Edge +64.2%
-   7. ✅ Mansfield vs Luton  (Football League One)
-      Over 2.5 · High 80.0% · xG 1.16–3.12
-      Stake 0.2% @ 2.0  ·  EV +60.0c/$  ·  Edge +60.0%
-   8. ✅ Rodina Moscow vs Baltika  (Russian Premier)
-      Over 2.5 · High 79.0% · xG 1.20–3.00
-      Stake 0.2% @ 2.0  ·  EV +58.0c/$  ·  Edge +58.0%
-   9. ✅ Rubin vs Dynamo Makhachkala  (Russian Premier)
-      Over 2.5 · High 75.6% · xG 1.08–2.88
-      Stake 0.2% @ 2.0  ·  EV +51.2c/$  ·  Edge +51.2%
-  10. ✅ Valerenga vs Molde  (Norwegian Tippeligaen)
-      Over 2.5 · High 74.4% · xG 1.95–1.93
-      Stake 0.2% @ 2.0  ·  EV +48.8c/$  ·  Edge +48.8%
-  11. ✅ Farul Constanta vs Botosani  (Romanian Liga 1)
-      Over 2.5 · High 73.9% · xG 2.01–1.84
-      Stake 0.2% @ 2.0  ·  EV +47.8c/$  ·  Edge +47.8%
+━━━ OVER / UNDER 2.5  (2 accepted) ━━━
+   1. ✅ Wigan vs MK Dons  (Football League One)
+      Over 2.5 · High 74.7% · xG 1.70–2.20
+      Stake 0.3% @ 2.0  ·  EV +49.4c/$  ·  Edge +49.4%
+   2. ✅ Aarhus vs Midtjylland  (Danish SAS Ligaen)
+      Over 2.5 · High 72.9% · xG 0.91–2.88
+      Stake 0.3% @ 2.0  ·  EV +45.8c/$  ·  Edge +45.8%
 
-━━━ BTTS (Yes / No)  (3 accepted) ━━━
-   1. 🔥 LNZ Cherkasy vs NK Veres Livne  (Ukrainian League)
-      BTTS No · High 78.9% · xG 0.69–0.55
-      Stake 2.3% @ 1.85  ·  EV 
-   2. ✅ Valerenga vs Molde  (Norwegian Tippeligaen)
-      BTTS Yes · High 73.3% · xG 1.95–1.93
-      Stake 1.6% @ 1.9  ·  EV 
-   3. ✅ IMT New Belgrade vs Mladost Lucani  (Serbian League)
-      BTTS No · High 69.6% · xG 0.58–1.17
-      Stake 1.5% @ 1.85  ·  EV 
+━━━ BTTS (Yes / No)  (0 accepted) ━━━
+  (none)
 
-━━━ HOME WIN  (2 accepted) ━━━
-   1. ✅ Aberdeen vs Rangers  (Scottish Premier)
-      Home Win · High 94.2%
-      Stake 2.6% @ 2.8  ·  EV +163.8c/$  ·  Edge +163.8%
-   2. ✅ Viktoria Plzen vs Synot  (Czech Liga)
-      Home Win · High 85.7%
-      Stake 2.2% @ 2.8  ·  EV +140.0c/$  ·  Edge +140.0%
+━━━ HOME WIN  (0 accepted) ━━━
+  (none)
 
-📊 Summary: 16 curated picks
-   Parsed total: 119   Rejected: 103   Accepted: 16
+📊 Summary: 2 curated picks
+   Parsed total: 93   Rejected: 91   Accepted: 2
 
 ---
 For informational purposes only · Gamble responsibly
