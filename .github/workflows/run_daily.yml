@@ -35,6 +35,9 @@ concurrency:
 jobs:
   fetch-results:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     if: github.event.schedule == '0 22 * * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'results' || github.event.inputs.mode == 'all'))
     steps:
       - uses: actions/checkout@v4
@@ -46,11 +49,13 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
+        shell: bash
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Fetch and settle match results
+        shell: bash
         run: |
           DAYS="${{ github.event.inputs.days_back || '3' }}"
           python fetch_results.py --days "$DAYS" 2>&1 | tee fetch_output_automated.txt
@@ -73,36 +78,8 @@ jobs:
 
       - name: Send Telegram selected match results
         if: always()
-        run: |
-          python - <<'PY'
-          import os
-          import requests
-
-          token = os.getenv("TELEGRAM_BOT_TOKEN")
-          chats = [os.getenv("TELEGRAM_CHAT_ID"), os.getenv("TELEGRAM_VIP_CHAT_ID")]
-          days = os.getenv("DAYS_BACK", "3")
-
-          if not token or not any(chats):
-              print("Skipping Telegram results summary: missing bot token or chat id.")
-              raise SystemExit(0)
-
-          if os.path.exists("selected_results_report.txt"):
-              with open("selected_results_report.txt", "r", encoding="utf-8", errors="replace") as f:
-                  report = f.read().strip()
-          else:
-              report = "No selected-match result report was generated."
-
-          message = f"📊 Results\n\n{report}" if report else "📊 Results\n\nNo updates."
-          chunks = [message[i:i + 3900] for i in range(0, len(message), 3900)]
-
-          for chat_id in filter(None, chats):
-              for chunk in chunks:
-                  requests.post(
-                      f"https://api.telegram.org/bot{token}/sendMessage",
-                      data={"chat_id": chat_id, "text": chunk},
-                      timeout=30,
-                  )
-          PY
+        shell: bash
+        run: python send_results_telegram.py
         env:
           DAYS_BACK: ${{ github.event.inputs.days_back || '3' }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -110,6 +87,7 @@ jobs:
           TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
 
       - name: Commit updated results
+        shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -124,6 +102,9 @@ jobs:
 
   daily-predictions:
     runs-on: self-hosted
+    defaults:
+      run:
+        shell: pwsh
     needs: fetch-results
     if: |
       always() &&
@@ -140,18 +121,24 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
+        shell: pwsh
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if (Test-Path requirements.txt) { pip install -r requirements.txt }
 
       - name: Sync with latest main
+        shell: pwsh
         run: git pull --rebase origin main
 
       - name: Fetch recent results before publishing
+        shell: pwsh
         run: |
-          python fetch_results.py --days 3 2>&1 | tee fetch_output_automated.txt || true
-          python update_manual_results.py 2>&1 | tee update_manual_output.txt || true
-          python fetch_results.py --days 3 2>&1 | tee fetch_output.txt || true
+          & python fetch_results.py --days 3 *>&1 | Tee-Object -FilePath fetch_output_automated.txt
+          if ($LASTEXITCODE -ne 0) { Write-Host "fetch_results (1st) warned: $LASTEXITCODE" }
+          & python update_manual_results.py *>&1 | Tee-Object -FilePath update_manual_output.txt
+          if ($LASTEXITCODE -ne 0) { Write-Host "update_manual_results warned: $LASTEXITCODE" }
+          & python fetch_results.py --days 3 *>&1 | Tee-Object -FilePath fetch_output.txt
+          if ($LASTEXITCODE -ne 0) { Write-Host "fetch_results (2nd) warned: $LASTEXITCODE" }
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
@@ -159,47 +146,90 @@ jobs:
       - name: Run Over/Under predictor
         id: over-under
         continue-on-error: true
+        shell: pwsh
         run: |
-          DATE="$(python -c "from datetime import datetime,timedelta; print((datetime.utcnow()+timedelta(hours=3)).strftime('%Y-%m-%d'))")"
-          echo "Using publish date: $DATE"
-          python over25_soccerbase.py --publish-date "$DATE" > output.txt 2> errors.txt || true
-          echo "date=$DATE" >> "$GITHUB_OUTPUT"
-          sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' output.txt | sed '1d;$d' > over25_body.txt || true
+          $DATE = python -c "from datetime import datetime,timedelta; print((datetime.utcnow()+timedelta(hours=3)).strftime('%Y-%m-%d'))"
+          Write-Host "Using publish date: $DATE"
+          & python over25_soccerbase.py --publish-date "$DATE" > output.txt 2> errors.txt
+          if ($LASTEXITCODE -ne 0) { Write-Host "over25 exited: $LASTEXITCODE" }
+          "date=$DATE" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+          if (Test-Path output.txt) {
+            $lines = Get-Content output.txt
+            $startIdx = -1; $endIdx = -1
+            for ($i=0; $i -lt $lines.Count; $i++) {
+              if ($lines[$i] -match '===EMAIL_START===') { $startIdx = $i }
+              if ($lines[$i] -match '===EMAIL_END===') { $endIdx = $i }
+            }
+            if ($startIdx -ge 0 -and $endIdx -gt $startIdx) {
+              $lines[($startIdx+1)..($endIdx-1)] | Out-File -FilePath over25_body.txt -Encoding utf8
+            } else {
+              if (Test-Path over25_body.txt) { Remove-Item over25_body.txt -Force }
+            }
+          }
 
       - name: Run Home Win predictor
         id: home-win
         continue-on-error: true
+        shell: pwsh
         run: |
-          DATE="${{ steps.over-under.outputs.date }}"
-          python home_win_soccerbase.py --publish-date "$DATE" > hw_output.txt 2> hw_errors.txt || true
-          sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' hw_output.txt | sed '1d;$d' > hw_body.txt || true
+          $DATE = "${{ steps.over-under.outputs.date }}"
+          & python home_win_soccerbase.py --publish-date "$DATE" > hw_output.txt 2> hw_errors.txt
+          if ($LASTEXITCODE -ne 0) { Write-Host "home_win exited: $LASTEXITCODE" }
+          if (Test-Path hw_output.txt) {
+            $lines = Get-Content hw_output.txt
+            $startIdx = -1; $endIdx = -1
+            for ($i=0; $i -lt $lines.Count; $i++) {
+              if ($lines[$i] -match '===EMAIL_START===') { $startIdx = $i }
+              if ($lines[$i] -match '===EMAIL_END===') { $endIdx = $i }
+            }
+            if ($startIdx -ge 0 -and $endIdx -gt $startIdx) {
+              $lines[($startIdx+1)..($endIdx-1)] | Out-File -FilePath hw_body.txt -Encoding utf8
+            } else {
+              if (Test-Path hw_body.txt) { Remove-Item hw_body.txt -Force }
+            }
+          }
 
       - name: Run BTTS predictor
         id: btts
         continue-on-error: true
+        shell: pwsh
         run: |
-          DATE="${{ steps.over-under.outputs.date }}"
-          python btts_soccerbase.py --publish-date "$DATE" > btts_output.txt 2> btts_errors.txt || true
-          sed -n '/===EMAIL_START===/,/===EMAIL_END===/p' btts_output.txt | sed '1d;$d' > btts_body.txt || true
+          $DATE = "${{ steps.over-under.outputs.date }}"
+          & python btts_soccerbase.py --publish-date "$DATE" > btts_output.txt 2> btts_errors.txt
+          if ($LASTEXITCODE -ne 0) { Write-Host "btts exited: $LASTEXITCODE" }
+          if (Test-Path btts_output.txt) {
+            $lines = Get-Content btts_output.txt
+            $startIdx = -1; $endIdx = -1
+            for ($i=0; $i -lt $lines.Count; $i++) {
+              if ($lines[$i] -match '===EMAIL_START===') { $startIdx = $i }
+              if ($lines[$i] -match '===EMAIL_END===') { $endIdx = $i }
+            }
+            if ($startIdx -ge 0 -and $endIdx -gt $startIdx) {
+              $lines[($startIdx+1)..($endIdx-1)] | Out-File -FilePath btts_body.txt -Encoding utf8
+            } else {
+              if (Test-Path btts_body.txt) { Remove-Item btts_body.txt -Force }
+            }
+          }
 
       - name: Debug predictor output
         if: always()
+        shell: pwsh
         run: |
-          echo "=== Over/Under body size ==="
-          wc -c over25_body.txt 2>/dev/null || echo "0"
-          echo "=== Home Win body size ==="
-          wc -c hw_body.txt 2>/dev/null || echo "0"
-          echo "=== BTTS body size ==="
-          wc -c btts_body.txt 2>/dev/null || echo "0"
-          echo ""
-          echo "=== Over/Under Errors ==="
-          cat errors.txt 2>/dev/null || echo "(none)"
-          echo ""
-          echo "=== Home Win Errors ==="
-          cat hw_errors.txt 2>/dev/null || echo "(none)"
-          echo ""
-          echo "=== BTTS Errors ==="
-          cat btts_errors.txt 2>/dev/null || echo "(none)"
+          Write-Host "=== Over/Under body size ==="
+          if (Test-Path over25_body.txt) { (Get-Item over25_body.txt).Length } else { Write-Host "0" }
+          Write-Host "=== Home Win body size ==="
+          if (Test-Path hw_body.txt) { (Get-Item hw_body.txt).Length } else { Write-Host "0" }
+          Write-Host "=== BTTS body size ==="
+          if (Test-Path btts_body.txt) { (Get-Item btts_body.txt).Length } else { Write-Host "0" }
+          Write-Host ""
+          Write-Host "=== Over/Under Errors ==="
+          if (Test-Path errors.txt) { Get-Content errors.txt } else { Write-Host "(none)" }
+          Write-Host ""
+          Write-Host "=== Home Win Errors ==="
+          if (Test-Path hw_errors.txt) { Get-Content hw_errors.txt } else { Write-Host "(none)" }
+          Write-Host ""
+          Write-Host "=== BTTS Errors ==="
+          if (Test-Path btts_errors.txt) { Get-Content btts_errors.txt } else { Write-Host "(none)" }
 
       - name: Upload predictor logs
         if: always()
@@ -219,13 +249,11 @@ jobs:
 
       - name: Build Telegram daily message
         continue-on-error: true
+        shell: pwsh
         run: |
-          DATE="${{ steps.over-under.outputs.date }}"
-          python build_telegram_daily.py --date "$DATE" \
-            --ou-output ou_telegram.txt \
-            --btts-output btts_telegram.txt \
-            --hw-output hw_telegram.txt \
-            --out telegram_daily.txt || true
+          $DATE = "${{ steps.over-under.outputs.date }}"
+          & python build_telegram_daily.py --date "$DATE" --ou-output ou_telegram.txt --btts-output btts_telegram.txt --hw-output hw_telegram.txt --out telegram_daily.txt
+          if ($LASTEXITCODE -ne 0) { Write-Host "build_telegram_daily exited: $LASTEXITCODE" }
 
       - name: Upload Telegram message
         if: always()
@@ -237,112 +265,87 @@ jobs:
 
       - name: Build free and VIP reports
         continue-on-error: true
+        shell: pwsh
         run: |
-          DATE="${{ steps.over-under.outputs.date }}"
+          $DATE = "${{ steps.over-under.outputs.date }}"
+          $free = @()
+          $free += "━━━ OVER / UNDER 2.5 ━━━"
+          if ((Test-Path over25_body.txt) -and ((Get-Item over25_body.txt).Length -gt 0)) {
+            $free += Get-Content over25_body.txt
+          } else {
+            $free += "No qualifying picks today."
+          }
+          $free += ""
+          $free += "━━━ BTTS (YES / NO) ━━━"
+          if ((Test-Path btts_body.txt) -and ((Get-Item btts_body.txt).Length -gt 0)) {
+            $free += Get-Content btts_body.txt
+          } else {
+            $free += "No qualifying BTTS picks today."
+          }
+          $free += ""
+          $free += "━━━ HOME WIN ━━━"
+          if ((Test-Path hw_body.txt) -and ((Get-Item hw_body.txt).Length -gt 0)) {
+            $free += Get-Content hw_body.txt
+          } else {
+            $free += "No qualifying home win picks today."
+          }
+          $free | Out-File -FilePath combined_free.txt -Encoding utf8
 
-          {
-            echo "━━━ OVER / UNDER 2.5 ━━━"
-            if [ -s over25_body.txt ]; then cat over25_body.txt; else echo "No qualifying picks today."; fi
-            echo ""
-            echo "━━━ BTTS (YES / NO) ━━━"
-            if [ -s btts_body.txt ]; then cat btts_body.txt; else echo "No qualifying BTTS picks today."; fi
-            echo ""
-            echo "━━━ HOME WIN ━━━"
-            if [ -s hw_body.txt ]; then cat hw_body.txt; else echo "No qualifying home win picks today."; fi
-          } > combined_free.txt
-
-          {
-            echo "DAILY PREDICTIONS (VIP)"
-            echo ""
-            if [ -f "over_under_vip_report_$DATE.txt" ]; then
-              cat "over_under_vip_report_$DATE.txt"
-            else
-              echo "Over/Under report unavailable."
-            fi
-            echo ""
-            if [ -f "btts_vip_report_$DATE.txt" ]; then
-              cat "btts_vip_report_$DATE.txt"
-            else
-              echo "BTTS report unavailable."
-            fi
-            echo ""
-            if [ -f "home_win_vip_report_$DATE.txt" ]; then
-              cat "home_win_vip_report_$DATE.txt"
-            else
-              echo "Home win report unavailable."
-            fi
-          } > combined_vip.txt
+          $vip = @()
+          $vip += "DAILY PREDICTIONS (VIP)"
+          $vip += ""
+          $ouVip = "over_under_vip_report_$DATE.txt"
+          if (Test-Path $ouVip) {
+            $vip += Get-Content $ouVip
+          } else {
+            $vip += "Over/Under report unavailable."
+          }
+          $vip += ""
+          $bttsVip = "btts_vip_report_$DATE.txt"
+          if (Test-Path $bttsVip) {
+            $vip += Get-Content $bttsVip
+          } else {
+            $vip += "BTTS report unavailable."
+          }
+          $vip += ""
+          $hwVip = "home_win_vip_report_$DATE.txt"
+          if (Test-Path $hwVip) {
+            $vip += Get-Content $hwVip
+          } else {
+            $vip += "Home win report unavailable."
+          }
+          $vip | Out-File -FilePath combined_vip.txt -Encoding utf8
 
       - name: Commit predictions and reports
         continue-on-error: true
+        shell: pwsh
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git pull --rebase --autostash origin main
-          shopt -s nullglob
-          files=(over_under_25_report_*.json home_win_report_*.json btts_report_*.json over_under_vip_report_*.txt home_win_vip_report_*.txt btts_vip_report_*.txt)
-          if [ ${#files[@]} -gt 0 ]; then
-            git add "${files[@]}"
-          fi
+          $files = @(Get-ChildItem -File -Name "over_under_25_report_*.json" -ErrorAction SilentlyContinue)
+          $files += @(Get-ChildItem -File -Name "home_win_report_*.json" -ErrorAction SilentlyContinue)
+          $files += @(Get-ChildItem -File -Name "btts_report_*.json" -ErrorAction SilentlyContinue)
+          $files += @(Get-ChildItem -File -Name "over_under_vip_report_*.txt" -ErrorAction SilentlyContinue)
+          $files += @(Get-ChildItem -File -Name "home_win_vip_report_*.txt" -ErrorAction SilentlyContinue)
+          $files += @(Get-ChildItem -File -Name "btts_vip_report_*.txt" -ErrorAction SilentlyContinue)
+          $files = @($files | Where-Object { $_ })
+          if ($files.Count -gt 0) {
+            git add $files
+          }
           git add prediction_history.json manual_results.csv README.md
-          if git diff --cached --quiet; then
-            echo "No prediction/report changes to commit."
-          else
+          $diffOutput = git diff --cached --quiet 2>&1
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "No prediction/report changes to commit."
+          } else {
             git commit -m "Daily update: predictions and results"
             git push origin main
-          fi
+          }
 
       - name: Send Telegram free and VIP messages
         if: always()
-        run: |
-          python - <<'PY'
-          import os
-          import requests
-
-          def read_file(path):
-              if path and os.path.exists(path):
-                  with open(path, "r", encoding="utf-8") as f:
-                      return f.read().strip()
-              return ""
-
-          def send(chat_id, text):
-              if not chat_id or not text:
-                  return
-              max_len = 3900
-              chunks = [text[i:i + max_len] for i in range(0, len(text), max_len)]
-              for chunk in chunks:
-                  try:
-                      r = requests.post(
-                          f"https://api.telegram.org/bot{token}/sendMessage",
-                          data={"chat_id": chat_id, "text": chunk},
-                          timeout=30,
-                      )
-                      print(f"Sent chunk to {chat_id}: {r.status_code}")
-                  except Exception as e:
-                      print(f"Failed to send to {chat_id}: {e}")
-
-          token = os.getenv("TELEGRAM_BOT_TOKEN")
-          free_channel = os.getenv("TELEGRAM_CHAT_ID")
-          vip_channel = os.getenv("TELEGRAM_VIP_CHAT_ID")
-          date = os.getenv("DATE")
-
-          if not token:
-              print("FATAL: TELEGRAM_BOT_TOKEN missing")
-              raise SystemExit(1)
-          if not free_channel:
-              print("FATAL: TELEGRAM_CHAT_ID missing")
-              raise SystemExit(1)
-
-          free_report = read_file("telegram_daily.txt") or read_file("combined_free.txt") or f"⚠️ No predictions generated for {date}."
-          vip_report = read_file("combined_vip.txt") or f"⚠️ VIP report unavailable for {date}."
-
-          print(f"Free report length: {len(free_report)}")
-          print(f"VIP report length: {len(vip_report)}")
-
-          send(free_channel, free_report)
-          if vip_channel:
-              send(vip_channel, vip_report)
-          PY
+        shell: pwsh
+        run: python send_daily_telegram.py
         env:
           DATE: ${{ steps.over-under.outputs.date }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -351,6 +354,9 @@ jobs:
 
   weekly-report:
     runs-on: self-hosted
+    defaults:
+      run:
+        shell: pwsh
     if: github.event.schedule == '0 3 * * 1' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'weekly' || github.event.inputs.mode == 'all'))
     steps:
       - uses: actions/checkout@v4
@@ -362,70 +368,57 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
+        shell: pwsh
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if (Test-Path requirements.txt) { pip install -r requirements.txt }
 
       - name: Sync with latest main
+        shell: pwsh
         run: git pull --rebase origin main
 
       - name: Settle results and generate weekly report
         id: report
         continue-on-error: true
+        shell: pwsh
         run: |
-          python fetch_results.py --days 10 || true
-          python update_manual_results.py || true
-          python fetch_results.py --days 10 || true
-          python generate_weekly_report.py
-          REPORT_FILE=$(ls -t weekly_report_*.txt 2>/dev/null | head -1)
-          echo "file=$REPORT_FILE" >> "$GITHUB_OUTPUT"
+          & python fetch_results.py --days 10
+          if ($LASTEXITCODE -ne 0) { Write-Host "fetch_results(1) exited: $LASTEXITCODE" }
+          & python update_manual_results.py
+          if ($LASTEXITCODE -ne 0) { Write-Host "update_manual_results exited: $LASTEXITCODE" }
+          & python fetch_results.py --days 10
+          if ($LASTEXITCODE -ne 0) { Write-Host "fetch_results(2) exited: $LASTEXITCODE" }
+          & python generate_weekly_report.py
+          $REPORT_FILE = Get-ChildItem -File weekly_report_*.txt | Sort-Object LastWriteTime -Descending | Select-Object -First 1 -ExpandProperty Name
+          Write-Host "Latest weekly report: $REPORT_FILE"
+          "file=$REPORT_FILE" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
 
       - name: Commit weekly report
         continue-on-error: true
+        shell: pwsh
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git pull --rebase --autostash origin main
-          shopt -s nullglob
-          files=(weekly_report_*.txt weekly_report_*.json)
-          if [ ${#files[@]} -gt 0 ]; then
-            git add "${files[@]}"
-          fi
+          $files = @(Get-ChildItem -File -Name "weekly_report_*.txt" -ErrorAction SilentlyContinue)
+          $files += @(Get-ChildItem -File -Name "weekly_report_*.json" -ErrorAction SilentlyContinue)
+          $files = @($files | Where-Object { $_ })
+          if ($files.Count -gt 0) {
+            git add $files
+          }
           git add prediction_history.json manual_results.csv README.md
-          if git diff --cached --quiet; then
-            echo "No weekly report changes to commit."
-          else
+          $null = git diff --cached --quiet 2>&1
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "No weekly report changes to commit."
+          } else {
             git commit -m "Weekly performance report"
             git push origin main
-          fi
+          }
 
       - name: Send weekly report to Telegram
         if: always()
-        run: |
-          python - <<'PY'
-          import os
-          import requests
-
-          def send(chat_id, text):
-              if not chat_id or not text:
-                  return
-              for chunk in (text[i:i + 3900] for i in range(0, len(text), 3900)):
-                  requests.post(
-                      f"https://api.telegram.org/bot{token}/sendMessage",
-                      data={"chat_id": chat_id, "text": chunk},
-                      timeout=30,
-                  )
-
-          token = os.getenv("TELEGRAM_BOT_TOKEN")
-          report_file = os.getenv("REPORT_FILE")
-          if not token or not report_file or not os.path.exists(report_file):
-              print("Skipping Telegram weekly report.")
-              raise SystemExit(0)
-          with open(report_file, "r", encoding="utf-8") as f:
-              report = f.read().strip()
-          for chat_id in (os.getenv("TELEGRAM_CHAT_ID"), os.getenv("TELEGRAM_VIP_CHAT_ID")):
-              send(chat_id, report)
-          PY
+        shell: pwsh
+        run: python send_periodic_telegram.py
         env:
           REPORT_FILE: ${{ steps.report.outputs.file }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -434,6 +427,9 @@ jobs:
 
   monthly-report:
     runs-on: self-hosted
+    defaults:
+      run:
+        shell: pwsh
     if: github.event.schedule == '0 3 1 * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'monthly' || github.event.inputs.mode == 'all'))
     steps:
       - uses: actions/checkout@v4
@@ -445,70 +441,57 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
+        shell: pwsh
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if (Test-Path requirements.txt) { pip install -r requirements.txt }
 
       - name: Sync with latest main
+        shell: pwsh
         run: git pull --rebase origin main
 
       - name: Settle results and generate monthly report
         id: report
         continue-on-error: true
+        shell: pwsh
         run: |
-          python fetch_results.py --days 35 || true
-          python update_manual_results.py || true
-          python fetch_results.py --days 35 || true
-          python generate_monthly_report.py
-          REPORT_FILE=$(ls -t monthly_report_*.txt 2>/dev/null | head -1)
-          echo "file=$REPORT_FILE" >> "$GITHUB_OUTPUT"
+          & python fetch_results.py --days 35
+          if ($LASTEXITCODE -ne 0) { Write-Host "fetch_results(1) exited: $LASTEXITCODE" }
+          & python update_manual_results.py
+          if ($LASTEXITCODE -ne 0) { Write-Host "update_manual_results exited: $LASTEXITCODE" }
+          & python fetch_results.py --days 35
+          if ($LASTEXITCODE -ne 0) { Write-Host "fetch_results(2) exited: $LASTEXITCODE" }
+          & python generate_monthly_report.py
+          $REPORT_FILE = Get-ChildItem -File monthly_report_*.txt | Sort-Object LastWriteTime -Descending | Select-Object -First 1 -ExpandProperty Name
+          Write-Host "Latest monthly report: $REPORT_FILE"
+          "file=$REPORT_FILE" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
 
       - name: Commit monthly report
         continue-on-error: true
+        shell: pwsh
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git pull --rebase --autostash origin main
-          shopt -s nullglob
-          files=(monthly_report_*.txt monthly_report_*.json)
-          if [ ${#files[@]} -gt 0 ]; then
-            git add "${files[@]}"
-          fi
+          $files = @(Get-ChildItem -File -Name "monthly_report_*.txt" -ErrorAction SilentlyContinue)
+          $files += @(Get-ChildItem -File -Name "monthly_report_*.json" -ErrorAction SilentlyContinue)
+          $files = @($files | Where-Object { $_ })
+          if ($files.Count -gt 0) {
+            git add $files
+          }
           git add prediction_history.json manual_results.csv
-          if git diff --cached --quiet; then
-            echo "No monthly report changes to commit."
-          else
+          $null = git diff --cached --quiet 2>&1
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "No monthly report changes to commit."
+          } else {
             git commit -m "Monthly performance report"
             git push origin main
-          fi
+          }
 
       - name: Send monthly report to Telegram
         if: always()
-        run: |
-          python - <<'PY'
-          import os
-          import requests
-
-          def send(chat_id, text):
-              if not chat_id or not text:
-                  return
-              for chunk in (text[i:i + 3900] for i in range(0, len(text), 3900)):
-                  requests.post(
-                      f"https://api.telegram.org/bot{token}/sendMessage",
-                      data={"chat_id": chat_id, "text": chunk},
-                      timeout=30,
-                  )
-
-          token = os.getenv("TELEGRAM_BOT_TOKEN")
-          report_file = os.getenv("REPORT_FILE")
-          if not token or not report_file or not os.path.exists(report_file):
-              print("Skipping Telegram monthly report.")
-              raise SystemExit(0)
-          with open(report_file, "r", encoding="utf-8") as f:
-              report = f.read().strip()
-          for chat_id in (os.getenv("TELEGRAM_CHAT_ID"), os.getenv("TELEGRAM_VIP_CHAT_ID")):
-              send(chat_id, report)
-          PY
+        shell: pwsh
+        run: python send_periodic_telegram.py
         env:
           REPORT_FILE: ${{ steps.report.outputs.file }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
