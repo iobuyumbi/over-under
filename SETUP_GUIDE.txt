@@ -1,138 +1,228 @@
-OVER 2.5 GOALS PREDICTION SYSTEM - SETUP GUIDE
-================================================
+OVER 2.5 / BTTS / HOME WIN PREDICTION SYSTEM - SETUP GUIDE
+=========================================================
 
-QUICK START (5 minutes):
-------------------------
+Last updated: 2026-09-03
+
+----------------------------------------------------------------------
+PRIMARY AUTOMATION: GitHub Actions Self-Hosted Runner (Windows)
+----------------------------------------------------------------------
+
+All daily predictions, result fetching, and weekly/monthly reports now
+run automatically via the GitHub Actions workflow:
+  .github/workflows/run_daily.yml    (runs-on: self-hosted)
+
+The `daily-predictions`, `weekly-report`, and `monthly-report` jobs
+MUST run on a self-hosted Windows runner. The `fetch-results` job can
+run on ubuntu-latest.
+
+---
+Setting up a NEW Windows self-hosted runner (one-time per machine)
+---
+
+1. Open PowerShell in the repo root and run:
+      .\actions-runner-bootstrap.ps1
+   It will:
+     - Detect repo slug from `git remote get-url origin`
+     - Download + extract the pinned runner release
+     - Prompt for a 1-hour registration token from
+         https://github.com/iobuyumbi/over-under/settings/actions/runners/new?arch=x64&os=win
+     - Register the runner as: over-under-<COMPUTERNAME>-<YYYYMMDD>
+
+2. The bootstrap defaults to `--runasservice false` (interactive mode).
+   To switch to a Windows Service that auto-starts at boot, see the
+   "Permanent Windows Service install" section below.
+
+3. Run interactively (simplest for testing):
+      cd actions-runner-local
+      .\run.cmd
+   The runner will print "Listening for Jobs" when connected.
+   Keep the window open — closing it stops the runner.
+
+---
+Permanent Windows Service install (auto-starts with Windows)
+---
+
+As of 2026-09-03, the repo ships with helper scripts in
+`actions-runner-local/` that correctly install the runner as a
+real Windows Service. Earlier attempts failed because running
+`RunnerService.exe start` directly always errors with:
+
+    "Cannot start service from the command line or a debugger.
+     A Windows Service must first be installed (using installutil.exe)..."
+
+This is by design — a Windows Service .NET assembly is launched by the
+SCM (Services Control Manager), never directly. Correct svc.cmd uses
+`.NET InstallUtil.exe` + `net start/stop` SCM commands.
+
+One-click install:
+
+    File: actions-runner-local\INSTALL_SERVICE.bat
+      Right-click -> Run as administrator.
+
+    What it does (via INSTALL_SERVICE.ps1):
+      1. Kills any stray Runner.Listener / RunnerService processes
+      2. InstallUtil.exe bin\RunnerService.exe   (registers in HKLM\Services)
+      3. Start-Service <service-name>
+      4. Waits for _diag\*.log to contain "Listening for Jobs"
+
+Manual equivalent in an ADMIN CMD window:
+
+    cd actions-runner-local
+    svc install       :: InstallUtil.exe against RunnerService.exe
+    svc start         :: net start actions.runner.iobuyumbi-over-under.<name>
+    svc status        :: sc query ...
+
+Service name format: actions.runner.iobuyumbi-over-under.<agentName>
+(Computed automatically by svc.cmd from .runner gitHubUrl + agentName.)
+
+Admin check services.msc if svc start fails (logon password expired, etc.).
+
+NOTE: actions-runner-local/ is gitignored. If you move machines, just
+re-run .\actions-runner-bootstrap.ps1 on the new machine.
+
+----------------------------------------------------------------------
+LOCAL (NO-CI) QUICK START (5 minutes) - For testing without CI
+----------------------------------------------------------------------
+
 1. Install Python 3.8+ from python.org
 2. Install required packages:
-   pip install requests beautifulsoup4
+      pip install -r requirements.txt
 
-3. Run the predictor:
-   python3 over25_predictor.py
+3. Run the full daily pipeline locally:
+      run_local.bat
+   Or individual engines:
+      python over25_soccerbase.py
+      python btts_soccerbase.py
+      python home_win_soccerbase.py
 
-That's it! The script will:
-• Fetch today's matches from 20+ leagues
-• Scrape recent form for each team
-• Apply your 6-check algorithm
-• Output qualified matches
+The pipeline will:
+- Fetch today's matches from Soccerbase (PRIMARY data source)
+- Scrape recent form + H2H for each team
+- Apply per-algorithm vetoes (form symmetry, BTTS per-team 50% floor,
+  home win clean-sheet / draw / overall-symmetry vetoes, O/U
+  overall-scoring floor, etc.)
+- Output qualified matches + curated premium/solid shortlist
+  to curated.json / curated.txt
 
-FILES INCLUDED:
----------------
-📄 over25_predictor.py      - Main prediction engine
-📄 daily_runner.py          - Automated daily execution
-📄 team_data_manager.py     - Manual data entry fallback
-📄 Dockerfile               - Container setup
-📄 docker-compose.yml       - Docker orchestration
-📄 team_data.json           - Manual data storage (create as needed)
+----------------------------------------------------------------------
+CURRENT LIVE PIPELINE (file map)
+----------------------------------------------------------------------
 
-DATA SOURCES USED:
-------------------
-The script tries these sources in order:
-1. WorldFootball.net (free, no key) - PRIMARY
-2. API-Football (100 free requests/day) - BACKUP
-3. Football-Data.org (free tier) - BACKUP
-4. Manual team_data.json - FALLBACK
+Prediction engines:
+  over25_soccerbase.py     - Over 2.5 / Under 2.5 goals
+  btts_soccerbase.py       - Both Teams To Score (Yes/No)
+  home_win_soccerbase.py   - Home Win
 
-TO GET API KEYS (optional but recommended):
--------------------------------------------
-• API-Football: https://www.api-football.com/ (free tier)
-• Football-Data: https://www.football-data.org/ (free tier)
+Shared logic (deduplicated 2026-09-01 — DO NOT re-copy):
+  scraping.py              - _count_btts, _count_over25, _count_clean_sheets
+                             and other form-count helpers shared by engines
 
-Add your API key to over25_predictor.py:
-   API_KEY = "your-key-here"
+Orchestration:
+  daily_runner.py          - Local pipeline runner (runs all 3 engines)
+  curate_picks.py          - Produces curated.txt premium/solid shortlist
+                             (strict % floors + league exclusions + xG)
 
-AUTOMATION OPTIONS:
--------------------
+Result tracking:
+  prediction_tracker.py    - Central JSON tracker with summary dashboard
+                             (writes prediction_history.json)
+  fetch_results.py         - Auto-updates pending results (Soccerbase)
+  update_manual_results.py - Manual CSV merge for unpredicted matches
 
-OPTION A: Cron Job (Linux/Mac)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-1. Edit crontab:
-   crontab -e
+Reports / notifications:
+  build_telegram_daily.py         - Daily Telegram message builder
+  generate_weekly_report.py       - Weekly performance report
+  generate_monthly_report.py      - Monthly performance report
+  send_local_telegram.py          - One-off Telegram send (local)
 
-2. Add this line for 8:00 AM daily:
-   0 8 * * * cd /path/to/your/scripts && python3 daily_runner.py >> predictions.log 2>&1
+GitHub Actions:
+  .github/workflows/run_daily.yml - Daily predictions + reports
+  actions-runner-bootstrap.ps1    - One-click self-hosted runner setup
 
-3. Save and exit. It will run every morning automatically.
+----------------------------------------------------------------------
+CURATION FILTERS (for Premium / Solid shortlist)
+----------------------------------------------------------------------
 
-OPTION B: Windows Task Scheduler
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-1. Open Task Scheduler → Create Basic Task
-2. Name: "Football Predictions"
-3. Trigger: Daily at 8:00 AM
-4. Action: Start a program
-5. Program: C:\Python311\python.exe (or your path)
-6. Arguments: daily_runner.py
-7. Start in: C:\path\to\your\scripts
+Only "Premium" and "Solid" tiers qualify for the shortlist:
+  Over/Under      >= 70%
+  BTTS Yes        >= 70%
+  BTTS No         >= 68%
+  Home Win        >= 85%
 
-OPTION C: Docker (Any OS)
-~~~~~~~~~~~~~~~~~~~~~~~~~
-1. Install Docker
-2. In the script folder, run:
-   docker-compose up -d
+Plus hard exclusions for volatile leagues (MLS, J-League, Mexican,
+Brazilian, etc. — see curate_picks.py LEAGUE_EXCLUSIONS).
 
-3. Container runs daily at 8 AM automatically
-4. Check logs: docker logs football-predictor
+----------------------------------------------------------------------
+VETO REFERENCE (engine hard-blocks)
+----------------------------------------------------------------------
 
-OPTION D: PythonAnywhere (Cloud - FREE)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-1. Sign up at pythonanywhere.com (free tier)
-2. Upload these files
-3. Set up a daily scheduled task
-4. Check results online anytime
+Home Win vetoes:
+  - Home has >= 2 draws in last 3 home games
+  - Away has >= 2 clean sheets in last 3 away games
+  - Overall form symmetry veto (home win% < 50% OR away win% >= 50%)
 
-MANUAL DATA ENTRY (When APIs Fail):
-------------------------------------
-1. Run: python3 team_data_manager.py
-2. Choose option 1 to add team data
-3. Enter last 3 home and away results
-4. Choose option 3 to analyze matches
+Over 2.5 overall scoring symmetry veto (per-team):
+  - Home: < 1.2 gpg overall AND scored in < 4/6 overall
+  - Away: < 1.0 gpg overall AND scored in < 3/6 overall
+    (Either fails → O/2.5 blocked; either passes → allowed.)
 
-TROUBLESHOOTING:
-----------------
+BTTS overall symmetry veto (per-team 50% floor — replaced the old
+combined-average check because one low-frequency team would hide
+behind a high-frequency partner):
+  - BTTS "Yes": BOTH teams must have >= 50% BTTS rate overall
+  - BTTS "No":  BOTH teams must have >= 50% non-BTTS rate overall
+
+Under 2.5 vetoes: blowout risk + peak high-scoring history games.
+
+----------------------------------------------------------------------
+MANUAL DATA ENTRY (when scraping fails)
+----------------------------------------------------------------------
+
+1. Copy manual_results_template.csv -> manual_results.csv
+2. Fill in match rows with final scores
+3. Run: python update_manual_results.py
+
+The tracker merges manual results on the next run.
+
+----------------------------------------------------------------------
+TROUBLESHOOTING
+----------------------------------------------------------------------
+
+Runner: "svc.cmd is not recognized"
+  -> svc.cmd is NOT shipped inside the runner zip. It is either
+     generated by config.cmd --runasservice true, or (for v2.336+)
+     must be deployed as a wrapper (ours is at actions-runner-local\svc.cmd).
+
+Runner: "Cannot start service from the command line or debugger"
+  -> Do not run RunnerService.exe install/start directly.
+     Always use svc install (InstallUtil) + svc start (net start).
+     Or right-click INSTALL_SERVICE.bat -> Run as admin.
+
+Runner: stays grey/offline in GitHub Runners list
+  -> Verify run.cmd or the service is actually running locally.
+     Open Task Manager -> Details -> Runner.Listener.exe should exist.
+
 "No matches found":
-  → Check if it's offseason for your leagues
-  → Try adding more leagues to LEAGUE_SOURCES
-  → Use manual data entry for cup matches
+  -> Offseason for your leagues. Use manual_results.csv for cup rounds
+     or add more leagues to LEAGUE_SOURCES in the engine scripts.
 
-"Rate limited":
-  → The script has built-in delays
-  → If still limited, switch to API-Football key
-  → Or use manual data entry
+"Rate limited" / "captcha detected" / "short page":
+  -> scraping.py has built-in retries, randomized headers, and TTL
+     caching. If Soccerbase blocks, switch to manual_results.csv until
+     the block lifts.
 
 "Team not found":
-  → Names might differ between sources
-  → Check WorldFootball.net for exact spelling
-  → Add manual mapping in clean_team_name()
+  -> Names differ between leagues/cups. Add manual mapping to
+     clean_team_name() in the engine or pre-normalize via
+     team_data_manager.py.
 
-CUSTOMIZATION:
---------------
-To add more leagues, edit LEAGUE_SOURCES in over25_predictor.py:
-   "League Name": "https://www.worldfootball.net/all_matches/XXX/",
+----------------------------------------------------------------------
+SUPPORT
+----------------------------------------------------------------------
 
-Find league URLs at: https://www.worldfootball.net/
-
-To adjust the algorithm thresholds, edit apply_algorithm():
-   H1 threshold: change "7" to your number
-   H2 threshold: change "2" to your number
-   etc.
-
-OUTPUT FORMAT:
-------------
-The script saves JSON files like: predictions_2024-01-15.json
-Structure:
-{
-  "date": "2024-01-15",
-  "qualified": [...],
-  "close_calls": [...],
-  "total_matches": 45
-}
-
-SUPPORT:
---------
 If something breaks:
-1. Check the error message
-2. Verify your internet connection
-3. Try manual data entry as fallback
-4. Update the script if website structures changed
+  1. Check the error message
+  2. Verify internet + Soccerbase reachability
+  3. Use manual_results.csv as a fallback
+  4. Engines: verify scraping.py helpers weren't re-duplicated (DRY)
 
 Happy predicting! 🎯
