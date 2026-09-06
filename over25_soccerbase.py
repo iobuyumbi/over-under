@@ -278,14 +278,43 @@ def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=_OU
 def _h2h_over_blocked(home_team_id, away_team_id, target_date_str=None):
     """Block Over 2.5 when recent H2H games are consistently low-scoring.
 
-    Blocks if >=3 H2H meetings AND <=33% went Over 2.5 (bogey low-scoring matchup).
+    Blocks if:
+      - >=3 H2H meetings AND <=33% went Over 2.5
+      - OR the last 3 H2H meetings were ALL Under 2.5 (streak veto)
     """
-    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str)
+    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str, limit=8)
     if len(meetings) < _OU_H2H_MIN_MEETINGS:
         return False, meetings
-    over_count = sum(1 for m in meetings if m.get("total", m.get("gf", 0) + m.get("ga", 0)) > 2.5)
+    
+    over_count = sum(1 for m in meetings if (m.get("gf", 0) + m.get("ga", 0)) > 2.5)
     rate = over_count / len(meetings)
-    return rate <= _OU_H2H_OVER_BLOCK_RATE, meetings
+    
+    # Recent streak check: last 3 were all Under 2.5
+    last_3_under = all((m.get("gf", 0) + m.get("ga", 0)) < 2.5 for m in meetings[:3])
+    
+    if rate <= _OU_H2H_OVER_BLOCK_RATE or (len(meetings) >= 3 and last_3_under):
+        return True, meetings
+        
+    return False, meetings
+
+
+def _venue_h2h_bogey_veto(home_team_id, away_team_id, target_date_str=None):
+    """Block Over 2.5 when H2H meetings AT THIS VENUE (current Home at home)
+    are consistently low-scoring. Catches the Greuther Fürth vs Heidenheim
+    bogey pattern (6/6 Under 2.5 at Fürth's venue).
+
+    Triggers if >=2 meetings at this venue AND all were Under 2.5.
+    """
+    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str, limit=10)
+    venue_meetings = [m for m in meetings if m.get("is_home") is True]
+    
+    if len(venue_meetings) < 2:
+        return False, venue_meetings
+        
+    under_count = sum(1 for m in venue_meetings if (m.get("gf", 0) + m.get("ga", 0)) < 2.5)
+    if under_count == len(venue_meetings):
+        return True, venue_meetings
+    return False, venue_meetings
 
 
 def _h2h_under_blocked(home_team_id, away_team_id, target_date_str=None):
@@ -1759,6 +1788,9 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         )
         mutual_cold_veto, mutual_cold_reason = _mutual_cold_attacks_defences_veto(home_3, away_3)
         combined_weak_veto, combined_weak_reason = _combined_weak_attack_strong_defence_veto(home_6, away_6)
+        venue_h2h_veto, venue_h2h_meetings = _venue_h2h_bogey_veto(
+            match["home_team_id"], match["away_team_id"], target_date
+        )
         h2h_zero_bogey_veto, h2h_zero_bogey_meetings = _h2h_zero_goal_bogey_veto(
             match["home_team_id"], match["away_team_id"], target_date
         )
@@ -1833,7 +1865,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             and not xg_imbalance_veto
             and not mutual_cold_veto and not combined_weak_veto
             and not h2h_zero_bogey_veto and not borderline_one_veto
-            and not one_sided_blank_veto
+            and not one_sided_blank_veto and not venue_h2h_veto
         )
         under_qualifies = (
             bool(under_passed) and under_score >= under_min_score and under_gate
