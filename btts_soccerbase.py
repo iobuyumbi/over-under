@@ -626,6 +626,243 @@ def _h2h_btts_yes_blocked_2game(home_team_id, away_team_id, target_date_str=None
 
 
 # =============================================================================
+# BTTS YES: NEW HARDENING VETOES (2026-09-06 loss post-mortem)
+# Losses: Stoke 4-0 Charlton, Helsingborgs 0-2 Sandvikens
+# Pattern: one side completely shut out by dominant defence
+# =============================================================================
+
+def _elite_defence_vs_dead_attack_veto(home_6, away_6):
+    """Block BTTS Yes when one team has an ELITE venue defence (conceded
+    <= 0.5 gpg) while the opponent has a DEAD venue attack (scored
+    <= 0.5 gpg). BTTS Yes needs BOTH teams to score — a mismatch this
+    extreme usually ends 3-0 / 4-0 style.
+
+    Stoke 4-0 Charlton: Stoke home defence was elite, Charlton away
+    attack was dead. BTTS Yes died on a clean sheet.
+    """
+    h = home_6 or []
+    a = away_6 or []
+    if len(h) < 4 or len(a) < 4:
+        return False, None
+
+    hn, an = min(len(h), 6), min(len(a), 6)
+    h_ga_avg = sum(ga for _, ga in h[:hn]) / hn
+    a_gf_avg = sum(gf for gf, _ in a[:an]) / an
+    home_def_elite_away_dead = h_ga_avg <= 0.5 and a_gf_avg <= 0.5
+
+    a_ga_avg = sum(ga for _, ga in a[:an]) / an
+    h_gf_avg = sum(gf for gf, _ in h[:hn]) / hn
+    away_def_elite_home_dead = a_ga_avg <= 0.5 and h_gf_avg <= 0.5
+
+    if home_def_elite_away_dead:
+        return True, (
+            f"home_def_elite_{h_ga_avg:.1f}gpg_away_attack_dead_{a_gf_avg:.1f}gpg"
+        )
+    if away_def_elite_home_dead:
+        return True, (
+            f"away_def_elite_{a_ga_avg:.1f}gpg_home_attack_dead_{h_gf_avg:.1f}gpg"
+        )
+    return False, None
+
+
+def _tightened_mismatch_with_form_veto(home_lambda, away_lambda, home_3, away_3):
+    """Block BTTS Yes when the lambda mismatch is moderate (>= 1.7x) AND
+    the weaker side confirms cold attacking form with at least one
+    recent venue blank. The existing _lambda_mismatch_veto triggers at
+    2.0x ratio or 0.8 absolute floor — Stoke vs Charlton was around
+    1.85x, which slipped through at the gap's edge. A 1.7x mismatch
+    combined with a recent venue blank on the weak side is enough to
+    kill BTTS Yes.
+    """
+    if home_lambda <= 0 or away_lambda <= 0:
+        return False, None
+    lo, hi = sorted((home_lambda, away_lambda))
+    ratio = hi / lo
+    if ratio < 1.7:
+        return False, None
+
+    weak_side_is_home = (lo == home_lambda)
+    if weak_side_is_home:
+        weak_recent = home_3 or []
+    else:
+        weak_recent = away_3 or []
+    if len(weak_recent) >= 2:
+        weak_blanks = sum(1 for gf, _ in weak_recent[:2] if gf == 0)
+        if weak_blanks >= 1:
+            side = "home" if weak_side_is_home else "away"
+            return True, (
+                f"weak_{side}_ratio_{ratio:.1f}x_and_{weak_blanks}_recent_blanks"
+            )
+    return False, None
+
+
+def _recent_heavy_blowout_loss_veto(home_overall_6, away_overall_6):
+    """Block BTTS Yes if EITHER team lost their SINGLE most recent
+    overall match by a 3+ goal margin (e.g. 0-3 / 4-0 / 0-4). A heavy
+    blowout loss signals either a collapsed defence (ready to concede
+    more) or a broken attack (unlikely to score). Helsingborgs 0-2
+    Sandvikens: Helsingborgs had been blown out 0-4 in their prior
+    fixture, confirming their attack was already dead.
+
+    Also blocks BTTS No (see call in no_qualifies) — a team coming off
+    a 4-goal thrashing often carries chaos into the next game.
+    """
+    ho = home_overall_6 or []
+    ao = away_overall_6 or []
+
+    if ho:
+        gf, ga = ho[0]
+        if abs(gf - ga) >= 3:
+            return True, f"home_last_match_heavy_loss_{gf}-{ga}"
+    if ao:
+        gf, ga = ao[0]
+        if abs(gf - ga) >= 3:
+            return True, f"away_last_match_heavy_loss_{gf}-{ga}"
+    return False, None
+
+
+def _dominant_favourite_clean_sheet_veto(home_6, away_6):
+    """Block BTTS Yes when it's a classic dominant-home / beat-up-away
+    matchup that historically produces 3-0 / 4-0 results, not 2-1 /
+    3-1. Specifically: home team won >= 4 of last 6 venue AND away
+    team lost >= 3 of last 6 venue AND home kept >= 2 clean sheets in
+    venue 6. Stoke vs Charlton was exactly this profile — Stoke's
+    home form was 5W-1D with 3 CS, Charlton's away was 4 losses.
+
+    BTTS Yes on these fixtures is a bet that a weak away side will
+    suddenly score against an in-form home defence — a negative-EV bet.
+    """
+    h = home_6 or []
+    a = away_6 or []
+    if len(h) < 5 or len(a) < 5:
+        return False, None
+
+    hn, an = min(len(h), 6), min(len(a), 6)
+    home_wins = sum(1 for gf, ga in h[:hn] if gf > ga)
+    away_losses = sum(1 for gf, ga in a[:an] if gf < ga)
+    home_cs = sum(1 for _, ga in h[:hn] if ga == 0)
+
+    if home_wins >= 4 and away_losses >= 3 and home_cs >= 2:
+        return True, (
+            f"favourite_sweep_hw{home_wins}_al{away_losses}_hcs{home_cs}"
+        )
+    return False, None
+
+
+# =============================================================================
+# BTTS NO: NEW HARDENING VETOES (2026-09-06 loss post-mortem)
+# Losses: Torpedo Belaz 1-2 Gomel, Arbroath 1-1 Dunfermline
+# Pattern: even matchups with mutual scoring/concession frequency
+# =============================================================================
+
+def _mutual_consistent_scoring_conceding_veto(home_overall_6, away_overall_6):
+    """Block BTTS No when BOTH teams consistently score AND consistently
+    concede across their overall form. BTTS No requires at least one
+    team to blank; if BOTH teams have scored in >= 4 of 6 overall AND
+    conceded in >= 4 of 6 overall, the probability of at least one
+    blank is very low.
+
+    Arbroath 1-1 Dunfermline: both teams consistently scored and
+    conceded overall. A 1-1 draw was far more likely than any clean
+    sheet — BTTS No died.
+    """
+    ho = home_overall_6 or []
+    ao = away_overall_6 or []
+    ho_n = min(len(ho), 6)
+    ao_n = min(len(ao), 6)
+    if ho_n < 4 or ao_n < 4:
+        return False, None
+
+    ho_scored = sum(1 for gf, _ in ho[:ho_n] if gf >= 1)
+    ho_conceded = sum(1 for _, ga in ho[:ho_n] if ga >= 1)
+    ao_scored = sum(1 for gf, _ in ao[:ao_n] if gf >= 1)
+    ao_conceded = sum(1 for _, ga in ao[:ao_n] if ga >= 1)
+
+    home_involved = ho_scored >= max(4, round(ho_n * 0.67)) and ho_conceded >= max(4, round(ho_n * 0.67))
+    away_involved = ao_scored >= max(4, round(ao_n * 0.67)) and ao_conceded >= max(4, round(ao_n * 0.67))
+
+    if home_involved and away_involved:
+        return True, (
+            f"both_active_hs{ho_scored}/{ho_n}_hc{ho_conceded}/{ho_n}_"
+            f"as{ao_scored}/{ao_n}_ac{ao_conceded}/{ao_n}"
+        )
+    return False, None
+
+
+def _h2h_btts_no_blocked_2game(home_team_id, away_team_id, target_date_str=None):
+    """Mirror of _h2h_btts_yes_blocked_2game for BTTS No: block BTTS No
+    if only 2 recent H2H meetings exist and BOTH were BTTS (both teams
+    scored). The existing 3-meeting H2H check for BTTS No fires at
+    >=67% BTTS rate, so a 2/2 pure-BTTS pattern is missed.
+
+    Torpedo Belaz vs Gomel type matchups often have limited recent H2H
+    due to league movement; the 2-game form is a strong signal.
+    """
+    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str, limit=2)
+    if len(meetings) == 2:
+        btts_both = sum(1 for m in meetings
+                        if m.get("gf", 0) >= 1 and m.get("ga", 0) >= 1)
+        if btts_both == 2:
+            return True, meetings
+    return False, meetings
+
+
+def _last_two_matches_both_scored_veto(home_overall_6, away_overall_6):
+    """Block BTTS No when BOTH teams scored in BOTH of their last 2
+    overall matches. Very recent form (last 2 matches each) is the
+    strongest signal of attacking momentum — if every side's last two
+    outings both had goals, the odds are against a clean sheet
+    appearing.
+
+    Arbroath 1-1 Dunfermline: both teams came into the match having
+    scored in each of their last 2 fixtures. BTTS No was a bet this
+    streak would simultaneously break for both sides — unlikely.
+    """
+    ho = home_overall_6 or []
+    ao = away_overall_6 or []
+    if len(ho) < 2 or len(ao) < 2:
+        return False, None
+
+    ho_scored_2 = all(gf >= 1 for gf, _ in ho[:2])
+    ao_scored_2 = all(gf >= 1 for gf, _ in ao[:2])
+
+    if ho_scored_2 and ao_scored_2:
+        return True, "both_scored_last_2_each"
+    return False, None
+
+
+def _even_game_leaky_defences_veto(home_lambda, away_lambda, home_6, away_6):
+    """Block BTTS No on EVEN (close lambda) matchups where BOTH defences
+    leak at >= 1.0 goal per game at venue. BTTS No relies on a lopsided
+    game where one side can be shut out; an even matchup where both
+    defences leak is textbook 1-1 / 2-1 territory.
+
+    Torpedo Belaz 1-2 Gomel: close matchup (< 1.3x lambda ratio), both
+    defences conceded 1.2+ gpg at venue. Both sides scored — BTTS No
+    died.
+    """
+    if home_lambda <= 0 or away_lambda <= 0:
+        return False, None
+    lo, hi = sorted((home_lambda, away_lambda))
+    if hi / lo >= 1.3:
+        return False, None
+
+    h = home_6 or []
+    a = away_6 or []
+    if len(h) < 4 or len(a) < 4:
+        return False, None
+    hn, an = min(len(h), 6), min(len(a), 6)
+    h_ga_avg = sum(ga for _, ga in h[:hn]) / hn
+    a_ga_avg = sum(ga for _, ga in a[:an]) / an
+
+    if h_ga_avg >= 1.0 and a_ga_avg >= 1.0:
+        return True, (
+            f"even_leaky_{hi/lo:.1f}ratio_h{h_ga_avg:.1f}ga_a{a_ga_avg:.1f}ga"
+        )
+    return False, None
+
+
+# =============================================================================
 # OVER25TIPS.COM BTTS POINT ALGORITHM (R1-R14)
 # https://www.over25tips.com/both-teams-to-score-tips/
 # =============================================================================
@@ -1219,6 +1456,26 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         shutout_freq_veto, shutout_freq_reason = _overall_shutout_frequency_veto(
             home_overall_6, away_overall_6
         )
+        elite_def_veto, elite_def_reason = _elite_defence_vs_dead_attack_veto(home_6, away_6)
+        tight_mismatch_veto, tight_mismatch_reason = _tightened_mismatch_with_form_veto(
+            home_lambda, away_lambda, home_3, away_3
+        )
+        heavy_blowout_veto, heavy_blowout_reason = _recent_heavy_blowout_loss_veto(
+            home_overall_6, away_overall_6
+        )
+        dom_fav_cs_veto, dom_fav_cs_reason = _dominant_favourite_clean_sheet_veto(home_6, away_6)
+        mutual_active_veto, mutual_active_reason = _mutual_consistent_scoring_conceding_veto(
+            home_overall_6, away_overall_6
+        )
+        h2h_btts_no_2g_veto, h2h_btts_no_2g_meetings = _h2h_btts_no_blocked_2game(
+            match["home_team_id"], match["away_team_id"], target_date
+        )
+        last_2_scored_veto, last_2_scored_reason = _last_two_matches_both_scored_veto(
+            home_overall_6, away_overall_6
+        )
+        even_leaky_veto, even_leaky_reason = _even_game_leaky_defences_veto(
+            home_lambda, away_lambda, home_6, away_6
+        )
         perm_passed, perm_failed, perm_details = _defensive_permeability_check(home_6, away_6)
 
         yes_passed = yes_passed + perm_passed
@@ -1250,6 +1507,8 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             and not overall_btts_yes_veto
             and not home_crisis_veto
             and not shutout_freq_veto
+            and not elite_def_veto and not tight_mismatch_veto
+            and not heavy_blowout_veto and not dom_fav_cs_veto
         )
         no_qualifies = (
             bool(no_passed) and no_score >= no_min and no_gate
@@ -1257,6 +1516,9 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             and not h2h_btts_no_blocked
             and not non_league_veto
             and not overall_btts_no_veto
+            and not mutual_active_veto and not h2h_btts_no_2g_veto
+            and not last_2_scored_veto and not even_leaky_veto
+            and not heavy_blowout_veto
         )
 
         min_venue = min(len(home_6 or []), len(away_6 or []))
@@ -1337,6 +1599,22 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             regressions.append(f"winless/scoreless crisis ({home_crisis_reason})")
         if shutout_freq_veto:
             regressions.append(f"overall shutout frequency ({shutout_freq_reason})")
+        if elite_def_veto:
+            regressions.append(f"elite defence vs dead attack ({elite_def_reason})")
+        if tight_mismatch_veto:
+            regressions.append(f"tight mismatch + blank ({tight_mismatch_reason})")
+        if heavy_blowout_veto:
+            regressions.append(f"recent heavy blowout loss ({heavy_blowout_reason})")
+        if dom_fav_cs_veto:
+            regressions.append(f"dominant favourite CS sweep ({dom_fav_cs_reason})")
+        if mutual_active_veto:
+            regressions.append(f"mutual scoring/conceding ({mutual_active_reason})")
+        if h2h_btts_no_2g_veto:
+            regressions.append(f"h2h 2-game btts bogey ({len(h2h_btts_no_2g_meetings)} meetings)")
+        if last_2_scored_veto:
+            regressions.append(f"last 2 matches both scored ({last_2_scored_reason})")
+        if even_leaky_veto:
+            regressions.append(f"even matchup leaky defences ({even_leaky_reason})")
         if yes_tier == "qualified" and last_2_scored_reason:
             regressions.append(f"perfect tier downgrade ({last_2_scored_reason})")
         if h2h_btts_no_blocked:

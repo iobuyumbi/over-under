@@ -757,6 +757,160 @@ def _xg_imbalance_shutout_risk_veto(home_lambda, away_lambda,
     return False, None
 
 
+def _mutual_cold_attacks_defences_veto(home_3, away_3):
+    """Block Over 2.5 when BOTH teams are in a simultaneous cold-attack +
+    hot-defence streak. Catches the 0-0 draw pattern: Widzew vs Radomiak
+    (0-0) and Slovacko vs Pardubice (0-0) — both sides blanked at
+    both ends of the pitch in recent games.
+
+    Triggers if BOTH teams have: blanked (gf==0) in >= 2 of last 3 venue
+                     AND kept a CS (ga==0) in >= 2 of last 3 venue
+    """
+    h = home_3 or []
+    a = away_3 or []
+    if len(h) < 3 or len(a) < 3:
+        return False, None
+
+    h_blanks = sum(1 for gf, _ in h[:3] if gf == 0)
+    a_blanks = sum(1 for gf, _ in a[:3] if gf == 0)
+    h_cs = sum(1 for _, ga in h[:3] if ga == 0)
+    a_cs = sum(1 for _, ga in a[:3] if ga == 0)
+
+    both_cold_attack = h_blanks >= 2 and a_blanks >= 2
+    both_hot_defence = h_cs >= 2 and a_cs >= 2
+
+    if both_cold_attack and both_hot_defence:
+        return True, (
+            f"mutual_0_0_streak_hb{h_blanks}ab{a_blanks}_"
+            f"hcs{h_cs}acs{a_cs}"
+        )
+    return False, None
+
+
+def _combined_weak_attack_strong_defence_veto(home_6, away_6):
+    """Block Over 2.5 when BOTH teams combine a weak attack with a strong
+    defence at their respective venues. The existing individual checks
+    (scoring_consistency, overall_scoring_symmetry) look at one side at
+    a time — they miss the case where NEITHER side can break 1.0 gpg
+    scored WHILE BOTH concede under 1.0 gpg. That combination is a
+    textbook low-scoring fixture (Bristol Rovers 1-0 Rotherham: 1 total
+    goal).
+
+    Triggers if BOTH teams scored <= 1.0 gpg avg AND conceded <= 1.0 gpg
+    avg in venue 6-match window.
+    """
+    h = home_6 or []
+    a = away_6 or []
+    if len(h) < 4 or len(a) < 4:
+        return False, None
+
+    hn, an = min(len(h), 6), min(len(a), 6)
+    h_gf_avg = sum(gf for gf, _ in h[:hn]) / hn
+    h_ga_avg = sum(ga for _, ga in h[:hn]) / hn
+    a_gf_avg = sum(gf for gf, _ in a[:an]) / an
+    a_ga_avg = sum(ga for _, ga in a[:an]) / an
+
+    home_snoozer = h_gf_avg <= 1.0 and h_ga_avg <= 1.0
+    away_snoozer = a_gf_avg <= 1.0 and a_ga_avg <= 1.0
+
+    if home_snoozer and away_snoozer:
+        return True, (
+            f"both_low_event_h{h_gf_avg:.1f}scored_{h_ga_avg:.1f}conceded_"
+            f"a{a_gf_avg:.1f}scored_{a_ga_avg:.1f}conceded"
+        )
+    return False, None
+
+
+def _h2h_zero_goal_bogey_veto(home_team_id, away_team_id, target_date_str=None):
+    """Block Over 2.5 when recent H2H meetings are EXTREMELY low-scoring:
+    no more than 1 total goal per game. The existing H2H checks fire on
+    <=2 total goals or <=33% Over rate, but this catches the pure 0-0 /
+    1-0 bogey-derby pattern where a matchup consistently produces 0 or
+    1 goal regardless of individual team form.
+
+    Triggers if >=2 H2H meetings AND all of them had <= 1 total goal.
+    """
+    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str, limit=4)
+    if len(meetings) < 2:
+        return False, meetings
+    sub1 = sum(
+        1 for m in meetings
+        if m.get("total", m.get("gf", 0) + m.get("ga", 0)) <= 1
+    )
+    if sub1 == len(meetings):
+        return True, meetings
+    return False, meetings
+
+
+def _borderline_one_goal_cluster_veto(home_overall_6, away_overall_6):
+    """Block Over 2.5 when BOTH teams' recent overall matches cluster at
+    EXACTLY 1 total goal (0-1 / 1-0 / 0-0 results). The existing
+    _borderline_two_goal_cluster_veto catches 2-goal boundary losses
+    like Aarhus 0-2 Midtjylland, but the Widzew 0-0 / Slovacko 0-0
+    losses clustered at EVEN LOWER goal counts — just 0 or 1 goal per
+    match. A team that keeps producing 1-goal games overall will drag
+    an O2.5 pick under even at inflated odds.
+
+    Fire if COMBINED both teams have >= 50% of recent overall matches
+    ending with <= 1 total goal, AND at least one team shows >= 3 of 6
+    at <= 1 goal.
+    """
+    h = home_overall_6 or []
+    a = away_overall_6 or []
+    h_len = min(len(h), 6)
+    a_len = min(len(a), 6)
+    if h_len < 4 or a_len < 4:
+        return False, None
+
+    h_at_1 = sum(1 for gf, ga in h[:h_len] if gf + ga <= 1)
+    a_at_1 = sum(1 for gf, ga in a[:a_len] if gf + ga <= 1)
+
+    combined_rate = (h_at_1 + a_at_1) / (h_len + a_len)
+    strong_cluster = (
+        h_at_1 >= max(3, round(h_len * 0.5))
+        or a_at_1 >= max(3, round(a_len * 0.5))
+    )
+
+    if combined_rate >= 0.5 and strong_cluster:
+        return True, (
+            f"cluster_at_0_or_1_h{h_at_1}of{h_len}_"
+            f"a{a_at_1}of{a_len}_{int(combined_rate*100)}pct"
+        )
+    return False, None
+
+
+def _one_sided_home_blank_away_midrange_veto(home_3, away_3):
+    """Blocks Over 2.5 when HOME attack is dead (>=2 blanks in 3) but AWAY
+    attack is in the 1-2-goals sweet spot — yields the classic 0-2 trap.
+
+    Scunthorpe 0-2 Harrogate (05/09/2026 O2.5 loss):
+      - Home attack shut out 0-0-0 profile → 2+ blanks in last 3 venue
+      - Away attack scores 1-2 goals reliably but rarely busts 3+ in a single
+        away match → total goals = 2, UNDER.
+      The mutual_cold veto doesn't fire here because AWAY scored 2 goals
+      (not blanked), so we need a one-sided counterpart that combines home's
+      offensive helplessness with away's moderate, non-busting scoring.
+    """
+    h = (home_3 or [])[:3]
+    a = (away_3 or [])[:3]
+    if len(h) < 3 or len(a) < 3:
+        return False, None
+
+    h_blanks = sum(1 for gf, _ in h if gf == 0)
+    if h_blanks < 2:
+        return False, None
+
+    a_gf_total = sum(gf for gf, _ in a)
+    a_max_single = max((gf for gf, _ in a), default=0)
+    a_has_bust = any(gf >= 4 for gf, _ in a)
+    if a_gf_total <= 7 and a_max_single <= 3 and not a_has_bust:
+        return True, (
+            f"home_blank_{h_blanks}of3_away_midrange_"
+            f"{a_gf_total}total_max{a_max_single}"
+        )
+    return False, None
+
+
 # =============================================================================
 # OVER 2.5 ALGORITHM (10-Check Rules + Overall Form)
 # =============================================================================
@@ -1603,6 +1757,17 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         severe_crisis_veto, severe_crisis_reason = _severe_offensive_crisis_veto(
             home_6, away_6, home_overall_6, away_overall_6
         )
+        mutual_cold_veto, mutual_cold_reason = _mutual_cold_attacks_defences_veto(home_3, away_3)
+        combined_weak_veto, combined_weak_reason = _combined_weak_attack_strong_defence_veto(home_6, away_6)
+        h2h_zero_bogey_veto, h2h_zero_bogey_meetings = _h2h_zero_goal_bogey_veto(
+            match["home_team_id"], match["away_team_id"], target_date
+        )
+        borderline_one_veto, borderline_one_reason = _borderline_one_goal_cluster_veto(
+            home_overall_6, away_overall_6
+        )
+        one_sided_blank_veto, one_sided_blank_reason = _one_sided_home_blank_away_midrange_veto(
+            home_3, away_3
+        )
 
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
@@ -1666,6 +1831,9 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             and not overall_scoring_veto
             and not borderline_cluster_veto and not severe_crisis_veto
             and not xg_imbalance_veto
+            and not mutual_cold_veto and not combined_weak_veto
+            and not h2h_zero_bogey_veto and not borderline_one_veto
+            and not one_sided_blank_veto
         )
         under_qualifies = (
             bool(under_passed) and under_score >= under_min_score and under_gate
@@ -1778,6 +1946,16 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append(f"severe offensive crisis ({severe_crisis_reason})")
         if xg_imbalance_veto:
             regressions.append(f"xG imbalance shutout risk ({xg_imbalance_reason})")
+        if mutual_cold_veto:
+            regressions.append(f"mutual 0-0 streak ({mutual_cold_reason})")
+        if combined_weak_veto:
+            regressions.append(f"combined weak attack+defence ({combined_weak_reason})")
+        if h2h_zero_bogey_veto:
+            regressions.append(f"h2h 0-or-1-goal bogey ({len(h2h_zero_bogey_meetings)} meetings)")
+        if borderline_one_veto:
+            regressions.append(f"0-or-1-goal cluster ({borderline_one_reason})")
+        if one_sided_blank_veto:
+            regressions.append(f"home blank + away mid-range ({one_sided_blank_reason})")
         if early_mult < 1.0:
             regressions.append(f"early-season penalty (x{early_mult})")
 
@@ -1825,6 +2003,16 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "severe_crisis_reason": severe_crisis_reason,
                     "xg_imbalance_veto": xg_imbalance_veto,
                     "xg_imbalance_reason": xg_imbalance_reason,
+                    "mutual_cold_veto": mutual_cold_veto,
+                    "mutual_cold_reason": mutual_cold_reason,
+                    "combined_weak_veto": combined_weak_veto,
+                    "combined_weak_reason": combined_weak_reason,
+                    "h2h_zero_bogey_veto": h2h_zero_bogey_veto,
+                    "h2h_zero_bogey_meetings_count": len(h2h_zero_bogey_meetings),
+                    "borderline_one_veto": borderline_one_veto,
+                    "borderline_one_reason": borderline_one_reason,
+                    "one_sided_blank_veto": one_sided_blank_veto,
+                    "one_sided_blank_reason": one_sided_blank_reason,
                     "early_season_mult": round(early_mult, 2),
                     "home_btts_6": home_btts_6,
                     "away_btts_6": away_btts_6,
@@ -1920,6 +2108,16 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "severe_crisis_reason": severe_crisis_reason,
                     "xg_imbalance_veto": xg_imbalance_veto,
                     "xg_imbalance_reason": xg_imbalance_reason,
+                    "mutual_cold_veto": mutual_cold_veto,
+                    "mutual_cold_reason": mutual_cold_reason,
+                    "combined_weak_veto": combined_weak_veto,
+                    "combined_weak_reason": combined_weak_reason,
+                    "h2h_zero_bogey_veto": h2h_zero_bogey_veto,
+                    "h2h_zero_bogey_meetings_count": len(h2h_zero_bogey_meetings),
+                    "borderline_one_veto": borderline_one_veto,
+                    "borderline_one_reason": borderline_one_reason,
+                    "one_sided_blank_veto": one_sided_blank_veto,
+                    "one_sided_blank_reason": one_sided_blank_reason,
                     "early_season_mult": round(early_mult, 2),
                     "recent_cold_blocked": recent_cold_over_block,
                     "regression_penalty_applied": regressions,

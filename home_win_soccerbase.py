@@ -666,6 +666,85 @@ def _overall_form_symmetry_veto(home_overall_5, home_overall_6, away_overall_5, 
     return False, None
 
 
+def _cold_home_attack_away_pocket_veto(home_data_6, away_data_6):
+    """Block Home Win / DC 1X when HOME attack is ice cold at venue
+    (>=2 blanks in last 3) AND AWAY is a consistent live road threat.
+
+    Viborg FF 0-2 Lyngby BK (04/09/2026 DC 1X loss):
+      - Viborg blanked at home (0 goals), Lyngby scored 2 on the road.
+      - A home side that can't find the net AND an away side that
+        consistently scores away is a 0-2 / 1-2 trap waiting to happen.
+      Pure Home Win is dead; Double Chance 1X is also at high risk because
+      the home team literally can't score — 0-X becomes 0-2.
+    """
+    h_recent = (home_data_6 or [])[:3]
+    a_recent = (away_data_6 or [])[:3]
+    if len(h_recent) < 3 or len(a_recent) < 3:
+        return False, None
+
+    h_blanks = sum(1 for m in h_recent if m.get("gf", 0) == 0)
+    if h_blanks < 2:
+        return False, None
+
+    a_scored = sum(1 for m in a_recent if m.get("gf", 0) > 0)
+    a_wins = sum(1 for m in a_recent if m.get("result") == "W")
+    if a_scored >= 2 and a_wins >= 1:
+        return True, (
+            f"home_blank_{h_blanks}of3_away_scored_{a_scored}_"
+            f"and_won_{a_wins}_of3"
+        )
+    return False, None
+
+
+def _leaky_home_hot_away_shootout_veto(home_data_6, away_data_6):
+    """Block Home Win / DC 1X when HOME defence is leaky at venue AND
+    AWAY attack fires on the road — creates a shootout where the away
+    side can outscore the home favourite.
+
+    FC Arda Kardzhali 2-3 Botev Plovdiv (04/09/2026 DC 1X loss):
+      - 5-goal thriller, home scored 2 but conceded 3 and lost.
+      - When home concedes >=4 in their last 3 venue games AND away has
+        scored >=4 in their last 3 road games, expect a high-event
+        match — 2-0 home wins become 2-3 away upsets in this profile.
+      Pure Home Win is unsafe; DC 1X still dies in a 2-3 or 3-4 away win.
+    """
+    h_recent = (home_data_6 or [])[:3]
+    a_recent = (away_data_6 or [])[:3]
+    if len(h_recent) < 3 or len(a_recent) < 3:
+        return False, None
+
+    h_ga_total = sum(m.get("ga", 0) for m in h_recent)
+    a_gf_total = sum(m.get("gf", 0) for m in a_recent)
+    if h_ga_total >= 4 and a_gf_total >= 4:
+        return True, (
+            f"home_leak_{h_ga_total}ga_in_3_away_hot_{a_gf_total}gf_in_3"
+        )
+    return False, None
+
+
+def _away_recent_road_wins_veto(away_data_6):
+    """Block Home Win / DC 1X when the AWAY side has won 2+ of their
+    last 3 away games.
+
+    A team that wins consistently on their travels is confident, in form,
+    and dangerous — even a 'strong home' side can drop points to them.
+    Lyngby BK (Viborg 0-2 loss) and similar road-warrior profiles slip
+    past overall_form_symmetry because the symmetry veto only checks
+    *overall* win-rate <50% for away — which can stay <50% even while
+    their last 3 AWAY games are all wins (bad overall home form dragging
+    their total down).
+
+    Added 2026-09-06 after Viborg FF 0-2 Lyngby BK DC 1X loss.
+    """
+    recent = (away_data_6 or [])[:3]
+    if len(recent) < 3:
+        return False, None
+    wins = sum(1 for m in recent if m.get("result") == "W")
+    if wins >= 2:
+        return True, f"away_{wins}_road_wins_in_last_3"
+    return False, None
+
+
 def hw_data_volume_penalty(home_form, away_form, home_overall, away_overall):
     n = min(
         len(home_form or []),
@@ -779,6 +858,13 @@ def process_single_match(match, target_date, default_odds=2.8):
         symmetry_veto, symmetry_reason = _overall_form_symmetry_veto(
             home_overall_5, home_overall_6, away_overall_5, away_overall_6
         )
+        cold_attack_veto, cold_attack_reason = _cold_home_attack_away_pocket_veto(
+            home_form, away_form
+        )
+        leaky_hot_veto, leaky_hot_reason = _leaky_home_hot_away_shootout_veto(
+            home_form, away_form
+        )
+        road_wins_veto, road_wins_reason = _away_recent_road_wins_veto(away_form)
 
         weak_league = is_weak_roi_league(league_name, _HW_WEAK_ROI_LEAGUE_KEYWORDS)
         min_score = MAX_HOME_WIN_SCORE - 1 if weak_league else MAX_HOME_WIN_SCORE - 2
@@ -787,6 +873,8 @@ def process_single_match(match, target_date, default_odds=2.8):
             and not away_strength_veto and not draw_risk_veto
             and not draw_streak_veto and not away_cs_streak_veto
             and not last_home_veto and not symmetry_veto
+            and not cold_attack_veto and not leaky_hot_veto
+            and not road_wins_veto
         )
 
         league_mult = _HW_WEAK_ROI_MULTIPLIER if weak_league else 1.0
@@ -822,6 +910,12 @@ def process_single_match(match, target_date, default_odds=2.8):
             regressions.append(f"last home match not win ({last_home_reason})")
         if symmetry_veto:
             regressions.append(f"symmetry fail ({symmetry_reason})")
+        if cold_attack_veto:
+            regressions.append(f"cold home attack + away pocket ({cold_attack_reason})")
+        if leaky_hot_veto:
+            regressions.append(f"leaky home + hot away shootout ({leaky_hot_reason})")
+        if road_wins_veto:
+            regressions.append(f"away recent road wins ({road_wins_reason})")
 
         return {
             "status": "success",
@@ -855,6 +949,12 @@ def process_single_match(match, target_date, default_odds=2.8):
                 "last_home_reason": last_home_reason,
                 "symmetry_veto": symmetry_veto,
                 "symmetry_reason": symmetry_reason,
+                "cold_attack_veto": cold_attack_veto,
+                "cold_attack_reason": cold_attack_reason,
+                "leaky_hot_veto": leaky_hot_veto,
+                "leaky_hot_reason": leaky_hot_reason,
+                "road_wins_veto": road_wins_veto,
+                "road_wins_reason": road_wins_reason,
                 "data_mult": round(data_mult, 2),
                 "weak_league_mult": round(league_mult, 2),
                 "regression_mult": round(reg_mult, 2),
@@ -874,6 +974,12 @@ def process_single_match(match, target_date, default_odds=2.8):
                     "last_home_reason": last_home_reason,
                     "symmetry_veto": symmetry_veto,
                     "symmetry_reason": symmetry_reason,
+                    "cold_attack_veto": cold_attack_veto,
+                    "cold_attack_reason": cold_attack_reason,
+                    "leaky_hot_veto": leaky_hot_veto,
+                    "leaky_hot_reason": leaky_hot_reason,
+                    "road_wins_veto": road_wins_veto,
+                    "road_wins_reason": road_wins_reason,
                     "home_strength": round(home_strength, 3),
                     "away_strength": round(away_strength, 3),
                     "regression_penalty_applied": regressions,
