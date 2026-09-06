@@ -15,6 +15,7 @@ PREDICTORS = (
     ("over25_soccerbase.py", "Over/Under 2.5"),
     ("btts_soccerbase.py", "BTTS Yes/No"),
     ("home_win_soccerbase.py", "Home Win"),
+    ("oo05_soccerbase.py", "Over 0.5 Team Goal"),
 )
 
 

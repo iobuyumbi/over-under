@@ -41,7 +41,7 @@ def _clean_body(body):
     return "\n".join(cleaned_lines)
 
 
-def build_daily_message(date, ou_body, btts_body, hw_body):
+def build_daily_message(date, ou_body, btts_body, hw_body, oo05_body):
     lines = [f"📅 Daily Soccer Picks · {date}", ""]
 
     yesterday = build_telegram_yesterday_block()
@@ -56,6 +56,7 @@ def build_daily_message(date, ou_body, btts_body, hw_body):
         ("⚽️ OVER / UNDER 2.5", ou_body),
         ("🎯 BTTS (YES / NO)", btts_body),
         ("🏠 HOME WIN", hw_body),
+        ("🎯 OVER 0.5 TEAM GOAL", oo05_body),
     ]
     for title, body in sections:
         clean = _clean_body(body) or "— none"
@@ -77,13 +78,15 @@ def main():
     parser.add_argument("--ou-output", default="ou_telegram.txt")
     parser.add_argument("--btts-output", default="btts_telegram.txt")
     parser.add_argument("--hw-output", default="hw_telegram.txt")
+    parser.add_argument("--oo05-output", default="oo05_telegram.txt")
     parser.add_argument("--out", default="telegram_daily.txt")
     args = parser.parse_args()
 
     ou = read_telegram_section(args.ou_output)
     btts = read_telegram_section(args.btts_output)
     hw = read_telegram_section(args.hw_output)
-    message = build_daily_message(args.date, ou, btts, hw)
+    oo05 = read_telegram_section(args.oo05_output)
+    message = build_daily_message(args.date, ou, btts, hw, oo05)
 
     with open(args.out, "w", encoding="utf-8") as f:
         f.write(message)
