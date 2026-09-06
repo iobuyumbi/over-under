@@ -3715,7 +3715,7 @@
       "result": "win",
       "recorded_at": "2026-08-30T03:54:00.951295",
       "published": false,
-      "updated_at": "2026-09-04T01:30:23.944793",
+      "updated_at": "2026-09-04T23:28:35.413449",
       "final_score": "2-0",
       "result_source": "soccerbase"
     },
@@ -3799,7 +3799,7 @@
       "result": "loss",
       "recorded_at": "2026-08-30T13:14:09.072679",
       "published": true,
-      "updated_at": "2026-09-05T03:31:30.345619",
+      "updated_at": "2026-09-05T23:25:11.350327",
       "final_score": "0-2",
       "result_source": "soccerbase"
     },
@@ -3813,7 +3813,7 @@
       "result": "win",
       "recorded_at": "2026-08-30T13:14:09.081249",
       "published": true,
-      "updated_at": "2026-09-05T03:31:30.347600",
+      "updated_at": "2026-09-05T23:25:11.351007",
       "final_score": "2-0",
       "result_source": "soccerbase"
     },
@@ -3827,7 +3827,7 @@
       "result": "loss",
       "recorded_at": "2026-08-30T13:14:09.102003",
       "published": true,
-      "updated_at": "2026-09-05T03:31:30.349617",
+      "updated_at": "2026-09-05T23:25:11.351826",
       "final_score": "1-1",
       "result_source": "soccerbase"
     },
@@ -3897,7 +3897,7 @@
       "result": "win",
       "recorded_at": "2026-08-30T13:14:09.143597",
       "published": false,
-      "updated_at": "2026-09-04T01:30:23.945802",
+      "updated_at": "2026-09-04T23:28:35.413871",
       "final_score": "2-0",
       "result_source": "soccerbase"
     },
@@ -3911,7 +3911,7 @@
       "result": "win",
       "recorded_at": "2026-08-30T13:14:09.145146",
       "published": true,
-      "updated_at": "2026-09-05T03:31:30.350597",
+      "updated_at": "2026-09-05T23:25:11.352780",
       "final_score": "3-2",
       "result_source": "soccerbase"
     },
@@ -3939,7 +3939,7 @@
       "result": "loss",
       "recorded_at": "2026-09-01T10:13:21.787352",
       "published": true,
-      "updated_at": "2026-09-05T03:31:30.352631",
+      "updated_at": "2026-09-05T23:25:11.353256",
       "final_score": "2-3",
       "result_source": "soccerbase"
     },
@@ -3975,7 +3975,7 @@
       "result": "win",
       "recorded_at": "2026-09-02T23:43:30.723819",
       "published": true,
-      "updated_at": "2026-09-05T03:31:32.832273",
+      "updated_at": "2026-09-04T23:28:35.414527",
       "final_score": "3-0",
       "result_source": "soccerbase"
     },
@@ -12566,7 +12566,7 @@
       "result": "win",
       "recorded_at": "2026-08-29T15:21:59.284401",
       "published": true,
-      "updated_at": "2026-09-04T01:30:23.946801",
+      "updated_at": "2026-09-04T23:28:35.414855",
       "final_score": "1-2",
       "result_source": "soccerbase"
     },
@@ -12582,7 +12582,7 @@
       "result": "win",
       "recorded_at": "2026-08-29T15:21:59.299393",
       "published": true,
-      "updated_at": "2026-09-04T01:30:23.947786",
+      "updated_at": "2026-09-04T23:28:35.415013",
       "final_score": "1-3",
       "result_source": "soccerbase"
     },
@@ -12598,7 +12598,7 @@
       "result": "win",
       "recorded_at": "2026-08-29T15:21:59.315389",
       "published": true,
-      "updated_at": "2026-09-04T01:30:23.947786",
+      "updated_at": "2026-09-04T23:28:35.415361",
       "final_score": "1-2",
       "result_source": "soccerbase"
     },
@@ -12742,7 +12742,7 @@
       "result": "win",
       "recorded_at": "2026-08-30T13:10:12.500223",
       "published": true,
-      "updated_at": "2026-09-05T03:31:30.353635",
+      "updated_at": "2026-09-05T23:25:11.353705",
       "final_score": "2-2",
       "result_source": "soccerbase"
     },
@@ -12758,7 +12758,7 @@
       "result": "win",
       "recorded_at": "2026-08-30T13:10:12.511466",
       "published": true,
-      "updated_at": "2026-09-05T03:31:30.354649",
+      "updated_at": "2026-09-05T23:25:11.354112",
       "final_score": "3-1",
       "result_source": "soccerbase"
     },
@@ -12774,7 +12774,7 @@
       "result": "win",
       "recorded_at": "2026-08-30T13:10:12.532348",
       "published": false,
-      "updated_at": "2026-09-05T03:31:30.357685",
+      "updated_at": "2026-09-05T23:25:11.354976",
       "final_score": "2-5",
       "result_source": "soccerbase"
     },
@@ -12806,7 +12806,7 @@
       "result": "loss",
       "recorded_at": "2026-09-01T10:05:37.527212",
       "published": true,
-      "updated_at": "2026-09-05T03:31:30.358687",
+      "updated_at": "2026-09-05T23:25:11.355399",
       "final_score": "0-1",
       "result_source": "soccerbase"
     },
@@ -12822,7 +12822,7 @@
       "result": "loss",
       "recorded_at": "2026-09-01T10:05:37.535253",
       "published": true,
-      "updated_at": "2026-09-05T03:31:30.359706",
+      "updated_at": "2026-09-05T23:25:11.356076",
       "final_score": "0-2",
       "result_source": "soccerbase"
     },
@@ -17247,7 +17247,7 @@
       "result": "loss",
       "recorded_at": "2026-08-30T04:12:58.837324",
       "published": true,
-      "updated_at": "2026-09-04T01:30:23.947786",
+      "updated_at": "2026-09-04T23:28:35.415686",
       "final_score": "2-0",
       "result_source": "soccerbase"
     },
@@ -17263,7 +17263,7 @@
       "result": "win",
       "recorded_at": "2026-08-30T04:12:58.852828",
       "published": true,
-      "updated_at": "2026-09-04T01:30:23.949294",
+      "updated_at": "2026-09-04T23:28:35.415828",
       "final_score": "1-3",
       "result_source": "soccerbase"
     },
@@ -17279,7 +17279,7 @@
       "result": "loss",
       "recorded_at": "2026-08-30T04:12:58.865838",
       "published": true,
-      "updated_at": "2026-09-05T03:31:30.360696",
+      "updated_at": "2026-09-05T23:25:11.356887",
       "final_score": "0-2",
       "result_source": "soccerbase"
     },
@@ -17375,7 +17375,7 @@
       "result": "win",
       "recorded_at": "2026-08-31T09:27:25.572260",
       "published": true,
-      "updated_at": "2026-09-04T01:30:23.949294",
+      "updated_at": "2026-09-04T23:28:35.416035",
       "final_score": "1-2",
       "result_source": "soccerbase"
     },
@@ -17391,7 +17391,7 @@
       "result": "loss",
       "recorded_at": "2026-08-31T09:27:25.574282",
       "published": true,
-      "updated_at": "2026-09-04T01:30:23.949294",
+      "updated_at": "2026-09-04T23:28:35.416380",
       "final_score": "0-3",
       "result_source": "soccerbase"
     },
@@ -17407,7 +17407,7 @@
       "result": "loss",
       "recorded_at": "2026-09-01T10:22:01.687175",
       "published": true,
-      "updated_at": "2026-09-05T03:31:30.362711",
+      "updated_at": "2026-09-05T23:25:11.357152",
       "final_score": "2-0",
       "result_source": "soccerbase"
     },
