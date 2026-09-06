@@ -237,14 +237,43 @@ def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=_BT
 def _h2h_btts_yes_blocked(home_team_id, away_team_id, target_date_str=None):
     """Block BTTS Yes when recent H2H games are consistently non-BTTS.
 
-    Blocks if >=3 H2H meetings AND <=33% had both teams score (bogey non-BTTS matchup).
+    Blocks if:
+      - >=3 H2H meetings AND <=33% had both teams score
+      - OR the last 3 H2H meetings were ALL BTTS No (streak veto)
     """
-    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str)
+    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str, limit=8)
     if len(meetings) < _BTTS_H2H_MIN_MEETINGS:
         return False, meetings
+        
     btts_count = sum(1 for m in meetings if m.get("gf", 0) >= 1 and m.get("ga", 0) >= 1)
     rate = btts_count / len(meetings)
-    return rate <= _BTTS_H2H_YES_BLOCK_RATE, meetings
+    
+    # Recent streak check: last 3 were all BTTS No
+    last_3_no = all(m.get("gf", 0) == 0 or m.get("ga", 0) == 0 for m in meetings[:3])
+    
+    if rate <= _BTTS_H2H_YES_BLOCK_RATE or (len(meetings) >= 3 and last_3_no):
+        return True, meetings
+        
+    return False, meetings
+
+
+def _venue_h2h_btts_bogey_veto(home_team_id, away_team_id, target_date_str=None):
+    """Block BTTS Yes when H2H meetings AT THIS VENUE (current Home at home)
+    are consistently non-BTTS. Catches Greuther Fürth vs Heidenheim
+    (4/6 were non-BTTS at Fürth's venue).
+
+    Triggers if >=3 meetings at this venue AND all were non-BTTS.
+    """
+    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str, limit=10)
+    venue_meetings = [m for m in meetings if m.get("is_home") is True]
+    
+    if len(venue_meetings) < 2:
+        return False, venue_meetings
+        
+    non_btts_count = sum(1 for m in venue_meetings if m.get("gf", 0) == 0 or m.get("ga", 0) == 0)
+    if non_btts_count == len(venue_meetings) and len(venue_meetings) >= 2:
+        return True, venue_meetings
+    return False, venue_meetings
 
 
 def _h2h_btts_no_blocked(home_team_id, away_team_id, target_date_str=None):
@@ -386,19 +415,54 @@ def _cup_mismatch_veto(match, home_lambda, away_lambda):
     return False, None
 
 
-def _clean_sheet_frequency_veto(home_6, away_6):
+def _clean_sheet_and_blank_frequency_veto(home_6, away_6):
     """
-    Hard block: if either team has kept a clean sheet in 3+ of their last 6
-    venue games (requires full 6-game sample), BTTS Yes is unlikely.
+    Hard block: if EITHER team has kept a clean sheet (ga==0) OR failed to score (gf==0)
+    in 3+ of their last 6 venue games, BTTS Yes is extremely risky.
+
+    Pattern: FC Tokyo vs Kyoto Sanga (2-0). Kyoto Sanga had blanks in venue matches
+    leading to a 2-0 shutout.
     """
-    if len(home_6 or []) >= 6:
-        cs = sum(1 for _, ga in home_6[:6] if ga == 0)
-        if cs >= 3:
-            return True, f"home_clean_sheets_{cs}_of_6"
-    if len(away_6 or []) >= 6:
-        cs = sum(1 for gf, _ in away_6[:6] if gf == 0)
-        if cs >= 3:
-            return True, f"away_clean_sheets_{cs}_of_6"
+    h = home_6 or []
+    a = away_6 or []
+    
+    if len(h) >= 6:
+        h_cs = sum(1 for _, ga in h[:6] if ga == 0)
+        h_blanks = sum(1 for gf, _ in h[:6] if gf == 0)
+        if h_cs >= 3:
+            return True, f"home_clean_sheets_{h_cs}_of_6"
+        if h_blanks >= 3:
+            return True, f"home_scoring_blanks_{h_blanks}_of_6"
+            
+    if len(a) >= 6:
+        a_cs = sum(1 for _, ga in a[:6] if ga == 0)
+        a_blanks = sum(1 for gf, _ in a[:6] if gf == 0)
+        if a_cs >= 3:
+            return True, f"away_clean_sheets_{a_cs}_of_6"
+        if a_blanks >= 3:
+            return True, f"away_scoring_blanks_{a_blanks}_of_6"
+            
+    return False, None
+
+
+def _extreme_shutout_potential_veto(home_overall_6, away_overall_6):
+    """
+    Block BTTS Yes if BOTH teams show high shutout potential overall.
+    Triggers if (Home clean sheets in last 3 >= 2) AND (Away blanks in last 3 >= 2).
+    This is the perfect recipe for a 1-0 / 2-0 home win (BTTS No).
+    """
+    ho = home_overall_6 or []
+    ao = away_overall_6 or []
+    
+    if len(ho) < 3 or len(ao) < 3:
+        return False, None
+        
+    h_cs_3 = sum(1 for _, ga in ho[:3] if ga == 0)
+    a_blanks_3 = sum(1 for gf, _ in ao[:3] if gf == 0)
+    
+    if h_cs_3 >= 2 and a_blanks_3 >= 2:
+        return True, f"extreme_shutout_potential_hcs{h_cs_3}_ablank{a_blanks_3}"
+        
     return False, None
 
 
@@ -1425,6 +1489,9 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         h2h_btts_no_blocked, h2h_btts_no_meetings = _h2h_btts_no_blocked(
             match["home_team_id"], match["away_team_id"], target_date
         )
+        venue_h2h_veto, venue_h2h_meetings = _venue_h2h_btts_bogey_veto(
+            match["home_team_id"], match["away_team_id"], target_date
+        )
         o25tips_total, o25tips_details = calculate_o25tips_btts_score(
             home_overall_6, home_6, away_overall_6, away_6, home_lambda, away_lambda
         )
@@ -1442,7 +1509,7 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
         extended_drought_veto, extended_drought_reason = _extended_scoring_drought_veto(home_3, away_3)
         min_attack_veto, min_attack_reason = _minimum_attack_rate_veto(home_3, away_3)
         cup_veto, cup_reason = _cup_mismatch_veto(match, home_lambda, away_lambda)
-        cs_freq_veto, cs_freq_reason = _clean_sheet_frequency_veto(home_6, away_6)
+        cs_freq_veto, cs_freq_reason = _clean_sheet_and_blank_frequency_veto(home_6, away_6)
         non_league_veto, non_league_reason = _non_league_reliability_veto(match, home_6, away_6)
         overall_btts_yes_veto, overall_btts_yes_reason = _overall_btts_symmetry_veto(
             home_overall_6, away_overall_6, "yes"
@@ -1464,6 +1531,9 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             home_overall_6, away_overall_6
         )
         dom_fav_cs_veto, dom_fav_cs_reason = _dominant_favourite_clean_sheet_veto(home_6, away_6)
+        extreme_shutout_veto, extreme_shutout_reason = _extreme_shutout_potential_veto(
+            home_overall_6, away_overall_6
+        )
         mutual_active_veto, mutual_active_reason = _mutual_consistent_scoring_conceding_veto(
             home_overall_6, away_overall_6
         )
@@ -1509,6 +1579,7 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             and not shutout_freq_veto
             and not elite_def_veto and not tight_mismatch_veto
             and not heavy_blowout_veto and not dom_fav_cs_veto
+            and not extreme_shutout_veto and not venue_h2h_veto
         )
         no_qualifies = (
             bool(no_passed) and no_score >= no_min and no_gate
