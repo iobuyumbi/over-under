@@ -517,6 +517,79 @@ def _under_peak_game_veto(home_6, away_6):
     return False, None
 
 
+def _under_overall_over_frequency_veto(home_overall_6, away_overall_6):
+    """Block Under 2.5 if EITHER team is generally involved in high-scoring games.
+    
+    Under 2.5 needs BOTH teams to be consistently low-scoring overall. If one side
+    has >= 3 Over 2.5 games in their last 6 overall matches, the Under 2.5 pick
+    is structurally risky despite their venue form.
+    
+    Added 2026-09-06 after Metalist 5-0 Obolon Kiev and Bukovyna 3-0 Dynamo Kyiv losses.
+    """
+    h = home_overall_6 or []
+    a = away_overall_6 or []
+    h_len = min(len(h), 6)
+    a_len = min(len(a), 6)
+    
+    if h_len >= 4:
+        h_overs = sum(1 for gf, ga in h[:h_len] if gf + ga > 2.5)
+        if h_overs >= 3:
+            return True, f"home_overall_overs_{h_overs}of{h_len}"
+            
+    if a_len >= 4:
+        a_overs = sum(1 for gf, ga in a[:a_len] if gf + ga > 2.5)
+        if a_overs >= 3:
+            return True, f"away_overall_overs_{a_overs}of{a_len}"
+            
+    return False, None
+
+
+def _under_recent_overall_leak_veto(home_overall_6, away_overall_6):
+    """Block Under 2.5 if EITHER team has shown severe defensive vulnerability recently.
+    
+    If a team conceded 3+ goals in ANY of their last 3 overall matches, they are
+    capable of a defensive collapse that kills the Under 2.5 bet.
+    
+    Added 2026-09-06 after Botosani 5-0 Sepsi and Bromley 0-5 Leyton Orient losses.
+    """
+    h = (home_overall_6 or [])[:3]
+    a = (away_overall_6 or [])[:3]
+    
+    for _, ga in h:
+        if ga >= 3:
+            return True, f"home_overall_leaked_{ga}_in_last_3"
+    for _, ga in a:
+        if ga >= 3:
+            return True, f"away_overall_leaked_{ga}_in_last_3"
+            
+    return False, None
+
+
+def _under_h2h_high_scoring_veto(home_team_id, away_team_id, target_date_str=None):
+    """Block Under 2.5 if H2H meetings show high-scoring potential.
+    
+    Blocks if:
+      - The single most recent H2H was 4+ goals.
+      - OR the last 2 H2H meetings were BOTH Over 2.5.
+    """
+    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str, limit=5)
+    if not meetings:
+        return False, None
+        
+    # Most recent shock
+    m1 = meetings[0]
+    if (m1.get("gf", 0) + m1.get("ga", 0)) >= 4:
+        return True, "h2h_last_match_4+_goals"
+        
+    # Last 2 streak
+    if len(meetings) >= 2:
+        m2 = meetings[1]
+        if (m1.get("gf", 0) + m1.get("ga", 0)) > 2.5 and (m2.get("gf", 0) + m2.get("ga", 0)) > 2.5:
+            return True, "h2h_last_2_both_over"
+            
+    return False, None
+
+
 def _derby_veto(match):
     """Block Over 2.5 for known derby/rivalry matches.
     Derbies are historically tighter, more defensive, and lower-scoring
@@ -1831,6 +1904,15 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         xg_imbalance_veto, xg_imbalance_reason = _xg_imbalance_shutout_risk_veto(
             home_lambda, away_lambda, home_overall_6, away_overall_6
         )
+        under_overall_overs_veto, under_overall_overs_reason = _under_overall_over_frequency_veto(
+            home_overall_6, away_overall_6
+        )
+        under_overall_leak_veto, under_overall_leak_reason = _under_recent_overall_leak_veto(
+            home_overall_6, away_overall_6
+        )
+        h2h_under_high_scoring_veto, h2h_under_high_scoring_reason = _under_h2h_high_scoring_veto(
+            match["home_team_id"], match["away_team_id"], target_date
+        )
 
         over_gate = lambda_gate_passes(home_lambda, away_lambda, "over")
         under_gate = lambda_gate_passes(home_lambda, away_lambda, "under")
@@ -1875,6 +1957,9 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             and not under_goal_shock_veto
             and not under_blowout_veto
             and not under_peak_game_veto
+            and not under_overall_overs_veto
+            and not under_overall_leak_veto
+            and not h2h_under_high_scoring_veto
         )
 
         if over_qualifies or under_qualifies:
@@ -1966,6 +2051,12 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append(f"under blowout risk ({under_blowout_reason})")
         if under_peak_game_veto:
             regressions.append(f"under peak game veto ({under_peak_game_reason})")
+        if under_overall_overs_veto:
+            regressions.append(f"under overall overs ({under_overall_overs_reason})")
+        if under_overall_leak_veto:
+            regressions.append(f"under overall defensive leak ({under_overall_leak_reason})")
+        if h2h_under_high_scoring_veto:
+            regressions.append(f"h2h high-scoring under veto ({h2h_under_high_scoring_reason})")
         if derby_veto:
             regressions.append(f"derby match ({derby_reason})")
         if scoring_consistency_veto:
