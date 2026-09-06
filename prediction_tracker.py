@@ -25,9 +25,11 @@ MARKET_OVER25 = "over25"
 MARKET_UNDER25 = "under25"
 MARKET_BTTS_YES = "btts_yes"
 MARKET_BTTS_NO = "btts_no"
+MARKET_OVER05_TG = "over05_tg"
 SUPPORTED_MARKETS = frozenset({
     MARKET_HOME_WIN, MARKET_OVER25, MARKET_UNDER25,
     MARKET_BTTS_YES, MARKET_BTTS_NO,
+    MARKET_OVER05_TG,
 })
 
 # User-facing label helpers
@@ -56,6 +58,8 @@ def market_short_label(market_label):
         "under_2.5": "U2.5", "under25": "U2.5", "under": "U2.5",
         "btts_yes": "BTTS+", "bttsyes": "BTTS+", "yes": "BTTS+",
         "btts_no": "BTTS-", "bttsno": "BTTS-", "no": "BTTS-",
+        "over05_tg": "O0.5TG", "over_0.5_team_goal": "O0.5TG",
+        "oo05": "O0.5TG", "o0.5tg": "O0.5TG",
     }
     return mapping.get(key, str(market_label or "").strip())
 
@@ -269,6 +273,11 @@ def _market_for_btts_pick(pick):
     return None
 
 
+def _market_for_oo05_pick(pick):
+    """Derive the market bucket from an oo05 history pick (always over05_tg)."""
+    return MARKET_OVER05_TG
+
+
 def _league_bucket_key(league):
     """Collapse weak-ROI league name variants into one bucket keyword."""
     normalized = _normalize_label(league)
@@ -388,6 +397,25 @@ def _compute_poor_league_tables():
             continue
         combined_stats[bucket][normalized_result] += 1
         fine = _market_for_btts_pick(pick)
+        if fine in per_market_stats:
+            per_market_stats[fine][bucket][normalized_result] += 1
+
+    for pick in history.get("oo05", []) or []:
+        league = pick.get("league")
+        if not league:
+            continue
+        pick_date = _parse_pick_date(pick.get("date"))
+        if pick_date and pick_date < cutoff:
+            continue
+        result = resolve_pick_result(pick)
+        normalized_result = str(result or "").strip().lower()
+        if normalized_result not in SETTLED_RESULTS:
+            continue
+        bucket = _league_bucket_key(league)
+        if not bucket:
+            continue
+        combined_stats[bucket][normalized_result] += 1
+        fine = _market_for_oo05_pick(pick)
         if fine in per_market_stats:
             per_market_stats[fine][bucket][normalized_result] += 1
 
@@ -575,6 +603,8 @@ def is_blocked_pick(pick, market=None):
             inferred = _market_for_over_under_pick(pick)
         elif section == "btts":
             inferred = _market_for_btts_pick(pick)
+        elif section == "oo05":
+            inferred = _market_for_oo05_pick(pick)
         else:
             prediction = str(pick.get("prediction", "")).strip().lower()
             if prediction == "over":
@@ -585,6 +615,8 @@ def is_blocked_pick(pick, market=None):
                 inferred = MARKET_BTTS_YES
             elif prediction in ("no", "btts_no"):
                 inferred = MARKET_BTTS_NO
+            elif prediction in ("over05_tg",):
+                inferred = MARKET_OVER05_TG
     return is_blocked_match(
         pick.get("home_team", pick.get("home", "")),
         pick.get("away_team", pick.get("away", "")),
@@ -708,6 +740,15 @@ def btts_key(pick):
     )
 
 
+def oo05_key(pick):
+    return (
+        pick["date"],
+        pick.get("home_team", pick.get("home")),
+        pick.get("away_team", pick.get("away")),
+        pick["confidence"],
+    )
+
+
 def _pick_better(existing, new):
     """Prefer settled results; otherwise keep the most recent entry."""
     existing_settled = existing.get("result") in SETTLED_RESULTS
@@ -735,18 +776,22 @@ def dedupe_history(history=None, save=True):
     before_hw = len(history["home_win"])
     before_ou = len(history["over_under"])
     before_btts = len(history.get("btts", []))
+    before_oo05 = len(history.get("oo05", []))
 
     history["home_win"] = dedupe_predictions(history["home_win"], home_win_key)
     history["over_under"] = dedupe_predictions(history["over_under"], over_under_key)
     history["btts"] = dedupe_predictions(history.get("btts", []), btts_key)
+    history["oo05"] = dedupe_predictions(history.get("oo05", []), oo05_key)
 
     stats = {
         "home_win_removed": before_hw - len(history["home_win"]),
         "over_under_removed": before_ou - len(history["over_under"]),
         "btts_removed": before_btts - len(history["btts"]),
+        "oo05_removed": before_oo05 - len(history["oo05"]),
         "home_win_remaining": len(history["home_win"]),
         "over_under_remaining": len(history["over_under"]),
         "btts_remaining": len(history["btts"]),
+        "oo05_remaining": len(history["oo05"]),
     }
 
     if save:
@@ -804,7 +849,7 @@ def add_to_manual_results_csv(date_str, home_team, away_team):
 
 
 def load_history():
-    default = {"home_win": [], "over_under": [], "btts": [], "stats": {}}
+    default = {"home_win": [], "over_under": [], "btts": [], "oo05": [], "stats": {}}
     if os.path.exists(HISTORY_FILE):
         try:
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
@@ -823,7 +868,7 @@ def save_history(history):
         json.dump(history, f, indent=2, default=str) 
  
  
-def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btts_picks=None):
+def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btts_picks=None, oo05_picks=None):
     """Record new predictions (called after running predictors).
 
     - Static/integrity blocked picks are fully skipped (not tracked).
@@ -835,6 +880,7 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
     existing_hw = {home_win_key(p) for p in history["home_win"]}
     existing_ou = {over_under_key(p) for p in history["over_under"]}
     existing_btts = {btts_key(p) for p in history.get("btts", [])}
+    existing_oo05 = {oo05_key(p) for p in history.get("oo05", [])}
     added = 0
     skipped = 0
 
@@ -933,6 +979,39 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
             added += 1
             add_to_manual_results_csv(entry["date"], entry["home_team"], entry["away_team"])
 
+    if oo05_picks:
+        for pick in oo05_picks:
+            home = pick.get("home", pick.get("home_team", ""))
+            away = pick.get("away", pick.get("away_team", ""))
+            league = pick.get("league", "")
+            if is_static_blocked_match(home, away, league):
+                skipped += 1
+                continue
+            prediction = str(pick.get("prediction", MARKET_OVER05_TG)).strip().lower()
+            market = _market_for_oo05_pick(pick)
+            published = not is_statistical_block_only(home, away, league, market)
+            entry = {
+                "date": pick.get("date", date_str),
+                "type": "oo05",
+                "league": pick.get("league"),
+                "home_team": home,
+                "away_team": away,
+                "prediction": prediction,
+                "prob": pick.get("prob"),
+                "confidence": pick.get("confidence", MEDIUM),
+                "result": "pending",
+                "recorded_at": datetime.now().isoformat(),
+                "published": published,
+            }
+            key = oo05_key(entry)
+            if key in existing_oo05:
+                skipped += 1
+                continue
+            history.setdefault("oo05", []).append(entry)
+            existing_oo05.add(key)
+            added += 1
+            add_to_manual_results_csv(entry["date"], entry["home_team"], entry["away_team"])
+
     if added > 0:
         save_history(history)
         print(f"[OK] Recorded {added} new predictions for {date_str}")
@@ -949,6 +1028,8 @@ def update_result(date_str, home_team, away_team, result, prediction_type="over_
         picks = history["over_under"]
     elif prediction_type == "btts":
         picks = history.get("btts", [])
+    elif prediction_type == "oo05" or prediction_type == "over05_tg":
+        picks = history.get("oo05", [])
     else:
         picks = history["home_win"] 
  
@@ -976,9 +1057,9 @@ def get_performance_summary(days=30):
     history = load_history() 
     cutoff = datetime.now() - timedelta(days=days) 
     
-    stats = {"home_win": {}, "over_under": {}, "btts": {}}
+    stats = {"home_win": {}, "over_under": {}, "btts": {}, "oo05": {}}
 
-    for ptype in ["home_win", "over_under", "btts"]:
+    for ptype in ["home_win", "over_under", "btts", "oo05"]:
         picks = history.get(ptype, [])
         wins = losses = pushes = pending = 0 
         recent = [p for p in picks if datetime.fromisoformat(p["date"]) >= cutoff] 
@@ -1029,8 +1110,8 @@ def get_pending_predictions(days_old=None, due_only=True):
     pending = []
     today = datetime.now().date()
 
-    for p_type in ["home_win", "over_under", "btts"]:
-        section = history.get(p_type, []) if p_type == "btts" else history[p_type]
+    for p_type in ["home_win", "over_under", "btts", "oo05"]:
+        section = history.get(p_type, [])
         for idx, pick in enumerate(section):
             if pick["result"] != "pending":
                 continue
@@ -1270,6 +1351,24 @@ def get_yesterday_results(prediction_type=None, detailed=False, compact=False):
             market = "BTTS Yes" if pred in ("yes", "btts_yes") else "BTTS No"
             if not detailed:
                 market = market.upper()
+            append_pick(pick, market)
+
+    if prediction_type in (None, "oo05", "over05_tg"):
+        yesterday_oo05 = [
+            pick for pick in history.get("oo05", [])
+            if pick.get("date", "")[:10] == yesterday
+        ]
+
+        def report_oo05_key(pick):
+            return (
+                pick.get("date", "")[:10],
+                pick.get("home_team", pick.get("home")),
+                pick.get("away_team", pick.get("away")),
+                str(pick.get("prediction", "over05_tg")).lower(),
+            )
+
+        for pick in dedupe_predictions(yesterday_oo05, report_oo05_key):
+            market = "Over 0.5 Team Goal" if detailed else "OVER 0.5 TEAM GOAL"
             append_pick(pick, market)
 
     while results and results[-1] == "":
