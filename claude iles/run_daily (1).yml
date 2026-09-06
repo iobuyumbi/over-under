@@ -133,9 +133,12 @@ jobs:
       - name: Fetch recent results before publishing
         shell: bash
         run: |
-          python fetch_results.py --days 3 2>&1 | tee fetch_output_automated.txt || true
-          python update_manual_results.py 2>&1 | tee update_manual_output.txt || true
-          python fetch_results.py --days 3 2>&1 | tee fetch_output.txt || true
+          python fetch_results.py --days 3 2>&1 | tee fetch_output_automated.txt
+          if [ ${PIPESTATUS[0]} -ne 0 ]; then echo "fetch_results (1st) warned"; fi
+          python update_manual_results.py 2>&1 | tee update_manual_output.txt
+          if [ ${PIPESTATUS[0]} -ne 0 ]; then echo "update_manual_results warned"; fi
+          python fetch_results.py --days 3 2>&1 | tee fetch_output.txt
+          if [ ${PIPESTATUS[0]} -ne 0 ]; then echo "fetch_results (2nd) warned"; fi
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
@@ -145,17 +148,13 @@ jobs:
         continue-on-error: true
         shell: bash
         run: |
-          DATE="$(python -c "from datetime import datetime,timedelta; print((datetime.utcnow()+timedelta(hours=3)).strftime('%Y-%m-%d'))")"
+          DATE=$(python -c "from datetime import datetime,timedelta; print((datetime.utcnow()+timedelta(hours=3)).strftime('%Y-%m-%d'))")
           echo "Using publish date: $DATE"
-          python over25_soccerbase.py --publish-date "$DATE" > output.txt 2> errors.txt || true
+          python over25_soccerbase.py --publish-date "$DATE" > output.txt 2> errors.txt
+          if [ $? -ne 0 ]; then echo "over25 exited non-zero"; fi
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
-          if [ -f output.txt ]; then
-            awk '/===EMAIL_START===/{s=NR; next} /===EMAIL_END===/{e=NR; exit} {if(s && !e) print}' output.txt > over25_body.tmp
-            if [ -s over25_body.tmp ]; then
-              mv over25_body.tmp over25_body.txt
-            else
-              rm -f over25_body.tmp over25_body.txt
-            fi
+          if [ -f output.txt ] && grep -q '===EMAIL_START===' output.txt && grep -q '===EMAIL_END===' output.txt; then
+            awk '/===EMAIL_START===/{f=1;next} /===EMAIL_END===/{f=0} f' output.txt > over25_body.txt
           else
             rm -f over25_body.txt
           fi
@@ -166,14 +165,10 @@ jobs:
         shell: bash
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
-          python home_win_soccerbase.py --publish-date "$DATE" > hw_output.txt 2> hw_errors.txt || true
-          if [ -f hw_output.txt ]; then
-            awk '/===EMAIL_START===/{s=NR; next} /===EMAIL_END===/{e=NR; exit} {if(s && !e) print}' hw_output.txt > hw_body.tmp
-            if [ -s hw_body.tmp ]; then
-              mv hw_body.tmp hw_body.txt
-            else
-              rm -f hw_body.tmp hw_body.txt
-            fi
+          python home_win_soccerbase.py --publish-date "$DATE" > hw_output.txt 2> hw_errors.txt
+          if [ $? -ne 0 ]; then echo "home_win exited non-zero"; fi
+          if [ -f hw_output.txt ] && grep -q '===EMAIL_START===' hw_output.txt && grep -q '===EMAIL_END===' hw_output.txt; then
+            awk '/===EMAIL_START===/{f=1;next} /===EMAIL_END===/{f=0} f' hw_output.txt > hw_body.txt
           else
             rm -f hw_body.txt
           fi
@@ -184,34 +179,12 @@ jobs:
         shell: bash
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
-          python btts_soccerbase.py --publish-date "$DATE" > btts_output.txt 2> btts_errors.txt || true
-          if [ -f btts_output.txt ]; then
-            awk '/===EMAIL_START===/{s=NR; next} /===EMAIL_END===/{e=NR; exit} {if(s && !e) print}' btts_output.txt > btts_body.tmp
-            if [ -s btts_body.tmp ]; then
-              mv btts_body.tmp btts_body.txt
-            else
-              rm -f btts_body.tmp btts_body.txt
-            fi
+          python btts_soccerbase.py --publish-date "$DATE" > btts_output.txt 2> btts_errors.txt
+          if [ $? -ne 0 ]; then echo "btts exited non-zero"; fi
+          if [ -f btts_output.txt ] && grep -q '===EMAIL_START===' btts_output.txt && grep -q '===EMAIL_END===' btts_output.txt; then
+            awk '/===EMAIL_START===/{f=1;next} /===EMAIL_END===/{f=0} f' btts_output.txt > btts_body.txt
           else
             rm -f btts_body.txt
-          fi
-
-      - name: Run Over 0.5 Team Goal predictor
-        id: oo05
-        continue-on-error: true
-        shell: bash
-        run: |
-          DATE="${{ steps.over-under.outputs.date }}"
-          python oo05_soccerbase.py --publish-date "$DATE" > oo05_output.txt 2> oo05_errors.txt || true
-          if [ -f oo05_output.txt ]; then
-            awk '/===EMAIL_START===/{s=NR; next} /===EMAIL_END===/{e=NR; exit} {if(s && !e) print}' oo05_output.txt > oo05_body.tmp
-            if [ -s oo05_body.tmp ]; then
-              mv oo05_body.tmp oo05_body.txt
-            else
-              rm -f oo05_body.tmp oo05_body.txt
-            fi
-          else
-            rm -f oo05_body.txt
           fi
 
       - name: Debug predictor output
@@ -224,8 +197,6 @@ jobs:
           if [ -f hw_body.txt ]; then wc -c < hw_body.txt; else echo "0"; fi
           echo "=== BTTS body size ==="
           if [ -f btts_body.txt ]; then wc -c < btts_body.txt; else echo "0"; fi
-          echo "=== Over 0.5 TG body size ==="
-          if [ -f oo05_body.txt ]; then wc -c < oo05_body.txt; else echo "0"; fi
           echo ""
           echo "=== Over/Under Errors ==="
           if [ -f errors.txt ]; then cat errors.txt; else echo "(none)"; fi
@@ -235,9 +206,6 @@ jobs:
           echo ""
           echo "=== BTTS Errors ==="
           if [ -f btts_errors.txt ]; then cat btts_errors.txt; else echo "(none)"; fi
-          echo ""
-          echo "=== Over 0.5 TG Errors ==="
-          if [ -f oo05_errors.txt ]; then cat oo05_errors.txt; else echo "(none)"; fi
 
       - name: Upload predictor logs
         if: always()
@@ -248,27 +216,20 @@ jobs:
             output.txt
             hw_output.txt
             btts_output.txt
-            oo05_output.txt
             errors.txt
             hw_errors.txt
             btts_errors.txt
-            oo05_errors.txt
             ou_telegram.txt
             hw_telegram.txt
             btts_telegram.txt
-            oo05_telegram.txt
 
       - name: Build Telegram daily message
         continue-on-error: true
         shell: bash
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
-          python build_telegram_daily.py --date "$DATE" \
-            --ou-output ou_telegram.txt \
-            --btts-output btts_telegram.txt \
-            --hw-output hw_telegram.txt \
-            --oo05-output oo05_telegram.txt \
-            --out telegram_daily.txt || true
+          python build_telegram_daily.py --date "$DATE" --ou-output ou_telegram.txt --btts-output btts_telegram.txt --hw-output hw_telegram.txt --out telegram_daily.txt
+          if [ $? -ne 0 ]; then echo "build_telegram_daily exited non-zero"; fi
 
       - name: Upload Telegram message
         if: always()
@@ -283,7 +244,6 @@ jobs:
         shell: bash
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
-
           {
             echo "━━━ OVER / UNDER 2.5 ━━━"
             if [ -s over25_body.txt ]; then cat over25_body.txt; else echo "No qualifying picks today."; fi
@@ -293,37 +253,19 @@ jobs:
             echo ""
             echo "━━━ HOME WIN ━━━"
             if [ -s hw_body.txt ]; then cat hw_body.txt; else echo "No qualifying home win picks today."; fi
-            echo ""
-            echo "━━━ OVER 0.5 TEAM GOAL ━━━"
-            if [ -s oo05_body.txt ]; then cat oo05_body.txt; else echo "No qualifying over 0.5 team goal picks today."; fi
           } > combined_free.txt
 
           {
             echo "DAILY PREDICTIONS (VIP)"
             echo ""
-            if [ -f "over_under_vip_report_$DATE.txt" ]; then
-              cat "over_under_vip_report_$DATE.txt"
-            else
-              echo "Over/Under report unavailable."
-            fi
+            OU_VIP="over_under_vip_report_${DATE}.txt"
+            if [ -f "$OU_VIP" ]; then cat "$OU_VIP"; else echo "Over/Under report unavailable."; fi
             echo ""
-            if [ -f "btts_vip_report_$DATE.txt" ]; then
-              cat "btts_vip_report_$DATE.txt"
-            else
-              echo "BTTS report unavailable."
-            fi
+            BTTS_VIP="btts_vip_report_${DATE}.txt"
+            if [ -f "$BTTS_VIP" ]; then cat "$BTTS_VIP"; else echo "BTTS report unavailable."; fi
             echo ""
-            if [ -f "home_win_vip_report_$DATE.txt" ]; then
-              cat "home_win_vip_report_$DATE.txt"
-            else
-              echo "Home win report unavailable."
-            fi
-            echo ""
-            if [ -f "over05_team_goal_vip_report_$DATE.txt" ]; then
-              cat "over05_team_goal_vip_report_$DATE.txt"
-            else
-              echo "Over 0.5 team goal report unavailable."
-            fi
+            HW_VIP="home_win_vip_report_${DATE}.txt"
+            if [ -f "$HW_VIP" ]; then cat "$HW_VIP"; else echo "Home win report unavailable."; fi
           } > combined_vip.txt
 
       - name: Commit predictions and reports
@@ -334,7 +276,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git pull --rebase --autostash origin main
           shopt -s nullglob
-          files=(over_under_25_report_*.json home_win_report_*.json btts_report_*.json over05_team_goal_report_*.json over_under_vip_report_*.txt home_win_vip_report_*.txt btts_vip_report_*.txt over05_team_goal_vip_report_*.txt)
+          files=(over_under_25_report_*.json home_win_report_*.json btts_report_*.json over_under_vip_report_*.txt home_win_vip_report_*.txt btts_vip_report_*.txt)
           if [ ${#files[@]} -gt 0 ]; then
             git add "${files[@]}"
           fi
@@ -386,11 +328,14 @@ jobs:
         continue-on-error: true
         shell: bash
         run: |
-          python fetch_results.py --days 10 || true
-          python update_manual_results.py || true
-          python fetch_results.py --days 10 || true
+          python fetch_results.py --days 10
+          if [ $? -ne 0 ]; then echo "fetch_results(1) exited non-zero"; fi
+          python update_manual_results.py
+          if [ $? -ne 0 ]; then echo "update_manual_results exited non-zero"; fi
+          python fetch_results.py --days 10
+          if [ $? -ne 0 ]; then echo "fetch_results(2) exited non-zero"; fi
           python generate_weekly_report.py
-          REPORT_FILE=$(ls -t weekly_report_*.txt 2>/dev/null | head -1)
+          REPORT_FILE=$(ls -t weekly_report_*.txt 2>/dev/null | head -n 1)
           echo "Latest weekly report: $REPORT_FILE"
           echo "file=$REPORT_FILE" >> "$GITHUB_OUTPUT"
 
@@ -454,11 +399,14 @@ jobs:
         continue-on-error: true
         shell: bash
         run: |
-          python fetch_results.py --days 35 || true
-          python update_manual_results.py || true
-          python fetch_results.py --days 35 || true
+          python fetch_results.py --days 35
+          if [ $? -ne 0 ]; then echo "fetch_results(1) exited non-zero"; fi
+          python update_manual_results.py
+          if [ $? -ne 0 ]; then echo "update_manual_results exited non-zero"; fi
+          python fetch_results.py --days 35
+          if [ $? -ne 0 ]; then echo "fetch_results(2) exited non-zero"; fi
           python generate_monthly_report.py
-          REPORT_FILE=$(ls -t monthly_report_*.txt 2>/dev/null | head -1)
+          REPORT_FILE=$(ls -t monthly_report_*.txt 2>/dev/null | head -n 1)
           echo "Latest monthly report: $REPORT_FILE"
           echo "file=$REPORT_FILE" >> "$GITHUB_OUTPUT"
 
