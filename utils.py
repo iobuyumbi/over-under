@@ -33,9 +33,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-DEFAULT_REQUEST_DELAY_MIN = 2.5
-DEFAULT_REQUEST_DELAY_MAX = 5.0
-DEFAULT_TIMEOUT_SECONDS = 20
+DEFAULT_REQUEST_DELAY_MIN = 3.0
+DEFAULT_REQUEST_DELAY_MAX = 6.0
+DEFAULT_TIMEOUT_SECONDS = 30
 MIN_VALID_PAGE_BYTES = 1500
 BLOCKED_PAGE_MARKERS = ("captcha", "verify you are human", "access denied", "blocked")
 
