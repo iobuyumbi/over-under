@@ -893,6 +893,7 @@ date,home_team,away_team,score
 2026-09-06,V Guimaraes,Casa Pia AC,0-0
 2026-09-06,Vojvodina NS,Zemun,2-1
 2026-09-06,Yokohama FC,Albirex Niigata,5-0
+<<<<<<< Updated upstream
 2026-09-07,Cagliari,Lecce,
 2026-09-07,Club Guarani,Deportivo Recoleta,
 2026-09-07,Deportivo Cuenca,Libertad Ecu,
@@ -921,6 +922,35 @@ date,home_team,away_team,score
 2026-09-08,Tonbridge,Maidstone,
 2026-09-08,Utrecht,Go A Eagles,
 2026-09-08,Wrexham,Burnley,
+=======
+2026-09-07,Cagliari,Lecce,1-0
+2026-09-07,Club Guarani,Deportivo Recoleta,2-0
+2026-09-07,Deportivo Cuenca,Libertad Ecu,0-1
+2026-09-07,Estoril,Arouca,0-0
+2026-09-07,H Beer Sheva,M Tel Aviv,1-4
+2026-09-07,Isloch Minsk,Arsenal Dzyarzhynsk,1-1
+2026-09-07,Uni Craiova,Uni Cluj,4-0
+2026-09-08,Annan,M'well U,4-0
+2026-09-08,Banks o'Dee,Forfar,1-1
+2026-09-08,Blackburn,Sheff Utd,1-2
+2026-09-08,Buxton,Brackley,5-0
+2026-09-08,Cardiff,Stoke,1-1
+2026-09-08,Club Brugge,Aston Villa,2-3
+2026-09-08,Clyde,East Fife,1-4
+2026-09-08,Clydebank,Alloa,1-1
+2026-09-08,Cowdenbeath,Kilmarnock BC,1-2
+2026-09-08,Dag & Red,Dover,0-1
+2026-09-08,Deportes Limache,Cobresal,3-0
+2026-09-08,Doncaster,Huddersfield,1-3
+2026-09-08,Elgin City,Fraserburgh,7-0
+2026-09-08,Emelec,Manta,1-0
+2026-09-08,Macclesfield,Scarborough A,0-0
+2026-09-08,Peterhead,Clachnacuddin,2-1
+2026-09-08,Southampton,Swansea,3-1
+2026-09-08,Stirling,Rangers II,3-2
+2026-09-08,Tonbridge,Maidstone,0-1
+2026-09-08,Wrexham,Burnley,1-1
+>>>>>>> Stashed changes
 2026-09-09,Barcelona,Feyenoord,
 2026-09-09,Derby,West Brom,
 2026-09-09,Gwangju,Jeju United,
