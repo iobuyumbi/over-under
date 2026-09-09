@@ -323,7 +323,7 @@ def apply_algorithm(team_form_20, opp_form_6, team_ov_20, opp_ov_10, team_v_6, o
         failed.append("No double-blank shock"); details["No double-blank shock"] = "FAIL"; is_perfect = False
 
     # 11 — ELITE STREAK BONUS
-    elite, _, _, _ = _scored_in_n_of_m(team_ov_20, 9, 10)
+    elite, _, _ = _scored_in_n_of_m(team_ov_20, 9, 10)
     if elite:
         passed.append("Elite overall streak (>=9/10)"); details["Elite overall streak (>=9/10)"] = "BONUS"
     else:
