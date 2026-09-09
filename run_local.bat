@@ -37,8 +37,14 @@ if errorlevel 1 goto :error
 echo --- done ---
 
 echo.
+echo === OVER 0.5 TEAM GOAL ===
+python oo05_soccerbase.py --publish-date %RUN_DATE% > oo05.txt 2> oo05_errors.txt
+if errorlevel 1 goto :error
+echo --- done ---
+
+echo.
 echo === TELEGRAM BUILD ===
-python build_telegram_daily.py --date %RUN_DATE% --ou-output ou_telegram.txt --btts-output btts_telegram.txt --hw-output hw_telegram.txt --out telegram.txt
+python build_telegram_daily.py --date %RUN_DATE% --ou-output ou_telegram.txt --btts-output btts_telegram.txt --hw-output hw_telegram.txt --oo05-output oo05_telegram.txt --out telegram.txt
 if errorlevel 1 goto :error
 echo --- done ---
 
@@ -81,9 +87,9 @@ echo.
 type telegram.txt
 echo.
 echo ============================================================
-echo  Files saved: ou.txt, hw.txt, btts.txt, telegram.txt, curated.txt, curated.json
-echo  Telegram sections: ou_telegram.txt, btts_telegram.txt, hw_telegram.txt
-echo  VIP reports: btts_vip_report_*.txt, over_under_vip_report_*.txt, home_win_vip_report_*.txt
+echo  Files saved: ou.txt, hw.txt, btts.txt, oo05.txt, telegram.txt, curated.txt, curated.json
+echo  Telegram sections: ou_telegram.txt, btts_telegram.txt, hw_telegram.txt, oo05_telegram.txt
+echo  VIP reports: btts_vip_report_*.txt, over_under_vip_report_*.txt, home_win_vip_report_*.txt, over05_team_goal_vip_report_*.txt
 echo  To resend to Telegram: set TELEGRAM_BOT_TOKEN ^&^& set TELEGRAM_CHAT_ID ^&^& set DATE=%RUN_DATE% ^&^& python send_local_telegram.py
 echo ============================================================
 pause
@@ -93,7 +99,7 @@ exit /b 0
 echo.
 echo ############################################################
 echo Pipeline failed with exit code %errorlevel%.
-echo Check error files: ou_errors.txt, hw_errors.txt, btts_errors.txt
+echo Check error files: ou_errors.txt, hw_errors.txt, btts_errors.txt, oo05_errors.txt
 echo ############################################################
 pause
 exit /b %errorlevel%
