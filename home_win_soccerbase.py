@@ -745,6 +745,35 @@ def _away_recent_road_wins_veto(away_data_6):
     return False, None
 
 
+def _opponent_concession_gate(opp_venue_form, opp_overall_form):
+    """Hard gate: away opponent must concede frequently for home win to be viable.
+
+    For Home Win market (leaky mode on AWAY defence):
+      ✅ Standard venue:   away conceded in >= 4 of last 5 away games
+      ✅ Standard overall: away conceded in >= 8 of last 10 overall games
+      🔥 Elite venue:      away conceded in 5/5 of last 5 away games
+      🔥 Elite overall:    away conceded in 10/10 of last 10 overall games
+
+    Passes if ANY ONE gate is met. If all fail → HARD VETO.
+
+    Adapted for dict-based form data (home_win_soccerbase uses match dicts
+    with gf/ga keys rather than (gf, ga) tuples).
+    """
+    v = (opp_venue_form or [])[:5]
+    v_n = len(v)
+    v_conceded = sum(1 for m in v if m.get("ga", 0) >= 1)
+    if v_n >= 3 and v_conceded >= 4:
+        return True, f"venue_{v_conceded}/{v_n}"
+
+    o = (opp_overall_form or [])[:10]
+    o_n = len(o)
+    o_conceded = sum(1 for m in o if m.get("ga", 0) >= 1)
+    if o_n >= 6 and o_conceded >= 8:
+        return True, f"overall_{o_conceded}/{o_n}"
+
+    return False, f"best_v{v_conceded}/{v_n}_o{o_conceded}/{o_n}"
+
+
 def hw_data_volume_penalty(home_form, away_form, home_overall, away_overall):
     n = min(
         len(home_form or []),
@@ -828,6 +857,7 @@ def process_single_match(match, target_date, default_odds=2.8):
         away_overall_5 = get_team_overall_form(match["away_team_id"], 5, target_date)
         home_overall_6 = get_team_overall_form(match["home_team_id"], 6, target_date)
         away_overall_6 = get_team_overall_form(match["away_team_id"], 6, target_date)
+        away_overall_10 = get_team_overall_form(match["away_team_id"], 10, target_date)
 
         if len(home_form) < HW_MIN_DATA_GAMES or len(away_form) < HW_MIN_DATA_GAMES:
             return {"status": "insufficient"}
@@ -865,6 +895,7 @@ def process_single_match(match, target_date, default_odds=2.8):
             home_form, away_form
         )
         road_wins_veto, road_wins_reason = _away_recent_road_wins_veto(away_form)
+        away_def_pass, away_def_label = _opponent_concession_gate(away_form, away_overall_10)
 
         weak_league = is_weak_roi_league(league_name, _HW_WEAK_ROI_LEAGUE_KEYWORDS)
         min_score = MAX_HOME_WIN_SCORE - 1 if weak_league else MAX_HOME_WIN_SCORE - 2
@@ -874,7 +905,7 @@ def process_single_match(match, target_date, default_odds=2.8):
             and not draw_streak_veto and not away_cs_streak_veto
             and not last_home_veto and not symmetry_veto
             and not cold_attack_veto and not leaky_hot_veto
-            and not road_wins_veto
+            and not road_wins_veto and away_def_pass
         )
 
         league_mult = _HW_WEAK_ROI_MULTIPLIER if weak_league else 1.0
@@ -896,6 +927,8 @@ def process_single_match(match, target_date, default_odds=2.8):
         regressions = []
         if reg_mult < 1.0:
             regressions.append("home win streak")
+        if not away_def_pass:
+            regressions.append(f"away defence gate ({away_def_label})")
         if h2h_blocked:
             regressions.append(f"h2h {h2h_reason} (home winless/bogey or away h2h advantage)")
         if away_strength_veto:
@@ -955,6 +988,7 @@ def process_single_match(match, target_date, default_odds=2.8):
                 "leaky_hot_reason": leaky_hot_reason,
                 "road_wins_veto": road_wins_veto,
                 "road_wins_reason": road_wins_reason,
+                "away_defence_gate": {"passed": away_def_pass, "label": away_def_label},
                 "data_mult": round(data_mult, 2),
                 "weak_league_mult": round(league_mult, 2),
                 "regression_mult": round(reg_mult, 2),
@@ -980,6 +1014,7 @@ def process_single_match(match, target_date, default_odds=2.8):
                     "leaky_hot_reason": leaky_hot_reason,
                     "road_wins_veto": road_wins_veto,
                     "road_wins_reason": road_wins_reason,
+                    "away_defence_gate": {"passed": away_def_pass, "label": away_def_label},
                     "home_strength": round(home_strength, 3),
                     "away_strength": round(away_strength, 3),
                     "regression_penalty_applied": regressions,
@@ -1058,12 +1093,19 @@ def build_report(perfect, qualified, close_calls, scanned_dates, bankroll, odds,
                     h2h_note = f"qualifies with H2H bogey flag raised ({h2h_n} meetings)"
                 elif h2h_n and h2h_n >= 2:
                     h2h_note = f"{h2h_n} H2H meetings logged"
+                adg = item.get("away_defence_gate") or {}
+                adg_label = adg.get("label", "unknown")
+                adg_passed = "PASS" if adg.get("passed") else "FAIL"
+                defence_note = f"Away defence gate: {adg_label} ({adg_passed})"
+                combined_note = f"{defence_note}"
+                if h2h_note:
+                    combined_note = f"{defence_note} · {h2h_note}"
                 extra = format_vip_extra_lines(
                     item["kelly"], odds, item["score"], MAX_HOME_WIN_SCORE,
                     home_strength=p["home_strength"], away_strength=p["away_strength"],
                     model_prob=p["home_win_prob"],
                     market=MARKET_HOME_WIN,
-                    h2h_note=h2h_note,
+                    h2h_note=combined_note,
                     rule_details=item.get("details"),
                 )
             categories = describe_pick_categories(
