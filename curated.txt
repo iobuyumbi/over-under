@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-09-06
+✦ CURATED PICKS · 2026-09-07
   Input reports:
-    OU   → over_under_vip_report_2026-09-06.txt
-    BTTS → btts_vip_report_2026-09-06.txt
-    HW   → home_win_vip_report_2026-09-06.txt
+    OU   → over_under_vip_report_2026-09-07.txt
+    BTTS → btts_vip_report_2026-09-07.txt
+    HW   → home_win_vip_report_2026-09-07.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,58 +11,21 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-09-06)
+    • Today only (2026-09-07)
 
-━━━ OVER / UNDER 2.5  (10 accepted) ━━━
-   1. ✅ FC Sion vs Thun  (Swiss Super League)
-      Over 2.5 · High 88.3% · xG 2.99–2.10
-      Stake 0.3% @ 2.0  ·  EV +76.6c/$  ·  Edge +76.6%
-   2. ✅ Greuther Furth vs Heidenheim  (German Bundesliga 2)
-      Over 2.5 · High 88.2% · xG 2.46–2.62
-      Stake 0.3% @ 2.0  ·  EV +76.4c/$  ·  Edge +76.4%
-   3. ✅ NK Rudes vs Hajduk Split  (Croatian HNL)
-      Over 2.5 · High 87.3% · xG 1.18–3.80
-      Stake 0.3% @ 2.0  ·  EV +74.6c/$  ·  Edge +74.6%
-   4. ✅ Petrolul vs Corvinul Hunedoara  (Romanian Liga 1)
-      Under 2.5 · High 85.0% · xG 0.61–0.72
-      Stake 2.4% @ 1.85  ·  EV +57.2c/$  ·  Edge +57.2%
-   5. ✅ FC Groningen vs FC Twente  (Netherlands League)
-      Over 2.5 · High 84.4% · xG 1.39–3.27
-      Stake 0.3% @ 2.0  ·  EV +68.8c/$  ·  Edge +68.8%
-   6. ✅ V Guimaraes vs Casa Pia AC  (Portuguese Liga)
-      Under 2.5 · High 78.9% · xG 0.93–0.65
-      Stake 2.0% @ 1.85  ·  EV +46.0c/$  ·  Edge +46.0%
-   7. ✅ Basel vs Lugano  (Swiss Super League)
-      Over 2.5 · High 78.6% · xG 1.77–2.40
-      Stake 0.3% @ 2.0  ·  EV +57.2c/$  ·  Edge +57.2%
-   8. ✅ Panathinaikos vs PAOK Salonika  (Greek Super League)
-      Over 2.5 · High 75.6% · xG 1.56–2.40
-      Stake 0.2% @ 2.0  ·  EV +51.2c/$  ·  Edge +51.2%
-   9. ✅ Molde vs KFUM Oslo  (Norwegian Tippeligaen)
-      Over 2.5 · High 72.1% · xG 2.31–1.43
-      Stake 0.2% @ 2.0  ·  EV +44.2c/$  ·  Edge +44.2%
-  10. ✅ Otelul Galati vs Rapid Buch.  (Romanian Liga 1)
-      Under 2.5 · High 71.7% · xG 0.64–1.21
-      Stake 1.4% @ 1.85  ·  EV +32.6c/$  ·  Edge +32.6%
+━━━ OVER / UNDER 2.5  (1 accepted) ━━━
+   1. ✅ H Beer Sheva vs M Tel Aviv  (Israeli League)
+      Over 2.5 · High 74.8% · xG 1.16–2.75
+      Stake 0.5% @ 2.0  ·  EV +49.6c/$  ·  Edge +49.6%
 
-━━━ BTTS (Yes / No)  (3 accepted) ━━━
-   1. 🔥 Petrolul vs Corvinul Hunedoara  (Romanian Liga 1)
-      BTTS No · High 78.5% · xG 0.77–0.51
-      Stake 4.2% @ 1.85  ·  EV 
-   2. 🔥 Panathinaikos vs PAOK Salonika  (Greek Super League)
-      BTTS Yes · High 71.8% · xG 1.57–2.37
-      Stake 1.8% @ 1.9  ·  EV 
-   3. ✅ V Guimaraes vs Casa Pia AC  (Portuguese Liga)
-      BTTS No · High 70.9% · xG 0.94–0.65
-      Stake 2.9% @ 1.85  ·  EV 
+━━━ BTTS (Yes / No)  (0 accepted) ━━━
+  (none)
 
-━━━ HOME WIN  (1 accepted) ━━━
-   1. ✅ Maribor vs NS Mura  (Slovenian League)
-      Home Win · High 88.2%
-      Stake 3.5% @ 2.8  ·  EV +147.0c/$  ·  Edge +147.0%
+━━━ HOME WIN  (0 accepted) ━━━
+  (none)
 
-📊 Summary: 14 curated picks
-   Parsed total: 111   Rejected: 97   Accepted: 14
+📊 Summary: 1 curated picks
+   Parsed total: 48   Rejected: 47   Accepted: 1
 
 ---
 For informational purposes only · Gamble responsibly

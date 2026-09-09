@@ -561,12 +561,13 @@ def compute_confidence_score(rule_score, max_score, model_prob_pct, decimal_odds
     return max(0.0, min(1.0, raw * data_mult))
 
 
-def tier_from_confidence(score, is_perfect, streak_label, combined_gpg):
+def tier_from_confidence(score, is_perfect, streak_label, combined_gpg, def_elite):
     is_elite_streak = "overall_9" in streak_label or "overall_8" in streak_label
     premium_ok = (
         is_perfect and
         is_elite_streak and
-        combined_gpg >= _PREMIUM_COMBINED_GPG
+        combined_gpg >= _PREMIUM_COMBINED_GPG and
+        def_elite
     )
     if score >= _TIER_PREMIUM_CUTOFF and premium_ok:
         return "perfect"
@@ -676,7 +677,7 @@ def _opponent_defence_gate_4way(opp_venue_form, opp_overall_form):
       ✅ Standard venue: conceded in 4/5 of last venue games
       ✅ Standard overall: conceded in 8/10 of last overall games
 
-    Returns (passed, label) — if passed=False, the pick is VETOED.
+    Returns (passed, label, is_elite) — if passed=False, the pick is VETOED.
     """
     elite_pass = LEAKY_GATE_55_1010.passes(opp_venue_form, opp_overall_form)
     std_pass = LEAKY_GATE_45_810.passes(opp_venue_form, opp_overall_form)
@@ -684,6 +685,8 @@ def _opponent_defence_gate_4way(opp_venue_form, opp_overall_form):
 
     elite_desc = LEAKY_GATE_55_1010.describe(opp_venue_form, opp_overall_form)
     std_desc = LEAKY_GATE_45_810.describe(opp_venue_form, opp_overall_form)
+
+    is_elite = elite_desc["venue"]["pass"] or elite_desc["overall"]["pass"]
 
     v_elite = elite_desc["venue"]["actual"]
     v_elite_of = elite_desc["venue"]["of"]
@@ -709,7 +712,7 @@ def _opponent_defence_gate_4way(opp_venue_form, opp_overall_form):
             f"_elite_v{v_elite}/{v_elite_of}_o{o_elite}/{o_elite_of}"
         )
 
-    return passed, label
+    return passed, label, is_elite
 
 
 # =============================================================================
@@ -752,7 +755,7 @@ def process_single_match(match, target_date, default_odds_home=DEFAULT_ODDS_HOME
         home_opp_wall_veto, home_opp_wall_reason = _opponent_defensive_wall_veto(away_form_20[:3])
         derby_veto, derby_reason = _derby_veto(match)
 
-        home_defence_gate_pass, home_defence_gate_label = _opponent_defence_gate_4way(
+        home_defence_gate_pass, home_defence_gate_label, home_def_elite = _opponent_defence_gate_4way(
             away_form_20[:5], away_overall_20[:10]
         )
 
@@ -781,7 +784,7 @@ def process_single_match(match, target_date, default_odds_home=DEFAULT_ODDS_HOME
             and not home_opp_wall_veto
             and not derby_veto
         )
-        home_tier = tier_from_confidence(home_conf_score, home_is_perfect, home_streak_label, home_combined_gpg) if home_qualifies else None
+        home_tier = tier_from_confidence(home_conf_score, home_is_perfect, home_streak_label, home_combined_gpg, home_def_elite) if home_qualifies else None
         home_kelly = calculate_kelly(home_prob_pct / 100, default_odds_home, use_half=True) if home_qualifies else 0.0
 
         # --- AWAY TEAM TO SCORE O0.5 ---
@@ -806,7 +809,7 @@ def process_single_match(match, target_date, default_odds_home=DEFAULT_ODDS_HOME
         away_drought_veto, away_drought_reason = _scoring_drought_veto(away_form_20[:3])
         away_opp_wall_veto, away_opp_wall_reason = _opponent_defensive_wall_veto(home_form_20[:3])
 
-        away_defence_gate_pass, away_defence_gate_label = _opponent_defence_gate_4way(
+        away_defence_gate_pass, away_defence_gate_label, away_def_elite = _opponent_defence_gate_4way(
             home_form_20[:5], home_overall_20[:10]
         )
 
@@ -831,7 +834,7 @@ def process_single_match(match, target_date, default_odds_home=DEFAULT_ODDS_HOME
             and not away_opp_wall_veto
             and not derby_veto
         )
-        away_tier = tier_from_confidence(away_conf_score, away_is_perfect, away_streak_label, away_combined_gpg) if away_qualifies else None
+        away_tier = tier_from_confidence(away_conf_score, away_is_perfect, away_streak_label, away_combined_gpg, away_def_elite) if away_qualifies else None
         away_kelly = calculate_kelly(away_prob_pct / 100, default_odds_away, use_half=True) if away_qualifies else 0.0
 
         # Build regressions
@@ -891,6 +894,7 @@ def process_single_match(match, target_date, default_odds_home=DEFAULT_ODDS_HOME
                     "streak_passed": home_streak_pass,
                     "defence_gate_passed": home_defence_gate_pass,
                     "defence_gate_label": home_defence_gate_label,
+                    "defence_gate_elite": home_def_elite,
                     "combined_gpg": round(home_combined_gpg, 2),
                     "h2h_veto": home_h2h_veto,
                     "h2h_reason": home_h2h_reason,
@@ -924,6 +928,7 @@ def process_single_match(match, target_date, default_odds_home=DEFAULT_ODDS_HOME
                     "streak_passed": away_streak_pass,
                     "defence_gate_passed": away_defence_gate_pass,
                     "defence_gate_label": away_defence_gate_label,
+                    "defence_gate_elite": away_def_elite,
                     "combined_gpg": round(away_combined_gpg, 2),
                     "h2h_veto": away_h2h_veto,
                     "h2h_reason": away_h2h_reason,
