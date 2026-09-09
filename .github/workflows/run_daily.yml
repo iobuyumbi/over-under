@@ -35,6 +35,7 @@ concurrency:
 jobs:
   fetch-results:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     defaults:
       run:
         shell: bash
@@ -44,23 +45,45 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Restore Soccerbase scrape cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            soccerbase_cache_*.db
+            soccerbase_cache*.db
+            *.sqlite
+            *.sqlite3
+          key: soccerbase-scrape-cache-${{ github.run_id }}
+          restore-keys: |
+            soccerbase-scrape-cache-
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install dependencies
         shell: bash
+        timeout-minutes: 15
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Fetch and settle match results
         shell: bash
+        timeout-minutes: 90
         run: |
           DAYS="${{ github.event.inputs.days_back || '3' }}"
-          python fetch_results.py --days "$DAYS" 2>&1 | tee fetch_output_automated.txt
-          python update_manual_results.py 2>&1 | tee update_manual_output.txt
-          python fetch_results.py --days "$DAYS" 2>&1 | tee fetch_output.txt
+          for attempt in 1 2 3; do
+            echo "=== Fetch attempt $attempt ==="
+            if python fetch_results.py --days "$DAYS" 2>&1 | tee fetch_output_automated.txt; then
+              echo "Fetch OK on attempt $attempt"
+              break
+            fi
+            echo "Attempt $attempt failed, retrying in 60s..."
+            sleep 60
+          done
+          python update_manual_results.py 2>&1 | tee update_manual_output.txt || true
+          python fetch_results.py --days "$DAYS" 2>&1 | tee fetch_output.txt || true
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
@@ -102,6 +125,7 @@ jobs:
 
   daily-predictions:
     runs-on: self-hosted
+    timeout-minutes: 240
     defaults:
       run:
         shell: bash
@@ -116,12 +140,25 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Restore Soccerbase scrape cache (self-hosted)
+        uses: actions/cache@v4
+        with:
+          path: |
+            soccerbase_cache_*.db
+            soccerbase_cache*.db
+            *.sqlite
+            *.sqlite3
+          key: soccerbase-scrape-cache-${{ github.run_id }}
+          restore-keys: |
+            soccerbase-scrape-cache-
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install dependencies
         shell: bash
+        timeout-minutes: 15
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
@@ -132,8 +169,17 @@ jobs:
 
       - name: Fetch recent results before publishing
         shell: bash
+        timeout-minutes: 60
         run: |
-          python fetch_results.py --days 3 2>&1 | tee fetch_output_automated.txt || true
+          for attempt in 1 2 3; do
+            echo "=== Results fetch attempt $attempt ==="
+            if python fetch_results.py --days 3 2>&1 | tee fetch_output_automated.txt; then
+              echo "Results fetch OK on attempt $attempt"
+              break
+            fi
+            echo "Attempt $attempt failed, retrying in 45s..."
+            sleep 45
+          done
           python update_manual_results.py 2>&1 | tee update_manual_output.txt || true
           python fetch_results.py --days 3 2>&1 | tee fetch_output.txt || true
         env:
@@ -144,10 +190,19 @@ jobs:
         id: over-under
         continue-on-error: true
         shell: bash
+        timeout-minutes: 90
         run: |
           DATE="$(python -c "from datetime import datetime,timedelta; print((datetime.utcnow()+timedelta(hours=3)).strftime('%Y-%m-%d'))")"
           echo "Using publish date: $DATE"
-          python over25_soccerbase.py --publish-date "$DATE" > output.txt 2> errors.txt || true
+          for attempt in 1 2; do
+            echo "=== O/U predictor attempt $attempt ==="
+            if python over25_soccerbase.py --publish-date "$DATE" > output.txt 2> errors.txt; then
+              echo "O/U predictor OK on attempt $attempt"
+              break
+            fi
+            echo "Attempt $attempt failed, retrying in 30s..."
+            sleep 30
+          done
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
           if [ -f output.txt ]; then
             awk '/===EMAIL_START===/{s=NR; next} /===EMAIL_END===/{e=NR; exit} {if(s && !e) print}' output.txt > over25_body.tmp
@@ -164,9 +219,18 @@ jobs:
         id: home-win
         continue-on-error: true
         shell: bash
+        timeout-minutes: 90
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
-          python home_win_soccerbase.py --publish-date "$DATE" > hw_output.txt 2> hw_errors.txt || true
+          for attempt in 1 2; do
+            echo "=== Home Win predictor attempt $attempt ==="
+            if python home_win_soccerbase.py --publish-date "$DATE" > hw_output.txt 2> hw_errors.txt; then
+              echo "Home Win predictor OK on attempt $attempt"
+              break
+            fi
+            echo "Attempt $attempt failed, retrying in 30s..."
+            sleep 30
+          done
           if [ -f hw_output.txt ]; then
             awk '/===EMAIL_START===/{s=NR; next} /===EMAIL_END===/{e=NR; exit} {if(s && !e) print}' hw_output.txt > hw_body.tmp
             if [ -s hw_body.tmp ]; then
@@ -182,9 +246,18 @@ jobs:
         id: btts
         continue-on-error: true
         shell: bash
+        timeout-minutes: 90
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
-          python btts_soccerbase.py --publish-date "$DATE" > btts_output.txt 2> btts_errors.txt || true
+          for attempt in 1 2; do
+            echo "=== BTTS predictor attempt $attempt ==="
+            if python btts_soccerbase.py --publish-date "$DATE" > btts_output.txt 2> btts_errors.txt; then
+              echo "BTTS predictor OK on attempt $attempt"
+              break
+            fi
+            echo "Attempt $attempt failed, retrying in 30s..."
+            sleep 30
+          done
           if [ -f btts_output.txt ]; then
             awk '/===EMAIL_START===/{s=NR; next} /===EMAIL_END===/{e=NR; exit} {if(s && !e) print}' btts_output.txt > btts_body.tmp
             if [ -s btts_body.tmp ]; then
@@ -200,9 +273,18 @@ jobs:
         id: oo05
         continue-on-error: true
         shell: bash
+        timeout-minutes: 90
         run: |
           DATE="${{ steps.over-under.outputs.date }}"
-          python oo05_soccerbase.py --publish-date "$DATE" > oo05_output.txt 2> oo05_errors.txt || true
+          for attempt in 1 2; do
+            echo "=== O0.5 Team Goal predictor attempt $attempt ==="
+            if python oo05_soccerbase.py --publish-date "$DATE" > oo05_output.txt 2> oo05_errors.txt; then
+              echo "O0.5 Team Goal predictor OK on attempt $attempt"
+              break
+            fi
+            echo "Attempt $attempt failed, retrying in 30s..."
+            sleep 30
+          done
           if [ -f oo05_output.txt ]; then
             awk '/===EMAIL_START===/{s=NR; next} /===EMAIL_END===/{e=NR; exit} {if(s && !e) print}' oo05_output.txt > oo05_body.tmp
             if [ -s oo05_body.tmp ]; then
