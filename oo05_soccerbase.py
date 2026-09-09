@@ -1,23 +1,24 @@
 #!/usr/bin/env python3
 """
-OVER 0.5 TEAM GOAL PREDICTOR - PRODUCTION v1
-================================================
-Bet: "At least one team will score 1+ goal" — i.e. NOT a 0-0 draw.
+OVER 0.5 TEAM GOAL PREDICTOR — v2.2 (DEFENCE-GATE INTEGRATED)
+================================================================
+HARD REQUIREMENT: Opponent must be conceding frequently.
 
-Core thesis (from totalcorner.com featured):
-  1. SCORING STREAK — a side has scored in >= 10 CONSECUTIVE matches
-     (venue-specific first, overall as fallback). If a team hasn't
-     blanked in 10+ games straight, a 0-0 is extremely unlikely
-     unless the opponent is an elite defence.
-  2. OPPONENT LEAKY DEFENCE — the OTHER side has kept a clean sheet
-     in <= 1 of their last 6 matches (venue-specific). They concede
-     goals easily, so the streaking team will almost certainly score.
-  3. FAVOURABLE CONFIRMERS (boost score / tier premium):
-     - Both teams scored in recent overall form
-     - Combined goals-per-game floor (both sides total >= 1.5 gpg venue)
-     - No H2H 0-0 bogey pattern in last 4 meetings
-     - Away side has scored on their travels consistently
-     - Team on scoring streak is NOT on a recent 0-goal cold shock
+Scoring streak alone is not enough. A team that scores in 10 straight
+games but faces a defence that kept 4 clean sheets in the last 5 will
+likely be shut out. The defence gate prevents this mismatch.
+
+STREAK GATE (team must pass ONE):
+  • Overall: scored in >= 8/10 or >= 9/12
+  • Venue: scored in >= 5/6 or >= 4/5
+
+DEFENCE GATE (opponent must pass ONE) — HARD VETO:
+  • Venue: opponent conceded in >= 4/5 of last venue games
+  • Overall: opponent conceded in >= 8/10 of last overall games
+  • Elite: opponent conceded in >= 5/5 venue OR >= 10/10 overall
+
+If opponent fails the defence gate, the pick is VETOED regardless of
+how strong the scoring streak is.
 """
 
 import json
@@ -31,447 +32,417 @@ from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from utils import (
-    Cache,
-    build_session,
-    fetch as _shared_fetch,
-    parse_date,
-    calculate_kelly,
-    apply_portfolio_kelly,
+    Cache, build_session, fetch as _shared_fetch, parse_date,
+    calculate_kelly, apply_portfolio_kelly,
+    exponential_form_averages as _shared_exponential_form_averages,
     is_weak_roi_league as _shared_is_weak_roi_league,
     poisson_pmf as _shared_poisson_pmf,
 )
-
 from scraping import (
     fetch_soccerbase_fixtures as _shared_fetch_fixtures,
     fetch_soccerbase_team_results as _shared_fetch_team_results,
     get_team_form as _shared_get_team_form,
     get_team_overall_form as _shared_get_team_overall_form,
     get_h2h_meetings as _shared_get_h2h_meetings,
-    _thin_count,
-    _thin_total,
+    _thin_count, _thin_total,
 )
-
 from prediction_tracker import (
-    record_predictions,
-    format_vip_extra_lines,
-    format_pick_block,
-    format_compact_pick_line,
-    format_confidence_label,
-    describe_pick_categories,
-    filter_pick_items_by_date,
-    is_static_blocked_fixture,
-    write_telegram_section,
-    append_yesterday_section,
-    format_vip_banner,
-    format_vip_summary,
-    PICK_TIER_PREMIUM,
-    PICK_TIER_STRONG,
-    PICK_TIER_VALUE,
-    COMPACT_TIER_HEADER_PREMIUM,
-    COMPACT_TIER_HEADER_STRONG,
-    COMPACT_TIER_HEADER_WATCH,
-    MARKET_SECTION_DIVIDER,
+    record_predictions, format_vip_extra_lines, format_pick_block,
+    format_compact_pick_line, format_confidence_label, describe_pick_categories,
+    filter_pick_items_by_date, is_static_blocked_fixture, write_telegram_section,
+    append_yesterday_section, format_vip_banner, format_vip_summary,
+    PICK_TIER_PREMIUM, PICK_TIER_STRONG, PICK_TIER_VALUE,
+    COMPACT_TIER_HEADER_PREMIUM, COMPACT_TIER_HEADER_STRONG, COMPACT_TIER_HEADER_WATCH,
 )
 
-MARKET_OVER05 = "over05_tg"
-MARKET_LABEL_OVER05 = "Over 0.5 Team Goal"
-SHORT_MARKET_OVER05 = "O0.5TG"
-
+# =============================================================================
+# CONFIG
+# =============================================================================
 CACHE_DB = "soccerbase_cache_oo05.db"
 CACHE_TTL_HOURS = 24
 MAX_WORKERS = 4
 REQUEST_DELAY_MIN = 2.5
 REQUEST_DELAY_MAX = 5.0
-MAX_TOTAL_EXPOSURE = 0.15
-DEFAULT_ODDS = 1.18
+MAX_TOTAL_EXPOSURE = 0.20
+DEFAULT_ODDS_HOME = 1.45
+DEFAULT_ODDS_AWAY = 1.55
 
 if os.getenv("CI"):
     MAX_WORKERS = 2
     REQUEST_DELAY_MIN = 4.0
     REQUEST_DELAY_MAX = 8.0
-    print("CI environment detected: throttling to 2 workers")
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
-
 session = build_session()
 cache = Cache(db_path=CACHE_DB, ttl_hours=CACHE_TTL_HOURS)
 
+MARKET_HOME_TG = "home_team_goals"
+MARKET_AWAY_TG = "away_team_goals"
+MARKET_LABEL_HOME = "Home to Score"
+MARKET_LABEL_AWAY = "Away to Score"
+SHORT_MARKET_HOME = "HTS"
+SHORT_MARKET_AWAY = "ATS"
 
-MIN_SCORING_STREAK = 10
-MIN_DATA_GAMES = 6
+# STREAK GATES (team scoring)
+OVERALL_STREAK_10 = (8, 10)
+OVERALL_STREAK_12 = (9, 12)
+VENUE_STREAK_6 = (5, 6)
+VENUE_STREAK_5 = (4, 5)
+
+# DEFENCE GATES (opponent conceding) — HARD VETO
+OPP_VENUE_LEAK_5 = (4, 5)      # conceded in >= 4 of last 5 venue
+OPP_OVERALL_LEAK_10 = (8, 10)  # conceded in >= 8 of last 10 overall
+OPP_VENUE_ELITE_5 = (5, 5)     # conceded in 5/5 venue (elite leak)
+OPP_OVERALL_ELITE_10 = (10, 10) # conceded in 10/10 overall (elite leak)
+
+MIN_DATA_GAMES = 3
 MAX_SCORE = 12
 
-_WEAK_ROI_OVER05_KEYWORDS = [
-    "Youth", "U17", "U19", "U20", "U21", "Amateur", "Friendly",
-    "Pre-season", "Copa do Brasil Sub", "Qualification preliminary",
-    "Women Reserve",
+_WEAK_ROI_KEYWORDS = [
+    "youth", "u17", "u19", "u20", "u21", "amateur", "friendly",
+    "pre-season", "copa do brasil sub", "qualification preliminary",
+    "women reserve", "reserve", "academy", "trial", "exhibition",
 ]
+_WEAK_ROI_MULTIPLIER = 0.85
 
-_WEAK_ROI_MULTIPLIER = 0.90
+_WEIGHT_RULES = 0.45
+_WEIGHT_MODEL = 0.35
+_WEIGHT_EDGE = 0.20
 
-_WEIGHT_RULES = 0.55
-_WEIGHT_MODEL = 0.30
-_WEIGHT_EDGE = 0.15
+_TIER_PREMIUM_CUTOFF = 0.65
+_TIER_SOLID_CUTOFF = 0.55
 
-_TIER_PREMIUM_CUTOFF = 0.80
-_TIER_SOLID_CUTOFF = 0.66
-
-_PREMIUM_STREAK_FLOOR = 14
-_PREMIUM_COMBINED_GPG = 2.2
+SHRINKAGE_WEIGHT = 0.55
 
 
 def fetch(url, use_cache=True):
-    delay = REQUEST_DELAY_MIN + (REQUEST_DELAY_MAX - REQUEST_DELAY_MIN) * (0.5 if use_cache else 1.0) * 0.1
-    return _shared_fetch(
-        url, session, cache,
-        use_cache=use_cache, min_delay_seconds=delay,
-    )
-
+    return _shared_fetch(url, session, cache, use_cache=use_cache,
+                         min_delay=REQUEST_DELAY_MIN, max_delay=REQUEST_DELAY_MAX)
 
 def fetch_soccerbase_team_results(team_id):
     return _shared_fetch_team_results(team_id, fetch)
 
-
 def fetch_soccerbase_fixtures(date_str):
     return _shared_fetch_fixtures(date_str, fetch)
 
-
 def get_team_form(team_id, is_home=True, num_matches=20, target_date_str=None):
-    return _shared_get_team_form(
-        team_id, fetch_soccerbase_team_results,
-        is_home, num_matches, target_date_str, parse_date,
-    )
-
+    return _shared_get_team_form(team_id, fetch_soccerbase_team_results, is_home, num_matches, target_date_str, parse_date)
 
 def get_team_overall_form(team_id, num_matches=20, target_date_str=None):
-    return _shared_get_team_overall_form(
-        team_id, fetch_soccerbase_team_results,
-        num_matches, target_date_str, parse_date,
-    )
-
+    return _shared_get_team_overall_form(team_id, fetch_soccerbase_team_results, num_matches, target_date_str, parse_date)
 
 def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=8):
-    return _shared_get_h2h_meetings(
-        home_team_id, away_team_id,
-        fetch_soccerbase_team_results, target_date_str, limit=limit,
-    )
-
+    return _shared_get_h2h_meetings(home_team_id, away_team_id, fetch_soccerbase_team_results, target_date_str, limit=limit)
 
 def _is_weak_roi_league(league_name):
-    return _shared_is_weak_roi_league(league_name, _WEAK_ROI_OVER05_KEYWORDS)
+    return _shared_is_weak_roi_league(league_name, _WEAK_ROI_KEYWORDS)
 
 
 # =============================================================================
-# STREAK + OPPONENT DETECTION (the 2 pillars)
+# STREAK & DEFENCE GATES
 # =============================================================================
 
-def _longest_scoring_streak(form):
-    """Return the length of the LONGEST consecutive run of matches
-    where the team scored >= 1 goal. Walks BACKWARDS through form
-    (most recent first). Returns 0 if empty."""
-    streak = 0
-    current = 0
-    for gf, _ in (form or []):
-        if gf >= 1:
-            current += 1
-            if current > streak:
-                streak = current
-        else:
-            current = 0
-    return streak
+def _scored_in_n_of_m(form, n, m):
+    sample = (form or [])[:m]
+    if len(sample) < min(3, m):
+        return False, 0, len(sample)
+    scored = sum(1 for gf, _ in sample if gf >= 1)
+    return scored >= n, scored, len(sample)
 
 
-def _current_recent_scored_run(form):
-    """Scored in every one of the MOST RECENT N matches (no recent blanks).
-    This is a STRONGER signal than longest-ever streak — a team currently
-    on fire is less likely to blank today than one whose streak was mid-season.
-    Returns (run_length, sample_size)."""
-    if not form:
-        return 0, 0
-    run = 0
-    for gf, _ in form:
-        if gf >= 1:
-            run += 1
-        else:
-            break
-    return run, len(form)
+def _conceded_in_n_of_m(form, n, m):
+    """For defence gate: opponent conceded in >= n of last m games."""
+    sample = (form or [])[:m]
+    if len(sample) < min(3, m):
+        return False, 0, len(sample)
+    conceded = sum(1 for _, ga in sample if ga >= 1)
+    return conceded >= n, conceded, len(sample)
 
 
-def _clean_sheets_in_last_n(form, n=6):
-    """Clean sheets (GA == 0) in last n matches of the given form list."""
-    sample = (form or [])[:n]
-    if not sample:
-        return None, None
-    cs = sum(1 for _, ga in sample if ga == 0)
-    return cs, len(sample)
+def check_streak_gate(overall_form, venue_form):
+    """Team scoring gate. Returns (passed, label, scored, sample_size)."""
+    for need, of in [OVERALL_STREAK_10, OVERALL_STREAK_12]:
+        passed, scored, n = _scored_in_n_of_m(overall_form, need, of)
+        if passed:
+            return True, f"overall_{scored}/{n}", scored, n
+    for need, of in [VENUE_STREAK_6, VENUE_STREAK_5]:
+        passed, scored, n = _scored_in_n_of_m(venue_form, need, of)
+        if passed:
+            return True, f"venue_{scored}/{n}", scored, n
+    o_scored = sum(1 for gf, _ in (overall_form or [])[:10] if gf >= 1)
+    v_scored = sum(1 for gf, _ in (venue_form or [])[:6] if gf >= 1)
+    return False, f"best_o{o_scored}/10_v{v_scored}/6", o_scored, min(len(overall_form or []), 10)
 
 
-def _consecutive_games_opponent_conceded(form):
-    """MOST RECENT consecutive matches where OPPONENT side (team represented
-    by this form) conceded >= 1 goal. i.e. no CS in their recent matches."""
-    run = 0
-    for _, ga in (form or []):
-        if ga >= 1:
-            run += 1
-        else:
-            break
-    return run
+def check_defence_gate(opp_venue_form, opp_overall_form):
+    """HARD VETO: Opponent must be conceding frequently.
 
-
-# =============================================================================
-# RULE ENGINE — 12-check scoring system
-# =============================================================================
-
-def apply_algorithm(streak_team_form_20, opponent_form_6,
-                    streak_team_overall_20, opponent_overall_10,
-                    streak_team_venue_6, opponent_venue_6,
-                    streak_is_home=True):
+    Returns: (passed, label, is_elite)
+    is_elite = True if opponent conceded 5/5 venue OR 10/10 overall
     """
-    Apply Over 0.5 Team Goal 12-check rule system.
+    # Elite leak check first
+    passed, conceded, n = _conceded_in_n_of_m(opp_venue_form, *OPP_VENUE_ELITE_5)
+    if passed:
+        return True, f"elite_venue_{conceded}/{n}", True
+    passed, conceded, n = _conceded_in_n_of_m(opp_overall_form, *OPP_OVERALL_ELITE_10)
+    if passed:
+        return True, f"elite_overall_{conceded}/{n}", True
 
-    Returns (passed_rules, failed_rules, rule_details_dict, is_perfect).
-    Rule checks are written from the POV of the "streak team" — the side
-    with the long scoring run we're riding.
-    """
-    passed = []
-    failed = []
-    details = {}
+    # Standard leak check
+    passed, conceded, n = _conceded_in_n_of_m(opp_venue_form, *OPP_VENUE_LEAK_5)
+    if passed:
+        return True, f"venue_{conceded}/{n}", False
+    passed, conceded, n = _conceded_in_n_of_m(opp_overall_form, *OPP_OVERALL_LEAK_10)
+    if passed:
+        return True, f"overall_{conceded}/{n}", False
+
+    # Fail
+    v_c = sum(1 for _, ga in (opp_venue_form or [])[:5] if ga >= 1)
+    o_c = sum(1 for _, ga in (opp_overall_form or [])[:10] if ga >= 1)
+    return False, f"best_v{v_c}/5_o{o_c}/10", False
+
+
+# =============================================================================
+# RULE ENGINE
+# =============================================================================
+
+def apply_algorithm(team_form_20, opp_form_6, team_ov_20, opp_ov_10, team_v_6, opp_v_6, is_home=True):
+    passed, failed, details = [], [], {}
     is_perfect = True
 
-    if len(streak_team_form_20 or []) < MIN_DATA_GAMES:
-        return None, None, {"error": "Insufficient streak-team data"}, False
-    if len(opponent_form_6 or []) < 3:
-        return None, None, {"error": "Insufficient opponent data"}, False
-
-    streak_len = _longest_scoring_streak(streak_team_form_20)
-    recent_run, recent_n = _current_recent_scored_run(streak_team_form_20)
-    streak_team_scored_6 = sum(1 for gf, _ in (streak_team_venue_6 or [])[:6] if gf >= 1)
-
-    opp_cs_6, opp_cs_n = _clean_sheets_in_last_n(opponent_venue_6, 6)
-    opp_cs_6 = opp_cs_6 if opp_cs_6 is not None else 2
-    opp_cs_n = opp_cs_n if opp_cs_n is not None else 0
-
-    opp_recent_concede_run = _consecutive_games_opponent_conceded(opponent_venue_6)
-
-    # 1 — LONG SCORING STREAK (core). Team has scored in >= MIN_SCORING_STREAK
-    #     consecutive matches at any point in recent history.
-    if streak_len >= MIN_SCORING_STREAK:
-        passed.append("Core scoring streak (>=10)")
-        details["Core scoring streak (>=10)"] = f"PASS ({streak_len})"
+    # 0 — STREAK GATE
+    streak_pass, streak_label, _, _ = check_streak_gate(team_ov_20, team_v_6)
+    if streak_pass:
+        passed.append(f"Streak gate ({streak_label})")
+        details["Streak gate"] = f"PASS ({streak_label})"
     else:
-        failed.append("Core scoring streak (>=10)")
-        details["Core scoring streak (>=10)"] = f"FAIL ({streak_len})"
+        failed.append(f"Streak gate ({streak_label})")
+        details["Streak gate"] = f"FAIL ({streak_label})"
         is_perfect = False
 
-    # 2 — RECENT RUN (no recent blanks). Current consecutive scored streak
-    #     >= 6 confirms the streak is NOW, not faded mid-season.
-    if recent_run >= 6 and recent_n >= 6:
-        passed.append("Recent 6-match scoring run")
-        details["Recent 6-match scoring run"] = f"PASS ({recent_run})"
+    # 0b — DEFENCE GATE (HARD VETO)
+    def_pass, def_label, def_elite = check_defence_gate(opp_v_6, opp_ov_10)
+    if def_pass:
+        passed.append(f"Defence gate ({def_label})")
+        details["Defence gate"] = f"PASS ({def_label})"
+        if not def_elite:
+            is_perfect = False  # standard pass = not perfect
     else:
-        failed.append("Recent 6-match scoring run")
-        details["Recent 6-match scoring run"] = f"FAIL ({recent_run}/{recent_n})"
+        failed.append(f"Defence gate ({def_label})")
+        details["Defence gate"] = f"FAIL ({def_label}) — HARD VETO"
         is_perfect = False
 
-    # 3 — OPPONENT NOT AIR-TIGHT at venue. Opponent has CS <= 1 of last 6
-    #     games at their venue (i.e. they concede goals). This is the
-    #     user's explicit requirement.
-    if opp_cs_n >= 4 and opp_cs_6 <= 1:
-        passed.append("Opponent leaky venue defence (CS<=1/6)")
-        details["Opponent leaky venue defence (CS<=1/6)"] = (
-            f"PASS (CS {opp_cs_6}/{opp_cs_n}, concede run {opp_recent_concede_run})"
-        )
-    else:
-        failed.append("Opponent leaky venue defence (CS<=1/6)")
-        details["Opponent leaky venue defence (CS<=1/6)"] = (
-            f"FAIL (CS {opp_cs_6}/{opp_cs_n})"
-        )
-        is_perfect = False
+    if len(team_form_20 or []) < 2 or len(opp_form_6 or []) < 2:
+        return None, None, {"error": "Insufficient data"}, False
 
-    # 4 — OPPONENT RECENTLY CONCEDED. Opponent conceded in each of their
-    #     most recent 3+ venue matches (confirming the CS<=1 isn't ancient).
-    if opp_recent_concede_run >= 3:
-        passed.append("Opponent recent concede run (>=3)")
-        details["Opponent recent concede run (>=3)"] = f"PASS ({opp_recent_concede_run})"
-    else:
-        failed.append("Opponent recent concede run (>=3)")
-        details["Opponent recent concede run (>=3)"] = f"FAIL ({opp_recent_concede_run})"
-        is_perfect = False
+    recent_run, _ = _current_scored_run(team_form_20)
+    team_scored_v6 = sum(1 for gf, _ in (team_v_6 or [])[:6] if gf >= 1)
+    opp_cs_v6, opp_cs_n = _clean_sheets_in_last_n(opp_v_6, 6)
+    opp_cs_v6 = opp_cs_v6 if opp_cs_v6 is not None else 2
+    opp_concede_run = _consecutive_conceded_run(opp_v_6)
 
-    # 5 — STREAK TEAM ALSO SCORED at VENUE in >=5 of 6. Confirm venue form
-    #     mirrors overall — no "they score everywhere EXCEPT home/away".
-    s6_n = min(len(streak_team_venue_6 or []), 6)
-    s6_thresh = _thin_count(5, 6, s6_n)
-    if s6_n >= 3 and streak_team_scored_6 >= s6_thresh:
-        passed.append("Streak team venue scored (>=5/6)")
-        details["Streak team venue scored (>=5/6)"] = f"PASS ({streak_team_scored_6}/{s6_n})"
+    # 1 — RECENT RUN >= 3
+    if recent_run >= 3:
+        passed.append("Recent 3-match scoring run"); details["Recent 3-match scoring run"] = f"PASS ({recent_run})"
     else:
-        failed.append("Streak team venue scored (>=5/6)")
-        details["Streak team venue scored (>=5/6)"] = f"FAIL ({streak_team_scored_6}/{s6_n})"
-        is_perfect = False
+        failed.append("Recent 3-match scoring run"); details["Recent 3-match scoring run"] = f"FAIL ({recent_run})"; is_perfect = False
 
-    # 6 — OPPONENT OVERALL NOT DEFENSIVE TITAN. Opponent overall last 10:
-    #     >= 5 of matches conceded (overall, not venue) — they leak across
-    #     the board, so streak-team has avenues home OR away.
-    opp_ov_cs10, opp_ov_n10 = _clean_sheets_in_last_n(opponent_overall_10, 10)
-    if opp_ov_cs10 is not None and opp_ov_n10 >= 6:
-        opp_ov_conceded_10 = opp_ov_n10 - opp_ov_cs10
-        if opp_ov_conceded_10 >= 5:
-            passed.append("Opponent overall conceded (>=5/10)")
-            details["Opponent overall conceded (>=5/10)"] = f"PASS ({opp_ov_conceded_10}/{opp_ov_n10})"
+    # 2 — OPPONENT CS <= 2/6
+    if opp_cs_n >= 4 and opp_cs_v6 <= 2:
+        passed.append("Opponent leaky venue (CS<=2/6)"); details["Opponent leaky venue (CS<=2/6)"] = f"PASS (CS {opp_cs_v6}/{opp_cs_n})"
+    else:
+        failed.append("Opponent leaky venue (CS<=2/6)"); details["Opponent leaky venue (CS<=2/6)"] = f"FAIL (CS {opp_cs_v6}/{opp_cs_n})"; is_perfect = False
+
+    # 3 — OPPONENT CONCEDED RUN >= 2
+    if opp_concede_run >= 2:
+        passed.append("Opponent concede run (>=2)"); details["Opponent concede run (>=2)"] = f"PASS ({opp_concede_run})"
+    else:
+        failed.append("Opponent concede run (>=2)"); details["Opponent concede run (>=2)"] = f"FAIL ({opp_concede_run})"; is_perfect = False
+
+    # 4 — TEAM SCORED VENUE >= 4/6
+    s6_n = min(len(team_v_6 or []), 6)
+    if s6_n >= 3 and team_scored_v6 >= _thin_count(4, 6, s6_n):
+        passed.append("Team venue scored (>=4/6)"); details["Team venue scored (>=4/6)"] = f"PASS ({team_scored_v6}/{s6_n})"
+    else:
+        failed.append("Team venue scored (>=4/6)"); details["Team venue scored (>=4/6)"] = f"FAIL ({team_scored_v6}/{s6_n})"; is_perfect = False
+
+    # 5 — OPPONENT OVERALL CONCEDED >= 4/10
+    opp_ov_cs10, opp_ov_n10 = _clean_sheets_in_last_n(opp_ov_10, 10)
+    if opp_ov_cs10 is not None and opp_ov_n10 >= 5:
+        if (opp_ov_n10 - opp_ov_cs10) >= 4:
+            passed.append("Opponent overall conceded (>=4/10)"); details["Opponent overall conceded (>=4/10)"] = "PASS"
         else:
-            failed.append("Opponent overall conceded (>=5/10)")
-            details["Opponent overall conceded (>=5/10)"] = f"FAIL ({opp_ov_conceded_10}/{opp_ov_n10})"
-            is_perfect = False
+            failed.append("Opponent overall conceded (>=4/10)"); details["Opponent overall conceded (>=4/10)"] = "FAIL"; is_perfect = False
     else:
-        failed.append("Opponent overall conceded (>=5/10)")
-        details["Opponent overall conceded (>=5/10)"] = "SKIP (thin data)"
-        is_perfect = False
+        details["Opponent overall conceded (>=4/10)"] = "SKIP"
 
-    # 7 — COMBINED GOAL VOLUME FLOOR. Last 6 venue each: combined average
-    #     total goals per game >= 1.5 — we're in active-goal territory,
-    #     not a 0-0 stalemate division.
-    sf = (streak_team_venue_6 or [])[:6]
-    of = (opponent_venue_6 or [])[:6]
-    combined_total = sum(gf + ga for gf, ga in sf) + sum(gf + ga for gf, ga in of)
-    games = max(1, len(sf) + len(of))
-    avg = combined_total / games
-    if avg >= 1.5:
-        passed.append("Combined venue GPG floor (>=1.5)")
-        details["Combined venue GPG floor (>=1.5)"] = f"PASS ({avg:.2f})"
+    # 6 — COMBINED GPG >= 1.3
+    sf, of = (team_v_6 or [])[:6], (opp_v_6 or [])[:6]
+    avg = (sum(gf+ga for gf,ga in sf) + sum(gf+ga for gf,ga in of)) / max(1, len(sf)+len(of))
+    if avg >= 1.3:
+        passed.append("Combined GPG (>=1.3)"); details["Combined GPG (>=1.3)"] = f"PASS ({avg:.2f})"
     else:
-        failed.append("Combined venue GPG floor (>=1.5)")
-        details["Combined venue GPG floor (>=1.5)"] = f"FAIL ({avg:.2f})"
-        is_perfect = False
+        failed.append("Combined GPG (>=1.3)"); details["Combined GPG (>=1.3)"] = f"FAIL ({avg:.2f})"; is_perfect = False
 
-    # 8 — BOTH TEAMS SCORED OVERALL FREQUENCY. Last 6 overall each:
-    #     if both sides scored in >= 4 of 6 overall, a 0-0 is near-impossible.
-    so = (streak_team_overall_20 or [])[:6]
-    oo = (opponent_overall_10 or [])[:6]
-    bs1 = sum(1 for gf, _ in so if gf >= 1) if len(so) >= 4 else 0
-    bs2 = sum(1 for gf, _ in oo if gf >= 1) if len(oo) >= 4 else 0
-    if len(so) >= 4 and len(oo) >= 4 and bs1 >= 4 and bs2 >= 4:
-        passed.append("Both teams scored overall (>=4/6 each)")
-        details["Both teams scored overall (>=4/6 each)"] = f"PASS ({bs1} vs {bs2})"
+    # 7 — BOTH TEAMS SCORED OVERALL >= 3/6
+    so, oo = (team_ov_20 or [])[:6], (opp_ov_10 or [])[:6]
+    bs1 = sum(1 for gf,_ in so if gf>=1) if len(so)>=3 else 0
+    bs2 = sum(1 for gf,_ in oo if gf>=1) if len(oo)>=3 else 0
+    if len(so)>=3 and len(oo)>=3 and bs1>=3 and bs2>=3:
+        passed.append("Both scored overall (>=3/6)"); details["Both scored overall (>=3/6)"] = f"PASS ({bs1}v{bs2})"
     else:
-        failed.append("Both teams scored overall (>=4/6 each)")
-        details["Both teams scored overall (>=4/6 each)"] = f"FAIL ({bs1} vs {bs2})"
-        is_perfect = False
+        failed.append("Both scored overall (>=3/6)"); details["Both scored overall (>=3/6)"] = f"FAIL ({bs1}v{bs2})"; is_perfect = False
 
-    # 9 — AWAY-TEAM SCORING CONFIRMATION. If AWAY is either the streak-team
-    #     OR opponent: confirm away scored in >=3 of 6 away (teams don't
-    #     contribute to a "non 0-0" if the away side never scores on road).
-    if not streak_is_home:
-        away_form = streak_team_venue_6
-    else:
-        away_form = opponent_venue_6
-    away_scored_6 = sum(1 for gf, _ in (away_form or [])[:6] if gf >= 1)
+    # 8 — AWAY SCORED ROAD >= 2/6
+    away_form = team_v_6 if not is_home else opp_v_6
+    away_s6 = sum(1 for gf,_ in (away_form or [])[:6] if gf>=1)
     away_n = min(len(away_form or []), 6)
-    away_thr = _thin_count(3, 6, away_n)
-    if away_n >= 3 and away_scored_6 >= away_thr:
-        passed.append("Away side scored road (>=3/6)")
-        details["Away side scored road (>=3/6)"] = f"PASS ({away_scored_6}/{away_n})"
+    if away_n >= 3 and away_s6 >= _thin_count(2, 6, away_n):
+        passed.append("Away scored road (>=2/6)"); details["Away scored road (>=2/6)"] = f"PASS ({away_s6}/{away_n})"
     else:
-        failed.append("Away side scored road (>=3/6)")
-        details["Away side scored road (>=3/6)"] = f"FAIL ({away_scored_6}/{away_n})"
-        is_perfect = False
+        failed.append("Away scored road (>=2/6)"); details["Away scored road (>=2/6)"] = f"FAIL ({away_s6}/{away_n})"; is_perfect = False
 
-    # 10 — HOME-TEAM DEFENCE NOT PERFECT. If HOME is streak-team opponent:
-    #      home conceded >=1 in >=3 of 6 home (so streak-team scores when home-opp leaks).
-    #      (Equivalently: home CS <= 3 of last 6.)
-    if streak_is_home:
-        home_form = opponent_venue_6
+    # 9 — HOME DEFENCE NOT ELITE (CS<=4/6)
+    home_form = opp_v_6 if is_home else team_v_6
+    home_cs, home_n = _clean_sheets_in_last_n(home_form, 6)
+    if home_cs is not None and home_n >= 4 and home_cs <= 4:
+        passed.append("Home defence not elite (CS<=4/6)"); details["Home defence not elite (CS<=4/6)"] = f"PASS (CS {home_cs}/{home_n})"
+    elif home_cs is not None:
+        failed.append("Home defence not elite (CS<=4/6)"); details["Home defence not elite (CS<=4/6)"] = f"FAIL (CS {home_cs}/{home_n})"; is_perfect = False
     else:
-        home_form = streak_team_venue_6
-    home_cs_6, home_n = _clean_sheets_in_last_n(home_form, 6)
-    if home_cs_6 is not None and home_n >= 4 and home_cs_6 <= 3:
-        passed.append("Home defence not elite (CS<=3/6)")
-        details["Home defence not elite (CS<=3/6)"] = f"PASS (CS {home_cs_6}/{home_n})"
-    elif home_cs_6 is not None:
-        failed.append("Home defence not elite (CS<=3/6)")
-        details["Home defence not elite (CS<=3/6)"] = f"FAIL (CS {home_cs_6}/{home_n})"
-        is_perfect = False
-    else:
-        failed.append("Home defence not elite (CS<=3/6)")
-        details["Home defence not elite (CS<=3/6)"] = "SKIP (thin data)"
-        is_perfect = False
+        details["Home defence not elite (CS<=4/6)"] = "SKIP"
 
-    # 11 — RECENT OFFENSIVE SHOCK ABSENT. Neither side BLANKED in both
-    #      of their two most recent overall matches. Such a double-shock
-    #      is a 0-0 preview.
-    def _double_blank_last_2(form):
-        sample = (form or [])[:2]
-        return len(sample) == 2 and all(gf == 0 for gf, _ in sample)
-    a = _double_blank_last_2(streak_team_overall_20)
-    b = _double_blank_last_2(opponent_overall_10)
-    if not a and not b:
-        passed.append("No recent double-blank shock")
-        details["No recent double-blank shock"] = "PASS"
+    # 10 — NO DOUBLE-BLANK SHOCK
+    def _dbl_blank(f):
+        s = (f or [])[:2]
+        return len(s)==2 and all(gf==0 for gf,_ in s)
+    if not _dbl_blank(team_ov_20) and not _dbl_blank(opp_ov_10):
+        passed.append("No double-blank shock"); details["No double-blank shock"] = "PASS"
     else:
-        failed.append("No recent double-blank shock")
-        details["No recent double-blank shock"] = f"FAIL (streak={a}, opp={b})"
-        is_perfect = False
+        failed.append("No double-blank shock"); details["No double-blank shock"] = "FAIL"; is_perfect = False
 
-    # 12 — STREAK LENGTH BONUS (>=14 = best-in-class premium feeder).
-    if streak_len >= _PREMIUM_STREAK_FLOOR:
-        passed.append("Elite streak length (>=14)")
-        details["Elite streak length (>=14)"] = f"PASS ({streak_len})"
+    # 11 — ELITE STREAK BONUS
+    elite, _, _, _ = _scored_in_n_of_m(team_ov_20, 9, 10)
+    if elite:
+        passed.append("Elite overall streak (>=9/10)"); details["Elite overall streak (>=9/10)"] = "BONUS"
     else:
-        failed.append("Elite streak length (>=14)")
-        details["Elite streak length (>=14)"] = f"FAIL ({streak_len})"
+        details["Elite overall streak (>=9/10)"] = "NEUTRAL"
 
     return passed, failed, details, is_perfect
 
 
+def _current_scored_run(form):
+    if not form: return 0, 0
+    run = 0
+    for gf, _ in form:
+        if gf >= 1: run += 1
+        else: break
+    return run, len(form)
+
+def _clean_sheets_in_last_n(form, n=6):
+    sample = (form or [])[:n]
+    if not sample: return None, None
+    return sum(1 for _, ga in sample if ga == 0), len(sample)
+
+def _consecutive_conceded_run(form):
+    run = 0
+    for _, ga in (form or []):
+        if ga >= 1: run += 1
+        else: break
+    return run
+
+
 # =============================================================================
-# MODEL PROBABILITY (Poisson 0-0 avoidance)
+# POISSON MODEL (unchanged from v2.1)
 # =============================================================================
+_LEAGUE_BASELINE_CACHE = {}
 
-def calculate_poisson_prob(home_lambda, away_lambda):
-    """Probability of AT LEAST 1 goal in the match (= 1 - P(0-0))."""
-    p_0_home = _shared_poisson_pmf(0, home_lambda)
-    p_0_away = _shared_poisson_pmf(0, away_lambda)
-    p_0_0 = p_0_home * p_0_away
-    return round(max(50.0, (1.0 - p_0_0) * 100), 1)
+def _exponential_form_averages(form_tuples, halflife=3.0):
+    return _shared_exponential_form_averages(form_tuples, halflife)
 
-
-def get_match_lambdas(home_6, away_6, league_name=None):
-    home_scores = sum(gf for gf, _ in (home_6 or [])[:6])
-    home_concedes = sum(ga for _, ga in (home_6 or [])[:6])
-    away_scores = sum(gf for gf, _ in (away_6 or [])[:6])
-    away_concedes = sum(ga for _, ga in (away_6 or [])[:6])
-    h_n = min(len(home_6 or []), 6) or 1
-    a_n = min(len(away_6 or []), 6) or 1
-    league_boost = 0.0 if not _is_weak_roi_league(league_name or "") else -0.10
-    home_lambda = (home_scores / h_n + away_concedes / a_n) / 2.0 + 0.15 + league_boost
-    away_lambda = (away_scores / a_n + home_concedes / h_n) / 2.0 + 0.15 + league_boost
-    return (
-        round(max(0.3, min(3.2, home_lambda)), 2),
-        round(max(0.3, min(3.2, away_lambda)), 2),
+def _load_league_baselines():
+    if _LEAGUE_BASELINE_CACHE: return _LEAGUE_BASELINE_CACHE
+    default = (1.45, 1.20, 1.35, 1.25)
+    history_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "prediction_history.json")
+    if not os.path.exists(history_path):
+        _LEAGUE_BASELINE_CACHE["_default"] = default
+        return _LEAGUE_BASELINE_CACHE
+    try:
+        with open(history_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        _LEAGUE_BASELINE_CACHE["_default"] = default
+        return _LEAGUE_BASELINE_CACHE
+    league_stats = defaultdict(lambda: {"h_gf": 0.0, "h_ga": 0.0, "a_gf": 0.0, "a_ga": 0.0, "n": 0})
+    for market in ("home_win", "over_under", "over15", "team_goals", "over05_tg"):
+        for row in data.get(market, []) or []:
+            final_score = row.get("final_score")
+            if not final_score or "-" not in str(final_score): continue
+            try:
+                hg, ag = str(final_score).split("-", 1)
+                hg = int(hg.strip()); ag = int(ag.strip())
+            except ValueError:
+                continue
+            lg = row.get("league", "")
+            if not lg: continue
+            s = league_stats[lg]
+            s["h_gf"] += hg; s["h_ga"] += ag; s["a_gf"] += ag; s["a_ga"] += hg; s["n"] += 1
+    global_n = max(1, sum(s["n"] for s in league_stats.values()))
+    fallback = (
+        sum(s["h_gf"] for s in league_stats.values()) / global_n,
+        sum(s["a_gf"] for s in league_stats.values()) / global_n,
+        sum(s["h_ga"] for s in league_stats.values()) / global_n,
+        sum(s["a_ga"] for s in league_stats.values()) / global_n,
     )
+    if not all(fallback) or fallback[0] < 0.6 or fallback[0] > 2.5:
+        fallback = default
+    _LEAGUE_BASELINE_CACHE["_default"] = fallback
+    for lg, s in league_stats.items():
+        n = s["n"]
+        if n < 5:
+            _LEAGUE_BASELINE_CACHE[lg] = fallback
+            continue
+        ha = s["h_gf"] / n; aa = s["a_gf"] / n; hd = s["h_ga"] / n; ad = s["a_ga"] / n
+        if ha < 0.5 or aa < 0.4 or hd < 0.4 or ad < 0.4:
+            _LEAGUE_BASELINE_CACHE[lg] = fallback
+            continue
+        _LEAGUE_BASELINE_CACHE[lg] = (ha, aa, hd, ad)
+    return _LEAGUE_BASELINE_CACHE
 
+def _league_baselines(league_name):
+    cache = _load_league_baselines()
+    return cache.get(league_name, cache.get("_default", (1.45, 1.20, 1.35, 1.25)))
+
+def get_team_xg(team_6, opp_6, league_name=None, is_home=True):
+    bl = _league_baselines(league_name or "")
+    home_baseline_attack, away_baseline_attack, home_baseline_defense, away_baseline_defense = bl
+    t_gf_avg, _, _ = _exponential_form_averages(team_6 or [])
+    if not (team_6 or []):
+        t_gf_avg = home_baseline_attack if is_home else away_baseline_attack
+    _, o_ga_avg, _ = _exponential_form_averages(opp_6 or [])
+    if not (opp_6 or []):
+        o_ga_avg = away_baseline_defense if is_home else home_baseline_defense
+    adaptive_shrinkage = SHRINKAGE_WEIGHT
+    if len(team_6 or []) < MIN_DATA_GAMES or len(opp_6 or []) < MIN_DATA_GAMES:
+        adaptive_shrinkage = max(0.40, SHRINKAGE_WEIGHT - 0.15)
+    team_attack = adaptive_shrinkage * t_gf_avg + (1 - adaptive_shrinkage) * (home_baseline_attack if is_home else away_baseline_attack)
+    opp_defence = adaptive_shrinkage * o_ga_avg + (1 - adaptive_shrinkage) * (away_baseline_defense if is_home else home_baseline_defense)
+    baseline_att = home_baseline_attack if is_home else away_baseline_attack
+    team_xg = team_attack * (opp_defence / max(0.5, baseline_att))
+    return round(max(0.2, min(3.5, team_xg)), 2)
+
+def calculate_poisson_team_over05(team_xg, max_goals=6):
+    prob_0 = _shared_poisson_pmf(0, team_xg)
+    return round((1.0 - prob_0) * 100, 1)
 
 def data_volume_penalty(streak_20, opp_6, streak_ov_20, opp_ov_10):
-    n = min(
-        len(streak_20 or []),
-        len(opp_6 or []),
-        len(streak_ov_20 or []),
-        len(opp_ov_10 or []),
-    )
-    if n >= MIN_DATA_GAMES:
-        return 1.0
-    if n >= 4:
-        return 0.94
-    if n >= 3:
-        return 0.86
-    if n >= 2:
-        return 0.78
-    return 0.65
-
+    n = min(len(streak_20 or []), len(opp_6 or []), len(streak_ov_20 or []), len(opp_ov_10 or []))
+    if n >= MIN_DATA_GAMES: return 1.0
+    if n >= 4: return 0.97
+    if n >= 3: return 0.92
+    if n >= 2: return 0.85
+    return 0.75
 
 def compute_confidence_score(rule_score, max_score, model_prob_pct, decimal_odds, data_mult=1.0):
     rule_component = max(0.0, min(1.0, rule_score / max(max_score, 1)))
@@ -481,375 +452,347 @@ def compute_confidence_score(rule_score, max_score, model_prob_pct, decimal_odds
     raw = _WEIGHT_RULES * rule_component + _WEIGHT_MODEL * model_component + _WEIGHT_EDGE * edge_component
     return max(0.0, min(1.0, raw * data_mult))
 
-
-def tier_from_confidence(score, is_perfect, streak_len, combined_gpg):
-    premium_ok = (
-        is_perfect and
-        streak_len >= _PREMIUM_STREAK_FLOOR and
-        combined_gpg >= _PREMIUM_COMBINED_GPG
-    )
+def tier_from_confidence(score, is_perfect, streak_label, combined_gpg, def_elite):
+    is_elite_streak = "overall_9" in streak_label or "overall_8" in streak_label
+    premium_ok = is_perfect and is_elite_streak and combined_gpg >= 2.0 and def_elite
     if score >= _TIER_PREMIUM_CUTOFF and premium_ok:
         return "perfect"
     if score >= _TIER_SOLID_CUTOFF:
         return "qualified"
     return "close"
 
+def _early_season_penalty(match_date_str):
+    if not match_date_str: return 1.0
+    try:
+        dt = datetime.strptime(match_date_str, "%Y-%m-%d")
+        if dt.month == 8 and dt.day <= 20: return 0.88
+    except (ValueError, TypeError): pass
+    return 1.0
+
 
 # =============================================================================
-# HARD VETOES (absolute blocks — override rule score)
+# HARD VETOES
 # =============================================================================
 
-def _h2h_zero_zero_bogey_veto(home_tid, away_tid, target_date):
-    """Block Over 0.5 if last 4+ H2H meetings include >=3 pure 0-0 results."""
-    meetings = get_h2h_meetings(home_tid, away_tid, target_date, limit=6)
-    if len(meetings) < 3:
-        return False, [], None
-    zeros = 0
+def _h2h_shutout_bogey_veto(team_id, opponent_id, target_date, is_home_perspective):
+    meetings = get_h2h_meetings(team_id, opponent_id, target_date, limit=6)
+    if len(meetings) < 2: return False, meetings, None
+    shutouts = 0
     for m in meetings:
-        if m.get("gf", -1) == 0 and m.get("ga", -1) == 0:
-            zeros += 1
-    if len(meetings) >= 4 and zeros >= 3:
-        return True, meetings, f"{zeros}_of_{len(meetings)}_h2h_were_0_0"
+        team_gf = m.get("gf", 0) if is_home_perspective else m.get("ga", 0)
+        if team_gf == 0: shutouts += 1
+    if len(meetings) >= 3 and shutouts >= 2:
+        return True, meetings, f"h2h_shutout_{shutouts}_of_{len(meetings)}"
+    if len(meetings) == 2 and shutouts == 2:
+        return True, meetings, "h2h_both_shutouts"
     return False, meetings, None
 
-
 def _combined_mutual_cold_start_veto(streak_ov_6, opp_ov_6):
-    """Block if BOTH teams blanked in BOTH of their last 2 overall matches.
-    Classic 0-0 preview — a sudden cold spell hitting both sides."""
-    so = (streak_ov_6 or [])[:2]
-    oo = (opp_ov_6 or [])[:2]
-    if len(so) < 2 or len(oo) < 2:
-        return False, None
-    s_cold = all(gf == 0 for gf, _ in so)
-    o_cold = all(gf == 0 for gf, _ in oo)
-    if s_cold and o_cold:
+    so, oo = (streak_ov_6 or [])[:2], (opp_ov_6 or [])[:2]
+    if len(so) < 2 or len(oo) < 2: return False, None
+    if all(gf == 0 for gf, _ in so) and all(gf == 0 for gf, _ in oo):
         return True, "both_teams_double_blank_last_2"
     return False, None
 
+def _scoring_drought_veto(team_3):
+    if len(team_3 or []) >= 2 and all(gf == 0 for gf, _ in team_3[:2]):
+        return True, "scoring_drought_2"
+    return False, None
 
-# =============================================================================
-# PICK SIDE: which team is the "streak team"?
-# =============================================================================
+def _opponent_defensive_wall_veto(opp_3):
+    if len(opp_3 or []) >= 2 and all(ga == 0 for _, ga in opp_3[:2]):
+        return True, "opponent_defensive_wall_2"
+    return False, None
 
-def _choose_best_side(home_form_20, away_form_20,
-                     home_overall_20, away_overall_20):
-    """Return dict {best_side_is_home, streak_len, recent_run, opp_is_away}.
-    Pick whichever side (home or away) has the longer scoring streak.
-    Ties go to home (home advantage for scoring)."""
-    h_streak = _longest_scoring_streak(home_form_20)
-    a_streak = _longest_scoring_streak(away_form_20)
-    h_run = _current_recent_scored_run(home_form_20)[0]
-    a_run = _current_recent_scored_run(away_form_20)[0]
-
-    h_score = h_streak * 2 + h_run
-    a_score = a_streak * 2 + a_run
-    if h_score >= a_score:
-        return {
-            "best_side_is_home": True,
-            "streak_len": h_streak,
-            "recent_run": h_run,
-            "streak_team": "home",
-            "streak_form": home_form_20,
-            "streak_venue_6": home_form_20[:6],
-            "streak_overall": home_overall_20,
-            "opp_venue_6": away_form_20[:6],
-            "opp_overall": away_overall_20,
-        }
-    return {
-        "best_side_is_home": False,
-        "streak_len": a_streak,
-        "recent_run": a_run,
-        "streak_team": "away",
-        "streak_form": away_form_20,
-        "streak_venue_6": away_form_20[:6],
-        "streak_overall": away_overall_20,
-        "opp_venue_6": home_form_20[:6],
-        "opp_overall": home_overall_20,
+def _derby_veto(match):
+    derby_pairs = {
+        ("watford", "west ham"), ("west ham", "watford"),
+        ("arsenal", "tottenham"), ("tottenham", "arsenal"),
+        ("chelsea", "arsenal"), ("arsenal", "chelsea"),
+        ("millwall", "west ham"), ("west ham", "millwall"),
+        ("chelsea", "tottenham"), ("tottenham", "chelsea"),
+        ("crystal palace", "brighton"), ("brighton", "crystal palace"),
+        ("southampton", "portsmouth"), ("portsmouth", "southampton"),
+        ("nottingham forest", "derby"), ("derby", "nottingham forest"),
+        ("liverpool", "everton"), ("everton", "liverpool"),
+        ("manchester united", "manchester city"), ("manchester city", "manchester united"),
+        ("celtic", "rangers"), ("rangers", "celtic"),
+        ("borussia dortmund", "schalke"), ("schalke", "borussia dortmund"),
+        ("real madrid", "barcelona"), ("barcelona", "real madrid"),
+        ("atletico madrid", "real madrid"), ("real madrid", "atletico madrid"),
+        ("inter", "ac milan"), ("ac milan", "inter"),
+        ("juventus", "torino"), ("torino", "juventus"),
+        ("lazio", "roma"), ("roma", "lazio"),
+        ("olympique lyon", "saint etienne"), ("saint etienne", "olympique lyon"),
+        ("marseille", "paris saint germain"), ("paris saint germain", "marseille"),
+        ("porto", "benfica"), ("benfica", "porto"),
+        ("ajax", "psv"), ("psv", "ajax"),
+        ("galatasaray", "fenerbahce"), ("fenerbahce", "galatasaray"),
+        ("panathinaikos", "olympiacos"), ("olympiacos", "panathinaikos"),
     }
+    home = match.get("home", "").lower()
+    away = match.get("away", "").lower()
+    if (home, away) in derby_pairs:
+        return True, "derby_match"
+    return False, None
 
 
 # =============================================================================
 # MATCH PROCESSING
 # =============================================================================
 
-def process_single_match(match, target_date, default_odds=DEFAULT_ODDS):
+def process_single_match(match, target_date, default_odds_home=DEFAULT_ODDS_HOME, default_odds_away=DEFAULT_ODDS_AWAY):
     try:
         league_name = match.get("league", "")
-
         home_form_20 = get_team_form(match["home_team_id"], True, 20, target_date)
         away_form_20 = get_team_form(match["away_team_id"], False, 20, target_date)
         home_overall_20 = get_team_overall_form(match["home_team_id"], 20, target_date)
         away_overall_20 = get_team_overall_form(match["away_team_id"], 20, target_date)
 
-        if len(home_form_20 or []) < MIN_DATA_GAMES or len(away_form_20 or []) < MIN_DATA_GAMES:
+        if len(home_form_20 or []) < 2 or len(away_form_20 or []) < 2:
             return {"status": "insufficient"}
 
-        side = _choose_best_side(
-            home_form_20, away_form_20, home_overall_20, away_overall_20,
+        # --- HOME TEAM ---
+        home_passed, home_failed, home_details, home_is_perfect = apply_algorithm(
+            home_form_20, away_form_20[:6], home_overall_20, away_overall_20[:10],
+            home_form_20[:6], away_form_20[:6], is_home=True,
         )
+        home_score = len(home_passed) if home_passed else 0
+        home_streak_pass, home_streak_label, _, _ = check_streak_gate(home_overall_20, home_form_20[:6])
+        home_def_pass, home_def_label, home_def_elite = check_defence_gate(away_form_20[:6], away_overall_20[:10])
 
-        data_mult = data_volume_penalty(
-            side["streak_form"],
-            side["opp_venue_6"],
-            side["streak_overall"],
-            side["opp_overall"],
+        home_xg = get_team_xg(home_form_20[:6], away_form_20[:6], league_name=league_name, is_home=True)
+        home_prob_pct = calculate_poisson_team_over05(home_xg)
+
+        home_h2h_veto, _, home_h2h_reason = _h2h_shutout_bogey_veto(match["home_team_id"], match["away_team_id"], target_date, True)
+        home_cold_veto, home_cold_reason = _combined_mutual_cold_start_veto(home_overall_20[:6], away_overall_20[:6])
+        home_drought_veto, home_drought_reason = _scoring_drought_veto(home_form_20[:3])
+        home_opp_wall_veto, home_opp_wall_reason = _opponent_defensive_wall_veto(away_form_20[:3])
+        derby_veto, derby_reason = _derby_veto(match)
+
+        home_data_mult = data_volume_penalty(home_form_20, away_form_20[:6], home_overall_20, away_overall_20[:10])
+        home_league_mult = _WEAK_ROI_MULTIPLIER if _is_weak_roi_league(league_name) else 1.0
+        home_early_mult = _early_season_penalty(match.get("date"))
+        home_final_mult = home_data_mult * home_league_mult * home_early_mult
+
+        sf, of = (home_form_20[:6] or []), (away_form_20[:6] or [])
+        home_combined_gpg = (sum(gf+ga for gf,ga in sf) + sum(gf+ga for gf,ga in of)) / max(1, len(sf)+len(of))
+
+        home_conf_score = compute_confidence_score(home_score, MAX_SCORE, home_prob_pct, default_odds_home, home_final_mult)
+        home_min_score = MAX_SCORE - 5 if _is_weak_roi_league(league_name) else MAX_SCORE - 6
+        home_qualifies = (
+            home_passed is not None and home_score >= home_min_score
+            and home_streak_pass and home_def_pass  # BOTH gates required
+            and not home_h2h_veto and not home_cold_veto
+            and not home_drought_veto and not home_opp_wall_veto and not derby_veto
         )
+        home_tier = tier_from_confidence(home_conf_score, home_is_perfect, home_streak_label, home_combined_gpg, home_def_elite) if home_qualifies else None
+        home_kelly = calculate_kelly(home_prob_pct / 100, default_odds_home, use_half=True) if home_qualifies else 0.0
 
-        passed, failed, details, is_perfect = apply_algorithm(
-            side["streak_form"],
-            side["opp_venue_6"],
-            side["streak_overall"],
-            side["opp_overall"][:10] if side["opp_overall"] else [],
-            side["streak_venue_6"],
-            side["opp_venue_6"],
-            streak_is_home=side["best_side_is_home"],
+        # --- AWAY TEAM ---
+        away_passed, away_failed, away_details, away_is_perfect = apply_algorithm(
+            away_form_20, home_form_20[:6], away_overall_20, home_overall_20[:10],
+            away_form_20[:6], home_form_20[:6], is_home=False,
         )
-        if passed is None:
-            return {"status": "insufficient"}
+        away_score = len(away_passed) if away_passed else 0
+        away_streak_pass, away_streak_label, _, _ = check_streak_gate(away_overall_20, away_form_20[:6])
+        away_def_pass, away_def_label, away_def_elite = check_defence_gate(home_form_20[:6], home_overall_20[:10])
 
-        score = len(passed)
-        weak_league = _is_weak_roi_league(league_name)
+        away_xg = get_team_xg(away_form_20[:6], home_form_20[:6], league_name=league_name, is_home=False)
+        away_prob_pct = calculate_poisson_team_over05(away_xg)
 
-        home_6 = home_form_20[:6]
-        away_6 = away_form_20[:6]
-        home_lambda, away_lambda = get_match_lambdas(home_6, away_6, league_name=league_name)
-        prob_pct = calculate_poisson_prob(home_lambda, away_lambda)
+        away_h2h_veto, _, away_h2h_reason = _h2h_shutout_bogey_veto(match["away_team_id"], match["home_team_id"], target_date, False)
+        away_cold_veto, away_cold_reason = _combined_mutual_cold_start_veto(away_overall_20[:6], home_overall_20[:6])
+        away_drought_veto, away_drought_reason = _scoring_drought_veto(away_form_20[:3])
+        away_opp_wall_veto, away_opp_wall_reason = _opponent_defensive_wall_veto(home_form_20[:3])
 
-        h2h_veto, h2h_meetings, h2h_reason = _h2h_zero_zero_bogey_veto(
-            match["home_team_id"], match["away_team_id"], target_date,
+        away_data_mult = data_volume_penalty(away_form_20, home_form_20[:6], away_overall_20, home_overall_20[:10])
+        away_final_mult = away_data_mult * home_league_mult * home_early_mult
+
+        away_combined_gpg = (sum(gf+ga for gf,ga in (away_form_20[:6] or [])) + sum(gf+ga for gf,ga in (home_form_20[:6] or []))) / max(1, len(away_form_20[:6] or [])+len(home_form_20[:6] or []))
+
+        away_conf_score = compute_confidence_score(away_score, MAX_SCORE, away_prob_pct, default_odds_away, away_final_mult)
+        away_min_score = home_min_score
+        away_qualifies = (
+            away_passed is not None and away_score >= away_min_score
+            and away_streak_pass and away_def_pass  # BOTH gates required
+            and not away_h2h_veto and not away_cold_veto
+            and not away_drought_veto and not away_opp_wall_veto and not derby_veto
         )
-        cold_veto, cold_reason = _combined_mutual_cold_start_veto(
-            home_overall_20[:6], away_overall_20[:6],
-        )
+        away_tier = tier_from_confidence(away_conf_score, away_is_perfect, away_streak_label, away_combined_gpg, away_def_elite) if away_qualifies else None
+        away_kelly = calculate_kelly(away_prob_pct / 100, default_odds_away, use_half=True) if away_qualifies else 0.0
 
-        min_score = MAX_SCORE - 3 if weak_league else MAX_SCORE - 4
-        qualifies = (
-            score >= min_score
-            and not h2h_veto
-            and not cold_veto
-            and side["streak_len"] >= MIN_SCORING_STREAK
-        )
+        # Regressions
+        home_regressions = []
+        if not home_streak_pass: home_regressions.append(f"streak gate ({home_streak_label})")
+        if not home_def_pass: home_regressions.append(f"defence gate ({home_def_label})")
+        if home_h2h_veto: home_regressions.append(f"h2h shutout ({home_h2h_reason})")
+        if home_cold_veto: home_regressions.append(f"cold start ({home_cold_reason})")
+        if home_drought_veto: home_regressions.append(f"drought ({home_drought_reason})")
+        if home_opp_wall_veto: home_regressions.append(f"opp wall ({home_opp_wall_reason})")
+        if derby_veto: home_regressions.append(f"derby ({derby_reason})")
+        if home_early_mult < 1.0: home_regressions.append(f"early-season (x{home_early_mult})")
 
-        league_mult = _WEAK_ROI_MULTIPLIER if weak_league else 1.0
-        final_mult = data_mult * league_mult
-
-        sf = (side["streak_venue_6"] or [])[:6]
-        of = (side["opp_venue_6"] or [])[:6]
-        combined_total = sum(gf + ga for gf, ga in sf) + sum(gf + ga for gf, ga in of)
-        combined_gpg = combined_total / max(1, len(sf) + len(of))
-
-        conf_score = compute_confidence_score(
-            score, MAX_SCORE, prob_pct, default_odds, final_mult,
-        )
-        tier = (
-            tier_from_confidence(conf_score, is_perfect, side["streak_len"], combined_gpg)
-            if qualifies else None
-        )
-        if not qualifies:
-            tier = None
-        kelly_half = calculate_kelly(prob_pct / 100, default_odds) if qualifies else 0.0
-
-        regressions = []
-        if final_mult < 1.0:
-            regressions.append(f"data volume / weak league multiplier (x{final_mult:.2f})")
-        if h2h_veto:
-            regressions.append(f"h2h 0-0 bogey ({h2h_reason})")
-        if cold_veto:
-            regressions.append(f"mutual double-blank cold start ({cold_reason})")
-        if side["streak_len"] < MIN_SCORING_STREAK:
-            regressions.append(f"streak too short ({side['streak_len']}<10)")
+        away_regressions = []
+        if not away_streak_pass: away_regressions.append(f"streak gate ({away_streak_label})")
+        if not away_def_pass: away_regressions.append(f"defence gate ({away_def_label})")
+        if away_h2h_veto: away_regressions.append(f"h2h shutout ({away_h2h_reason})")
+        if away_cold_veto: away_regressions.append(f"cold start ({away_cold_reason})")
+        if away_drought_veto: away_regressions.append(f"drought ({away_drought_reason})")
+        if away_opp_wall_veto: away_regressions.append(f"opp wall ({away_opp_wall_reason})")
+        if derby_veto: away_regressions.append(f"derby ({derby_reason})")
+        if home_early_mult < 1.0: away_regressions.append(f"early-season (x{home_early_mult})")
 
         return {
             "status": "success",
             "data": {
                 "match": match,
-                "score": score,
-                "passed": passed,
-                "failed": failed,
-                "details": details,
-                "is_perfect": is_perfect,
-                "tier": tier,
-                "confidence_score": round(conf_score * 100, 1),
-                "model": {
-                    "streak_side": side["streak_team"],
-                    "streak_len": side["streak_len"],
-                    "recent_run": side["recent_run"],
-                    "home_lambda": home_lambda,
-                    "away_lambda": away_lambda,
-                    "combined_lambda": round(home_lambda + away_lambda, 2),
-                    "prob_pct": prob_pct,
-                    "combined_gpg": round(combined_gpg, 2),
+                "home_team_goals": {
+                    "score": home_score, "passed": home_passed, "failed": home_failed,
+                    "details": home_details, "is_perfect": home_is_perfect,
+                    "tier": home_tier, "confidence_score": round(home_conf_score * 100, 1),
+                    "prob": home_prob_pct, "confidence": "HIGH" if home_prob_pct >= 78 else ("MEDIUM" if home_prob_pct >= 68 else "LOW"),
+                    "kelly": round(home_kelly * 100, 2), "xg": home_xg,
+                    "streak_label": home_streak_label, "streak_passed": home_streak_pass,
+                    "defence_label": home_def_label, "defence_passed": home_def_pass, "defence_elite": home_def_elite,
+                    "combined_gpg": round(home_combined_gpg, 2),
+                    "h2h_veto": home_h2h_veto, "h2h_reason": home_h2h_reason,
+                    "cold_veto": home_cold_veto, "cold_reason": home_cold_reason,
+                    "drought_veto": home_drought_veto, "drought_reason": home_drought_reason,
+                    "opp_wall_veto": home_opp_wall_veto, "opp_wall_reason": home_opp_wall_reason,
+                    "derby_veto": derby_veto, "derby_reason": derby_reason,
+                    "early_season_mult": round(home_early_mult, 2),
+                    "data_mult": round(home_data_mult, 2), "weak_league_mult": round(home_league_mult, 2),
+                    "min_score_threshold": home_min_score, "regressions": home_regressions,
                 },
-                "prob": prob_pct,
-                "confidence": "HIGH" if prob_pct >= 95 else (
-                    "MEDIUM" if prob_pct >= 88 else "LOW"
-                ),
-                "kelly": round(kelly_half * 100, 2),
-                "gate_passed": True,
-                "h2h_zero_bogey_veto": h2h_veto,
-                "h2h_zero_bogey_reason": h2h_reason,
-                "h2h_zero_bogey_meetings_count": len(h2h_meetings),
-                "cold_start_veto": cold_veto,
-                "cold_start_reason": cold_reason,
-                "data_mult": round(data_mult, 2),
-                "weak_league_mult": round(league_mult, 2),
-                "min_score_threshold": min_score,
-                "weak_roi_league": weak_league,
-                "regression_penalty_applied": regressions,
+                "away_team_goals": {
+                    "score": away_score, "passed": away_passed, "failed": away_failed,
+                    "details": away_details, "is_perfect": away_is_perfect,
+                    "tier": away_tier, "confidence_score": round(away_conf_score * 100, 1),
+                    "prob": away_prob_pct, "confidence": "HIGH" if away_prob_pct >= 75 else ("MEDIUM" if away_prob_pct >= 65 else "LOW"),
+                    "kelly": round(away_kelly * 100, 2), "xg": away_xg,
+                    "streak_label": away_streak_label, "streak_passed": away_streak_pass,
+                    "defence_label": away_def_label, "defence_passed": away_def_pass, "defence_elite": away_def_elite,
+                    "combined_gpg": round(away_combined_gpg, 2),
+                    "h2h_veto": away_h2h_veto, "h2h_reason": away_h2h_reason,
+                    "cold_veto": away_cold_veto, "cold_reason": away_cold_reason,
+                    "drought_veto": away_drought_veto, "drought_reason": away_drought_reason,
+                    "opp_wall_veto": away_opp_wall_veto, "opp_wall_reason": away_opp_wall_reason,
+                    "derby_veto": derby_veto, "derby_reason": derby_reason,
+                    "early_season_mult": round(home_early_mult, 2),
+                    "data_mult": round(away_data_mult, 2), "weak_league_mult": round(home_league_mult, 2),
+                    "min_score_threshold": away_min_score, "regressions": away_regressions,
+                },
             }
         }
     except Exception as e:
-        logger.error(
-            f"Processing failed for "
-            f"{match.get('home', 'N/A')} vs {match.get('away', 'N/A')}: {e}",
-            exc_info=True,
-        )
+        logger.error(f"Processing failed for {match.get('home', 'N/A')} vs {match.get('away', 'N/A')}: {e}", exc_info=True)
         return {"status": "error"}
 
 
 # =============================================================================
-# REPORTING
+# REPORTING (same as v2.1)
 # =============================================================================
 
-def _append_o05_pick(lines, idx, item, odds, detailed, compact=False):
+def _append_pick(lines, idx, item, side, odds, detailed, compact=False):
     m = item["match"]
-    tgt = item
-    md = tgt["model"]
-    side_label = "Home streak" if md["streak_side"] == "home" else "Away streak"
+    tgt = item[f"{side}_team_goals"]
+    label = MARKET_LABEL_HOME if side == "home" else MARKET_LABEL_AWAY
+    short = SHORT_MARKET_HOME if side == "home" else SHORT_MARKET_AWAY
     if compact:
-        lines.append(format_compact_pick_line(
-            m["home"], m["away"], SHORT_MARKET_OVER05,
-            tgt.get("tier"), tgt.get("prob"), m.get("date"),
-        ))
+        lines.append(format_compact_pick_line(m["home"], m["away"], short, tgt.get("tier"), tgt["prob"], m.get("date")))
         return
     extra = None
     if detailed:
+        h2h_veto = tgt.get("h2h_veto")
+        h2h_note = "H2H shutout flag" if h2h_veto else "no H2H flags"
+        streak_note = tgt.get("streak_label", "unknown")
+        def_note = tgt.get("defence_label", "unknown")
+        elite_mark = "🔥" if tgt.get("defence_elite") else ""
         extra = format_vip_extra_lines(
             tgt["kelly"], odds, tgt["score"], MAX_SCORE,
-            home_lambda=md["home_lambda"], away_lambda=md["away_lambda"],
-            model_prob=tgt["prob"],
-            market=MARKET_OVER05,
-            h2h_note=(
-                f"streak={md['streak_len']} ({side_label}, recent {md['recent_run']}) "
-                f"· combined GPG {md['combined_gpg']}"
-            ),
+            home_lambda=tgt["xg"], away_lambda=None, model_prob=tgt["prob"],
+            market="team_goals",
+            h2h_note=f"streak={streak_note} · defence={def_note}{elite_mark} · {h2h_note}",
             rule_details=tgt.get("details"),
         )
-    categories = describe_pick_categories(
-        m["home"], m["away"], m.get("league", ""),
-        market=MARKET_OVER05,
-        tier=tgt.get("tier"),
-        weak_roi_league=bool(tgt.get("weak_roi_league")),
-    )
-    lines.extend(format_pick_block(
-        idx, m["home"], m["away"], m["date"],
-        (
-            f"{MARKET_LABEL_OVER05} · "
-            f"{format_confidence_label(tgt['confidence'])} ({tgt['prob']}%)"
-        ),
-        extra,
-        league=m.get("league"),
-        categories=categories,
-    ))
+    categories = describe_pick_categories(m["home"], m["away"], m.get("league", ""), market="team_goals", tier=tgt.get("tier"), weak_roi_league=bool(tgt.get("weak_league_mult", 1.0) < 1.0))
+    lines.extend(format_pick_block(idx, m["home"], m["away"], m["date"],
+        f"{label} · {format_confidence_label(tgt['confidence'])} ({tgt['prob']}%)", extra, league=m.get("league"), categories=categories))
 
 
-def build_report(perfect, qualified, close, weak,
-                 scanned_dates, bankroll, odds, detailed=False, compact=False,
-                 include_yesterday=True, include_header=True, include_footer=True,
-                 report_date=None):
-    included = [
-        item for item in (perfect + qualified + close)
-        if not is_static_blocked_fixture(item.get("match", {}))
-    ]
+def build_report(home_perfect, home_qualified, home_close, home_weak,
+                 away_perfect, away_qualified, away_close, away_weak,
+                 scanned_dates, bankroll, odds_home, odds_away,
+                 detailed=False, compact=False, include_yesterday=True, include_header=True, include_footer=True, report_date=None):
+    included_home = [item for item in (home_perfect + home_qualified + home_close) if not is_static_blocked_fixture(item.get("match", {}))]
+    included_away = [item for item in (away_perfect + away_qualified + away_close) if not is_static_blocked_fixture(item.get("match", {}))]
     if report_date:
-        included = filter_pick_items_by_date(included, report_date)
-    included_dates = scanned_dates
+        included_home = filter_pick_items_by_date(included_home, report_date)
+        included_away = filter_pick_items_by_date(included_away, report_date)
     base_date = scanned_dates[0] if scanned_dates else datetime.now().strftime("%Y-%m-%d")
-
     lines = []
     if report_date and not include_header and not compact:
-        lines.append(f"📅 Picks for {report_date}")
-        lines.append("")
+        lines.append(f"📅 Picks for {report_date}"); lines.append("")
     if not compact:
         if detailed and include_header:
-            lines.extend(format_vip_banner(
-                "Over 0.5 Team Goal (Non 0-0)", base_date, included_dates,
-            ))
+            lines.extend(format_vip_banner("Team Goals Over 0.5", base_date, scanned_dates))
         if include_header:
-            lines.append("🎯 Over 0.5 Team Goal (no 0-0)")
-            lines.append("")
-            if len(included_dates) > 1:
-                lines.append(f"Dates: {included_dates[0]} to {included_dates[-1]}")
-            else:
-                lines.append(f"Date: {base_date}")
+            lines.append("🎯 Team Goals Over 0.5"); lines.append("")
+            lines.append(f"Date: {base_date}" if len(scanned_dates) == 1 else f"Dates: {scanned_dates[0]} to {scanned_dates[-1]}")
             lines.append("")
             if include_yesterday:
                 append_yesterday_section(lines, "over05_tg", detailed=detailed)
-    elif compact:
-        perf_tier = [p for p in included if p in perfect]
-        qual_tier = [p for p in included if p in qualified]
-        clos_tier = [p for p in included if p in close]
-        has_any = False
-        for tier_header, items in [
-            (COMPACT_TIER_HEADER_PREMIUM, perf_tier),
-            (COMPACT_TIER_HEADER_STRONG, qual_tier),
-            (COMPACT_TIER_HEADER_WATCH, clos_tier),
-        ]:
-            if not items:
-                continue
-            if not has_any:
-                lines.append(f"▸ {MARKET_LABEL_OVER05.upper()}")
-                has_any = True
-            lines.append(f"  {tier_header}")
-            for item in items:
-                lines.append(f"  {format_compact_pick_line(
-                    item['match']['home'], item['match']['away'], SHORT_MARKET_OVER05,
-                    item.get('tier'), item.get('prob'), item['match'].get('date'),
-                )}")
-
-    if not compact and included:
-        lines.append("")
-        lines.append("🏁 Over 0.5 Team Goal picks")
-        lines.append("")
-        inc_perf = [p for p in included if p in perfect]
-        inc_qual = [p for p in included if p in qualified]
-        inc_close = [p for p in included if p in close]
-        if inc_perf:
-            lines.append(f"  {PICK_TIER_PREMIUM}")
-            lines.append("")
-            for i, item in enumerate(inc_perf, 1):
-                _append_o05_pick(lines, i, item, odds, detailed, compact)
-        if inc_qual:
-            lines.append(f"  {PICK_TIER_STRONG}")
-            lines.append("")
-            start = len(inc_perf) + 1
-            for i, item in enumerate(inc_qual, start):
-                _append_o05_pick(lines, i, item, odds, detailed, compact)
-        if inc_close:
-            if detailed:
-                lines.append(f"  {PICK_TIER_VALUE}")
-                lines.append("")
-            start = len(inc_perf) + len(inc_qual) + 1
-            for i, item in enumerate(inc_close, start):
-                _append_o05_pick(lines, i, item, odds, detailed, compact)
-
-    if include_footer:
-        if not compact:
-            lines.append("")
-            if detailed:
-                lines.extend(format_vip_summary(
-                    "OVER 0.5 TEAM GOAL · Pick summary",
-                    perfect, qualified, close,
-                ))
-            lines.append("---")
-            lines.append("For informational purposes only")
-            lines.append("Gamble responsibly")
-            lines.append("")
-
+    if compact:
+        def _group(items, side_key, side_label):
+            has_group = False
+            groups = [
+                (COMPACT_TIER_HEADER_PREMIUM, [p for p in items if p in (home_perfect if side_key=="home" else away_perfect)]),
+                (COMPACT_TIER_HEADER_STRONG, [p for p in items if p in (home_qualified if side_key=="home" else away_qualified)]),
+                (COMPACT_TIER_HEADER_WATCH, [p for p in items if p in (home_close if side_key=="home" else away_close)]),
+            ]
+            for tier_header, tier_items in groups:
+                if not tier_items: continue
+                if not has_group:
+                    lines.append(f"▸ {side_label.upper()}"); has_group = True
+                lines.append(f"  {tier_header}")
+                for it in tier_items:
+                    lines.append(f"  {format_compact_pick_line(it['match']['home'], it['match']['away'], SHORT_MARKET_HOME if side_key == 'home' else SHORT_MARKET_AWAY, it[f'{side_key}_team_goals'].get('tier'), it[f'{side_key}_team_goals']['prob'], it['match'].get('date'))}")
+            return has_group
+        has_home = _group(included_home, "home", MARKET_LABEL_HOME)
+        if has_home and included_away: lines.append("")
+        _group(included_away, "away", MARKET_LABEL_AWAY)
+    else:
+        if included_home:
+            lines.append(""); lines.append("🏠 Home Team to Score"); lines.append("")
+            hp = [p for p in included_home if p in home_perfect]
+            hq = [p for p in included_home if p in home_qualified]
+            hc = [p for p in included_home if p in home_close]
+            if hp: lines.append(f"  {PICK_TIER_PREMIUM}"); lines.append("")
+            for i, it in enumerate(hp, 1): _append_pick(lines, i, it, "home", odds_home, detailed, compact)
+            if hq: lines.append(f"  {PICK_TIER_STRONG}"); lines.append("")
+            for i, it in enumerate(hq, len(hp)+1): _append_pick(lines, i, it, "home", odds_home, detailed, compact)
+            if hc and detailed: lines.append(f"  {PICK_TIER_VALUE}"); lines.append("")
+            for i, it in enumerate(hc, len(hp)+len(hq)+1): _append_pick(lines, i, it, "home", odds_home, detailed, compact)
+        if included_away:
+            lines.append(""); lines.append("✈️ Away Team to Score"); lines.append("")
+            ap = [p for p in included_away if p in away_perfect]
+            aq = [p for p in included_away if p in away_qualified]
+            ac = [p for p in included_away if p in away_close]
+            if ap: lines.append(f"  {PICK_TIER_PREMIUM}"); lines.append("")
+            for i, it in enumerate(ap, 1): _append_pick(lines, i, it, "away", odds_away, detailed, compact)
+            if aq: lines.append(f"  {PICK_TIER_STRONG}"); lines.append("")
+            for i, it in enumerate(aq, len(ap)+1): _append_pick(lines, i, it, "away", odds_away, detailed, compact)
+            if ac and detailed: lines.append(f"  {PICK_TIER_VALUE}"); lines.append("")
+            for i, it in enumerate(ac, len(ap)+len(aq)+1): _append_pick(lines, i, it, "away", odds_away, detailed, compact)
+    if not compact and include_footer:
+        if detailed:
+            lines.extend(format_vip_summary("HOME TO SCORE · Pick summary", home_perfect, home_qualified, home_close))
+            lines.extend(format_vip_summary("AWAY TO SCORE · Pick summary", away_perfect, away_qualified, away_close))
+        lines.append("---"); lines.append("For informational purposes only"); lines.append("Gamble responsibly"); lines.append("")
     report = "\n".join(lines).strip()
-    if not report:
-        report = "— none"
-    return report, base_date, included
+    if not report: report = "— none"
+    return report, base_date, included_home, included_away
 
 
 # =============================================================================
@@ -861,97 +804,80 @@ def main():
         sys.stdout.reconfigure(encoding="utf-8")
     except (AttributeError, OSError):
         pass
-    parser = argparse.ArgumentParser(
-        description="Over 0.5 Team Goal (no 0-0) Predictor — >=10 scoring streak + leaky opponent"
-    )
-    parser.add_argument("date", nargs="?",
-                        default=datetime.now().strftime("%Y-%m-%d"),
-                        help="Start date (YYYY-MM-DD)")
-    parser.add_argument("--scheduled", action="store_true",
-                        help="Only include scheduled (upcoming) matches")
+    parser = argparse.ArgumentParser(description="Team Goals Over 0.5 Predictor v2.2 (Defence-Gate)")
+    parser.add_argument("date", nargs="?", default=datetime.now().strftime("%Y-%m-%d"))
+    parser.add_argument("--scheduled", action="store_true")
     parser.add_argument("--bankroll", type=float, default=1000.0)
-    parser.add_argument("--odds", type=float, default=DEFAULT_ODDS,
-                        help=f"Average decimal odds for Over 0.5 TG (default {DEFAULT_ODDS})")
+    parser.add_argument("--odds-home", type=float, default=DEFAULT_ODDS_HOME)
+    parser.add_argument("--odds-away", type=float, default=DEFAULT_ODDS_AWAY)
     parser.add_argument("--clear-cache", action="store_true")
     parser.add_argument("--days", type=int, default=None)
     parser.add_argument("--publish-date", default=None)
     args = parser.parse_args()
 
-    if args.clear_cache:
-        cache.clear()
-
+    if args.clear_cache: cache.clear()
     start_date = datetime.strptime(args.date, "%Y-%m-%d")
-    scan_days = args.days
-    if scan_days is None:
-        scan_days = 6 if start_date.weekday() >= 4 else 4
+    scan_days = args.days if args.days is not None else (6 if start_date.weekday() >= 4 else 4)
 
-    perfect, qualified, close, weak = [], [], [], []
-    seen_fixtures = set()
-    unique_fixtures = []
+    home_perfect, home_qualified, home_close, home_weak = [], [], [], []
+    away_perfect, away_qualified, away_close, away_weak = [], [], [], []
     scanned_dates = []
 
+    print(f"Starting Team Goals O0.5 v2.2 (defence-gate) from {args.date}...")
+
     for day_offset in range(scan_days):
-        d = start_date + timedelta(days=day_offset)
-        date_str = d.strftime("%Y-%m-%d")
+        current_date = start_date + timedelta(days=day_offset)
+        date_str = current_date.strftime("%Y-%m-%d")
         scanned_dates.append(date_str)
         fixtures = fetch_soccerbase_fixtures(date_str)
-        if args.scheduled:
-            fixtures = [f for f in fixtures if f.get("status") == "scheduled"]
-        for m in fixtures:
-            key = (m["home_team_id"], m["away_team_id"], date_str)
-            if key in seen_fixtures:
-                continue
-            seen_fixtures.add(key)
-            unique_fixtures.append(m)
+        seen = set()
+        unique_fixtures = []
+        for f in fixtures:
+            key = (f["home_team_id"], f["away_team_id"], f["league"])
+            if key not in seen and f["home_team_id"] and f["away_team_id"]:
+                if not args.scheduled or f.get("status", "").lower() == "scheduled":
+                    seen.add(key); unique_fixtures.append(f)
+        if not unique_fixtures:
+            logger.info(f"No fixtures on {date_str}"); continue
+        print(f"   Processing {len(unique_fixtures)} matches on {date_str}...")
+        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+            futures = {executor.submit(process_single_match, match, date_str, args.odds_home, args.odds_away): match for match in unique_fixtures}
+            for future in as_completed(futures):
+                try:
+                    res = future.result(timeout=60)
+                except Exception as e:
+                    logger.error(f"Future error: {e}"); continue
+                if res["status"] == "insufficient": continue
+                if res["status"] == "success":
+                    data = res["data"]
+                    ht = data["home_team_goals"]["tier"]
+                    if ht == "perfect": home_perfect.append(data)
+                    elif ht == "qualified": home_qualified.append(data)
+                    elif ht == "close": home_close.append(data)
+                    elif data["home_team_goals"]["score"] >= max(1, MAX_SCORE - 3): home_weak.append(data)
+                    at = data["away_team_goals"]["tier"]
+                    if at == "perfect": away_perfect.append(data)
+                    elif at == "qualified": away_qualified.append(data)
+                    elif at == "close": away_close.append(data)
+                    elif data["away_team_goals"]["score"] >= max(1, MAX_SCORE - 3): away_weak.append(data)
 
-    logger.info(
-        "Scanning %d unique fixtures across %d days",
-        len(unique_fixtures), scan_days,
-    )
+    apply_portfolio_kelly(home_perfect + home_qualified + home_close, "home_team_goals", args.bankroll, MAX_TOTAL_EXPOSURE / 2)
+    apply_portfolio_kelly(away_perfect + away_qualified + away_close, "away_team_goals", args.bankroll, MAX_TOTAL_EXPOSURE / 2)
 
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        futures = {
-            executor.submit(process_single_match, m, date_str, args.odds): m
-            for m in unique_fixtures
-        }
-        for future in as_completed(futures):
-            try:
-                res = future.result(timeout=60)
-            except Exception as e:
-                logger.error(f"Future timeout/error: {e}")
-                continue
-            if res["status"] == "insufficient":
-                continue
-            if res["status"] == "success":
-                t = res["data"]["tier"]
-                if t == "perfect":
-                    perfect.append(res["data"])
-                elif t == "qualified":
-                    qualified.append(res["data"])
-                elif t == "close":
-                    close.append(res["data"])
-                elif res["data"]["score"] >= max(1, MAX_SCORE - 3):
-                    weak.append(res["data"])
-
-    apply_portfolio_kelly(
-        perfect + qualified + close, "over05_tg", args.bankroll, MAX_TOTAL_EXPOSURE,
-    )
-
-    free_report, base_date, included = build_report(
-        perfect, qualified, close, weak, scanned_dates,
-        args.bankroll, args.odds, detailed=False,
-    )
+    free_report, base_date, included_home, included_away = build_report(
+        home_perfect, home_qualified, home_close, home_weak,
+        away_perfect, away_qualified, away_close, away_weak,
+        scanned_dates, args.bankroll, args.odds_home, args.odds_away, detailed=False)
     publish_date = args.publish_date or datetime.now().strftime("%Y-%m-%d")
-    telegram_report, _, _ = build_report(
-        perfect, qualified, close, weak, scanned_dates,
-        args.bankroll, args.odds, detailed=False, compact=False,
-        include_yesterday=False, include_header=False, include_footer=False,
-        report_date=publish_date,
-    )
-    detailed_report, _, _ = build_report(
-        perfect, qualified, close, weak, scanned_dates,
-        args.bankroll, args.odds, detailed=True,
-    )
+    telegram_report, _, _, _ = build_report(
+        home_perfect, home_qualified, home_close, home_weak,
+        away_perfect, away_qualified, away_close, away_weak,
+        scanned_dates, args.bankroll, args.odds_home, args.odds_away,
+        detailed=False, compact=False, include_yesterday=False, include_header=False, include_footer=False, report_date=publish_date)
+    detailed_report, _, _, _ = build_report(
+        home_perfect, home_qualified, home_close, home_weak,
+        away_perfect, away_qualified, away_close, away_weak,
+        scanned_dates, args.bankroll, args.odds_home, args.odds_away, detailed=True)
 
     print("\n===EMAIL_START===")
     print(free_report)
@@ -961,48 +887,33 @@ def main():
     detailed_report_path = f"over05_team_goal_vip_report_{base_date}.txt"
     with open(detailed_report_path, "w", encoding="utf-8") as f:
         f.write(detailed_report)
-
     output_path = f"over05_team_goal_report_{base_date}.json"
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump({
-            "metadata": {
-                "scanned_window": scanned_dates,
-                "bankroll": args.bankroll,
-                "odds": args.odds,
-                "min_scoring_streak": MIN_SCORING_STREAK,
-                "max_score": MAX_SCORE,
-                "generated_at": datetime.now().isoformat(),
-            },
-            "perfect": perfect,
-            "qualified": qualified,
-            "close": close,
-            "weak": weak,
+            "metadata": {"scanned_window": scanned_dates, "bankroll": args.bankroll, "odds_home": args.odds_home, "odds_away": args.odds_away, "generated_at": datetime.now().isoformat()},
+            "home_team_goals": {"perfect": home_perfect, "qualified": home_qualified, "close": home_close, "weak": home_weak},
+            "away_team_goals": {"perfect": away_perfect, "qualified": away_qualified, "close": away_close, "weak": away_weak},
         }, f, indent=2, ensure_ascii=False, default=str)
 
     try:
-        oo05_picks = []
-        for pick in perfect + qualified + close:
-            tier = pick.get("tier") or (
-                "perfect" if pick in perfect else
-                "qualified" if pick in qualified else "close"
-            )
-            oo05_picks.append({
-                "league": pick["match"]["league"],
-                "home": pick["match"]["home"],
-                "away": pick["match"]["away"],
-                "date": pick["match"]["date"],
-                "prediction": "over05_tg",
-                "confidence": tier,
-            })
-        stats = record_predictions(base_date, oo05_picks=oo05_picks)
-        if stats["added"]:
-            print(f"Predictions recorded ({stats['added']} new)")
-        elif stats["skipped"]:
-            print(f"Predictions already recorded ({stats['skipped']} skipped)")
+        picks = []
+        for pick in home_perfect + home_qualified + home_close:
+            tier = pick["home_team_goals"].get("tier") or ("perfect" if pick in home_perfect else "qualified" if pick in home_qualified else "close")
+            picks.append({"league": pick["match"]["league"], "home": pick["match"]["home"], "away": pick["match"]["away"], "date": pick["match"]["date"], "prediction": "home_team_goals", "confidence": tier})
+        for pick in away_perfect + away_qualified + away_close:
+            tier = pick["away_team_goals"].get("tier") or ("perfect" if pick in away_perfect else "qualified" if pick in away_qualified else "close")
+            picks.append({"league": pick["match"]["league"], "home": pick["match"]["home"], "away": pick["match"]["away"], "date": pick["match"]["date"], "prediction": "away_team_goals", "confidence": tier})
+        stats = record_predictions(base_date, team_goals_picks=picks)
+        if stats.get("added"): print(f"Predictions recorded ({stats['added']} new)")
+        elif stats.get("skipped"): print(f"Predictions already recorded ({stats['skipped']} skipped)")
     except Exception as e:
         print(f"Could not record predictions: {e}")
 
-    print(f"\nReport saved: {output_path}")
+    total_picks = len(included_home) + len(included_away)
+    print(f"\n[OK] {total_picks} Team Goals O0.5 picks for {base_date}")
+    print(f"   Home to score: {len(included_home)}")
+    print(f"   Away to score: {len(included_away)}")
+    print(f"Report saved: {output_path}")
     print(f"VIP report saved: {detailed_report_path}")
 
 
