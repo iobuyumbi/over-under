@@ -4132,7 +4132,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T10:01:29.479369",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.666365",
+=======
+      "updated_at": "2026-09-09T05:29:48.083676",
+>>>>>>> Stashed changes
       "final_score": "1-1",
       "result_source": "soccerbase"
     },
@@ -4146,7 +4150,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T10:01:29.490707",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.673364",
+=======
+      "updated_at": "2026-09-09T05:29:48.084637",
+>>>>>>> Stashed changes
       "final_score": "2-1",
       "result_source": "soccerbase"
     },
@@ -4160,7 +4168,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T10:01:29.518442",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.679368",
+=======
+      "updated_at": "2026-09-09T05:29:48.085678",
+>>>>>>> Stashed changes
       "final_score": "2-1",
       "result_source": "soccerbase"
     },
@@ -4174,7 +4186,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T10:01:29.542570",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.685354",
+=======
+      "updated_at": "2026-09-09T05:29:48.086607",
+>>>>>>> Stashed changes
       "final_score": "2-2",
       "result_source": "soccerbase"
     },
@@ -4188,7 +4204,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T10:01:29.568895",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.692348",
+=======
+      "updated_at": "2026-09-09T05:29:48.087631",
+>>>>>>> Stashed changes
       "final_score": "1-1",
       "result_source": "soccerbase"
     },
@@ -4202,7 +4222,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T10:01:29.596043",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.700344",
+=======
+      "updated_at": "2026-09-09T05:29:48.089588",
+>>>>>>> Stashed changes
       "final_score": "3-1",
       "result_source": "soccerbase"
     },
@@ -4216,7 +4240,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T10:01:29.625234",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.710339",
+=======
+      "updated_at": "2026-09-09T05:29:48.091000",
+>>>>>>> Stashed changes
       "final_score": "2-2",
       "result_source": "soccerbase"
     },
@@ -4230,7 +4258,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T10:01:29.650291",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.716335",
+=======
+      "updated_at": "2026-09-09T05:29:48.092072",
+>>>>>>> Stashed changes
       "final_score": "2-0",
       "result_source": "soccerbase"
     },
@@ -4244,7 +4276,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T10:01:29.676769",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.724348",
+=======
+      "updated_at": "2026-09-09T05:29:48.093311",
+>>>>>>> Stashed changes
       "final_score": "5-0",
       "result_source": "soccerbase"
     },
@@ -4258,7 +4294,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T10:01:29.704028",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.733325",
+=======
+      "updated_at": "2026-09-09T05:29:48.094573",
+>>>>>>> Stashed changes
       "final_score": "2-1",
       "result_source": "soccerbase"
     },
@@ -4272,7 +4312,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T10:01:29.727425",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.743327",
+=======
+      "updated_at": "2026-09-09T05:29:48.095844",
+>>>>>>> Stashed changes
       "final_score": "1-0",
       "result_source": "soccerbase"
     },
@@ -4286,7 +4330,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T10:01:29.756149",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.756834",
+=======
+      "updated_at": "2026-09-09T05:29:48.097436",
+>>>>>>> Stashed changes
       "final_score": "0-1",
       "result_source": "soccerbase"
     },
@@ -4300,7 +4348,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T10:01:29.781077",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.769825",
+=======
+      "updated_at": "2026-09-09T05:29:48.099015",
+>>>>>>> Stashed changes
       "final_score": "0-0",
       "result_source": "soccerbase"
     },
@@ -4314,7 +4366,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T10:01:29.805456",
       "published": false,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.785814",
+=======
+      "updated_at": "2026-09-09T05:29:48.100590",
+>>>>>>> Stashed changes
       "final_score": "4-2",
       "result_source": "soccerbase"
     },
@@ -4325,9 +4381,12 @@
       "home_team": "Isloch Minsk",
       "away_team": "Arsenal Dzyarzhynsk",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-04T03:16:29.014340",
-      "published": false
+      "published": false,
+      "updated_at": "2026-09-09T05:29:45.836266",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -4336,9 +4395,12 @@
       "home_team": "Dag & Red",
       "away_team": "Dover",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-04T03:16:29.036749",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.933637",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-06",
@@ -4358,9 +4420,12 @@
       "home_team": "Uni Craiova",
       "away_team": "Uni Cluj",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:16:29.079843",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:45.836442",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -4369,9 +4434,12 @@
       "home_team": "Banks o'Dee",
       "away_team": "Forfar",
       "confidence": "close",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-04T03:16:29.096809",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.934053",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -4380,9 +4448,12 @@
       "home_team": "Clydebank",
       "away_team": "Alloa",
       "confidence": "close",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-04T03:16:29.101264",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.934509",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -4391,9 +4462,12 @@
       "home_team": "Macclesfield",
       "away_team": "Scarborough A",
       "confidence": "close",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-04T03:16:29.112844",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.935118",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -4402,9 +4476,12 @@
       "home_team": "Emelec",
       "away_team": "Manta",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-05T04:26:35.801627",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.935902",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-10",
@@ -4446,9 +4523,12 @@
       "home_team": "Club Brugge",
       "away_team": "Aston Villa",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-06T05:36:30.888956",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.936003",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -4457,9 +4537,12 @@
       "home_team": "Banks o'Dee",
       "away_team": "Forfar",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-06T05:36:30.900870",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.936352",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -4468,9 +4551,12 @@
       "home_team": "Macclesfield",
       "away_team": "Scarborough A",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-06T05:36:30.921191",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.936968",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -4479,9 +4565,12 @@
       "home_team": "Clyde",
       "away_team": "East Fife",
       "confidence": "close",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-06T05:36:30.947951",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.937273",
+      "final_score": "1-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-11",
@@ -13717,7 +13806,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.406286",
       "published": false,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.800806",
+=======
+      "updated_at": "2026-09-09T05:29:48.102827",
+>>>>>>> Stashed changes
       "final_score": "2-2",
       "result_source": "soccerbase"
     },
@@ -13733,7 +13826,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.421431",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.802805",
+=======
+      "updated_at": "2026-09-09T05:29:48.103108",
+>>>>>>> Stashed changes
       "final_score": "2-2",
       "result_source": "soccerbase"
     },
@@ -13749,7 +13846,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.437545",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.806806",
+=======
+      "updated_at": "2026-09-09T05:29:48.103448",
+>>>>>>> Stashed changes
       "final_score": "2-1",
       "result_source": "soccerbase"
     },
@@ -13765,7 +13866,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.449932",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.809802",
+=======
+      "updated_at": "2026-09-09T05:29:48.103781",
+>>>>>>> Stashed changes
       "final_score": "2-2",
       "result_source": "soccerbase"
     },
@@ -13781,7 +13886,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T09:43:43.464725",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.811800",
+=======
+      "updated_at": "2026-09-09T05:29:48.104109",
+>>>>>>> Stashed changes
       "final_score": "0-1",
       "result_source": "soccerbase"
     },
@@ -13797,7 +13906,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T09:43:43.480318",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.814797",
+=======
+      "updated_at": "2026-09-09T05:29:48.104529",
+>>>>>>> Stashed changes
       "final_score": "0-1",
       "result_source": "soccerbase"
     },
@@ -13813,7 +13926,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T09:43:43.495080",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.817796",
+=======
+      "updated_at": "2026-09-09T05:29:48.104976",
+>>>>>>> Stashed changes
       "final_score": "0-0",
       "result_source": "soccerbase"
     },
@@ -13829,7 +13946,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.511249",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.822795",
+=======
+      "updated_at": "2026-09-09T05:29:48.105531",
+>>>>>>> Stashed changes
       "final_score": "1-3",
       "result_source": "soccerbase"
     },
@@ -13845,7 +13966,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.525178",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.826792",
+=======
+      "updated_at": "2026-09-09T05:29:48.106128",
+>>>>>>> Stashed changes
       "final_score": "3-2",
       "result_source": "soccerbase"
     },
@@ -13861,7 +13986,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.538051",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.830793",
+=======
+      "updated_at": "2026-09-09T05:29:48.106854",
+>>>>>>> Stashed changes
       "final_score": "2-1",
       "result_source": "soccerbase"
     },
@@ -13877,7 +14006,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T09:43:43.553762",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.834787",
+=======
+      "updated_at": "2026-09-09T05:29:48.107591",
+>>>>>>> Stashed changes
       "final_score": "2-0",
       "result_source": "soccerbase"
     },
@@ -13893,7 +14026,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.567570",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.841793",
+=======
+      "updated_at": "2026-09-09T05:29:48.108521",
+>>>>>>> Stashed changes
       "final_score": "3-1",
       "result_source": "soccerbase"
     },
@@ -13909,7 +14046,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.582165",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.849793",
+=======
+      "updated_at": "2026-09-09T05:29:48.109314",
+>>>>>>> Stashed changes
       "final_score": "0-4",
       "result_source": "soccerbase"
     },
@@ -13925,7 +14066,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.599436",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.859298",
+=======
+      "updated_at": "2026-09-09T05:29:48.110297",
+>>>>>>> Stashed changes
       "final_score": "1-2",
       "result_source": "soccerbase"
     },
@@ -13941,7 +14086,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T09:43:43.613629",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.865290",
+=======
+      "updated_at": "2026-09-09T05:29:48.111336",
+>>>>>>> Stashed changes
       "final_score": "2-0",
       "result_source": "soccerbase"
     },
@@ -13957,7 +14106,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.629378",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.874285",
+=======
+      "updated_at": "2026-09-09T05:29:48.112402",
+>>>>>>> Stashed changes
       "final_score": "2-2",
       "result_source": "soccerbase"
     },
@@ -13973,7 +14126,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.644105",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.881278",
+=======
+      "updated_at": "2026-09-09T05:29:48.113338",
+>>>>>>> Stashed changes
       "final_score": "4-4",
       "result_source": "soccerbase"
     },
@@ -14002,7 +14159,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T09:43:43.677410",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.902266",
+=======
+      "updated_at": "2026-09-09T05:29:48.116022",
+>>>>>>> Stashed changes
       "final_score": "0-0",
       "result_source": "soccerbase"
     },
@@ -14018,7 +14179,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.691230",
       "published": false,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.911261",
+=======
+      "updated_at": "2026-09-09T05:29:48.117269",
+>>>>>>> Stashed changes
       "final_score": "2-1",
       "result_source": "soccerbase"
     },
@@ -14034,7 +14199,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T09:43:43.705492",
       "published": false,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.919258",
+=======
+      "updated_at": "2026-09-09T05:29:48.118469",
+>>>>>>> Stashed changes
       "final_score": "0-1",
       "result_source": "soccerbase"
     },
@@ -14050,7 +14219,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.721206",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.929250",
+=======
+      "updated_at": "2026-09-09T05:29:48.120009",
+>>>>>>> Stashed changes
       "final_score": "1-4",
       "result_source": "soccerbase"
     },
@@ -14066,7 +14239,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.736955",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.939246",
+=======
+      "updated_at": "2026-09-09T05:29:48.121396",
+>>>>>>> Stashed changes
       "final_score": "5-0",
       "result_source": "soccerbase"
     },
@@ -14082,7 +14259,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T09:43:43.751560",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.947249",
+=======
+      "updated_at": "2026-09-09T05:29:48.122882",
+>>>>>>> Stashed changes
       "final_score": "0-1",
       "result_source": "soccerbase"
     },
@@ -14098,7 +14279,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.767409",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.961750",
+=======
+      "updated_at": "2026-09-09T05:29:48.124436",
+>>>>>>> Stashed changes
       "final_score": "1-3",
       "result_source": "soccerbase"
     },
@@ -14114,7 +14299,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T09:43:43.783975",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.972745",
+=======
+      "updated_at": "2026-09-09T05:29:48.125951",
+>>>>>>> Stashed changes
       "final_score": "2-0",
       "result_source": "soccerbase"
     },
@@ -14130,7 +14319,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.798595",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.981742",
+=======
+      "updated_at": "2026-09-09T05:29:48.127396",
+>>>>>>> Stashed changes
       "final_score": "0-3",
       "result_source": "soccerbase"
     },
@@ -14146,7 +14339,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T09:43:43.813794",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.988736",
+=======
+      "updated_at": "2026-09-09T05:29:48.128410",
+>>>>>>> Stashed changes
       "final_score": "1-1",
       "result_source": "soccerbase"
     },
@@ -14162,7 +14359,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.831193",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.992734",
+=======
+      "updated_at": "2026-09-09T05:29:48.128940",
+>>>>>>> Stashed changes
       "final_score": "2-0",
       "result_source": "soccerbase"
     },
@@ -14178,7 +14379,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.848464",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:39.995734",
+=======
+      "updated_at": "2026-09-09T05:29:48.129510",
+>>>>>>> Stashed changes
       "final_score": "0-1",
       "result_source": "soccerbase"
     },
@@ -14194,7 +14399,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.862075",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:40.000729",
+=======
+      "updated_at": "2026-09-09T05:29:48.130211",
+>>>>>>> Stashed changes
       "final_score": "0-0",
       "result_source": "soccerbase"
     },
@@ -14210,7 +14419,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T09:43:43.877245",
       "published": false,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:40.013728",
+=======
+      "updated_at": "2026-09-09T05:29:48.131913",
+>>>>>>> Stashed changes
       "final_score": "1-1",
       "result_source": "soccerbase"
     },
@@ -14226,7 +14439,11 @@
       "result": "win",
       "recorded_at": "2026-09-04T03:15:34.885197",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:40.026713",
+=======
+      "updated_at": "2026-09-09T05:29:48.132823",
+>>>>>>> Stashed changes
       "final_score": "3-2",
       "result_source": "soccerbase"
     },
@@ -14239,9 +14456,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:15:34.894294",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:45.836657",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-07",
@@ -14252,9 +14472,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:15:34.911275",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:45.837060",
+      "final_score": "1-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-07",
@@ -14265,9 +14488,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-04T03:15:34.930496",
-      "published": false
+      "published": false,
+      "updated_at": "2026-09-09T05:29:45.837559",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -14278,9 +14504,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:15:34.947898",
-      "published": false
+      "published": false,
+      "updated_at": "2026-09-09T05:29:43.937497",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -14291,9 +14520,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-04T03:15:34.972082",
-      "published": false
+      "published": false,
+      "updated_at": "2026-09-09T05:29:43.937650",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -14304,9 +14536,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:15:34.989654",
-      "published": false
+      "published": false,
+      "updated_at": "2026-09-09T05:29:43.937837",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -14317,9 +14552,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-04T03:15:35.011322",
-      "published": false
+      "published": false,
+      "updated_at": "2026-09-09T05:29:43.938027",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -14330,9 +14568,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-04T03:15:35.027557",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.938367",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -14343,9 +14584,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:15:35.046142",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.938767",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -14356,9 +14600,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:15:35.064773",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.939158",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -14369,9 +14616,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:15:35.081420",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.939565",
+      "final_score": "7-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -14382,9 +14632,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:15:35.101239",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.940036",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -14395,9 +14648,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:15:35.120378",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.940517",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -14408,9 +14664,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-04T03:15:35.137405",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.941144",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -14421,9 +14680,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:15:35.155522",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.941777",
+      "final_score": "5-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -14434,9 +14696,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-04T03:15:35.179161",
-      "published": false
+      "published": false,
+      "updated_at": "2026-09-09T05:29:43.942447",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-08",
@@ -14447,9 +14712,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:15:35.209442",
-      "published": false
+      "published": false,
+      "updated_at": "2026-09-09T05:29:43.943301",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-09",
@@ -14525,9 +14793,12 @@
       "prediction": "under",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:15:35.386569",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:45.837839",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-09",
@@ -14616,9 +14887,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-06T05:21:11.782091",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.943592",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-09",
@@ -18158,7 +18432,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T10:24:28.879476",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:40.031709",
+=======
+      "updated_at": "2026-09-09T05:29:48.133690",
+>>>>>>> Stashed changes
       "final_score": "3-1",
       "result_source": "soccerbase"
     },
@@ -18190,7 +18468,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T10:24:28.891054",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:40.035707",
+=======
+      "updated_at": "2026-09-09T05:29:48.134342",
+>>>>>>> Stashed changes
       "final_score": "2-0",
       "result_source": "soccerbase"
     },
@@ -18206,7 +18488,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T10:24:28.903124",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:40.043710",
+=======
+      "updated_at": "2026-09-09T05:29:48.135279",
+>>>>>>> Stashed changes
       "final_score": "4-4",
       "result_source": "soccerbase"
     },
@@ -18222,7 +18508,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T10:24:28.907258",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:40.049707",
+=======
+      "updated_at": "2026-09-09T05:29:48.136250",
+>>>>>>> Stashed changes
       "final_score": "0-0",
       "result_source": "soccerbase"
     },
@@ -18238,7 +18528,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T10:24:28.912300",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:40.060214",
+=======
+      "updated_at": "2026-09-09T05:29:48.137793",
+>>>>>>> Stashed changes
       "final_score": "2-0",
       "result_source": "soccerbase"
     },
@@ -18254,7 +18548,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T10:24:28.915808",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:40.064212",
+=======
+      "updated_at": "2026-09-09T05:29:48.138313",
+>>>>>>> Stashed changes
       "final_score": "2-0",
       "result_source": "soccerbase"
     },
@@ -18270,7 +18568,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T10:24:28.919328",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:40.075206",
+=======
+      "updated_at": "2026-09-09T05:29:48.139791",
+>>>>>>> Stashed changes
       "final_score": "1-0",
       "result_source": "soccerbase"
     },
@@ -18286,7 +18588,11 @@
       "result": "win",
       "recorded_at": "2026-09-03T10:24:28.929913",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:40.080202",
+=======
+      "updated_at": "2026-09-09T05:29:48.140480",
+>>>>>>> Stashed changes
       "final_score": "0-0",
       "result_source": "soccerbase"
     },
@@ -18302,7 +18608,11 @@
       "result": "loss",
       "recorded_at": "2026-09-03T10:24:28.941971",
       "published": true,
+<<<<<<< Updated upstream
       "updated_at": "2026-09-07T11:22:40.091196",
+=======
+      "updated_at": "2026-09-09T05:29:48.141925",
+>>>>>>> Stashed changes
       "final_score": "3-1",
       "result_source": "soccerbase"
     },
@@ -18315,9 +18625,12 @@
       "prediction": "yes",
       "prob": 63.5,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-04T03:38:04.800593",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:43.944250",
+      "final_score": "5-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-07",
@@ -18328,9 +18641,12 @@
       "prediction": "yes",
       "prob": 72.7,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-04T03:38:04.802643",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:45.838366",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-09",
@@ -18354,9 +18670,12 @@
       "prediction": "no",
       "prob": 59.1,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:38:04.807726",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:45.838445",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-07",
@@ -18367,9 +18686,12 @@
       "prediction": "no",
       "prob": 67.9,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-04T03:38:04.815281",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-09T05:29:45.838894",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-10",
