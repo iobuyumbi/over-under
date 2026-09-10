@@ -249,6 +249,24 @@ def value_gate_passes(model_prob_pct, decimal_odds, min_edge_pct=0.0):
     return (model_prob_pct / 100.0) >= (implied + min_edge_pct / 100.0)
 
 
+NON_LEAGUE_RELIABILITY_KEYWORDS = (
+    "isthmian", "southern league", "northern premier",
+    "national league south", "national league north",
+    "evostik", "pitching in", "betvictor", "southern prem",
+    "isthmian prem", "npl premier",
+    "football conference",
+)
+
+
+def non_league_reliability_veto(league_name, home_venue_form, away_venue_form, min_games=5):
+    league = str(league_name or "").lower()
+    if not any(k in league for k in NON_LEAGUE_RELIABILITY_KEYWORDS):
+        return False, None
+    if len(home_venue_form or []) < min_games or len(away_venue_form or []) < min_games:
+        return True, "non_league_thin_data"
+    return False, None
+
+
 def apply_portfolio_kelly(recommendations, bet_type, bankroll, max_exposure):
     """
     Scale Kelly fractions so total exposure does not exceed max_exposure.

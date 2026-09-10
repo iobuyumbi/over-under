@@ -29,6 +29,7 @@ from utils import (
     exponential_form_averages as _shared_exponential_form_averages,
     is_weak_roi_league as _shared_is_weak_roi_league,
     poisson_pmf as _shared_poisson_pmf,
+    non_league_reliability_veto as _shared_non_league_reliability_veto,
 )
 
 # Shared Soccerbase scraping/parsing (see scraping.py) — do not redefine
@@ -467,30 +468,8 @@ def _extreme_shutout_potential_veto(home_overall_6, away_overall_6):
 
 
 def _non_league_reliability_veto(match, home_6, away_6):
-    """Block BTTS and Over in very low-tier English / non-league football.
-    Soccerbase coverage for the 7th tier and below is sparse and often
-    limited to 2-3 games per team — the thin-data fallbacks kick in but
-    the underlying sample is still too unreliable for predictions.
-
-    Added 2026-08-30 after Eastbourne vs Leatherhead (Isthmian League,
-    7th tier): both the Over 2.5 and BTTS Yes picks lost on a match
-    where the algorithm was running on ~3 games of venue data per team.
-    Working on thin-data fallbacks with 2-3 matches is gambling, not
-    statistical prediction.
-    """
-    league = str(match.get("league", "")).lower()
-    non_league_keywords = [
-        "isthmian", "southern league", "northern premier",
-        "national league south", "national league north",
-        "evostik", "pitching in", "betvictor", "southern prem",
-        "isthmian prem", "npl premier",
-    ]
-    is_non_league = any(k in league for k in non_league_keywords)
-    if not is_non_league:
-        return False, None
-    if len(home_6 or []) < 5 or len(away_6 or []) < 5:
-        return True, "non_league_thin_data"
-    return False, None
+    league = match.get("league")
+    return _shared_non_league_reliability_veto(league, home_6, away_6)
 
 
 def _overall_btts_symmetry_veto(home_overall_6, away_overall_6, side):
