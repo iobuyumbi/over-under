@@ -27,6 +27,7 @@ from utils import (
     calculate_kelly as _shared_calculate_kelly,
     apply_portfolio_kelly as _shared_apply_portfolio_kelly,
     is_weak_roi_league,
+    non_league_reliability_veto as _shared_non_league_reliability_veto,
 )
 
 # Shared Soccerbase fixture/results scraping (see scraping.py). NOTE: this
@@ -895,6 +896,7 @@ def process_single_match(match, target_date, default_odds=2.8):
             home_form, away_form
         )
         road_wins_veto, road_wins_reason = _away_recent_road_wins_veto(away_form)
+        non_league_veto, non_league_reason = _shared_non_league_reliability_veto(league_name, home_form, away_form)
         away_def_pass, away_def_label = _opponent_concession_gate(away_form, away_overall_10)
 
         weak_league = is_weak_roi_league(league_name, _HW_WEAK_ROI_LEAGUE_KEYWORDS)
@@ -905,7 +907,7 @@ def process_single_match(match, target_date, default_odds=2.8):
             and not draw_streak_veto and not away_cs_streak_veto
             and not last_home_veto and not symmetry_veto
             and not cold_attack_veto and not leaky_hot_veto
-            and not road_wins_veto and away_def_pass
+            and not road_wins_veto and not non_league_veto and away_def_pass
         )
 
         league_mult = _HW_WEAK_ROI_MULTIPLIER if weak_league else 1.0
@@ -949,6 +951,8 @@ def process_single_match(match, target_date, default_odds=2.8):
             regressions.append(f"leaky home + hot away shootout ({leaky_hot_reason})")
         if road_wins_veto:
             regressions.append(f"away recent road wins ({road_wins_reason})")
+        if non_league_veto:
+            regressions.append(f"non-league thin data ({non_league_reason})")
 
         return {
             "status": "success",
@@ -988,6 +992,8 @@ def process_single_match(match, target_date, default_odds=2.8):
                 "leaky_hot_reason": leaky_hot_reason,
                 "road_wins_veto": road_wins_veto,
                 "road_wins_reason": road_wins_reason,
+                "non_league_veto": non_league_veto,
+                "non_league_reason": non_league_reason,
                 "away_defence_gate": {"passed": away_def_pass, "label": away_def_label},
                 "data_mult": round(data_mult, 2),
                 "weak_league_mult": round(league_mult, 2),
@@ -1014,6 +1020,8 @@ def process_single_match(match, target_date, default_odds=2.8):
                     "leaky_hot_reason": leaky_hot_reason,
                     "road_wins_veto": road_wins_veto,
                     "road_wins_reason": road_wins_reason,
+                    "non_league_veto": non_league_veto,
+                    "non_league_reason": non_league_reason,
                     "away_defence_gate": {"passed": away_def_pass, "label": away_def_label},
                     "home_strength": round(home_strength, 3),
                     "away_strength": round(away_strength, 3),

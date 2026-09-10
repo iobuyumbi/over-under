@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-09-07
+✦ CURATED PICKS · 2026-09-09
   Input reports:
-    OU   → over_under_vip_report_2026-09-07.txt
-    BTTS → btts_vip_report_2026-09-07.txt
-    HW   → home_win_vip_report_2026-09-07.txt
+    OU   → over_under_vip_report_2026-09-09.txt
+    BTTS → btts_vip_report_2026-09-09.txt
+    HW   → home_win_vip_report_2026-09-09.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,12 +11,10 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-09-07)
+    • Today only (2026-09-09)
 
-━━━ OVER / UNDER 2.5  (1 accepted) ━━━
-   1. ✅ H Beer Sheva vs M Tel Aviv  (Israeli League)
-      Over 2.5 · High 74.8% · xG 1.16–2.75
-      Stake 0.5% @ 2.0  ·  EV +49.6c/$  ·  Edge +49.6%
+━━━ OVER / UNDER 2.5  (0 accepted) ━━━
+  (none)
 
 ━━━ BTTS (Yes / No)  (0 accepted) ━━━
   (none)
@@ -24,8 +22,8 @@
 ━━━ HOME WIN  (0 accepted) ━━━
   (none)
 
-📊 Summary: 1 curated picks
-   Parsed total: 48   Rejected: 47   Accepted: 1
+📊 Summary: 0 curated picks
+   Parsed total: 0   Rejected: 0   Accepted: 0
 
 ---
 For informational purposes only · Gamble responsibly

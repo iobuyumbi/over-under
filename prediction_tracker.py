@@ -716,8 +716,8 @@ def describe_pick_categories(home, away, league, market=None, tier=None, weak_ro
  
  
 def home_win_key(pick):
-    return (pick["date"], pick.get("home_team", pick.get("home")), 
-            pick.get("away_team", pick.get("away")), pick["confidence"])
+    return (pick["date"], pick.get("home_team", pick.get("home")),
+            pick.get("away_team", pick.get("away")))
 
 
 def over_under_key(pick):
@@ -726,7 +726,6 @@ def over_under_key(pick):
         pick.get("home_team", pick.get("home")),
         pick.get("away_team", pick.get("away")),
         pick["prediction"],
-        pick["confidence"],
     )
 
 
@@ -736,7 +735,6 @@ def btts_key(pick):
         pick.get("home_team", pick.get("home")),
         pick.get("away_team", pick.get("away")),
         pick["prediction"],
-        pick["confidence"],
     )
 
 
@@ -745,7 +743,7 @@ def oo05_key(pick):
         pick["date"],
         pick.get("home_team", pick.get("home")),
         pick.get("away_team", pick.get("away")),
-        pick["confidence"],
+        pick["prediction"],
     )
 
 

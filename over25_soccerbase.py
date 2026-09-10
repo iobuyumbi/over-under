@@ -31,6 +31,7 @@ from utils import (
     exponential_form_averages as _shared_exponential_form_averages,
     is_weak_roi_league as _shared_is_weak_roi_league,
     poisson_pmf as _shared_poisson_pmf,
+    non_league_reliability_veto as _shared_non_league_reliability_veto,
 )
 
 # Shared Soccerbase scraping/parsing (see scraping.py) — do not redefine
@@ -1849,6 +1850,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         over_goalless_shock_veto, over_goalless_shock_reason = _recent_goalless_shock_veto(home_3, away_3)
         under_peak_game_veto, under_peak_game_reason = _under_peak_game_veto(home_6, away_6)
         derby_veto, derby_reason = _derby_veto(match)
+        non_league_veto, non_league_reason = _shared_non_league_reliability_veto(league_name, home_6, away_6)
         scoring_consistency_veto, scoring_consistency_reason = _scoring_consistency_veto(home_6, away_6)
         overall_scoring_veto, overall_scoring_reason = _overall_scoring_symmetry_veto(
             home_overall_6, away_overall_6
@@ -1941,7 +1943,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             and not scoring_drought_veto and not defensive_wall_veto
             and not over_btts_gate and not over_leak_gate
             and not over_low_event_veto and not over_goalless_shock_veto
-            and not derby_veto and not scoring_consistency_veto
+            and not derby_veto and not non_league_veto and not scoring_consistency_veto
             and not overall_scoring_veto
             and not borderline_cluster_veto and not severe_crisis_veto
             and not xg_imbalance_veto
@@ -1960,6 +1962,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             and not under_overall_overs_veto
             and not under_overall_leak_veto
             and not h2h_under_high_scoring_veto
+            and not non_league_veto
         )
 
         if over_qualifies or under_qualifies:
@@ -2059,6 +2062,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append(f"h2h high-scoring under veto ({h2h_under_high_scoring_reason})")
         if derby_veto:
             regressions.append(f"derby match ({derby_reason})")
+        if non_league_veto:
+            regressions.append(f"non-league thin data ({non_league_reason})")
         if scoring_consistency_veto:
             regressions.append(f"scoring inconsistency ({scoring_consistency_reason})")
         if overall_scoring_veto:
@@ -2118,6 +2123,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "goalless_shock_reason": over_goalless_shock_reason,
                     "derby_veto": derby_veto,
                     "derby_reason": derby_reason,
+                    "non_league_veto": non_league_veto,
+                    "non_league_reason": non_league_reason,
                     "scoring_consistency_veto": scoring_consistency_veto,
                     "scoring_consistency_reason": scoring_consistency_reason,
                     "borderline_cluster_veto": borderline_cluster_veto,
@@ -2221,6 +2228,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "under_peak_game_reason": under_peak_game_reason,
                     "derby_veto": derby_veto,
                     "derby_reason": derby_reason,
+                    "non_league_veto": non_league_veto,
+                    "non_league_reason": non_league_reason,
                     "scoring_consistency_veto": scoring_consistency_veto,
                     "scoring_consistency_reason": scoring_consistency_reason,
                     "overall_scoring_veto": overall_scoring_veto,
