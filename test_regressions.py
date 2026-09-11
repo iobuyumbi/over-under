@@ -66,6 +66,16 @@ class ResultTrackingTests(unittest.TestCase):
         self.assertEqual(stats["added"], 1)
         self.assertEqual(history["oo05"][0]["prediction"], "away_team_goals")
 
+    def test_yesterday_telegram_block_includes_every_settled_pick_by_default(self):
+        results = ["first", "second", "third"]
+        with patch.object(
+            prediction_tracker,
+            "get_yesterday_results",
+            return_value=("2026-09-10", results, {"wins": 3, "losses": 0, "pushes": 0, "pending": 0}),
+        ):
+            block = prediction_tracker.build_telegram_yesterday_block()
+        self.assertEqual([line for line in block if line in results], results)
+
 
 class H2HDeduplicationTests(unittest.TestCase):
     def test_mirrored_team_pages_produce_one_h2h_meeting(self):

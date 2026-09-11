@@ -156,8 +156,14 @@ def format_compact_result_line(pick, market_label):
     return line
 
 
-def build_telegram_yesterday_block(max_lines=12):
-    """One shared yesterday block for all Telegram messages."""
+def build_telegram_yesterday_block(max_lines=None):
+    """One shared yesterday block for all Telegram messages.
+
+    Results must remain complete: Telegram delivery chunks long messages, so
+    truncating settled picks here only hides information from subscribers.
+    ``max_lines`` is retained as an optional explicit preview limit for callers
+    that genuinely need one.
+    """
     yesterday, results, summary = get_yesterday_results(
         prediction_type=None, detailed=False, compact=False
     )
@@ -172,12 +178,13 @@ def build_telegram_yesterday_block(max_lines=12):
         title = f"{title} · {clean}"
     lines.append(title)
     lines.append("")
-    for line in results[:max_lines]:
+    visible_results = results if max_lines is None else results[:max_lines]
+    for line in visible_results:
         lines.append(line)
         lines.append("")
     while lines and not lines[-1].strip():
         lines.pop()
-    remaining = len(results) - max_lines
+    remaining = len(results) - len(visible_results)
     if remaining > 0:
         lines.append(f"+{remaining} more")
     return lines

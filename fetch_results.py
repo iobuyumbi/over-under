@@ -829,7 +829,7 @@ def write_selected_results_report(dates_to_check, history, dry_run=False):
     with open(SELECTED_RESULTS_REPORT, "w", encoding="utf-8") as f:
         from prediction_tracker import build_telegram_yesterday_block, format_compact_result_line, market_short_label
 
-        yesterday_block = build_telegram_yesterday_block(max_lines=15)
+        yesterday_block = build_telegram_yesterday_block()
         if yesterday_block:
             f.write(f"{mode}📊 Results\n")
             for line in yesterday_block:
