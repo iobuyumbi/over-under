@@ -21,6 +21,29 @@ Automated daily soccer predictions with performance tracking for monetization.
 ### 1. Daily Predictions (Automated)
 Runs automatically every morning via GitHub Actions.
 
+### Run locally and post to Telegram
+
+`run_local.bat` fetches results, generates all four markets (Over/Under,
+BTTS, Home Win, and Over 0.5 Team Goal), builds the Telegram report, and posts
+it automatically when these user environment variables are configured:
+
+```powershell
+setx TELEGRAM_BOT_TOKEN "your-bot-token"
+setx TELEGRAM_CHAT_ID "@your_free_channel"
+setx TELEGRAM_VIP_CHAT_ID "-1001234567890"
+```
+
+Close and reopen PowerShell after running `setx`, then run:
+
+```powershell
+.\run_local.bat
+```
+
+Use a numeric channel ID (normally beginning with `-100`) for a private VIP
+channel; an invite link cannot receive bot messages. Add the bot as a channel
+administrator with permission to post. The credentials are intentionally read
+from environment variables and are never stored in this repository.
+
 ### 2. Updating Results
 After matches finish, update results using the automated fetcher:
 

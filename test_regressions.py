@@ -9,6 +9,7 @@ import fetch_results
 import prediction_tracker
 import scraping
 import send_daily_telegram
+import send_local_telegram
 
 
 class ResultTrackingTests(unittest.TestCase):
@@ -103,6 +104,28 @@ class TelegramTests(unittest.TestCase):
         response.raise_for_status.side_effect = RuntimeError("telegram failure")
         with patch.object(send_daily_telegram.requests, "post", return_value=response):
             self.assertFalse(send_daily_telegram.send("token", "chat", "message"))
+
+    def test_local_sender_includes_the_oo05_section(self):
+        with tempfile.TemporaryDirectory() as directory:
+            old_cwd = os.getcwd()
+            try:
+                os.chdir(directory)
+                for filename, content in (
+                    ("ou_telegram.txt", "OU pick"),
+                    ("btts_telegram.txt", "BTTS pick"),
+                    ("hw_telegram.txt", "Home pick"),
+                    ("oo05_telegram.txt", "OO05 pick"),
+                ):
+                    with open(filename, "w", encoding="utf-8") as file:
+                        file.write(content)
+                response = unittest.mock.Mock(status_code=200)
+                with patch.dict(os.environ, {
+                    "TELEGRAM_BOT_TOKEN": "token", "TELEGRAM_CHAT_ID": "chat", "DATE": "2026-09-11",
+                }, clear=False), patch.object(send_local_telegram.requests, "post", return_value=response) as post:
+                    self.assertEqual(send_local_telegram.main(), 0)
+            finally:
+                os.chdir(old_cwd)
+        self.assertIn("OO05 pick", post.call_args.kwargs["data"]["text"])
 
 
 if __name__ == "__main__":
