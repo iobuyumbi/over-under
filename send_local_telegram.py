@@ -8,8 +8,8 @@ Usage:
   set DATE=2026-08-30            (optional, defaults to today)
   python send_local_telegram.py
 
-The script reads the three per-market Telegram section files
-(ou_telegram.txt, btts_telegram.txt, hw_telegram.txt) that each
+The script reads the four per-market Telegram section files
+(ou_telegram.txt, btts_telegram.txt, hw_telegram.txt, oo05_telegram.txt) that each
 predictor writes, assembles them via build_telegram_daily.py, and
 posts the assembled message to the configured chat IDs.
 
@@ -36,6 +36,7 @@ def main():
     OU_FILE = _env_or("OU_TELEGRAM_FILE", "ou_telegram.txt")
     BTTS_FILE = _env_or("BTTS_TELEGRAM_FILE", "btts_telegram.txt")
     HW_FILE = _env_or("HW_TELEGRAM_FILE", "hw_telegram.txt")
+    OO05_FILE = _env_or("OO05_TELEGRAM_FILE", "oo05_telegram.txt")
 
     if not TOKEN or not CHAT:
         print("ERROR: Set TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID env vars before running.")
@@ -45,13 +46,14 @@ def main():
     ou_body = read_telegram_section(OU_FILE)
     btts_body = read_telegram_section(BTTS_FILE)
     hw_body = read_telegram_section(HW_FILE)
+    oo05_body = read_telegram_section(OO05_FILE)
 
-    msg = build_daily_message(DATE, ou_body, btts_body, hw_body)
+    msg = build_daily_message(DATE, ou_body, btts_body, hw_body, oo05_body)
 
     if not msg or msg.strip() == "":
         print("ERROR: Assembled Telegram message is empty.")
         print("  Check that at least one of these files exists and has content:")
-        print(f"    {OU_FILE}, {BTTS_FILE}, {HW_FILE}")
+        print(f"    {OU_FILE}, {BTTS_FILE}, {HW_FILE}, {OO05_FILE}")
         return 2
 
     targets = [cid for cid in [CHAT, VIP] if cid]
