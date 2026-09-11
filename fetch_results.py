@@ -219,18 +219,19 @@ def set_cache(key, data):
 # TEAM NAME NORMALIZATION
 # =============================================================================
 def normalize_team_name(name):
-    name = name.strip().lower()
+    name = str(name or "").strip().lower()
+    # Normalize punctuation before applying known aliases.  In particular, do
+    # not discard meaningful suffixes such as "City" or "United": doing so
+    # turns distinct clubs (for example, Manchester City and Manchester
+    # United) into the same identity.
+    name = re.sub(r"[^a-z0-9\s]", "", name)
+    name = re.sub(r"\s+", " ", name).strip()
+    if name in TEAM_NAME_MAP:
+        return TEAM_NAME_MAP[name]
     name = re.sub(r"\s*fc$", "", name)
     name = re.sub(r"\s*cf$", "", name)
-    name = re.sub(r"\s*city$", "", name)
-    name = re.sub(r"\s*united$", "", name)
-    name = re.sub(r"\s*athletic$", "", name)
     name = re.sub(r"\s*afc$", "", name)
     name = re.sub(r"\s*sc$", "", name)
-    name = re.sub(r"\s*deportivo$", "", name)
-    name = re.sub(r"\s*club$", "", name)
-    name = re.sub(r"\s*esporte$", "", name)
-    name = re.sub(r"[^a-z0-9\s]", "", name)
     name = re.sub(r"\s+", " ", name).strip()
     if name in TEAM_NAME_MAP:
         name = TEAM_NAME_MAP[name]
@@ -241,9 +242,8 @@ def team_names_match(name1, name2):
     n2 = normalize_team_name(name2)
     if n1 == n2:
         return True
-    if len(n1) > 3 and len(n2) > 3:
-        if n1 in n2 or n2 in n1:
-            return True
+    # Results are financial-performance inputs.  An unresolved alias is safer
+    # than settling a pick against a different club with a similar name.
     return False
 
 # =============================================================================
@@ -510,11 +510,14 @@ def fetch_match_results(date_str):
     all_results = []
     seen = set()
 
+    # First source wins for an identical fixture.  Manual input is explicitly
+    # an override, followed by the documented primary and fallback APIs; the
+    # scrape is the least authoritative fallback.
     sources = [
-        ("Soccerbase", fetch_soccerbase_results),
+        ("Manual Override", fetch_manual_override),
         ("Football-Data.org", fetch_football_data_org),
         ("API-Football", fetch_api_football),
-        ("Manual Override", fetch_manual_override),
+        ("Soccerbase", fetch_soccerbase_results),
     ]
 
     for source_name, source_func in sources:
@@ -997,8 +1000,13 @@ def determine_oo05_result(pick, results):
                 return "push"
             hg, ag = parse_score(match["score"])
             if hg is not None and ag is not None:
-                not_zero_zero = (hg >= 1) or (ag >= 1)
-                return "win" if not_zero_zero else "loss"
+                prediction = str(pick.get("prediction", "")).strip().lower()
+                if prediction in ("home_team_goals", "home", "home_over05"):
+                    return "win" if hg >= 1 else "loss"
+                if prediction in ("away_team_goals", "away", "away_over05"):
+                    return "win" if ag >= 1 else "loss"
+                logger.warning("Cannot settle OO05 pick with unknown side: %r", prediction)
+                return None
     return None
 
 # =============================================================================

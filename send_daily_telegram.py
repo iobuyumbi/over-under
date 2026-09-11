@@ -12,7 +12,7 @@ def read_file(path):
 
 def send(token, chat_id, text):
     if not chat_id or not text:
-        return
+        return True
     max_len = 3900
     chunks = [text[i:i + max_len] for i in range(0, len(text), max_len)]
     for chunk in chunks:
@@ -22,9 +22,12 @@ def send(token, chat_id, text):
                 data={"chat_id": chat_id, "text": chunk},
                 timeout=30,
             )
+            r.raise_for_status()
             print(f"Sent chunk to {chat_id}: {r.status_code}")
         except Exception as e:
             print(f"Failed to send to {chat_id}: {e}")
+            return False
+    return True
 
 
 def main():
@@ -46,10 +49,10 @@ def main():
     print(f"Free report length: {len(free_report)}")
     print(f"VIP report length: {len(vip_report)}")
 
-    send(token, free_channel, free_report)
+    sent = send(token, free_channel, free_report)
     if vip_channel:
-        send(token, vip_channel, vip_report)
-    return 0
+        sent = send(token, vip_channel, vip_report) and sent
+    return 0 if sent else 1
 
 
 if __name__ == "__main__":

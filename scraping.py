@@ -230,9 +230,6 @@ def get_h2h_meetings(home_team_id, away_team_id, results_fetcher, target_date_st
             match_date = match.get("date_str")
             if target_date_str and match_date and match_date >= target_date_str:
                 continue
-            key = (match_date, match.get("gf"), match.get("ga"), bool(match.get("is_home")))
-            if key in collected:
-                continue
             if str(team_id) == str(home_team_id):
                 perspective = dict(match)
             else:
@@ -246,6 +243,17 @@ def get_h2h_meetings(home_team_id, away_team_id, results_fetcher, target_date_st
                     "result": flipped_result,
                     "is_home": not match.get("is_home"),
                 }
+            # Both team pages contain the same fixture.  Deduplicate only
+            # after converting each row to the common home-team perspective;
+            # otherwise the mirrored score and venue fields produce two keys.
+            key = (
+                perspective.get("date_str"),
+                perspective.get("gf"),
+                perspective.get("ga"),
+                bool(perspective.get("is_home")),
+            )
+            if key in collected:
+                continue
             collected[key] = perspective
     meetings = sorted(collected.values(), key=lambda m: m.get("date_str") or "", reverse=True)
     return meetings[:limit]

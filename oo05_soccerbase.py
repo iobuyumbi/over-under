@@ -903,7 +903,10 @@ def main():
         for pick in away_perfect + away_qualified + away_close:
             tier = pick["away_team_goals"].get("tier") or ("perfect" if pick in away_perfect else "qualified" if pick in away_qualified else "close")
             picks.append({"league": pick["match"]["league"], "home": pick["match"]["home"], "away": pick["match"]["away"], "date": pick["match"]["date"], "prediction": "away_team_goals", "confidence": tier})
-        stats = record_predictions(base_date, team_goals_picks=picks)
+        # ``record_predictions`` stores this market under the oo05 section.
+        # Keep the side in ``prediction``: settlement needs to know whether
+        # the home or away team, rather than either team, was backed to score.
+        stats = record_predictions(base_date, oo05_picks=picks)
         if stats.get("added"): print(f"Predictions recorded ({stats['added']} new)")
         elif stats.get("skipped"): print(f"Predictions already recorded ({stats['skipped']} skipped)")
     except Exception as e:
