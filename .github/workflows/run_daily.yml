@@ -2,20 +2,20 @@ name: Daily Soccer Predictions + Results
 
 on:
   schedule:
-    - cron: "0 1 * * *"   # 4:00 AM EAT: daily predictions
+    - cron: "0 1 * * *"   # 4:00 AM EAT: publish already-committed daily predictions to Telegram
     - cron: "0 22 * * *"  # 1:00 AM EAT: settle recent results
-    - cron: "0 3 * * 1"   # 6:00 AM EAT Mondays: weekly report
-    - cron: "0 3 1 * *"   # 6:00 AM EAT on the 1st: monthly report
+    - cron: "0 3 * * 1"   # 6:00 AM EAT Mondays: weekly report (settle + publish)
+    - cron: "0 3 1 * *"   # 6:00 AM EAT on the 1st: monthly report (settle + publish)
   workflow_dispatch:
     inputs:
       mode:
         description: "What should this manual run do?"
         required: true
-        default: "results"
+        default: "publish"
         type: choice
         options:
           - results
-          - predictions
+          - publish
           - weekly
           - monthly
           - all
@@ -62,14 +62,12 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        shell: bash
         timeout-minutes: 15
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Fetch and settle match results
-        shell: bash
         timeout-minutes: 90
         run: |
           DAYS="${{ github.event.inputs.days_back || '3' }}"
@@ -101,7 +99,6 @@ jobs:
 
       - name: Send Telegram selected match results
         if: always()
-        shell: bash
         run: python send_results_telegram.py
         env:
           DAYS_BACK: ${{ github.event.inputs.days_back || '3' }}
@@ -110,7 +107,6 @@ jobs:
           TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
 
       - name: Commit updated results
-        shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -123,323 +119,87 @@ jobs:
             git push origin main
           fi
 
-  daily-predictions:
-    runs-on: self-hosted
-    timeout-minutes: 240
+  publish-daily:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
     defaults:
       run:
         shell: bash
-    needs: fetch-results
     if: |
-      always() &&
-      !cancelled() &&
-      (needs.fetch-results.result == 'success' || needs.fetch-results.result == 'skipped') &&
-      (github.event.schedule == '0 1 * * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'predictions' || github.event.inputs.mode == 'all')))
+      github.event.schedule == '0 1 * * *' ||
+      (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'publish' || github.event.inputs.mode == 'all'))
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Restore Soccerbase scrape cache (self-hosted)
-        uses: actions/cache@v4
-        with:
-          path: |
-            soccerbase_cache_*.db
-            soccerbase_cache*.db
-            *.sqlite
-            *.sqlite3
-          key: soccerbase-scrape-cache-${{ github.run_id }}
-          restore-keys: |
-            soccerbase-scrape-cache-
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
-        shell: bash
-        timeout-minutes: 15
+      - name: Install dependencies (dotenv + requests for Telegram sender)
+        timeout-minutes: 5
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Sync with latest main
-        shell: bash
         run: git pull --rebase origin main
 
-      - name: Fetch recent results before publishing
-        shell: bash
-        timeout-minutes: 60
-        run: |
-          for attempt in 1 2 3; do
-            echo "=== Results fetch attempt $attempt ==="
-            if python fetch_results.py --days 3 2>&1 | tee fetch_output_automated.txt; then
-              echo "Results fetch OK on attempt $attempt"
-              break
-            fi
-            echo "Attempt $attempt failed, retrying in 45s..."
-            sleep 45
-          done
-          python update_manual_results.py 2>&1 | tee update_manual_output.txt || true
-          python fetch_results.py --days 3 2>&1 | tee fetch_output.txt || true
-        env:
-          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
-
-      - name: Run Over/Under predictor
-        id: over-under
-        continue-on-error: true
-        shell: bash
-        timeout-minutes: 90
+      - name: Determine publish date (EAT = UTC+3)
+        id: date
         run: |
           DATE="$(python -c "from datetime import datetime,timedelta; print((datetime.utcnow()+timedelta(hours=3)).strftime('%Y-%m-%d'))")"
           echo "Using publish date: $DATE"
-          for attempt in 1 2; do
-            echo "=== O/U predictor attempt $attempt ==="
-            if python over25_soccerbase.py --publish-date "$DATE" > output.txt 2> errors.txt; then
-              echo "O/U predictor OK on attempt $attempt"
-              break
-            fi
-            echo "Attempt $attempt failed, retrying in 30s..."
-            sleep 30
-          done
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
-          if [ -f output.txt ]; then
-            awk '/===EMAIL_START===/{s=NR; next} /===EMAIL_END===/{e=NR; exit} {if(s && !e) print}' output.txt > over25_body.tmp
-            if [ -s over25_body.tmp ]; then
-              mv over25_body.tmp over25_body.txt
-            else
-              rm -f over25_body.tmp over25_body.txt
-            fi
-          else
-            rm -f over25_body.txt
-          fi
 
-      - name: Run Home Win predictor
-        id: home-win
-        continue-on-error: true
-        shell: bash
-        timeout-minutes: 90
+      - name: Verify committed report files exist
         run: |
-          DATE="${{ steps.over-under.outputs.date }}"
-          for attempt in 1 2; do
-            echo "=== Home Win predictor attempt $attempt ==="
-            if python home_win_soccerbase.py --publish-date "$DATE" > hw_output.txt 2> hw_errors.txt; then
-              echo "Home Win predictor OK on attempt $attempt"
-              break
-            fi
-            echo "Attempt $attempt failed, retrying in 30s..."
-            sleep 30
+          DATE="${{ steps.date.outputs.date }}"
+          echo "=== Checking today's committed files for $DATE ==="
+          for f in ou_telegram.txt btts_telegram.txt hw_telegram.txt oo05_telegram.txt telegram.txt curated.txt curated.json; do
+            if [ -f "$f" ]; then echo "OK  $f ($(wc -c < "$f") bytes)"; else echo "MISSING $f (expected from run_local.bat commit)"; fi
           done
-          if [ -f hw_output.txt ]; then
-            awk '/===EMAIL_START===/{s=NR; next} /===EMAIL_END===/{e=NR; exit} {if(s && !e) print}' hw_output.txt > hw_body.tmp
-            if [ -s hw_body.tmp ]; then
-              mv hw_body.tmp hw_body.txt
-            else
-              rm -f hw_body.tmp hw_body.txt
-            fi
-          else
-            rm -f hw_body.txt
-          fi
-
-      - name: Run BTTS predictor
-        id: btts
-        continue-on-error: true
-        shell: bash
-        timeout-minutes: 90
-        run: |
-          DATE="${{ steps.over-under.outputs.date }}"
-          for attempt in 1 2; do
-            echo "=== BTTS predictor attempt $attempt ==="
-            if python btts_soccerbase.py --publish-date "$DATE" > btts_output.txt 2> btts_errors.txt; then
-              echo "BTTS predictor OK on attempt $attempt"
-              break
-            fi
-            echo "Attempt $attempt failed, retrying in 30s..."
-            sleep 30
+          echo ""
+          echo "=== Checking VIP reports for $DATE ==="
+          for f in \
+            "over_under_vip_report_${DATE}.txt" "btts_vip_report_${DATE}.txt" \
+            "home_win_vip_report_${DATE}.txt" "over05_team_goal_vip_report_${DATE}.txt" \
+            "over_under_25_report_${DATE}.json" "btts_report_${DATE}.json" \
+            "home_win_report_${DATE}.json" "over05_team_goal_report_${DATE}.json"; do
+            if [ -f "$f" ]; then echo "OK  $f ($(wc -c < "$f") bytes)"; else echo "MISSING $f (optional)"; fi
           done
-          if [ -f btts_output.txt ]; then
-            awk '/===EMAIL_START===/{s=NR; next} /===EMAIL_END===/{e=NR; exit} {if(s && !e) print}' btts_output.txt > btts_body.tmp
-            if [ -s btts_body.tmp ]; then
-              mv btts_body.tmp btts_body.txt
-            else
-              rm -f btts_body.tmp btts_body.txt
-            fi
-          else
-            rm -f btts_body.txt
-          fi
 
-      - name: Run Over 0.5 Team Goal predictor
-        id: oo05
-        continue-on-error: true
-        shell: bash
-        timeout-minutes: 90
-        run: |
-          DATE="${{ steps.over-under.outputs.date }}"
-          for attempt in 1 2; do
-            echo "=== O0.5 Team Goal predictor attempt $attempt ==="
-            if python oo05_soccerbase.py --publish-date "$DATE" > oo05_output.txt 2> oo05_errors.txt; then
-              echo "O0.5 Team Goal predictor OK on attempt $attempt"
-              break
-            fi
-            echo "Attempt $attempt failed, retrying in 30s..."
-            sleep 30
-          done
-          if [ -f oo05_output.txt ]; then
-            awk '/===EMAIL_START===/{s=NR; next} /===EMAIL_END===/{e=NR; exit} {if(s && !e) print}' oo05_output.txt > oo05_body.tmp
-            if [ -s oo05_body.tmp ]; then
-              mv oo05_body.tmp oo05_body.txt
-            else
-              rm -f oo05_body.tmp oo05_body.txt
-            fi
-          else
-            rm -f oo05_body.txt
-          fi
-
-      - name: Debug predictor output
-        if: always()
-        shell: bash
-        run: |
-          echo "=== Over/Under body size ==="
-          if [ -f over25_body.txt ]; then wc -c < over25_body.txt; else echo "0"; fi
-          echo "=== Home Win body size ==="
-          if [ -f hw_body.txt ]; then wc -c < hw_body.txt; else echo "0"; fi
-          echo "=== BTTS body size ==="
-          if [ -f btts_body.txt ]; then wc -c < btts_body.txt; else echo "0"; fi
-          echo "=== Over 0.5 TG body size ==="
-          if [ -f oo05_body.txt ]; then wc -c < oo05_body.txt; else echo "0"; fi
-          echo ""
-          echo "=== Over/Under Errors ==="
-          if [ -f errors.txt ]; then cat errors.txt; else echo "(none)"; fi
-          echo ""
-          echo "=== Home Win Errors ==="
-          if [ -f hw_errors.txt ]; then cat hw_errors.txt; else echo "(none)"; fi
-          echo ""
-          echo "=== BTTS Errors ==="
-          if [ -f btts_errors.txt ]; then cat btts_errors.txt; else echo "(none)"; fi
-          echo ""
-          echo "=== Over 0.5 TG Errors ==="
-          if [ -f oo05_errors.txt ]; then cat oo05_errors.txt; else echo "(none)"; fi
-
-      - name: Upload predictor logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: predictor-logs-${{ github.run_id }}
-          path: |
-            output.txt
-            hw_output.txt
-            btts_output.txt
-            oo05_output.txt
-            errors.txt
-            hw_errors.txt
-            btts_errors.txt
-            oo05_errors.txt
-            ou_telegram.txt
-            hw_telegram.txt
-            btts_telegram.txt
-            oo05_telegram.txt
-
-      - name: Build Telegram daily message
-        continue-on-error: true
-        shell: bash
-        run: |
-          DATE="${{ steps.over-under.outputs.date }}"
-          python build_telegram_daily.py --date "$DATE" \
-            --ou-output ou_telegram.txt \
-            --btts-output btts_telegram.txt \
-            --hw-output hw_telegram.txt \
-            --oo05-output oo05_telegram.txt \
-            --out telegram_daily.txt || true
-
-      - name: Upload Telegram message
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: telegram-message-${{ github.run_id }}
-          path: telegram_daily.txt
-          if-no-files-found: warn
-
-      - name: Build free and VIP reports
-        continue-on-error: true
-        shell: bash
-        run: |
-          DATE="${{ steps.over-under.outputs.date }}"
-
-          {
-            echo "━━━ OVER / UNDER 2.5 ━━━"
-            if [ -s over25_body.txt ]; then cat over25_body.txt; else echo "No qualifying picks today."; fi
-            echo ""
-            echo "━━━ BTTS (YES / NO) ━━━"
-            if [ -s btts_body.txt ]; then cat btts_body.txt; else echo "No qualifying BTTS picks today."; fi
-            echo ""
-            echo "━━━ HOME WIN ━━━"
-            if [ -s hw_body.txt ]; then cat hw_body.txt; else echo "No qualifying home win picks today."; fi
-            echo ""
-            echo "━━━ OVER 0.5 TEAM GOAL ━━━"
-            if [ -s oo05_body.txt ]; then cat oo05_body.txt; else echo "No qualifying over 0.5 team goal picks today."; fi
-          } > combined_free.txt
-
-          {
-            echo "DAILY PREDICTIONS (VIP)"
-            echo ""
-            if [ -f "over_under_vip_report_$DATE.txt" ]; then
-              cat "over_under_vip_report_$DATE.txt"
-            else
-              echo "Over/Under report unavailable."
-            fi
-            echo ""
-            if [ -f "btts_vip_report_$DATE.txt" ]; then
-              cat "btts_vip_report_$DATE.txt"
-            else
-              echo "BTTS report unavailable."
-            fi
-            echo ""
-            if [ -f "home_win_vip_report_$DATE.txt" ]; then
-              cat "home_win_vip_report_$DATE.txt"
-            else
-              echo "Home win report unavailable."
-            fi
-            echo ""
-            if [ -f "over05_team_goal_vip_report_$DATE.txt" ]; then
-              cat "over05_team_goal_vip_report_$DATE.txt"
-            else
-              echo "Over 0.5 team goal report unavailable."
-            fi
-          } > combined_vip.txt
-
-      - name: Commit predictions and reports
-        continue-on-error: true
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash origin main
-          shopt -s nullglob
-          files=(over_under_25_report_*.json home_win_report_*.json btts_report_*.json over05_team_goal_report_*.json over_under_vip_report_*.txt home_win_vip_report_*.txt btts_vip_report_*.txt over05_team_goal_vip_report_*.txt)
-          if [ ${#files[@]} -gt 0 ]; then
-            git add "${files[@]}"
-          fi
-          git add prediction_history.json manual_results.csv README.md
-          if git diff --cached --quiet; then
-            echo "No prediction/report changes to commit."
-          else
-            git commit -m "Daily update: predictions and results"
-            git push origin main
-          fi
-
-      - name: Send Telegram free and VIP messages
-        if: always()
-        shell: bash
+      - name: Publish committed reports to Telegram (free + VIP)
         run: python send_daily_telegram.py
         env:
-          DATE: ${{ steps.over-under.outputs.date }}
+          DATE: ${{ steps.date.outputs.date }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
 
+      - name: Upload publish artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-publish-${{ steps.date.outputs.date }}-${{ github.run_id }}
+          path: |
+            ou_telegram.txt
+            btts_telegram.txt
+            hw_telegram.txt
+            oo05_telegram.txt
+            telegram.txt
+            curated.txt
+            curated.json
+            over_under_vip_report_*.txt
+            btts_vip_report_*.txt
+            home_win_vip_report_*.txt
+            over05_team_goal_vip_report_*.txt
+          if-no-files-found: warn
+
   weekly-report:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
     defaults:
       run:
         shell: bash
@@ -454,19 +214,16 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        shell: bash
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Sync with latest main
-        shell: bash
         run: git pull --rebase origin main
 
       - name: Settle results and generate weekly report
         id: report
         continue-on-error: true
-        shell: bash
         run: |
           python fetch_results.py --days 10 || true
           python update_manual_results.py || true
@@ -475,10 +232,12 @@ jobs:
           REPORT_FILE=$(ls -t weekly_report_*.txt 2>/dev/null | head -1)
           echo "Latest weekly report: $REPORT_FILE"
           echo "file=$REPORT_FILE" >> "$GITHUB_OUTPUT"
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
-      - name: Commit weekly report
+      - name: Commit weekly report + settled results
         continue-on-error: true
-        shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -498,16 +257,17 @@ jobs:
 
       - name: Send weekly report to Telegram
         if: always()
-        shell: bash
         run: python send_periodic_telegram.py
         env:
           REPORT_FILE: ${{ steps.report.outputs.file }}
+          PERIOD: weekly
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
 
   monthly-report:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
     defaults:
       run:
         shell: bash
@@ -522,19 +282,16 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        shell: bash
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Sync with latest main
-        shell: bash
         run: git pull --rebase origin main
 
       - name: Settle results and generate monthly report
         id: report
         continue-on-error: true
-        shell: bash
         run: |
           python fetch_results.py --days 35 || true
           python update_manual_results.py || true
@@ -543,10 +300,12 @@ jobs:
           REPORT_FILE=$(ls -t monthly_report_*.txt 2>/dev/null | head -1)
           echo "Latest monthly report: $REPORT_FILE"
           echo "file=$REPORT_FILE" >> "$GITHUB_OUTPUT"
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
-      - name: Commit monthly report
+      - name: Commit monthly report + settled results
         continue-on-error: true
-        shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -566,10 +325,10 @@ jobs:
 
       - name: Send monthly report to Telegram
         if: always()
-        shell: bash
         run: python send_periodic_telegram.py
         env:
           REPORT_FILE: ${{ steps.report.outputs.file }}
+          PERIOD: monthly
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
