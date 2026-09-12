@@ -20,8 +20,13 @@ that lives inside the GitHub Actions workflow (run_daily.yml).
 import os
 import sys
 import requests
+from dotenv import load_dotenv
 
 from build_telegram_daily import build_daily_message, read_telegram_section
+
+# Local credentials live in .env (which is ignored by Git). Environment
+# variables still take precedence, which keeps GitHub Actions unchanged.
+load_dotenv()
 
 
 def _env_or(name, default=None):

@@ -25,15 +25,14 @@ Runs automatically every morning via GitHub Actions.
 
 `run_local.bat` fetches results, generates all four markets (Over/Under,
 BTTS, Home Win, and Over 0.5 Team Goal), builds the Telegram report, and posts
-it automatically when these user environment variables are configured:
+it automatically when the following values are in a local `.env` file. Copy
+`.env.example` to `.env` and fill in the values:
 
 ```powershell
-setx TELEGRAM_BOT_TOKEN "your-bot-token"
-setx TELEGRAM_CHAT_ID "@your_free_channel"
-setx TELEGRAM_VIP_CHAT_ID "-1001234567890"
+TELEGRAM_BOT_TOKEN=your-bot-token
+TELEGRAM_CHAT_ID=@your_free_channel
+TELEGRAM_VIP_CHAT_ID=-1001234567890
 ```
-
-Close and reopen PowerShell after running `setx`, then run:
 
 ```powershell
 .\run_local.bat

@@ -267,6 +267,58 @@ def non_league_reliability_veto(league_name, home_venue_form, away_venue_form, m
     return False, None
 
 
+def conceded_in_n_of_m(form, n, m):
+    """Opponent conceded in >= n of their last m games (tuple-based
+    (gf, ga) form). Shared helper behind the "opponent concession gate"
+    pattern — this exact logic already existed independently in both
+    oo05_soccerbase.py (check_defence_gate) and home_win_soccerbase.py
+    (_opponent_concession_gate, dict-form variant) before being
+    centralized here on 2026-09-12. over25_soccerbase.py had neither —
+    it only had a softer average-based check — and was brought up to
+    the same standard rather than left with a bespoke third variant.
+    """
+    sample = (form or [])[:m]
+    if len(sample) < min(3, m):
+        return False, 0, len(sample)
+    conceded = sum(1 for _, ga in sample if ga >= 1)
+    return conceded >= n, conceded, len(sample)
+
+
+def opponent_concession_gate(opp_venue_form, opp_overall_form,
+                              venue_leak=(4, 5), venue_elite=(5, 5),
+                              overall_leak=(4, 6), overall_elite=(6, 6)):
+    """Hard gate: an opponent must have an actual track record of
+    conceding, not just an average that a good attacker's raw scoring
+    rate could paper over. Passes (and returns is_elite=True) on a
+    perfect concession streak; passes on a standard leak rate; otherwise
+    fails outright — this is a HARD veto candidate for callers, not a
+    soft score contributor.
+
+    Window sizes (venue_leak/venue_elite/overall_leak/overall_elite) are
+    parameterized because the three predictors that use this pattern
+    don't all fetch the same window sizes — home_win/oo05 use a 10-game
+    overall window, over25 only fetches 6. Same underlying logic and
+    same "n of m" framing either way.
+    """
+    passed, conceded, n = conceded_in_n_of_m(opp_venue_form, *venue_elite)
+    if passed:
+        return True, f"elite_venue_{conceded}/{n}", True
+    passed, conceded, n = conceded_in_n_of_m(opp_overall_form, *overall_elite)
+    if passed:
+        return True, f"elite_overall_{conceded}/{n}", True
+
+    passed, conceded, n = conceded_in_n_of_m(opp_venue_form, *venue_leak)
+    if passed:
+        return True, f"venue_{conceded}/{n}", False
+    passed, conceded, n = conceded_in_n_of_m(opp_overall_form, *overall_leak)
+    if passed:
+        return True, f"overall_{conceded}/{n}", False
+
+    v_c = sum(1 for _, ga in (opp_venue_form or [])[:venue_leak[1]] if ga >= 1)
+    o_c = sum(1 for _, ga in (opp_overall_form or [])[:overall_leak[1]] if ga >= 1)
+    return False, f"best_v{v_c}/{venue_leak[1]}_o{o_c}/{overall_leak[1]}", False
+
+
 def apply_portfolio_kelly(recommendations, bet_type, bankroll, max_exposure):
     """
     Scale Kelly fractions so total exposure does not exceed max_exposure.

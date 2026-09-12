@@ -15,6 +15,7 @@ env/
 # after removal.
 .env
 .env.*
+!.env.example
 api_key.txt
 *_key
 *_key.*

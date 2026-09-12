@@ -765,15 +765,25 @@ def _recent_heavy_blowout_loss_veto(home_overall_6, away_overall_6):
 
 
 def _dominant_favourite_clean_sheet_veto(home_6, away_6):
-    """Block BTTS Yes when it's a classic dominant-home / beat-up-away
+    """Block BTTS Yes when it's a classic dominant-favourite / beat-up
     matchup that historically produces 3-0 / 4-0 results, not 2-1 /
-    3-1. Specifically: home team won >= 4 of last 6 venue AND away
-    team lost >= 3 of last 6 venue AND home kept >= 2 clean sheets in
-    venue 6. Stoke vs Charlton was exactly this profile — Stoke's
-    home form was 5W-1D with 3 CS, Charlton's away was 4 losses.
+    3-1. Checks BOTH directions:
+      - home dominant: home won >= 4 of last 6 venue AND away lost >= 3
+        of last 6 venue AND home kept >= 2 clean sheets in venue 6.
+      - away dominant: away won >= 4 of last 6 venue AND home lost >= 3
+        of last 6 venue AND away kept >= 2 clean sheets in venue 6.
 
-    BTTS Yes on these fixtures is a bet that a weak away side will
-    suddenly score against an in-form home defence — a negative-EV bet.
+    Stoke vs Charlton was the home-dominant profile — Stoke's home form
+    was 5W-1D with 3 CS, Charlton's away was 4 losses. The away-dominant
+    mirror (a big away favourite beating up a struggling home side) is
+    rarer, since home advantage means away teams keep fewer clean sheets
+    on average — but it's the same underlying pattern and was missing
+    from this check entirely until 2026-09-10, checked only one
+    direction despite every other mismatch veto in this file (lambda
+    ratio, elite-defence-vs-dead-attack) correctly checking both sides.
+
+    BTTS Yes on either profile is a bet that the weak side will suddenly
+    score against an in-form defence — a negative-EV bet either way.
     """
     h = home_6 or []
     a = away_6 or []
@@ -785,9 +795,17 @@ def _dominant_favourite_clean_sheet_veto(home_6, away_6):
     away_losses = sum(1 for gf, ga in a[:an] if gf < ga)
     home_cs = sum(1 for _, ga in h[:hn] if ga == 0)
 
+    away_wins = sum(1 for gf, ga in a[:an] if gf > ga)
+    home_losses = sum(1 for gf, ga in h[:hn] if gf < ga)
+    away_cs = sum(1 for _, ga in a[:an] if ga == 0)
+
     if home_wins >= 4 and away_losses >= 3 and home_cs >= 2:
         return True, (
-            f"favourite_sweep_hw{home_wins}_al{away_losses}_hcs{home_cs}"
+            f"home_favourite_sweep_hw{home_wins}_al{away_losses}_hcs{home_cs}"
+        )
+    if away_wins >= 4 and home_losses >= 3 and away_cs >= 2:
+        return True, (
+            f"away_favourite_sweep_aw{away_wins}_hl{home_losses}_acs{away_cs}"
         )
     return False, None
 
