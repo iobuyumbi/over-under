@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-09-09
+✦ CURATED PICKS · 2026-09-11
   Input reports:
-    OU   → over_under_vip_report_2026-09-09.txt
-    BTTS → btts_vip_report_2026-09-09.txt
-    HW   → home_win_vip_report_2026-09-09.txt
+    OU   → over_under_vip_report_2026-09-11.txt
+    BTTS → btts_vip_report_2026-09-11.txt
+    HW   → home_win_vip_report_2026-09-11.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,10 +11,15 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-09-09)
+    • Today only (2026-09-11)
 
-━━━ OVER / UNDER 2.5  (0 accepted) ━━━
-  (none)
+━━━ OVER / UNDER 2.5  (2 accepted) ━━━
+   1. ✅ Cambrian United vs Holywell Town  (Welsh Premier)
+      Over 2.5 · High 79.8% · xG 2.52–1.74
+      Stake 0.1% @ 2.0  ·  EV +59.6c/$  ·  Edge +59.6%
+   2. ✅ Copenhagen vs AC Horsens  (Danish SAS Ligaen)
+      Over 2.5 · High 79.4% · xG 1.72–2.51
+      Stake 0.1% @ 2.0  ·  EV +58.8c/$  ·  Edge +58.8%
 
 ━━━ BTTS (Yes / No)  (0 accepted) ━━━
   (none)
@@ -22,8 +27,8 @@
 ━━━ HOME WIN  (0 accepted) ━━━
   (none)
 
-📊 Summary: 0 curated picks
-   Parsed total: 0   Rejected: 0   Accepted: 0
+📊 Summary: 2 curated picks
+   Parsed total: 152   Rejected: 150   Accepted: 2
 
 ---
 For informational purposes only · Gamble responsibly

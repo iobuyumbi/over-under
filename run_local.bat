@@ -58,25 +58,13 @@ if errorlevel 1 (
 )
 
 echo.
-echo === LOCAL TELEGRAM SEND (optional, gated on env vars) ===
-if defined TELEGRAM_BOT_TOKEN (
-  if defined TELEGRAM_CHAT_ID (
-    echo   TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID set — sending...
-    set "DATE=%RUN_DATE%"
-    python send_local_telegram.py
-    if errorlevel 1 (
-      echo   WARNING: send_local_telegram.py returned non-zero (see above)
-    ) else (
-      echo   --- send complete ---
-    )
-  ) else (
-    echo   Skipping: TELEGRAM_CHAT_ID not set.
-  )
+echo === LOCAL TELEGRAM SEND (optional, loaded from .env) ===
+set "DATE=%RUN_DATE%"
+python send_local_telegram.py
+if errorlevel 1 (
+  echo   WARNING: Telegram was not sent. Add TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID to .env.
 ) else (
-  echo   Skipping: TELEGRAM_BOT_TOKEN not set. To enable locally:
-  echo     set TELEGRAM_BOT_TOKEN=your_token_here
-  echo     set TELEGRAM_CHAT_ID=your_chat_id_here
-  echo     set TELEGRAM_VIP_CHAT_ID=optional_vip_chat_id
+  echo   --- send complete ---
 )
 
 echo.

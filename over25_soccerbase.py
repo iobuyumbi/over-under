@@ -32,6 +32,7 @@ from utils import (
     is_weak_roi_league as _shared_is_weak_roi_league,
     poisson_pmf as _shared_poisson_pmf,
     non_league_reliability_veto as _shared_non_league_reliability_veto,
+    opponent_concession_gate as _shared_opponent_concession_gate,
 )
 
 # Shared Soccerbase scraping/parsing (see scraping.py) — do not redefine
@@ -810,6 +811,44 @@ def _severe_offensive_crisis_veto(home_6, away_6, home_overall_6, away_overall_6
             return True, (f"home_winless_crisis_{home_overall_wins}w_in_{ho5_len}_"
                          f"{home_scoreless}scoreless_in_{min(3,h6_len)}home")
 
+    return False, None
+
+
+def _opponent_elite_defense_veto(home_6, away_6, home_overall_6, away_overall_6):
+    """Block Over 2.5 when EITHER side's specific opponent today has an
+    actual TRACK RECORD of conceding rarely — not just a low average,
+    a frequency-based "conceded in N of last M games" gate — regardless
+    of how strong the attacking side's OWN raw scoring average looks.
+
+    This used to be a bespoke average-based check (GA/game + clean sheet
+    count). Replaced 2026-09-12 with a call to the shared
+    opponent_concession_gate() in utils.py — the exact same "conceded in
+    N of M" pattern already proven in oo05_soccerbase.py's
+    check_defence_gate() and home_win_soccerbase.py's
+    _opponent_concession_gate(), rather than a third, differently-shaped
+    variant of the same underlying idea. over25 only fetches a 6-game
+    overall window (not 10 like the other two), so the overall thresholds
+    are scaled proportionally (4/6 leak, 6/6 elite vs. their 8/10 and
+    10/10) rather than fetching a new window just for this.
+
+    A team that's shut out 3+ of its last 6 at their own venue isn't
+    going to suddenly let the "expected" goals through just because the
+    attacker's season average looks good on paper — and unlike a plain
+    average, this can't be diluted by one high-scoring outlier game.
+    """
+    home_gate_pass, home_reason, home_elite = _shared_opponent_concession_gate(
+        home_6, home_overall_6
+    )
+    away_gate_pass, away_reason, away_elite = _shared_opponent_concession_gate(
+        away_6, away_overall_6
+    )
+    # Gate PASSING means the opponent has a real leak record (fine for
+    # Over). Gate FAILING means they don't — i.e. this opponent looks
+    # like a wall, which is exactly the risk this veto exists to catch.
+    if not home_gate_pass:
+        return True, f"home_opponent_no_leak_record_{home_reason}"
+    if not away_gate_pass:
+        return True, f"away_opponent_no_leak_record_{away_reason}"
     return False, None
 
 
@@ -1848,6 +1887,9 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         over_leak_gate, over_leak_reason = _over_leak_participation_gate(home_3, away_3)
         over_low_event_veto, over_low_event_reason = _combined_low_event_veto(home_3, away_3)
         over_goalless_shock_veto, over_goalless_shock_reason = _recent_goalless_shock_veto(home_3, away_3)
+        opponent_elite_defense_veto, opponent_elite_defense_reason = _opponent_elite_defense_veto(
+            home_6, away_6, home_overall_6, away_overall_6
+        )
         under_peak_game_veto, under_peak_game_reason = _under_peak_game_veto(home_6, away_6)
         derby_veto, derby_reason = _derby_veto(match)
         non_league_veto, non_league_reason = _shared_non_league_reliability_veto(league_name, home_6, away_6)
@@ -1950,6 +1992,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             and not mutual_cold_veto and not combined_weak_veto
             and not h2h_zero_bogey_veto and not borderline_one_veto
             and not one_sided_blank_veto and not venue_h2h_veto
+            and not opponent_elite_defense_veto
         )
         under_qualifies = (
             bool(under_passed) and under_score >= under_min_score and under_gate
@@ -2046,6 +2089,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append(f"combined low event ({over_low_event_reason})")
         if over_goalless_shock_veto:
             regressions.append(f"recent goalless shock ({over_goalless_shock_reason})")
+        if opponent_elite_defense_veto:
+            regressions.append(f"opponent elite defense ({opponent_elite_defense_reason})")
         if under_leak_veto:
             regressions.append(f"under defensive leak ({under_leak_reason})")
         if under_goal_shock_veto:

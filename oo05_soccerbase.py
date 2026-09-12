@@ -37,6 +37,8 @@ from utils import (
     exponential_form_averages as _shared_exponential_form_averages,
     is_weak_roi_league as _shared_is_weak_roi_league,
     poisson_pmf as _shared_poisson_pmf,
+    conceded_in_n_of_m as _shared_conceded_in_n_of_m,
+    opponent_concession_gate as _shared_opponent_concession_gate,
 )
 from scraping import (
     fetch_soccerbase_fixtures as _shared_fetch_fixtures,
@@ -152,12 +154,11 @@ def _scored_in_n_of_m(form, n, m):
 
 
 def _conceded_in_n_of_m(form, n, m):
-    """For defence gate: opponent conceded in >= n of last m games."""
-    sample = (form or [])[:m]
-    if len(sample) < min(3, m):
-        return False, 0, len(sample)
-    conceded = sum(1 for _, ga in sample if ga >= 1)
-    return conceded >= n, conceded, len(sample)
+    """[DEPRECATED 2026-09-12] Kept as thin wrapper around shared
+    utils.conceded_in_n_of_m() for any stray callers outside the main
+    check_defence_gate() path. New code should import from utils directly.
+    """
+    return _shared_conceded_in_n_of_m(form, n, m)
 
 
 def check_streak_gate(overall_form, venue_form):
@@ -180,27 +181,19 @@ def check_defence_gate(opp_venue_form, opp_overall_form):
 
     Returns: (passed, label, is_elite)
     is_elite = True if opponent conceded 5/5 venue OR 10/10 overall
+
+    [REFACTORED 2026-09-12] Delegates to the shared
+    utils.opponent_concession_gate() with O0.5's hardcoded 5/10 windows.
+    The gate logic was copy-pasted independently in oo05 / home_win /
+    (newly) over25; centralizing it prevents drift between the three.
     """
-    # Elite leak check first
-    passed, conceded, n = _conceded_in_n_of_m(opp_venue_form, *OPP_VENUE_ELITE_5)
-    if passed:
-        return True, f"elite_venue_{conceded}/{n}", True
-    passed, conceded, n = _conceded_in_n_of_m(opp_overall_form, *OPP_OVERALL_ELITE_10)
-    if passed:
-        return True, f"elite_overall_{conceded}/{n}", True
-
-    # Standard leak check
-    passed, conceded, n = _conceded_in_n_of_m(opp_venue_form, *OPP_VENUE_LEAK_5)
-    if passed:
-        return True, f"venue_{conceded}/{n}", False
-    passed, conceded, n = _conceded_in_n_of_m(opp_overall_form, *OPP_OVERALL_LEAK_10)
-    if passed:
-        return True, f"overall_{conceded}/{n}", False
-
-    # Fail
-    v_c = sum(1 for _, ga in (opp_venue_form or [])[:5] if ga >= 1)
-    o_c = sum(1 for _, ga in (opp_overall_form or [])[:10] if ga >= 1)
-    return False, f"best_v{v_c}/5_o{o_c}/10", False
+    return _shared_opponent_concession_gate(
+        opp_venue_form, opp_overall_form,
+        venue_leak=OPP_VENUE_LEAK_5,
+        venue_elite=OPP_VENUE_ELITE_5,
+        overall_leak=OPP_OVERALL_LEAK_10,
+        overall_elite=OPP_OVERALL_ELITE_10,
+    )
 
 
 # =============================================================================
