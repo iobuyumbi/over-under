@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 """
 Test API Football Key - Quick Test
+
+IMPORTANT: API keys must be set via environment variables or .env file.
+The previously hardcoded keys below are treated as COMPROMISED —
+rotate them at the provider immediately (they were committed to git).
 """
 
+import os
 import requests
 from datetime import datetime, timedelta
 
-# Your keys from working_predictor.py
-FOOTBALL_DATA_KEY = "a17ca455c2eb4ac79408f48dd8cca2bb"
-API_FOOTBALL_KEY = "168c8e43e9ff8e09752249976dc7115d"
+# Load from environment (never hardcode secrets in source)
+FOOTBALL_DATA_KEY = os.environ.get("FOOTBALL_DATA_KEY", "")
+API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_KEY", "")
 
 print("="*70)
 print("Testing API Keys...")

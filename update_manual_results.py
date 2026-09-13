@@ -12,6 +12,8 @@ import json
 import os
 from datetime import datetime, timedelta
 
+import requests
+
 API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_KEY", "")
 API_FOOTBALL_HOST = "v3.football.api-sports.io"
 MANUAL_CSV = "manual_results.csv"
@@ -90,19 +92,18 @@ def fetch_online(date, home, away):
     if not API_FOOTBALL_KEY:
         return None
     try:
-        import requests
         url = f"https://{API_FOOTBALL_HOST}/fixtures"
         headers = {
             "x-rapidapi-key": API_FOOTBALL_KEY,
             "x-rapidapi-host": API_FOOTBALL_HOST,
         }
-        # FT first (most matches), then any voided/postponed statuses
         for status_param in ("FT", "PST-CANC-ABD-SUSP-WO-AWD-BT"):
             params = {"date": date, "status": status_param}
             try:
                 resp = requests.get(url, headers=headers, params=params, timeout=30)
                 resp.raise_for_status()
-            except Exception:
+            except (requests.Timeout, requests.ConnectionError, requests.HTTPError, requests.RequestException) as e:
+                print(f"  [warn] API fetch failed status={status_param} date={date}: {type(e).__name__}: {e}")
                 continue
             data = resp.json()
             for fixture in data.get("response", []):
@@ -117,8 +118,10 @@ def fetch_online(date, home, away):
                     ga = fixture["goals"]["away"]
                     if gh is not None and ga is not None:
                         return f"{gh}-{ga}"
-    except Exception:
-        pass
+    except (ValueError, KeyError, TypeError) as e:
+        print(f"  [warn] fetch_online parse error for {date} {home} vs {away}: {type(e).__name__}: {e}")
+    except requests.RequestException as e:
+        print(f"  [warn] fetch_online request error for {date} {home} vs {away}: {type(e).__name__}: {e}")
     return None
 
 

@@ -352,7 +352,11 @@ def fetch_api_football(date_str):
             try:
                 resp = requests.get(url, headers=headers, params=params, timeout=30)
                 resp.raise_for_status()
-            except Exception:
+            except (requests.Timeout, requests.ConnectionError, requests.HTTPError, requests.RequestException) as e:
+                logger.warning(
+                    "API fetch failed date=%s status=%s: %s: %s",
+                    date_str, status_param, type(e).__name__, e
+                )
                 continue
             data = resp.json()
             for fixture in data.get("response", []):
