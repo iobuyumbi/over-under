@@ -24,7 +24,7 @@ from config import (
     REQUEST_DELAY_MAX,
     MAX_TOTAL_EXPOSURE,
     HOME_WIN_CACHE_DB,
-    HOME_WIN_HOME_WIN_SHRINKAGE_WEIGHT,
+    HOME_WIN_SHRINKAGE_WEIGHT,
 
     # Home Win scoring / tiers / weights
     MAX_HOME_WIN_SCORE,
