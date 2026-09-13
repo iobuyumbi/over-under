@@ -15,6 +15,60 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+# ─── Centralized config (single source of truth) ──────────────────────────
+from config import (
+    # Shared infrastructure
+    CACHE_TTL_HOURS,
+    MAX_WORKERS,
+    REQUEST_DELAY_MIN,
+    REQUEST_DELAY_MAX,
+    MAX_TOTAL_EXPOSURE,
+    SHRINKAGE_WEIGHT,
+    BTTS_CACHE_DB,
+
+    # BTTS scoring ranges
+    MAX_BTTS_YES_SCORE,
+    MAX_BTTS_NO_SCORE,
+
+    # BTTS mini-gates (reused from OU section)
+    BTTS_MIN_6,
+    NON_BTTS_MIN_6,
+
+    # BTTS lambda thresholds
+    MIN_COMBINED_LAMBDA_BTTS_YES,
+    MAX_COMBINED_LAMBDA_BTTS_NO,
+    PREMIUM_COMBINED_LAMBDA_BTTS_YES,
+    PREMIUM_COMBINED_LAMBDA_BTTS_NO,
+
+    # BTTS default odds
+    DEFAULT_ODDS_BTTS_YES,
+    DEFAULT_ODDS_BTTS_NO,
+
+    # over25tips BTTS point algorithm
+    MIN_O25TIPS_BTTS_YES_POINTS,
+    MAX_O25TIPS_BTTS_NO_POINTS,
+    O25TIPS_FORM_WINDOW,
+
+    # BTTS tiers / weights / data
+    BTTSBTTS_WEIGHT_RULES,
+    BTTS_WEIGHT_MODEL,
+    BTTSBTTS_WEIGHT_EDGE,
+    BTTSBTTS_TIER_PREMIUM_CUTOFF,
+    BTTSBTTS_TIER_SOLID_CUTOFF,
+    BTTSBTTS_MIN_DATA_GAMES,
+    BTTSBTTS_MIN_FORM_HALFLIFE,
+
+    # BTTS weak ROI
+    BTTSBTTS_WEAK_ROI_LEAGUE_KEYWORDS,
+    BTTSBTTS_WEAK_ROI_MULTIPLIER,
+
+    # BTTS H2H
+    BTTS_H2H_MAX_LOOKBACK,
+    BTTS_H2H_MIN_MEETINGS,
+    BTTS_H2H_YES_BLOCK_RATE,
+    BTTS_H2H_NO_BLOCK_RATE,
+)
+
 # Shared scraping/caching/date/staking helpers (see utils.py) — do not
 # redefine Cache, fetch, parse_date, or calculate_kelly locally; that
 # copy-paste pattern is exactly what let this file and its siblings
@@ -29,7 +83,7 @@ from utils import (
     exponential_form_averages as _shared_exponential_form_averages,
     is_weak_roi_league as _shared_is_weak_roi_league,
     poisson_pmf as _shared_poisson_pmf,
-    non_league_reliability_veto as _shared_non_league_reliability_veto,
+    non_league_reliability_veto,
 )
 
 # Shared Soccerbase scraping/parsing (see scraping.py) — do not redefine
@@ -71,73 +125,13 @@ from prediction_tracker import (
     MARKET_BTTS_NO,
 )
 
-# =============================================================================
-# CONFIGURATION
-# =============================================================================
-CACHE_DB = "soccerbase_cache_btts.db"
-CACHE_TTL_HOURS = 24
-MAX_WORKERS = 4
-REQUEST_DELAY_MIN = 2.5
-REQUEST_DELAY_MAX = 5.0
-MAX_TOTAL_EXPOSURE = 0.25
-SHRINKAGE_WEIGHT = 0.60
-
-if os.getenv("CI"):
-    MAX_WORKERS = 2
-    REQUEST_DELAY_MIN = 4.0
-    REQUEST_DELAY_MAX = 8.0
-    print("CI environment detected: throttling to 2 workers")
-
-MAX_BTTS_YES_SCORE = 14
-MAX_BTTS_NO_SCORE = 14
-BTTS_MIN_6 = 3
-NON_BTTS_MIN_6 = 3
-
-MIN_COMBINED_LAMBDA_BTTS_YES = 2.50
-MAX_COMBINED_LAMBDA_BTTS_NO = 2.80
-PREMIUM_COMBINED_LAMBDA_BTTS_YES = 2.90
-PREMIUM_COMBINED_LAMBDA_BTTS_NO = 2.20
-
-DEFAULT_ODDS_BTTS_YES = 1.90
-DEFAULT_ODDS_BTTS_NO = 1.85
-
-# over25tips.com official BTTS point algorithm (BetAndSkill / over25tips)
-MIN_O25TIPS_BTTS_YES_POINTS = 7.0
-MAX_O25TIPS_BTTS_NO_POINTS = 3.0
-_O25TIPS_FORM_WINDOW = 6
-
-_WEIGHT_RULES = 0.40
-_WEIGHT_MODEL = 0.40
-_WEIGHT_EDGE = 0.20
-_TIER_PREMIUM_CUTOFF = 0.62
-_TIER_SOLID_CUTOFF = 0.54
-_MIN_DATA_GAMES = 5
-_MIN_FORM_HALFLIFE = 3.0
-
-_WEAK_ROI_LEAGUE_KEYWORDS = (
-    "swedish allsvenskan", "allsvenskan", "superettan",
-    "belarus",
-    "k-league", "k league", "korean k-league",
-    "league of ireland", "irish", "fai cup",
-    "mexican primera", "brazilian serie a",
-    "mls", "ecuador", "argentina primera", "chile primera",
-)
-_WEAK_ROI_MULTIPLIER = 0.82
-
-_BTTS_H2H_MAX_LOOKBACK = 6
-_BTTS_H2H_MIN_MEETINGS = 3
-_BTTS_H2H_YES_BLOCK_RATE = 0.33
-_BTTS_H2H_NO_BLOCK_RATE = 0.67
-
-_LEAGUE_BASELINE_CACHE = {}
-
+# ─── Logging ──────────────────────────────────────────────────────────────
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-# HTTP session + cache: implementation lives in utils.py and is shared
-# with the other two predictors. Build the session once per process.
+# ─── Session + Cache (bound to this market's DB, shared TTL/concurrency) ─
 session = build_session()
-cache = Cache(db_path=CACHE_DB, ttl_hours=CACHE_TTL_HOURS)
+cache = Cache(db_path=BTTS_CACHE_DB, ttl_hours=CACHE_TTL_HOURS)
 
 
 def fetch(url, use_cache=True):
@@ -152,9 +146,7 @@ def fetch(url, use_cache=True):
     )
 
 
-# =============================================================================
-# SCRAPING (shared implementation in scraping.py)
-# =============================================================================
+# ─── Thin scraping wrappers (fine to keep here — callers below use them) ──
 def fetch_soccerbase_fixtures(date_str):
     return _shared_fetch_fixtures(date_str, fetch)
 
@@ -173,6 +165,12 @@ def get_team_overall_form(team_id, num_matches=6, target_date_str=None):
     return _shared_get_team_overall_form(
         team_id, fetch_soccerbase_team_results, num_matches, target_date_str, parse_date
     )
+
+# =============================================================================
+# FORM & DATA HELPERS
+# =============================================================================
+
+_LEAGUE_BASELINE_CACHE = {}
 
 
 # _thin_count/_thin_total and _count_* form helpers are imported from scraping.py —
@@ -228,7 +226,7 @@ def _compact_btts_no_bonus(home_6, away_6):
     return hs <= 1.0 and hc <= 0.9 and as_ <= 1.0 and ac <= 0.9
 
 
-def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=_BTTS_H2H_MAX_LOOKBACK):
+def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=BTTS_H2H_MAX_LOOKBACK):
     """Recent meetings between these sides, merged from both teams' result pages."""
     return _shared_get_h2h_meetings(
         home_team_id, away_team_id, fetch_soccerbase_team_results, target_date_str, limit
@@ -243,7 +241,7 @@ def _h2h_btts_yes_blocked(home_team_id, away_team_id, target_date_str=None):
       - OR the last 3 H2H meetings were ALL BTTS No (streak veto)
     """
     meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str, limit=8)
-    if len(meetings) < _BTTS_H2H_MIN_MEETINGS:
+    if len(meetings) < BTTS_H2H_MIN_MEETINGS:
         return False, meetings
         
     btts_count = sum(1 for m in meetings if m.get("gf", 0) >= 1 and m.get("ga", 0) >= 1)
@@ -252,7 +250,7 @@ def _h2h_btts_yes_blocked(home_team_id, away_team_id, target_date_str=None):
     # Recent streak check: last 3 were all BTTS No
     last_3_no = all(m.get("gf", 0) == 0 or m.get("ga", 0) == 0 for m in meetings[:3])
     
-    if rate <= _BTTS_H2H_YES_BLOCK_RATE or (len(meetings) >= 3 and last_3_no):
+    if rate <= BTTS_H2H_YES_BLOCK_RATE or (len(meetings) >= 3 and last_3_no):
         return True, meetings
         
     return False, meetings
@@ -283,11 +281,11 @@ def _h2h_btts_no_blocked(home_team_id, away_team_id, target_date_str=None):
     Blocks if >=3 H2H meetings AND >=67% had both teams score (bogey BTTS matchup).
     """
     meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str)
-    if len(meetings) < _BTTS_H2H_MIN_MEETINGS:
+    if len(meetings) < BTTS_H2H_MIN_MEETINGS:
         return False, meetings
     btts_count = sum(1 for m in meetings if m.get("gf", 0) >= 1 and m.get("ga", 0) >= 1)
     rate = btts_count / len(meetings)
-    return rate >= _BTTS_H2H_NO_BLOCK_RATE, meetings
+    return rate >= BTTS_H2H_NO_BLOCK_RATE, meetings
 
 
 # =============================================================================
@@ -469,7 +467,7 @@ def _extreme_shutout_potential_veto(home_overall_6, away_overall_6):
 
 def _non_league_reliability_veto(match, home_6, away_6):
     league = match.get("league")
-    return _shared_non_league_reliability_veto(league, home_6, away_6)
+    return non_league_reliability_veto(league, home_6, away_6)
 
 
 def _overall_btts_symmetry_veto(home_overall_6, away_overall_6, side):
@@ -933,7 +931,7 @@ def _o25tips_venue_points(form_venue):
     goals_over_2 = 0.0
     conceded_over_2 = 0.0
     nil_nil = 0
-    for gf, ga in form_venue[:_O25TIPS_FORM_WINDOW]:
+    for gf, ga in form_venue[:O25TIPS_FORM_WINDOW]:
         if gf > 2:
             goals_over_2 += (gf - 2) * 0.5
         if ga > 2:
@@ -950,8 +948,8 @@ def _o25tips_venue_points(form_venue):
 
 def _o25tips_team_points(form_overall, form_venue, prefix):
     """R1-R5 home or R6-R10 away team point block."""
-    overall_btts = sum(1 for gf, ga in form_overall[:_O25TIPS_FORM_WINDOW] if gf >= 1 and ga >= 1)
-    venue_btts = sum(1 for gf, ga in form_venue[:_O25TIPS_FORM_WINDOW] if gf >= 1 and ga >= 1)
+    overall_btts = sum(1 for gf, ga in form_overall[:O25TIPS_FORM_WINDOW] if gf >= 1 and ga >= 1)
+    venue_btts = sum(1 for gf, ga in form_venue[:O25TIPS_FORM_WINDOW] if gf >= 1 and ga >= 1)
     venue_pts, venue_detail = _o25tips_venue_points(form_venue)
     total = overall_btts + venue_btts + venue_pts
     details = {
@@ -1276,12 +1274,12 @@ def apply_btts_no_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None,
 # =============================================================================
 # POISSON / LAMBDAS
 # =============================================================================
-def _exponential_form_averages(form_tuples, halflife=_MIN_FORM_HALFLIFE):
+def _exponential_form_averages(form_tuples, halflife=BTTS_MIN_FORM_HALFLIFE):
     return _shared_exponential_form_averages(form_tuples, halflife)
 
 
 def _is_weak_roi_league(league_name):
-    return _shared_is_weak_roi_league(league_name, _WEAK_ROI_LEAGUE_KEYWORDS)
+    return _shared_is_weak_roi_league(league_name, BTTS_WEAK_ROI_LEAGUE_KEYWORDS)
 
 
 def _load_league_baselines():
@@ -1353,7 +1351,7 @@ def get_match_lambdas(home_6, away_6, league_name=None):
     if not (away_6 or []):
         a_gf, a_ga = a_att_b, h_def_b
     shrink = SHRINKAGE_WEIGHT
-    if len(home_6 or []) < _MIN_DATA_GAMES or len(away_6 or []) < _MIN_DATA_GAMES:
+    if len(home_6 or []) < BTTS_MIN_DATA_GAMES or len(away_6 or []) < BTTS_MIN_DATA_GAMES:
         shrink = max(0.45, SHRINKAGE_WEIGHT - 0.15)
     h_attack = shrink * h_gf + (1 - shrink) * h_att_b
     h_defense = shrink * h_ga + (1 - shrink) * a_def_b
@@ -1393,7 +1391,7 @@ def lambda_gate_passes(home_lambda, away_lambda, side):
 
 def data_volume_penalty(home_6, away_6):
     n = min(len(home_6 or []), len(away_6 or []))
-    if n >= _MIN_DATA_GAMES:
+    if n >= BTTS_MIN_DATA_GAMES:
         return 1.0
     if n >= 4:
         return 0.95
@@ -1409,7 +1407,7 @@ def compute_confidence_score(rule_score, max_score, model_prob_pct, decimal_odds
     model_component = max(0.0, min(1.0, model_prob_pct / 100.0))
     implied = 1.0 / max(1.05, decimal_odds)
     edge_component = max(0.0, min(1.0, (model_prob_pct / 100.0 - implied) + 0.5))
-    raw = _WEIGHT_RULES * rule_component + _WEIGHT_MODEL * model_component + _WEIGHT_EDGE * edge_component
+    raw = BTTS_WEIGHT_RULES * rule_component + _WEIGHT_MODEL * model_component + BTTS_WEIGHT_EDGE * edge_component
     return max(0.0, min(1.0, raw * data_mult))
 
 
@@ -1419,9 +1417,9 @@ def tier_from_confidence(score, side, home_lambda, away_lambda, is_perfect=True)
         (side == "yes" and combined >= PREMIUM_COMBINED_LAMBDA_BTTS_YES)
         or (side == "no" and combined <= PREMIUM_COMBINED_LAMBDA_BTTS_NO)
     )
-    if score >= _TIER_PREMIUM_CUTOFF and premium_ok and is_perfect:
+    if score >= BTTS_TIER_PREMIUM_CUTOFF and premium_ok and is_perfect:
         return "perfect"
-    if score >= _TIER_SOLID_CUTOFF:
+    if score >= BTTS_TIER_SOLID_CUTOFF:
         return "qualified"
     return "close"
 
@@ -1604,7 +1602,7 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
             if not (home_reliable and away_reliable):
                 yes_qualifies = False
 
-        league_mult = _WEAK_ROI_MULTIPLIER if weak else 1.0
+        league_mult = BTTS_WEAK_ROI_MULTIPLIER if weak else 1.0
         final_mult = data_mult * league_mult
 
         yes_conf = compute_confidence_score(yes_score, MAX_BTTS_YES_SCORE + 1, btts_yes_pct, odds_yes, final_mult)

@@ -5,6 +5,9 @@ OVER/UNDER 2.5 GOALS PREDICTOR - UNIFIED v5
 Over 2.5: High-scoring rules + overall goal-activity filter (last 6)
 Under 2.5: Low-scoring mirror rules + overall under 2.5 in 4/6
 Shrinkage xG | Portfolio Kelly | SQLite Cache
+
+Configuration lives in config.py (shared to prevent drift).
+Only market-specific logic that CANNOT be shared lives below.
 """
 
 import json
@@ -17,10 +20,57 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# Shared scraping/caching/date/staking helpers (see utils.py) — do not
-# redefine Cache, fetch, parse_date, or calculate_kelly locally; that
-# copy-paste pattern is exactly what previously let this file and its
-# siblings (home_win_soccerbase.py, btts_soccerbase.py) drift apart.
+# ─── Centralized config (single source of truth) ──────────────────────────
+from config import (
+    # Shared infrastructure
+    CACHE_TTL_HOURS,
+    MAX_WORKERS,
+    REQUEST_DELAY_MIN,
+    REQUEST_DELAY_MAX,
+    MAX_TOTAL_EXPOSURE,
+    SHRINKAGE_WEIGHT,
+    OVER25_CACHE_DB,
+
+    # OU scoring ranges + Under caps
+    MAX_OVER_SCORE,
+    MAX_UNDER_SCORE,
+    UNDER_HOME_SCORED_CAP,
+    UNDER_HOME_CONCEDED_CAP,
+    UNDER_AWAY_SCORED_CAP,
+    UNDER_AWAY_CONCEDED_CAP,
+    UNDER_HOME_TOTAL_6_CAP,
+    UNDER_AWAY_TOTAL_6_CAP,
+    UNDER_HOME_OVER25_MAX,
+    UNDER_AWAY_OVER25_MAX,
+
+    # BTTS mini-gates reused inside OU
+    BTTS_MIN_6,
+    NON_BTTS_MIN_6,
+
+    # Lambda thresholds
+    MIN_COMBINED_LAMBDA_OVER,
+    MAX_COMBINED_LAMBDA_UNDER,
+    PREMIUM_COMBINED_LAMBDA_OVER,
+    PREMIUM_COMBINED_LAMBDA_UNDER,
+
+    # Form / regression / weak ROI
+    MIN_FORM_HALFLIFE,
+    REGRESSION_OVER_STREAK,
+    REGRESSION_UNDER_STREAK,
+    REGRESSION_PENALTY,
+    WEAK_ROI_MULTIPLIER,
+    WEAK_ROI_OVER_LAMBDA_BOOST,
+    WEAK_ROI_UNDER_LAMBDA_REDUCTION,
+    WEAK_ROI_LEAGUE_KEYWORDS,
+
+    # OU H2H
+    OU_H2H_MAX_LOOKBACK,
+    OU_H2H_MIN_MEETINGS,
+    OU_H2H_OVER_BLOCK_RATE,
+    OU_H2H_UNDER_BLOCK_RATE,
+)
+
+# ─── Shared infrastructure helpers ────────────────────────────────────────
 from utils import (
     Cache,
     build_session,
@@ -28,17 +78,14 @@ from utils import (
     parse_date,
     calculate_kelly,
     apply_portfolio_kelly,
-    exponential_form_averages as _shared_exponential_form_averages,
-    is_weak_roi_league as _shared_is_weak_roi_league,
-    poisson_pmf as _shared_poisson_pmf,
-    non_league_reliability_veto as _shared_non_league_reliability_veto,
-    opponent_concession_gate as _shared_opponent_concession_gate,
+    exponential_form_averages,
+    is_weak_roi_league,
+    poisson_pmf,
+    non_league_reliability_veto,
+    opponent_concession_gate,
 )
 
-# Shared Soccerbase scraping/parsing (see scraping.py) — do not redefine
-# fetch_soccerbase_fixtures, fetch_soccerbase_team_results, get_team_form,
-# get_team_overall_form, or _thin_count/_thin_total locally; same
-# copy-paste-drift risk as the utils.py helpers above.
+# ─── Shared scraping / parsing helpers ────────────────────────────────────
 from scraping import (
     fetch_soccerbase_fixtures as _shared_fetch_fixtures,
     fetch_soccerbase_team_results as _shared_fetch_team_results,
@@ -53,7 +100,7 @@ from scraping import (
     _count_under25,
 )
 
-# Import prediction tracker
+# ─── Prediction tracker I/O ───────────────────────────────────────────────
 from prediction_tracker import (
     record_predictions,
     format_vip_extra_lines,
@@ -78,50 +125,20 @@ from prediction_tracker import (
     MARKET_UNDER25,
 )
 
-# =============================================================================
-# CONFIGURATION
-# =============================================================================
-CACHE_DB = "soccerbase_cache.db"
-CACHE_TTL_HOURS = 24
-MAX_WORKERS = 4
-REQUEST_DELAY_MIN = 2.5
-REQUEST_DELAY_MAX = 5.0
-MAX_TOTAL_EXPOSURE = 0.25
-SHRINKAGE_WEIGHT = 0.60
-
-if os.getenv("CI"):
-    MAX_WORKERS = 2
-    REQUEST_DELAY_MIN = 4.0
-    REQUEST_DELAY_MAX = 8.0
-    print("CI environment detected: throttling to 2 workers")
-
-MAX_OVER_SCORE = 13
-MAX_UNDER_SCORE = 12
-
-# Under 2.5 thresholds (from over25tips.com official algorithm)
-UNDER_HOME_SCORED_CAP = 1.2      # Max avg goals scored by home team in last 6 home
-UNDER_HOME_CONCEDED_CAP = 1.2    # Max avg goals conceded by home team in last 6 home
-UNDER_AWAY_SCORED_CAP = 1.0      # Max avg goals scored by away team in last 6 away
-UNDER_AWAY_CONCEDED_CAP = 1.0    # Max avg goals conceded by away team in last 6 away
-UNDER_HOME_TOTAL_6_CAP = 10.0    # Legacy cap for backwards compatibility
-UNDER_AWAY_TOTAL_6_CAP = 10.0    # Legacy cap for backwards compatibility
-UNDER_HOME_OVER25_MAX = 3        # Legacy max for backwards compatibility
-UNDER_AWAY_OVER25_MAX = 3        # Legacy max for backwards compatibility
-
+# ─── Logging ──────────────────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 
-# HTTP session + cache: implementation lives in utils.py and is shared
-# with the other two predictors. Build the session once per process.
+# ─── Session + Cache (bound to this market's DB, shared TTL/concurrency) ─
 session = build_session()
-cache = Cache(db_path=CACHE_DB, ttl_hours=CACHE_TTL_HOURS)
+cache = Cache(db_path=OVER25_CACHE_DB, ttl_hours=CACHE_TTL_HOURS)
 
 
 def fetch(url, use_cache=True):
-    """Thin wrapper binding the shared fetch() to this module's session/cache/delay config."""
+    """Thin wrapper — keeps the rest of the file clean."""
     return _shared_fetch(
         url,
         session=session,
@@ -132,9 +149,7 @@ def fetch(url, use_cache=True):
     )
 
 
-# =============================================================================
-# SCRAPING (shared implementation in scraping.py)
-# =============================================================================
+# ─── Thin scraping wrappers (fine to keep here — callers below use them) ──
 def fetch_soccerbase_fixtures(date_str):
     return _shared_fetch_fixtures(date_str, fetch)
 
@@ -180,10 +195,6 @@ def _team_active_goal_profile(form):
 
 def _count_under_25_overall(form):
     return sum(1 for gf, ga in form[:6] if gf + ga < 2.5)
-
-
-BTTS_MIN_6 = 3
-NON_BTTS_MIN_6 = 3
 
 
 # _thin_count/_thin_total and _count_* form helpers are imported from scraping.py —
@@ -264,13 +275,8 @@ def _non_btts_gate_passes(home_6, away_6):
     return h_ok or a_ok
 
 
-_OU_H2H_MAX_LOOKBACK = 6
-_OU_H2H_MIN_MEETINGS = 3
-_OU_H2H_OVER_BLOCK_RATE = 0.33
-_OU_H2H_UNDER_BLOCK_RATE = 0.67
 
-
-def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=_OU_H2H_MAX_LOOKBACK):
+def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=OU_H2H_MAX_LOOKBACK):
     """Recent meetings between these sides, merged from both teams' result pages."""
     return _shared_get_h2h_meetings(
         home_team_id, away_team_id, fetch_soccerbase_team_results, target_date_str, limit
@@ -285,7 +291,7 @@ def _h2h_over_blocked(home_team_id, away_team_id, target_date_str=None):
       - OR the last 3 H2H meetings were ALL Under 2.5 (streak veto)
     """
     meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str, limit=8)
-    if len(meetings) < _OU_H2H_MIN_MEETINGS:
+    if len(meetings) < OU_H2H_MIN_MEETINGS:
         return False, meetings
     
     over_count = sum(1 for m in meetings if (m.get("gf", 0) + m.get("ga", 0)) > 2.5)
@@ -294,7 +300,7 @@ def _h2h_over_blocked(home_team_id, away_team_id, target_date_str=None):
     # Recent streak check: last 3 were all Under 2.5
     last_3_under = all((m.get("gf", 0) + m.get("ga", 0)) < 2.5 for m in meetings[:3])
     
-    if rate <= _OU_H2H_OVER_BLOCK_RATE or (len(meetings) >= 3 and last_3_under):
+    if rate <= OU_H2H_OVER_BLOCK_RATE or (len(meetings) >= 3 and last_3_under):
         return True, meetings
         
     return False, meetings
@@ -325,11 +331,11 @@ def _h2h_under_blocked(home_team_id, away_team_id, target_date_str=None):
     Blocks if >=3 H2H meetings AND >=67% went Over 2.5 (bogey high-scoring matchup).
     """
     meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str)
-    if len(meetings) < _OU_H2H_MIN_MEETINGS:
+    if len(meetings) < OU_H2H_MIN_MEETINGS:
         return False, meetings
     over_count = sum(1 for m in meetings if m.get("total", m.get("gf", 0) + m.get("ga", 0)) > 2.5)
     rate = over_count / len(meetings)
-    return rate >= _OU_H2H_UNDER_BLOCK_RATE, meetings
+    return rate >= OU_H2H_UNDER_BLOCK_RATE, meetings
 
 
 def _h2h_over_blocked_2game(home_team_id, away_team_id, target_date_str=None):
@@ -1490,10 +1496,6 @@ def apply_under_overall_checks(home_overall_6, away_overall_6):
 DIXON_COLES_RHO = -0.13
 
 _MIN_DATA_GAMES = 5
-_MIN_COMBINED_LAMBDA_OVER = 2.75
-_MAX_COMBINED_LAMBDA_UNDER = 2.15
-_PREMIUM_COMBINED_LAMBDA_OVER = 3.30
-_PREMIUM_COMBINED_LAMBDA_UNDER = 2.00
 
 IMPLIED_ODDS_OVER = 1.95
 IMPLIED_ODDS_UNDER = 1.85
@@ -1505,47 +1507,7 @@ _WEIGHT_EDGE = 0.20
 _TIER_PREMIUM_CUTOFF = 0.62
 _TIER_SOLID_CUTOFF = 0.54
 
-_MIN_FORM_HALFLIFE = 3.0
-
-_WEAK_ROI_LEAGUE_KEYWORDS = (
-    "swedish allsvenskan",
-    "allsvenskan",
-    "superettan",
-    "belarus",
-    "k-league",
-    "k league",
-    "league of ireland",
-    "fai cup",
-    "mexican primera",
-    "brazilian serie a",
-    "mls",
-    "ecuador",
-    "argentina primera",
-    "chile primera",
-)
-_WEAK_ROI_MULTIPLIER = 0.82
-_WEAK_ROI_OVER_LAMBDA_BOOST = 0.30
-_WEAK_ROI_UNDER_LAMBDA_REDUCTION = 0.20
-
-_REGRESSION_OVER_STREAK = 5
-_REGRESSION_UNDER_STREAK = 5
-_REGRESSION_PENALTY = 0.08
-
 _LEAGUE_BASELINE_CACHE = {}
-
-
-def _exponential_form_averages(form_tuples, halflife=_MIN_FORM_HALFLIFE):
-    """Weighted average of (gf, ga) with exponential decay.
-
-    form_tuples[0] is the most recent match (weight=1.0); each older match
-    is multiplied by 0.5 ** (n / halflife) for match index n going back.
-    Returns (weighted_gf_per_game, weighted_ga_per_game, effective_sample_weight).
-    """
-    return _shared_exponential_form_averages(form_tuples, halflife)
-
-
-def _is_weak_roi_league(league_name):
-    return _shared_is_weak_roi_league(league_name, _WEAK_ROI_LEAGUE_KEYWORDS)
 
 
 def _over_streak_count(form_tuples):
@@ -1574,13 +1536,13 @@ def regression_penalty(home_6, away_6, side):
     if side == "over":
         h_streak = _over_streak_count(home_6 or [])
         a_streak = _over_streak_count(away_6 or [])
-        if max(h_streak, a_streak) >= _REGRESSION_OVER_STREAK:
-            return 1.0 - _REGRESSION_PENALTY
+        if max(h_streak, a_streak) >= REGRESSION_OVER_STREAK:
+            return 1.0 - REGRESSION_PENALTY
     elif side == "under":
         h_streak = _under_streak_count(home_6 or [])
         a_streak = _under_streak_count(away_6 or [])
-        if max(h_streak, a_streak) >= _REGRESSION_UNDER_STREAK:
-            return 1.0 - _REGRESSION_PENALTY
+        if max(h_streak, a_streak) >= REGRESSION_UNDER_STREAK:
+            return 1.0 - REGRESSION_PENALTY
     return 1.0
 
 
@@ -1610,11 +1572,6 @@ def _compact_rule_under(home_6, away_6):
     as_ = sum(gf for gf, _ in away_6) / max(len(away_6), 1)
     ac = sum(ga for _, ga in away_6) / max(len(away_6), 1)
     return hs <= 1.0 and hc <= 0.9 and as_ <= 1.0 and ac <= 0.9
-
-
-
-def poisson_pmf(k, lam):
-    return _shared_poisson_pmf(k, lam)
 
 
 def _dixon_coles_tau(h, a, lh, la, rho):
@@ -1745,15 +1702,15 @@ def get_match_lambdas(home_6, away_6, league_name=None):
     bl = _league_baselines(league_name or "")
     home_baseline_attack, away_baseline_attack, home_baseline_defense, away_baseline_defense = bl
 
-    weak_league = _is_weak_roi_league(league_name)
+    weak_league = is_weak_roi_league(league_name)
 
     n_home = max(len(home_6 or []), 1)
     n_away = max(len(away_6 or []), 1)
 
-    h_gf_avg, h_ga_avg, _ = _exponential_form_averages(home_6 or [])
+    h_gf_avg, h_ga_avg, _ = exponential_form_averages(home_6 or [])
     if not (home_6 or []):
         h_gf_avg, h_ga_avg = home_baseline_attack, away_baseline_defense
-    a_gf_avg, a_ga_avg, _ = _exponential_form_averages(away_6 or [])
+    a_gf_avg, a_ga_avg, _ = exponential_form_averages(away_6 or [])
     if not (away_6 or []):
         a_gf_avg, a_ga_avg = away_baseline_attack, home_baseline_defense
 
@@ -1771,8 +1728,8 @@ def get_match_lambdas(home_6, away_6, league_name=None):
     away_lambda = a_attack * (h_defense / max(0.5, away_baseline_attack))
 
     if weak_league:
-        home_lambda -= _WEAK_ROI_OVER_LAMBDA_BOOST / 2.0
-        away_lambda -= _WEAK_ROI_OVER_LAMBDA_BOOST / 2.0
+        home_lambda -= WEAK_ROI_OVER_LAMBDA_BOOST / 2.0
+        away_lambda -= WEAK_ROI_OVER_LAMBDA_BOOST / 2.0
 
     return (
         round(max(0.5, min(3.8, home_lambda)), 2),
@@ -1797,9 +1754,9 @@ def data_volume_penalty(home_6, away_6):
 def lambda_gate_passes(home_lambda, away_lambda, side):
     combined = home_lambda + away_lambda
     if side == "over":
-        return combined >= _MIN_COMBINED_LAMBDA_OVER
+        return combined >= MIN_COMBINED_LAMBDA_OVER
     if side == "under":
-        return combined <= _MAX_COMBINED_LAMBDA_UNDER
+        return combined <= MAX_COMBINED_LAMBDA_UNDER
     return True
 
 
@@ -1816,9 +1773,9 @@ def compute_confidence_score(rule_score, max_score, model_prob_pct, decimal_odds
 def tier_from_confidence(score, side, home_lambda, away_lambda, is_perfect=True):
     combined = home_lambda + away_lambda
     premium_ok = False
-    if side == "over" and combined >= _PREMIUM_COMBINED_LAMBDA_OVER:
+    if side == "over" and combined >= PREMIUM_COMBINED_LAMBDA_OVER:
         premium_ok = True
-    elif side == "under" and combined <= _PREMIUM_COMBINED_LAMBDA_UNDER:
+    elif side == "under" and combined <= PREMIUM_COMBINED_LAMBDA_UNDER:
         premium_ok = True
     if score >= _TIER_PREMIUM_CUTOFF and premium_ok and is_perfect:
         return "perfect"
@@ -1966,8 +1923,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             len(home_overall_6), len(away_overall_6)
         )
         thin_data_gap = max(0, 6 - data_quality_min)
-        base_over_min = MAX_OVER_SCORE - 3 if _is_weak_roi_league(league_name) else MAX_OVER_SCORE - 4
-        base_under_min = MAX_UNDER_SCORE - 2 if _is_weak_roi_league(league_name) else MAX_UNDER_SCORE - 3
+        base_over_min = MAX_OVER_SCORE - 3 if is_weak_roi_league(league_name) else MAX_OVER_SCORE - 4
+        base_under_min = MAX_UNDER_SCORE - 2 if is_weak_roi_league(league_name) else MAX_UNDER_SCORE - 3
         over_min_score = max(6, base_over_min - thin_data_gap)
         under_min_score = max(5, base_under_min - thin_data_gap)
 
@@ -2034,7 +1991,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             else "LOW"
         )
 
-        league_mult = _WEAK_ROI_MULTIPLIER if _is_weak_roi_league(league_name) else 1.0
+        league_mult = WEAK_ROI_MULTIPLIER if is_weak_roi_league(league_name) else 1.0
         over_regression_penalty = regression_penalty(home_6, away_6, "over")
         under_regression_penalty = regression_penalty(home_6, away_6, "under")
         early_mult = _early_season_penalty(match.get("date"))
@@ -2235,7 +2192,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "under25_prob": under25_prob_pct,
                 },
                 "guards": {
-                    "weak_roi_league": _is_weak_roi_league(league_name),
+                    "weak_roi_league": is_weak_roi_league(league_name),
                     "chaos_rule_over": _chaos_rule_over(home_6, away_6),
                     "compact_rule_under": _compact_rule_under(home_6, away_6),
                     "btts_gate_passed": btts_gate,

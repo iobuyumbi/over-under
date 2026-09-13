@@ -31,6 +31,47 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+# ─── Centralized config (single source of truth) ──────────────────────────
+from config import (
+    # Shared infrastructure
+    CACHE_TTL_HOURS,
+    MAX_WORKERS,
+    REQUEST_DELAY_MIN,
+    REQUEST_DELAY_MAX,
+    OO05_CACHE_DB,
+
+    # OO.5 market-specific
+    OO05_MAX_TOTAL_EXPOSURE,
+    OO05_OO05_DEFAULT_ODDS_HOME,
+    OO05_OO05_DEFAULT_ODDS_AWAY,
+    OO05_SHRINKAGE_WEIGHT,
+    OO05_OO05_MIN_DATA_GAMES,
+    OO05_OO05_MAX_SCORE,
+
+    # OO.5 streak gates (team scoring)
+    OO05_OVERALL_STREAK_10,
+    OO05_OO05_OVERALL_STREAK_12,
+    OO05_VENUE_STREAK_6,
+    OO05_OO05_VENUE_STREAK_5,
+
+    # OO.5 defence gates (opponent conceding) — HARD VETO
+    OO05_OPP_VENUE_LEAK_5,
+    OO05_OO05_OPP_OVERALL_LEAK_10,
+    OO05_OO05_OPP_VENUE_ELITE_5,
+    OO05_OO05_OPP_OVERALL_ELITE_10,
+
+    # OO.5 weak ROI
+    OO05OO05_WEAK_ROI_KEYWORDS,
+    OO05OO05_WEAK_ROI_MULTIPLIER,
+
+    # OO.5 tiers / weights
+    OO05OO05_WEIGHT_RULES,
+    OO05OO05_WEIGHT_MODEL,
+    OO05OO05_WEIGHT_EDGE,
+    OO05_TIER_PREMIUM_CUTOFF,
+    OO05OO05_TIER_SOLID_CUTOFF,
+)
+
 from utils import (
     Cache, build_session, fetch as _shared_fetch, parse_date,
     calculate_kelly, apply_portfolio_kelly,
@@ -57,27 +98,13 @@ from prediction_tracker import (
     COMPACT_TIER_HEADER_PREMIUM, COMPACT_TIER_HEADER_STRONG, COMPACT_TIER_HEADER_WATCH,
 )
 
-# =============================================================================
-# CONFIG
-# =============================================================================
-CACHE_DB = "soccerbase_cache_oo05.db"
-CACHE_TTL_HOURS = 24
-MAX_WORKERS = 4
-REQUEST_DELAY_MIN = 2.5
-REQUEST_DELAY_MAX = 5.0
-MAX_TOTAL_EXPOSURE = 0.20
-DEFAULT_ODDS_HOME = 1.45
-DEFAULT_ODDS_AWAY = 1.55
-
-if os.getenv("CI"):
-    MAX_WORKERS = 2
-    REQUEST_DELAY_MIN = 4.0
-    REQUEST_DELAY_MAX = 8.0
-
+# ─── Logging ──────────────────────────────────────────────────────────────
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
+
+# ─── Session + Cache (bound to this market's DB, shared TTL/concurrency) ─
 session = build_session()
-cache = Cache(db_path=CACHE_DB, ttl_hours=CACHE_TTL_HOURS)
+cache = Cache(db_path=OO05_CACHE_DB, ttl_hours=CACHE_TTL_HOURS)
 
 MARKET_HOME_TG = "home_team_goals"
 MARKET_AWAY_TG = "away_team_goals"
@@ -85,37 +112,6 @@ MARKET_LABEL_HOME = "Home to Score"
 MARKET_LABEL_AWAY = "Away to Score"
 SHORT_MARKET_HOME = "HTS"
 SHORT_MARKET_AWAY = "ATS"
-
-# STREAK GATES (team scoring)
-OVERALL_STREAK_10 = (8, 10)
-OVERALL_STREAK_12 = (9, 12)
-VENUE_STREAK_6 = (5, 6)
-VENUE_STREAK_5 = (4, 5)
-
-# DEFENCE GATES (opponent conceding) — HARD VETO
-OPP_VENUE_LEAK_5 = (4, 5)      # conceded in >= 4 of last 5 venue
-OPP_OVERALL_LEAK_10 = (8, 10)  # conceded in >= 8 of last 10 overall
-OPP_VENUE_ELITE_5 = (5, 5)     # conceded in 5/5 venue (elite leak)
-OPP_OVERALL_ELITE_10 = (10, 10) # conceded in 10/10 overall (elite leak)
-
-MIN_DATA_GAMES = 3
-MAX_SCORE = 12
-
-_WEAK_ROI_KEYWORDS = [
-    "youth", "u17", "u19", "u20", "u21", "amateur", "friendly",
-    "pre-season", "copa do brasil sub", "qualification preliminary",
-    "women reserve", "reserve", "academy", "trial", "exhibition",
-]
-_WEAK_ROI_MULTIPLIER = 0.85
-
-_WEIGHT_RULES = 0.45
-_WEIGHT_MODEL = 0.35
-_WEIGHT_EDGE = 0.20
-
-_TIER_PREMIUM_CUTOFF = 0.65
-_TIER_SOLID_CUTOFF = 0.55
-
-SHRINKAGE_WEIGHT = 0.55
 
 
 def fetch(url, use_cache=True):
@@ -138,7 +134,7 @@ def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=8):
     return _shared_get_h2h_meetings(home_team_id, away_team_id, fetch_soccerbase_team_results, target_date_str, limit=limit)
 
 def _is_weak_roi_league(league_name):
-    return _shared_is_weak_roi_league(league_name, _WEAK_ROI_KEYWORDS)
+    return _shared_is_weak_roi_league(league_name, OO05_WEAK_ROI_KEYWORDS)
 
 
 # =============================================================================
@@ -163,11 +159,11 @@ def _conceded_in_n_of_m(form, n, m):
 
 def check_streak_gate(overall_form, venue_form):
     """Team scoring gate. Returns (passed, label, scored, sample_size)."""
-    for need, of in [OVERALL_STREAK_10, OVERALL_STREAK_12]:
+    for need, of in [OVERALL_STREAK_10, OO05_OVERALL_STREAK_12]:
         passed, scored, n = _scored_in_n_of_m(overall_form, need, of)
         if passed:
             return True, f"overall_{scored}/{n}", scored, n
-    for need, of in [VENUE_STREAK_6, VENUE_STREAK_5]:
+    for need, of in [VENUE_STREAK_6, OO05_VENUE_STREAK_5]:
         passed, scored, n = _scored_in_n_of_m(venue_form, need, of)
         if passed:
             return True, f"venue_{scored}/{n}", scored, n
@@ -190,9 +186,9 @@ def check_defence_gate(opp_venue_form, opp_overall_form):
     return _shared_opponent_concession_gate(
         opp_venue_form, opp_overall_form,
         venue_leak=OPP_VENUE_LEAK_5,
-        venue_elite=OPP_VENUE_ELITE_5,
-        overall_leak=OPP_OVERALL_LEAK_10,
-        overall_elite=OPP_OVERALL_ELITE_10,
+        venue_elite=OO05_OPP_VENUE_ELITE_5,
+        overall_leak=OO05_OPP_OVERALL_LEAK_10,
+        overall_elite=OO05_OPP_OVERALL_ELITE_10,
     )
 
 
@@ -417,7 +413,7 @@ def get_team_xg(team_6, opp_6, league_name=None, is_home=True):
     if not (opp_6 or []):
         o_ga_avg = away_baseline_defense if is_home else home_baseline_defense
     adaptive_shrinkage = SHRINKAGE_WEIGHT
-    if len(team_6 or []) < MIN_DATA_GAMES or len(opp_6 or []) < MIN_DATA_GAMES:
+    if len(team_6 or []) < OO05_MIN_DATA_GAMES or len(opp_6 or []) < OO05_MIN_DATA_GAMES:
         adaptive_shrinkage = max(0.40, SHRINKAGE_WEIGHT - 0.15)
     team_attack = adaptive_shrinkage * t_gf_avg + (1 - adaptive_shrinkage) * (home_baseline_attack if is_home else away_baseline_attack)
     opp_defence = adaptive_shrinkage * o_ga_avg + (1 - adaptive_shrinkage) * (away_baseline_defense if is_home else home_baseline_defense)
@@ -431,7 +427,7 @@ def calculate_poisson_team_over05(team_xg, max_goals=6):
 
 def data_volume_penalty(streak_20, opp_6, streak_ov_20, opp_ov_10):
     n = min(len(streak_20 or []), len(opp_6 or []), len(streak_ov_20 or []), len(opp_ov_10 or []))
-    if n >= MIN_DATA_GAMES: return 1.0
+    if n >= OO05_MIN_DATA_GAMES: return 1.0
     if n >= 4: return 0.97
     if n >= 3: return 0.92
     if n >= 2: return 0.85
@@ -442,7 +438,7 @@ def compute_confidence_score(rule_score, max_score, model_prob_pct, decimal_odds
     model_component = max(0.0, min(1.0, model_prob_pct / 100.0))
     implied = 1.0 / max(1.02, decimal_odds)
     edge_component = max(0.0, min(1.0, (model_prob_pct / 100.0 - implied) + 0.5))
-    raw = _WEIGHT_RULES * rule_component + _WEIGHT_MODEL * model_component + _WEIGHT_EDGE * edge_component
+    raw = OO05_WEIGHT_RULES * rule_component + OO05_WEIGHT_MODEL * model_component + OO05_WEIGHT_EDGE * edge_component
     return max(0.0, min(1.0, raw * data_mult))
 
 def tier_from_confidence(score, is_perfect, streak_label, combined_gpg, def_elite):
@@ -450,7 +446,7 @@ def tier_from_confidence(score, is_perfect, streak_label, combined_gpg, def_elit
     premium_ok = is_perfect and is_elite_streak and combined_gpg >= 2.0 and def_elite
     if score >= _TIER_PREMIUM_CUTOFF and premium_ok:
         return "perfect"
-    if score >= _TIER_SOLID_CUTOFF:
+    if score >= OO05_TIER_SOLID_CUTOFF:
         return "qualified"
     return "close"
 
@@ -534,7 +530,7 @@ def _derby_veto(match):
 # MATCH PROCESSING
 # =============================================================================
 
-def process_single_match(match, target_date, default_odds_home=DEFAULT_ODDS_HOME, default_odds_away=DEFAULT_ODDS_AWAY):
+def process_single_match(match, target_date, default_odds_home=OO05_DEFAULT_ODDS_HOME, default_odds_away=OO05_DEFAULT_ODDS_AWAY):
     try:
         league_name = match.get("league", "")
         home_form_20 = get_team_form(match["home_team_id"], True, 20, target_date)
@@ -564,15 +560,15 @@ def process_single_match(match, target_date, default_odds_home=DEFAULT_ODDS_HOME
         derby_veto, derby_reason = _derby_veto(match)
 
         home_data_mult = data_volume_penalty(home_form_20, away_form_20[:6], home_overall_20, away_overall_20[:10])
-        home_league_mult = _WEAK_ROI_MULTIPLIER if _is_weak_roi_league(league_name) else 1.0
+        home_league_mult = OO05_WEAK_ROI_MULTIPLIER if _is_weak_roi_league(league_name) else 1.0
         home_early_mult = _early_season_penalty(match.get("date"))
         home_final_mult = home_data_mult * home_league_mult * home_early_mult
 
         sf, of = (home_form_20[:6] or []), (away_form_20[:6] or [])
         home_combined_gpg = (sum(gf+ga for gf,ga in sf) + sum(gf+ga for gf,ga in of)) / max(1, len(sf)+len(of))
 
-        home_conf_score = compute_confidence_score(home_score, MAX_SCORE, home_prob_pct, default_odds_home, home_final_mult)
-        home_min_score = MAX_SCORE - 5 if _is_weak_roi_league(league_name) else MAX_SCORE - 6
+        home_conf_score = compute_confidence_score(home_score, OO05_MAX_SCORE, home_prob_pct, default_odds_home, home_final_mult)
+        home_min_score = OO05_MAX_SCORE - 5 if _is_weak_roi_league(league_name) else OO05_MAX_SCORE - 6
         home_qualifies = (
             home_passed is not None and home_score >= home_min_score
             and home_streak_pass and home_def_pass  # BOTH gates required
@@ -604,7 +600,7 @@ def process_single_match(match, target_date, default_odds_home=DEFAULT_ODDS_HOME
 
         away_combined_gpg = (sum(gf+ga for gf,ga in (away_form_20[:6] or [])) + sum(gf+ga for gf,ga in (home_form_20[:6] or []))) / max(1, len(away_form_20[:6] or [])+len(home_form_20[:6] or []))
 
-        away_conf_score = compute_confidence_score(away_score, MAX_SCORE, away_prob_pct, default_odds_away, away_final_mult)
+        away_conf_score = compute_confidence_score(away_score, OO05_MAX_SCORE, away_prob_pct, default_odds_away, away_final_mult)
         away_min_score = home_min_score
         away_qualifies = (
             away_passed is not None and away_score >= away_min_score
@@ -703,7 +699,7 @@ def _append_pick(lines, idx, item, side, odds, detailed, compact=False):
         def_note = tgt.get("defence_label", "unknown")
         elite_mark = "🔥" if tgt.get("defence_elite") else ""
         extra = format_vip_extra_lines(
-            tgt["kelly"], odds, tgt["score"], MAX_SCORE,
+            tgt["kelly"], odds, tgt["score"], OO05_MAX_SCORE,
             home_lambda=tgt["xg"], away_lambda=None, model_prob=tgt["prob"],
             market="team_goals",
             h2h_note=f"streak={streak_note} · defence={def_note}{elite_mark} · {h2h_note}",
@@ -801,8 +797,8 @@ def main():
     parser.add_argument("date", nargs="?", default=datetime.now().strftime("%Y-%m-%d"))
     parser.add_argument("--scheduled", action="store_true")
     parser.add_argument("--bankroll", type=float, default=1000.0)
-    parser.add_argument("--odds-home", type=float, default=DEFAULT_ODDS_HOME)
-    parser.add_argument("--odds-away", type=float, default=DEFAULT_ODDS_AWAY)
+    parser.add_argument("--odds-home", type=float, default=OO05_DEFAULT_ODDS_HOME)
+    parser.add_argument("--odds-away", type=float, default=OO05_DEFAULT_ODDS_AWAY)
     parser.add_argument("--clear-cache", action="store_true")
     parser.add_argument("--days", type=int, default=None)
     parser.add_argument("--publish-date", default=None)
@@ -847,12 +843,12 @@ def main():
                     if ht == "perfect": home_perfect.append(data)
                     elif ht == "qualified": home_qualified.append(data)
                     elif ht == "close": home_close.append(data)
-                    elif data["home_team_goals"]["score"] >= max(1, MAX_SCORE - 3): home_weak.append(data)
+                    elif data["home_team_goals"]["score"] >= max(1, OO05_MAX_SCORE - 3): home_weak.append(data)
                     at = data["away_team_goals"]["tier"]
                     if at == "perfect": away_perfect.append(data)
                     elif at == "qualified": away_qualified.append(data)
                     elif at == "close": away_close.append(data)
-                    elif data["away_team_goals"]["score"] >= max(1, MAX_SCORE - 3): away_weak.append(data)
+                    elif data["away_team_goals"]["score"] >= max(1, OO05_MAX_SCORE - 3): away_weak.append(data)
 
     apply_portfolio_kelly(home_perfect + home_qualified + home_close, "home_team_goals", args.bankroll, MAX_TOTAL_EXPOSURE / 2)
     apply_portfolio_kelly(away_perfect + away_qualified + away_close, "away_team_goals", args.bankroll, MAX_TOTAL_EXPOSURE / 2)
