@@ -1,8 +1,7 @@
-✦ CURATED PICKS · 2026-09-12
+✦ CURATED PICKS · 2026-09-13
   Input reports:
-    OU   → over_under_vip_report_2026-09-12.txt
-    BTTS → btts_vip_report_2026-09-12.txt
-    HW   → home_win_vip_report_2026-09-12.txt
+    BTTS → btts_vip_report_2026-09-13.txt
+    HW   → home_win_vip_report_2026-09-13.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,83 +10,32 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-09-12)
+    • Today only (2026-09-13)
 
-━━━ OVER / UNDER 2.5  (18 accepted) ━━━
-   1. 🔥 St Gallen vs FC Sion  (Swiss Super League)
-      Over 2.5 · High 94.5% · xG 2.37–3.80
-      Stake 0.3% @ 2.0  ·  EV +89.0c/$  ·  Edge +89.0%
-   2. ✅ Go A Eagles vs FC Groningen  (Netherlands League)
-      Over 2.5 · High 87.8% · xG 2.82–2.21
-      Stake 0.2% @ 2.0  ·  EV +75.6c/$  ·  Edge +75.6%
-   3. ✅ Gornik Zabrze vs Lech Poznan  (Polish Ekstraklasa)
-      Over 2.5 · High 87.5% · xG 1.20–3.80
-      Stake 0.2% @ 2.0  ·  EV +75.0c/$  ·  Edge +75.0%
-   4. ✅ Comerciantes Unidos vs Sport Huancayo  (FA Trophy)
-      Over 2.5 · High 86.5% · xG 1.68–3.20
-      Stake 0.2% @ 2.0  ·  EV +73.0c/$  ·  Edge +73.0%
-   5. ✅ Harrogate vs Tamworth  (National League)
-      Over 2.5 · High 86.4% · xG 2.55–2.32
-      Stake 0.2% @ 2.0  ·  EV +72.8c/$  ·  Edge +72.8%
-   6. ✅ Lillestrom vs Valerenga  (Norwegian Tippeligaen)
-      Over 2.5 · High 86.3% · xG 1.64–3.22
-      Stake 0.2% @ 2.0  ·  EV +72.6c/$  ·  Edge +72.6%
-   7. ✅ Cambuur vs NEC Nijmegen  (Netherlands League)
-      Over 2.5 · High 85.7% · xG 1.00–3.80
-      Stake 0.2% @ 2.0  ·  EV +71.4c/$  ·  Edge +71.4%
-   8. ✅ Blackpool vs Bromley  (Football League One)
-      Over 2.5 · High 83.8% · xG 2.56–2.05
-      Stake 0.2% @ 2.0  ·  EV +67.6c/$  ·  Edge +67.6%
-   9. ✅ Real Madrid vs Rayo Vallecano  (Spanish La Liga)
-      Over 2.5 · High 83.0% · xG 2.95–1.58
-      Stake 0.2% @ 2.0  ·  EV +66.0c/$  ·  Edge +66.0%
-  10. ✅ F. Sittard vs Ajax  (Netherlands League)
-      Over 2.5 · High 78.7% · xG 0.92–3.26
-      Stake 0.2% @ 2.0  ·  EV +57.4c/$  ·  Edge +57.4%
-  11. ✅ Carlisle vs Southend  (National League)
-      Over 2.5 · High 78.6% · xG 1.47–2.70
-      Stake 0.2% @ 2.0  ·  EV +57.2c/$  ·  Edge +57.2%
-  12. ✅ Southampton vs Bristol C  (Football League Championship)
-      Over 2.5 · High 78.4% · xG 1.53–2.63
-      Stake 0.2% @ 2.0  ·  EV +56.8c/$  ·  Edge +56.8%
-  13. ✅ Mansfield vs Huddersfield  (Football League One)
-      Over 2.5 · High 77.2% · xG 1.20–2.87
-      Stake 0.2% @ 2.0  ·  EV +54.4c/$  ·  Edge +54.4%
-  14. ✅ Eastleigh vs Boreham W  (National League)
-      Over 2.5 · High 75.9% · xG 1.12–2.86
-      Stake 0.2% @ 2.0  ·  EV +51.8c/$  ·  Edge +51.8%
-  15. ✅ Barnet vs Accrington  (Football League Two)
-      Over 2.5 · High 74.7% · xG 2.25–1.65
-      Stake 0.2% @ 2.0  ·  EV +49.4c/$  ·  Edge +49.4%
-  16. ✅ Yeovil vs Fylde  (National League)
-      Over 2.5 · High 74.1% · xG 1.55–2.31
-      Stake 0.1% @ 2.0  ·  EV +48.2c/$  ·  Edge +48.2%
-  17. ✅ Clyde vs Kelty Hearts  (Scottish League Two)
-      Over 2.5 · High 71.3% · xG 1.62–2.07
-      Stake 0.1% @ 2.0  ·  EV +42.6c/$  ·  Edge +42.6%
-  18. ✅ Genoa vs Frosinone  (Italian Serie A)
-      Over 2.5 · High 70.2% · xG 0.78–2.85
-      Stake 0.1% @ 2.0  ·  EV +40.4c/$  ·  Edge +40.4%
-
-━━━ BTTS (Yes / No)  (4 accepted) ━━━
-   1. 🔥 Harrogate vs Tamworth  (National League)
-      BTTS Yes · High 81.9% · xG 2.77–2.07
-      Stake 1.3% @ 1.9  ·  EV 
-   2. ✅ Comerciantes Unidos vs Sport Huancayo  (FA Trophy)
-      BTTS Yes · High 79.4% · xG 1.84–2.88
-      Stake 1.2% @ 1.9  ·  EV 
-   3. 🔥 Southampton vs Bristol C  (Football League Championship)
-      BTTS Yes · High 74.0% · xG 1.71–2.34
-      Stake 1.0% @ 1.9  ·  EV 
-   4. 🔥 Carlisle vs Southend  (National League)
-      BTTS Yes · High 73.8% · xG 1.66–2.42
-      Stake 0.9% @ 1.9  ·  EV 
-
-━━━ HOME WIN  (0 accepted) ━━━
+━━━ OVER / UNDER 2.5  (0 accepted) ━━━
   (none)
 
-📊 Summary: 22 curated picks
-   Parsed total: 156   Rejected: 134   Accepted: 22
+━━━ BTTS (Yes / No)  (4 accepted) ━━━
+   1. 🔥 Terek Grozny vs Dynamo Makhachkala  (Russian Premier)
+      BTTS Yes · High 79.7% · xG 2.16–2.31
+      Stake 2.5% @ 1.9  ·  EV 
+   2. 🔥 Tenerife vs Leganes  (Spanish Segunda)
+      BTTS No · High 74.2% · xG 0.57–0.90
+      Stake 1.9% @ 1.85  ·  EV 
+   3. ✅ FC Zurich vs Vaduz  (Swiss Super League)
+      BTTS Yes · High 74.1% · xG 1.78–2.22
+      Stake 2.0% @ 1.9  ·  EV 
+   4. ✅ Wisla Plock vs Cracovia  (Polish Ekstraklasa)
+      BTTS No · High 71.1% · xG 0.61–1.00
+      Stake 1.6% @ 1.85  ·  EV 
+
+━━━ HOME WIN  (1 accepted) ━━━
+   1. ✅ Nordsjaelland vs Aarhus  (Danish SAS Ligaen)
+      Home Win · High 87.6%
+      Stake 3.7% @ 2.8  ·  EV +145.3c/$  ·  Edge +145.3%
+
+📊 Summary: 5 curated picks
+   Parsed total: 38   Rejected: 33   Accepted: 5
 
 ---
 For informational purposes only · Gamble responsibly
