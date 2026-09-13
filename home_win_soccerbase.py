@@ -15,6 +15,40 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+# ─── Centralized config (single source of truth) ──────────────────────────
+from config import (
+    # Shared infrastructure
+    CACHE_TTL_HOURS,
+    MAX_WORKERS,
+    REQUEST_DELAY_MIN,
+    REQUEST_DELAY_MAX,
+    MAX_TOTAL_EXPOSURE,
+    HOME_WIN_CACHE_DB,
+    HOME_WIN_HOME_WIN_SHRINKAGE_WEIGHT,
+
+    # Home Win scoring / tiers / weights
+    MAX_HOME_WIN_SCORE,
+    HW_MIN_DATA_GAMES,
+    HW_WEIGHT_RULES,
+    HW_WEIGHT_MODEL,
+    HW_WEIGHT_EDGE,
+    HW_TIER_PREMIUM_CUTOFF,
+    HW_TIER_SOLID_CUTOFF,
+    HW_MIN_MODEL_PROB,
+    HW_MIN_STRENGTH_GAP,
+    HW_HALFLIFE,
+
+    # Home Win weak ROI / regression / H2H
+    HW_WEAK_ROI_LEAGUE_KEYWORDS,
+    HW_WEAK_ROI_MULTIPLIER,
+    HW_REGRESSION_WIN_STREAK,
+    HW_REGRESSION_PENALTY,
+    HW_H2H_MIN_MEETINGS,
+    HW_H2H_MAX_LOOKBACK,
+    HW_H2H_AWAY_WIN_RATIO,
+    HW_H2H_MIN_AWAY_WINS_FOR_ADVANTAGE,
+)
+
 # Shared scraping/caching/date/staking helpers (see utils.py) — do not
 # redefine Cache, fetch, parse_date, or calculate_kelly locally; that
 # copy-paste pattern is exactly what let this file and its siblings
@@ -27,7 +61,7 @@ from utils import (
     calculate_kelly as _shared_calculate_kelly,
     apply_portfolio_kelly as _shared_apply_portfolio_kelly,
     is_weak_roi_league,
-    non_league_reliability_veto as _shared_non_league_reliability_veto,
+    non_league_reliability_veto,
 )
 
 # Shared Soccerbase fixture/results scraping (see scraping.py). NOTE: this
@@ -69,33 +103,16 @@ from prediction_tracker import (
     MARKET_HOME_WIN,
 )
 
-# =============================================================================
-# CONFIGURATION
-# =============================================================================
-CACHE_DB = "soccerbase_cache_home.db"
-CACHE_TTL_HOURS = 24
-MAX_WORKERS = 4
-REQUEST_DELAY_MIN = 2.5
-REQUEST_DELAY_MAX = 5.0
-MAX_TOTAL_EXPOSURE = 0.25
-SHRINKAGE_WEIGHT = 0.65
-
-if os.getenv("CI"):
-    MAX_WORKERS = 2
-    REQUEST_DELAY_MIN = 4.0
-    REQUEST_DELAY_MAX = 8.0
-    print("CI environment detected: throttling to 2 workers")
-
+# ─── Logging ──────────────────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 
-# HTTP session + cache: implementation lives in utils.py and is shared
-# with the other two predictors. Build the session once per process.
+# ─── Session + Cache (bound to this market's DB, shared TTL/concurrency) ─
 session = build_session()
-cache = Cache(db_path=CACHE_DB, ttl_hours=CACHE_TTL_HOURS)
+cache = Cache(db_path=HOME_WIN_CACHE_DB, ttl_hours=CACHE_TTL_HOURS)
 
 
 def fetch(url, use_cache=True):
@@ -110,9 +127,7 @@ def fetch(url, use_cache=True):
     )
 
 
-# =============================================================================
-# SCRAPING (shared implementation in scraping.py)
-# =============================================================================
+# ─── Thin scraping wrappers (fine to keep here — callers below use them) ──
 def fetch_soccerbase_fixtures(date_str):
     return _shared_fetch_fixtures(date_str, fetch)
 
@@ -121,52 +136,15 @@ def fetch_soccerbase_team_results(team_id):
     return _shared_fetch_team_results(team_id, fetch)
 
 
-
-
 # =============================================================================
 # FORM & DATA HELPERS
 # =============================================================================
 # parse_date() is imported from utils.py — do not redefine it locally.
 
-MAX_HOME_WIN_SCORE = 11
-
-HW_MIN_DATA_GAMES = 3
-HW_WEIGHT_RULES = 0.40
-HW_WEIGHT_MODEL = 0.40
-HW_WEIGHT_EDGE = 0.20
-HW_TIER_PREMIUM_CUTOFF = 0.62
-HW_TIER_SOLID_CUTOFF = 0.53
-HW_MIN_MODEL_PROB = 0.55
-HW_MIN_STRENGTH_GAP = 0.12
-
-_HW_HALFLIFE = 3.0
-
-_HW_WEAK_ROI_LEAGUE_KEYWORDS = (
-    "swedish allsvenskan",
-    "allsvenskan",
-    "belarus",
-    "k-league 1",
-    "k league 1",
-    "korean k-league 1",
-    "league of ireland",
-    "fai cup",
-    "mexican primera apertura",
-    "brazilian serie a",
-    "mls",
-)
-_HW_WEAK_ROI_MULTIPLIER = 0.82
-
-_HW_REGRESSION_WIN_STREAK = 5
-_HW_REGRESSION_PENALTY = 0.08
-_HW_H2H_MIN_MEETINGS = 2
-_HW_H2H_MAX_LOOKBACK = 6
-_HW_H2H_AWAY_WIN_RATIO = 2.0
-_HW_H2H_MIN_AWAY_WINS_FOR_ADVANTAGE = 2
-
 _HW_LEAGUE_BASELINE_CACHE = {}
 
 
-def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=_HW_H2H_MAX_LOOKBACK):
+def get_h2h_meetings(home_team_id, away_team_id, target_date_str=None, limit=HW_H2H_MAX_LOOKBACK):
     """Recent meetings between these sides, merged from both teams' result pages."""
     return _shared_get_h2h_meetings(
         home_team_id, away_team_id, fetch_soccerbase_team_results, target_date_str, limit
@@ -185,18 +163,18 @@ def _h2h_home_win_blocked(home_team_id, away_team_id, target_date_str=None):
         return False, meetings, "none"
     home_wins = sum(1 for m in meetings if m.get("result") == "W")
     away_wins = sum(1 for m in meetings if m.get("result") == "L")
-    if len(meetings) >= _HW_H2H_MIN_MEETINGS and home_wins == 0 and away_wins >= 1:
+    if len(meetings) >= HW_H2H_MIN_MEETINGS and home_wins == 0 and away_wins >= 1:
         return True, meetings, "home_winless"
     if len(meetings) == 1 and meetings[0].get("is_home") and meetings[0].get("result") == "L":
         return True, meetings, "single_home_loss"
-    if (len(meetings) >= _HW_H2H_MIN_MEETINGS
-            and away_wins >= _HW_H2H_MIN_AWAY_WINS_FOR_ADVANTAGE
+    if (len(meetings) >= HW_H2H_MIN_MEETINGS
+            and away_wins >= HW_H2H_MIN_AWAY_WINS_FOR_ADVANTAGE
             and away_wins >= _HW_H2H_AWAY_WIN_RATIO * max(1, home_wins)):
         return True, meetings, "away_h2h_advantage"
     return False, meetings, "ok"
 
 
-def _hw_weighted_win_rate(form, halflife=_HW_HALFLIFE):
+def _hw_weighted_win_rate(form, halflife=HW_HALFLIFE):
     """Exponential-decay weighted win rate.  form[0] is most recent."""
     if not form:
         return 0.5, 0.0
@@ -224,8 +202,8 @@ def _hw_win_streak(form):
 
 def _hw_regression_penalty(home_form, away_form):
     h_streak = _hw_win_streak(home_form or [])
-    if h_streak >= _HW_REGRESSION_WIN_STREAK:
-        return 1.0 - _HW_REGRESSION_PENALTY
+    if h_streak >= HW_REGRESSION_WIN_STREAK:
+        return 1.0 - HW_REGRESSION_PENALTY
     return 1.0
 
 
@@ -481,9 +459,9 @@ def get_team_strength(form_data, is_home=True, league_name=None):
     n = len(sample)
     win_rate, eff_weight = _hw_weighted_win_rate(sample)
 
-    adaptive_shrinkage = SHRINKAGE_WEIGHT
+    adaptive_shrinkage = HOME_WIN_SHRINKAGE_WEIGHT
     if n < HW_MIN_DATA_GAMES:
-        adaptive_shrinkage = max(0.45, SHRINKAGE_WEIGHT - 0.15)
+        adaptive_shrinkage = max(0.45, HOME_WIN_SHRINKAGE_WEIGHT - 0.15)
 
     strength = adaptive_shrinkage * win_rate + (1 - adaptive_shrinkage) * baseline
     return round(max(0.1, min(0.95, strength)), 3)
@@ -896,10 +874,10 @@ def process_single_match(match, target_date, default_odds=2.8):
             home_form, away_form
         )
         road_wins_veto, road_wins_reason = _away_recent_road_wins_veto(away_form)
-        non_league_veto, non_league_reason = _shared_non_league_reliability_veto(league_name, home_form, away_form)
+        non_league_veto, non_league_reason = non_league_reliability_veto(league_name, home_form, away_form)
         away_def_pass, away_def_label = _opponent_concession_gate(away_form, away_overall_10)
 
-        weak_league = is_weak_roi_league(league_name, _HW_WEAK_ROI_LEAGUE_KEYWORDS)
+        weak_league = is_weak_roi_league(league_name, HW_WEAK_ROI_LEAGUE_KEYWORDS)
         min_score = MAX_HOME_WIN_SCORE - 1 if weak_league else MAX_HOME_WIN_SCORE - 2
         qualifies = (
             score >= min_score and gate_passes and not h2h_blocked
