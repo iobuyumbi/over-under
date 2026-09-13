@@ -134,7 +134,10 @@ def main():
 
     if working_sources:
         print(f"\n✅ Working sources: {', '.join(working_sources)}")
-        print("\nYou can now run: python3 over25_predictor_v2.py")
+        print("\nRun the full pipeline via:")
+        print("   Local (primary):   run_local.bat")
+        print("   Direct Python:     python3 daily_runner.py")
+        print("   Individual engine: python3 over25_soccerbase.py (or btts_soccerbase.py / etc.)")
     else:
         print("\n⚠️  No automated sources working.")
         print("   You can still use manual data entry:")

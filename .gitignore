@@ -26,6 +26,7 @@ id_ed25519*
 *.key
 windows key inno*
 !requirements.txt
+!requirements.lock
 
 # --- Caches / local DBs (regenerated at runtime) ---
 *.db

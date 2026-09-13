@@ -1,13 +1,16 @@
 version: '3.8'
 services:
-  over25-predictor:
+  over-under-pipeline:
     build: .
-    container_name: football-predictor
+    container_name: over-under-pipeline
     volumes:
-      - ./predictions:/app/predictions
-      - ./data:/app/data
+      - ./.env:/app/.env:ro
+      - ./prediction_history.json:/app/prediction_history.json
+      - ./manual_results.csv:/app/manual_results.csv
+      - ./blacklist.json:/app/blacklist.json
+      - ./curated.json:/app/curated.json
     environment:
       - TZ=Europe/London
     restart: unless-stopped
-    # Or run once and exit:
-    # command: python3 over25_predictor.py
+    # One-shot run (instead of cron):
+    # command: python3 daily_runner.py
