@@ -259,9 +259,12 @@
       "home_team": "Palmeiras",
       "away_team": "Sao Paulo",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-09T09:29:54.657710",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-13T23:42:19.969442",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-12",
@@ -3634,9 +3637,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-09-11T11:40:48.186685",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-13T23:42:19.972901",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-12",
@@ -4534,9 +4540,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-09-11T11:40:48.928512",
-      "published": true
+      "published": true,
+      "updated_at": "2026-09-13T23:42:19.981071",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-09-13",
