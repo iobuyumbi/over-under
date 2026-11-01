@@ -211,3 +211,49 @@ python generate_monthly_report.py
 ### BTTS (Yes + No)
 
 Pending — data builds as `btts_soccerbase.py` runs. Generate fresh tables via `generate_weekly_report.py` once settled picks accumulate.
+
+## Weekly Performance Report
+
+**Last Updated:** 2026-11-01 22:23
+
+### Over 2.5 Goals
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+| 2026-W37 | 38 | 26 | 12 | 68.4% |
+| 2026-W36 | 116 | 70 | 45 | 60.3% |
+
+### Under 2.5 Goals
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+| 2026-W36 | 4 | 2 | 2 | 50.0% |
+
+### Home Win
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+| 2026-W43 | 5 | 5 | 0 | 100.0% |
+| 2026-W37 | 21 | 12 | 9 | 57.1% |
+| 2026-W36 | 27 | 17 | 10 | 63.0% |
+
+### BTTS Yes
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+| 2026-W37 | 4 | 2 | 2 | 50.0% |
+| 2026-W36 | 21 | 14 | 7 | 66.7% |
+
+### BTTS No
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+| 2026-W37 | 3 | 1 | 2 | 33.3% |
+| 2026-W36 | 10 | 4 | 6 | 40.0% |
+
+### Over 0.5 Team Goal
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+| 2026-W37 | 78 | 62 | 16 | 79.5% |
+| 2026-W36 | 163 | 126 | 37 | 77.3% |

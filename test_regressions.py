@@ -6,6 +6,7 @@ import unittest
 from unittest.mock import patch
 
 import fetch_results
+import generate_weekly_report
 import prediction_tracker
 import scraping
 import send_daily_telegram
@@ -183,6 +184,39 @@ class TelegramTests(unittest.TestCase):
         self.assertLess(board.index("⬆️ OVER 2.5"), board.index("⬇️ UNDER 2.5"))
         self.assertLess(board.index("Alpha vs Beta"), board.index("⬇️ UNDER 2.5"))
         self.assertLess(board.index("⬇️ UNDER 2.5"), board.index("Epsilon vs Zeta"))
+
+
+class WeeklyReportSplitTests(unittest.TestCase):
+    def test_negative_sides_are_tracked_separately_in_the_readme_report(self):
+        history = {
+            "over_under": [
+                {"date": "2026-09-01", "prediction": "over", "result": "win"},
+                {"date": "2026-09-01", "prediction": "under", "result": "loss"},
+                {"date": "2026-09-01", "prediction": "under", "result": "win"},
+            ],
+            "btts": [
+                {"date": "2026-09-01", "prediction": "yes", "result": "win"},
+                {"date": "2026-09-01", "prediction": "no", "result": "loss"},
+            ],
+            "home_win": [{"date": "2026-09-01", "prediction": "home_win", "result": "win"}],
+            "oo05": [{"date": "2026-09-01", "prediction": "over05_tg", "result": "win"}],
+        }
+        stats = generate_weekly_report.calculate_weekly_stats(history, weeks=6)
+
+        self.assertEqual(stats["over_25"][0]["total"], 1)
+        self.assertEqual(stats["under_25"][0]["total"], 2)
+        self.assertEqual(stats["under_25"][0]["wins"], 1)
+        self.assertEqual(stats["btts_yes"][0]["total"], 1)
+        self.assertEqual(stats["btts_no"][0]["total"], 1)
+
+        section = generate_weekly_report.generate_readme_section(stats)
+        self.assertIn("### Over 2.5 Goals", section)
+        self.assertIn("### Under 2.5 Goals", section)
+        self.assertIn("### BTTS Yes", section)
+        self.assertIn("### BTTS No", section)
+        # The old merged headings must be gone, or the sides would hide each other.
+        self.assertNotIn("### BTTS\n", section)
+        self.assertIn("| 2 | 1 | 1 | 50.0% |", section)
 
 
 if __name__ == "__main__":

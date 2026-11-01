@@ -15,13 +15,44 @@ from prediction_tracker import load_history
 HISTORY_FILE = "prediction_history.json"
 README_FILE = "README.md"
 
+# Tracked markets, in report order. Each entry is
+# (key, display name, history section, prediction token or None for "all").
+# The negative sides (Under 2.5, BTTS No) are tracked on their own so their
+# win rate is not hidden inside the Over 2.5 / BTTS totals.
+MARKET_GROUPS = (
+    ("over_25", "Over 2.5 Goals", "over_under", "over"),
+    ("under_25", "Under 2.5 Goals", "over_under", "under"),
+    ("home_win", "Home Win", "home_win", None),
+    ("btts_yes", "BTTS Yes", "btts", "yes"),
+    ("btts_no", "BTTS No", "btts", "no"),
+    ("oo05", "Over 0.5 Team Goal", "oo05", None),
+)
 
-def calculate_weekly_stats(history, weeks=4):
-    """Calculate performance for last N weeks"""
-    stats = {"over_under": {}, "home_win": {}, "btts": {}, "oo05": {}}
 
-    for ptype in ["over_under", "home_win", "btts", "oo05"]:
+def _normalized_prediction(pick, ptype):
+    """Collapse the various stored prediction spellings to 'over'/'under'/'yes'/'no'."""
+    value = str(pick.get("prediction", "")).strip().lower()
+    if ptype == "over_under":
+        if value.startswith("under"):
+            return "under"
+        if value.startswith("over") or not value:
+            return "over"
+    if ptype == "btts":
+        if value in ("no", "btts_no", "btts no"):
+            return "no"
+        if value in ("yes", "btts_yes", "btts yes"):
+            return "yes"
+    return value
+
+
+def calculate_weekly_stats(history, weeks=4, groups=MARKET_GROUPS):
+    """Calculate performance for last N weeks, per tracked market."""
+    stats = {}
+
+    for key, _name, ptype, token in groups:
         picks = history.get(ptype, [])
+        if token is not None:
+            picks = [p for p in picks if _normalized_prediction(p, ptype) == token]
         weekly = defaultdict(lambda: {"wins": 0, "losses": 0, "pushes": 0, "total": 0})
 
         for pick in picks:
@@ -43,7 +74,7 @@ def calculate_weekly_stats(history, weeks=4):
                 continue
 
         # Convert to list and sort
-        stats[ptype] = sorted(
+        stats[key] = sorted(
             [{"week": k, **v, "win_rate": round(v["wins"]/v["total"]*100, 1) if v["total"] > 0 else 0}
              for k, v in weekly.items()],
             key=lambda x: x["week"],
@@ -53,24 +84,16 @@ def calculate_weekly_stats(history, weeks=4):
     return stats
 
 
-def generate_readme_section(stats):
+def generate_readme_section(stats, groups=MARKET_GROUPS):
     lines = ["\n## Weekly Performance Report\n"]
     lines.append(f"**Last Updated:** {datetime.now().strftime('%Y-%m-%d %H:%M')}\n")
 
-    market_names = {
-        "over_under": "Over 2.5 Goals",
-        "home_win": "Home Win",
-        "btts": "BTTS",
-        "oo05": "Over 0.5 Team Goal",
-    }
-
-    for ptype, data in stats.items():
-        name = market_names.get(ptype, ptype)
+    for key, name, _ptype, _token in groups:
         lines.append(f"### {name}\n")
         lines.append("| Week | Matches | Wins | Losses | Win Rate |")
         lines.append("|------|---------|------|--------|----------|")
 
-        for entry in data:
+        for entry in stats.get(key, []):
             lines.append(f"| {entry['week']} | {entry['total']} | {entry['wins']} | {entry['losses']} | {entry['win_rate']}% |")
 
         lines.append("")
