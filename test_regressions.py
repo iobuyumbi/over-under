@@ -311,5 +311,41 @@ class WeeklyReportSplitTests(unittest.TestCase):
         self.assertIn("| 2 | 1 | 1 | 50.0% |", section)
 
 
+class PublishGuardTests(unittest.TestCase):
+    """CI must not re-post a board older than the publish date.
+
+    Only run_local.bat builds a board, so without this guard the nightly
+    publish-daily job re-sends the last committed picks under a fresh header.
+    """
+
+    def _publish(self, directory, board_date, publish_date):
+        old_cwd = os.getcwd()
+        try:
+            os.chdir(directory)
+            with open("telegram.txt", "w", encoding="utf-8") as file:
+                file.write(f"📅 Daily Soccer Picks · {board_date}\n\n⚽️ OVER / UNDER 2.5\n")
+            response = unittest.mock.Mock(status_code=200)
+            with patch.dict(os.environ, {
+                "TELEGRAM_BOT_TOKEN": "123456789:TESTTOKEN", "TELEGRAM_CHAT_ID": "chat",
+                "TELEGRAM_VIP_CHAT_ID": "", "DATE": publish_date,
+            }, clear=False), patch.object(send_daily_telegram.requests, "post", return_value=response) as post:
+                code = send_daily_telegram.main()
+        finally:
+            os.chdir(old_cwd)
+        return code, post
+
+    def test_stale_board_is_not_republished(self):
+        with tempfile.TemporaryDirectory() as directory:
+            code, post = self._publish(directory, "2026-09-10", "2026-09-11")
+        self.assertEqual(code, 0)
+        post.assert_not_called()
+
+    def test_board_matching_the_publish_date_is_sent(self):
+        with tempfile.TemporaryDirectory() as directory:
+            code, post = self._publish(directory, "2026-09-11", "2026-09-11")
+        self.assertEqual(code, 0)
+        self.assertTrue(post.called)
+
+
 if __name__ == "__main__":
     unittest.main()

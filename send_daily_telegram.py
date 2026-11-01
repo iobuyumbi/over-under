@@ -14,7 +14,10 @@ to origin/main.  This CI script then just:
   3. Builds the VIP board from those same sections: every fixture across all
      four markets as a confidence-grouped monospace table, preceded by
      yesterday's per-market-side record (W-L-P and win rate).
-  4. Posts each message to its corresponding chat ID via secrets env vars
+  4. Skips the whole send when the committed board is older than the publish
+     date. A board only exists after a local run, so a stale one means CI would
+     otherwise re-post yesterday's picks under today's header.
+  5. Posts each message to its corresponding chat ID via secrets env vars
      (TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, TELEGRAM_VIP_CHAT_ID).
 
 Env vars:
@@ -26,6 +29,7 @@ Env vars:
 
 import html
 import os
+import re
 import sys
 import time
 
@@ -61,6 +65,24 @@ def _retry_after(resp, fallback):
     except (ValueError, AttributeError):
         pass
     return fallback
+
+
+# The assembled daily message, committed by run_local.bat. Its first line is
+# ``📅 Daily Soccer Picks · YYYY-MM-DD`` — the date of the run that produced the
+# picks, which is how this publisher detects a stale board.
+BOARD_FILE = "telegram.txt"
+_BOARD_DATE_RE = re.compile(r"Daily Soccer Picks\s*·\s*(\d{4}-\d{2}-\d{2})")
+
+
+def committed_board_date(path=BOARD_FILE):
+    """Publish date stamped on the committed board, or None when unknown."""
+    try:
+        with open(path, "r", encoding="utf-8", errors="replace") as handle:
+            head = handle.read(200)
+    except OSError:
+        return None
+    match = _BOARD_DATE_RE.search(head)
+    return match.group(1) if match else None
 
 
 def _send_one(token, chat_id, payload, index, total, label):
@@ -158,6 +180,13 @@ def main():
         print("ERROR: TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID are required env vars.")
         print("       (Set them as GitHub repository secrets.)")
         return 1
+
+    board_date = committed_board_date()
+    if board_date and board_date < date:
+        print(f"SKIP: committed board is dated {board_date}, publish date is {date}.")
+        print("      No local run has built a fresh board, so the stale picks are")
+        print("      not re-sent. Run run_local.bat to generate today's board.")
+        return 0
 
     print(f"Publish date: {date}")
     free_msg = build_free_message(date)

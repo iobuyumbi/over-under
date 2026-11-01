@@ -5,6 +5,19 @@ if not defined RUN_DATE (
   for /f %%I in ('powershell -NoProfile -Command "Get-Date -Format yyyy-MM-dd"') do set "RUN_DATE=%%I"
 )
 
+REM --- Optional flags (any argument position) ---
+REM   --no-send  skip the local Telegram send; let the CI publish-daily job deliver
+REM              the committed board instead (avoids a duplicate message)
+REM   --no-push  skip the auto-commit + push step
+set "SKIP_SEND="
+set "SKIP_PUSH="
+if /i "%~1"=="--no-send" set "SKIP_SEND=1"
+if /i "%~2"=="--no-send" set "SKIP_SEND=1"
+if /i "%~3"=="--no-send" set "SKIP_SEND=1"
+if /i "%~1"=="--no-push" set "SKIP_PUSH=1"
+if /i "%~2"=="--no-push" set "SKIP_PUSH=1"
+if /i "%~3"=="--no-push" set "SKIP_PUSH=1"
+
 REM --- Load variables from .env (gitignored) into this cmd session ---
 REM Only sets a VAR if that VAR is not already defined in the environment,
 REM so explicit set-on-the-shell overrides win. Skips blank lines and
@@ -75,6 +88,7 @@ if errorlevel 1 (
 
 echo.
 echo === LOCAL TELEGRAM SEND (optional, loaded from .env) ===
+if defined SKIP_SEND goto skip_send
 set "DATE=%RUN_DATE%"
 python send_local_telegram.py
 if errorlevel 1 (
@@ -82,6 +96,10 @@ if errorlevel 1 (
 ) else (
   echo   --- send complete ---
 )
+goto after_send
+:skip_send
+echo   (skipped: --no-send — the CI publish-daily job delivers this board instead)
+:after_send
 
 echo.
 echo === CONSOLIDATE REPORTS (archive pick digests + prune dated files) ===
@@ -96,8 +114,7 @@ if errorlevel 1 (
 
 echo.
 echo === AUTO-COMMIT + PUSH (optional, only if local git is configured) ===
-set "GIT_SKIP_AUTO_PUSH=%~2"
-if /i "%GIT_SKIP_AUTO_PUSH%"=="--no-push" goto skip_git
+if defined SKIP_PUSH goto skip_git
 
 git status --porcelain > _git_status.txt 2>&1
 for /f %%A in ('findstr /R "." _git_status.txt ^| find /C /V ""') do set "DIRTY=%%A"
@@ -114,7 +131,7 @@ if "%DIRTY%"=="0" (
   echo   -- pulling latest origin/main (rebase + autostash) --
   git pull --rebase --autostash origin main 2>&1
   if errorlevel 1 (
-    echo   WARNING: git pull --rebase failed ^(possible merge conflicts^). Skipping commit + push; resolve conflicts manually, then commit/push by hand, or re-run with --no-push 2nd arg and retry git operations.
+    echo   WARNING: git pull --rebase failed ^(possible merge conflicts^). Skipping commit + push; resolve conflicts manually, then commit/push by hand, or re-run with --no-push and retry git operations.
     goto skip_git
   )
   git commit -m "Local run: predictions, reports, curated picks, results update (%RUN_DATE%)" 2>&1
@@ -185,6 +202,7 @@ echo  Telegram sections: ou_telegram.txt, btts_telegram.txt, hw_telegram.txt, oo
 echo  VIP reports: btts_vip_report_*.txt, over_under_vip_report_*.txt, home_win_vip_report_*.txt, over05_team_goal_vip_report_*.txt
 echo  To resend to Telegram: set TELEGRAM_BOT_TOKEN ^&^& set TELEGRAM_CHAT_ID ^&^& set DATE=%RUN_DATE% ^&^& python send_local_telegram.py
 echo  To skip git push next run: run_local.bat %RUN_DATE% --no-push
+echo  To let CI deliver this board (no local send): run_local.bat %RUN_DATE% --no-send
 echo ============================================================
 pause
 exit /b 0
