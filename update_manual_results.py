@@ -174,7 +174,7 @@ def main():
     write_csv(csv_data)
 
     with_score = sum(1 for s in csv_data.values() if s)
-    print(f"\nDone.")
+    print("\nDone.")
     print(f"  Predicted matches:         {len(all_predicted)}")
     if added_rows:
         print(f"  CSV rows added (backfill): {added_rows}")

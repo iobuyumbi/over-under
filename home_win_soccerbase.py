@@ -99,7 +99,6 @@ from prediction_tracker import (
     COMPACT_TIER_HEADER_PREMIUM,
     COMPACT_TIER_HEADER_STRONG,
     COMPACT_TIER_HEADER_WATCH,
-    MARKET_SECTION_DIVIDER,
     MARKET_HOME_WIN,
 )
 
@@ -169,7 +168,7 @@ def _h2h_home_win_blocked(home_team_id, away_team_id, target_date_str=None):
         return True, meetings, "single_home_loss"
     if (len(meetings) >= HW_H2H_MIN_MEETINGS
             and away_wins >= HW_H2H_MIN_AWAY_WINS_FOR_ADVANTAGE
-            and away_wins >= _HW_H2H_AWAY_WIN_RATIO * max(1, home_wins)):
+            and away_wins >= HW_H2H_AWAY_WIN_RATIO * max(1, home_wins)):
         return True, meetings, "away_h2h_advantage"
     return False, meetings, "ok"
 
@@ -888,7 +887,7 @@ def process_single_match(match, target_date, default_odds=2.8):
             and not road_wins_veto and not non_league_veto and away_def_pass
         )
 
-        league_mult = _HW_WEAK_ROI_MULTIPLIER if weak_league else 1.0
+        league_mult = HW_WEAK_ROI_MULTIPLIER if weak_league else 1.0
         reg_mult = _hw_regression_penalty(home_form, away_form)
         final_mult = data_mult * league_mult * reg_mult
 
@@ -1295,8 +1294,7 @@ def main():
     print("\n===EMAIL_START===")
     print(free_report)
     print("===EMAIL_END===")
-    from prediction_tracker import write_telegram_section
-    telegram_body = write_telegram_section(telegram_report, "hw_telegram.txt")
+    write_telegram_section(telegram_report, "hw_telegram.txt")
 
     # Save detailed report to file
     detailed_report_path = f"home_win_vip_report_{base_date}.txt"

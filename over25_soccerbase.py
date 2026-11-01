@@ -13,7 +13,6 @@ Only market-specific logic that CANNOT be shared lives below.
 import json
 import argparse
 import sys
-import math
 import logging
 import os
 from datetime import datetime, timedelta
@@ -34,10 +33,6 @@ from config import (
     # OU scoring ranges + Under caps
     MAX_OVER_SCORE,
     MAX_UNDER_SCORE,
-    UNDER_HOME_SCORED_CAP,
-    UNDER_HOME_CONCEDED_CAP,
-    UNDER_AWAY_SCORED_CAP,
-    UNDER_AWAY_CONCEDED_CAP,
     UNDER_HOME_TOTAL_6_CAP,
     UNDER_AWAY_TOTAL_6_CAP,
     UNDER_HOME_OVER25_MAX,
@@ -54,14 +49,11 @@ from config import (
     PREMIUM_COMBINED_LAMBDA_UNDER,
 
     # Form / regression / weak ROI
-    MIN_FORM_HALFLIFE,
     REGRESSION_OVER_STREAK,
     REGRESSION_UNDER_STREAK,
     REGRESSION_PENALTY,
     WEAK_ROI_MULTIPLIER,
     WEAK_ROI_OVER_LAMBDA_BOOST,
-    WEAK_ROI_UNDER_LAMBDA_REDUCTION,
-    WEAK_ROI_LEAGUE_KEYWORDS,
 
     # OU H2H
     OU_H2H_MAX_LOOKBACK,
@@ -97,7 +89,6 @@ from scraping import (
     _count_btts,
     _count_non_btts,
     _count_over25,
-    _count_under25,
 )
 
 # ─── Prediction tracker I/O ───────────────────────────────────────────────
@@ -120,7 +111,6 @@ from prediction_tracker import (
     COMPACT_TIER_HEADER_PREMIUM,
     COMPACT_TIER_HEADER_STRONG,
     COMPACT_TIER_HEADER_WATCH,
-    MARKET_SECTION_DIVIDER,
     MARKET_OVER25,
     MARKET_UNDER25,
 )
@@ -842,10 +832,10 @@ def _opponent_elite_defense_veto(home_6, away_6, home_overall_6, away_overall_6)
     attacker's season average looks good on paper — and unlike a plain
     average, this can't be diluted by one high-scoring outlier game.
     """
-    home_gate_pass, home_reason, home_elite = _shared_opponent_concession_gate(
+    home_gate_pass, home_reason, home_elite = opponent_concession_gate(
         home_6, home_overall_6
     )
-    away_gate_pass, away_reason, away_elite = _shared_opponent_concession_gate(
+    away_gate_pass, away_reason, away_elite = opponent_concession_gate(
         away_6, away_overall_6
     )
     # Gate PASSING means the opponent has a real leak record (fine for
@@ -1704,9 +1694,6 @@ def get_match_lambdas(home_6, away_6, league_name=None):
 
     weak_league = is_weak_roi_league(league_name)
 
-    n_home = max(len(home_6 or []), 1)
-    n_away = max(len(away_6 or []), 1)
-
     h_gf_avg, h_ga_avg, _ = exponential_form_averages(home_6 or [])
     if not (home_6 or []):
         h_gf_avg, h_ga_avg = home_baseline_attack, away_baseline_defense
@@ -1849,7 +1836,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         )
         under_peak_game_veto, under_peak_game_reason = _under_peak_game_veto(home_6, away_6)
         derby_veto, derby_reason = _derby_veto(match)
-        non_league_veto, non_league_reason = _shared_non_league_reliability_veto(league_name, home_6, away_6)
+        non_league_veto, non_league_reason = non_league_reliability_veto(league_name, home_6, away_6)
         scoring_consistency_veto, scoring_consistency_reason = _scoring_consistency_veto(home_6, away_6)
         overall_scoring_veto, overall_scoring_reason = _overall_scoring_symmetry_veto(
             home_overall_6, away_overall_6
@@ -1892,7 +1879,6 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         )
 
         under_passed = under3_passed + under6_passed + under_overall_passed
-        under_failed = under3_failed + under6_failed + under_overall_failed
         under_details = {**under3_details, **under6_details, **under_overall_details}
         under_is_perfect = under3_perfect and under6_perfect and under_overall_perfect
 

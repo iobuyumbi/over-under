@@ -4,7 +4,6 @@
 import argparse
 import re
 import sys
-import textwrap
 from datetime import datetime
 
 from prediction_tracker import build_telegram_yesterday_block

@@ -8,7 +8,6 @@ BTTS Yes / BTTS No rule scoring | Poisson model | Portfolio Kelly | SQLite Cache
 import json
 import argparse
 import sys
-import math
 import logging
 import os
 from datetime import datetime, timedelta
@@ -120,7 +119,6 @@ from prediction_tracker import (
     COMPACT_TIER_HEADER_PREMIUM,
     COMPACT_TIER_HEADER_STRONG,
     COMPACT_TIER_HEADER_WATCH,
-    MARKET_SECTION_DIVIDER,
     MARKET_BTTS_YES,
     MARKET_BTTS_NO,
 )
@@ -544,7 +542,6 @@ def _home_winless_scoreless_crisis_veto(home_overall_6, away_overall_6, home_6, 
     ho = home_overall_6 or []
     ao = away_overall_6 or []
     h6 = home_6 or []
-    a6 = away_6 or []
 
     # 1. Home winless + venue scoreless crisis
     ho5_len = min(len(ho), 5)
@@ -1407,7 +1404,7 @@ def compute_confidence_score(rule_score, max_score, model_prob_pct, decimal_odds
     model_component = max(0.0, min(1.0, model_prob_pct / 100.0))
     implied = 1.0 / max(1.05, decimal_odds)
     edge_component = max(0.0, min(1.0, (model_prob_pct / 100.0 - implied) + 0.5))
-    raw = BTTS_WEIGHT_RULES * rule_component + _WEIGHT_MODEL * model_component + BTTS_WEIGHT_EDGE * edge_component
+    raw = BTTS_WEIGHT_RULES * rule_component + BTTS_WEIGHT_MODEL * model_component + BTTS_WEIGHT_EDGE * edge_component
     return max(0.0, min(1.0, raw * data_mult))
 
 
@@ -1624,7 +1621,7 @@ def process_single_match(match, target_date, odds_yes=DEFAULT_ODDS_BTTS_YES, odd
                 if not away_last_2_scored:
                     away_last_2_ok = False
                     last_2_scored_reason = ("away_blanked_in_last_2" if not last_2_scored_reason
-                                            else f"both_blanked_in_last_2")
+                                            else "both_blanked_in_last_2")
             if not (home_last_2_ok and away_last_2_ok):
                 yes_tier = "qualified"
 

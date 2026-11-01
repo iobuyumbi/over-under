@@ -5,12 +5,11 @@ Generates performance reports and auto-updates README.md
 """
 
 import json
-import os
-from datetime import datetime, timedelta
+from datetime import datetime
 from collections import defaultdict
 
 from prediction_tracker import generate_weekly_report as generate_7day_report
-from prediction_tracker import load_history, save_history
+from prediction_tracker import load_history
 
 
 HISTORY_FILE = "prediction_history.json"
@@ -20,7 +19,6 @@ README_FILE = "README.md"
 def calculate_weekly_stats(history, weeks=4):
     """Calculate performance for last N weeks"""
     stats = {"over_under": {}, "home_win": {}}
-    now = datetime.now()
 
     for ptype in ["over_under", "home_win"]:
         picks = history.get(ptype, [])

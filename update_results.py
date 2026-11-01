@@ -5,8 +5,6 @@ Easily mark wins, losses, and pushes.
 """
 
 import os
-import json
-from datetime import datetime
 from prediction_tracker import get_pending_predictions, update_result, load_history
 
 def clear_screen():

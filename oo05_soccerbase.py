@@ -24,7 +24,6 @@ how strong the scoring streak is.
 import json
 import argparse
 import sys
-import math
 import logging
 import os
 from datetime import datetime, timedelta
@@ -87,7 +86,7 @@ from scraping import (
     get_team_form as _shared_get_team_form,
     get_team_overall_form as _shared_get_team_overall_form,
     get_h2h_meetings as _shared_get_h2h_meetings,
-    _thin_count, _thin_total,
+    _thin_count,
 )
 from prediction_tracker import (
     record_predictions, format_vip_extra_lines, format_pick_block,
@@ -159,11 +158,11 @@ def _conceded_in_n_of_m(form, n, m):
 
 def check_streak_gate(overall_form, venue_form):
     """Team scoring gate. Returns (passed, label, scored, sample_size)."""
-    for need, of in [OVERALL_STREAK_10, OO05_OVERALL_STREAK_12]:
+    for need, of in [OO05_OVERALL_STREAK_10, OO05_OVERALL_STREAK_12]:
         passed, scored, n = _scored_in_n_of_m(overall_form, need, of)
         if passed:
             return True, f"overall_{scored}/{n}", scored, n
-    for need, of in [VENUE_STREAK_6, OO05_VENUE_STREAK_5]:
+    for need, of in [OO05_VENUE_STREAK_6, OO05_VENUE_STREAK_5]:
         passed, scored, n = _scored_in_n_of_m(venue_form, need, of)
         if passed:
             return True, f"venue_{scored}/{n}", scored, n
@@ -185,7 +184,7 @@ def check_defence_gate(opp_venue_form, opp_overall_form):
     """
     return _shared_opponent_concession_gate(
         opp_venue_form, opp_overall_form,
-        venue_leak=OPP_VENUE_LEAK_5,
+        venue_leak=OO05_OPP_VENUE_LEAK_5,
         venue_elite=OO05_OPP_VENUE_ELITE_5,
         overall_leak=OO05_OPP_OVERALL_LEAK_10,
         overall_elite=OO05_OPP_OVERALL_ELITE_10,
@@ -412,9 +411,9 @@ def get_team_xg(team_6, opp_6, league_name=None, is_home=True):
     _, o_ga_avg, _ = _exponential_form_averages(opp_6 or [])
     if not (opp_6 or []):
         o_ga_avg = away_baseline_defense if is_home else home_baseline_defense
-    adaptive_shrinkage = SHRINKAGE_WEIGHT
+    adaptive_shrinkage = OO05_SHRINKAGE_WEIGHT
     if len(team_6 or []) < OO05_MIN_DATA_GAMES or len(opp_6 or []) < OO05_MIN_DATA_GAMES:
-        adaptive_shrinkage = max(0.40, SHRINKAGE_WEIGHT - 0.15)
+        adaptive_shrinkage = max(0.40, OO05_SHRINKAGE_WEIGHT - 0.15)
     team_attack = adaptive_shrinkage * t_gf_avg + (1 - adaptive_shrinkage) * (home_baseline_attack if is_home else away_baseline_attack)
     opp_defence = adaptive_shrinkage * o_ga_avg + (1 - adaptive_shrinkage) * (away_baseline_defense if is_home else home_baseline_defense)
     baseline_att = home_baseline_attack if is_home else away_baseline_attack
@@ -444,7 +443,7 @@ def compute_confidence_score(rule_score, max_score, model_prob_pct, decimal_odds
 def tier_from_confidence(score, is_perfect, streak_label, combined_gpg, def_elite):
     is_elite_streak = "overall_9" in streak_label or "overall_8" in streak_label
     premium_ok = is_perfect and is_elite_streak and combined_gpg >= 2.0 and def_elite
-    if score >= _TIER_PREMIUM_CUTOFF and premium_ok:
+    if score >= OO05_TIER_PREMIUM_CUTOFF and premium_ok:
         return "perfect"
     if score >= OO05_TIER_SOLID_CUTOFF:
         return "qualified"
@@ -850,8 +849,8 @@ def main():
                     elif at == "close": away_close.append(data)
                     elif data["away_team_goals"]["score"] >= max(1, OO05_MAX_SCORE - 3): away_weak.append(data)
 
-    apply_portfolio_kelly(home_perfect + home_qualified + home_close, "home_team_goals", args.bankroll, MAX_TOTAL_EXPOSURE / 2)
-    apply_portfolio_kelly(away_perfect + away_qualified + away_close, "away_team_goals", args.bankroll, MAX_TOTAL_EXPOSURE / 2)
+    apply_portfolio_kelly(home_perfect + home_qualified + home_close, "home_team_goals", args.bankroll, OO05_MAX_TOTAL_EXPOSURE / 2)
+    apply_portfolio_kelly(away_perfect + away_qualified + away_close, "away_team_goals", args.bankroll, OO05_MAX_TOTAL_EXPOSURE / 2)
 
     free_report, base_date, included_home, included_away = build_report(
         home_perfect, home_qualified, home_close, home_weak,

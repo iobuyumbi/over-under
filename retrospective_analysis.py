@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 """Retrospective prediction analysis: Update results and analyze performance"""
 
-import os
-import json
 import re
 import requests
-from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 from prediction_tracker import load_history, save_history
 
@@ -71,7 +68,7 @@ def fetch_match_results(date_str):
                     "score": score_text
                 })
                 
-            except Exception as e:
+            except Exception:
                 continue
     
     print(f"  Found {len(matches)} completed matches")

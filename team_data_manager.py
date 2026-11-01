@@ -33,7 +33,6 @@ EXAMPLE team_data.json:
 
 import json
 import os
-from datetime import datetime
 
 DATA_FILE = 'team_data.json'
 

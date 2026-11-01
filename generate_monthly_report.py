@@ -4,11 +4,9 @@ Monthly Report Generator
 Generates performance reports for the past month with win/loss tracking.
 """
 
-import os
 import json
-import glob
-from datetime import datetime, timedelta
-from prediction_tracker import generate_monthly_report, load_history
+from datetime import datetime
+from prediction_tracker import generate_monthly_report
 
 def main():
     """Main function - generate report for last month."""

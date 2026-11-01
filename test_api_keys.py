@@ -9,7 +9,7 @@ rotate them at the provider immediately (they were committed to git).
 
 import os
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime
 
 # Load from environment (never hardcode secrets in source)
 FOOTBALL_DATA_KEY = os.environ.get("FOOTBALL_DATA_KEY", "")

@@ -7,7 +7,6 @@ import sys
 from dataclasses import dataclass, asdict, field
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
 
 WEAK_FLAG_SUBSTRINGS = [
     "weak-ROI region",
@@ -210,7 +209,7 @@ def filter_pick(p: Pick, today: str, rules: dict) -> str | None:
     if p.date != today:
         return f"not today ({p.date})"
     if p.tier == TIER_WATCHLIST and not rules.get("allow_watchlist", False):
-        return f"tier Watchlist"
+        return "tier Watchlist"
     if p.has_weak_flag and not rules.get("allow_weak_league", False):
         return "weak-ROI / poor-league-win-rate flag"
     if p.confidence_label != "High" and not rules.get("allow_medium_conf", False):
@@ -315,18 +314,18 @@ def main(argv: list[str]) -> int:
 
     sections = []
     sections.append(f"✦ CURATED PICKS · {today}")
-    sections.append(f"  Input reports:")
+    sections.append("  Input reports:")
     if ou_path: sections.append(f"    OU   → {ou_path.name}")
     if btts_path: sections.append(f"    BTTS → {btts_path.name}")
     if hw_path: sections.append(f"    HW   → {hw_path.name}")
     sections.append("")
     sections.append("  Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:")
-    sections.append(f"    • Tier: Premium/Solid only (Watchlist dropped)")
-    sections.append(f"    • Label: High confidence only")
-    sections.append(f"    • Min %: Over/Under ≥70, BTTS Yes ≥70, BTTS No ≥68, Home Win ≥85")
-    sections.append(f"    • Weak-ROI / poor-win-rate leagues → blocked")
+    sections.append("    • Tier: Premium/Solid only (Watchlist dropped)")
+    sections.append("    • Label: High confidence only")
+    sections.append("    • Min %: Over/Under ≥70, BTTS Yes ≥70, BTTS No ≥68, Home Win ≥85")
+    sections.append("    • Weak-ROI / poor-win-rate leagues → blocked")
     sections.append(f"    • Over 2.5 min xG sum ≥ {rules['ou_over_min_xg_sum']}")
-    sections.append(f"    • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked")
+    sections.append("    • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked")
     sections.append(f"    • Today only ({today})")
     sections.append("")
     total = 0

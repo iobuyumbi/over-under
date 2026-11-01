@@ -23,16 +23,11 @@ from bs4 import BeautifulSoup
 from prediction_tracker import (
     load_history,
     save_history,
-    format_safer_result_line,
     get_pending_predictions,
     pick_is_due,
     pick_is_overdue,
     pick_is_stale_pending,
-    resolve_pick_result,
-    is_blocked_pick,
     format_pick_result_lines,
-    format_result_badge,
-    format_result_tag,
 )
 
 # =============================================================================
@@ -831,7 +826,7 @@ def write_selected_results_report(dates_to_check, history, dry_run=False):
     mode = "[DRY RUN] " if dry_run else ""
 
     with open(SELECTED_RESULTS_REPORT, "w", encoding="utf-8") as f:
-        from prediction_tracker import build_telegram_yesterday_block, format_compact_result_line, market_short_label
+        from prediction_tracker import build_telegram_yesterday_block, format_compact_result_line
 
         yesterday_block = build_telegram_yesterday_block()
         if yesterday_block:
@@ -1146,7 +1141,6 @@ def update_all_pending_results(days_back=7):
 
 
 if __name__ == "__main__":
-    import sys
     if len(sys.argv) > 1 and sys.argv[1] == "update":
         update_all_pending_results(days_back=int(sys.argv[2]) if len(sys.argv) > 2 else 14)
         sys.exit(0)

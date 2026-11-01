@@ -101,9 +101,10 @@ class TelegramTests(unittest.TestCase):
     def test_http_failure_is_reported_to_the_caller(self):
         response = unittest.mock.Mock()
         response.status_code = 500
+        response.text = "telegram failure"
         response.raise_for_status.side_effect = RuntimeError("telegram failure")
         with patch.object(send_daily_telegram.requests, "post", return_value=response):
-            self.assertFalse(send_daily_telegram.send("token", "chat", "message"))
+            self.assertFalse(send_daily_telegram._send_chunks("token", "chat", "message"))
 
     def test_local_sender_includes_the_oo05_section(self):
         with tempfile.TemporaryDirectory() as directory:
