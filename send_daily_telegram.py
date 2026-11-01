@@ -25,14 +25,72 @@ Env vars:
 
 import os
 import sys
+import time
+
 import requests
 
 from build_telegram_daily import build_daily_message, read_telegram_section
+
+# Telegram caps sends to a single chat (~20 msgs/min); space chunks out and
+# retry with backoff on HTTP 429 so a long message never fails the CI job.
+MAX_ATTEMPTS = 4
+BACKOFF_BASE_SECONDS = 5
+INTER_CHUNK_DELAY_SECONDS = 3
 
 
 def _env(name, default=None):
     v = os.environ.get(name)
     return default if v in (None, "") else v
+
+
+def _retry_after(resp, fallback):
+    """Telegram sends ``parameters.retry_after`` (seconds) on HTTP 429."""
+    try:
+        params = (resp.json() or {}).get("parameters") or {}
+        wait = params.get("retry_after")
+        if isinstance(wait, (int, float)) and wait > 0:
+            return float(wait)
+    except (ValueError, AttributeError):
+        pass
+    return fallback
+
+
+def _send_one(token, chat_id, chunk, index, total, label):
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        try:
+            resp = requests.post(
+                f"https://api.telegram.org/bot{token}/sendMessage",
+                data={"chat_id": chat_id, "text": chunk, "disable_web_page_preview": "true"},
+                timeout=30,
+            )
+        except requests.RequestException as e:
+            print(f"[{label}] chunk {index}/{total} chat {chat_id}: network error: {e}")
+            if attempt < MAX_ATTEMPTS:
+                time.sleep(BACKOFF_BASE_SECONDS * attempt)
+                continue
+            return False
+
+        if resp.status_code == 200:
+            print(f"[{label}] chunk {index}/{total} chat {chat_id}: OK")
+            return True
+
+        if resp.status_code == 429:
+            wait = _retry_after(resp, BACKOFF_BASE_SECONDS * attempt)
+            if attempt < MAX_ATTEMPTS:
+                print(
+                    f"[{label}] chunk {index}/{total} chat {chat_id}: HTTP 429 "
+                    f"rate limited, retrying in {wait:.0f}s (attempt {attempt}/{MAX_ATTEMPTS})"
+                )
+                time.sleep(wait)
+                continue
+            print(f"[{label}] chunk {index}/{total} chat {chat_id}: HTTP 429: giving up after {MAX_ATTEMPTS} attempts")
+            return False
+
+        body = resp.text[:300]
+        print(f"[{label}] chunk {index}/{total} chat {chat_id}: HTTP {resp.status_code} {body}")
+        return False
+
+    return False
 
 
 def _send_chunks(token, chat_id, text, label="message"):
@@ -42,21 +100,10 @@ def _send_chunks(token, chat_id, text, label="message"):
     chunks = [text[i:i + 3900] for i in range(0, len(text), 3900)]
     ok = True
     for ci, chunk in enumerate(chunks, 1):
-        try:
-            resp = requests.post(
-                f"https://api.telegram.org/bot{token}/sendMessage",
-                data={"chat_id": chat_id, "text": chunk, "disable_web_page_preview": "true"},
-                timeout=30,
-            )
-            if resp.status_code != 200:
-                body = resp.text[:300]
-                print(f"[{label}] chunk {ci}/{len(chunks)} chat {chat_id}: HTTP {resp.status_code} {body}")
-                ok = False
-            else:
-                print(f"[{label}] chunk {ci}/{len(chunks)} chat {chat_id}: OK")
-        except requests.RequestException as e:
-            print(f"[{label}] chunk {ci}/{len(chunks)} chat {chat_id}: network error: {e}")
+        if not _send_one(token, chat_id, chunk, ci, len(chunks), label):
             ok = False
+        if ci < len(chunks):
+            time.sleep(INTER_CHUNK_DELAY_SECONDS)
     return ok
 
 
