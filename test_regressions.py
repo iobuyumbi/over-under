@@ -121,7 +121,7 @@ class TelegramTests(unittest.TestCase):
                         file.write(content)
                 response = unittest.mock.Mock(status_code=200)
                 with patch.dict(os.environ, {
-                    "TELEGRAM_BOT_TOKEN": "token", "TELEGRAM_CHAT_ID": "chat", "DATE": "2026-09-11",
+                    "TELEGRAM_BOT_TOKEN": "123456789:TESTTOKEN", "TELEGRAM_CHAT_ID": "chat", "DATE": "2026-09-11",
                 }, clear=False), patch.object(send_local_telegram.requests, "post", return_value=response) as post:
                     self.assertEqual(send_local_telegram.main(), 0)
             finally:

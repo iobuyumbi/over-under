@@ -48,6 +48,12 @@ def main():
         print("  Example (Windows cmd):  set TELEGRAM_BOT_TOKEN=123456:ABCxyz && set TELEGRAM_CHAT_ID=-1001234567890")
         return 1
 
+    if ":" not in TOKEN:
+        print("ERROR: TELEGRAM_BOT_TOKEN looks invalid (expected '<digits>:<secret>').")
+        print("  Telegram returns HTTP 404 for every call when the token is a placeholder.")
+        print("  Put the real token from @BotFather in .env, e.g. TELEGRAM_BOT_TOKEN=123456789:AA...")
+        return 4
+
     ou_body = read_telegram_section(OU_FILE)
     btts_body = read_telegram_section(BTTS_FILE)
     hw_body = read_telegram_section(HW_FILE)
@@ -65,6 +71,7 @@ def main():
     ok = True
     for cid in targets:
         chunks = [msg[i:i + 3900] for i in range(0, len(msg), 3900)]
+        chat_ok = True
         for ci, chunk in enumerate(chunks, 1):
             try:
                 resp = requests.post(
@@ -74,11 +81,20 @@ def main():
                 )
                 if resp.status_code != 200:
                     print(f"  chunk {ci}/{len(chunks)} -> chat {cid}: HTTP {resp.status_code} {resp.text[:200]}")
+                    chat_ok = False
                     ok = False
             except requests.RequestException as e:
                 print(f"  chunk {ci}/{len(chunks)} -> chat {cid}: network error: {e}")
+                chat_ok = False
                 ok = False
-        print(f"Sent {len(chunks)} chunk(s) to chat {cid}")
+        if chat_ok:
+            print(f"Sent {len(chunks)} chunk(s) to chat {cid}")
+        else:
+            print(f"FAILED to send to chat {cid} ({len(chunks)} chunk(s) attempted).")
+
+    if not ok:
+        print("HINT: HTTP 404 = bad/placeholder TELEGRAM_BOT_TOKEN; "
+              "HTTP 400 'chat not found' = bot is not a member of the chat.")
 
     return 0 if ok else 3
 
