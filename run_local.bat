@@ -84,6 +84,17 @@ if errorlevel 1 (
 )
 
 echo.
+echo === CONSOLIDATE REPORTS (archive weekly/monthly + prune dated files) ===
+REM Runs AFTER curate_picks.py (which reads the *_vip_report_*.txt files) and
+REM AFTER the Telegram send, so it never deletes an input still in use.
+python consolidate_reports.py
+if errorlevel 1 (
+  echo   WARNING: consolidate_reports.py returned non-zero (see above; optional step)
+) else (
+  echo   --- done (reports_history.md updated; dated report files pruned) ---
+)
+
+echo.
 echo === AUTO-COMMIT + PUSH (optional, only if local git is configured) ===
 set "GIT_SKIP_AUTO_PUSH=%~2"
 if /i "%GIT_SKIP_AUTO_PUSH%"=="--no-push" goto skip_git
