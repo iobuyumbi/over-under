@@ -236,22 +236,23 @@ jobs:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
-      - name: Commit weekly report + settled results
+      - name: Consolidate + commit weekly report
         continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git pull --rebase --autostash origin main
-          shopt -s nullglob
-          files=(weekly_report_*.txt weekly_report_*.json)
-          if [ ${#files[@]} -gt 0 ]; then
-            git add "${files[@]}"
-          fi
-          git add prediction_history.json manual_results.csv README.md
+          # Archive dated reports into reports_history.md and prune the rest.
+          # Dated report files are gitignored, so the old "git add
+          # weekly_report_*.txt" step could never stage them; only the single
+          # consolidated file is tracked now.
+          python consolidate_reports.py
+          git add reports_history.md
+          git add -u
           if git diff --cached --quiet; then
             echo "No weekly report changes to commit."
           else
-            git commit -m "Weekly performance report"
+            git commit -m "Weekly performance report (consolidated report history)"
             git push origin main
           fi
 
@@ -304,22 +305,23 @@ jobs:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
-      - name: Commit monthly report + settled results
+      - name: Consolidate + commit monthly report
         continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git pull --rebase --autostash origin main
-          shopt -s nullglob
-          files=(monthly_report_*.txt monthly_report_*.json)
-          if [ ${#files[@]} -gt 0 ]; then
-            git add "${files[@]}"
-          fi
-          git add prediction_history.json manual_results.csv
+          # Archive dated reports into reports_history.md and prune the rest.
+          # Dated report files are gitignored, so the old "git add
+          # monthly_report_*.txt" step could never stage them; only the single
+          # consolidated file is tracked now.
+          python consolidate_reports.py
+          git add reports_history.md
+          git add -u
           if git diff --cached --quiet; then
             echo "No monthly report changes to commit."
           else
-            git commit -m "Monthly performance report"
+            git commit -m "Monthly performance report (consolidated report history)"
             git push origin main
           fi
 
