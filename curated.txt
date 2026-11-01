@@ -2,6 +2,7 @@
   Input reports:
     OU   → over_under_vip_report_2026-11-01.txt
     BTTS → btts_vip_report_2026-11-01.txt
+    HW   → home_win_vip_report_2026-11-01.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -64,11 +65,13 @@
       BTTS Yes · High 77.7% · xG 2.58–1.84
       Stake 1.0% @ 1.9  ·  EV 
 
-━━━ HOME WIN  (0 accepted) ━━━
-  (none)
+━━━ HOME WIN  (1 accepted) ━━━
+   1. 🔥 Amedspor vs Eyupspor  (Turkish Super Lig)
+      Home Win · High 90.7%
+      Stake 4.7% @ 2.8  ·  EV +154.0c/$  ·  Edge +154.0%
 
-📊 Summary: 16 curated picks
-   Parsed total: 100   Rejected: 84   Accepted: 16
+📊 Summary: 17 curated picks
+   Parsed total: 134   Rejected: 117   Accepted: 17
 
 ---
 For informational purposes only · Gamble responsibly
