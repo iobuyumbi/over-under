@@ -1,0 +1,220 @@
+📅 Picks for 2026-11-01
+
+
+🟢 Over 2.5 goals
+
+  ✅ Solid picks
+
+
+  1. Falkirk vs Celtic
+     Date: 2026-11-01
+     League: Scottish Premier
+     Pick: Over 2.5 · Medium confidence (56.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  2. Frosinone vs Torino
+     Date: 2026-11-01
+     League: Italian Serie A
+     Pick: Over 2.5 · High confidence (65.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  3. Lazio vs Cagliari
+     Date: 2026-11-01
+     League: Italian Serie A
+     Pick: Over 2.5 · High confidence (63.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  4. Juventus vs Napoli
+     Date: 2026-11-01
+     League: Italian Serie A
+     Pick: Over 2.5 · High confidence (63.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  5. Racing vs Real Madrid
+     Date: 2026-11-01
+     League: Spanish La Liga
+     Pick: Over 2.5 · High confidence (86.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  6. Strasbourg vs Auxerre
+     Date: 2026-11-01
+     League: French Ligue 1
+     Pick: Over 2.5 · High confidence (74.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  7. Marseille vs Toulouse
+     Date: 2026-11-01
+     League: French Ligue 1
+     Pick: Over 2.5 · High confidence (75.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  8. Kasimpasa vs Besiktas
+     Date: 2026-11-01
+     League: Turkish Super Lig
+     Pick: Over 2.5 · High confidence (58.1%)
+     Category:
+       • Tier: ✅ Solid
+       • Auto-flag: poor league win rate on this market
+
+  9. Excelsior vs FC Twente
+     Date: 2026-11-01
+     League: Netherlands League
+     Pick: Over 2.5 · High confidence (75.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  10. FC Groningen vs Sp. Rotterdam
+     Date: 2026-11-01
+     League: Netherlands League
+     Pick: Over 2.5 · High confidence (85.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  11. OB Odense vs Silkeborg
+     Date: 2026-11-01
+     League: Danish SAS Ligaen
+     Pick: Over 2.5 · High confidence (63.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  12. Viborg vs AC Horsens
+     Date: 2026-11-01
+     League: Danish SAS Ligaen
+     Pick: Over 2.5 · High confidence (76.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  13. Young Boys vs FC Zurich
+     Date: 2026-11-01
+     League: Swiss Super League
+     Pick: Over 2.5 · High confidence (81.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  14. AD Ceuta vs Sp. Gijon
+     Date: 2026-11-01
+     League: Spanish Segunda
+     Pick: Over 2.5 · Medium confidence (56.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  15. Brann vs Molde
+     Date: 2026-11-01
+     League: Norwegian Tippeligaen
+     Pick: Over 2.5 · High confidence (85.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  16. KFUM Oslo vs HamKam
+     Date: 2026-11-01
+     League: Norwegian Tippeligaen
+     Pick: Over 2.5 · High confidence (86.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  17. Sarpsborg vs Kristiansund
+     Date: 2026-11-01
+     League: Norwegian Tippeligaen
+     Pick: Over 2.5 · High confidence (80.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  18. Valerenga vs Tromso
+     Date: 2026-11-01
+     League: Norwegian Tippeligaen
+     Pick: Over 2.5 · High confidence (88.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  19. PAOK Salonika vs Asteras T.
+     Date: 2026-11-01
+     League: Greek Super League
+     Pick: Over 2.5 · High confidence (70.8%)
+     Category:
+       • Tier: ✅ Solid
+
+  20. Panathinaikos vs AEK Athens
+     Date: 2026-11-01
+     League: Greek Super League
+     Pick: Over 2.5 · High confidence (78.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  21. M. Petah Tikva vs H Beer Sheva
+     Date: 2026-11-01
+     League: Israeli League
+     Pick: Over 2.5 · High confidence (77.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  22. Vancouver W vs Seattle
+     Date: 2026-11-01
+     League: MLS
+     Pick: Over 2.5 · High confidence (64.7%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+  23. Atlanta U vs Toronto FC
+     Date: 2026-11-01
+     League: MLS
+     Pick: Over 2.5 · High confidence (66.6%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+  24. Machida Zelvia vs Gamba Osaka
+     Date: 2026-11-01
+     League: Japanese J1 League
+     Pick: Over 2.5 · High confidence (65.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  25. Ulsan Hyundai vs Gangwon
+     Date: 2026-11-01
+     League: Korean K-League 1
+     Pick: Over 2.5 · Medium confidence (56.3%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+       • Auto-flag: weak ROI history on this market
+
+  26. Jeonnam Dragons vs Seongnam
+     Date: 2026-11-01
+     League: Korean K-League 2
+     Pick: Over 2.5 · Medium confidence (53.1%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+       • Auto-flag: weak ROI history on this market
+
+  27. Univ Catolica vs Univ de Chile
+     Date: 2026-11-01
+     League: Chile Primera
+     Pick: Over 2.5 · High confidence (60.1%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+  28. Cobresal vs Everton de Vina del Mar
+     Date: 2026-11-01
+     League: Chile Primera
+     Pick: Over 2.5 · High confidence (62.6%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+  29. Guayaquil City vs Libertad Ecu
+     Date: 2026-11-01
+     League: Ecuador Liga Pro
+     Pick: Over 2.5 · Medium confidence (53.8%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)

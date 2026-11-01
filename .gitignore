@@ -83,6 +83,16 @@ _diag_out.txt
 _diag_err.txt
 soccerbase_cache*.zip
 
+# --- Publish inputs: the assembled message + the four per-market sections ---
+# These are NOT dated (overwritten on every run -> no history growth) and the
+# GitHub Actions publish-daily job reads them from the checkout to build the
+# free-tier Telegram message. Without them committed, CI can only send "— none".
+!telegram.txt
+!ou_telegram.txt
+!btts_telegram.txt
+!hw_telegram.txt
+!oo05_telegram.txt
+
 # --- GitHub Actions self-hosted runner ---
 # NEVER commit a runner folder to git. It contains:
 #   - The .runner file with your repository URL + the runner registration token

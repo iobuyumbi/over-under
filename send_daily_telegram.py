@@ -3,21 +3,21 @@
 
 Intended to be called ONLY from the `publish-daily` job in
 .github/workflows/run_daily.yml.  The prediction engines NEVER run in
-CI — run_local.bat runs them locally, commits all report artifacts
-(ou_telegram.txt, ..., curated.json, date-stamped VIP .txt/.json reports),
+CI — run_local.bat runs them locally, commits the publish inputs
+(telegram.txt, the 4 per-market *_telegram.txt sections, curated.txt),
 and pushes to origin/main.  This CI script then just:
 
   1. Reads the already-committed report files from disk.
   2. Builds the free-tier message from the 4 per-market telegram sections
      (exactly the same way build_telegram_daily.py / send_local_telegram.py
      do locally — no duplicate assembly logic).
-  3. Builds the VIP-tier message from the date-stamped VIP reports that
-     run_local.bat produced.
+  3. Builds the VIP-tier message from the committed curated.txt that
+     curate_picks.py produced.
   4. Posts each message to its corresponding chat ID via secrets env vars
      (TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, TELEGRAM_VIP_CHAT_ID).
 
 Env vars:
-    DATE                 - YYYY-MM-DD publish date (to match VIP files)
+    DATE                 - YYYY-MM-DD publish date (free-tier header)
     TELEGRAM_BOT_TOKEN   - Bot token (GitHub secret)
     TELEGRAM_CHAT_ID     - Free-tier channel ID (GitHub secret)
     TELEGRAM_VIP_CHAT_ID - VIP channel ID (GitHub secret, optional)
@@ -25,7 +25,6 @@ Env vars:
 
 import os
 import sys
-import glob
 import requests
 
 from build_telegram_daily import build_daily_message, read_telegram_section
@@ -61,12 +60,6 @@ def _send_chunks(token, chat_id, text, label="message"):
     return ok
 
 
-def _latest(pattern):
-    """Pick the newest file matching a glob (today's dated file if present)."""
-    files = sorted(glob.glob(pattern), key=os.path.getmtime, reverse=True)
-    return files[0] if files else None
-
-
 def _read(path):
     try:
         with open(path, "r", encoding="utf-8") as f:
@@ -84,40 +77,16 @@ def build_free_message(date):
 
 
 def build_vip_message(date):
-    parts = [f"DAILY PREDICTIONS (VIP) — {date}", ""]
-    found_any = False
-    for label, pattern in [
-        ("OVER / UNDER 2.5", f"over_under_vip_report_{date}.txt"),
-        ("BTTS (YES / NO)",   f"btts_vip_report_{date}.txt"),
-        ("HOME WIN",          f"home_win_vip_report_{date}.txt"),
-        ("OVER 0.5 TEAM GOAL", f"over05_team_goal_vip_report_{date}.txt"),
-    ]:
-        body = _read(pattern)
-        parts.append(f"━━━ {label} ━━━")
-        if body and body.strip():
-            parts.append(body.strip())
-            found_any = True
-        else:
-            parts.append("No qualifying VIP picks today.")
-        parts.append("")
-    if not found_any:
-        # Fall back to latest dated VIP file regardless of date mismatch.
-        for pattern in [
-            "over_under_vip_report_*.txt", "btts_vip_report_*.txt",
-            "home_win_vip_report_*.txt", "over05_team_goal_vip_report_*.txt",
-        ]:
-            latest = _latest(pattern)
-            if latest:
-                body = _read(latest)
-                if body and body.strip():
-                    parts.append(f"(fallback: {os.path.basename(latest)})")
-                    parts.append(body.strip())
-                    parts.append("")
-                    found_any = True
-    if not found_any:
-        parts.append("No VIP reports available.")
-        parts.append("")
-    return "\n".join(parts).rstrip() + "\n"
+    """VIP message = the committed curated picks.
+
+    Sourced from curated.txt (already filtered/ranked by curate_picks.py)
+    rather than the per-day *_vip_report_*.txt files, so no dated report
+    artifacts need to be committed for the VIP channel.
+    """
+    body = _read("curated.txt")
+    if body and body.strip():
+        return body.strip() + "\n"
+    return f"VIP picks — {date}\n\nNo curated picks available.\n"
 
 
 def main():
