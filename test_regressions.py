@@ -128,13 +128,25 @@ class TelegramTests(unittest.TestCase):
         ]
         self.assertTrue(any("OO05 pick" in text for text in free_texts))
 
-    def test_vip_board_separates_markets_and_groups_by_confidence(self):
+    def test_vip_board_separates_markets_sides_and_confidence(self):
         ou = (
             "  1. Alpha vs Beta\n"
             "     League: Test League\n"
             "     Pick: Over 2.5 · High confidence (80.0%)\n"
             "     Category:\n"
             "       • Tier: 🔥 Premium\n"
+            "  2. Epsilon vs Zeta\n"
+            "     League: Test League\n"
+            "     Pick: Under 2.5 · High confidence (72.0%)\n"
+            "     Category:\n"
+            "       • Tier: ✅ Solid\n"
+        )
+        btts = (
+            "  1. Theta vs Iota\n"
+            "     League: Test League\n"
+            "     Pick: BTTS No · Medium confidence (66.0%)\n"
+            "     Category:\n"
+            "       • Tier: ✅ Solid\n"
         )
         hw = (
             "  1. Gamma vs Delta\n"
@@ -143,13 +155,19 @@ class TelegramTests(unittest.TestCase):
             "     Category:\n"
             "       • Tier: ✅ Solid\n"
         )
-        board = build_telegram_daily.build_vip_board("2026-09-11", ou, "", hw, "")
+        oo05 = (
+            "  1. Kappa vs Lambda\n"
+            "     League: Test League\n"
+            "     Pick: Away to Score · Low confidence (50.0%)\n"
+            "     Category:\n"
+            "       • Tier: 👀 Watchlist\n"
+        )
+        board = build_telegram_daily.build_vip_board("2026-09-11", ou, btts, hw, oo05)
         self.assertIn("HIGH CONFIDENCE", board)
         self.assertIn("MEDIUM CONFIDENCE", board)
-        self.assertIn("Alpha vs Beta", board)
-        self.assertIn("Gamma vs Delta", board)
+        self.assertIn("LOW CONFIDENCE", board)
         self.assertIn("80.0%", board)
-        self.assertIn("Total: 2 picks", board)
+        self.assertIn("Total: 5 picks", board)
         # Each market is its own list, and each pick sits in its market's block.
         self.assertIn("⚽️ OVER / UNDER 2.5", board)
         self.assertIn("🏠 HOME WIN", board)
@@ -157,6 +175,14 @@ class TelegramTests(unittest.TestCase):
         self.assertLess(board.index("⚽️ OVER / UNDER 2.5"), board.index("🏠 HOME WIN"))
         self.assertLess(board.index("Alpha vs Beta"), board.index("🏠 HOME WIN"))
         self.assertLess(board.index("🏠 HOME WIN"), board.index("Gamma vs Delta"))
+        # Sides are separated: Over before Under, No after Yes, Away after Home.
+        self.assertIn("⬆️ OVER 2.5", board)
+        self.assertIn("⬇️ UNDER 2.5", board)
+        self.assertIn("🚫 BTTS NO", board)
+        self.assertIn("✈️ AWAY TO SCORE", board)
+        self.assertLess(board.index("⬆️ OVER 2.5"), board.index("⬇️ UNDER 2.5"))
+        self.assertLess(board.index("Alpha vs Beta"), board.index("⬇️ UNDER 2.5"))
+        self.assertLess(board.index("⬇️ UNDER 2.5"), board.index("Epsilon vs Zeta"))
 
 
 if __name__ == "__main__":

@@ -5,9 +5,9 @@ Two messages are produced:
 
 * the free-tier daily message (``build_daily_message``) -- the raw per-market
   sections, forwarded as-is; and
-* the VIP board (``build_vip_board``) -- every fixture from all four markets,
-  separated into one list per market and grouped by confidence level inside
-  each market, all rendered as monospace tables.
+* the VIP board (``build_vip_board``) -- every fixture, split by market, then by
+  side within the market (Over vs Under, BTTS Yes vs No, home vs away goal),
+  then grouped by confidence level, all rendered as monospace tables.
 """
 
 import argparse
@@ -98,6 +98,33 @@ _MARKET_TITLES = {
     "Home Win": "🏠 HOME WIN",
     "Over 0.5 Team Goal": "🎯 OVER 0.5 TEAM GOAL",
 }
+# Side within a market, so Over is never mixed with Under, Yes with No, or the
+# home-team goal with the away-team goal.
+_VARIANT_ORDER = {
+    "Over/Under 2.5": ("Over 2.5", "Under 2.5"),
+    "BTTS": ("BTTS Yes", "BTTS No"),
+    "Over 0.5 Team Goal": ("Home to Score", "Away to Score"),
+    "Home Win": (),
+}
+_VARIANT_TITLES = {
+    "Over 2.5": "⬆️ OVER 2.5",
+    "Under 2.5": "⬇️ UNDER 2.5",
+    "BTTS Yes": "✅ BTTS YES",
+    "BTTS No": "🚫 BTTS NO",
+    "Home to Score": "🏠 HOME TO SCORE",
+    "Away to Score": "✈️ AWAY TO SCORE",
+}
+
+
+def _variant_label(market, pick):
+    text = (pick or "").lower()
+    if market == "Over/Under 2.5":
+        return "Over 2.5" if text.startswith("over") else "Under 2.5"
+    if market == "BTTS":
+        return "BTTS Yes" if "yes" in text else "BTTS No"
+    if market == "Over 0.5 Team Goal":
+        return "Away to Score" if "away" in text else "Home to Score"
+    return ""
 
 
 def parse_telegram_section(body, market):
@@ -179,8 +206,40 @@ def _render_table(rows, headers, caps):
     return out
 
 
+def _render_conf_groups(subset, headers, caps):
+    """HIGH/MEDIUM/LOW blocks (each its own table) for one market or side."""
+    lines = []
+    for title, label in _CONF_GROUPS:
+        group = [p for p in subset if p["label"] == label]
+        if not group:
+            continue
+        group.sort(key=lambda p: (-p["pct"], p["fixture"]))
+        lines.append(f"━━━ {title}  ({len(group)}) ━━━")
+        rows = []
+        for idx, p in enumerate(group, 1):
+            # The tier icon lives in the trailing column: emoji occupy two
+            # display columns but count as one char, so keeping them last
+            # stops the width mismatch from misaligning earlier columns.
+            icon = _TIER_ICON.get(p["tier"], "•")
+            rows.append([
+                str(idx),
+                p["fixture"],
+                p["league"],
+                f"{p['pct']:.1f}%",
+                icon + ("⚠" if p["caution"] else ""),
+            ])
+        lines.extend(_render_table(rows, headers, caps))
+        lines.append("")
+    return lines
+
+
 def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body):
-    """Every fixture, separated by market and grouped by confidence inside each."""
+    """Every fixture, split by market, then by side, then by confidence level.
+
+    Markets are never blended, and neither are the sides inside a market:
+    Over is listed apart from Under, BTTS Yes apart from BTTS No, and the
+    home-team goal apart from the away-team goal.
+    """
     picks = []
     picks += parse_telegram_section(ou_body, "Over/Under 2.5")
     picks += parse_telegram_section(btts_body, "BTTS")
@@ -193,7 +252,7 @@ def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body):
 
     lines = [
         f"🏆 VIP BOARD · {date}",
-        "Every fixture, separated by market and grouped by confidence.",
+        "Every fixture, split by market and side, grouped by confidence.",
         "",
         "📊 " + " · ".join(f"{m} {counts.get(m, 0)}" for m in _MARKETS),
         f"   Total: {len(picks)} picks",
@@ -202,8 +261,10 @@ def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body):
         "",
     ]
 
-    headers = ["#", "Match", "League", "Pick", "Conf", "Tier"]
-    caps = [3, 28, 18, 13, 7, 4]
+    # The pick itself is dropped from the table: the market, side and
+    # confidence headers already state it, so the columns stay narrow.
+    headers = ["#", "Match", "League", "Conf", "Tier"]
+    caps = [3, 32, 20, 7, 4]
 
     for market in _MARKETS:
         market_picks = [p for p in picks if p["market"] == market]
@@ -215,28 +276,17 @@ def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body):
             lines.append("")
             continue
 
-        for title, label in _CONF_GROUPS:
-            subset = [p for p in market_picks if p["label"] == label]
+        variants = _VARIANT_ORDER.get(market, ())
+        if not variants:
+            lines.extend(_render_conf_groups(market_picks, headers, caps))
+            continue
+
+        for variant in variants:
+            subset = [p for p in market_picks if _variant_label(market, p["pick"]) == variant]
             if not subset:
                 continue
-            subset.sort(key=lambda p: (-p["pct"], p["fixture"]))
-            lines.append(f"━━━ {title}  ({len(subset)}) ━━━")
-            rows = []
-            for idx, p in enumerate(subset, 1):
-                # The tier icon lives in the trailing column: emoji occupy two
-                # display columns but count as one char, so keeping them last
-                # stops the width mismatch from misaligning earlier columns.
-                icon = _TIER_ICON.get(p["tier"], "•")
-                rows.append([
-                    str(idx),
-                    p["fixture"],
-                    p["league"],
-                    p["pick"],
-                    f"{p['pct']:.1f}%",
-                    icon + ("⚠" if p["caution"] else ""),
-                ])
-            lines.extend(_render_table(rows, headers, caps))
-            lines.append("")
+            lines.append(f"── {_VARIANT_TITLES[variant]}  ({len(subset)}) ──")
+            lines.extend(_render_conf_groups(subset, headers, caps))
 
     lines.append("───────────")
     lines.append("Info only · gamble responsibly")
