@@ -84,7 +84,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo === CONSOLIDATE REPORTS (archive weekly/monthly + prune dated files) ===
+echo === CONSOLIDATE REPORTS (archive pick digests + prune dated files) ===
 REM Runs AFTER curate_picks.py (which reads the *_vip_report_*.txt files) and
 REM AFTER the Telegram send, so it never deletes an input still in use.
 python consolidate_reports.py
