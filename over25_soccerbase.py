@@ -53,6 +53,7 @@ from config import (
     REGRESSION_UNDER_STREAK,
     REGRESSION_PENALTY,
     WEAK_ROI_MULTIPLIER,
+    WEAK_ROI_LEAGUE_KEYWORDS,
     WEAK_ROI_OVER_LAMBDA_BOOST,
 
     # OU H2H
@@ -1692,7 +1693,7 @@ def get_match_lambdas(home_6, away_6, league_name=None):
     bl = _league_baselines(league_name or "")
     home_baseline_attack, away_baseline_attack, home_baseline_defense, away_baseline_defense = bl
 
-    weak_league = is_weak_roi_league(league_name)
+    weak_league = is_weak_roi_league(league_name, WEAK_ROI_LEAGUE_KEYWORDS)
 
     h_gf_avg, h_ga_avg, _ = exponential_form_averages(home_6 or [])
     if not (home_6 or []):
@@ -1909,8 +1910,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             len(home_overall_6), len(away_overall_6)
         )
         thin_data_gap = max(0, 6 - data_quality_min)
-        base_over_min = MAX_OVER_SCORE - 3 if is_weak_roi_league(league_name) else MAX_OVER_SCORE - 4
-        base_under_min = MAX_UNDER_SCORE - 2 if is_weak_roi_league(league_name) else MAX_UNDER_SCORE - 3
+        base_over_min = MAX_OVER_SCORE - 3 if is_weak_roi_league(league_name, WEAK_ROI_LEAGUE_KEYWORDS) else MAX_OVER_SCORE - 4
+        base_under_min = MAX_UNDER_SCORE - 2 if is_weak_roi_league(league_name, WEAK_ROI_LEAGUE_KEYWORDS) else MAX_UNDER_SCORE - 3
         over_min_score = max(6, base_over_min - thin_data_gap)
         under_min_score = max(5, base_under_min - thin_data_gap)
 
@@ -1977,7 +1978,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             else "LOW"
         )
 
-        league_mult = WEAK_ROI_MULTIPLIER if is_weak_roi_league(league_name) else 1.0
+        league_mult = WEAK_ROI_MULTIPLIER if is_weak_roi_league(league_name, WEAK_ROI_LEAGUE_KEYWORDS) else 1.0
         over_regression_penalty = regression_penalty(home_6, away_6, "over")
         under_regression_penalty = regression_penalty(home_6, away_6, "under")
         early_mult = _early_season_penalty(match.get("date"))
@@ -2178,7 +2179,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "under25_prob": under25_prob_pct,
                 },
                 "guards": {
-                    "weak_roi_league": is_weak_roi_league(league_name),
+                    "weak_roi_league": is_weak_roi_league(league_name, WEAK_ROI_LEAGUE_KEYWORDS),
                     "chaos_rule_over": _chaos_rule_over(home_6, away_6),
                     "compact_rule_under": _compact_rule_under(home_6, away_6),
                     "btts_gate_passed": btts_gate,
