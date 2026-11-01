@@ -7,7 +7,9 @@ Two messages are produced:
   sections, forwarded as-is; and
 * the VIP board (``build_vip_board``) -- every fixture, split by market, then by
   side within the market (Over vs Under, BTTS Yes vs No, home vs away goal),
-  then grouped by confidence level, all rendered as monospace tables.
+  then grouped by confidence level, all rendered as monospace tables, with a
+  yesterday results table split the same way (per-market-side W-L-P and win
+  rate) prepended when the caller supplies the breakdown.
 """
 
 import argparse
@@ -233,12 +235,62 @@ def _render_conf_groups(subset, headers, caps):
     return lines
 
 
-def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body):
+def _render_results_block(rows):
+    """Yesterday's record per market side, as a monospace table.
+
+    Emoji stay out of the rows (only the block header uses them): an emoji
+    occupies two display columns but counts as one character, which would
+    break the alignment of the fixed-width table.
+    """
+    if not rows:
+        return ["— no settled picks yesterday", ""]
+
+    headers = ["Market / Side", "W", "L", "P", "Pend", "Win%"]
+    caps = [16, 3, 3, 3, 4, 6]
+    table = [
+        [
+            row["label"],
+            str(row["wins"]),
+            str(row["losses"]),
+            str(row["pushes"]),
+            str(row["pending"]),
+            "-" if row["win_rate"] is None else f"{row['win_rate']:.1f}%",
+        ]
+        for row in rows
+    ]
+
+    wins = sum(r["wins"] for r in rows)
+    losses = sum(r["losses"] for r in rows)
+    pushes = sum(r["pushes"] for r in rows)
+    pending = sum(r["pending"] for r in rows)
+    decided = wins + losses
+    table.append([
+        "TOTAL",
+        str(wins),
+        str(losses),
+        str(pushes),
+        str(pending),
+        "-" if not decided else f"{100.0 * wins / decided:.1f}%",
+    ])
+
+    lines = _render_table(table, headers, caps)
+    lines.append("")
+    lines.append("W-L-P = win-loss-push (void) · Pend awaits settlement · Win% = W/(W+L)")
+    lines.append("")
+    return lines
+
+
+def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body, results=None):
     """Every fixture, split by market, then by side, then by confidence level.
 
     Markets are never blended, and neither are the sides inside a market:
     Over is listed apart from Under, BTTS Yes apart from BTTS No, and the
     home-team goal apart from the away-team goal.
+
+    Pass ``results`` (the ``(yesterday_date, rows)`` tuple from
+    ``prediction_tracker.get_yesterday_market_breakdown()``) to prepend a
+    yesterday block that splits the record the same way; when omitted the
+    board is today's picks only.
     """
     picks = []
     picks += parse_telegram_section(ou_body, "Over/Under 2.5")
@@ -260,6 +312,13 @@ def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body):
         "Tier: 🔥 Premium · ✅ Solid · 👀 Watchlist    ⚠ weak-ROI caution",
         "",
     ]
+
+    if results is not None:
+        results_date, results_rows = results
+        lines.append("═══════════════════════════")
+        lines.append(f"📊 YESTERDAY · {results_date}")
+        lines.append("═══════════════════════════")
+        lines.extend(_render_results_block(results_rows))
 
     # The pick itself is dropped from the table: the market, side and
     # confidence headers already state it, so the columns stay narrow.

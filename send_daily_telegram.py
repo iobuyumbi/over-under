@@ -12,7 +12,8 @@ to origin/main.  This CI script then just:
      (exactly the same way build_telegram_daily.py / send_local_telegram.py
      do locally — no duplicate assembly logic).
   3. Builds the VIP board from those same sections: every fixture across all
-     four markets, rendered as a confidence-grouped monospace table.
+     four markets as a confidence-grouped monospace table, preceded by
+     yesterday's per-market-side record (W-L-P and win rate).
   4. Posts each message to its corresponding chat ID via secrets env vars
      (TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, TELEGRAM_VIP_CHAT_ID).
 
@@ -36,6 +37,7 @@ from build_telegram_daily import (
     read_telegram_section,
     split_pre_chunks,
 )
+from prediction_tracker import get_yesterday_market_breakdown
 
 # Telegram caps sends to a single chat (~20 msgs/min); space chunks out and
 # retry with backoff on HTTP 429 so a long message never fails the CI job.
@@ -134,13 +136,16 @@ def build_vip_message(date):
 
     Built from the same *_telegram.txt inputs the free message uses, so the
     VIP channel shows the full board (not just a curated subset) rendered as
-    a confidence-grouped monospace table.
+    a confidence-grouped monospace table, preceded by yesterday's record
+    split by market and side.
     """
     ou = read_telegram_section("ou_telegram.txt")
     btts = read_telegram_section("btts_telegram.txt")
     hw = read_telegram_section("hw_telegram.txt")
     oo05 = read_telegram_section("oo05_telegram.txt")
-    return build_vip_board(date, ou, btts, hw, oo05)
+    return build_vip_board(
+        date, ou, btts, hw, oo05, results=get_yesterday_market_breakdown()
+    )
 
 
 def main():

@@ -1328,11 +1328,7 @@ def get_yesterday_results(prediction_type=None, detailed=False, compact=False):
             if pick.get("date", "")[:10] == yesterday
         ]
         for pick in dedupe_predictions(yesterday_ou, report_ou_key):
-            market = (
-                "Over 2.5"
-                if str(pick.get("prediction", "over")).lower() in ("over", "over 2.5")
-                else "Under 2.5"
-            )
+            market = ou_side_label(pick)
             if not detailed:
                 market = market.upper()
             append_pick(pick, market)
@@ -1352,8 +1348,7 @@ def get_yesterday_results(prediction_type=None, detailed=False, compact=False):
             )
 
         for pick in dedupe_predictions(yesterday_btts, report_btts_key):
-            pred = str(pick.get("prediction", "yes")).lower()
-            market = "BTTS Yes" if pred in ("yes", "btts_yes") else "BTTS No"
+            market = btts_side_label(pick)
             if not detailed:
                 market = market.upper()
             append_pick(pick, market)
@@ -1380,6 +1375,96 @@ def get_yesterday_results(prediction_type=None, detailed=False, compact=False):
         results.pop()
 
     return yesterday, results, summary
+
+
+# --- Per-market-side results for the VIP board ------------------------------
+# The VIP board lists picks split by market and then by side (Over vs Under,
+# BTTS Yes vs No, home-to-score vs away-to-score), so its results block reports
+# the same split: one row per side, never a blended market total.
+
+VIP_RESULT_GROUPS = (
+    "Over 2.5",
+    "Under 2.5",
+    "BTTS Yes",
+    "BTTS No",
+    "Home Win",
+    "Home to Score",
+    "Away to Score",
+)
+
+
+def ou_side_label(pick):
+    """'Over 2.5' or 'Under 2.5' for an over/under pick."""
+    value = str(pick.get("prediction", "over")).lower()
+    return "Over 2.5" if value in ("over", "over 2.5") else "Under 2.5"
+
+
+def btts_side_label(pick):
+    """'BTTS Yes' or 'BTTS No' for a BTTS pick."""
+    value = str(pick.get("prediction", "yes")).lower()
+    return "BTTS Yes" if value in ("yes", "btts_yes") else "BTTS No"
+
+
+def oo05_side_label(pick):
+    """'Home to Score' or 'Away to Score' for an over-0.5-team-goal pick."""
+    value = str(pick.get("prediction", "")).lower()
+    return "Away to Score" if "away" in value else "Home to Score"
+
+
+def get_yesterday_market_breakdown():
+    """Yesterday's record per market side, for the VIP board results block.
+
+    Uses the same date window, dedupe keys and overdue/stale rules as
+    get_yesterday_results() so the free-channel block and the VIP block can
+    never disagree.  Returns ``(yesterday_date, rows)``; each row is a dict
+    with ``label``/``wins``/``losses``/``pushes``/``pending``/``win_rate``.
+    Sides with no activity are omitted, and ``win_rate`` is None (rendered as
+    a dash) when nothing was decided so pushes never inflate the percentage.
+    """
+    history = load_history()
+    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+    buckets = {
+        label: {"label": label, "wins": 0, "losses": 0, "pushes": 0, "pending": 0}
+        for label in VIP_RESULT_GROUPS
+    }
+
+    def tally(pick, label):
+        bucket = buckets[label]
+        result = resolve_pick_result(pick)
+        if result in SETTLED_RESULTS:
+            if result == "win":
+                bucket["wins"] += 1
+            elif result == "loss":
+                bucket["losses"] += 1
+            else:
+                bucket["pushes"] += 1
+        elif (pick.get("result") == "pending" and pick_is_overdue(pick)
+              and not pick_is_stale_pending(pick)):
+            bucket["pending"] += 1
+
+    def tally_section(section, key_fn, label_fn):
+        picks = [
+            pick for pick in history.get(section, [])
+            if str(pick.get("date", ""))[:10] == yesterday
+        ]
+        for pick in dedupe_predictions(picks, key_fn):
+            tally(pick, label_fn(pick))
+
+    tally_section("over_under", over_under_key, ou_side_label)
+    tally_section("btts", btts_key, btts_side_label)
+    tally_section("home_win", home_win_key, lambda pick: "Home Win")
+    tally_section("oo05", oo05_key, oo05_side_label)
+
+    rows = []
+    for label in VIP_RESULT_GROUPS:
+        bucket = buckets[label]
+        if not any(bucket[k] for k in ("wins", "losses", "pushes", "pending")):
+            continue
+        decided = bucket["wins"] + bucket["losses"]
+        row = dict(bucket)
+        row["win_rate"] = (100.0 * bucket["wins"] / decided) if decided else None
+        rows.append(row)
+    return yesterday, rows
 
 
 def append_yesterday_section(lines, prediction_type, detailed=False):

@@ -14,7 +14,8 @@ predictor writes and posts two messages:
 
   * the free-tier chat (TELEGRAM_CHAT_ID) gets the assembled daily message; and
   * the VIP chat (TELEGRAM_VIP_CHAT_ID) gets the full board -- every fixture
-    from all four markets, rendered as a confidence-grouped monospace table.
+    from all four markets, rendered as a confidence-grouped monospace table,
+    preceded by yesterday's record split by market and side (W-L-P + win%).
 
 This is the local-only counterpart to the inline Telegram posting
 that lives inside the GitHub Actions workflow (run_daily.yml).
@@ -34,6 +35,7 @@ from build_telegram_daily import (
     read_telegram_section,
     split_pre_chunks,
 )
+from prediction_tracker import get_yesterday_market_breakdown
 
 # Local credentials live in .env (which is ignored by Git). Environment
 # variables still take precedence, which keeps GitHub Actions unchanged.
@@ -142,7 +144,10 @@ def main():
     ok = _send(TOKEN, CHAT, msg, "FREE")
 
     if VIP:
-        vip_msg = build_vip_board(DATE, ou_body, btts_body, hw_body, oo05_body)
+        vip_msg = build_vip_board(
+            DATE, ou_body, btts_body, hw_body, oo05_body,
+            results=get_yesterday_market_breakdown(),
+        )
         ok = _send(TOKEN, VIP, vip_msg, "VIP", as_pre=True) and ok
 
     if not ok:

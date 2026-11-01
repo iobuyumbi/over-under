@@ -1,8 +1,10 @@
 """Regression coverage for result tracking and source-selection fixes."""
 
+import json
 import os
 import tempfile
 import unittest
+from datetime import datetime, timedelta
 from unittest.mock import patch
 
 import fetch_results
@@ -184,6 +186,96 @@ class TelegramTests(unittest.TestCase):
         self.assertLess(board.index("⬆️ OVER 2.5"), board.index("⬇️ UNDER 2.5"))
         self.assertLess(board.index("Alpha vs Beta"), board.index("⬇️ UNDER 2.5"))
         self.assertLess(board.index("⬇️ UNDER 2.5"), board.index("Epsilon vs Zeta"))
+
+    def test_vip_board_prepends_a_per_market_side_results_table(self):
+        rows = [
+            {"label": "Over 2.5", "wins": 26, "losses": 12, "pushes": 1,
+             "pending": 2, "win_rate": 68.421},
+            {"label": "Under 2.5", "wins": 2, "losses": 2, "pushes": 0,
+             "pending": 0, "win_rate": 50.0},
+            {"label": "BTTS No", "wins": 1, "losses": 2, "pushes": 0,
+             "pending": 0, "win_rate": 33.333},
+        ]
+        board = build_telegram_daily.build_vip_board(
+            "2026-09-11", "", "", "", "", results=("2026-09-10", rows)
+        )
+
+        self.assertIn("📊 YESTERDAY · 2026-09-10", board)
+        # The results block comes before today's picks.
+        self.assertLess(board.index("📊 YESTERDAY"), board.index("⚽️ OVER / UNDER 2.5"))
+        # Every side keeps its own row instead of a blended market total.
+        for label in ("Over 2.5", "Under 2.5", "BTTS No"):
+            self.assertIn(label, board)
+        over_row = [line for line in board.split("\n") if line.startswith("Over 2.5")][0]
+        self.assertIn("26", over_row)
+        self.assertIn("68.4%", over_row)
+        self.assertIn("33.3%", board)
+        self.assertIn("TOTAL", board)
+        # Totals sum every side: 29W-16L of 45 decided.
+        total_row = [line for line in board.split("\n") if line.startswith("TOTAL")][0]
+        self.assertIn("64.4%", total_row)
+
+    def test_vip_board_says_so_when_yesterday_has_no_settled_picks(self):
+        board = build_telegram_daily.build_vip_board(
+            "2026-09-11", "", "", "", "", results=("2026-09-10", [])
+        )
+        self.assertIn("📊 YESTERDAY · 2026-09-10", board)
+        self.assertIn("no settled picks yesterday", board)
+
+
+class YesterdayBreakdownTests(unittest.TestCase):
+    def test_breakdown_splits_sides_and_keeps_voids_out_of_the_win_rate(self):
+        yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+        history = {
+            "over_under": [
+                {"date": yesterday, "home_team": "A", "away_team": "B",
+                 "prediction": "over", "result": "win", "final_score": "3-1"},
+                {"date": yesterday, "home_team": "C", "away_team": "D",
+                 "prediction": "under", "result": "loss", "final_score": "1-1"},
+                {"date": yesterday, "home_team": "E", "away_team": "F",
+                 "prediction": "under", "result": "push", "final_score": "0-2"},
+            ],
+            "btts": [
+                {"date": yesterday, "home_team": "G", "away_team": "H",
+                 "prediction": "no", "result": "win", "final_score": "1-0"},
+            ],
+            "home_win": [
+                {"date": yesterday, "home_team": "I", "away_team": "J",
+                 "prediction": "home_win", "result": "win", "final_score": "2-0"},
+            ],
+            "oo05": [
+                {"date": yesterday, "home_team": "K", "away_team": "L",
+                 "prediction": "away_team_goals", "result": "loss", "final_score": "0-0"},
+            ],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            old_cwd = os.getcwd()
+            try:
+                os.chdir(directory)
+                with open("history.json", "w", encoding="utf-8") as file:
+                    json.dump(history, file)
+                with patch.object(prediction_tracker, "HISTORY_FILE", "history.json"):
+                    date, rows = prediction_tracker.get_yesterday_market_breakdown()
+            finally:
+                os.chdir(old_cwd)
+
+        self.assertEqual(date, yesterday)
+        by_label = {row["label"]: row for row in rows}
+        self.assertEqual(
+            sorted(by_label),
+            ["Away to Score", "BTTS No", "Home Win", "Over 2.5", "Under 2.5"],
+        )
+        self.assertEqual(by_label["Over 2.5"]["wins"], 1)
+        self.assertEqual(by_label["Under 2.5"]["losses"], 1)
+        self.assertEqual(by_label["Under 2.5"]["pushes"], 1)
+        self.assertEqual(by_label["Home Win"]["wins"], 1)
+        self.assertEqual(by_label["Away to Score"]["losses"], 1)
+        # Win rate is W/(W+L), so the void must not drag Under 2.5 to a third.
+        self.assertEqual(by_label["Over 2.5"]["win_rate"], 100.0)
+        self.assertEqual(by_label["Under 2.5"]["win_rate"], 0.0)
+        # Sides with no picks yesterday are omitted rather than shown as zeros.
+        self.assertNotIn("Home to Score", by_label)
+        self.assertNotIn("BTTS Yes", by_label)
 
 
 class WeeklyReportSplitTests(unittest.TestCase):
