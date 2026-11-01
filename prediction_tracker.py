@@ -1838,7 +1838,20 @@ def generate_monthly_report(year, month):
         return month_start <= pick_date < month_end
     
     safer_stats = calculate_safer_pick_stats(history, month_filter)
-    
+
+    btts_picks = history.get("btts", []) or []
+    btts_yes_picks = [
+        p for p in btts_picks
+        if str(p.get("prediction", "yes")).strip().lower() in ("yes", "btts_yes", "btts yes")
+    ]
+    btts_no_picks = [
+        p for p in btts_picks
+        if str(p.get("prediction", "no")).strip().lower() in ("no", "btts_no", "btts no")
+    ]
+    btts_yes_stats = calculate_performance_for_month(btts_yes_picks, month_start, month_end)
+    btts_no_stats = calculate_performance_for_month(btts_no_picks, month_start, month_end)
+    oo05_stats = calculate_performance_for_month(history.get("oo05", []) or [], month_start, month_end)
+
     # Generate report text 
     month_name = month_start.strftime("%B %Y") 
     report = [] 
@@ -1896,6 +1909,33 @@ def generate_monthly_report(year, month):
     if safer_stats['under_3_5']['decisions'] > 0: 
         report.append(f"Win Rate: {safer_stats['under_3_5']['win_rate']:.1f}%") 
     report.append("") 
+    report.append("BTTS YES") 
+    report.append(f"Total picks: {btts_yes_stats['total']}") 
+    report.append(f"Wins: {btts_yes_stats['wins']}") 
+    report.append(f"Losses: {btts_yes_stats['losses']}") 
+    report.append(f"Pushes: {btts_yes_stats['pushes']}") 
+    report.append(f"Pending: {btts_yes_stats['pending']}") 
+    if btts_yes_stats['decisions'] > 0: 
+        report.append(f"Win Rate: {btts_yes_stats['win_rate']:.1f}%") 
+    report.append("") 
+    report.append("BTTS NO") 
+    report.append(f"Total picks: {btts_no_stats['total']}") 
+    report.append(f"Wins: {btts_no_stats['wins']}") 
+    report.append(f"Losses: {btts_no_stats['losses']}") 
+    report.append(f"Pushes: {btts_no_stats['pushes']}") 
+    report.append(f"Pending: {btts_no_stats['pending']}") 
+    if btts_no_stats['decisions'] > 0: 
+        report.append(f"Win Rate: {btts_no_stats['win_rate']:.1f}%") 
+    report.append("") 
+    report.append("OVER 0.5 TEAM GOAL") 
+    report.append(f"Total picks: {oo05_stats['total']}") 
+    report.append(f"Wins: {oo05_stats['wins']}") 
+    report.append(f"Losses: {oo05_stats['losses']}") 
+    report.append(f"Pushes: {oo05_stats['pushes']}") 
+    report.append(f"Pending: {oo05_stats['pending']}") 
+    if oo05_stats['decisions'] > 0: 
+        report.append(f"Win Rate: {oo05_stats['win_rate']:.1f}%") 
+    report.append("") 
     report.append("---") 
     report.append("For informational purposes only") 
     report.append("Gamble responsibly") 
@@ -1908,7 +1948,10 @@ def generate_monthly_report(year, month):
         "over": over_stats,
         "over_1_5": safer_stats["over_1_5"],
         "under": under_stats,
-        "under_3_5": safer_stats["under_3_5"]
+        "under_3_5": safer_stats["under_3_5"],
+        "btts_yes": btts_yes_stats,
+        "btts_no": btts_no_stats,
+        "oo05": oo05_stats
     }
 
 
@@ -1992,7 +2035,20 @@ def generate_weekly_report():
         return week_ago.date() <= pick_date.date() <= today.date()
     
     safer_stats = calculate_safer_pick_stats(history, week_filter)
-    
+
+    btts_picks = history.get("btts", []) or []
+    btts_yes_picks = [
+        p for p in btts_picks
+        if str(p.get("prediction", "yes")).strip().lower() in ("yes", "btts_yes", "btts yes")
+    ]
+    btts_no_picks = [
+        p for p in btts_picks
+        if str(p.get("prediction", "no")).strip().lower() in ("no", "btts_no", "btts no")
+    ]
+    btts_yes_stats = calc_stats(btts_yes_picks)
+    btts_no_stats = calc_stats(btts_no_picks)
+    oo05_stats = calc_stats(history.get("oo05", []) or [])
+
     report = [] 
     report.append("WEEKLY PERFORMANCE REPORT") 
     report.append(f"{week_ago.strftime('%Y-%m-%d')} to {today.strftime('%Y-%m-%d')}") 
@@ -2084,6 +2140,36 @@ def generate_weekly_report():
         report.append(f"Win rate: {safer_stats['under_3_5']['win_rate']:.1f}%") 
     
     report.append("") 
+    report.append("BTTS YES") 
+    report.append(f"Total picks: {btts_yes_stats['total']}") 
+    report.append(f"Wins: {btts_yes_stats['wins']}") 
+    report.append(f"Losses: {btts_yes_stats['losses']}") 
+    report.append(f"Pushes: {btts_yes_stats['pushes']}") 
+    report.append(f"Pending: {btts_yes_stats['pending']}") 
+    if btts_yes_stats['decisions']>0: 
+        report.append(f"Win rate: {btts_yes_stats['win_rate']:.1f}%") 
+    
+    report.append("") 
+    report.append("BTTS NO") 
+    report.append(f"Total picks: {btts_no_stats['total']}") 
+    report.append(f"Wins: {btts_no_stats['wins']}") 
+    report.append(f"Losses: {btts_no_stats['losses']}") 
+    report.append(f"Pushes: {btts_no_stats['pushes']}") 
+    report.append(f"Pending: {btts_no_stats['pending']}") 
+    if btts_no_stats['decisions']>0: 
+        report.append(f"Win rate: {btts_no_stats['win_rate']:.1f}%") 
+    
+    report.append("") 
+    report.append("OVER 0.5 TEAM GOAL") 
+    report.append(f"Total picks: {oo05_stats['total']}") 
+    report.append(f"Wins: {oo05_stats['wins']}") 
+    report.append(f"Losses: {oo05_stats['losses']}") 
+    report.append(f"Pushes: {oo05_stats['pushes']}") 
+    report.append(f"Pending: {oo05_stats['pending']}") 
+    if oo05_stats['decisions']>0: 
+        report.append(f"Win rate: {oo05_stats['win_rate']:.1f}%") 
+    
+    report.append("") 
     report.append("---") 
     report.append("For informational purposes only") 
     report.append("Gamble responsibly") 
@@ -2094,7 +2180,10 @@ def generate_weekly_report():
         "over": over_stats, 
         "over_1_5": safer_stats["over_1_5"],
         "under": under_stats,
-        "under_3_5": safer_stats["under_3_5"]
+        "under_3_5": safer_stats["under_3_5"],
+        "btts_yes": btts_yes_stats,
+        "btts_no": btts_no_stats,
+        "oo05": oo05_stats
     }
 
  

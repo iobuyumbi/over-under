@@ -18,9 +18,9 @@ README_FILE = "README.md"
 
 def calculate_weekly_stats(history, weeks=4):
     """Calculate performance for last N weeks"""
-    stats = {"over_under": {}, "home_win": {}}
+    stats = {"over_under": {}, "home_win": {}, "btts": {}, "oo05": {}}
 
-    for ptype in ["over_under", "home_win"]:
+    for ptype in ["over_under", "home_win", "btts", "oo05"]:
         picks = history.get(ptype, [])
         weekly = defaultdict(lambda: {"wins": 0, "losses": 0, "pushes": 0, "total": 0})
 
@@ -57,8 +57,15 @@ def generate_readme_section(stats):
     lines = ["\n## Weekly Performance Report\n"]
     lines.append(f"**Last Updated:** {datetime.now().strftime('%Y-%m-%d %H:%M')}\n")
 
+    market_names = {
+        "over_under": "Over 2.5 Goals",
+        "home_win": "Home Win",
+        "btts": "BTTS",
+        "oo05": "Over 0.5 Team Goal",
+    }
+
     for ptype, data in stats.items():
-        name = "Over 2.5 Goals" if ptype == "over_under" else "Home Win"
+        name = market_names.get(ptype, ptype)
         lines.append(f"### {name}\n")
         lines.append("| Week | Matches | Wins | Losses | Win Rate |")
         lines.append("|------|---------|------|--------|----------|")
