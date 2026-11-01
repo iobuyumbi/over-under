@@ -29,7 +29,7 @@ if errorlevel 1 goto :error
 echo --- done ---
 
 echo.
-echo === UPDATE MANUAL (pending only, last 7 days) ===
+echo === UPDATE MANUAL (auto-fill scores, mark never-played rows) ===
 python update_manual_results.py
 if errorlevel 1 goto :error
 echo --- done ---

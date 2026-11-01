@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """
 Smart manual result updater.
-Only checks RECENT pending predictions (last 7 days).
-Merges new scores into existing CSV without deleting old entries.
-Also ensures every predicted match has a row in the CSV so
-fetch_results.py can short-circuit lookups against the local file.
+
+Keeps manual_results.csv complete and unambiguous:
+  * backfills a blank row for every match we have ever predicted;
+  * auto-fills the score for any past-dated row that is still blank -- not just
+    the last 7 days, so a result that appears late still lands;
+  * marks rows that stay unresolved past a grace window as NOT PLAYED, so a
+    fixture that never produced a result is explicit instead of silently empty.
+
+fetch_results.py reads this file as its highest-priority result override.
 """
 
 import csv
@@ -33,7 +38,7 @@ def load_prediction_history():
 def get_all_predicted_keys(history):
     """All matches we've ever predicted — used to ensure CSV completeness."""
     keys = {}
-    for ptype in ("home_win", "over_under", "btts"):
+    for ptype in ("home_win", "over_under", "btts", "oo05"):
         for pick in history.get(ptype, []):
             date = pick.get("date", "")
             home = pick.get("home_team", pick.get("home", "")).strip()
@@ -47,24 +52,6 @@ def get_all_predicted_keys(history):
             elif final_score and not keys[key]:
                 keys[key] = final_score
     return keys
-
-
-def get_pending_recent(history, days_back=7):
-    """Only get PENDING predictions from last N days — these are the only ones we'll fetch online."""
-    cutoff = (datetime.now() - timedelta(days=days_back)).strftime("%Y-%m-%d")
-    matches = set()
-    for ptype in ("home_win", "over_under", "btts"):
-        for pick in history.get(ptype, []):
-            if pick.get("result") != "pending":
-                continue
-            date = pick.get("date", "")
-            if not date or date < cutoff:
-                continue
-            home = pick.get("home_team", pick.get("home", "")).strip()
-            away = pick.get("away_team", pick.get("away", "")).strip()
-            if home and away:
-                matches.add((date, home, away))
-    return sorted(list(matches), key=lambda x: x[0])
 
 
 def load_csv_dict():
@@ -84,14 +71,26 @@ def load_csv_dict():
 
 
 POSTPONED_MARKER = "POSTPONED"
+NOT_PLAYED_MARKER = "NOT PLAYED"
+_STALE_DAYS = 14  # a blank row older than this is treated as never played
 _POSTPONED_API_STATUSES = frozenset({"PST", "CANC", "ABD", "SUSP", "WO", "AWD", "BT"})
 
+_fixture_cache = {}
 
-def fetch_online(date, home, away):
-    """Fast API-Football lookup for a single match. Returns score string or POSTPONED_MARKER."""
-    if not API_FOOTBALL_KEY:
-        return None
-    try:
+
+def _fixtures_for_date(date):
+    """Fixtures for a date (finished + voided), memoised for this run.
+
+    Returns (fixtures, ok). ok is False when every API request for the date
+    failed, which lets callers tell "no result yet" apart from "API unreachable".
+    Fetching per date rather than per match keeps a backlog of unresolved rows
+    down to two API calls per distinct date instead of two per fixture.
+    """
+    if date in _fixture_cache:
+        return _fixture_cache[date]
+    fixtures = []
+    ok = False
+    if API_FOOTBALL_KEY:
         url = f"https://{API_FOOTBALL_HOST}/fixtures"
         headers = {
             "x-rapidapi-key": API_FOOTBALL_KEY,
@@ -105,24 +104,39 @@ def fetch_online(date, home, away):
             except (requests.Timeout, requests.ConnectionError, requests.HTTPError, requests.RequestException) as e:
                 print(f"  [warn] API fetch failed status={status_param} date={date}: {type(e).__name__}: {e}")
                 continue
-            data = resp.json()
-            for fixture in data.get("response", []):
-                status_short = (fixture.get("fixture", {}).get("status", {}) or {}).get("short", "")
-                api_home = fixture["teams"]["home"]["name"]
-                api_away = fixture["teams"]["away"]["name"]
-                if (home.lower() in api_home.lower() or api_home.lower() in home.lower()) and \
-                   (away.lower() in api_away.lower() or api_away.lower() in away.lower()):
-                    if status_short in _POSTPONED_API_STATUSES:
-                        return POSTPONED_MARKER
-                    gh = fixture["goals"]["home"]
-                    ga = fixture["goals"]["away"]
-                    if gh is not None and ga is not None:
-                        return f"{gh}-{ga}"
+            try:
+                fixtures.extend(resp.json().get("response", []))
+                ok = True
+            except (ValueError, TypeError) as e:
+                print(f"  [warn] API parse error date={date}: {type(e).__name__}: {e}")
+    _fixture_cache[date] = (fixtures, ok)
+    return _fixture_cache[date]
+
+
+def fetch_online(date, home, away):
+    """Look up one match. Returns a score string, POSTPONED_MARKER, or None."""
+    fixtures, _ = _fixtures_for_date(date)
+    try:
+        for fixture in fixtures:
+            status_short = (fixture.get("fixture", {}).get("status", {}) or {}).get("short", "")
+            api_home = fixture["teams"]["home"]["name"]
+            api_away = fixture["teams"]["away"]["name"]
+            if (home.lower() in api_home.lower() or api_home.lower() in home.lower()) and \
+               (away.lower() in api_away.lower() or api_away.lower() in away.lower()):
+                if status_short in _POSTPONED_API_STATUSES:
+                    return POSTPONED_MARKER
+                gh = fixture["goals"]["home"]
+                ga = fixture["goals"]["away"]
+                if gh is not None and ga is not None:
+                    return f"{gh}-{ga}"
     except (ValueError, KeyError, TypeError) as e:
         print(f"  [warn] fetch_online parse error for {date} {home} vs {away}: {type(e).__name__}: {e}")
-    except requests.RequestException as e:
-        print(f"  [warn] fetch_online request error for {date} {home} vs {away}: {type(e).__name__}: {e}")
     return None
+
+
+def date_lookup_ok(date):
+    """True when the API answered for this date, so a missing score is meaningful."""
+    return _fixtures_for_date(date)[1]
 
 
 def write_csv(csv_data):
@@ -135,11 +149,10 @@ def write_csv(csv_data):
 
 
 def main():
-    print("Smart manual updater — only recent pending predictions...")
+    print("Smart manual updater — backfill, auto-fill, resolve never-played rows...")
     history = load_prediction_history()
 
     all_predicted = get_all_predicted_keys(history)
-    pending = get_pending_recent(history, days_back=7)
     csv_data = load_csv_dict()
 
     # 1) Make sure every predicted match has a CSV row (with a blank score if missing)
@@ -152,39 +165,51 @@ def main():
             csv_data[key] = history_score
             added_rows += 1
 
-    # 2) Now check only the pending-recent set online
+    # 2) Every past-dated row still blank is eligible for auto-fill -- not just
+    #    the last 7 days, so a result published late still lands in the CSV.
+    today = datetime.now().strftime("%Y-%m-%d")
+    unresolved = sorted(
+        (k for k, v in csv_data.items() if not v and k[0] <= today),
+        key=lambda k: k[0],
+    )
+
     found_new = 0
-    skipped_has_score = 0
-    failed = 0
+    marked = 0
+    if not API_FOOTBALL_KEY:
+        print("  [warn] API_FOOTBALL_KEY not set — skipping auto-fill and NOT PLAYED marking.")
+    else:
+        for date, home, away in unresolved:
+            score = fetch_online(date, home, away)
+            if score:
+                csv_data[(date, home, away)] = score
+                found_new += 1
+                print(f"  [NEW] {date} {home} vs {away} = {score}")
 
-    for date, home, away in pending:
-        key = (date, home, away)
-        if key in csv_data and csv_data[key]:
-            skipped_has_score += 1
-            continue
-
-        score = fetch_online(date, home, away)
-        if score:
-            csv_data[key] = score
-            found_new += 1
-            print(f"  [NEW] {date} {home} vs {away} = {score}")
-        else:
-            failed += 1
+        # 3) Anything still blank past the grace window never produced a result.
+        #    Only rows whose date the API actually answered for are marked, so a
+        #    transient outage can't relabel real fixtures as never played.
+        stale_cutoff = (datetime.now() - timedelta(days=_STALE_DAYS)).strftime("%Y-%m-%d")
+        for key, score in csv_data.items():
+            if score or key[0] >= stale_cutoff or not date_lookup_ok(key[0]):
+                continue
+            csv_data[key] = NOT_PLAYED_MARKER
+            marked += 1
 
     write_csv(csv_data)
 
-    with_score = sum(1 for s in csv_data.values() if s)
+    blank = sum(1 for s in csv_data.values() if not s)
+    void = sum(1 for s in csv_data.values() if s in (NOT_PLAYED_MARKER, POSTPONED_MARKER))
     print("\nDone.")
     print(f"  Predicted matches:         {len(all_predicted)}")
     if added_rows:
         print(f"  CSV rows added (backfill): {added_rows}")
-    print(f"  Pending checked (7d):      {len(pending)}")
-    print(f"  Already scored in CSV:     {skipped_has_score}")
+    print(f"  Blank past rows checked:   {len(unresolved)}")
     print(f"  New scores (from API):     {found_new}")
-    print(f"  Still missing:             {failed}")
+    print(f"  Marked NOT PLAYED:         {marked}")
     print(f"  Total CSV rows:            {len(csv_data)}")
-    print(f"  CSV rows with score:       {with_score}")
-    print(f"  CSV rows pending score:    {len(csv_data) - with_score}")
+    print(f"  CSV rows with score:       {len(csv_data) - blank - void}")
+    print(f"  CSV rows void:             {void}")
+    print(f"  CSV rows still blank:      {blank}")
 
 
 if __name__ == "__main__":

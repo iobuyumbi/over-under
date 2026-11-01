@@ -245,7 +245,11 @@ def team_names_match(name1, name2):
 # SCORE PARSING
 # =============================================================================
 POSTPONED_MARKER = "POSTPONED"
-_POSTPONED_TOKENS = frozenset({"p-p", "pp", "p.p.", "abd", "abandoned", "cancelled", "canceled", "suspended"})
+# Markers meaning "no result to settle against" — the bet is void. NOT PLAYED is
+# written by update_manual_results.py for fixtures that never produced a score.
+NOT_PLAYED_MARKER = "NOT PLAYED"
+VOID_MARKERS = (POSTPONED_MARKER, NOT_PLAYED_MARKER)
+_POSTPONED_TOKENS = frozenset({"p-p", "pp", "p.p.", "abd", "abandoned", "cancelled", "canceled", "suspended", "notplayed"})
 
 
 def is_postponed(score_str):
@@ -255,6 +259,8 @@ def is_postponed(score_str):
     text = score_str.strip().lower()
     if not text:
         return False
+    if text in (m.lower() for m in VOID_MARKERS):
+        return True
     if "postponed" in text or "void" in text:
         return True
     cleaned = re.sub(r"[^a-z0-9.]", "", text)
@@ -940,7 +946,7 @@ def determine_home_win_result(pick, results):
     for match in results:
         if (team_names_match(match["home_team"], pick_home) and
                 team_names_match(match["away_team"], pick_away)):
-            if match["score"] == POSTPONED_MARKER:
+            if match["score"] in VOID_MARKERS:
                 return "push"
             hg, ag = parse_score(match["score"])
             if hg is not None and ag is not None:
@@ -958,7 +964,7 @@ def determine_over_under_result(pick, results):
     for match in results:
         if (team_names_match(match["home_team"], pick_home) and
                 team_names_match(match["away_team"], pick_away)):
-            if match["score"] == POSTPONED_MARKER:
+            if match["score"] in VOID_MARKERS:
                 return "push"
             hg, ag = parse_score(match["score"])
             if hg is not None and ag is not None:
@@ -977,7 +983,7 @@ def determine_btts_result(pick, results):
     for match in results:
         if (team_names_match(match["home_team"], pick_home) and
                 team_names_match(match["away_team"], pick_away)):
-            if match["score"] == POSTPONED_MARKER:
+            if match["score"] in VOID_MARKERS:
                 return "push"
             hg, ag = parse_score(match["score"])
             if hg is not None and ag is not None:
@@ -995,7 +1001,7 @@ def determine_oo05_result(pick, results):
     for match in results:
         if (team_names_match(match["home_team"], pick_home) and
                 team_names_match(match["away_team"], pick_away)):
-            if match["score"] == POSTPONED_MARKER:
+            if match["score"] in VOID_MARKERS:
                 return "push"
             hg, ag = parse_score(match["score"])
             if hg is not None and ag is not None:
