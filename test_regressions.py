@@ -10,6 +10,7 @@ import prediction_tracker
 import scraping
 import send_daily_telegram
 import send_local_telegram
+import build_telegram_daily
 
 
 class ResultTrackingTests(unittest.TestCase):
@@ -111,22 +112,45 @@ class TelegramTests(unittest.TestCase):
             old_cwd = os.getcwd()
             try:
                 os.chdir(directory)
-                for filename, content in (
-                    ("ou_telegram.txt", "OU pick"),
-                    ("btts_telegram.txt", "BTTS pick"),
-                    ("hw_telegram.txt", "Home pick"),
-                    ("oo05_telegram.txt", "OO05 pick"),
-                ):
-                    with open(filename, "w", encoding="utf-8") as file:
-                        file.write(content)
+                with open("oo05_telegram.txt", "w", encoding="utf-8") as file:
+                    file.write("OO05 pick")
                 response = unittest.mock.Mock(status_code=200)
                 with patch.dict(os.environ, {
-                    "TELEGRAM_BOT_TOKEN": "123456789:TESTTOKEN", "TELEGRAM_CHAT_ID": "chat", "DATE": "2026-09-11",
+                    "TELEGRAM_BOT_TOKEN": "123456789:TESTTOKEN", "TELEGRAM_CHAT_ID": "chat",
+                    "TELEGRAM_VIP_CHAT_ID": "", "DATE": "2026-09-11",
                 }, clear=False), patch.object(send_local_telegram.requests, "post", return_value=response) as post:
                     self.assertEqual(send_local_telegram.main(), 0)
             finally:
                 os.chdir(old_cwd)
-        self.assertIn("OO05 pick", post.call_args.kwargs["data"]["text"])
+        free_texts = [
+            call.kwargs["data"]["text"] for call in post.call_args_list
+            if call.kwargs["data"]["chat_id"] == "chat"
+        ]
+        self.assertTrue(any("OO05 pick" in text for text in free_texts))
+
+    def test_vip_board_lists_every_pick_grouped_by_confidence(self):
+        ou = (
+            "  1. Alpha vs Beta\n"
+            "     League: Test League\n"
+            "     Pick: Over 2.5 · High confidence (80.0%)\n"
+            "     Category:\n"
+            "       • Tier: 🔥 Premium\n"
+        )
+        hw = (
+            "  1. Gamma vs Delta\n"
+            "     League: Other League\n"
+            "     Pick: Home Win · Medium confidence (60.0%)\n"
+            "     Category:\n"
+            "       • Tier: ✅ Solid\n"
+        )
+        board = build_telegram_daily.build_vip_board("2026-09-11", ou, "", hw, "")
+        self.assertIn("HIGH CONFIDENCE", board)
+        self.assertIn("MEDIUM CONFIDENCE", board)
+        self.assertIn("Alpha vs Beta", board)
+        self.assertIn("Gamma vs Delta", board)
+        self.assertIn("80.0%", board)
+        self.assertIn("Total: 2 picks", board)
+        self.assertLess(board.index("Alpha vs Beta"), board.index("Gamma vs Delta"))
 
 
 if __name__ == "__main__":

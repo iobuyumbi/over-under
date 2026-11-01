@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
-"""Build one compact Telegram message from predictor TELEGRAM markers."""
+"""Build the Telegram messages from predictor TELEGRAM markers.
+
+Two messages are produced:
+
+* the free-tier daily message (``build_daily_message``) -- the raw per-market
+  sections, forwarded as-is; and
+* the VIP board (``build_vip_board``) -- every fixture from all four markets
+  rendered as a monospace table grouped by confidence level.
+"""
 
 import argparse
 import re
@@ -69,6 +77,174 @@ def build_daily_message(date, ou_body, btts_body, hw_body, oo05_body):
     lines.append("───────────")
     lines.append("Info only · gamble responsibly")
     return "\n".join(lines).strip()
+
+
+_FIXTURE_RE = re.compile(r"^\s*\d+\.\s+(.+?)\s*$")
+_LEAGUE_RE = re.compile(r"^\s+League:\s*(.+?)\s*$")
+_PICK_RE = re.compile(
+    r"^\s+Pick:\s+(.+?)\s*·\s*(High|Medium|Low)\s+confidence\s+\((\d+(?:\.\d+)?)\%\)\s*$"
+)
+_TIER_ICON = {"Premium": "🔥", "Solid": "✅", "Watchlist": "👀"}
+_CONF_GROUPS = (
+    ("🟢 HIGH CONFIDENCE", "High"),
+    ("🟡 MEDIUM CONFIDENCE", "Medium"),
+    ("🔵 LOW CONFIDENCE", "Low"),
+)
+_MARKETS = ("Over/Under 2.5", "BTTS", "Home Win", "Over 0.5 Team Goal")
+
+
+def parse_telegram_section(body, market):
+    """Parse a per-market Telegram section into one dict per fixture.
+
+    All four engines emit the same block layout::
+
+          1. Amedspor vs Eyupspor
+             League: Turkish Super Lig
+             Pick: Home Win · High confidence (90.7%)
+             Category:
+               • Tier: 🔥 Premium
+    """
+    picks = []
+    current = None
+    for raw in (body or "").splitlines():
+        line = raw.rstrip()
+        fixture = _FIXTURE_RE.match(line)
+        if fixture:
+            if current:
+                picks.append(current)
+            current = {
+                "fixture": fixture.group(1).strip(),
+                "market": market,
+                "league": "",
+                "pick": "",
+                "label": "",
+                "pct": 0.0,
+                "tier": "Solid",
+                "caution": False,
+            }
+            continue
+        if current is None:
+            continue
+        league = _LEAGUE_RE.match(line)
+        if league:
+            current["league"] = league.group(1).strip()
+            continue
+        pick = _PICK_RE.match(line)
+        if pick:
+            current["pick"] = pick.group(1).strip()
+            current["label"] = pick.group(2)
+            current["pct"] = float(pick.group(3))
+            continue
+        if "• Tier:" in line:
+            if "Premium" in line:
+                current["tier"] = "Premium"
+            elif "Watchlist" in line:
+                current["tier"] = "Watchlist"
+            else:
+                current["tier"] = "Solid"
+            continue
+        if "weak-ROI" in line or "weak ROI" in line or "Auto-flag" in line:
+            current["caution"] = True
+    if current:
+        picks.append(current)
+    return [p for p in picks if p["pick"]]
+
+
+def _clip(text, width):
+    text = str(text)
+    return text if len(text) <= width else text[: width - 1] + "…"
+
+
+def _render_table(rows, headers, caps):
+    """Fixed-width, space-aligned table (rendered inside a <pre> block)."""
+    clipped = [[_clip(c, caps[i]) for i, c in enumerate(r)] for r in rows]
+    widths = [len(h) for h in headers]
+    for r in clipped:
+        for i, c in enumerate(r):
+            widths[i] = max(widths[i], len(c))
+
+    def render(cols):
+        return "  ".join(c.ljust(widths[i]) for i, c in enumerate(cols)).rstrip()
+
+    head = render(headers)
+    out = [head, "-" * len(head)]
+    out.extend(render(r) for r in clipped)
+    return out
+
+
+def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body):
+    """Every fixture from all four markets, grouped by confidence level."""
+    picks = []
+    picks += parse_telegram_section(ou_body, "Over/Under 2.5")
+    picks += parse_telegram_section(btts_body, "BTTS")
+    picks += parse_telegram_section(hw_body, "Home Win")
+    picks += parse_telegram_section(oo05_body, "Over 0.5 Team Goal")
+
+    counts = {}
+    for p in picks:
+        counts[p["market"]] = counts.get(p["market"], 0) + 1
+
+    lines = [
+        f"🏆 VIP BOARD · {date}",
+        "Every fixture across all four markets, grouped by confidence.",
+        "",
+        "📊 " + " · ".join(f"{m} {counts.get(m, 0)}" for m in _MARKETS),
+        f"   Total: {len(picks)} picks",
+        "",
+        "Tier: 🔥 Premium · ✅ Solid · 👀 Watchlist    ⚠ weak-ROI caution",
+        "",
+    ]
+
+    headers = ["#", "Match", "League", "Pick", "Conf", "Tier"]
+    caps = [3, 28, 18, 13, 7, 4]
+    for title, label in _CONF_GROUPS:
+        subset = [p for p in picks if p["label"] == label]
+        if not subset:
+            continue
+        subset.sort(key=lambda p: (-p["pct"], p["fixture"]))
+        lines.append(f"━━━ {title}  ({len(subset)}) ━━━")
+        rows = []
+        for idx, p in enumerate(subset, 1):
+            # The tier icon lives in the trailing column: emoji occupy two
+            # display columns but count as one char, so keeping them last
+            # stops the width mismatch from misaligning earlier columns.
+            icon = _TIER_ICON.get(p["tier"], "•")
+            rows.append([
+                str(idx),
+                p["fixture"],
+                p["league"],
+                p["pick"],
+                f"{p['pct']:.1f}%",
+                icon + ("⚠" if p["caution"] else ""),
+            ])
+        lines.extend(_render_table(rows, headers, caps))
+        lines.append("")
+
+    lines.append("───────────")
+    lines.append("Info only · gamble responsibly")
+    return "\n".join(lines).strip()
+
+
+def split_pre_chunks(body, limit=3500):
+    """Split a plain-text body into <=limit pieces on line boundaries.
+
+    Used by the senders to wrap each piece in its own <pre> block so a
+    multi-chunk monospace table stays aligned and valid HTML.
+    """
+    chunks = []
+    current = []
+    size = 0
+    for line in (body or "").split("\n"):
+        add = len(line) + 1
+        if current and size + add > limit:
+            chunks.append("\n".join(current))
+            current = []
+            size = 0
+        current.append(line)
+        size += add
+    if current:
+        chunks.append("\n".join(current))
+    return chunks or [""]
 
 
 def main():

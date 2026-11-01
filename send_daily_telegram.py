@@ -4,15 +4,15 @@
 Intended to be called ONLY from the `publish-daily` job in
 .github/workflows/run_daily.yml.  The prediction engines NEVER run in
 CI — run_local.bat runs them locally, commits the publish inputs
-(telegram.txt, the 4 per-market *_telegram.txt sections, curated.txt),
-and pushes to origin/main.  This CI script then just:
+(telegram.txt and the 4 per-market *_telegram.txt sections), and pushes
+to origin/main.  This CI script then just:
 
   1. Reads the already-committed report files from disk.
   2. Builds the free-tier message from the 4 per-market telegram sections
      (exactly the same way build_telegram_daily.py / send_local_telegram.py
      do locally — no duplicate assembly logic).
-  3. Builds the VIP-tier message from the committed curated.txt that
-     curate_picks.py produced.
+  3. Builds the VIP board from those same sections: every fixture across all
+     four markets, rendered as a confidence-grouped monospace table.
   4. Posts each message to its corresponding chat ID via secrets env vars
      (TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, TELEGRAM_VIP_CHAT_ID).
 
@@ -23,13 +23,19 @@ Env vars:
     TELEGRAM_VIP_CHAT_ID - VIP channel ID (GitHub secret, optional)
 """
 
+import html
 import os
 import sys
 import time
 
 import requests
 
-from build_telegram_daily import build_daily_message, read_telegram_section
+from build_telegram_daily import (
+    build_daily_message,
+    build_vip_board,
+    read_telegram_section,
+    split_pre_chunks,
+)
 
 # Telegram caps sends to a single chat (~20 msgs/min); space chunks out and
 # retry with backoff on HTTP 429 so a long message never fails the CI job.
@@ -55,12 +61,12 @@ def _retry_after(resp, fallback):
     return fallback
 
 
-def _send_one(token, chat_id, chunk, index, total, label):
+def _send_one(token, chat_id, payload, index, total, label):
     for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
             resp = requests.post(
                 f"https://api.telegram.org/bot{token}/sendMessage",
-                data={"chat_id": chat_id, "text": chunk, "disable_web_page_preview": "true"},
+                data=payload,
                 timeout=30,
             )
         except requests.RequestException as e:
@@ -93,26 +99,26 @@ def _send_one(token, chat_id, chunk, index, total, label):
     return False
 
 
-def _send_chunks(token, chat_id, text, label="message"):
+def _send_chunks(token, chat_id, text, label="message", as_pre=False):
     if not text or not text.strip():
         print(f"[{label}] Empty, skipping chat {chat_id}.")
         return True
-    chunks = [text[i:i + 3900] for i in range(0, len(text), 3900)]
+    if as_pre:
+        # Monospace table: wrap each line-bounded chunk in its own <pre>.
+        payloads = [(f"<pre>{html.escape(c)}</pre>", "HTML") for c in split_pre_chunks(text)]
+    else:
+        payloads = [(text[i:i + 3900], None) for i in range(0, len(text), 3900)]
+
     ok = True
-    for ci, chunk in enumerate(chunks, 1):
-        if not _send_one(token, chat_id, chunk, ci, len(chunks), label):
+    for ci, (chunk, parse_mode) in enumerate(payloads, 1):
+        payload = {"chat_id": chat_id, "text": chunk, "disable_web_page_preview": "true"}
+        if parse_mode:
+            payload["parse_mode"] = parse_mode
+        if not _send_one(token, chat_id, payload, ci, len(payloads), label):
             ok = False
-        if ci < len(chunks):
+        if ci < len(payloads):
             time.sleep(INTER_CHUNK_DELAY_SECONDS)
     return ok
-
-
-def _read(path):
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            return f.read()
-    except (FileNotFoundError, OSError):
-        return ""
 
 
 def build_free_message(date):
@@ -124,16 +130,17 @@ def build_free_message(date):
 
 
 def build_vip_message(date):
-    """VIP message = the committed curated picks.
+    """VIP board = every fixture from all four committed market sections.
 
-    Sourced from curated.txt (already filtered/ranked by curate_picks.py)
-    rather than the per-day *_vip_report_*.txt files, so no dated report
-    artifacts need to be committed for the VIP channel.
+    Built from the same *_telegram.txt inputs the free message uses, so the
+    VIP channel shows the full board (not just a curated subset) rendered as
+    a confidence-grouped monospace table.
     """
-    body = _read("curated.txt")
-    if body and body.strip():
-        return body.strip() + "\n"
-    return f"VIP picks — {date}\n\nNo curated picks available.\n"
+    ou = read_telegram_section("ou_telegram.txt")
+    btts = read_telegram_section("btts_telegram.txt")
+    hw = read_telegram_section("hw_telegram.txt")
+    oo05 = read_telegram_section("oo05_telegram.txt")
+    return build_vip_board(date, ou, btts, hw, oo05)
 
 
 def main():
@@ -156,7 +163,7 @@ def main():
 
     ok = _send_chunks(token, free_chat, free_msg, label="FREE")
     if vip_chat:
-        ok_vip = _send_chunks(token, vip_chat, vip_msg, label="VIP")
+        ok_vip = _send_chunks(token, vip_chat, vip_msg, label="VIP", as_pre=True)
         ok = ok and ok_vip
 
     return 0 if ok else 3

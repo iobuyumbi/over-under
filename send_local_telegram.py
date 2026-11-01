@@ -10,27 +10,99 @@ Usage:
 
 The script reads the four per-market Telegram section files
 (ou_telegram.txt, btts_telegram.txt, hw_telegram.txt, oo05_telegram.txt) that each
-predictor writes, assembles them via build_telegram_daily.py, and
-posts the assembled message to the configured chat IDs.
+predictor writes and posts two messages:
+
+  * the free-tier chat (TELEGRAM_CHAT_ID) gets the assembled daily message; and
+  * the VIP chat (TELEGRAM_VIP_CHAT_ID) gets the full board -- every fixture
+    from all four markets, rendered as a confidence-grouped monospace table.
 
 This is the local-only counterpart to the inline Telegram posting
 that lives inside the GitHub Actions workflow (run_daily.yml).
 """
 
+import html
 import os
 import sys
+import time
+
 import requests
 from dotenv import load_dotenv
 
-from build_telegram_daily import build_daily_message, read_telegram_section
+from build_telegram_daily import (
+    build_daily_message,
+    build_vip_board,
+    read_telegram_section,
+    split_pre_chunks,
+)
 
 # Local credentials live in .env (which is ignored by Git). Environment
 # variables still take precedence, which keeps GitHub Actions unchanged.
 load_dotenv()
 
+MAX_ATTEMPTS = 4
+BACKOFF_BASE_SECONDS = 5
+INTER_CHUNK_DELAY_SECONDS = 3
+
 
 def _env_or(name, default=None):
     return os.getenv(name, default)
+
+
+def _retry_after(resp, fallback):
+    try:
+        wait = (resp.json() or {}).get("parameters", {}).get("retry_after")
+        if isinstance(wait, (int, float)) and wait > 0:
+            return float(wait)
+    except (ValueError, AttributeError):
+        pass
+    return fallback
+
+
+def _send(TOKEN, chat_id, text, label, as_pre=False):
+    if as_pre:
+        payloads = [(f"<pre>{html.escape(c)}</pre>", "HTML") for c in split_pre_chunks(text)]
+    else:
+        payloads = [(text[i:i + 3900], None) for i in range(0, len(text), 3900)]
+
+    ok = True
+    for ci, (chunk, parse_mode) in enumerate(payloads, 1):
+        data = {"chat_id": chat_id, "text": chunk}
+        if parse_mode:
+            data["parse_mode"] = parse_mode
+        sent = False
+        for attempt in range(1, MAX_ATTEMPTS + 1):
+            try:
+                resp = requests.post(
+                    f"https://api.telegram.org/bot{TOKEN}/sendMessage",
+                    data=data,
+                    timeout=30,
+                )
+            except requests.RequestException as e:
+                print(f"  [{label}] chunk {ci}/{len(payloads)} -> chat {chat_id}: network error: {e}")
+                if attempt < MAX_ATTEMPTS:
+                    time.sleep(BACKOFF_BASE_SECONDS * attempt)
+                    continue
+                break
+            if resp.status_code == 200:
+                sent = True
+                break
+            if resp.status_code == 429:
+                wait = _retry_after(resp, BACKOFF_BASE_SECONDS * attempt)
+                if attempt < MAX_ATTEMPTS:
+                    print(f"  [{label}] chunk {ci}/{len(payloads)}: HTTP 429, retrying in {wait:.0f}s")
+                    time.sleep(wait)
+                    continue
+                print(f"  [{label}] chunk {ci}/{len(payloads)}: HTTP 429: giving up after {MAX_ATTEMPTS} attempts")
+                break
+            print(f"  [{label}] chunk {ci}/{len(payloads)} -> chat {chat_id}: HTTP {resp.status_code} {resp.text[:200]}")
+            break
+        if not sent:
+            ok = False
+        if ci < len(payloads):
+            time.sleep(INTER_CHUNK_DELAY_SECONDS)
+    if ok:
+        print(f"Sent {len(payloads)} chunk(s) to chat {chat_id} ({label})")
+    return ok
 
 
 def main():
@@ -67,30 +139,11 @@ def main():
         print(f"    {OU_FILE}, {BTTS_FILE}, {HW_FILE}, {OO05_FILE}")
         return 2
 
-    targets = [cid for cid in [CHAT, VIP] if cid]
-    ok = True
-    for cid in targets:
-        chunks = [msg[i:i + 3900] for i in range(0, len(msg), 3900)]
-        chat_ok = True
-        for ci, chunk in enumerate(chunks, 1):
-            try:
-                resp = requests.post(
-                    f"https://api.telegram.org/bot{TOKEN}/sendMessage",
-                    data={"chat_id": cid, "text": chunk},
-                    timeout=30,
-                )
-                if resp.status_code != 200:
-                    print(f"  chunk {ci}/{len(chunks)} -> chat {cid}: HTTP {resp.status_code} {resp.text[:200]}")
-                    chat_ok = False
-                    ok = False
-            except requests.RequestException as e:
-                print(f"  chunk {ci}/{len(chunks)} -> chat {cid}: network error: {e}")
-                chat_ok = False
-                ok = False
-        if chat_ok:
-            print(f"Sent {len(chunks)} chunk(s) to chat {cid}")
-        else:
-            print(f"FAILED to send to chat {cid} ({len(chunks)} chunk(s) attempted).")
+    ok = _send(TOKEN, CHAT, msg, "FREE")
+
+    if VIP:
+        vip_msg = build_vip_board(DATE, ou_body, btts_body, hw_body, oo05_body)
+        ok = _send(TOKEN, VIP, vip_msg, "VIP", as_pre=True) and ok
 
     if not ok:
         print("HINT: HTTP 404 = bad/placeholder TELEGRAM_BOT_TOKEN; "
