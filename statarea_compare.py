@@ -63,6 +63,7 @@ from bs4 import BeautifulSoup
 THRESH_OVER: int = 70      # statarea over25 >= this => AGREE_OVER
 THRESH_UNDER: int = 40     # statarea over25 <= this => AGREE_UNDER
 THRESH_HOME: int = 55      # statarea home_win >= this => AGREE_HOME
+THRESH_BTTS: int = 55      # statarea bts >= this => AGREE_BTTS
 
 CACHE_DIR: Path = Path(".statarea_cache")
 CACHE_TTL_SECONDS: int = 12 * 3600   # 12h — one fetch per day in practice
@@ -214,15 +215,13 @@ def fetch_card(date: Optional[str] = None, *, force: bool = False) -> str:
         return cpath.read_text(encoding="utf-8", errors="replace")
 
     url = "https://statarea.com/predictions"
-    last_err: Optional[Exception] = None
     try:
         r = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=45)
         if r.status_code == 200 and len(r.text) > 5000:
             text = r.text
         else:
             raise RuntimeError(f"statarea GET {r.status_code} ({len(r.text)}b)")
-    except Exception as e:  # noqa: BLE001 — bubble only as last_err
-        last_err = e
+    except Exception as e:  # noqa: BLE001 — fall back to reader proxy
         try:
             text = _reader_proxy(url)
         except Exception as e2:  # noqa: BLE001
@@ -581,9 +580,28 @@ def _note_for(
         return "AGREE_UNDER" if row.o25 >= 0 and row.o25 <= THRESH_UNDER else "DIVERGE"
     if pick_market in ("home", "home_win", "hw", "1"):
         return "AGREE_HOME" if row.home_vote >= THRESH_HOME else "DIVERGE"
+    if pick_market in ("btts", "bts", "bttt"):
+        return "AGREE_BTTS" if row.bts >= THRESH_BTTS else "DIVERGE"
     # Markets we don't have explicit rule for: still say DIVERGE to avoid a
     # bogus AGREE_* call-site reading.  Callers can extend as needed.
     return "DIVERGE"
+
+
+def _statarea_value_for(
+    pick_market: str,
+    row: Optional[MatchRow],
+) -> Optional[int]:
+    """Return the single matching coefficient for the pick's market (used in the
+    printed table's "Statarea" column).  ``None`` means match not found / N/A."""
+    if row is None:
+        return None
+    if pick_market in ("over", "o25", "under", "u25"):
+        return row.o25 if row.o25 >= 0 else None
+    if pick_market in ("home", "home_win", "hw", "1"):
+        return row.home_vote if row.home_vote >= 0 else None
+    if pick_market in ("btts", "bts", "bttt"):
+        return row.bts if row.bts >= 0 else None
+    return None
 
 
 def compare_picks(
@@ -718,26 +736,73 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             return 2
         picks = _read_picks_csv(args.picks)
         compared = compare_picks(picks, rows)
-        serialised = [asdict(c) for c in compared]
-        blob = json.dumps({"rows": serialised, "thresholds": {
-            "over": THRESH_OVER, "under": THRESH_UNDER, "home_win": THRESH_HOME,
-        }}, indent=2, ensure_ascii=False)
-        if args.out:
-            Path(args.out).write_text(blob + "\n", encoding="utf-8")
-        else:
-            print(blob)
-        # Human-readable line per pick to stderr for the operator
-        counts = {"AGREE_OVER": 0, "AGREE_UNDER": 0, "AGREE_HOME": 0, "DIVERGE": 0, "NOT_FOUND": 0}
+
+        # -------------------------------------------------------------------
+        # Pretty side-by-side table → stdout
+        # -------------------------------------------------------------------
+        W_IDX   = 3
+        W_MATCH = 42
+        W_MKT   = 10
+        W_YOURS = 7
+        W_STAT  = 8
+        hdrs = (
+            "#".ljust(W_IDX)
+            + "  " + "Match".ljust(W_MATCH)
+            + "  " + "Market".ljust(W_MKT)
+            + "  " + "Yours".rjust(W_YOURS)
+            + "  " + "Statarea".rjust(W_STAT)
+            + "  " + "Note"
+        )
+        rule = "-" * len(hdrs.expandtabs())
+        print(rule)
+        print(hdrs)
+        print(rule)
+        for i, c in enumerate(compared, 1):
+            match_label = f"{c.home} vs {c.away}"
+            if len(match_label) > W_MATCH:
+                match_label = match_label[: W_MATCH - 1] + "…"
+            if c.confidence is None:
+                yours = "-"
+            else:
+                yours = f"{c.confidence:.1f}%"
+            sv = _statarea_value_for(c.market,
+                                     MatchRow(**c.statarea) if c.statarea else None)
+            stat = f"{sv}%" if sv is not None else "-"
+            row = (
+                f"{i:<{W_IDX}d}"
+                f"  {match_label:<{W_MATCH}}"
+                f"  {c.market:<{W_MKT}}"
+                f"  {yours:>{W_YOURS}}"
+                f"  {stat:>{W_STAT}}"
+                f"  {c.statarea_note}"
+            )
+            print(row)
+        print(rule)
+
+        # Totals → stdout (matches the table's own output channel)
+        counts = {"AGREE_OVER": 0, "AGREE_UNDER": 0, "AGREE_HOME": 0,
+                  "AGREE_BTTS": 0, "DIVERGE": 0, "NOT_FOUND": 0}
         for c in compared:
             counts[c.statarea_note] = counts.get(c.statarea_note, 0) + 1
+        print("totals -> " + "  ".join(f"{k}={v}" for k, v in counts.items() if v))
+
+        # JSON → file only when --out is given; never dumped to the terminal
+        if args.out:
+            serialised = [asdict(c) for c in compared]
+            blob = json.dumps({"rows": serialised, "thresholds": {
+                "over": THRESH_OVER, "under": THRESH_UNDER,
+                "home_win": THRESH_HOME, "btts": THRESH_BTTS,
+            }}, indent=2, ensure_ascii=False)
+            Path(args.out).write_text(blob + "\n", encoding="utf-8")
+            print(f"json   -> {args.out}", file=sys.stderr)
+
+        # Short per-pick operator log → stderr
+        for c in compared:
             tag = c.statarea_note
             if c.note_extra:
                 tag += f" [{c.note_extra}]"
-            print(f"  {tag:20s}  {c.home} vs {c.away}  ({c.market})", file=sys.stderr)
-        print(
-            "totals -> " + "  ".join(f"{k}={v}" for k, v in counts.items()),
-            file=sys.stderr,
-        )
+            print(f"  {tag:20s}  {c.home} vs {c.away}  ({c.market})",
+                  file=sys.stderr)
         return 0
 
     p.print_help(sys.stderr)
