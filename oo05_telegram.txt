@@ -50,17 +50,17 @@
   ✅ Solid picks
 
 
-  7. Liverpool vs Arsenal
-     Date: 2026-11-01
-     League: Premier League
-     Pick: Home to Score · High confidence (78.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  8. Falkirk vs Celtic
+  7. Falkirk vs Celtic
      Date: 2026-11-01
      League: Scottish Premier
      Pick: Home to Score · High confidence (81.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  8. Liverpool vs Arsenal
+     Date: 2026-11-01
+     League: Premier League
+     Pick: Home to Score · High confidence (78.1%)
      Category:
        • Tier: ✅ Solid
 
@@ -155,17 +155,17 @@
      Category:
        • Tier: ✅ Solid
 
-  22. Mlada Boleslav vs Hradec Kralove
-     Date: 2026-11-01
-     League: Czech Liga
-     Pick: Home to Score · Medium confidence (76.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  23. FC Groningen vs Sp. Rotterdam
+  22. FC Groningen vs Sp. Rotterdam
      Date: 2026-11-01
      League: Netherlands League
      Pick: Home to Score · High confidence (92.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  23. Mlada Boleslav vs Hradec Kralove
+     Date: 2026-11-01
+     League: Czech Liga
+     Pick: Home to Score · Medium confidence (76.8%)
      Category:
        • Tier: ✅ Solid
 
@@ -183,73 +183,73 @@
      Category:
        • Tier: ✅ Solid
 
-  26. St. Truiden vs O-H Leuven
-     Date: 2026-11-01
-     League: Belgium League
-     Pick: Home to Score · High confidence (87.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  27. Charleroi vs RAAL La Louviere
+  26. Charleroi vs RAAL La Louviere
      Date: 2026-11-01
      League: Belgium League
      Pick: Home to Score · High confidence (93.2%)
      Category:
        • Tier: ✅ Solid
 
-  28. Djurgaarden vs Degerfors
+  27. St. Truiden vs O-H Leuven
      Date: 2026-11-01
-     League: Swedish Allsvenskan
-     Pick: Home to Score · High confidence (90.5%)
+     League: Belgium League
+     Pick: Home to Score · High confidence (87.3%)
      Category:
        • Tier: ✅ Solid
 
-  29. Elfsborg vs Orgryte IS
+  28. Elfsborg vs Orgryte IS
      Date: 2026-11-01
      League: Swedish Allsvenskan
      Pick: Home to Score · High confidence (87.4%)
      Category:
        • Tier: ✅ Solid
 
-  30. Hacken vs IFK Goth'burg
+  29. Djurgaarden vs Degerfors
      Date: 2026-11-01
      League: Swedish Allsvenskan
-     Pick: Home to Score · High confidence (82.1%)
+     Pick: Home to Score · High confidence (90.5%)
      Category:
        • Tier: ✅ Solid
 
-  31. OB Odense vs Silkeborg
+  30. OB Odense vs Silkeborg
      Date: 2026-11-01
      League: Danish SAS Ligaen
      Pick: Home to Score · High confidence (78.3%)
      Category:
        • Tier: ✅ Solid
 
-  32. Viborg vs AC Horsens
+  31. Viborg vs AC Horsens
      Date: 2026-11-01
      League: Danish SAS Ligaen
      Pick: Home to Score · High confidence (88.0%)
      Category:
        • Tier: ✅ Solid
 
-  33. Nordsjaelland vs Midtjylland
+  32. Nordsjaelland vs Midtjylland
      Date: 2026-11-01
      League: Danish SAS Ligaen
      Pick: Home to Score · Low confidence (67.0%)
      Category:
        • Tier: ✅ Solid
 
-  34. Brondby vs Aarhus
+  33. Hacken vs IFK Goth'burg
      Date: 2026-11-01
-     League: Danish SAS Ligaen
-     Pick: Home to Score · High confidence (82.6%)
+     League: Swedish Allsvenskan
+     Pick: Home to Score · High confidence (82.1%)
      Category:
        • Tier: ✅ Solid
 
-  35. Young Boys vs FC Zurich
+  34. Young Boys vs FC Zurich
      Date: 2026-11-01
      League: Swiss Super League
      Pick: Home to Score · High confidence (93.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  35. Brondby vs Aarhus
+     Date: 2026-11-01
+     League: Danish SAS Ligaen
+     Pick: Home to Score · High confidence (82.6%)
      Category:
        • Tier: ✅ Solid
 
@@ -323,17 +323,17 @@
      Category:
        • Tier: ✅ Solid
 
-  46. Panathinaikos vs AEK Athens
-     Date: 2026-11-01
-     League: Greek Super League
-     Pick: Home to Score · High confidence (95.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  47. Arouca vs CD Nacional
+  46. Arouca vs CD Nacional
      Date: 2026-11-01
      League: Portuguese Liga
      Pick: Home to Score · High confidence (85.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  47. Panathinaikos vs AEK Athens
+     Date: 2026-11-01
+     League: Greek Super League
+     Pick: Home to Score · High confidence (95.4%)
      Category:
        • Tier: ✅ Solid
 
@@ -358,17 +358,17 @@
      Category:
        • Tier: ✅ Solid
 
-  51. Partizan vs Zemun
-     Date: 2026-11-01
-     League: Serbian League
-     Pick: Home to Score · High confidence (82.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  52. FK Rad vs Novi Pazar
+  51. FK Rad vs Novi Pazar
      Date: 2026-11-01
      League: Serbian League
      Pick: Home to Score · Medium confidence (69.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  52. Partizan vs Zemun
+     Date: 2026-11-01
+     League: Serbian League
+     Pick: Home to Score · High confidence (82.6%)
      Category:
        • Tier: ✅ Solid
 
@@ -379,45 +379,45 @@
      Category:
        • Tier: ✅ Solid
 
-  54. Vancouver W vs Seattle
-     Date: 2026-11-01
-     League: MLS
-     Pick: Home to Score · High confidence (87.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  55. Atlanta U vs Toronto FC
+  54. Atlanta U vs Toronto FC
      Date: 2026-11-01
      League: MLS
      Pick: Home to Score · High confidence (83.6%)
      Category:
        • Tier: ✅ Solid
 
-  56. Boca Juniors vs River Plate
+  55. Vancouver W vs Seattle
      Date: 2026-11-01
      League: MLS
-     Pick: Home to Score · Medium confidence (75.3%)
+     Pick: Home to Score · High confidence (87.1%)
      Category:
        • Tier: ✅ Solid
 
-  57. Newell's OB vs Union Santa Fe
+  56. Newell's OB vs Union Santa Fe
      Date: 2026-11-01
      League: MLS
      Pick: Home to Score · High confidence (78.3%)
      Category:
        • Tier: ✅ Solid
 
-  58. Belgrano vs Barracas Central
+  57. Boca Juniors vs River Plate
      Date: 2026-11-01
      League: MLS
-     Pick: Home to Score · Low confidence (66.4%)
+     Pick: Home to Score · Medium confidence (75.3%)
      Category:
        • Tier: ✅ Solid
 
-  59. Lanus vs Gimnasia de Mendoza
+  58. Lanus vs Gimnasia de Mendoza
      Date: 2026-11-01
      League: MLS
      Pick: Home to Score · Medium confidence (77.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  59. Belgrano vs Barracas Central
+     Date: 2026-11-01
+     League: MLS
+     Pick: Home to Score · Low confidence (66.4%)
      Category:
        • Tier: ✅ Solid
 
@@ -435,17 +435,17 @@
      Category:
        • Tier: ✅ Solid
 
-  62. Yokohama F. Marinos vs Kawasaki F
-     Date: 2026-11-01
-     League: Japanese J1 League
-     Pick: Home to Score · High confidence (79.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  63. V-Varen Nagasaki vs Tokyo Verdy
+  62. V-Varen Nagasaki vs Tokyo Verdy
      Date: 2026-11-01
      League: Japanese J1 League
      Pick: Home to Score · High confidence (81.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  63. Yokohama F. Marinos vs Kawasaki F
+     Date: 2026-11-01
+     League: Japanese J1 League
+     Pick: Home to Score · High confidence (79.2%)
      Category:
        • Tier: ✅ Solid
 
@@ -575,17 +575,17 @@
   ✅ Solid picks
 
 
-  5. Liverpool vs Arsenal
-     Date: 2026-11-01
-     League: Premier League
-     Pick: Away to Score · High confidence (75.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  6. Falkirk vs Celtic
+  5. Falkirk vs Celtic
      Date: 2026-11-01
      League: Scottish Premier
      Pick: Away to Score · Medium confidence (71.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  6. Liverpool vs Arsenal
+     Date: 2026-11-01
+     League: Premier League
+     Pick: Away to Score · High confidence (75.6%)
      Category:
        • Tier: ✅ Solid
 
@@ -645,17 +645,17 @@
      Category:
        • Tier: ✅ Solid
 
-  15. PEC Zwolle vs Den Haag
-     Date: 2026-11-01
-     League: Netherlands League
-     Pick: Away to Score · High confidence (83.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  16. Telstar vs Utrecht
+  15. Telstar vs Utrecht
      Date: 2026-11-01
      League: Netherlands League
      Pick: Away to Score · High confidence (89.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  16. PEC Zwolle vs Den Haag
+     Date: 2026-11-01
+     League: Netherlands League
+     Pick: Away to Score · High confidence (83.0%)
      Category:
        • Tier: ✅ Solid
 
@@ -694,17 +694,17 @@
      Category:
        • Tier: ✅ Solid
 
-  22. Brondby vs Aarhus
-     Date: 2026-11-01
-     League: Danish SAS Ligaen
-     Pick: Away to Score · High confidence (80.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  23. Young Boys vs FC Zurich
+  22. Young Boys vs FC Zurich
      Date: 2026-11-01
      League: Swiss Super League
      Pick: Away to Score · High confidence (81.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  23. Brondby vs Aarhus
+     Date: 2026-11-01
+     League: Danish SAS Ligaen
+     Pick: Away to Score · High confidence (80.4%)
      Category:
        • Tier: ✅ Solid
 
@@ -757,17 +757,17 @@
      Category:
        • Tier: ✅ Solid
 
-  31. Panathinaikos vs AEK Athens
-     Date: 2026-11-01
-     League: Greek Super League
-     Pick: Away to Score · Medium confidence (66.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  32. Maritimo vs Santa Clara
+  31. Maritimo vs Santa Clara
      Date: 2026-11-01
      League: Portuguese Liga
      Pick: Away to Score · High confidence (80.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  32. Panathinaikos vs AEK Athens
+     Date: 2026-11-01
+     League: Greek Super League
+     Pick: Away to Score · Medium confidence (66.0%)
      Category:
        • Tier: ✅ Solid
 
@@ -778,17 +778,17 @@
      Category:
        • Tier: ✅ Solid
 
-  34. Ferencvaros vs Paksi SE
-     Date: 2026-11-01
-     League: Hungarian League
-     Pick: Away to Score · Medium confidence (67.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  35. OFK Belgrade vs Vojvodina NS
+  34. OFK Belgrade vs Vojvodina NS
      Date: 2026-11-01
      League: Serbian League
      Pick: Away to Score · High confidence (89.8%)
+     Category:
+       • Tier: ✅ Solid
+
+  35. Ferencvaros vs Paksi SE
+     Date: 2026-11-01
+     League: Hungarian League
+     Pick: Away to Score · Medium confidence (67.7%)
      Category:
        • Tier: ✅ Solid
 
@@ -799,17 +799,17 @@
      Category:
        • Tier: ✅ Solid
 
-  37. Vancouver W vs Seattle
-     Date: 2026-11-01
-     League: MLS
-     Pick: Away to Score · High confidence (80.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  38. Atlanta U vs Toronto FC
+  37. Atlanta U vs Toronto FC
      Date: 2026-11-01
      League: MLS
      Pick: Away to Score · High confidence (85.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  38. Vancouver W vs Seattle
+     Date: 2026-11-01
+     League: MLS
+     Pick: Away to Score · High confidence (80.2%)
      Category:
        • Tier: ✅ Solid
 
@@ -848,17 +848,17 @@
      Category:
        • Tier: ✅ Solid
 
-  44. Gimhae City vs Cheonan City
-     Date: 2026-11-01
-     League: Korean K-League 2
-     Pick: Away to Score · Medium confidence (74.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  45. Varbergs Bois vs Ljungskile
+  44. Varbergs Bois vs Ljungskile
      Date: 2026-11-01
      League: Swedish Superettan
      Pick: Away to Score · Medium confidence (69.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  45. Gimhae City vs Cheonan City
+     Date: 2026-11-01
+     League: Korean K-League 2
+     Pick: Away to Score · Medium confidence (74.8%)
      Category:
        • Tier: ✅ Solid
 
