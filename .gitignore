@@ -58,6 +58,10 @@ combined_free.txt
 combined_vip.txt
 telegram_daily.txt
 
+# --- Local scratch / one-off experiments (do not commit) ---
+smoke_picks.csv
+tempfile/
+
 # --- OS / editor cruft ---
 .DS_Store
 Thumbs.db
@@ -72,6 +76,7 @@ Thumbs.db
 ou.txt
 hw.txt
 btts.txt
+oo05.txt
 telegram.txt
 *_telegram.txt
 _diag_out.txt
