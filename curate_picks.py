@@ -109,7 +109,12 @@ def parse_vip_report(path: Path, report_type: str) -> list[Pick]:
     picks: list[Pick] = []
     i = 0
     n = len(text)
-    in_today = False
+    # The four market engines emit VIP reports with no "📅 TODAY" marker
+    # (only prediction_tracker.py writes one). Those reports are already
+    # scoped to the publish window and filter_pick() enforces p.date == today,
+    # so parse by default and only stop at an explicit "yesterday" boundary
+    # when a tracker-style report is supplied.
+    in_today = True
     while i < n:
         line = text[i]
         if line.startswith("📅 TODAY"):
