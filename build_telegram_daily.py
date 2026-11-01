@@ -5,8 +5,9 @@ Two messages are produced:
 
 * the free-tier daily message (``build_daily_message``) -- the raw per-market
   sections, forwarded as-is; and
-* the VIP board (``build_vip_board``) -- every fixture from all four markets
-  rendered as a monospace table grouped by confidence level.
+* the VIP board (``build_vip_board``) -- every fixture from all four markets,
+  separated into one list per market and grouped by confidence level inside
+  each market, all rendered as monospace tables.
 """
 
 import argparse
@@ -91,6 +92,12 @@ _CONF_GROUPS = (
     ("🔵 LOW CONFIDENCE", "Low"),
 )
 _MARKETS = ("Over/Under 2.5", "BTTS", "Home Win", "Over 0.5 Team Goal")
+_MARKET_TITLES = {
+    "Over/Under 2.5": "⚽️ OVER / UNDER 2.5",
+    "BTTS": "🎯 BTTS (YES / NO)",
+    "Home Win": "🏠 HOME WIN",
+    "Over 0.5 Team Goal": "🎯 OVER 0.5 TEAM GOAL",
+}
 
 
 def parse_telegram_section(body, market):
@@ -173,7 +180,7 @@ def _render_table(rows, headers, caps):
 
 
 def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body):
-    """Every fixture from all four markets, grouped by confidence level."""
+    """Every fixture, separated by market and grouped by confidence inside each."""
     picks = []
     picks += parse_telegram_section(ou_body, "Over/Under 2.5")
     picks += parse_telegram_section(btts_body, "BTTS")
@@ -186,7 +193,7 @@ def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body):
 
     lines = [
         f"🏆 VIP BOARD · {date}",
-        "Every fixture across all four markets, grouped by confidence.",
+        "Every fixture, separated by market and grouped by confidence.",
         "",
         "📊 " + " · ".join(f"{m} {counts.get(m, 0)}" for m in _MARKETS),
         f"   Total: {len(picks)} picks",
@@ -197,28 +204,39 @@ def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body):
 
     headers = ["#", "Match", "League", "Pick", "Conf", "Tier"]
     caps = [3, 28, 18, 13, 7, 4]
-    for title, label in _CONF_GROUPS:
-        subset = [p for p in picks if p["label"] == label]
-        if not subset:
+
+    for market in _MARKETS:
+        market_picks = [p for p in picks if p["market"] == market]
+        lines.append("═══════════════════════════")
+        lines.append(f"{_MARKET_TITLES[market]}  ({len(market_picks)})")
+        lines.append("═══════════════════════════")
+        if not market_picks:
+            lines.append("— none")
+            lines.append("")
             continue
-        subset.sort(key=lambda p: (-p["pct"], p["fixture"]))
-        lines.append(f"━━━ {title}  ({len(subset)}) ━━━")
-        rows = []
-        for idx, p in enumerate(subset, 1):
-            # The tier icon lives in the trailing column: emoji occupy two
-            # display columns but count as one char, so keeping them last
-            # stops the width mismatch from misaligning earlier columns.
-            icon = _TIER_ICON.get(p["tier"], "•")
-            rows.append([
-                str(idx),
-                p["fixture"],
-                p["league"],
-                p["pick"],
-                f"{p['pct']:.1f}%",
-                icon + ("⚠" if p["caution"] else ""),
-            ])
-        lines.extend(_render_table(rows, headers, caps))
-        lines.append("")
+
+        for title, label in _CONF_GROUPS:
+            subset = [p for p in market_picks if p["label"] == label]
+            if not subset:
+                continue
+            subset.sort(key=lambda p: (-p["pct"], p["fixture"]))
+            lines.append(f"━━━ {title}  ({len(subset)}) ━━━")
+            rows = []
+            for idx, p in enumerate(subset, 1):
+                # The tier icon lives in the trailing column: emoji occupy two
+                # display columns but count as one char, so keeping them last
+                # stops the width mismatch from misaligning earlier columns.
+                icon = _TIER_ICON.get(p["tier"], "•")
+                rows.append([
+                    str(idx),
+                    p["fixture"],
+                    p["league"],
+                    p["pick"],
+                    f"{p['pct']:.1f}%",
+                    icon + ("⚠" if p["caution"] else ""),
+                ])
+            lines.extend(_render_table(rows, headers, caps))
+            lines.append("")
 
     lines.append("───────────")
     lines.append("Info only · gamble responsibly")

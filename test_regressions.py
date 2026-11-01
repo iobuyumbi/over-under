@@ -128,7 +128,7 @@ class TelegramTests(unittest.TestCase):
         ]
         self.assertTrue(any("OO05 pick" in text for text in free_texts))
 
-    def test_vip_board_lists_every_pick_grouped_by_confidence(self):
+    def test_vip_board_separates_markets_and_groups_by_confidence(self):
         ou = (
             "  1. Alpha vs Beta\n"
             "     League: Test League\n"
@@ -150,7 +150,13 @@ class TelegramTests(unittest.TestCase):
         self.assertIn("Gamma vs Delta", board)
         self.assertIn("80.0%", board)
         self.assertIn("Total: 2 picks", board)
-        self.assertLess(board.index("Alpha vs Beta"), board.index("Gamma vs Delta"))
+        # Each market is its own list, and each pick sits in its market's block.
+        self.assertIn("⚽️ OVER / UNDER 2.5", board)
+        self.assertIn("🏠 HOME WIN", board)
+        self.assertIn("🎯 BTTS (YES / NO)", board)
+        self.assertLess(board.index("⚽️ OVER / UNDER 2.5"), board.index("🏠 HOME WIN"))
+        self.assertLess(board.index("Alpha vs Beta"), board.index("🏠 HOME WIN"))
+        self.assertLess(board.index("🏠 HOME WIN"), board.index("Gamma vs Delta"))
 
 
 if __name__ == "__main__":
