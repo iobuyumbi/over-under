@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-11-01
+✦ CURATED PICKS · 2026-11-02
   Input reports:
-    OU   → over_under_vip_report_2026-11-01.txt
-    BTTS → btts_vip_report_2026-11-01.txt
-    HW   → home_win_vip_report_2026-11-01.txt
+    OU   → over_under_vip_report_2026-11-02.txt
+    BTTS → btts_vip_report_2026-11-02.txt
+    HW   → home_win_vip_report_2026-11-02.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,67 +11,27 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-11-01)
+    • Today only (2026-11-02)
 
-━━━ OVER / UNDER 2.5  (14 accepted) ━━━
-   1. ✅ Valerenga vs Tromso  (Norwegian Tippeligaen)
-      Over 2.5 · High 88.5% · xG 1.36–3.76
-      Stake 0.3% @ 2.0  ·  EV +77.0c/$  ·  Edge +77.0%
-   2. ✅ KFUM Oslo vs HamKam  (Norwegian Tippeligaen)
-      Over 2.5 · High 86.9% · xG 1.13–3.80
-      Stake 0.3% @ 2.0  ·  EV +73.8c/$  ·  Edge +73.8%
-   3. ✅ Racing vs Real Madrid  (Spanish La Liga)
-      Over 2.5 · High 86.6% · xG 1.16–3.74
-      Stake 0.3% @ 2.0  ·  EV +73.2c/$  ·  Edge +73.2%
-   4. ✅ Brann vs Molde  (Norwegian Tippeligaen)
-      Over 2.5 · High 85.3% · xG 0.96–3.80
-      Stake 0.3% @ 2.0  ·  EV +70.6c/$  ·  Edge +70.6%
-   5. ✅ FC Groningen vs Sp. Rotterdam  (Netherlands League)
-      Over 2.5 · High 85.0% · xG 2.61–2.11
-      Stake 0.3% @ 2.0  ·  EV +70.0c/$  ·  Edge +70.0%
-   6. ✅ Young Boys vs FC Zurich  (Swiss Super League)
-      Over 2.5 · High 81.4% · xG 2.50–1.89
-      Stake 0.2% @ 2.0  ·  EV +62.8c/$  ·  Edge +62.8%
-   7. ✅ Sarpsborg vs Kristiansund  (Norwegian Tippeligaen)
-      Over 2.5 · High 80.4% · xG 1.40–2.91
-      Stake 0.2% @ 2.0  ·  EV +60.8c/$  ·  Edge +60.8%
-   8. ✅ Panathinaikos vs AEK Athens  (Greek Super League)
-      Over 2.5 · High 78.7% · xG 2.94–1.24
-      Stake 0.2% @ 2.0  ·  EV +57.4c/$  ·  Edge +57.4%
-   9. ✅ M. Petah Tikva vs H Beer Sheva  (Israeli League)
-      Over 2.5 · High 77.6% · xG 1.43–2.67
-      Stake 0.2% @ 2.0  ·  EV +55.2c/$  ·  Edge +55.2%
-  10. ✅ Viborg vs AC Horsens  (Danish SAS Ligaen)
-      Over 2.5 · High 76.3% · xG 1.94–2.07
-      Stake 0.2% @ 2.0  ·  EV +52.6c/$  ·  Edge +52.6%
-  11. ✅ Marseille vs Toulouse  (French Ligue 1)
-      Over 2.5 · High 75.7% · xG 1.45–2.52
-      Stake 0.2% @ 2.0  ·  EV +51.4c/$  ·  Edge +51.4%
-  12. ✅ Excelsior vs FC Twente  (Netherlands League)
-      Over 2.5 · High 75.3% · xG 1.39–2.55
-      Stake 0.2% @ 2.0  ·  EV +50.6c/$  ·  Edge +50.6%
-  13. ✅ Strasbourg vs Auxerre  (French Ligue 1)
-      Over 2.5 · High 74.7% · xG 1.77–2.13
-      Stake 0.2% @ 2.0  ·  EV +49.4c/$  ·  Edge +49.4%
-  14. ✅ PAOK Salonika vs Asteras T.  (Greek Super League)
-      Over 2.5 · High 70.8% · xG 2.21–1.45
-      Stake 0.2% @ 2.0  ·  EV +41.6c/$  ·  Edge +41.6%
+━━━ OVER / UNDER 2.5  (3 accepted) ━━━
+   1. ✅ Uni Cluj vs FCSB  (Romanian Liga 1)
+      Over 2.5 · High 76.2% · xG 1.88–2.12
+      Stake 0.4% @ 2.0  ·  EV +52.4c/$  ·  Edge +52.4%
+   2. ✅ Kryliya Sovetov vs Zenit  (Russian Premier)
+      Over 2.5 · High 72.5% · xG 1.03–2.73
+      Stake 0.3% @ 2.0  ·  EV +45.0c/$  ·  Edge +45.0%
+   3. ✅ Benfica vs Alverca  (Portuguese Liga)
+      Over 2.5 · High 71.8% · xG 1.80–1.92
+      Stake 0.3% @ 2.0  ·  EV +43.6c/$  ·  Edge +43.6%
 
-━━━ BTTS (Yes / No)  (2 accepted) ━━━
-   1. ✅ FC Groningen vs Sp. Rotterdam  (Netherlands League)
-      BTTS Yes · High 81.4% · xG 2.61–2.11
-      Stake 1.1% @ 1.9  ·  EV 
-   2. ✅ Young Boys vs FC Zurich  (Swiss Super League)
-      BTTS Yes · High 77.7% · xG 2.58–1.84
-      Stake 1.0% @ 1.9  ·  EV 
+━━━ BTTS (Yes / No)  (0 accepted) ━━━
+  (none)
 
-━━━ HOME WIN  (1 accepted) ━━━
-   1. 🔥 Amedspor vs Eyupspor  (Turkish Super Lig)
-      Home Win · High 90.7%
-      Stake 4.7% @ 2.8  ·  EV +154.0c/$  ·  Edge +154.0%
+━━━ HOME WIN  (0 accepted) ━━━
+  (none)
 
-📊 Summary: 17 curated picks
-   Parsed total: 134   Rejected: 117   Accepted: 17
+📊 Summary: 3 curated picks
+   Parsed total: 65   Rejected: 62   Accepted: 3
 
 ---
 For informational purposes only · Gamble responsibly

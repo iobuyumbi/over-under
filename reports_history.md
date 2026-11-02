@@ -4,6 +4,36 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-02 -->
+## Daily Picks — 2026-11-02
+
+### Over/Under 2.5  (14)
+  ✅ Sassuolo vs Fiorentina (Italian Serie A) — Over 2.5 · High 84.2%
+  ✅ Mallorca vs Cadiz (Spanish Segunda) — Over 2.5 · Medium 52.8%
+  ✅ Kryliya Sovetov vs Zenit (Russian Premier) — Over 2.5 · High 72.5%
+  ✅ Uni Cluj vs FCSB (Romanian Liga 1) — Over 2.5 · High 76.2%
+  ✅ SonderjyskE vs Copenhagen (Danish SAS Ligaen) — Over 2.5 · High 76.3%
+  ✅ Benfica vs Alverca (Portuguese Liga) — Over 2.5 · High 71.8%
+  ✅ Karpaty Lvov vs Kudrivka (Ukrainian League) — Over 2.5 · High 64.7%
+  ✅ New England vs Inter Miami CF (MLS) — Over 2.5 · Medium 53.1%
+  ✅ Aveley vs St Albans (Ryman Premier) — Over 2.5 · High 80.9%
+  ✅ Sport Huancayo vs Melgar (Mexican Primera Apertura) — Over 2.5 · High 61.6%
+  ✅ UTC Cajamarca vs Deportivo Garcilaso (Mexican Primera Apertura) — Over 2.5 · High 59.7%
+  ✅ Sporting Cristal vs Cajamarca (Mexican Primera Apertura) — Over 2.5 · High 79.5%
+  ✅ Landskrona BoIS vs Orebro (Swedish Superettan) — Over 2.5 · High 67.7%
+  ✅ Red Bull Bragantino vs Santos (Brazilian Serie A) — Over 2.5 · Medium 55.6%
+
+### BTTS  (4)
+  ✅ Aveley vs St Albans (Ryman Premier) — BTTS Yes · High 75.8%
+  ✅ Cruz Azul vs Leon (Mexican Primera Apertura) — BTTS Yes · High 66.5%
+  ✅ Sporting Cristal vs Cajamarca (Mexican Primera Apertura) — BTTS Yes · High 77.8%
+  ✅ Landskrona BoIS vs Orebro (Swedish Superettan) — BTTS Yes · High 72.3%
+
+### Home Win  (2)
+  👀 Karpaty Lvov vs Kudrivka (Ukrainian League) — Home Win · Medium 68.9%
+  👀 Sporting Cristal vs Cajamarca (Mexican Primera Apertura) — Home Win · High 89.9%
+
+
 <!-- report: daily 2026-11-01 -->
 ## Daily Picks — 2026-11-01
 

@@ -1,139 +1,21 @@
-📅 Picks for 2026-11-01
+📅 Picks for 2026-11-02
 
-
-  🔥 Premium picks
-
-
-  1. Amedspor vs Eyupspor
-     Date: 2026-11-01
-     League: Turkish Super Lig
-     Pick: Home Win · High confidence (90.7%)
-     Category:
-       • Tier: 🔥 Premium
-
-  ✅ Solid picks
-
-
-  2. Charleroi vs RAAL La Louviere
-     Date: 2026-11-01
-     League: Belgium League
-     Pick: Home Win · High confidence (82.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  3. Arouca vs CD Nacional
-     Date: 2026-11-01
-     League: Portuguese Liga
-     Pick: Home Win · High confidence (82.9%)
-     Category:
-       • Tier: ✅ Solid
 
   👀 Watchlist
 
 
-  4. Como vs Venezia
-     Date: 2026-11-01
-     League: Italian Serie A
-     Pick: Home Win · High confidence (85.7%)
+  1. Karpaty Lvov vs Kudrivka
+     Date: 2026-11-02
+     League: Ukrainian League
+     Pick: Home Win · Medium confidence (68.9%)
      Category:
        • Tier: 👀 Watchlist
 
-  5. Trabzonspor vs Gazisehir
-     Date: 2026-11-01
-     League: Turkish Super Lig
-     Pick: Home Win · High confidence (74.1%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  6. Basaksehir vs Samsunspor
-     Date: 2026-11-01
-     League: Turkish Super Lig
-     Pick: Home Win · Medium confidence (69.1%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  7. Mlada Boleslav vs Hradec Kralove
-     Date: 2026-11-01
-     League: Czech Liga
-     Pick: Home Win · High confidence (84.7%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  8. Elfsborg vs Orgryte IS
-     Date: 2026-11-01
-     League: Swedish Allsvenskan
-     Pick: Home Win · High confidence (75.3%)
-     Category:
-       • Tier: 👀 Watchlist
-       • League type: weak-ROI region (extra model caution)
-
-  9. Uni Craiova vs Botosani
-     Date: 2026-11-01
-     League: Romanian Liga 1
-     Pick: Home Win · High confidence (82.2%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  10. Din. Bucharest vs UT Arad
-     Date: 2026-11-01
-     League: Romanian Liga 1
-     Pick: Home Win · High confidence (77.7%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  11. Isloch Minsk vs Slavia Mozyr
-     Date: 2026-11-01
-     League: Belarus League
-     Pick: Home Win · Medium confidence (64.7%)
-     Category:
-       • Tier: 👀 Watchlist
-       • League type: weak-ROI region (extra model caution)
-
-  12. ML Vitebsk vs FC Minsk
-     Date: 2026-11-01
-     League: Belarus League
-     Pick: Home Win · Medium confidence (67.7%)
-     Category:
-       • Tier: 👀 Watchlist
-       • League type: weak-ROI region (extra model caution)
-
-  13. Ferencvaros vs Paksi SE
-     Date: 2026-11-01
-     League: Hungarian League
-     Pick: Home Win · Medium confidence (58.9%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  14. Nashville MLS vs NY Red Bulls
-     Date: 2026-11-01
-     League: MLS
-     Pick: Home Win · Medium confidence (68.0%)
-     Category:
-       • Tier: 👀 Watchlist
-       • League type: weak-ROI region (extra model caution)
-       • Auto-flag: weak ROI history on this market
-
-  15. Newell's OB vs Union Santa Fe
-     Date: 2026-11-01
-     League: MLS
-     Pick: Home Win · Medium confidence (66.4%)
-     Category:
-       • Tier: 👀 Watchlist
-       • League type: weak-ROI region (extra model caution)
-       • Auto-flag: weak ROI history on this market
-
-  16. Santos Laguna vs Necaxa
-     Date: 2026-11-01
+  2. Sporting Cristal vs Cajamarca
+     Date: 2026-11-02
      League: Mexican Primera Apertura
-     Pick: Home Win · High confidence (85.5%)
+     Pick: Home Win · High confidence (89.9%)
      Category:
        • Tier: 👀 Watchlist
        • League type: weak-ROI region (extra model caution)
        • Auto-flag: weak ROI history on this market
-
-  17. Deportivo Cali vs Boyaca Chico
-     Date: 2026-11-01
-     League: Ecuador Liga Pro
-     Pick: Home Win · High confidence (74.2%)
-     Category:
-       • Tier: 👀 Watchlist
