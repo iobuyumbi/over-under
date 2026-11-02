@@ -14789,6 +14789,19 @@
       "result": "pending",
       "recorded_at": "2026-11-01T15:21:55.713873",
       "published": true
+    },
+    {
+      "date": "2026-11-05",
+      "type": "oo05",
+      "league": "Europa Conference League",
+      "home_team": "Lugano",
+      "away_team": "Kauno Zalgiris",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-02T03:12:07.355938",
+      "published": true
     }
   ],
   "stats": {}
