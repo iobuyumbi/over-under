@@ -37,9 +37,10 @@ from build_telegram_daily import (
 )
 from prediction_tracker import get_yesterday_market_breakdown
 
-# Local credentials live in .env (which is ignored by Git). Environment
-# variables still take precedence, which keeps GitHub Actions unchanged.
-load_dotenv()
+# Local credentials live in .env (which is ignored by Git). override=True makes
+# .env authoritative, so a stale TELEGRAM_* variable left in the shell or in the
+# Windows User environment cannot shadow the real token.
+load_dotenv(override=True)
 
 MAX_ATTEMPTS = 4
 BACKOFF_BASE_SECONDS = 5
