@@ -42,6 +42,9 @@ from config import (
     BTTS_MIN_6,
     NON_BTTS_MIN_6,
 
+    # One-sided goal volume (scored OR opponent conceded, last 6)
+    OVER_SCORED_OR_CONCEDED_MIN_6,
+
     # Lambda thresholds
     MIN_COMBINED_LAMBDA_OVER,
     MAX_COMBINED_LAMBDA_UNDER,
@@ -182,6 +185,21 @@ def _team_conceded_every_match(form):
 def _team_active_goal_profile(form):
     """Scored or conceded in every one of the last N matches (min 4 required)."""
     return _team_scored_every_match(form) or _team_conceded_every_match(form)
+
+
+def _one_sided_goal_volume(team_form, opp_form, team_len, opp_len):
+    """Team scored, OR its opponent conceded, OVER_SCORED_OR_CONCEDED_MIN_6
+    goals over the last 6 venue games — either route qualifies.
+
+    Complements the combined "total goals >= 18" rule, which needs both legs
+    busy; this one passes on a single hot leg. Returns
+    ``(scored, opp_conceded, passed)`` with per-leg thin-data thresholds.
+    """
+    scored = sum(gf for gf, _ in team_form)
+    opp_conceded = sum(ga for _, ga in opp_form)
+    scored_min = _thin_total(OVER_SCORED_OR_CONCEDED_MIN_6, 6, team_len)
+    conceded_min = _thin_total(OVER_SCORED_OR_CONCEDED_MIN_6, 6, opp_len)
+    return scored, opp_conceded, scored >= scored_min or opp_conceded >= conceded_min
 
 
 def _count_under_25_overall(form):
@@ -1188,6 +1206,31 @@ def apply_over_algorithm(home_3, away_3, home_6, away_6, home_overall_6=None, aw
             is_perfect = False
         else:
             failed.append("Away total goals (last 6)"); details["Away total goals (last 6)"] = f"FAIL-THIN ({a_total_6} < {a_total_min})"; is_perfect = False
+
+    # One-sided goal volume: the combined "total goals" items above need BOTH
+    # legs busy; these pass when either the team scored, or its opponent
+    # conceded, >= OVER_SCORED_OR_CONCEDED_MIN_6 over the last 6 (OR logic).
+    if h_len >= 2:
+        h_scored_6, a_conceded_6, ok = _one_sided_goal_volume(home_6, away_6, h_len, a_len)
+        label = "Home goal volume (last 6)"
+        summary = f"scored {h_scored_6}, opp conceded {a_conceded_6}"
+        if ok:
+            passed.append(label); details[label] = f"PASS ({summary})"
+            if h_len < 6 or a_len < 6:
+                is_perfect = False
+        else:
+            failed.append(label); details[label] = f"FAIL ({summary})"; is_perfect = False
+
+    if a_len >= 2:
+        a_scored_6, h_conceded_6, ok = _one_sided_goal_volume(away_6, home_6, a_len, h_len)
+        label = "Away goal volume (last 6)"
+        summary = f"scored {a_scored_6}, opp conceded {h_conceded_6}"
+        if ok:
+            passed.append(label); details[label] = f"PASS ({summary})"
+            if h_len < 6 or a_len < 6:
+                is_perfect = False
+        else:
+            failed.append(label); details[label] = f"FAIL ({summary})"; is_perfect = False
 
     home_overall_6 = home_overall_6 or []
     away_overall_6 = away_overall_6 or []

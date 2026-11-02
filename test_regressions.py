@@ -9,6 +9,7 @@ from unittest.mock import patch
 
 import fetch_results
 import generate_weekly_report
+import over25_soccerbase
 import prediction_tracker
 import scraping
 import send_daily_telegram
@@ -392,6 +393,58 @@ class PublishGuardTests(unittest.TestCase):
             code, post = self._publish(directory, "2026-09-11", "2026-09-11")
         self.assertEqual(code, 0)
         self.assertTrue(post.called)
+
+
+class OverGoalVolumeRuleTests(unittest.TestCase):
+    """The one-sided goal-volume rule: the team scored, OR its opponent
+    conceded, OVER_SCORED_OR_CONCEDED_MIN_6 over the last 6 — in contrast to
+    the combined "total goals >= 18" rule, which needs both legs busy.
+    """
+
+    def setUp(self):
+        self.hot = [(3, 0), (2, 0), (4, 0), (1, 0), (2, 0), (1, 0)]      # 13 scored
+        self.cold = [(1, 0), (0, 1), (1, 0), (0, 0), (1, 0), (0, 1)]     # 3 scored
+        self.stingy = [(0, 0), (1, 0), (0, 0), (1, 0), (0, 0), (1, 0)]   # 0 conceded
+        self.sieve = [(0, 2), (0, 2), (0, 2), (0, 2), (0, 2), (0, 2)]    # 12 conceded
+
+    def test_hot_attack_passes_without_a_leaky_opponent(self):
+        scored, conceded, passed = over25_soccerbase._one_sided_goal_volume(
+            self.hot, self.stingy, 6, 6
+        )
+        self.assertEqual((scored, conceded), (13, 0))
+        self.assertTrue(passed)
+
+    def test_leaky_opponent_passes_without_a_hot_attack(self):
+        scored, conceded, passed = over25_soccerbase._one_sided_goal_volume(
+            self.cold, self.sieve, 6, 6
+        )
+        self.assertEqual((scored, conceded), (3, 12))
+        self.assertTrue(passed)
+
+    def test_both_legs_cold_fails(self):
+        scored, conceded, passed = over25_soccerbase._one_sided_goal_volume(
+            self.cold, self.stingy, 6, 6
+        )
+        self.assertEqual((scored, conceded), (3, 0))
+        self.assertFalse(passed)
+
+    def test_threshold_scales_down_for_thin_data(self):
+        # 3 games available drops the threshold from 10 to 5 (10 * 3 / 6).
+        scored, _, passed = over25_soccerbase._one_sided_goal_volume(
+            [(2, 0), (1, 1), (2, 0)], [], 3, 0
+        )
+        self.assertEqual(scored, 5)
+        self.assertTrue(passed)
+
+    def test_rulebook_records_the_volume_item_per_side(self):
+        passed, failed, details, _ = over25_soccerbase.apply_over_algorithm(
+            self.hot[:3], self.cold[:3], self.hot, self.cold
+        )
+        self.assertIn("Home goal volume (last 6)", details)
+        self.assertIn("Home goal volume (last 6)", passed)
+        # Away is cold on both legs here, so its item must fail, not vanish.
+        self.assertIn("Away goal volume (last 6)", details)
+        self.assertIn("Away goal volume (last 6)", failed)
 
 
 if __name__ == "__main__":

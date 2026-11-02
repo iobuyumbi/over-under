@@ -62,7 +62,7 @@ WEAK_ROI_LEAGUE_KEYWORDS = (
 # =============================================================================
 # Over / Under 2.5
 # =============================================================================
-MAX_OVER_SCORE = 13
+MAX_OVER_SCORE = 15
 MAX_UNDER_SCORE = 12
 
 # Under 2.5 specific caps (from over25tips.com style rules)
@@ -80,6 +80,11 @@ UNDER_AWAY_OVER25_MAX = 3
 # BTTS mini-gates reused inside OU (with thin-data fallbacks)
 BTTS_MIN_6 = 3
 NON_BTTS_MIN_6 = 3
+
+# One-sided goal volume over the last 6 venue games: the team scored, OR its
+# opponent conceded, at least this many goals (either route qualifies). The
+# combined "total goals >= 18" rule needs BOTH legs busy; this is the OR case.
+OVER_SCORED_OR_CONCEDED_MIN_6 = 10
 
 # Lambda thresholds
 MIN_COMBINED_LAMBDA_OVER = 2.75
