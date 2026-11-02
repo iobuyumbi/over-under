@@ -3,7 +3,7 @@ name: Daily Soccer Predictions + Results
 on:
   schedule:
     - cron: "0 1 * * *"   # 4:00 AM EAT: publish already-committed daily predictions to Telegram
-    - cron: "0 23 * * *"  # 2:00 AM EAT: settle recent results
+    - cron: "0 7 * * *"   # 10:00 AM EAT: settle recent results
     - cron: "0 3 * * 1"   # 6:00 AM EAT Mondays: weekly report (settle + publish)
     - cron: "0 3 1 * *"   # 6:00 AM EAT on the 1st: monthly report (settle + publish)
   workflow_dispatch:
@@ -39,7 +39,7 @@ jobs:
     defaults:
       run:
         shell: bash
-    if: github.event.schedule == '0 23 * * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'results' || github.event.inputs.mode == 'all'))
+    if: github.event.schedule == '0 7 * * *' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.mode == 'results' || github.event.inputs.mode == 'all'))
     steps:
       - uses: actions/checkout@v4
         with:
