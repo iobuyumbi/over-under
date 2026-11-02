@@ -1,5 +1,8 @@
 ✦ CURATED PICKS · 2026-11-02
   Input reports:
+    OU   → over_under_vip_report_2026-11-02.txt
+    BTTS → btts_vip_report_2026-11-02.txt
+    HW   → home_win_vip_report_2026-11-02.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -10,8 +13,16 @@
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
     • Today only (2026-11-02)
 
-━━━ OVER / UNDER 2.5  (0 accepted) ━━━
-  (none)
+━━━ OVER / UNDER 2.5  (3 accepted) ━━━
+   1. ✅ Uni Cluj vs FCSB  (Romanian Liga 1)
+      Over 2.5 · High 76.2% · xG 1.88–2.12
+      Stake 0.4% @ 2.0  ·  EV +52.4c/$  ·  Edge +52.4%
+   2. ✅ Kryliya Sovetov vs Zenit  (Russian Premier)
+      Over 2.5 · High 72.5% · xG 1.03–2.73
+      Stake 0.3% @ 2.0  ·  EV +45.0c/$  ·  Edge +45.0%
+   3. ✅ Benfica vs Alverca  (Portuguese Liga)
+      Over 2.5 · High 71.8% · xG 1.80–1.92
+      Stake 0.3% @ 2.0  ·  EV +43.6c/$  ·  Edge +43.6%
 
 ━━━ BTTS (Yes / No)  (0 accepted) ━━━
   (none)
@@ -19,8 +30,8 @@
 ━━━ HOME WIN  (0 accepted) ━━━
   (none)
 
-📊 Summary: 0 curated picks
-   Parsed total: 0   Rejected: 0   Accepted: 0
+📊 Summary: 3 curated picks
+   Parsed total: 65   Rejected: 62   Accepted: 3
 
 ---
 For informational purposes only · Gamble responsibly

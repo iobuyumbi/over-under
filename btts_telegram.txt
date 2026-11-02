@@ -21,18 +21,18 @@
        • Tier: ✅ Solid
        • League type: weak-ROI region (extra model caution)
 
-  3. Sporting Cristal vs Cajamarca
+  3. Landskrona BoIS vs Orebro
      Date: 2026-11-02
-     League: Mexican Primera Apertura
-     Pick: BTTS Yes · High confidence (77.8%)
+     League: Swedish Superettan
+     Pick: BTTS Yes · High confidence (72.3%)
      Category:
        • Tier: ✅ Solid
        • League type: weak-ROI region (extra model caution)
 
-  4. Landskrona BoIS vs Orebro
+  4. Sporting Cristal vs Cajamarca
      Date: 2026-11-02
-     League: Swedish Superettan
-     Pick: BTTS Yes · High confidence (72.3%)
+     League: Mexican Primera Apertura
+     Pick: BTTS Yes · High confidence (77.8%)
      Category:
        • Tier: ✅ Solid
        • League type: weak-ROI region (extra model caution)

@@ -512,18 +512,18 @@ Independiente M vs Alianza Petrolera · 2026-11-01 · OVER 0.5 TEAM GOAL · Pend
        • Tier: ✅ Solid
        • League type: weak-ROI region (extra model caution)
 
-  3. Sporting Cristal vs Cajamarca
+  3. Landskrona BoIS vs Orebro
      Date: 2026-11-02
-     League: Mexican Primera Apertura
-     Pick: BTTS Yes · High confidence (77.8%)
+     League: Swedish Superettan
+     Pick: BTTS Yes · High confidence (72.3%)
      Category:
        • Tier: ✅ Solid
        • League type: weak-ROI region (extra model caution)
 
-  4. Landskrona BoIS vs Orebro
+  4. Sporting Cristal vs Cajamarca
      Date: 2026-11-02
-     League: Swedish Superettan
-     Pick: BTTS Yes · High confidence (72.3%)
+     League: Mexican Primera Apertura
+     Pick: BTTS Yes · High confidence (77.8%)
      Category:
        • Tier: ✅ Solid
        • League type: weak-ROI region (extra model caution)
@@ -580,17 +580,17 @@ Independiente M vs Alianza Petrolera · 2026-11-01 · OVER 0.5 TEAM GOAL · Pend
      Category:
        • Tier: ✅ Solid
 
-  3. Atalanta vs Parma
-     Date: 2026-11-02
-     League: Italian Serie A
-     Pick: Home to Score · High confidence (93.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  4. Deportivo vs Osasuna
+  3. Deportivo vs Osasuna
      Date: 2026-11-02
      League: Spanish La Liga
      Pick: Home to Score · High confidence (82.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  4. Atalanta vs Parma
+     Date: 2026-11-02
+     League: Italian Serie A
+     Pick: Home to Score · High confidence (93.1%)
      Category:
        • Tier: ✅ Solid
 
@@ -601,10 +601,10 @@ Independiente M vs Alianza Petrolera · 2026-11-01 · OVER 0.5 TEAM GOAL · Pend
      Category:
        • Tier: ✅ Solid
 
-  6. Real Oviedo vs Las Palmas
+  6. Voluntari vs Farul Constanta
      Date: 2026-11-02
-     League: Spanish Segunda
-     Pick: Home to Score · High confidence (81.0%)
+     League: Romanian Liga 1
+     Pick: Home to Score · Medium confidence (73.8%)
      Category:
        • Tier: ✅ Solid
 
@@ -615,17 +615,17 @@ Independiente M vs Alianza Petrolera · 2026-11-01 · OVER 0.5 TEAM GOAL · Pend
      Category:
        • Tier: ✅ Solid
 
-  8. Uni Cluj vs FCSB
+  8. Real Oviedo vs Las Palmas
      Date: 2026-11-02
-     League: Romanian Liga 1
-     Pick: Home to Score · High confidence (90.7%)
+     League: Spanish Segunda
+     Pick: Home to Score · High confidence (81.0%)
      Category:
        • Tier: ✅ Solid
 
-  9. Voluntari vs Farul Constanta
+  9. Uni Cluj vs FCSB
      Date: 2026-11-02
      League: Romanian Liga 1
-     Pick: Home to Score · Medium confidence (73.8%)
+     Pick: Home to Score · High confidence (90.7%)
      Category:
        • Tier: ✅ Solid
 
@@ -657,17 +657,17 @@ Independiente M vs Alianza Petrolera · 2026-11-01 · OVER 0.5 TEAM GOAL · Pend
      Category:
        • Tier: ✅ Solid
 
-  14. Cherno More vs Botev Vratsa
-     Date: 2026-11-02
-     League: Bulgarian League
-     Pick: Home to Score · High confidence (84.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  15. Arda vs PFC Septemvri Sofia
+  14. Arda vs PFC Septemvri Sofia
      Date: 2026-11-02
      League: Bulgarian League
      Pick: Home to Score · High confidence (80.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  15. Cherno More vs Botev Vratsa
+     Date: 2026-11-02
+     League: Bulgarian League
+     Pick: Home to Score · High confidence (84.6%)
      Category:
        • Tier: ✅ Solid
 
@@ -727,38 +727,38 @@ Independiente M vs Alianza Petrolera · 2026-11-01 · OVER 0.5 TEAM GOAL · Pend
      Category:
        • Tier: ✅ Solid
 
-  24. Landskrona BoIS vs Orebro
-     Date: 2026-11-02
-     League: Swedish Superettan
-     Pick: Home to Score · High confidence (87.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  25. Osters vs Helsingborgs
+  24. Osters vs Helsingborgs
      Date: 2026-11-02
      League: Swedish Superettan
      Pick: Home to Score · Medium confidence (74.6%)
      Category:
        • Tier: ✅ Solid
 
-  26. Orense vs Tecnico Universitario
+  25. Landskrona BoIS vs Orebro
+     Date: 2026-11-02
+     League: Swedish Superettan
+     Pick: Home to Score · High confidence (87.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  26. Deportes Concepcion vs Palestino
+     Date: 2026-11-02
+     League: Chile Primera
+     Pick: Home to Score · Medium confidence (73.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  27. Orense vs Tecnico Universitario
      Date: 2026-11-02
      League: Ecuador Liga Pro
      Pick: Home to Score · High confidence (85.3%)
      Category:
        • Tier: ✅ Solid
 
-  27. Aguilas Doradas vs Fortaleza CEIF
+  28. Aguilas Doradas vs Fortaleza CEIF
      Date: 2026-11-02
      League: Chile Primera
      Pick: Home to Score · High confidence (80.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  28. Deportes Concepcion vs Palestino
-     Date: 2026-11-02
-     League: Chile Primera
-     Pick: Home to Score · Medium confidence (73.0%)
      Category:
        • Tier: ✅ Solid
 
@@ -818,17 +818,17 @@ Independiente M vs Alianza Petrolera · 2026-11-01 · OVER 0.5 TEAM GOAL · Pend
      Category:
        • Tier: ✅ Solid
 
-  8. Radomiak Radom vs Slask Wroclaw
-     Date: 2026-11-02
-     League: Polish Ekstraklasa
-     Pick: Away to Score · High confidence (83.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  9. Rakow Czestochowa vs Pogon Szczecin
+  8. Rakow Czestochowa vs Pogon Szczecin
      Date: 2026-11-02
      League: Polish Ekstraklasa
      Pick: Away to Score · High confidence (92.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  9. Radomiak Radom vs Slask Wroclaw
+     Date: 2026-11-02
+     League: Polish Ekstraklasa
+     Pick: Away to Score · High confidence (83.5%)
      Category:
        • Tier: ✅ Solid
 
