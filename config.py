@@ -87,7 +87,11 @@ NON_BTTS_MIN_6 = 3
 OVER_SCORED_OR_CONCEDED_MIN_6 = 10
 
 # Lambda thresholds
-MIN_COMBINED_LAMBDA_OVER = 2.75
+# Over gate raised 2.75 -> 3.10 (combined-lambda equivalent of a ~60% model
+# Over probability). Settled Over 2.5 picks at >=60% model probability have
+# historically performed better than the sub-60% tail, and this mirrors the
+# hard Over model bar used in the v3/v4 engines. Costs ~25% of Over volume.
+MIN_COMBINED_LAMBDA_OVER = 3.10
 MAX_COMBINED_LAMBDA_UNDER = 2.15
 PREMIUM_COMBINED_LAMBDA_OVER = 3.30
 PREMIUM_COMBINED_LAMBDA_UNDER = 2.00

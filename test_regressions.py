@@ -498,5 +498,24 @@ class OverGoalVolumeRuleTests(unittest.TestCase):
         self.assertIn("Away goal volume (last 6)", failed)
 
 
+class OverLambdaGateTests(unittest.TestCase):
+    """The Over gate demands a real model lean: combined lambda must clear
+    MIN_COMBINED_LAMBDA_OVER, which maps to a ~60% Poisson Over probability.
+    """
+
+    def test_weak_over_lean_is_rejected(self):
+        # 2.75 combined ~= 52% Over probability: the old, too-loose bar.
+        self.assertFalse(over25_soccerbase.lambda_gate_passes(1.40, 1.35, "over"))
+
+    def test_strong_over_lean_passes(self):
+        # 3.20 combined ~= 62% Over probability.
+        self.assertTrue(over25_soccerbase.lambda_gate_passes(1.65, 1.55, "over"))
+
+    def test_under_gate_is_unchanged_by_the_over_tightening(self):
+        # 2.10 combined clears the Under ceiling (2.15) but not the Over bar.
+        self.assertTrue(over25_soccerbase.lambda_gate_passes(1.05, 1.05, "under"))
+        self.assertFalse(over25_soccerbase.lambda_gate_passes(1.05, 1.05, "over"))
+
+
 if __name__ == "__main__":
     unittest.main()
