@@ -4,6 +4,91 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: weekly 2026-11-02 -->
+## Weekly Report — 2026-11-02
+
+WEEKLY PERFORMANCE REPORT
+2026-10-26 to 2026-11-02
+
+Home win picks
+Total picks: 24
+Wins: 21
+Losses: 1
+Pushes: 0
+Pending: 0
+Win rate: 95.5%
+
+Performance by confidence:
+  close: 18/19 wins (94.7%)
+  perfect: 1/1 wins (100.0%)
+  qualified: 2/2 wins (100.0%)
+
+DOUBLE CHANCE (HOME OR DRAW)
+Total picks: 24
+Wins: 22
+Losses: 0
+Pending: 0
+Win rate: 100.0%
+
+OVER 2.5 GOALS
+Total picks: 43
+Wins: 19
+Losses: 10
+Pushes: 0
+Pending: 0
+Win rate: 65.5%
+
+Performance by confidence:
+  qualified: 19/29 wins (65.5%)
+
+OVER 1.5 GOALS
+Total picks: 43
+Wins: 25
+Losses: 4
+Pending: 0
+Win rate: 86.2%
+
+UNDER 2.5 GOALS
+Total picks: 0
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+UNDER 3.5 GOALS
+Total picks: 0
+Wins: 0
+Losses: 0
+Pending: 0
+
+BTTS YES
+Total picks: 12
+Wins: 7
+Losses: 1
+Pushes: 0
+Pending: 0
+Win rate: 87.5%
+
+BTTS NO
+Total picks: 0
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+OVER 0.5 TEAM GOAL
+Total picks: 176
+Wins: 104
+Losses: 24
+Pushes: 0
+Pending: 0
+Win rate: 81.2%
+
+---
+For informational purposes only
+Gamble responsibly
+
+
 <!-- report: daily 2026-11-02 -->
 ## Daily Picks — 2026-11-02
 

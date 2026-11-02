@@ -91,9 +91,9 @@ date,home_team,away_team,score
 2026-07-06,Universidad Catolica,Mushuc Runa,2-3
 2026-07-07,Switzerland,Colombia,0-0
 2026-07-10,Cork City,Longford T,3-4
-2026-07-10,Dinamo Minsk,FC Naftan,
-2026-07-10,Isloch Minsk,Bate Borisov,
-2026-07-10,ML Vitebsk,Belshina,
+2026-07-10,Dinamo Minsk,FC Naftan,NOT PLAYED
+2026-07-10,Isloch Minsk,Bate Borisov,NOT PLAYED
+2026-07-10,ML Vitebsk,Belshina,NOT PLAYED
 2026-07-10,VPS Vaasa,SJK,1-0
 2026-07-11,All Boys,Almirante Brown,1-1
 2026-07-11,Gnistan,Mariehamn,4-2
@@ -112,7 +112,7 @@ date,home_team,away_team,score
 2026-07-17,Almirante Brown,Estudiantes Caseros,0-0
 2026-07-17,Bodo Glimt,Fredrikstad,1-0
 2026-07-17,Cajamarca,Juan Pablo II College,2-2
-2026-07-17,Chicago,Vancouver W,
+2026-07-17,Chicago,Vancouver W,NOT PLAYED
 2026-07-17,Deportivo Maipu,San Martin de Tucuman,0-0
 2026-07-17,Nueva Chicago,Agropecuario,1-1
 2026-07-17,St. Louis City SC,Kansas City,3-2
@@ -124,16 +124,16 @@ date,home_team,away_team,score
 2026-07-18,Ostersunds FK,Landskrona BoIS,2-0
 2026-07-18,Suwon FC,Seoul E-Land,2-2
 2026-07-18,Viking,Sandefjord,2-1
-2026-07-19,Cerro,Racing Club M,
+2026-07-19,Cerro,Racing Club M,NOT PLAYED
 2026-07-19,Cheongju,Cheonan City,1-0
 2026-07-19,Suwon Samsung,Paju Frontier,0-0
-2026-07-20,Acassuso,San Telmo,
+2026-07-20,Acassuso,San Telmo,NOT PLAYED
 2026-07-20,Alianza Lima,Sport Huancayo,2-1
-2026-07-20,Chacarita,Guemes,
+2026-07-20,Chacarita,Guemes,NOT PLAYED
 2026-07-20,Independiente d V,Emelec,6-1
-2026-07-20,San Martin de San Juan,Tristan Suarez,
+2026-07-20,San Martin de San Juan,Tristan Suarez,NOT PLAYED
 2026-07-20,TPS Turku,Ilves Tampere,1-3
-2026-07-21,Almagro,Gimnasia y Tiro,
+2026-07-21,Almagro,Gimnasia y Tiro,NOT PLAYED
 2026-07-22,Bodo Glimt,HamKam,3-0
 2026-07-22,Independiente d V,Tecnico Universitario,3-0
 2026-07-23,Austin FC,Seattle,3-1
@@ -150,9 +150,9 @@ date,home_team,away_team,score
 2026-07-24,Racing Club,Gimnasia La Plata,2-1
 2026-07-24,St Patrick's,Dundalk,1-1
 2026-07-24,Velez Sarsfield,Instituto,1-0
-2026-07-25,Cerro,Racing Club M,
+2026-07-25,Cerro,Racing Club M,NOT PLAYED
 2026-07-25,Colo-Colo,Deportes Limache,3-1
-2026-07-25,Coquimbo Unido,Universidad de Concepcion,
+2026-07-25,Coquimbo Unido,Universidad de Concepcion,NOT PLAYED
 2026-07-25,Daegu,Suwon FC,1-2
 2026-07-25,Deportivo Recoleta,Sp. San Lorenzo,1-1
 2026-07-25,Huachipato,Cobresal,3-3
@@ -199,14 +199,14 @@ date,home_team,away_team,score
 2026-07-30,Fluminense,Bahia,0-0
 2026-07-30,Sp. San Lorenzo,Club Guarani,0-1
 2026-07-30,Talleres de Cordoba,Velez Sarsfield,1-3
-2026-07-31,Bate Borisov,Neman Grodno,
+2026-07-31,Bate Borisov,Neman Grodno,NOT PLAYED
 2026-07-31,Bodo Glimt,Lillestrom,4-0
 2026-07-31,Bray,Kerry,0-4
 2026-07-31,Montevideo City Torque,Montevideo W,0-2
 2026-07-31,Valerenga,HamKam,0-3
 2026-08-01,Belgrano,Argentinos Jun,0-1
 2026-08-01,Cajamarca,Sport Huancayo,0-2
-2026-08-01,Chacarita,Agropecuario,
+2026-08-01,Chacarita,Agropecuario,NOT PLAYED
 2026-08-01,Cheongju,Suwon Samsung,2-2
 2026-08-01,Defensores de Belgrano,Estudiantes Caseros,1-1
 2026-08-01,FC Lahti,FF Jaro,2-0
@@ -268,7 +268,7 @@ date,home_team,away_team,score
 2026-08-04,Llaneros,Fortaleza CEIF,3-1
 2026-08-04,Universidad Central,Monagas SC,2-1
 2026-08-05,Boca Juniors,Estudiantes,1-0
-2026-08-05,Caracas,Deportivo La Guaira,
+2026-08-05,Caracas,Deportivo La Guaira,NOT PLAYED
 2026-08-05,Deportivo La Guaira,Metropolitanos,1-2
 2026-08-06,Alianza Atletico,Cienciano,1-0
 2026-08-06,KPS Kuopio,Uni Craiova,1-1
@@ -295,15 +295,15 @@ date,home_team,away_team,score
 2026-08-08,Universitario de Deportes,Sporting Cristal,1-1
 2026-08-08,Valerenga,Bodo Glimt,1-2
 2026-08-08,Viking,Sarpsborg,2-1
-2026-08-09,Academia Puerto Cabello,Rayo Zuliano,
-2026-08-09,Carabobo FC,Metropolitanos,
+2026-08-09,Academia Puerto Cabello,Rayo Zuliano,NOT PLAYED
+2026-08-09,Carabobo FC,Metropolitanos,NOT PLAYED
 2026-08-09,Colegiales,Patronato,2-2
 2026-08-09,Defensa y Justicia,Newell's OB,2-1
 2026-08-09,Deportes Concepcion,Universidad de Concepcion,1-0
 2026-08-09,Deportes Tolima,La Equidad,2-1
 2026-08-09,Deportivo Garcilaso,Deportivo Moquegua,2-0
-2026-08-09,Deportivo Tachira,Monagas SC,
-2026-08-09,Estudiantes de Merida,Anzoategui,
+2026-08-09,Deportivo Tachira,Monagas SC,NOT PLAYED
+2026-08-09,Estudiantes de Merida,Anzoategui,NOT PLAYED
 2026-08-09,FC Inter,FC Lahti,0-0
 2026-08-09,Flamengo,Vitoria,2-0
 2026-08-09,Godoy Cruz,Chaco For Ever,2-1
@@ -313,7 +313,7 @@ date,home_team,away_team,score
 2026-08-09,Lillestrom,Rosenborg,0-2
 2026-08-09,Melgar,Cajamarca,2-4
 2026-08-09,O'Higgins,Deportes Limache,1-3
-2026-08-09,Portuguesa FC,Trujillanos,
+2026-08-09,Portuguesa FC,Trujillanos,NOT PLAYED
 2026-08-09,Union La Calera,Colo-Colo,1-2
 2026-08-09,Varbergs Bois,Sandvikens,0-1
 2026-08-10,Argentinos Jun,Racing Club,2-1
@@ -322,7 +322,7 @@ date,home_team,away_team,score
 2026-08-11,Deportivo Cuenca,Manta,1-2
 2026-08-11,Helsingborgs,Varnamo,1-2
 2026-08-11,Union Santa Fe,Central Cordoba SDE,1-2
-2026-08-12,Deportes Tolima,Independiente d V,
+2026-08-12,Deportes Tolima,Independiente d V,NOT PLAYED
 2026-08-12,Platense,Coquimbo Unido,1-1
 2026-08-12,Talleres de Cordoba,Lanus,0-3
 2026-08-13,Mirassol,LDU Quito,1-1
@@ -339,7 +339,7 @@ date,home_team,away_team,score
 2026-08-15,Kashima Antlers,Nagoya Grampus,2-1
 2026-08-15,Kawasaki F,Kyoto Sanga,2-2
 2026-08-15,Ljungskile,Osters,2-3
-2026-08-15,Llaneros,Deportes Tolima,
+2026-08-15,Llaneros,Deportes Tolima,NOT PLAYED
 2026-08-15,Mariehamn,SJK,2-0
 2026-08-15,Mito HollyHock,Gamba Osaka,1-1
 2026-08-15,Nordic United,Varbergs Bois,0-0
@@ -372,18 +372,18 @@ date,home_team,away_team,score
 2026-08-16,Seoul E-Land,Ansan Greeners,3-1
 2026-08-16,Sp Luqueno,Libertad,1-2
 2026-08-16,Toronto FC,New England,2-1
-2026-08-17,America de Cali,Fortaleza CEIF,
+2026-08-17,America de Cali,Fortaleza CEIF,NOT PLAYED
 2026-08-17,Barracas Central,Rosario,0-1
 2026-08-17,Estudiantes de Rio Cuarto,Atletico Tucuman,0-1
 2026-08-17,Lanus,Independiente,1-3
 2026-08-17,Seattle,Vancouver W,0-2
 2026-08-17,Velez Sarsfield,Defensa y Justicia,1-1
-2026-08-18,Boyaca Chico,Atletico Junior,
+2026-08-18,Boyaca Chico,Atletico Junior,NOT PLAYED
 2026-08-18,Internacional,Remo,1-1
-2026-08-18,Millonarios,Deportivo Cali,
+2026-08-18,Millonarios,Deportivo Cali,NOT PLAYED
 2026-08-18,Necaxa,Leon,1-2
 2026-08-18,Palestino,Huachipato,5-1
-2026-08-19,Independiente d V,Deportes Tolima,
+2026-08-19,Independiente d V,Deportes Tolima,NOT PLAYED
 2026-08-20,Benfica,Aarhus,3-1
 2026-08-20,Besiktas,Kauno Zalgiris,3-0
 2026-08-20,Cincinnati,New York City,2-1
@@ -423,11 +423,11 @@ date,home_team,away_team,score
 2026-08-22,Sanf Hiroshima,Kawasaki F,1-1
 2026-08-22,Universidad Catolica,Manta,5-1
 2026-08-23,AC Horsens,Lyngby,2-1
-2026-08-23,Academia Puerto Cabello,Anzoategui,
+2026-08-23,Academia Puerto Cabello,Anzoategui,NOT PLAYED
 2026-08-23,Austin FC,Philadelphia U,1-1
 2026-08-23,Baranovichi,Dinamo Brest,1-1
 2026-08-23,Barracas Central,Platense,1-2
-2026-08-23,Carabobo FC,Zamora FC,
+2026-08-23,Carabobo FC,Zamora FC,NOT PLAYED
 2026-08-23,Central Norte,Estudiantes Caseros,2-1
 2026-08-23,Chacarita,San Martin de Tucuman,1-2
 2026-08-23,Charlotte FC,DC United,3-1
@@ -439,7 +439,7 @@ date,home_team,away_team,score
 2026-08-23,Deportivo Garcilaso,Cusco,4-1
 2026-08-23,Deportivo Maipu,Quilmes,1-0
 2026-08-23,Deportivo Pasto,Llaneros,0-1
-2026-08-23,Deportivo Tachira,Caracas,
+2026-08-23,Deportivo Tachira,Caracas,NOT PLAYED
 2026-08-23,Din. Moscow,Rodina Moscow,3-1
 2026-08-23,GKS Katowice,Wisla Plock,5-0
 2026-08-23,Guadalajara,Tijuana,5-2
@@ -449,7 +449,7 @@ date,home_team,away_team,score
 2026-08-23,IK Oddevold,Helsingborgs,3-1
 2026-08-23,Inter Miami CF,Toronto FC,1-2
 2026-08-23,Kisvarda,Debrecen,0-0
-2026-08-23,Lokomotiv Sofia,CSKA Sofia,
+2026-08-23,Lokomotiv Sofia,CSKA Sofia,NOT PLAYED
 2026-08-23,Los Angeles FC,Portland Timb.,1-1
 2026-08-23,ML Vitebsk,Bate Borisov,0-0
 2026-08-23,Maribor,Bravo Publikum,3-1
@@ -463,7 +463,7 @@ date,home_team,away_team,score
 2026-08-23,PFC Septemvri Sofia,CSKA,1-0
 2026-08-23,Palmeiras,Vasco,4-1
 2026-08-23,Pogon Szczecin,Wisla Krakow,2-2
-2026-08-23,Portuguesa FC,Metropolitanos,
+2026-08-23,Portuguesa FC,Metropolitanos,NOT PLAYED
 2026-08-23,Puebla,Santos Laguna,3-2
 2026-08-23,Radnik Surdulica,Novi Pazar,1-0
 2026-08-23,Red Star,Cukaricki,4-0
@@ -473,7 +473,7 @@ date,home_team,away_team,score
 2026-08-23,Sport Boys,Cienciano,5-1
 2026-08-23,TPS Turku,FC Inter,0-0
 2026-08-23,Univ Catolica,Nublense,1-2
-2026-08-23,Universidad Central,Rayo Zuliano,
+2026-08-23,Universidad Central,Rayo Zuliano,NOT PLAYED
 2026-08-23,Vancouver W,Dallas,5-0
 2026-08-23,Vojvodina NS,Zeleznicar Pancevo,1-0
 2026-08-24,Baltika,Rubin,1-1
@@ -499,7 +499,7 @@ date,home_team,away_team,score
 2026-08-25,Everton de Vina del Mar,Universidad de Concepcion,3-1
 2026-08-25,FC Seoul,Bucheon,1-0
 2026-08-25,Fleetwood,Shrewsbury,4-0
-2026-08-25,Forfar,Formartine Utd,
+2026-08-25,Forfar,Formartine Utd,NOT PLAYED
 2026-08-25,Guiseley,Stockton T,3-0
 2026-08-25,Hamilton,Edinburgh C,0-1
 2026-08-25,Kelty Hearts,Clydebank,2-4
@@ -558,7 +558,7 @@ date,home_team,away_team,score
 2026-08-28,Legia Warsaw,Slask Wroclaw,1-1
 2026-08-28,Montevideo W,Central Espanol,3-0
 2026-08-28,Morecambe,Telford,2-1
-2026-08-28,Once Caldas,Deportes Tolima,
+2026-08-28,Once Caldas,Deportes Tolima,NOT PLAYED
 2026-08-28,The New Saints,Colwyn Bay,5-1
 2026-08-28,Trefelin,Ammanford,1-1
 2026-08-28,Uni Cluj,Petrolul,2-3
@@ -577,8 +577,8 @@ date,home_team,away_team,score
 2026-08-29,Bath City,Uxbridge,1-2
 2026-08-29,Bedford,Spennymoor,3-1
 2026-08-29,Blackpool,Peterborough,4-0
-2026-08-29,Botev Plovdiv,Levski Sofia,
-2026-08-29,Brackley,South Shields,
+2026-08-29,Botev Plovdiv,Levski Sofia,NOT PLAYED
+2026-08-29,Brackley,South Shields,NOT PLAYED
 2026-08-29,Bracknell,Sholing,3-1
 2026-08-29,Bravo Publikum,NS Mura,2-0
 2026-08-29,Bucheon,Anyang,1-1
@@ -623,7 +623,7 @@ date,home_team,away_team,score
 2026-08-29,Necaxa,Cruz Azul,1-3
 2026-08-29,Nyiregyhaza,Paksi SE,1-1
 2026-08-29,Pardubice,Artis Brno,1-2
-2026-08-29,Racing Club M,Albion FC,
+2026-08-29,Racing Club M,Albion FC,NOT PLAYED
 2026-08-29,Redcar Athletic,FC Utd,3-2
 2026-08-29,Renfrew,Clydebank,1-5
 2026-08-29,Ross County,East Kilbride,4-0
@@ -641,8 +641,8 @@ date,home_team,away_team,score
 2026-08-29,Truro City,Dag & Red,3-0
 2026-08-29,Ujpest Dozsa,Vasas,3-1
 2026-08-29,V-Varen Nagasaki,FC Tokyo,0-3
-2026-08-29,Valerenga,Molde,
-2026-08-29,Viking,Aalesund,
+2026-08-29,Valerenga,Molde,NOT PLAYED
+2026-08-29,Viking,Aalesund,NOT PLAYED
 2026-08-29,Walsall,Accrington,3-2
 2026-08-29,Watford,West Ham,1-1
 2026-08-29,Wimborne T,Hanworth Villa,0-0
@@ -702,7 +702,7 @@ date,home_team,away_team,score
 2026-08-31,Arda,Botev Vratsa,2-0
 2026-08-31,Basingstoke,Bracknell,2-1
 2026-08-31,Braintree,Farnborough,0-2
-2026-08-31,Brentwood T,Maldon & T,
+2026-08-31,Brentwood T,Maldon & T,NOT PLAYED
 2026-08-31,Bukovyna Chernivtsi,Dynamo Kyiv,3-0
 2026-08-31,Buxton,Merthyr,2-1
 2026-08-31,Carlisle,Scunthorpe,4-2
@@ -819,7 +819,7 @@ date,home_team,away_team,score
 2026-09-05,Rangers,Motherwell,1-0
 2026-09-05,Reading,Blackpool,3-1
 2026-09-05,Rosenborg,HamKam,4-0
-2026-09-05,Santa Fe,Fortaleza CEIF,
+2026-09-05,Santa Fe,Fortaleza CEIF,NOT PLAYED
 2026-09-05,Scarborough A,Telford,0-1
 2026-09-05,Scunthorpe,Harrogate,0-2
 2026-09-05,Sigma O.,B.,3-0
@@ -835,7 +835,7 @@ date,home_team,away_team,score
 2026-09-05,Tranmere,Oldham,2-0
 2026-09-05,Truro City,Chesham,3-1
 2026-09-05,UT Arad,Csikszereda,5-1
-2026-09-05,Utrecht,Go A Eagles,
+2026-09-05,Utrecht,Go A Eagles,NOT PLAYED
 2026-09-05,Wealdstone,Kidderminster,1-4
 2026-09-05,West Ham,Derby,3-0
 2026-09-05,Widzew Lodz,Radomiak Radom,0-0
@@ -843,7 +843,7 @@ date,home_team,away_team,score
 2026-09-05,Wycombe,MK Dons,3-3
 2026-09-05,Yongin,Suwon FC,1-1
 2026-09-05,Young Boys,Lucerne,3-3
-2026-09-06,Academia Puerto Cabello,Carabobo FC,
+2026-09-06,Academia Puerto Cabello,Carabobo FC,NOT PLAYED
 2026-09-06,Anderlecht,Genk,0-0
 2026-09-06,Anyang,Gangwon,0-3
 2026-09-06,Atlas,Atlante,1-1
@@ -853,7 +853,7 @@ date,home_team,away_team,score
 2026-09-06,Central Espanol,Defensor,1-1
 2026-09-06,Cerezo Osaka,Tokyo Verdy,0-0
 2026-09-06,Cerro,Racing Club M,1-0
-2026-09-06,Cincinnati,DC United,
+2026-09-06,Cincinnati,DC United,NOT PLAYED
 2026-09-06,Consadole Sapporo,Tochigi City,1-4
 2026-09-06,Cusco,Deportivo Moquegua,2-0
 2026-09-06,Deportivo Tachira,Rayo Zuliano,3-1
@@ -919,14 +919,14 @@ date,home_team,away_team,score
 2026-09-08,Southampton,Swansea,3-1
 2026-09-08,Stirling,Rangers II,3-2
 2026-09-08,Tonbridge,Maidstone,0-1
-2026-09-08,Utrecht,Go A Eagles,
+2026-09-08,Utrecht,Go A Eagles,NOT PLAYED
 2026-09-08,Wrexham,Burnley,1-1
 2026-09-09,Barcelona,Feyenoord,5-1
 2026-09-09,Derby,West Brom,0-1
 2026-09-09,Gwangju,Jeju United,0-1
 2026-09-09,HJK Helsinki,FC Inter,2-1
 2026-09-09,PSG,S. Bratislava,6-1
-2026-09-09,Palmeiras,LDU Quito,
+2026-09-09,Palmeiras,LDU Quito,NOT PLAYED
 2026-09-09,Sandvikens,IK Oddevold,0-1
 2026-09-09,Sporting,Galatasaray,3-1
 2026-09-09,St Johnstone,Celtic,0-1
@@ -934,13 +934,13 @@ date,home_team,away_team,score
 2026-09-10,Falkenbergs FF,Osters,2-1
 2026-09-10,Houston,Real Salt Lake,2-1
 2026-09-10,Montreal Imp,Charlotte FC,1-2
-2026-09-10,New York City,New England,
+2026-09-10,New York City,New England,NOT PLAYED
 2026-09-10,Philadelphia U,Cincinnati,5-0
 2026-09-10,Portland Timb.,St. Louis City SC,2-2
 2026-09-10,Radnik Surdulica,Red Star,0-0
 2026-09-10,San Diego,San Jose,2-3
 2026-09-10,Stevenage,Luton,2-1
-2026-09-10,Vancouver W,LA Galaxy,
+2026-09-10,Vancouver W,LA Galaxy,NOT PLAYED
 2026-09-11,Barry Town,Llandudno,4-1
 2026-09-11,Cambrian United,Holywell Town,2-1
 2026-09-11,Cherno More,Lokomotiv Sofia,2-2
@@ -992,7 +992,7 @@ date,home_team,away_team,score
 2026-09-12,Cusco,Melgar,0-1
 2026-09-12,Daejeon Hana Citizen,Pohang S,2-2
 2026-09-12,Deportivo La Guaira,Universidad Central,0-2
-2026-09-12,Deportivo Moquegua,Sporting Cristal,
+2026-09-12,Deportivo Moquegua,Sporting Cristal,NOT PLAYED
 2026-09-12,Deportivo Recoleta,Sportivo Trinidense,1-3
 2026-09-12,Dulwich H,Brentwood T,2-1
 2026-09-12,E Stirling,Linlithgow Rose,2-4
@@ -1094,7 +1094,7 @@ date,home_team,away_team,score
 2026-09-13,Atletico Nacional,Aguilas Doradas,2-0
 2026-09-13,Botev Plovdiv,Loko. Plovdiv,2-0
 2026-09-13,Boyaca Chico,Independiente M,2-1
-2026-09-13,Carabobo FC,Deportivo La Guaira,
+2026-09-13,Carabobo FC,Deportivo La Guaira,NOT PLAYED
 2026-09-13,Caracas,Monagas SC,0-1
 2026-09-13,Chicago,New England,1-2
 2026-09-13,Cincinnati,Charlotte FC,3-3
@@ -1131,7 +1131,7 @@ date,home_team,away_team,score
 2026-09-13,Ljungskile,Falkenbergs FF,0-2
 2026-09-13,Macara,Emelec,1-0
 2026-09-13,Man Utd,Man City,0-1
-2026-09-13,Metropolitanos,Caracas,
+2026-09-13,Metropolitanos,Caracas,NOT PLAYED
 2026-09-13,Mirassol,Vitoria,2-2
 2026-09-13,Monterrey,Tigres,0-0
 2026-09-13,NK Istra,NK Rudes,3-2
@@ -1145,7 +1145,7 @@ date,home_team,away_team,score
 2026-09-13,Partizan,Vojvodina NS,2-3
 2026-09-13,Penarol,Albion FC,3-1
 2026-09-13,Pogon Szczecin,Wieczysta Krakow,2-0
-2026-09-13,Portuguesa FC,Estudiantes de Merida,
+2026-09-13,Portuguesa FC,Estudiantes de Merida,NOT PLAYED
 2026-09-13,Progreso,Cerro,1-3
 2026-09-13,Rayo Zuliano,Portuguesa FC,1-1
 2026-09-13,Real Salt Lake,New York City,0-2
@@ -1161,7 +1161,7 @@ date,home_team,away_team,score
 2026-09-13,Talleres de Cordoba,Union Santa Fe,2-1
 2026-09-13,Tenerife,Leganes,2-0
 2026-09-13,Terek Grozny,Dynamo Makhachkala,3-2
-2026-09-13,Trujillanos,Rayo Zuliano,
+2026-09-13,Trujillanos,Rayo Zuliano,NOT PLAYED
 2026-09-13,Urawa Red Diamonds,Fagiano Okayama,1-2
 2026-09-13,Vancouver W,Austin FC,1-2
 2026-09-13,Vegalta Sendai,Consadole Sapporo,1-1
@@ -1195,7 +1195,7 @@ date,home_team,away_team,score
 2026-09-15,Bahia,Remo,2-1
 2026-09-15,Barry Town,Ammanford,2-2
 2026-09-15,Boness Utd,Lochee Utd,0-5
-2026-09-15,Burgess Hill,Dulwich H,
+2026-09-15,Burgess Hill,Dulwich H,NOT PLAYED
 2026-09-15,Cray W,St Albans,3-3
 2026-09-15,Enfield T,Dartford,0-2
 2026-09-15,Falkirk,Hearts,2-1
@@ -1281,12 +1281,12 @@ date,home_team,away_team,score
 2026-11-01,Amedspor,Eyupspor,5-1
 2026-11-01,Arouca,CD Nacional,1-0
 2026-11-01,Ath Bilbao,Sociedad,2-1
-2026-11-01,Atlanta U,Toronto FC,
-2026-11-01,Atletico Grau,Universitario de Deportes,
+2026-11-01,Atlanta U,Toronto FC,3-1
+2026-11-01,Atletico Grau,Universitario de Deportes,1-3
 2026-11-01,Aus. Vienna,Rapid Vienna,0-2
 2026-11-01,Baltika,Akron,2-1
 2026-11-01,Basaksehir,Samsunspor,5-2
-2026-11-01,Belgrano,Barracas Central,
+2026-11-01,Belgrano,Barracas Central,2-2
 2026-11-01,Boca Juniors,River Plate,1-0
 2026-11-01,Brann,Molde,3-2
 2026-11-01,Brondby,Aarhus,2-0
@@ -1297,8 +1297,8 @@ date,home_team,away_team,score
 2026-11-01,Colorado,Chicago,2-4
 2026-11-01,Como,Venezia,1-0
 2026-11-01,Cusco,Sport Boys,0-1
-2026-11-01,Danubio,Nacional Montevideo,
-2026-11-01,Deportivo Cali,Boyaca Chico,
+2026-11-01,Danubio,Nacional Montevideo,1-2
+2026-11-01,Deportivo Cali,Boyaca Chico,2-0
 2026-11-01,Din. Bucharest,UT Arad,2-0
 2026-11-01,Djurgaarden,Degerfors,2-1
 2026-11-01,Eldense,Granada,0-2
@@ -1314,13 +1314,13 @@ date,home_team,away_team,score
 2026-11-01,Gimhae City,Cheonan City,3-3
 2026-11-01,Greuther Furth,Holstein Kiel,1-0
 2026-11-01,Guadalajara,Atlante,4-2
-2026-11-01,Guayaquil City,Libertad Ecu,
+2026-11-01,Guayaquil City,Libertad Ecu,0-0
 2026-11-01,Hacken,IFK Goth'burg,1-0
 2026-11-01,Hannover,Dyn Dresden,2-1
 2026-11-01,Hearts,Hibernian,1-2
 2026-11-01,Huachipato,La Serena,0-0
 2026-11-01,IK Start,Lillestrom,0-1
-2026-11-01,Independiente M,Alianza Petrolera,
+2026-11-01,Independiente M,Alianza Petrolera,2-1
 2026-11-01,Independiente d V,LDU Quito,2-0
 2026-11-01,Isloch Minsk,Slavia Mozyr,3-1
 2026-11-01,JEF United,Avispa Fukuoka,3-0
@@ -1328,7 +1328,7 @@ date,home_team,away_team,score
 2026-11-01,Juventus,Napoli,2-0
 2026-11-01,KFUM Oslo,HamKam,2-2
 2026-11-01,Kasimpasa,Besiktas,2-2
-2026-11-01,Lanus,Gimnasia de Mendoza,
+2026-11-01,Lanus,Gimnasia de Mendoza,1-1
 2026-11-01,Lausanne,Thun,4-5
 2026-11-01,Lazio,Cagliari,2-1
 2026-11-01,Liverpool,Arsenal,0-1
@@ -1341,8 +1341,8 @@ date,home_team,away_team,score
 2026-11-01,Marseille,Toulouse,2-0
 2026-11-01,Mlada Boleslav,Hradec Kralove,3-1
 2026-11-01,Monterrey,Tijuana,3-3
-2026-11-01,Nashville MLS,NY Red Bulls,
-2026-11-01,Newell's OB,Union Santa Fe,
+2026-11-01,Nashville MLS,NY Red Bulls,3-2
+2026-11-01,Newell's OB,Union Santa Fe,1-1
 2026-11-01,Nordsjaelland,Midtjylland,2-3
 2026-11-01,OB Odense,Silkeborg,4-1
 2026-11-01,OFK Belgrade,Vojvodina NS,0-2
@@ -1350,12 +1350,12 @@ date,home_team,away_team,score
 2026-11-01,PEC Zwolle,Den Haag,1-0
 2026-11-01,Panathinaikos,AEK Athens,2-0
 2026-11-01,Partizan,Zemun,3-0
-2026-11-01,Progreso,Defensor,
+2026-11-01,Progreso,Defensor,0-2
 2026-11-01,Puskas FA FC,Debrecen,1-3
 2026-11-01,RB Salzburg,Austria Lustenau,5-1
 2026-11-01,Racing,Real Madrid,0-3
 2026-11-01,Rijeka,NK Varazdin,1-1
-2026-11-01,Santos Laguna,Necaxa,
+2026-11-01,Santos Laguna,Necaxa,1-0
 2026-11-01,Sarpsborg,Kristiansund,2-4
 2026-11-01,St Pauli,Nuremberg,1-3
 2026-11-01,St. Truiden,O-H Leuven,1-2
@@ -1370,7 +1370,7 @@ date,home_team,away_team,score
 2026-11-01,Universidad Catolica,Aucas,1-2
 2026-11-01,V-Varen Nagasaki,Tokyo Verdy,1-2
 2026-11-01,Valerenga,Tromso,4-0
-2026-11-01,Vancouver W,Seattle,
+2026-11-01,Vancouver W,Seattle,5-1
 2026-11-01,Varbergs Bois,Ljungskile,2-2
 2026-11-01,Viborg,AC Horsens,1-0
 2026-11-01,Wolfsberger,Sturm Graz,1-1
