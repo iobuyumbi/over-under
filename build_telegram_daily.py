@@ -9,7 +9,9 @@ Two messages are produced:
   side within the market (Over vs Under, BTTS Yes vs No, home vs away goal),
   then grouped by confidence level, all rendered as monospace tables, with a
   yesterday results table split the same way (per-market-side W-L-P and win
-  rate) prepended when the caller supplies the breakdown.
+  rate) prepended when the caller supplies the breakdown, followed by a
+  per-pick list showing each pick's actual result and score when the caller
+  supplies the detail rows.
 """
 
 import argparse
@@ -280,7 +282,36 @@ def _render_results_block(rows):
     return lines
 
 
-def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body, results=None):
+def _render_results_detail(rows):
+    """One line per pick: market side, match, result and final score.
+
+    The summary table above says *how many* won; this says *which* picks and
+    with what score.  Emoji stay out of the rows (only the block headers use
+    them) so the fixed-width table stays aligned; the result is spelled out
+    instead.  Rows arrive grouped by market side, matching the summary.
+    """
+    if not rows:
+        return []
+
+    headers = ["Market / Side", "Match", "Result", "Score"]
+    caps = [14, 30, 10, 6]
+    words = {"win": "Win", "loss": "Loss", "push": "Push", "pending": "Pending"}
+    table = [
+        [
+            row["label"],
+            row["match"],
+            words.get(row["result"], row["result"]),
+            row["score"],
+        ]
+        for row in rows
+    ]
+    lines = _render_table(table, headers, caps)
+    lines.append("")
+    return lines
+
+
+def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body, results=None,
+                    details=None):
     """Every fixture, split by market, then by side, then by confidence level.
 
     Markets are never blended, and neither are the sides inside a market:
@@ -291,6 +322,10 @@ def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body, results=None):
     ``prediction_tracker.get_yesterday_market_breakdown()``) to prepend a
     yesterday block that splits the record the same way; when omitted the
     board is today's picks only.
+
+    Pass ``details`` (the ``(yesterday_date, rows)`` tuple from
+    ``prediction_tracker.get_yesterday_pick_results()``) to add a per-pick
+    list under the summary table showing each pick's actual result and score.
     """
     picks = []
     picks += parse_telegram_section(ou_body, "Over/Under 2.5")
@@ -319,6 +354,14 @@ def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body, results=None):
         lines.append(f"📊 YESTERDAY · {results_date}")
         lines.append("═══════════════════════════")
         lines.extend(_render_results_block(results_rows))
+
+    if details is not None:
+        details_date, detail_rows = details
+        if detail_rows:
+            lines.append("═══════════════════════════")
+            lines.append(f"📋 YESTERDAY PICKS · {details_date}")
+            lines.append("═══════════════════════════")
+            lines.extend(_render_results_detail(detail_rows))
 
     # The pick itself is dropped from the table: the market, side and
     # confidence headers already state it, so the columns stay narrow.

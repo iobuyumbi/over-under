@@ -35,7 +35,10 @@ from build_telegram_daily import (
     read_telegram_section,
     split_pre_chunks,
 )
-from prediction_tracker import get_yesterday_market_breakdown
+from prediction_tracker import (
+    get_yesterday_market_breakdown,
+    get_yesterday_pick_results,
+)
 
 # Local credentials live in .env (which is ignored by Git). override=True makes
 # .env authoritative, so a stale TELEGRAM_* variable left in the shell or in the
@@ -148,6 +151,7 @@ def main():
         vip_msg = build_vip_board(
             DATE, ou_body, btts_body, hw_body, oo05_body,
             results=get_yesterday_market_breakdown(),
+            details=get_yesterday_pick_results(),
         )
         ok = _send(TOKEN, VIP, vip_msg, "VIP", as_pre=True) and ok
 

@@ -1467,6 +1467,59 @@ def get_yesterday_market_breakdown():
     return yesterday, rows
 
 
+def get_yesterday_pick_results():
+    """Yesterday's individual picks with their final score, for the VIP board.
+
+    Companion to get_yesterday_market_breakdown(): the same date window,
+    dedupe keys and overdue/stale rules, but one row per pick instead of one
+    row per market side, so the VIP board can show the actual results under
+    its summary table.  Rows are grouped by VIP_RESULT_GROUPS so the detail
+    lines up with the summary above it.  Each row is a dict with ``label``
+    (the market side), ``match``, ``result`` and ``score``.
+    """
+    history = load_history()
+    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+    by_label = {label: [] for label in VIP_RESULT_GROUPS}
+
+    def add(pick, label):
+        result = resolve_pick_result(pick)
+        home = pick.get("home_team", pick.get("home"))
+        away = pick.get("away_team", pick.get("away"))
+        if result in SETTLED_RESULTS:
+            by_label[label].append({
+                "label": label,
+                "match": f"{home} vs {away}",
+                "result": result,
+                "score": str(pick.get("final_score") or "-"),
+            })
+        elif (pick.get("result") == "pending" and pick_is_overdue(pick)
+              and not pick_is_stale_pending(pick)):
+            by_label[label].append({
+                "label": label,
+                "match": f"{home} vs {away}",
+                "result": "pending",
+                "score": "-",
+            })
+
+    def collect(section, key_fn, label_fn):
+        picks = [
+            pick for pick in history.get(section, [])
+            if str(pick.get("date", ""))[:10] == yesterday
+        ]
+        for pick in dedupe_predictions(picks, key_fn):
+            add(pick, label_fn(pick))
+
+    collect("over_under", over_under_key, ou_side_label)
+    collect("btts", btts_key, btts_side_label)
+    collect("home_win", home_win_key, lambda pick: "Home Win")
+    collect("oo05", oo05_key, oo05_side_label)
+
+    rows = []
+    for label in VIP_RESULT_GROUPS:
+        rows.extend(by_label[label])
+    return yesterday, rows
+
+
 def append_yesterday_section(lines, prediction_type, detailed=False):
     """Add a spaced yesterday block before today's picks."""
     yesterday_date, yesterday_results, yesterday_summary = get_yesterday_results(

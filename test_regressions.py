@@ -222,6 +222,53 @@ class TelegramTests(unittest.TestCase):
         self.assertIn("📊 YESTERDAY · 2026-09-10", board)
         self.assertIn("no settled picks yesterday", board)
 
+    def test_vip_board_lists_each_pick_with_its_actual_result_and_score(self):
+        rows = [
+            {"label": "Over 2.5", "wins": 1, "losses": 1, "pushes": 0,
+             "pending": 1, "win_rate": 50.0},
+        ]
+        detail = [
+            {"label": "Over 2.5", "match": "Alpha vs Beta",
+             "result": "win", "score": "3-1"},
+            {"label": "Over 2.5", "match": "Gamma vs Delta",
+             "result": "loss", "score": "0-0"},
+            {"label": "Home to Score", "match": "Epsilon vs Zeta",
+             "result": "pending", "score": "-"},
+        ]
+        board = build_telegram_daily.build_vip_board(
+            "2026-09-11", "", "", "", "",
+            results=("2026-09-10", rows),
+            details=("2026-09-10", detail),
+        )
+
+        self.assertIn("📋 YESTERDAY PICKS · 2026-09-10", board)
+        # The per-pick list sits under the summary table and before today.
+        self.assertLess(board.index("📊 YESTERDAY"), board.index("📋 YESTERDAY PICKS"))
+        self.assertLess(board.index("📋 YESTERDAY PICKS"), board.index("⚽️ OVER / UNDER 2.5"))
+        # Both wins and losses surface, each with its final score.
+        self.assertIn("Win", board)
+        self.assertIn("Loss", board)
+        self.assertIn("Pending", board)
+        self.assertIn("3-1", board)
+        self.assertIn("0-0", board)
+        # Every pick keeps its own market-side label.
+        win_row = [line for line in board.split("\n") if "Alpha vs Beta" in line][0]
+        self.assertIn("Over 2.5", win_row)
+        self.assertIn("Win", win_row)
+        self.assertIn("3-1", win_row)
+        loss_row = [line for line in board.split("\n") if "Gamma vs Delta" in line][0]
+        self.assertIn("Loss", loss_row)
+        self.assertIn("0-0", loss_row)
+
+    def test_vip_board_omits_the_per_pick_list_when_yesterday_had_none(self):
+        board = build_telegram_daily.build_vip_board(
+            "2026-09-11", "", "", "", "",
+            results=("2026-09-10", []),
+            details=("2026-09-10", []),
+        )
+        self.assertIn("no settled picks yesterday", board)
+        self.assertNotIn("📋 YESTERDAY PICKS", board)
+
 
 class YesterdayBreakdownTests(unittest.TestCase):
     def test_breakdown_splits_sides_and_keeps_voids_out_of_the_win_rate(self):
