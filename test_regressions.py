@@ -325,6 +325,57 @@ class YesterdayBreakdownTests(unittest.TestCase):
         self.assertNotIn("Home to Score", by_label)
         self.assertNotIn("BTTS Yes", by_label)
 
+    def test_breakdown_splits_each_side_by_confidence_tier(self):
+        yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+        history = {
+            "over_under": [
+                {"date": yesterday, "home_team": "A", "away_team": "B",
+                 "prediction": "over", "confidence": "perfect",
+                 "result": "win", "final_score": "3-1"},
+                {"date": yesterday, "home_team": "C", "away_team": "D",
+                 "prediction": "over", "confidence": "qualified",
+                 "result": "loss", "final_score": "0-0"},
+                {"date": yesterday, "home_team": "E", "away_team": "F",
+                 "prediction": "over", "confidence": "qualified",
+                 "result": "win", "final_score": "4-1"},
+            ],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            old_cwd = os.getcwd()
+            try:
+                os.chdir(directory)
+                with open("history.json", "w", encoding="utf-8") as file:
+                    json.dump(history, file)
+                with patch.object(prediction_tracker, "HISTORY_FILE", "history.json"):
+                    _, rows = prediction_tracker.get_yesterday_market_breakdown()
+            finally:
+                os.chdir(old_cwd)
+
+        # perfect/qualified collapse onto the Premium/Solid VIP tiers.
+        by_tier = {row["tier"]: row for row in rows}
+        self.assertEqual(sorted(by_tier), ["Premium", "Solid"])
+        self.assertTrue(all(row["label"] == "Over 2.5" for row in rows))
+        self.assertEqual(by_tier["Premium"]["wins"], 1)
+        self.assertEqual(by_tier["Solid"]["wins"], 1)
+        self.assertEqual(by_tier["Solid"]["losses"], 1)
+        self.assertEqual(by_tier["Solid"]["win_rate"], 50.0)
+
+    def test_results_block_shows_a_tier_row_per_side_with_a_subtotal(self):
+        rows = [
+            {"label": "Over 2.5", "tier": "Premium", "wins": 1, "losses": 0,
+             "pushes": 0, "pending": 0, "win_rate": 100.0},
+            {"label": "Over 2.5", "tier": "Solid", "wins": 3, "losses": 1,
+             "pushes": 0, "pending": 2, "win_rate": 75.0},
+        ]
+        block = "\n".join(build_telegram_daily._render_results_block(rows))
+        self.assertIn("Premium", block)
+        self.assertIn("Solid", block)
+        # A side spanning two tiers gets an ALL subtotal summing both.
+        subtotal = [line for line in block.split("\n") if "ALL" in line][0]
+        self.assertIn("80.0%", subtotal)  # 4/(4+1)
+        total = [line for line in block.split("\n") if line.startswith("TOTAL")][0]
+        self.assertIn("80.0%", total)
+
 
 class WeeklyReportSplitTests(unittest.TestCase):
     def test_negative_sides_are_tracked_separately_in_the_readme_report(self):

@@ -1392,6 +1392,22 @@ VIP_RESULT_GROUPS = (
     "Away to Score",
 )
 
+# Confidence tiers, strongest first, mirroring the VIP board's tip grouping.
+VIP_RESULT_TIERS = ("Premium", "Solid", "Watchlist")
+
+# Stored pick confidences are engine-specific (perfect/qualified/close) while
+# a few engines write HIGH/MEDIUM/LOW; both collapse onto the three VIP tiers.
+_TIER_BY_CONFIDENCE = {
+    "perfect": "Premium", "premium": "Premium", "high": "Premium",
+    "qualified": "Solid", "solid": "Solid", "medium": "Solid",
+    "close": "Watchlist", "watchlist": "Watchlist", "low": "Watchlist",
+}
+
+
+def tier_for_confidence(confidence):
+    """Normalise a stored pick confidence to its VIP tier name."""
+    return _TIER_BY_CONFIDENCE.get(str(confidence or "").strip().lower(), "Solid")
+
 
 def ou_side_label(pick):
     """'Over 2.5' or 'Under 2.5' for an over/under pick."""
@@ -1412,24 +1428,28 @@ def oo05_side_label(pick):
 
 
 def get_yesterday_market_breakdown():
-    """Yesterday's record per market side, for the VIP board results block.
+    """Yesterday's record per market side and confidence tier, for the VIP board.
 
     Uses the same date window, dedupe keys and overdue/stale rules as
     get_yesterday_results() so the free-channel block and the VIP block can
     never disagree.  Returns ``(yesterday_date, rows)``; each row is a dict
-    with ``label``/``wins``/``losses``/``pushes``/``pending``/``win_rate``.
-    Sides with no activity are omitted, and ``win_rate`` is None (rendered as
-    a dash) when nothing was decided so pushes never inflate the percentage.
+    with ``label`` (the market side), ``tier`` (Premium/Solid/Watchlist),
+    ``wins``/``losses``/``pushes``/``pending`` and ``win_rate``.  Rows are
+    ordered by side, then tier (strongest first) so the caller can group them
+    by side with a simple scan.  Buckets with no activity are omitted, and
+    ``win_rate`` is None (rendered as a dash) when nothing was decided so
+    pushes never inflate the percentage.
     """
     history = load_history()
     yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
-    buckets = {
-        label: {"label": label, "wins": 0, "losses": 0, "pushes": 0, "pending": 0}
-        for label in VIP_RESULT_GROUPS
-    }
+    buckets = {}
 
     def tally(pick, label):
-        bucket = buckets[label]
+        key = (label, tier_for_confidence(pick.get("confidence")))
+        bucket = buckets.setdefault(key, {
+            "label": label, "tier": key[1],
+            "wins": 0, "losses": 0, "pushes": 0, "pending": 0,
+        })
         result = resolve_pick_result(pick)
         if result in SETTLED_RESULTS:
             if result == "win":
@@ -1457,13 +1477,16 @@ def get_yesterday_market_breakdown():
 
     rows = []
     for label in VIP_RESULT_GROUPS:
-        bucket = buckets[label]
-        if not any(bucket[k] for k in ("wins", "losses", "pushes", "pending")):
-            continue
-        decided = bucket["wins"] + bucket["losses"]
-        row = dict(bucket)
-        row["win_rate"] = (100.0 * bucket["wins"] / decided) if decided else None
-        rows.append(row)
+        for tier in VIP_RESULT_TIERS:
+            bucket = buckets.get((label, tier))
+            if not bucket:
+                continue
+            if not any(bucket[k] for k in ("wins", "losses", "pushes", "pending")):
+                continue
+            decided = bucket["wins"] + bucket["losses"]
+            row = dict(bucket)
+            row["win_rate"] = (100.0 * bucket["wins"] / decided) if decided else None
+            rows.append(row)
     return yesterday, rows
 
 

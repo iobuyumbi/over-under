@@ -8,10 +8,10 @@ Two messages are produced:
 * the VIP board (``build_vip_board``) -- every fixture, split by market, then by
   side within the market (Over vs Under, BTTS Yes vs No, home vs away goal),
   then grouped by confidence level, all rendered as monospace tables, with a
-  yesterday results table split the same way (per-market-side W-L-P and win
-  rate) prepended when the caller supplies the breakdown, followed by a
-  per-pick list showing each pick's actual result and score when the caller
-  supplies the detail rows.
+  yesterday results table split the same way (per-market-side AND per-tier
+  W-L-P and win rate) prepended when the caller supplies the breakdown,
+  followed by a per-pick list showing each pick's actual result and score
+  when the caller supplies the detail rows.
 """
 
 import argparse
@@ -237,43 +237,61 @@ def _render_conf_groups(subset, headers, caps):
     return lines
 
 
-def _render_results_block(rows):
-    """Yesterday's record per market side, as a monospace table.
+def _format_win_rate(wins, losses):
+    decided = wins + losses
+    return "-" if not decided else f"{100.0 * wins / decided:.1f}%"
 
-    Emoji stay out of the rows (only the block header uses them): an emoji
-    occupies two display columns but counts as one character, which would
-    break the alignment of the fixed-width table.
+
+def _render_results_block(rows):
+    """Yesterday's record per market side AND confidence tier.
+
+    Each side is broken down by tier (Premium/Solid/Watchlist) so the results
+    read the same way the tips are grouped, with an ALL subtotal whenever a
+    side spans more than one tier.  Emoji stay out of the rows (only the block
+    header uses them): an emoji occupies two display columns but counts as one
+    character, which would break the alignment of the fixed-width table.
     """
     if not rows:
         return ["— no settled picks yesterday", ""]
 
-    headers = ["Market / Side", "W", "L", "P", "Pend", "Win%"]
-    caps = [16, 3, 3, 3, 4, 6]
-    table = [
-        [
-            row["label"],
-            str(row["wins"]),
-            str(row["losses"]),
-            str(row["pushes"]),
-            str(row["pending"]),
-            "-" if row["win_rate"] is None else f"{row['win_rate']:.1f}%",
-        ]
-        for row in rows
-    ]
+    headers = ["Market / Side", "Tier", "W", "L", "P", "Pend", "Win%"]
+    caps = [14, 9, 3, 3, 3, 4, 6]
 
-    wins = sum(r["wins"] for r in rows)
-    losses = sum(r["losses"] for r in rows)
-    pushes = sum(r["pushes"] for r in rows)
-    pending = sum(r["pending"] for r in rows)
-    decided = wins + losses
-    table.append([
-        "TOTAL",
-        str(wins),
-        str(losses),
-        str(pushes),
-        str(pending),
-        "-" if not decided else f"{100.0 * wins / decided:.1f}%",
-    ])
+    def cells(label, tier, wins, losses, pushes, pending):
+        return [
+            label, tier, str(wins), str(losses), str(pushes), str(pending),
+            _format_win_rate(wins, losses),
+        ]
+
+    table = []
+    total = [0, 0, 0, 0]  # wins, losses, pushes, pending
+    index = 0
+    while index < len(rows):
+        label = rows[index]["label"]
+        group = []
+        while index < len(rows) and rows[index]["label"] == label:
+            group.append(rows[index])
+            index += 1
+        for row in group:
+            table.append(cells(
+                label, row.get("tier", ""),
+                row["wins"], row["losses"], row["pushes"], row["pending"],
+            ))
+        if len(group) > 1:
+            w = sum(r["wins"] for r in group)
+            l = sum(r["losses"] for r in group)
+            p = sum(r["pushes"] for r in group)
+            pending = sum(r["pending"] for r in group)
+            table.append(cells(label, "ALL", w, l, p, pending))
+        else:
+            w, l = group[0]["wins"], group[0]["losses"]
+            p, pending = group[0]["pushes"], group[0]["pending"]
+        total[0] += w
+        total[1] += l
+        total[2] += p
+        total[3] += pending
+
+    table.append(cells("TOTAL", "", total[0], total[1], total[2], total[3]))
 
     lines = _render_table(table, headers, caps)
     lines.append("")
@@ -320,8 +338,8 @@ def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body, results=None,
 
     Pass ``results`` (the ``(yesterday_date, rows)`` tuple from
     ``prediction_tracker.get_yesterday_market_breakdown()``) to prepend a
-    yesterday block that splits the record the same way; when omitted the
-    board is today's picks only.
+    yesterday block that splits the record the same way -- by side, then by
+    confidence tier; when omitted the board is today's picks only.
 
     Pass ``details`` (the ``(yesterday_date, rows)`` tuple from
     ``prediction_tracker.get_yesterday_pick_results()``) to add a per-pick
