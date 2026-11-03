@@ -4,6 +4,140 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-03 -->
+## Daily Picks — 2026-11-03
+
+### Over/Under 2.5  (20)
+  ✅ Galatasaray vs Stuttgart (European Cup) — Over 2.5 · High 67.0%
+  ✅ LASK Linz vs S. Bratislava (European Cup) — Over 2.5 · High 79.5%
+  ✅ Feyenoord vs Inter (European Cup) — Over 2.5 · High 64.1%
+  ✅ Portsmouth vs Swansea (Football League Championship) — Over 2.5 · High 66.6%
+  ✅ QPR vs Burnley (Football League Championship) — Over 2.5 · High 75.9%
+  ✅ Huddersfield vs Luton (Football League One) — Over 2.5 · High 74.2%
+  ✅ Wigan vs Mansfield (Football League One) — Over 2.5 · High 70.9%
+  ✅ Newport Co vs C Palace U (Football League Trophy) — Over 2.5 · High 71.6%
+  ✅ Rotherham vs N'castle U (Football League Trophy) — Over 2.5 · High 76.0%
+  ✅ Rochdale vs Doncaster (Football League Trophy) — Over 2.5 · High 75.7%
+  ✅ Cambridge U vs Brighton U (Football League Trophy) — Over 2.5 · High 86.0%
+  ✅ Ross County vs Celtic II (Scottish League Challenge Cup) — Over 2.5 · High 90.2%
+  ✅ East Kilbride vs Stirling (Scottish League Challenge Cup) — Over 2.5 · High 71.1%
+  ✅ Wingate & F vs Burgess Hill (Ryman Premier) — Over 2.5 · High 82.6%
+  ✅ Lewes vs Dartford (Ryman Premier) — Over 2.5 · High 64.3%
+  ✅ Bracknell vs Chertsey Town (Southern League Premier) — Over 2.5 · High 69.7%
+  ✅ Guiseley vs Leek (Unibond Premier) — Over 2.5 · High 82.6%
+  ✅ Independiente Rivadavia vs Banfield (Unibond Premier) — Over 2.5 · High 66.0%
+  ✅ Ventforet Kofu vs Albirex Niigata (Japanese J2 League) — Over 2.5 · High 61.2%
+  ✅ Omiya Ardija vs Iwaki (Japanese J2 League) — Over 2.5 · High 67.9%
+
+### BTTS  (4)
+  ✅ Feyenoord vs Inter (European Cup) — BTTS Yes · High 65.3%
+  ✅ Rotherham vs N'castle U (Football League Trophy) — BTTS Yes · High 70.8%
+  ✅ Bracknell vs Chertsey Town (Southern League Premier) — BTTS Yes · High 64.2%
+  ✅ Guiseley vs Leek (Unibond Premier) — BTTS Yes · High 80.0%
+
+### Home Win  (7)
+  👀 QPR vs Burnley (Football League Championship) — Home Win · High 77.8%
+  👀 Dorking W vs Hampton & R (Football Conference South) — Home Win · High 84.6%
+  👀 Wingate & F vs Burgess Hill (Ryman Premier) — Home Win · High 82.7%
+  👀 Eastbourne vs Stanway (Ryman Premier) — Home Win · High 88.3%
+  👀 Curzon A vs FC Utd (Unibond Premier) — Home Win · High 93.3%
+  👀 Guiseley vs Leek (Unibond Premier) — Home Win · High 84.4%
+  👀 Nacional As vs Sp. San Lorenzo (Japanese J2 League) — Home Win · High 84.4%
+
+### Team Goals Over 0.5  (91)
+  🔥 Inverness CT vs Montrose (Scottish League Challenge Cup) — Home to Score · Medium 75.1%
+  🔥 IK Sirius vs Halmstads (Swedish Allsvenskan) — Home to Score · High 79.0%
+  🔥 Eastbourne vs Stanway (Ryman Premier) — Home to Score · High 95.6%
+  🔥 Poole Town vs Hanwell Town (Southern League Premier) — Home to Score · High 81.0%
+  🔥 Curzon A vs FC Utd (Unibond Premier) — Home to Score · High 85.8%
+  🔥 Atletico Bucaramanga vs Atletico Nacional (Unibond Premier) — Home to Score · High 78.3%
+  🔥 Shonan Bellmare vs Sagan Tosu (Japanese J2 League) — Home to Score · Medium 77.0%
+  🔥 Yokohama FC vs Blaublitz Akita (Japanese J2 League) — Home to Score · High 83.1%
+  🔥 Chapecoense vs Mirassol (Brazilian Serie A) — Home to Score · Medium 75.1%
+  ✅ LASK Linz vs S. Bratislava (European Cup) — Home to Score · High 82.6%
+  ✅ Feyenoord vs Inter (European Cup) — Home to Score · High 85.0%
+  ✅ Atl Madrid vs B Munich (European Cup) — Home to Score · High 82.3%
+  ✅ Barcelona vs Aston Villa (European Cup) — Home to Score · High 94.4%
+  ✅ QPR vs Burnley (Football League Championship) — Home to Score · High 93.6%
+  ✅ Blackburn vs Stoke (Football League Championship) — Home to Score · Medium 77.9%
+  ✅ Watford vs Lincoln (Football League Championship) — Home to Score · Medium 75.3%
+  ✅ Birmingham vs Millwall (Football League Championship) — Home to Score · High 90.0%
+  ✅ West Brom vs Southampton (Football League Championship) — Home to Score · Medium 75.3%
+  ✅ Huddersfield vs Luton (Football League One) — Home to Score · High 89.9%
+  ✅ Newport Co vs C Palace U (Football League Trophy) — Home to Score · High 86.5%
+  ✅ Rotherham vs N'castle U (Football League Trophy) — Home to Score · High 81.7%
+  ✅ Rochdale vs Doncaster (Football League Trophy) — Home to Score · High 87.3%
+  ✅ Cambridge U vs Brighton U (Football League Trophy) — Home to Score · High 89.7%
+  ✅ Ross County vs Celtic II (Scottish League Challenge Cup) — Home to Score · High 97.0%
+  ✅ Edinburgh C vs Partick (Scottish League Challenge Cup) — Home to Score · Medium 76.1%
+  ✅ Formartine Utd vs Cove Rangers (Scottish League Challenge Cup) — Home to Score · High 83.5%
+  ✅ East Kilbride vs Stirling (Scottish League Challenge Cup) — Home to Score · High 87.4%
+  ✅ Annan vs Ayr (Scottish League Challenge Cup) — Home to Score · Low 67.4%
+  ✅ Arbroath vs Queen of Sth (Scottish League Challenge Cup) — Home to Score · Medium 72.2%
+  ✅ Clydebank vs Alloa (Scottish League Challenge Cup) — Home to Score · High 82.4%
+  ✅ Morton vs Kelty Hearts (Scottish League Challenge Cup) — Home to Score · High 79.6%
+  ✅ Dorking W vs Hampton & R (Football Conference South) — Home to Score · High 88.5%
+  ✅ Wingate & F vs Burgess Hill (Ryman Premier) — Home to Score · High 93.1%
+  ✅ Brentwood T vs Leatherhead (Ryman Premier) — Home to Score · High 86.9%
+  ✅ Chippenham vs Evesham (Southern League Premier) — Home to Score · High 79.0%
+  ✅ Bracknell vs Chertsey Town (Southern League Premier) — Home to Score · Medium 75.3%
+  ✅ AFC Emley vs Bamber Br. (Unibond Premier) — Home to Score · High 79.2%
+  ✅ Ashton Utd vs Warrington (Unibond Premier) — Home to Score · Medium 71.3%
+  ✅ Bury vs Avro (Unibond Premier) — Home to Score · High 90.1%
+  ✅ Guiseley vs Leek (Unibond Premier) — Home to Score · High 92.9%
+  ✅ Independiente Rivadavia vs Banfield (Unibond Premier) — Home to Score · High 83.5%
+  ✅ Omiya Ardija vs Iwaki (Japanese J2 League) — Home to Score · High 81.0%
+  ✅ Oita Trinita vs Vanraure Hachinohe (Japanese J2 League) — Home to Score · High 85.5%
+  ✅ Tegevajaro Miyazaki vs Tochigi City (Japanese J2 League) — Home to Score · High 83.1%
+  ✅ Nacional As vs Sp. San Lorenzo (Japanese J2 League) — Home to Score · High 78.6%
+  ✅ Comerciantes Unidos vs ADT (Japanese J2 League) — Home to Score · High 80.4%
+  ✅ Monagas SC vs Caracas (Ecuador Liga Pro) — Home to Score · Low 61.3%
+  ✅ Deportivo Tachira vs Academia Puerto Cabello (Ecuador Liga Pro) — Home to Score · Medium 72.5%
+  🔥 Preston vs Sheff Utd (Football League Championship) — Away to Score · Medium 74.3%
+  🔥 Rotherham vs N'castle U (Football League Trophy) — Away to Score · High 89.0%
+  🔥 Independiente Rivadavia vs Banfield (Unibond Premier) — Away to Score · High 78.8%
+  🔥 Ventforet Kofu vs Albirex Niigata (Japanese J2 League) — Away to Score · High 76.3%
+  🔥 Comerciantes Unidos vs ADT (Japanese J2 League) — Away to Score · Low 59.3%
+  ✅ Bodo Glimt vs Lille (European Cup) — Away to Score · Medium 65.7%
+  ✅ Galatasaray vs Stuttgart (European Cup) — Away to Score · High 86.5%
+  ✅ Villarreal vs PSG (European Cup) — Away to Score · High 88.4%
+  ✅ LASK Linz vs S. Bratislava (European Cup) — Away to Score · High 90.9%
+  ✅ Man Utd vs Roma (European Cup) — Away to Score · High 92.6%
+  ✅ Barcelona vs Aston Villa (European Cup) — Away to Score · Medium 74.8%
+  ✅ Charlton vs Bolton (Football League Championship) — Away to Score · Medium 73.6%
+  ✅ Portsmouth vs Swansea (Football League Championship) — Away to Score · Medium 74.1%
+  ✅ QPR vs Burnley (Football League Championship) — Away to Score · Medium 68.3%
+  ✅ Derby vs Norwich (Football League Championship) — Away to Score · High 80.4%
+  ✅ Blackburn vs Stoke (Football League Championship) — Away to Score · Medium 70.2%
+  ✅ West Brom vs Southampton (Football League Championship) — Away to Score · Medium 73.3%
+  ✅ Huddersfield vs Luton (Football League One) — Away to Score · High 76.1%
+  ✅ Newport Co vs C Palace U (Football League Trophy) — Away to Score · High 79.6%
+  ✅ Rochdale vs Doncaster (Football League Trophy) — Away to Score · High 84.1%
+  ✅ Cambridge U vs Brighton U (Football League Trophy) — Away to Score · High 89.7%
+  ✅ Airdrieonians vs Elgin City (Scottish League Challenge Cup) — Away to Score · Medium 70.5%
+  ✅ Bonnyrigg Rose vs Dunfermline (Scottish League Challenge Cup) — Away to Score · Medium 72.7%
+  ✅ Edinburgh C vs Partick (Scottish League Challenge Cup) — Away to Score · High 76.5%
+  ✅ East Kilbride vs Stirling (Scottish League Challenge Cup) — Away to Score · High 78.8%
+  ✅ Arbroath vs Queen of Sth (Scottish League Challenge Cup) — Away to Score · Low 64.7%
+  ✅ Morton vs Kelty Hearts (Scottish League Challenge Cup) — Away to Score · High 75.3%
+  ✅ Farnborough vs Ebbsfleet (Football Conference South) — Away to Score · High 85.8%
+  ✅ Brentwood T vs Leatherhead (Ryman Premier) — Away to Score · High 86.9%
+  ✅ Bracknell vs Chertsey Town (Southern League Premier) — Away to Score · High 87.6%
+  ✅ AFC Emley vs Bamber Br. (Unibond Premier) — Away to Score · High 75.1%
+  ✅ Ashton Utd vs Warrington (Unibond Premier) — Away to Score · High 77.0%
+  ✅ Guiseley vs Leek (Unibond Premier) — Away to Score · High 81.5%
+  ✅ Atletico Bucaramanga vs Atletico Nacional (Unibond Premier) — Away to Score · High 77.0%
+  ✅ Kataller Toyama vs Vegalta Sendai (Japanese J2 League) — Away to Score · High 79.2%
+  ✅ Montedio Yamagata vs Tokushima Vortis (Japanese J2 League) — Away to Score · Medium 73.0%
+  ✅ Omiya Ardija vs Iwaki (Japanese J2 League) — Away to Score · High 83.1%
+  ✅ Fujieda MYFC vs Jubilo Iwata (Japanese J2 League) — Away to Score · Low 59.3%
+  ✅ Oita Trinita vs Vanraure Hachinohe (Japanese J2 League) — Away to Score · Low 64.7%
+  ✅ Tegevajaro Miyazaki vs Tochigi City (Japanese J2 League) — Away to Score · Low 64.7%
+  ✅ Imabari vs Consadole Sapporo (Japanese J2 League) — Away to Score · High 83.8%
+  ✅ Monagas SC vs Caracas (Ecuador Liga Pro) — Away to Score · Low 60.9%
+  ✅ Deportivo Tachira vs Academia Puerto Cabello (Ecuador Liga Pro) — Away to Score · Low 59.7%
+
+
 <!-- report: weekly 2026-11-02 -->
 ## Weekly Report — 2026-11-02
 

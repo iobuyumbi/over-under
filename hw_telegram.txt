@@ -1,21 +1,54 @@
-📅 Picks for 2026-11-02
+📅 Picks for 2026-11-03
 
 
   👀 Watchlist
 
 
-  1. Karpaty Lvov vs Kudrivka
-     Date: 2026-11-02
-     League: Ukrainian League
-     Pick: Home Win · Medium confidence (68.9%)
+  1. QPR vs Burnley
+     Date: 2026-11-03
+     League: Football League Championship
+     Pick: Home Win · High confidence (77.5%)
      Category:
        • Tier: 👀 Watchlist
 
-  2. Sporting Cristal vs Cajamarca
-     Date: 2026-11-02
-     League: Mexican Primera Apertura
-     Pick: Home Win · High confidence (89.9%)
+  2. Dorking W vs Hampton & R
+     Date: 2026-11-03
+     League: Football Conference South
+     Pick: Home Win · High confidence (84.3%)
      Category:
        • Tier: 👀 Watchlist
-       • League type: weak-ROI region (extra model caution)
-       • Auto-flag: weak ROI history on this market
+
+  3. Wingate & F vs Burgess Hill
+     Date: 2026-11-03
+     League: Ryman Premier
+     Pick: Home Win · High confidence (82.7%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  4. Eastbourne vs Stanway
+     Date: 2026-11-03
+     League: Ryman Premier
+     Pick: Home Win · High confidence (88.3%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  5. Curzon A vs FC Utd
+     Date: 2026-11-03
+     League: Unibond Premier
+     Pick: Home Win · High confidence (93.1%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  6. Guiseley vs Leek
+     Date: 2026-11-03
+     League: Unibond Premier
+     Pick: Home Win · High confidence (84.1%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  7. Nacional As vs Sp. San Lorenzo
+     Date: 2026-11-03
+     League: Japanese J2 League
+     Pick: Home Win · High confidence (84.1%)
+     Category:
+       • Tier: 👀 Watchlist

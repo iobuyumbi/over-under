@@ -1,4 +1,4 @@
-📅 Picks for 2026-11-02
+📅 Picks for 2026-11-03
 
 
 🟢 Over 2.5 goals
@@ -6,109 +6,144 @@
   ✅ Solid picks
 
 
-  1. Sassuolo vs Fiorentina
-     Date: 2026-11-02
-     League: Italian Serie A
-     Pick: Over 2.5 · High confidence (84.2%)
-     Category:
-       • Tier: ✅ Solid
-       • Auto-flag: poor league win rate on this market
-
-  2. Mallorca vs Cadiz
-     Date: 2026-11-02
-     League: Spanish Segunda
-     Pick: Over 2.5 · Medium confidence (52.8%)
+  1. Galatasaray vs Stuttgart
+     Date: 2026-11-03
+     League: European Cup
+     Pick: Over 2.5 · High confidence (67.0%)
      Category:
        • Tier: ✅ Solid
 
-  3. Kryliya Sovetov vs Zenit
-     Date: 2026-11-02
-     League: Russian Premier
-     Pick: Over 2.5 · High confidence (72.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  4. Uni Cluj vs FCSB
-     Date: 2026-11-02
-     League: Romanian Liga 1
-     Pick: Over 2.5 · High confidence (76.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  5. SonderjyskE vs Copenhagen
-     Date: 2026-11-02
-     League: Danish SAS Ligaen
-     Pick: Over 2.5 · High confidence (76.3%)
-     Category:
-       • Tier: ✅ Solid
-       • Auto-flag: poor league win rate on this market
-
-  6. Benfica vs Alverca
-     Date: 2026-11-02
-     League: Portuguese Liga
-     Pick: Over 2.5 · High confidence (71.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  7. Karpaty Lvov vs Kudrivka
-     Date: 2026-11-02
-     League: Ukrainian League
-     Pick: Over 2.5 · High confidence (64.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  8. New England vs Inter Miami CF
-     Date: 2026-11-02
-     League: MLS
-     Pick: Over 2.5 · Medium confidence (53.1%)
-     Category:
-       • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
-
-  9. Aveley vs St Albans
-     Date: 2026-11-02
-     League: Ryman Premier
-     Pick: Over 2.5 · High confidence (80.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  10. Sport Huancayo vs Melgar
-     Date: 2026-11-02
-     League: Mexican Primera Apertura
-     Pick: Over 2.5 · High confidence (61.6%)
-     Category:
-       • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
-
-  11. UTC Cajamarca vs Deportivo Garcilaso
-     Date: 2026-11-02
-     League: Mexican Primera Apertura
-     Pick: Over 2.5 · High confidence (59.7%)
-     Category:
-       • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
-
-  12. Sporting Cristal vs Cajamarca
-     Date: 2026-11-02
-     League: Mexican Primera Apertura
+  2. LASK Linz vs S. Bratislava
+     Date: 2026-11-03
+     League: European Cup
      Pick: Over 2.5 · High confidence (79.5%)
      Category:
        • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
 
-  13. Landskrona BoIS vs Orebro
-     Date: 2026-11-02
-     League: Swedish Superettan
-     Pick: Over 2.5 · High confidence (67.7%)
+  3. Feyenoord vs Inter
+     Date: 2026-11-03
+     League: European Cup
+     Pick: Over 2.5 · High confidence (64.1%)
      Category:
        • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
-       • Auto-flag: weak ROI history on this market
 
-  14. Red Bull Bragantino vs Santos
-     Date: 2026-11-02
-     League: Brazilian Serie A
-     Pick: Over 2.5 · Medium confidence (55.6%)
+  4. Portsmouth vs Swansea
+     Date: 2026-11-03
+     League: Football League Championship
+     Pick: Over 2.5 · High confidence (66.6%)
      Category:
        • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
+
+  5. QPR vs Burnley
+     Date: 2026-11-03
+     League: Football League Championship
+     Pick: Over 2.5 · High confidence (75.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  6. Huddersfield vs Luton
+     Date: 2026-11-03
+     League: Football League One
+     Pick: Over 2.5 · High confidence (74.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  7. Wigan vs Mansfield
+     Date: 2026-11-03
+     League: Football League One
+     Pick: Over 2.5 · High confidence (70.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  8. Newport Co vs C Palace U
+     Date: 2026-11-03
+     League: Football League Trophy
+     Pick: Over 2.5 · High confidence (71.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  9. Rochdale vs Doncaster
+     Date: 2026-11-03
+     League: Football League Trophy
+     Pick: Over 2.5 · High confidence (75.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  10. Rotherham vs N'castle U
+     Date: 2026-11-03
+     League: Football League Trophy
+     Pick: Over 2.5 · High confidence (76.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  11. Cambridge U vs Brighton U
+     Date: 2026-11-03
+     League: Football League Trophy
+     Pick: Over 2.5 · High confidence (86.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  12. Ross County vs Celtic II
+     Date: 2026-11-03
+     League: Scottish League Challenge Cup
+     Pick: Over 2.5 · High confidence (90.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  13. East Kilbride vs Stirling
+     Date: 2026-11-03
+     League: Scottish League Challenge Cup
+     Pick: Over 2.5 · High confidence (71.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  14. Wingate & F vs Burgess Hill
+     Date: 2026-11-03
+     League: Ryman Premier
+     Pick: Over 2.5 · High confidence (82.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  15. Lewes vs Dartford
+     Date: 2026-11-03
+     League: Ryman Premier
+     Pick: Over 2.5 · High confidence (64.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  16. Bracknell vs Chertsey Town
+     Date: 2026-11-03
+     League: Southern League Premier
+     Pick: Over 2.5 · High confidence (69.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  17. Guiseley vs Leek
+     Date: 2026-11-03
+     League: Unibond Premier
+     Pick: Over 2.5 · High confidence (82.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  18. Independiente Rivadavia vs Banfield
+     Date: 2026-11-03
+     League: Unibond Premier
+     Pick: Over 2.5 · High confidence (66.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  19. Ventforet Kofu vs Albirex Niigata
+     Date: 2026-11-03
+     League: Japanese J2 League
+     Pick: Over 2.5 · High confidence (61.2%)
+     Category:
+       • Tier: ✅ Solid
+       • Auto-flag: poor league win rate on this market
+
+  20. Omiya Ardija vs Iwaki
+     Date: 2026-11-03
+     League: Japanese J2 League
+     Pick: Over 2.5 · High confidence (67.9%)
+     Category:
+       • Tier: ✅ Solid
+       • Auto-flag: poor league win rate on this market
