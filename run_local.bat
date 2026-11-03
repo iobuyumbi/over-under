@@ -178,7 +178,7 @@ call :step_curated
 
 if defined SKIP_SEND (
   echo.
-  echo === TELEGRAM SEND (skipped) ===
+  echo === TELEGRAM SEND ^(skipped^) ===
   echo   --no-send: the CI publish-daily job will deliver this board --
 ) else (
   call :step_send
@@ -188,7 +188,7 @@ call :step_consolidate
 
 if defined SKIP_PUSH (
   echo.
-  echo === COMMIT + PUSH (skipped) ===
+  echo === COMMIT + PUSH ^(skipped^) ===
   echo   --no-push: nothing was uploaded --
 ) else (
   call :step_git
@@ -317,7 +317,6 @@ if "%DIRTY%"=="0" (
   exit /b 0
 )
 
-git add -A 2>nul
 git config user.name >nul 2>&1
 if errorlevel 1 git config user.name "Local Run (run_local.bat)"
 git config user.email >nul 2>&1
@@ -330,6 +329,11 @@ if errorlevel 1 (
   echo   Resolve conflicts manually, then commit and push by hand.
   exit /b 0
 )
+
+REM Stage AFTER the pull: --autostash reapplies the stash without restoring the
+REM index, so anything staged before the pull comes back unstaged and the
+REM commit below would find nothing to commit.
+git add -A 2>nul
 
 git commit -m "Local run: predictions, reports, curated picks, results update (%RUN_DATE%)" 2>&1
 if errorlevel 1 (
