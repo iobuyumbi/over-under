@@ -236,6 +236,19 @@ jobs:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
+      - name: Send weekly report to Telegram
+        if: always()
+        run: python send_periodic_telegram.py
+        env:
+          REPORT_FILE: ${{ steps.report.outputs.file }}
+          PERIOD: weekly
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
+
+      # Runs AFTER the send above: consolidate_reports.py archives the dated
+      # report into reports_history.md and then DELETES weekly_report_*.txt, so
+      # sending after it failed with "Report file is empty or unreadable".
       - name: Consolidate + commit weekly report
         continue-on-error: true
         run: |
@@ -255,16 +268,6 @@ jobs:
             git commit -m "Weekly performance report (consolidated report history)"
             git push origin main
           fi
-
-      - name: Send weekly report to Telegram
-        if: always()
-        run: python send_periodic_telegram.py
-        env:
-          REPORT_FILE: ${{ steps.report.outputs.file }}
-          PERIOD: weekly
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
 
   monthly-report:
     runs-on: ubuntu-latest
@@ -305,6 +308,19 @@ jobs:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
 
+      - name: Send monthly report to Telegram
+        if: always()
+        run: python send_periodic_telegram.py
+        env:
+          REPORT_FILE: ${{ steps.report.outputs.file }}
+          PERIOD: monthly
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
+
+      # Runs AFTER the send above: consolidate_reports.py archives the dated
+      # report into reports_history.md and then DELETES monthly_report_*.txt, so
+      # sending after it failed with "Report file is empty or unreadable".
       - name: Consolidate + commit monthly report
         continue-on-error: true
         run: |
@@ -324,13 +340,3 @@ jobs:
             git commit -m "Monthly performance report (consolidated report history)"
             git push origin main
           fi
-
-      - name: Send monthly report to Telegram
-        if: always()
-        run: python send_periodic_telegram.py
-        env:
-          REPORT_FILE: ${{ steps.report.outputs.file }}
-          PERIOD: monthly
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          TELEGRAM_VIP_CHAT_ID: ${{ secrets.TELEGRAM_VIP_CHAT_ID }}
