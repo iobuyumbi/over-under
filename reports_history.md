@@ -4,6 +4,40 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-04 -->
+## Daily Picks — 2026-11-04
+
+### Over/Under 2.5  (2)
+  ✅ Fenerbahce vs Liverpool (European Cup) — Over 2.5 · High 85.6%
+  ✅ Wrexham vs Middlesbrough (Football League Championship) — Over 2.5 · High 74.4%
+
+### BTTS  (1)
+  ✅ Kortrijk vs Mechelen (Belgium League) — BTTS No · Medium 56.4%
+
+### Home Win  (1)
+  👀 Porto vs Napoli (European Cup) — Home Win · High 84.0%
+
+### Team Goals Over 0.5  (18)
+  ✅ AEK Athens vs Real Madrid (European Cup) — Home to Score · High 92.8%
+  ✅ PSV Eindhoven vs Club Brugge (European Cup) — Home to Score · High 91.6%
+  ✅ B Dortmund vs Real Betis (European Cup) — Home to Score · High 83.5%
+  ✅ Porto vs Napoli (European Cup) — Home to Score · High 84.6%
+  ✅ Wrexham vs Middlesbrough (Football League Championship) — Home to Score · High 83.3%
+  ✅ Oxford vs Reading (Football League One) — Home to Score · Low 65.7%
+  ✅ Paranaense vs Vasco (Brazilian Serie A) — Home to Score · Medium 74.1%
+  ✅ Internacional vs Coritiba (Brazilian Serie A) — Home to Score · High 87.9%
+  ✅ Flamengo vs Gremio (Brazilian Serie A) — Home to Score · Medium 75.1%
+  ✅ Libertad vs Cerro Porteno (Brazilian Serie A) — Home to Score · Medium 70.2%
+  ✅ Cucuta Deportivo vs Santa Fe (Brazilian Serie A) — Home to Score · Medium 72.2%
+  🔥 Lens vs Como (European Cup) — Away to Score · High 86.9%
+  ✅ Viking vs Sabah (European Cup) — Away to Score · High 84.4%
+  ✅ Wrexham vs Middlesbrough (Football League Championship) — Away to Score · High 86.3%
+  ✅ Cardiff vs West Ham (Football League Championship) — Away to Score · High 82.8%
+  ✅ Bristol C vs Wolves (Football League Championship) — Away to Score · Low 62.8%
+  ✅ Artis Brno vs B. (Czech Liga) — Away to Score · High 83.8%
+  ✅ Libertad vs Cerro Porteno (Brazilian Serie A) — Away to Score · High 78.6%
+
+
 <!-- report: weekly 2026-11-03 -->
 ## Weekly Report — 2026-11-03
 

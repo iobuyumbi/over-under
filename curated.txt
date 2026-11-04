@@ -1,8 +1,5 @@
 ✦ CURATED PICKS · 2026-11-03
   Input reports:
-    OU   → over_under_vip_report_2026-11-03.txt
-    BTTS → btts_vip_report_2026-11-03.txt
-    HW   → home_win_vip_report_2026-11-03.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -13,48 +10,17 @@
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
     • Today only (2026-11-03)
 
-━━━ OVER / UNDER 2.5  (10 accepted) ━━━
-   1. ✅ Ross County vs Celtic II  (Scottish League Challenge Cup)
-      Over 2.5 · High 90.2% · xG 3.63–1.73
-      Stake 0.6% @ 2.0  ·  EV +80.4c/$  ·  Edge +80.4%
-   2. ✅ Cambridge U vs Brighton U  (Football League Trophy)
-      Over 2.5 · High 86.0% · xG 2.08–2.75
-      Stake 0.6% @ 2.0  ·  EV +72.0c/$  ·  Edge +72.0%
-   3. ✅ LASK Linz vs S. Bratislava  (European Cup)
-      Over 2.5 · High 79.5% · xG 1.45–2.79
-      Stake 0.5% @ 2.0  ·  EV +59.0c/$  ·  Edge +59.0%
-   4. ✅ Rotherham vs N'castle U  (Football League Trophy)
-      Over 2.5 · High 76.0% · xG 1.45–2.54
-      Stake 0.4% @ 2.0  ·  EV +52.0c/$  ·  Edge +52.0%
-   5. ✅ QPR vs Burnley  (Football League Championship)
-      Over 2.5 · High 75.9% · xG 2.87–1.11
-      Stake 0.4% @ 2.0  ·  EV +51.8c/$  ·  Edge +51.8%
-   6. ✅ Rochdale vs Doncaster  (Football League Trophy)
-      Over 2.5 · High 75.7% · xG 1.87–2.10
-      Stake 0.4% @ 2.0  ·  EV +51.4c/$  ·  Edge +51.4%
-   7. ✅ Huddersfield vs Luton  (Football League One)
-      Over 2.5 · High 74.2% · xG 2.54–1.33
-      Stake 0.4% @ 2.0  ·  EV +48.4c/$  ·  Edge +48.4%
-   8. ✅ Newport Co vs C Palace U  (Football League Trophy)
-      Over 2.5 · High 71.6% · xG 1.76–1.95
-      Stake 0.3% @ 2.0  ·  EV +43.2c/$  ·  Edge +43.2%
-   9. ✅ East Kilbride vs Stirling  (Scottish League Challenge Cup)
-      Over 2.5 · High 71.1% · xG 1.86–1.82
-      Stake 0.3% @ 2.0  ·  EV +42.2c/$  ·  Edge +42.2%
-  10. ✅ Wigan vs Mansfield  (Football League One)
-      Over 2.5 · High 70.9% · xG 1.87–1.80
-      Stake 0.3% @ 2.0  ·  EV +41.8c/$  ·  Edge +41.8%
+━━━ OVER / UNDER 2.5  (0 accepted) ━━━
+  (none)
 
-━━━ BTTS (Yes / No)  (1 accepted) ━━━
-   1. ✅ Rotherham vs N'castle U  (Football League Trophy)
-      BTTS Yes · High 70.8% · xG 1.48–2.48
-      Stake 2.1% @ 1.9  ·  EV 
+━━━ BTTS (Yes / No)  (0 accepted) ━━━
+  (none)
 
 ━━━ HOME WIN  (0 accepted) ━━━
   (none)
 
-📊 Summary: 11 curated picks
-   Parsed total: 54   Rejected: 43   Accepted: 11
+📊 Summary: 0 curated picks
+   Parsed total: 0   Rejected: 0   Accepted: 0
 
 ---
 For informational purposes only · Gamble responsibly
