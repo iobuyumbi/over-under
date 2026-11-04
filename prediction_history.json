@@ -973,9 +973,12 @@
       "home_team": "Nacional As",
       "away_team": "Sp. San Lorenzo",
       "confidence": "close",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-10-30T17:26:36.076059",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-04T15:06:25.737428",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-06",
@@ -11217,9 +11220,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-01T15:21:47.868529",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-04T15:06:25.738455",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-05",
@@ -13420,9 +13426,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-01T15:21:51.497952",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-04T15:06:25.739399",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-03",
@@ -13449,9 +13458,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-01T15:21:51.547420",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-04T15:06:25.740370",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-04",
@@ -16011,9 +16023,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-01T15:21:54.836128",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-04T15:06:25.741442",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-04",
