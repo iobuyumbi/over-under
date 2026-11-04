@@ -1,5 +1,8 @@
-✦ CURATED PICKS · 2026-11-03
+✦ CURATED PICKS · 2026-11-04
   Input reports:
+    OU   → over_under_vip_report_2026-11-04.txt
+    BTTS → btts_vip_report_2026-11-04.txt
+    HW   → home_win_vip_report_2026-11-04.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -8,10 +11,15 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-11-03)
+    • Today only (2026-11-04)
 
-━━━ OVER / UNDER 2.5  (0 accepted) ━━━
-  (none)
+━━━ OVER / UNDER 2.5  (2 accepted) ━━━
+   1. ✅ Fenerbahce vs Liverpool  (European Cup)
+      Over 2.5 · High 85.6% · xG 0.99–3.80
+      Stake 0.3% @ 2.0  ·  EV +71.2c/$  ·  Edge +71.2%
+   2. ✅ Wrexham vs Middlesbrough  (Football League Championship)
+      Over 2.5 · High 74.4% · xG 1.72–2.16
+      Stake 0.2% @ 2.0  ·  EV +48.8c/$  ·  Edge +48.8%
 
 ━━━ BTTS (Yes / No)  (0 accepted) ━━━
   (none)
@@ -19,8 +27,8 @@
 ━━━ HOME WIN  (0 accepted) ━━━
   (none)
 
-📊 Summary: 0 curated picks
-   Parsed total: 0   Rejected: 0   Accepted: 0
+📊 Summary: 2 curated picks
+   Parsed total: 108   Rejected: 106   Accepted: 2
 
 ---
 For informational purposes only · Gamble responsibly

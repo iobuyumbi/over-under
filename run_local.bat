@@ -14,9 +14,15 @@ REM      --no-push  build everything but do not commit or push
 REM ============================================================
 
 REM ---- Run date: first non-flag argument, else today ----
+REM A date passed explicitly is pinned for the whole session. An auto-computed
+REM date is remembered as non-explicit so :refresh_date can recompute it, which
+REM matters if the launcher sits open across midnight.
+set "RUN_DATE_EXPLICIT="
 set "RUN_DATE=%~1"
 if "%RUN_DATE:~0,1%"=="-" set "RUN_DATE="
-if not defined RUN_DATE (
+if defined RUN_DATE (
+  set "RUN_DATE_EXPLICIT=1"
+) else (
   for /f %%I in ('powershell -NoProfile -Command "Get-Date -Format yyyy-MM-dd"') do set "RUN_DATE=%%I"
 )
 
@@ -55,6 +61,7 @@ setlocal enabledelayedexpansion
 
 :menu
 cls
+call :refresh_date
 echo ============================================================
 echo   SOCCER PICKS  -  local launcher
 echo   run date: %RUN_DATE%
@@ -109,6 +116,7 @@ goto run_all
 :m_board
 echo.
 echo === REBUILD BOARD ONLY (no fetch, no send, no push) ===
+call :refresh_date
 call :step_engines
 if errorlevel 1 goto :error
 call :step_board
@@ -119,6 +127,7 @@ pause
 goto menu
 
 :m_send
+call :refresh_date
 call :step_send
 echo.
 pause
@@ -161,6 +170,7 @@ REM ============================================================
 REM  Full pipeline
 REM ============================================================
 :run_all
+call :refresh_date
 echo.
 echo ============================================================
 echo   Running pipeline for %RUN_DATE%
@@ -222,6 +232,15 @@ goto menu
 REM ============================================================
 REM  Pipeline steps (each returns non-zero errorlevel on failure)
 REM ============================================================
+:refresh_date
+REM Recompute the run date only when it was auto-derived (no explicit argument),
+REM so a launcher left open past midnight cannot pin a stale date. An explicit
+REM date argument always wins.
+if not defined RUN_DATE_EXPLICIT (
+  for /f %%I in ('powershell -NoProfile -Command "Get-Date -Format yyyy-MM-dd"') do set "RUN_DATE=%%I"
+)
+exit /b 0
+
 :step_fetch
 echo.
 echo === FETCH RESULTS ===
@@ -241,22 +260,22 @@ exit /b 0
 :step_engines
 echo.
 echo === OVER/UNDER 2.5 ===
-python over25_soccerbase.py --publish-date %RUN_DATE% > ou.txt 2> ou_errors.txt
+python over25_soccerbase.py %RUN_DATE% --publish-date %RUN_DATE% > ou.txt 2> ou_errors.txt
 if errorlevel 1 exit /b 1
 echo --- done ---
 echo.
 echo === HOME WIN ===
-python home_win_soccerbase.py --publish-date %RUN_DATE% > hw.txt 2> hw_errors.txt
+python home_win_soccerbase.py %RUN_DATE% --publish-date %RUN_DATE% > hw.txt 2> hw_errors.txt
 if errorlevel 1 exit /b 1
 echo --- done ---
 echo.
 echo === BTTS ===
-python btts_soccerbase.py --publish-date %RUN_DATE% > btts.txt 2> btts_errors.txt
+python btts_soccerbase.py %RUN_DATE% --publish-date %RUN_DATE% > btts.txt 2> btts_errors.txt
 if errorlevel 1 exit /b 1
 echo --- done ---
 echo.
 echo === OVER 0.5 TEAM GOAL ===
-python oo05_soccerbase.py --publish-date %RUN_DATE% > oo05.txt 2> oo05_errors.txt
+python oo05_soccerbase.py %RUN_DATE% --publish-date %RUN_DATE% > oo05.txt 2> oo05_errors.txt
 if errorlevel 1 exit /b 1
 echo --- done ---
 exit /b 0
