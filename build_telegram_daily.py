@@ -254,12 +254,13 @@ def _render_results_block(rows):
     if not rows:
         return ["— no settled picks yesterday", ""]
 
-    headers = ["Market / Side", "Tier", "W", "L", "P", "Pend", "Win%"]
-    caps = [14, 9, 3, 3, 3, 4, 6]
+    headers = ["Market / Side", "Tier", "Tot", "W", "L", "P", "Pend", "Win%"]
+    caps = [14, 9, 4, 3, 3, 3, 4, 6]
 
     def cells(label, tier, wins, losses, pushes, pending):
         return [
-            label, tier, str(wins), str(losses), str(pushes), str(pending),
+            label, tier, str(wins + losses + pushes + pending), str(wins),
+            str(losses), str(pushes), str(pending),
             _format_win_rate(wins, losses),
         ]
 
@@ -295,7 +296,7 @@ def _render_results_block(rows):
 
     lines = _render_table(table, headers, caps)
     lines.append("")
-    lines.append("W-L-P = win-loss-push (void) · Pend awaits settlement · Win% = W/(W+L)")
+    lines.append("Tot = picks · W-L-P = win-loss-push (void) · Pend awaits settlement · Win% = W/(W+L)")
     lines.append("")
     return lines
 
