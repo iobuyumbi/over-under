@@ -4,6 +4,69 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-05 -->
+## Daily Picks — 2026-11-05
+
+### Over/Under 2.5  (6)
+  ✅ Milan vs Ferencvaros (Europa League) — Over 2.5 · High 80.3%
+  ✅ Lillestrom vs Viktoria Plzen (Europa League) — Over 2.5 · High 86.6%
+  ✅ Celtic vs Besiktas (Europa League) — Over 2.5 · High 74.2%
+  ✅ Atalanta vs Kairat Almaty (Europa Conference League) — Over 2.5 · High 67.5%
+  ✅ Midtjylland vs Ajax (Europa Conference League) — Over 2.5 · High 81.5%
+  ✅ St. Truiden vs Brann (Europa Conference League) — Over 2.5 · High 68.3%
+
+### BTTS  (2)
+  ✅ Midtjylland vs Ajax (Europa Conference League) — BTTS Yes · High 72.4%
+  ✅ Monaco vs Nordsjaelland (Europa Conference League) — BTTS Yes · Medium 56.5%
+
+### Home Win  (1)
+  ✅ Olimpia vs Deportivo Recoleta (Copa del Rey) — Home Win · High 84.9%
+
+### Team Goals Over 0.5  (42)
+  🔥 Celtic vs Besiktas (Europa League) — Home to Score · High 88.6%
+  🔥 Sao Paulo vs Corinthians (Brazilian Serie A) — Home to Score · High 85.9%
+  ✅ Lillestrom vs Viktoria Plzen (Europa League) — Home to Score · Medium 74.8%
+  ✅ Milan vs Ferencvaros (Europa League) — Home to Score · Medium 77.0%
+  ✅ Levski Sofia vs Jagiellonia (Europa League) — Home to Score · Medium 74.1%
+  ✅ Sparta Prague vs Bournemouth (Europa League) — Home to Score · High 84.0%
+  ✅ C Palace vs Hoffenheim (Europa League) — Home to Score · High 85.6%
+  ✅ Sociedad vs Lyon (Europa League) — Home to Score · High 79.8%
+  ✅ Benfica vs Lech Poznan (Europa League) — Home to Score · High 87.8%
+  ✅ AZ Alkmaar vs Juventus (Europa League) — Home to Score · Medium 73.3%
+  ✅ B Leverkusen vs Marseille (Europa League) — Home to Score · High 88.5%
+  ✅ H Beer Sheva vs OFI Crete (Europa League) — Home to Score · Medium 75.1%
+  ✅ Aarhus vs Braga (Europa Conference League) — Home to Score · Medium 76.8%
+  ✅ Trabzonspor vs Freiburg (Europa Conference League) — Home to Score · High 87.9%
+  ✅ Red Star vs Inter Club D'Escaldes (Europa Conference League) — Home to Score · High 87.3%
+  ✅ Uni Craiova vs Egnatia (Europa Conference League) — Home to Score · High 83.3%
+  ✅ Midtjylland vs Ajax (Europa Conference League) — Home to Score · High 81.7%
+  ✅ Monaco vs Nordsjaelland (Europa Conference League) — Home to Score · High 81.4%
+  ✅ St. Truiden vs Brann (Europa Conference League) — Home to Score · High 81.9%
+  ✅ Olimpia vs Deportivo Recoleta (Copa del Rey) — Home to Score · High 78.8%
+  ✅ Botafogo vs Atletico Mineiro (Brazilian Serie A) — Home to Score · High 79.6%
+  ✅ Palmeiras vs Remo (Brazilian Serie A) — Home to Score · Medium 75.6%
+  ✅ Cucuta Deportivo vs Santa Fe (Brazilian Serie A) — Home to Score · Medium 72.2%
+  ✅ Millonarios vs America de Cali (Brazilian Serie A) — Home to Score · Medium 75.6%
+  ✅ Aldosivi vs River Plate (Brazilian Serie A) — Home to Score · Low 65.7%
+  🔥 Lillestrom vs Viktoria Plzen (Europa League) — Away to Score · High 96.2%
+  🔥 Riga FC vs Jablonec (Europa Conference League) — Away to Score · Medium 71.9%
+  ✅ Milan vs Ferencvaros (Europa League) — Away to Score · High 92.5%
+  ✅ Celtic vs Besiktas (Europa League) — Away to Score · High 80.8%
+  ✅ Sunderland vs Dinamo Zagreb (Europa League) — Away to Score · High 78.8%
+  ✅ AZ Alkmaar vs Juventus (Europa League) — Away to Score · Medium 69.0%
+  ✅ Atalanta vs Kairat Almaty (Europa Conference League) — Away to Score · High 84.9%
+  ✅ Thun vs Hearts (Europa Conference League) — Away to Score · High 81.0%
+  ✅ Mjallby vs B. Banja Luka (Europa Conference League) — Away to Score · High 83.5%
+  ✅ Lugano vs Kauno Zalgiris (Europa Conference League) — Away to Score · High 79.4%
+  ✅ Midtjylland vs Ajax (Europa Conference League) — Away to Score · High 90.9%
+  ✅ Monaco vs Nordsjaelland (Europa Conference League) — Away to Score · Medium 68.3%
+  ✅ Getafe vs Brighton (Europa Conference League) — Away to Score · High 77.0%
+  ✅ Botafogo vs Atletico Mineiro (Brazilian Serie A) — Away to Score · Medium 72.2%
+  ✅ Millonarios vs America de Cali (Brazilian Serie A) — Away to Score · Low 59.7%
+  ✅ Aldosivi vs River Plate (Brazilian Serie A) — Away to Score · Medium 71.9%
+  ✅ Gimnasia La Plata vs Belgrano (Brazilian Serie A) — Away to Score · Low 62.1%
+
+
 <!-- report: daily 2026-11-04 -->
 ## Daily Picks — 2026-11-04
 

@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-11-04
+✦ CURATED PICKS · 2026-11-05
   Input reports:
-    OU   → over_under_vip_report_2026-11-04.txt
-    BTTS → btts_vip_report_2026-11-04.txt
-    HW   → home_win_vip_report_2026-11-04.txt
+    OU   → over_under_vip_report_2026-11-05.txt
+    BTTS → btts_vip_report_2026-11-05.txt
+    HW   → home_win_vip_report_2026-11-05.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,24 +11,32 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-11-04)
+    • Today only (2026-11-05)
 
-━━━ OVER / UNDER 2.5  (2 accepted) ━━━
-   1. ✅ Fenerbahce vs Liverpool  (European Cup)
-      Over 2.5 · High 85.6% · xG 0.99–3.80
-      Stake 0.3% @ 2.0  ·  EV +71.2c/$  ·  Edge +71.2%
-   2. ✅ Wrexham vs Middlesbrough  (Football League Championship)
-      Over 2.5 · High 74.4% · xG 1.72–2.16
-      Stake 0.2% @ 2.0  ·  EV +48.8c/$  ·  Edge +48.8%
+━━━ OVER / UNDER 2.5  (4 accepted) ━━━
+   1. ✅ Lillestrom vs Viktoria Plzen  (Europa League)
+      Over 2.5 · High 86.6% · xG 1.10–3.80
+      Stake 0.2% @ 2.0  ·  EV +73.2c/$  ·  Edge +73.2%
+   2. ✅ Midtjylland vs Ajax  (Europa Conference League)
+      Over 2.5 · High 81.5% · xG 1.41–2.99
+      Stake 0.2% @ 2.0  ·  EV +63.0c/$  ·  Edge +63.0%
+   3. ✅ Milan vs Ferencvaros  (Europa League)
+      Over 2.5 · High 80.3% · xG 1.14–3.16
+      Stake 0.2% @ 2.0  ·  EV +60.6c/$  ·  Edge +60.6%
+   4. ✅ Celtic vs Besiktas  (Europa League)
+      Over 2.5 · High 74.2% · xG 1.91–1.96
+      Stake 0.1% @ 2.0  ·  EV +48.4c/$  ·  Edge +48.4%
 
-━━━ BTTS (Yes / No)  (0 accepted) ━━━
-  (none)
+━━━ BTTS (Yes / No)  (1 accepted) ━━━
+   1. ✅ Midtjylland vs Ajax  (Europa Conference League)
+      BTTS Yes · High 72.4% · xG 1.46–2.87
+      Stake 1.8% @ 1.9  ·  EV 
 
 ━━━ HOME WIN  (0 accepted) ━━━
   (none)
 
-📊 Summary: 2 curated picks
-   Parsed total: 108   Rejected: 106   Accepted: 2
+📊 Summary: 5 curated picks
+   Parsed total: 143   Rejected: 138   Accepted: 5
 
 ---
 For informational purposes only · Gamble responsibly
