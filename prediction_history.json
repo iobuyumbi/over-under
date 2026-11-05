@@ -7336,9 +7336,12 @@
       "prediction": "yes",
       "prob": 52.4,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-01T15:05:02.943231",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-05T15:11:09.724799",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-05",
@@ -14133,9 +14136,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-01T15:21:51.790886",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-05T15:11:09.725172",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-04",
@@ -14162,9 +14168,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-01T15:21:51.841893",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-05T15:11:09.725475",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-04",
@@ -14175,9 +14184,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-01T15:21:51.872816",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-05T15:11:09.725809",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-04",
@@ -16709,9 +16721,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-01T15:21:54.974734",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-05T15:11:09.726449",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-05",
