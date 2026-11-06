@@ -4,6 +4,76 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-06 -->
+## Daily Picks — 2026-11-06
+
+### Over/Under 2.5  (5)
+  ✅ Hamburg vs B M'gladbach (German Bundesliga) — Over 2.5 · High 72.3%
+  ✅ Silkeborg vs Lyngby (Danish SAS Ligaen) — Over 2.5 · High 86.9%
+  ✅ M Tel Aviv vs M. Petah Tikva (Israeli League) — Over 2.5 · High 70.4%
+  ✅ Penybont vs Caernarfon (Welsh Premier) — Over 2.5 · High 84.2%
+  ✅ Union Santa Fe vs Velez Sarsfield (Brazilian Serie A) — Over 2.5 · High 60.7%
+
+### BTTS  (1)
+  ✅ Oxford C vs Leicester (English FA Cup) — BTTS Yes · High 70.8%
+
+### Home Win  (5)
+  🔥 Rapid Vienna vs Wolfsberger (Austrian Bundesliga) — Home Win · High 90.3%
+  ✅ Polessya Zhitomir vs NK Veres Livne (Ukrainian League) — Home Win · High 85.9%
+  👀 Wisla Krakow vs Cracovia (Polish Ekstraklasa) — Home Win · High 92.6%
+  👀 Connah's Q vs Flint Town U (Welsh Premier) — Home Win · High 78.8%
+  👀 Cruzeiro vs Bahia (Brazilian Serie A) — Home Win · High 83.1%
+
+### Team Goals Over 0.5  (47)
+  🔥 Wisla Krakow vs Cracovia (Polish Ekstraklasa) — Home to Score · High 88.7%
+  🔥 Dyn Dresden vs Greuther Furth (German Bundesliga 2) — Home to Score · High 83.8%
+  🔥 Botev Plovdiv vs Dunav Ruse (Bulgarian League) — Home to Score · High 84.0%
+  ✅ Everton vs Coventry (Premier League) — Home to Score · High 80.2%
+  ✅ Bristol R vs Cambridge U (English FA Cup) — Home to Score · Medium 69.9%
+  ✅ Oxford C vs Leicester (English FA Cup) — Home to Score · High 86.2%
+  ✅ Sevilla vs Alaves (Spanish La Liga) — Home to Score · High 86.5%
+  ✅ Motor Lublin vs Wisla Plock (Polish Ekstraklasa) — Home to Score · High 81.0%
+  ✅ Hammarby vs Elfsborg (Swedish Allsvenskan) — Home to Score · High 79.0%
+  ✅ Braunschweig vs Cottbus (German Bundesliga 2) — Home to Score · High 84.4%
+  ✅ Loko. Zagreb vs NK Rudes (Croatian HNL) — Home to Score · Medium 76.3%
+  ✅ Silkeborg vs Lyngby (Danish SAS Ligaen) — Home to Score · High 86.9%
+  ✅ Rapid Vienna vs Wolfsberger (Austrian Bundesliga) — Home to Score · High 95.4%
+  ✅ Castellon vs Eibar (Spanish Segunda) — Home to Score · High 87.5%
+  ✅ St Liege vs W Beveren (Belgium League) — Home to Score · High 84.9%
+  ✅ Polessya Zhitomir vs NK Veres Livne (Ukrainian League) — Home to Score · High 79.6%
+  ✅ M Tel Aviv vs M. Petah Tikva (Israeli League) — Home to Score · High 91.2%
+  ✅ Gomel vs Arsenal Dzyarzhynsk (Belarus League) — Home to Score · High 85.5%
+  ✅ Penybont vs Caernarfon (Welsh Premier) — Home to Score · High 86.3%
+  ✅ Cambrian United vs Barry Town (Welsh Premier) — Home to Score · High 85.5%
+  ✅ Holywell Town vs Airbus UK (Welsh Premier) — Home to Score · High 78.3%
+  ✅ Quorn vs Alfreton (Unibond Premier) — Home to Score · High 85.8%
+  ✅ Cruzeiro vs Bahia (Brazilian Serie A) — Home to Score · High 79.8%
+  ✅ Vitoria vs Fluminense (Brazilian Serie A) — Home to Score · Medium 76.1%
+  ✅ Union Santa Fe vs Velez Sarsfield (Brazilian Serie A) — Home to Score · Medium 76.5%
+  ✅ Boyaca Chico vs La Equidad (Brazilian Serie A) — Home to Score · Medium 68.0%
+  🔥 Cambrian United vs Barry Town (Welsh Premier) — Away to Score · High 85.8%
+  🔥 Holywell Town vs Airbus UK (Welsh Premier) — Away to Score · High 97.0%
+  ✅ Derby vs Bolton (Football League Championship) — Away to Score · High 85.5%
+  ✅ Bristol R vs Cambridge U (English FA Cup) — Away to Score · Medium 68.7%
+  ✅ Arges Pitesti vs Din. Bucharest (Romanian Liga 1) — Away to Score · High 80.2%
+  ✅ Lok. Moscow vs Rubin (Russian Premier) — Away to Score · High 75.3%
+  ✅ Gazisehir vs Kasimpasa (Turkish Super Lig) — Away to Score · High 79.8%
+  ✅ Loko. Zagreb vs NK Rudes (Croatian HNL) — Away to Score · Medium 71.3%
+  ✅ Silkeborg vs Lyngby (Danish SAS Ligaen) — Away to Score · High 88.2%
+  ✅ Willem II vs PEC Zwolle (Netherlands League) — Away to Score · High 88.0%
+  ✅ PFC Septemvri Sofia vs Lokomotiv Sofia (Bulgarian League) — Away to Score · High 87.1%
+  ✅ M Tel Aviv vs M. Petah Tikva (Israeli League) — Away to Score · Medium 74.6%
+  ✅ Penybont vs Caernarfon (Welsh Premier) — Away to Score · High 84.0%
+  ✅ Trefelin vs Colwyn Bay (Welsh Premier) — Away to Score · High 85.9%
+  ✅ Ammanford vs Briton Ferry Ath (Welsh Premier) — Away to Score · High 87.0%
+  ✅ Haverfordwest vs Cardiff MU (Welsh Premier) — Away to Score · High 76.3%
+  ✅ Llandudno vs The New Saints (Welsh Premier) — Away to Score · High 96.0%
+  ✅ Quorn vs Alfreton (Unibond Premier) — Away to Score · High 80.8%
+  ✅ Vitoria vs Fluminense (Brazilian Serie A) — Away to Score · Medium 65.0%
+  ✅ Union Santa Fe vs Velez Sarsfield (Brazilian Serie A) — Away to Score · High 85.0%
+  ✅ Atletico Grau vs Cusco (Brazilian Serie A) — Away to Score · High 77.7%
+
+
 <!-- report: daily 2026-11-05 -->
 ## Daily Picks — 2026-11-05
 

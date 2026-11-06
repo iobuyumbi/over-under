@@ -1498,6 +1498,7 @@ date,home_team,away_team,score
 2026-11-04,Slavia Prague,Arsenal,1-2
 2026-11-04,Viking,Sabah,4-1
 2026-11-04,Wrexham,Middlesbrough,2-0
+<<<<<<< Updated upstream
 2026-11-05,AZ Alkmaar,Juventus,
 2026-11-05,Aarhus,Braga,
 2026-11-05,Aldosivi,River Plate,
@@ -1510,32 +1511,46 @@ date,home_team,away_team,score
 2026-11-05,Copenhagen,Saburtalo,
 2026-11-05,Cucuta Deportivo,Santa Fe,
 2026-11-05,Getafe,Brighton,
+=======
+2026-11-05,AZ Alkmaar,Juventus,1-2
+2026-11-05,Aarhus,Braga,0-0
+2026-11-05,Aldosivi,River Plate,0-2
+2026-11-05,Atalanta,Kairat Almaty,1-1
+2026-11-05,B Leverkusen,Marseille,0-1
+2026-11-05,Benfica,Lech Poznan,3-1
+2026-11-05,Botafogo,Atletico Mineiro,1-0
+2026-11-05,C Palace,Hoffenheim,1-1
+2026-11-05,Celtic,Besiktas,3-2
+2026-11-05,Copenhagen,Saburtalo,2-1
+2026-11-05,Cucuta Deportivo,Santa Fe,1-0
+2026-11-05,Getafe,Brighton,0-1
+>>>>>>> Stashed changes
 2026-11-05,Gimnasia La Plata,Belgrano,
-2026-11-05,H Beer Sheva,OFI Crete,
-2026-11-05,Levski Sofia,Jagiellonia,
-2026-11-05,Lillestrom,Viktoria Plzen,
-2026-11-05,Lugano,Kauno Zalgiris,
-2026-11-05,Midtjylland,Ajax,
-2026-11-05,Milan,Ferencvaros,
-2026-11-05,Millonarios,America de Cali,
-2026-11-05,Mjallby,B. Banja Luka,
-2026-11-05,Monaco,Nordsjaelland,
-2026-11-05,NEC Nijmegen,O Nicosia,
-2026-11-05,Olimpia,Deportivo Recoleta,
+2026-11-05,H Beer Sheva,OFI Crete,0-2
+2026-11-05,Levski Sofia,Jagiellonia,1-0
+2026-11-05,Lillestrom,Viktoria Plzen,0-1
+2026-11-05,Lugano,Kauno Zalgiris,3-0
+2026-11-05,Midtjylland,Ajax,1-6
+2026-11-05,Milan,Ferencvaros,0-2
+2026-11-05,Millonarios,America de Cali,0-0
+2026-11-05,Mjallby,B. Banja Luka,2-0
+2026-11-05,Monaco,Nordsjaelland,2-0
+2026-11-05,NEC Nijmegen,O Nicosia,3-1
+2026-11-05,Olimpia,Deportivo Recoleta,4-1
 2026-11-05,Palmeiras,Remo,
-2026-11-05,Panathinaikos,CSKA Sofia,
-2026-11-05,Red Star,Inter Club D'Escaldes,
-2026-11-05,Riga FC,Jablonec,
-2026-11-05,Sao Paulo,Corinthians,
-2026-11-05,Sociedad,Lyon,
-2026-11-05,Sparta Prague,Bournemouth,
-2026-11-05,St. Truiden,Brann,
-2026-11-05,Sunderland,Dinamo Zagreb,
-2026-11-05,Thun,Hearts,
-2026-11-05,Torreense,Ararat-Armenia,
-2026-11-05,Trabzonspor,Freiburg,
-2026-11-05,Uni Craiova,Egnatia,
-2026-11-05,Universitario de Deportes,Sport Boys,
+2026-11-05,Panathinaikos,CSKA Sofia,2-1
+2026-11-05,Red Star,Inter Club D'Escaldes,2-1
+2026-11-05,Riga FC,Jablonec,1-1
+2026-11-05,Sao Paulo,Corinthians,0-0
+2026-11-05,Sociedad,Lyon,1-1
+2026-11-05,Sparta Prague,Bournemouth,1-3
+2026-11-05,St. Truiden,Brann,1-1
+2026-11-05,Sunderland,Dinamo Zagreb,0-2
+2026-11-05,Thun,Hearts,3-1
+2026-11-05,Torreense,Ararat-Armenia,3-2
+2026-11-05,Trabzonspor,Freiburg,0-1
+2026-11-05,Uni Craiova,Egnatia,2-0
+2026-11-05,Universitario de Deportes,Sport Boys,2-2
 2026-11-06,Ammanford,Briton Ferry Ath,
 2026-11-06,Arges Pitesti,Din. Bucharest,
 2026-11-06,Atletico Grau,Cusco,
@@ -1913,3 +1928,55 @@ date,home_team,away_team,score
 2026-11-08,Viking,KFUM Oslo,
 2026-11-08,Wimborne T,Crawley,
 2026-11-08,Zorya,LNZ Cherkasy,
+<<<<<<< Updated upstream
+=======
+2026-11-08,Sturm Graz,RB Salzburg,
+2026-11-10,Crawley,Brentford U,
+2026-11-10,Cray W,Three Bridges,
+2026-11-10,Chertsey Town,Chichester C,
+2026-11-10,Rylands,Guiseley,
+2026-11-10,Quorn,Stockton T,
+2026-11-11,Avro,Whitby,
+2026-11-11,Frome,Plymouth P,
+2026-11-10,Eastbourne,Dulwich H,
+2026-11-10,Oxford,Cheltenham,
+2026-11-09,Plymouth P,Berkhamsted,
+2026-11-10,Uxbridge,Hanwell Town,
+2026-11-10,Sholing,Chippenham,
+2026-11-10,Curzon A,Ilkeston,
+2026-11-10,Leicester,Walsall,
+2026-11-08,KPS Kuopio,FC Inter,
+2026-11-09,Botosani,Otelul Galati,
+2026-11-09,Alianza Petrolera,Llaneros,
+2026-11-09,Tecnico Universitario,Manta,
+2026-11-10,Enfield T,Lewes,
+2026-11-10,Wimborne T,Poole Town,
+2026-11-10,Chatham Town,Leatherhead,
+2026-11-08,Levski Sofia,CSKA Sofia,
+2026-11-09,Sabadell,Real Sociedad B,
+2026-11-09,Leon,Guadalajara,
+2026-11-09,Queretaro,Puebla,
+2026-11-09,Mushuc Runa,Delfin,
+2026-11-10,Bristol R,Reading,
+2026-11-10,Crewe,Wigan,
+2026-11-10,Burton,Notts Co,
+2026-11-10,Grimsby,N Forest U,
+2026-11-10,Huddersfield,Liverpool U,
+2026-11-10,Stevenage,Fulham U,
+2026-11-10,Colchester,Ipswich Town U,
+2026-11-10,Salisbury FC,Braintree,
+2026-11-10,Gloucester,Malvern Town,
+2026-11-10,Hemel,Torquay,
+2026-11-10,Bath City,Taunton Town,
+2026-11-10,Havant & W,Bracknell,
+2026-11-10,Redcar Athletic,Bamber Br.,
+2026-11-10,Workington,Alfreton,
+2026-11-11,Barnsley,Oldham,
+2026-11-08,Lens,Marseille,
+2026-11-10,Barnet,Leyton Orient,
+2026-11-10,Mansfield,Chesterfield,
+2026-11-10,Bromley,MK Dons,
+2026-11-10,Darlington,Oxford C,
+2026-11-10,Whitehawk,Welling,
+2026-11-10,Bury,Cleethorpes T,
+>>>>>>> Stashed changes

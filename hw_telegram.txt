@@ -1,12 +1,48 @@
-📅 Picks for 2026-11-05
+📅 Picks for 2026-11-06
 
+
+  🔥 Premium picks
+
+
+  1. Rapid Vienna vs Wolfsberger
+     Date: 2026-11-06
+     League: Austrian Bundesliga
+     Pick: Home Win · High confidence (90.3%)
+     Category:
+       • Tier: 🔥 Premium
 
   ✅ Solid picks
 
 
-  1. Olimpia vs Deportivo Recoleta
-     Date: 2026-11-05
-     League: Copa del Rey
-     Pick: Home Win · High confidence (84.9%)
+  2. Polessya Zhitomir vs NK Veres Livne
+     Date: 2026-11-06
+     League: Ukrainian League
+     Pick: Home Win · High confidence (85.9%)
      Category:
        • Tier: ✅ Solid
+
+  👀 Watchlist
+
+
+  3. Wisla Krakow vs Cracovia
+     Date: 2026-11-06
+     League: Polish Ekstraklasa
+     Pick: Home Win · High confidence (92.6%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  4. Connah's Q vs Flint Town U
+     Date: 2026-11-06
+     League: Welsh Premier
+     Pick: Home Win · High confidence (78.8%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  5. Cruzeiro vs Bahia
+     Date: 2026-11-06
+     League: Brazilian Serie A
+     Pick: Home Win · High confidence (83.1%)
+     Category:
+       • Tier: 👀 Watchlist
+       • League type: weak-ROI region (extra model caution)
+       • Auto-flag: weak ROI history on this market
