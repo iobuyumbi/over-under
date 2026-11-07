@@ -4,6 +4,98 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-07 -->
+## Daily Picks — 2026-11-07
+
+### Over/Under 2.5  (52)
+  🔥 Rylands vs Gainsborough (Unibond Premier) — Over 2.5 · High 86.7%
+  ✅ Cardiff vs Burnley (Football League Championship) — Over 2.5 · High 78.4%
+  ✅ Gillingham vs Barrow (English FA Cup) — Over 2.5 · High 80.1%
+  ✅ Boreham W vs Wigan (English FA Cup) — Over 2.5 · High 80.5%
+  ✅ Crewe vs AFC W'bledon (English FA Cup) — Over 2.5 · High 71.3%
+  ✅ Guiseley vs Sutton Utd (English FA Cup) — Over 2.5 · High 71.6%
+  ✅ Chesterfield vs Yeovil (English FA Cup) — Over 2.5 · High 76.3%
+  ✅ Kidderminster vs Doncaster (English FA Cup) — Over 2.5 · High 64.1%
+  ✅ Eastleigh vs Shrewsbury (English FA Cup) — Over 2.5 · High 80.4%
+  ✅ Harrogate vs Fylde (English FA Cup) — Over 2.5 · High 76.6%
+  ✅ Fleetwood vs Rochdale (English FA Cup) — Over 2.5 · High 74.1%
+  ✅ Dundee Utd vs Motherwell (Scottish Premier) — Over 2.5 · High 68.3%
+  ✅ Montrose vs East Fife (Scottish League One) — Over 2.5 · High 61.4%
+  ✅ Clyde vs Spartans (Scottish League Two) — Over 2.5 · High 67.0%
+  ✅ Fraserburgh vs Forres Mech (Scottish Highland League) — Over 2.5 · High 70.9%
+  ✅ Troon vs Dalbeattie Star (Scottish Lowland League) — Over 2.5 · High 81.0%
+  ✅ Albion vs Renfrew (Scottish Lowland League) — Over 2.5 · High 68.3%
+  ✅ Torino vs Lecce (Italian Serie A) — Over 2.5 · High 67.0%
+  ✅ Mainz vs B Munich (German Bundesliga) — Over 2.5 · High 76.5%
+  ✅ Stuttgart vs W Bremen (German Bundesliga) — Over 2.5 · High 78.8%
+  ✅ Farul Constanta vs Rapid Buch. (Romanian Liga 1) — Over 2.5 · High 82.5%
+  ✅ Cadiz vs Real Oviedo (Spanish Segunda) — Over 2.5 · High 72.0%
+  ✅ Cordoba vs AD Ceuta (Spanish Segunda) — Over 2.5 · High 66.8%
+  ✅ Bravo Publikum vs Maribor (Slovenian League) — Over 2.5 · High 64.3%
+  ✅ NK Istra vs Rijeka (Croatian HNL) — Over 2.5 · High 62.6%
+  ✅ Royal Antwerp vs Lommel (Belgium League) — Over 2.5 · High 79.9%
+  ✅ Den Haag vs Sp. Rotterdam (Netherlands League) — Over 2.5 · High 88.7%
+  ✅ Sporting vs Moreirense (Portuguese Liga) — Over 2.5 · High 64.3%
+  ✅ Ried vs LASK Linz (Austrian Bundesliga) — Over 2.5 · High 80.4%
+  ✅ Austria Lustenau vs GAK (Austrian Bundesliga) — Over 2.5 · High 74.1%
+  ✅ Lucerne vs Young Boys (Swiss Super League) — Over 2.5 · High 79.8%
+  ✅ Vaduz vs FC Sion (Swiss Super League) — Over 2.5 · High 80.4%
+  ✅ Kudrivka vs Ch. Odessa (Ukrainian League) — Over 2.5 · High 63.0%
+  ✅ M. Haifa vs M. Netanya (Israeli League) — Over 2.5 · High 75.4%
+  ✅ Philadelphia U vs Toronto FC (MLS) — Over 2.5 · High 74.2%
+  ✅ Orlando City vs New England (MLS) — Over 2.5 · High 69.0%
+  ✅ Merthyr vs Hebburn Town (Football Conference North) — Over 2.5 · High 64.7%
+  ✅ Hednesford vs Morecambe (Football Conference North) — Over 2.5 · High 61.6%
+  ✅ Wingate & F vs Maldon & T (Ryman Premier) — Over 2.5 · High 75.4%
+  ✅ Dulwich H vs Lewes (Ryman Premier) — Over 2.5 · High 68.5%
+  ✅ Three Bridges vs Brentwood T (Ryman Premier) — Over 2.5 · High 79.4%
+  ✅ Chatham Town vs Burgess Hill (Ryman Premier) — Over 2.5 · High 85.5%
+  ✅ Chippenham vs Gosport Bor (Southern League Premier) — Over 2.5 · High 78.3%
+  ✅ Malvern Town vs Havant & W (Southern League Premier) — Over 2.5 · High 89.5%
+  ✅ Taunton Town vs Sholing (Southern League Premier) — Over 2.5 · High 69.5%
+  ✅ Leek vs Ilkeston (Unibond Premier) — Over 2.5 · High 86.2%
+  ✅ Workington vs Ashton Utd (Unibond Premier) — Over 2.5 · High 82.2%
+  ✅ Stockton T vs Curzon A (Unibond Premier) — Over 2.5 · High 70.1%
+  ✅ Atlas vs Pachuca (Mexican Primera Apertura) — Over 2.5 · High 67.0%
+  ✅ Kashiwa Reysol vs Kawasaki F (Japanese J1 League) — Over 2.5 · High 83.4%
+  ✅ Seoul E-Land vs Jeonnam Dragons (Korean K-League 2) — Over 2.5 · High 76.3%
+  ✅ Cajamarca vs Alianza Atletico (Chile Primera) — Over 2.5 · High 66.8%
+
+### BTTS  (11)
+  ✅ Newport Co vs Walsall (English FA Cup) — BTTS Yes · Medium 55.9%
+  ✅ Accrington vs Wycombe (English FA Cup) — BTTS Yes · High 58.1%
+  ✅ Cheltenham vs Halifax (English FA Cup) — BTTS Yes · High 58.4%
+  ✅ Barnet vs Tranmere (English FA Cup) — BTTS Yes · Medium 57.6%
+  ✅ Carlisle vs Salford (English FA Cup) — BTTS Yes · High 68.5%
+  ✅ St Johnstone vs Dundee (Scottish Premier) — BTTS Yes · Medium 57.2%
+  ✅ Dundee Utd vs Motherwell (Scottish Premier) — BTTS Yes · High 68.4%
+  ✅ Sporting vs Moreirense (Portuguese Liga) — BTTS Yes · High 65.4%
+  ✅ Lucerne vs Young Boys (Swiss Super League) — BTTS Yes · High 74.4%
+  ✅ M. Haifa vs M. Netanya (Israeli League) — BTTS Yes · High 72.4%
+  🔥 Epitsentr vs Kryvbas (Ukrainian League) — BTTS No · High 68.8%
+
+### Home Win  (19)
+  🔥 Port Vale vs Scunthorpe (English FA Cup) — Home Win · High 89.5%
+  ✅ Arsenal vs Hull (Premier League) — Home Win · High 91.0%
+  ✅ Boreham W vs Wigan (English FA Cup) — Home Win · High 93.1%
+  ✅ MK Dons vs Swindon (English FA Cup) — Home Win · High 84.2%
+  ✅ Boness Utd vs Dunipace (Scottish Lowland League) — Home Win · High 89.0%
+  ✅ Rosario vs Estudiantes de Rio Cuarto (Mexican Primera Apertura) — Home Win · High 85.0%
+  👀 Birmingham vs Swansea (Football League Championship) — Home Win · Medium 66.8%
+  👀 Roma vs Sassuolo (Italian Serie A) — Home Win · High 87.7%
+  👀 PSG vs Troyes (French Ligue 1) — Home Win · High 86.7%
+  👀 Hertha Berlin vs Wolfsburg (German Bundesliga 2) — Home Win · High 91.0%
+  👀 Aris Salonika vs Panetolikos (Greek Super League) — Home Win · High 83.1%
+  👀 Rosenborg vs IK Start (Norwegian Tippeligaen) — Home Win · High 82.2%
+  👀 Zeleznicar Pancevo vs FK Rad (Serbian League) — Home Win · High 74.5%
+  👀 South Shields vs Southport (Football Conference North) — Home Win · High 87.7%
+  👀 Ebbsfleet vs Chesham (Football Conference South) — Home Win · High 74.5%
+  👀 Enfield T vs AFC Whyteleafe (Ryman Premier) — Home Win · High 82.2%
+  👀 Argentinos Jun vs Huracan (Mexican Primera Apertura) — Home Win · High 81.3%
+  👀 Seoul E-Land vs Jeonnam Dragons (Korean K-League 2) — Home Win · High 85.7%
+  👀 Libertad Ecu vs Emelec (Ecuador Liga Pro) — Home Win · High 74.6%
+
+
 <!-- report: daily 2026-11-06 -->
 ## Daily Picks — 2026-11-06
 
