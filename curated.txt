@@ -1,8 +1,5 @@
 ✦ CURATED PICKS · 2026-11-07
   Input reports:
-    OU   → over_under_vip_report_2026-11-07.txt
-    BTTS → btts_vip_report_2026-11-07.txt
-    HW   → home_win_vip_report_2026-11-07.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -13,101 +10,17 @@
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
     • Today only (2026-11-07)
 
-━━━ OVER / UNDER 2.5  (22 accepted) ━━━
-   1. ✅ Den Haag vs Sp. Rotterdam  (Netherlands League)
-      Over 2.5 · High 88.7% · xG 2.24–2.90
-      Stake 0.2% @ 2.0  ·  EV +77.4c/$  ·  Edge +77.4%
-   2. ✅ Farul Constanta vs Rapid Buch.  (Romanian Liga 1)
-      Over 2.5 · High 82.5% · xG 2.67–1.82
-      Stake 0.2% @ 2.0  ·  EV +65.0c/$  ·  Edge +65.0%
-   3. ✅ Troon vs Dalbeattie Star  (Scottish Lowland League)
-      Over 2.5 · High 81.0% · xG 2.78–1.58
-      Stake 0.2% @ 2.0  ·  EV +62.0c/$  ·  Edge +62.0%
-   4. ✅ Boreham W vs Wigan  (English FA Cup)
-      Over 2.5 · High 80.5% · xG 3.50–0.82
-      Stake 0.2% @ 2.0  ·  EV +61.0c/$  ·  Edge +61.0%
-   5. ✅ Eastleigh vs Shrewsbury  (English FA Cup)
-      Over 2.5 · High 80.4% · xG 2.21–2.10
-      Stake 0.2% @ 2.0  ·  EV +60.8c/$  ·  Edge +60.8%
-   6. ✅ Ried vs LASK Linz  (Austrian Bundesliga)
-      Over 2.5 · High 80.4% · xG 1.99–2.32
-      Stake 0.2% @ 2.0  ·  EV +60.8c/$  ·  Edge +60.8%
-   7. ✅ Vaduz vs FC Sion  (Swiss Super League)
-      Over 2.5 · High 80.4% · xG 2.44–1.87
-      Stake 0.2% @ 2.0  ·  EV +60.8c/$  ·  Edge +60.8%
-   8. ✅ Gillingham vs Barrow  (English FA Cup)
-      Over 2.5 · High 80.1% · xG 1.37–2.92
-      Stake 0.2% @ 2.0  ·  EV +60.2c/$  ·  Edge +60.2%
-   9. ✅ Royal Antwerp vs Lommel  (Belgium League)
-      Over 2.5 · High 79.9% · xG 2.36–1.91
-      Stake 0.2% @ 2.0  ·  EV +59.8c/$  ·  Edge +59.8%
-  10. ✅ Lucerne vs Young Boys  (Swiss Super League)
-      Over 2.5 · High 79.8% · xG 1.61–2.65
-      Stake 0.2% @ 2.0  ·  EV +59.6c/$  ·  Edge +59.6%
-  11. ✅ Stuttgart vs W Bremen  (German Bundesliga)
-      Over 2.5 · High 78.8% · xG 2.10–2.09
-      Stake 0.2% @ 2.0  ·  EV +57.6c/$  ·  Edge +57.6%
-  12. ✅ Cardiff vs Burnley  (Football League Championship)
-      Over 2.5 · High 78.4% · xG 2.59–1.57
-      Stake 0.2% @ 2.0  ·  EV +56.8c/$  ·  Edge +56.8%
-  13. ✅ Harrogate vs Fylde  (English FA Cup)
-      Over 2.5 · High 76.6% · xG 2.88–1.15
-      Stake 0.2% @ 2.0  ·  EV +53.2c/$  ·  Edge +53.2%
-  14. ✅ Mainz vs B Munich  (German Bundesliga)
-      Over 2.5 · High 76.5% · xG 1.35–2.67
-      Stake 0.2% @ 2.0  ·  EV +53.0c/$  ·  Edge +53.0%
-  15. ✅ Chesterfield vs Yeovil  (English FA Cup)
-      Over 2.5 · High 76.3% · xG 2.28–1.73
-      Stake 0.2% @ 2.0  ·  EV +52.6c/$  ·  Edge +52.6%
-  16. ✅ M. Haifa vs M. Netanya  (Israeli League)
-      Over 2.5 · High 75.4% · xG 1.62–2.33
-      Stake 0.2% @ 2.0  ·  EV +50.8c/$  ·  Edge +50.8%
-  17. ✅ Fleetwood vs Rochdale  (English FA Cup)
-      Over 2.5 · High 74.1% · xG 2.72–1.14
-      Stake 0.1% @ 2.0  ·  EV +48.2c/$  ·  Edge +48.2%
-  18. ✅ Austria Lustenau vs GAK  (Austrian Bundesliga)
-      Over 2.5 · High 74.1% · xG 2.38–1.48
-      Stake 0.1% @ 2.0  ·  EV +48.2c/$  ·  Edge +48.2%
-  19. ✅ Cadiz vs Real Oviedo  (Spanish Segunda)
-      Over 2.5 · High 72.0% · xG 2.16–1.57
-      Stake 0.1% @ 2.0  ·  EV +44.0c/$  ·  Edge +44.0%
-  20. ✅ Guiseley vs Sutton Utd  (English FA Cup)
-      Over 2.5 · High 71.6% · xG 2.42–1.29
-      Stake 0.1% @ 2.0  ·  EV +43.2c/$  ·  Edge +43.2%
-  21. ✅ Crewe vs AFC W'bledon  (English FA Cup)
-      Over 2.5 · High 71.3% · xG 2.65–1.04
-      Stake 0.1% @ 2.0  ·  EV +42.6c/$  ·  Edge +42.6%
-  22. ✅ Fraserburgh vs Forres Mech  (Scottish Highland League)
-      Over 2.5 · High 70.9% · xG 1.52–2.15
-      Stake 0.1% @ 2.0  ·  EV +41.8c/$  ·  Edge +41.8%
+━━━ OVER / UNDER 2.5  (0 accepted) ━━━
+  (none)
 
-━━━ BTTS (Yes / No)  (3 accepted) ━━━
-   1. ✅ Lucerne vs Young Boys  (Swiss Super League)
-      BTTS Yes · High 74.4% · xG 1.61–2.65
-      Stake 1.1% @ 1.9  ·  EV 
-   2. ✅ M. Haifa vs M. Netanya  (Israeli League)
-      BTTS Yes · High 72.4% · xG 1.62–2.33
-      Stake 1.0% @ 1.9  ·  EV 
-   3. 🔥 Epitsentr vs Kryvbas  (Ukrainian League)
-      BTTS No · High 68.8% · xG 0.74–0.91
-      Stake 12.5% @ 1.85  ·  EV 
+━━━ BTTS (Yes / No)  (0 accepted) ━━━
+  (none)
 
-━━━ HOME WIN  (4 accepted) ━━━
-   1. ✅ Boreham W vs Wigan  (English FA Cup)
-      Home Win · High 93.1%
-      Stake 2.1% @ 2.8  ·  EV +160.7c/$  ·  Edge +160.7%
-   2. ✅ Arsenal vs Hull  (Premier League)
-      Home Win · High 91.0%
-      Stake 2.1% @ 2.8  ·  EV +154.8c/$  ·  Edge +154.8%
-   3. 🔥 Port Vale vs Scunthorpe  (English FA Cup)
-      Home Win · High 89.5%
-      Stake 2.0% @ 2.8  ·  EV +150.6c/$  ·  Edge +150.6%
-   4. ✅ Boness Utd vs Dunipace  (Scottish Lowland League)
-      Home Win · High 89.0%
-      Stake 2.0% @ 2.8  ·  EV +149.2c/$  ·  Edge +149.2%
+━━━ HOME WIN  (0 accepted) ━━━
+  (none)
 
-📊 Summary: 29 curated picks
-   Parsed total: 139   Rejected: 110   Accepted: 29
+📊 Summary: 0 curated picks
+   Parsed total: 0   Rejected: 0   Accepted: 0
 
 ---
 For informational purposes only · Gamble responsibly
