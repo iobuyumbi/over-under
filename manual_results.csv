@@ -1589,8 +1589,8 @@ date,home_team,away_team,score
 2026-11-07,Aris Salonika,Panetolikos,3-0
 2026-11-07,Arsenal,Hull,1-0
 2026-11-07,Atlante,Santos Laguna,0-2
-2026-11-07,Atlas,Pachuca,
-2026-11-07,Atletico Nacional,Deportivo Pereira,
+2026-11-07,Atlas,Pachuca,1-4
+2026-11-07,Atletico Nacional,Deportivo Pereira,4-3
 2026-11-07,Austria Lustenau,GAK,2-1
 2026-11-07,Avispa Fukuoka,V-Varen Nagasaki,1-1
 2026-11-07,Avro,Warrington,0-3
@@ -1617,7 +1617,7 @@ date,home_team,away_team,score
 2026-11-07,Cadiz,Real Oviedo,1-2
 2026-11-07,Cagliari,Frosinone,1-0
 2026-11-07,Cajamarca,Alianza Atletico,2-0
-2026-11-07,Caracas,Academia Puerto Cabello,
+2026-11-07,Caracas,Academia Puerto Cabello,1-2
 2026-11-07,Cardiff,Burnley,5-4
 2026-11-07,Carlisle,Salford,1-0
 2026-11-07,Carshalton,Cheshunt,4-2
@@ -1700,9 +1700,9 @@ date,home_team,away_team,score
 2026-11-07,Lancaster,Cleethorpes T,0-2
 2026-11-07,Largs Thistle,Newton S,2-0
 2026-11-07,Leek,Ilkeston,3-2
-2026-11-07,Leones,Guayaquil City,
+2026-11-07,Leones,Guayaquil City,1-1
 2026-11-07,Leyton Orient,Harborough T,5-1
-2026-11-07,Libertad,Nacional As,
+2026-11-07,Libertad,Nacional As,3-0
 2026-11-07,Libertad Ecu,Emelec,0-1
 2026-11-07,Ljungskile,Landskrona BoIS,1-1
 2026-11-07,Lucerne,Young Boys,2-3
@@ -1716,7 +1716,7 @@ date,home_team,away_team,score
 2026-11-07,Malvern Town,Havant & W,1-0
 2026-11-07,Mansfield,Macclesfield,3-0
 2026-11-07,Merthyr,Hebburn Town,4-1
-2026-11-07,Monagas SC,Deportivo Tachira,
+2026-11-07,Monagas SC,Deportivo Tachira,0-2
 2026-11-07,Montreal Imp,Vancouver W,0-2
 2026-11-07,Montrose,East Fife,1-2
 2026-11-07,NK Istra,Rijeka,3-1
@@ -1816,6 +1816,7 @@ date,home_team,away_team,score
 2026-11-08,Brighton,Brentford,
 2026-11-08,Brinje Grosuplje,NK Aluminij,
 2026-11-08,C Palace,Liverpool,
+2026-11-08,CD Nacional,Academico de Viseu,
 2026-11-08,CFR Cluj,Uni Craiova,
 2026-11-08,Cambuur,PSV Eindhoven,
 2026-11-08,Celta Vigo,Levante,
@@ -1919,6 +1920,7 @@ date,home_team,away_team,score
 2026-11-08,Zorya,LNZ Cherkasy,
 2026-11-09,Alianza Petrolera,Llaneros,
 2026-11-09,Botosani,Otelul Galati,
+2026-11-09,Chelmsford,Ebbsfleet,
 2026-11-09,Kristiansund,Valerenga,
 2026-11-09,Leon,Guadalajara,
 2026-11-09,Mushuc Runa,Delfin,
@@ -1928,6 +1930,7 @@ date,home_team,away_team,score
 2026-11-09,Tecnico Universitario,Manta,
 2026-11-10,Barnet,Leyton Orient,
 2026-11-10,Bath City,Taunton Town,
+2026-11-10,Bradford,York,
 2026-11-10,Bristol R,Reading,
 2026-11-10,Bromley,MK Dons,
 2026-11-10,Burton,Notts Co,
@@ -1949,13 +1952,17 @@ date,home_team,away_team,score
 2026-11-10,Huddersfield,Liverpool U,
 2026-11-10,Leicester,Walsall,
 2026-11-10,Mansfield,Chesterfield,
+2026-11-10,Morecambe,Hereford,
+2026-11-10,Northampton,Gillingham,
 2026-11-10,Oxford,Cheltenham,
 2026-11-10,Quorn,Stockton T,
 2026-11-10,Redcar Athletic,Bamber Br.,
 2026-11-10,Rylands,Guiseley,
 2026-11-10,Salisbury FC,Braintree,
+2026-11-10,Scarborough A,Marine,
 2026-11-10,Sholing,Chippenham,
 2026-11-10,Stevenage,Fulham U,
+2026-11-10,Stockport,Tranmere,
 2026-11-10,Uxbridge,Hanwell Town,
 2026-11-10,Whitehawk,Welling,
 2026-11-10,Wimborne T,Poole Town,
@@ -1976,20 +1983,10 @@ date,home_team,away_team,score
 2026-11-12,Millonarios,Alianza Petrolera,
 2026-11-12,Montenegro,Latvia,
 2026-11-12,Turkey,Belgium,
-<<<<<<< Updated upstream
-=======
-2026-11-10,Scarborough A,Marine,
-2026-11-13,Strathspey T,Deveronvale,
-2026-11-10,Bradford,York,
+2026-11-13,Leganes,Burgos,
+2026-11-13,Luxembourg,Estonia,
+2026-11-13,Moldova,Kazakhstan,
 2026-11-13,Montevideo City Torque,Racing Club M,
-2026-11-10,Stockport,Tranmere,
-2026-11-08,CD Nacional,Academico de Viseu,
-2026-11-10,Morecambe,Hereford,
 2026-11-13,Serbia,Germany,
 2026-11-13,Slovakia,Faroe Islands,
-2026-11-13,Moldova,Kazakhstan,
-2026-11-13,Leganes,Burgos,
-2026-11-09,Chelmsford,Ebbsfleet,
-2026-11-10,Northampton,Gillingham,
-2026-11-13,Luxembourg,Estonia,
->>>>>>> Stashed changes
+2026-11-13,Strathspey T,Deveronvale,
