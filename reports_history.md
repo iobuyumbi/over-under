@@ -4,6 +4,204 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-08 -->
+## Daily Picks — 2026-11-08
+
+### Over/Under 2.5  (21)
+  ✅ Ipswich vs Bournemouth (Premier League) — Over 2.5 · High 73.3%
+  ✅ Celtic vs Kilmarnock (Scottish Premier) — Over 2.5 · High 72.3%
+  ✅ Monza vs Atalanta (Italian Serie A) — Over 2.5 · High 69.9%
+  ✅ Sociedad vs Rayo Vallecano (Spanish La Liga) — Over 2.5 · High 66.0%
+  ✅ Midtjylland vs SonderjyskE (Danish SAS Ligaen) — Over 2.5 · High 76.5%
+  ✅ AZ Alkmaar vs FC Groningen (Netherlands League) — Over 2.5 · High 74.5%
+  ✅ Thun vs Basel (Swiss Super League) — Over 2.5 · High 70.8%
+  ✅ Servette vs FC Zurich (Swiss Super League) — Over 2.5 · High 71.8%
+  ✅ Tromso vs Bodo Glimt (Norwegian Tippeligaen) — Over 2.5 · High 68.1%
+  ✅ Sandefjord vs Molde (Norwegian Tippeligaen) — Over 2.5 · High 69.7%
+  ✅ Viking vs KFUM Oslo (Norwegian Tippeligaen) — Over 2.5 · High 77.2%
+  ✅ Swarovski Wattens vs Aus. Vienna (Austrian Bundesliga) — Over 2.5 · High 62.2%
+  ✅ Sturm Graz vs RB Salzburg (Austrian Bundesliga) — Over 2.5 · High 64.1%
+  ✅ Lech Poznan vs Zaglebie Lubin (Polish Ekstraklasa) — Over 2.5 · High 73.4%
+  ✅ Austin FC vs Portland Timb. (MLS) — Over 2.5 · High 70.4%
+  ✅ Toluca vs Monterrey (Mexican Primera Apertura) — Over 2.5 · High 73.7%
+  ✅ San Diego vs Kansas City (MLS) — Over 2.5 · High 76.8%
+  ✅ Pumas UNAM vs Club America (Mexican Primera Apertura) — Over 2.5 · High 89.9%
+  ✅ Sport Boys vs UTC Cajamarca (Mexican Primera Apertura) — Over 2.5 · High 70.9%
+  ✅ Tochigi City vs Omiya Ardija (Japanese J2 League) — Over 2.5 · High 61.0%
+  ✅ Univ de Chile vs Cobresal (Chile Primera) — Over 2.5 · High 74.8%
+
+### BTTS  (6)
+  ✅ Servette vs FC Zurich (Swiss Super League) — BTTS Yes · High 71.5%
+  ✅ Lech Poznan vs Zaglebie Lubin (Polish Ekstraklasa) — BTTS Yes · High 71.8%
+  ✅ Toluca vs Monterrey (Mexican Primera Apertura) — BTTS Yes · High 76.4%
+  ✅ Pumas UNAM vs Club America (Mexican Primera Apertura) — BTTS Yes · High 82.9%
+  🔥 KPS Kuopio vs FC Inter (Finland League) — BTTS No · High 71.6%
+  ✅ Zorya vs LNZ Cherkasy (Ukrainian League) — BTTS No · High 65.4%
+
+### Home Win  (13)
+  ✅ Brighton vs Brentford (Premier League) — Home Win · High 82.3%
+  ✅ Wimborne T vs Crawley (English FA Cup) — Home Win · High 81.2%
+  ✅ Spartak Moscow vs Akron (Russian Premier) — Home Win · High 84.1%
+  ✅ Union St Gilloise vs Genk (Belgium League) — Home Win · High 80.8%
+  ✅ Hartberg vs Altach (Austrian Bundesliga) — Home Win · High 78.4%
+  👀 Stafford vs Grimsby (English FA Cup) — Home Win · High 74.6%
+  👀 Gent vs Kortrijk (Belgium League) — Home Win · High 88.3%
+  👀 Legia Warsaw vs Rakow Czestochowa (Polish Ekstraklasa) — Home Win · Low 53.9%
+  👀 AEK Athens vs Levadiakos (Greek Super League) — Home Win · High 82.2%
+  👀 OFI Crete vs Atromitos (Greek Super League) — Home Win · High 77.4%
+  👀 Olympiakos vs PAOK Salonika (Greek Super League) — Home Win · High 73.9%
+  👀 Santa Fe vs Deportivo Pasto (Mexican Primera Apertura) — Home Win · Medium 66.0%
+  👀 Suwon Samsung vs Yongin (Korean K-League 2) — Home Win · Medium 64.5%
+
+### Team Goals Over 0.5  (146)
+  🔥 Brighton vs Brentford (Premier League) — Home to Score · High 94.1%
+  🔥 Stafford vs Grimsby (English FA Cup) — Home to Score · High 89.1%
+  🔥 Freiburg vs Union Berlin (German Bundesliga) — Home to Score · High 97.0%
+  🔥 Sociedad vs Rayo Vallecano (Spanish La Liga) — Home to Score · High 82.6%
+  🔥 Spartak Moscow vs Akron (Russian Premier) — Home to Score · High 85.0%
+  🔥 Midtjylland vs SonderjyskE (Danish SAS Ligaen) — Home to Score · High 91.4%
+  🔥 Utrecht vs NEC Nijmegen (Netherlands League) — Home to Score · High 85.3%
+  🔥 Swarovski Wattens vs Aus. Vienna (Austrian Bundesliga) — Home to Score · High 79.8%
+  🔥 Legia Warsaw vs Rakow Czestochowa (Polish Ekstraklasa) — Home to Score · High 83.8%
+  🔥 Olympiakos vs PAOK Salonika (Greek Super League) — Home to Score · High 88.8%
+  🔥 Debrecen vs Ujpest Dozsa (Hungarian League) — Home to Score · High 81.0%
+  🔥 Minnesota U vs San Jose (MLS) — Home to Score · High 86.7%
+  🔥 Austin FC vs Portland Timb. (MLS) — Home to Score · High 81.7%
+  🔥 Real Salt Lake vs LA Galaxy (MLS) — Home to Score · High 91.4%
+  🔥 Sport Boys vs UTC Cajamarca (Mexican Primera Apertura) — Home to Score · High 84.9%
+  🔥 Cheonan City vs Busan IPark (Korean K-League 2) — Home to Score · Medium 74.1%
+  🔥 Univ de Chile vs Cobresal (Chile Primera) — Home to Score · High 95.9%
+  🔥 Barcelona de G vs LDU Quito (Ecuador Liga Pro) — Home to Score · Medium 73.3%
+  ✅ C Palace vs Liverpool (Premier League) — Home to Score · High 83.0%
+  ✅ Ipswich vs Bournemouth (Premier League) — Home to Score · High 79.8%
+  ✅ Wimborne T vs Crawley (English FA Cup) — Home to Score · High 91.3%
+  ✅ Hearts vs Falkirk (Scottish Premier) — Home to Score · Medium 72.5%
+  ✅ Celtic vs Kilmarnock (Scottish Premier) — Home to Score · High 91.9%
+  ✅ Monza vs Atalanta (Italian Serie A) — Home to Score · High 88.7%
+  ✅ Inter vs Como (Italian Serie A) — Home to Score · High 85.0%
+  ✅ Fiorentina vs Juventus (Italian Serie A) — Home to Score · Medium 73.6%
+  ✅ Hoffenheim vs Schalke (German Bundesliga) — Home to Score · High 86.3%
+  ✅ Celta Vigo vs Levante (Spanish La Liga) — Home to Score · Medium 76.8%
+  ✅ Atl Madrid vs Barcelona (Spanish La Liga) — Home to Score · High 82.3%
+  ✅ Brest vs Lyon (French Ligue 1) — Home to Score · High 83.8%
+  ✅ Besiktas vs Genclerbirligi (Turkish Super Lig) — Home to Score · High 95.0%
+  ✅ Baltika vs Dynamo Makhachkala (Russian Premier) — Home to Score · High 83.5%
+  ✅ Copenhagen vs Brondby (Danish SAS Ligaen) — Home to Score · High 83.8%
+  ✅ Aarhus vs AC Horsens (Danish SAS Ligaen) — Home to Score · Medium 77.9%
+  ✅ FC Twente vs Ajax (Netherlands League) — Home to Score · High 78.6%
+  ✅ AZ Alkmaar vs FC Groningen (Netherlands League) — Home to Score · High 79.2%
+  ✅ Cambuur vs PSV Eindhoven (Netherlands League) — Home to Score · High 82.6%
+  ✅ Slavia Prague vs Artis Brno (Czech Liga) — Home to Score · Medium 75.1%
+  ✅ Heidenheim vs Hannover (German Bundesliga 2) — Home to Score · High 83.6%
+  ✅ FC Magdeburg vs St Pauli (German Bundesliga 2) — Home to Score · High 87.9%
+  ✅ Gent vs Kortrijk (Belgium League) — Home to Score · High 87.5%
+  ✅ Union St Gilloise vs Genk (Belgium League) — Home to Score · High 93.1%
+  ✅ Servette vs FC Zurich (Swiss Super League) — Home to Score · High 85.8%
+  ✅ Lillestrom vs Aalesund (Norwegian Tippeligaen) — Home to Score · Medium 74.8%
+  ✅ Fredrikstad vs Brann (Norwegian Tippeligaen) — Home to Score · Low 65.0%
+  ✅ Viking vs KFUM Oslo (Norwegian Tippeligaen) — Home to Score · High 93.2%
+  ✅ Hartberg vs Altach (Austrian Bundesliga) — Home to Score · High 88.8%
+  ✅ Sturm Graz vs RB Salzburg (Austrian Bundesliga) — Home to Score · High 83.0%
+  ✅ Jagiellonia vs GKS Katowice (Polish Ekstraklasa) — Home to Score · Medium 74.6%
+  ✅ Lech Poznan vs Zaglebie Lubin (Polish Ekstraklasa) — Home to Score · High 90.7%
+  ✅ Brinje Grosuplje vs NK Aluminij (Slovenian League) — Home to Score · Low 66.4%
+  ✅ OFI Crete vs Atromitos (Greek Super League) — Home to Score · High 83.5%
+  ✅ CD Nacional vs Academico de Viseu (Portuguese Liga) — Home to Score · Low 62.8%
+  ✅ Radnik Surdulica vs OFK Belgrade (Serbian League) — Home to Score · High 85.5%
+  ✅ Partizan vs Macva Sabac (Serbian League) — Home to Score · High 81.2%
+  ✅ Novi Pazar vs Mladost Lucani (Serbian League) — Home to Score · High 87.6%
+  ✅ Levski Sofia vs CSKA Sofia (Bulgarian League) — Home to Score · Medium 74.8%
+  ✅ Nyiregyhaza vs Gyori ETO (Hungarian League) — Home to Score · Low 65.4%
+  ✅ Dallas vs Colorado (MLS) — Home to Score · Medium 76.3%
+  ✅ Seattle vs Los Angeles FC (MLS) — Home to Score · Medium 73.3%
+  ✅ San Diego vs Kansas City (MLS) — Home to Score · High 91.2%
+  ✅ Tigres vs Cruz Azul (Mexican Primera Apertura) — Home to Score · Medium 75.1%
+  ✅ Toluca vs Monterrey (Mexican Primera Apertura) — Home to Score · High 88.6%
+  ✅ Pumas UNAM vs Club America (Mexican Primera Apertura) — Home to Score · High 87.3%
+  ✅ Deportivo Garcilaso vs Comerciantes Unidos (Mexican Primera Apertura) — Home to Score · High 92.0%
+  ✅ Jaguares de Cordoba vs Atletico Bucaramanga (Mexican Primera Apertura) — Home to Score · Medium 75.6%
+  ✅ Tochigi City vs Omiya Ardija (Japanese J2 League) — Home to Score · Medium 69.3%
+  ✅ Jubilo Iwata vs Shonan Bellmare (Japanese J2 League) — Home to Score · Low 64.7%
+  ✅ Vegalta Sendai vs Ventforet Kofu (Japanese J2 League) — Home to Score · High 86.9%
+  ✅ JEF United vs Mito HollyHock (Japanese J1 League) — Home to Score · High 87.3%
+  ✅ FC Seoul vs Ulsan Hyundai (Korean K-League 1) — Home to Score · Medium 76.1%
+  ✅ Audax Italiano vs Coquimbo Unido (Chile Primera) — Home to Score · High 78.8%
+  ✅ Nublense vs Colo-Colo (Chile Primera) — Home to Score · High 80.4%
+  ✅ Univ Catolica vs Deportes Limache (Chile Primera) — Home to Score · Medium 70.5%
+  ✅ Macara vs Universidad Catolica (Ecuador Liga Pro) — Home to Score · Medium 75.1%
+  ✅ Aucas vs Independiente d V (Ecuador Liga Pro) — Home to Score · Low 63.6%
+  ✅ Cerro Porteno vs Deportivo Recoleta (Ecuador Liga Pro) — Home to Score · Medium 70.8%
+  ✅ Sportivo Trinidense vs Sportivo Ameliano (Ecuador Liga Pro) — Home to Score · High 81.7%
+  🔥 Ipswich vs Bournemouth (Premier League) — Away to Score · High 87.3%
+  🔥 Sociedad vs Rayo Vallecano (Spanish La Liga) — Away to Score · High 79.4%
+  🔥 Lech Poznan vs Zaglebie Lubin (Polish Ekstraklasa) — Away to Score · High 75.8%
+  🔥 Nyiregyhaza vs Gyori ETO (Hungarian League) — Away to Score · Medium 70.2%
+  🔥 Tochigi City vs Omiya Ardija (Japanese J2 League) — Away to Score · High 85.3%
+  ✅ C Palace vs Liverpool (Premier League) — Away to Score · High 85.0%
+  ✅ Sunderland vs Chelsea (Premier League) — Away to Score · Medium 74.3%
+  ✅ Cray W vs Stockport (English FA Cup) — Away to Score · Medium 74.6%
+  ✅ Hearts vs Falkirk (Scottish Premier) — Away to Score · Medium 70.8%
+  ✅ Napoli vs Lazio (Italian Serie A) — Away to Score · High 94.2%
+  ✅ Monza vs Atalanta (Italian Serie A) — Away to Score · High 76.5%
+  ✅ Fiorentina vs Juventus (Italian Serie A) — Away to Score · High 81.5%
+  ✅ Elche vs Real Betis (Spanish La Liga) — Away to Score · High 79.4%
+  ✅ Brest vs Lyon (French Ligue 1) — Away to Score · Low 63.9%
+  ✅ Le Mans vs Monaco (French Ligue 1) — Away to Score · High 78.6%
+  ✅ Lens vs Marseille (French Ligue 1) — Away to Score · High 93.1%
+  ✅ Corum vs Fenerbahce (Turkish Super Lig) — Away to Score · Medium 67.0%
+  ✅ Midtjylland vs SonderjyskE (Danish SAS Ligaen) — Away to Score · High 79.0%
+  ✅ Randers vs Nordsjaelland (Danish SAS Ligaen) — Away to Score · High 78.8%
+  ✅ AZ Alkmaar vs FC Groningen (Netherlands League) — Away to Score · High 88.0%
+  ✅ Utrecht vs NEC Nijmegen (Netherlands League) — Away to Score · High 85.6%
+  ✅ Halmstads vs Djurgaarden (Swedish Allsvenskan) — Away to Score · High 79.4%
+  ✅ AIK Solna vs Hacken (Swedish Allsvenskan) — Away to Score · High 88.7%
+  ✅ Kalmar vs IK Sirius (Swedish Allsvenskan) — Away to Score · High 84.1%
+  ✅ St Gallen vs Lugano (Swiss Super League) — Away to Score · High 95.3%
+  ✅ Thun vs Basel (Swiss Super League) — Away to Score · High 83.3%
+  ✅ Servette vs FC Zurich (Swiss Super League) — Away to Score · High 80.4%
+  ✅ Sp. Gijon vs Valladolid (Spanish Segunda) — Away to Score · Medium 67.0%
+  ✅ Tromso vs Bodo Glimt (Norwegian Tippeligaen) — Away to Score · High 81.2%
+  ✅ Lillestrom vs Aalesund (Norwegian Tippeligaen) — Away to Score · High 87.4%
+  ✅ HamKam vs Sarpsborg (Norwegian Tippeligaen) — Away to Score · High 92.3%
+  ✅ Sandefjord vs Molde (Norwegian Tippeligaen) — Away to Score · High 85.8%
+  ✅ Fredrikstad vs Brann (Norwegian Tippeligaen) — Away to Score · High 82.4%
+  ✅ Viking vs KFUM Oslo (Norwegian Tippeligaen) — Away to Score · High 75.8%
+  ✅ Swarovski Wattens vs Aus. Vienna (Austrian Bundesliga) — Away to Score · High 79.2%
+  ✅ Osijek vs Hajduk Split (Croatian HNL) — Away to Score · Medium 70.5%
+  ✅ Sepsi Sfantu G vs Voluntari (Romanian Liga 1) — Away to Score · High 78.6%
+  ✅ CD Nacional vs Academico de Viseu (Portuguese Liga) — Away to Score · High 86.6%
+  ✅ Estoril vs Maritimo (Portuguese Liga) — Away to Score · Medium 72.2%
+  ✅ Estrela vs Benfica (Portuguese Liga) — Away to Score · High 90.8%
+  ✅ FC Minsk vs Dinamo Brest (Belarus League) — Away to Score · High 86.3%
+  ✅ Spartak Varna vs Arda (Bulgarian League) — Away to Score · Low 60.1%
+  ✅ Vasas vs Ferencvaros (Hungarian League) — Away to Score · High 88.1%
+  ✅ Minnesota U vs San Jose (MLS) — Away to Score · Medium 74.8%
+  ✅ Austin FC vs Portland Timb. (MLS) — Away to Score · High 87.9%
+  ✅ Seattle vs Los Angeles FC (MLS) — Away to Score · Low 58.9%
+  ✅ Houston vs St. Louis City SC (MLS) — Away to Score · High 75.3%
+  ✅ Real Salt Lake vs LA Galaxy (MLS) — Away to Score · Medium 74.8%
+  ✅ San Diego vs Kansas City (MLS) — Away to Score · High 84.3%
+  ✅ Toluca vs Monterrey (Mexican Primera Apertura) — Away to Score · High 84.9%
+  ✅ Pumas UNAM vs Club America (Mexican Primera Apertura) — Away to Score · High 95.6%
+  ✅ Central Cordoba SDE vs Lanus (Mexican Primera Apertura) — Away to Score · High 83.1%
+  ✅ Los Chankas vs Alianza Lima (Mexican Primera Apertura) — Away to Score · High 76.3%
+  ✅ Deportivo Garcilaso vs Comerciantes Unidos (Mexican Primera Apertura) — Away to Score · Low 64.3%
+  ✅ America de Cali vs Deportivo Cali (Mexican Primera Apertura) — Away to Score · Medium 68.0%
+  ✅ Jaguares de Cordoba vs Atletico Bucaramanga (Mexican Primera Apertura) — Away to Score · Medium 72.5%
+  ✅ Vanraure Hachinohe vs Consadole Sapporo (Japanese J2 League) — Away to Score · High 89.2%
+  ✅ Deportes Tolima vs Millonarios (Mexican Primera Apertura) — Away to Score · Low 63.6%
+  ✅ Vegalta Sendai vs Ventforet Kofu (Japanese J2 League) — Away to Score · Low 63.2%
+  ✅ FC Seoul vs Ulsan Hyundai (Korean K-League 1) — Away to Score · Medium 68.3%
+  ✅ Daejeon Hana Citizen vs Incheon United (Korean K-League 1) — Away to Score · Medium 65.4%
+  ✅ Nublense vs Colo-Colo (Chile Primera) — Away to Score · High 77.7%
+  ✅ Univ Catolica vs Deportes Limache (Chile Primera) — Away to Score · Medium 73.3%
+  ✅ Union La Calera vs Huachipato (Chile Primera) — Away to Score · Medium 66.4%
+  ✅ Aucas vs Independiente d V (Ecuador Liga Pro) — Away to Score · High 79.8%
+  ✅ Barcelona de G vs LDU Quito (Ecuador Liga Pro) — Away to Score · Low 59.3%
+  ✅ Portuguesa FC vs Metropolitanos (Ecuador Liga Pro) — Away to Score · High 85.5%
+  ✅ Deportivo La Guaira vs Carabobo FC (Ecuador Liga Pro) — Away to Score · High 89.1%
+
+
 <!-- report: daily 2026-11-07 -->
 ## Daily Picks — 2026-11-07
 

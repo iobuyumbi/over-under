@@ -7,9 +7,12 @@
       "home_team": "Port Vale",
       "away_team": "Scunthorpe",
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:32.927614",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:46.937277",
+      "final_score": "4-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-10",
@@ -29,9 +32,12 @@
       "home_team": "Arsenal",
       "away_team": "Hull",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:32.939031",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:46.937277",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -40,9 +46,12 @@
       "home_team": "Boreham W",
       "away_team": "Wigan",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:36:32.944533",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:46.940274",
+      "final_score": "0-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -51,9 +60,12 @@
       "home_team": "MK Dons",
       "away_team": "Swindon",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:32.949954",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:46.942273",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -62,9 +74,12 @@
       "home_team": "Boness Utd",
       "away_team": "Dunipace",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:32.954454",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:46.945270",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -73,9 +88,12 @@
       "home_team": "Rosario",
       "away_team": "Estudiantes de Rio Cuarto",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:32.958456",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:46.958263",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-08",
@@ -150,9 +168,12 @@
       "home_team": "Birmingham",
       "away_team": "Swansea",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:32.997178",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:46.958263",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -161,9 +182,12 @@
       "home_team": "Roma",
       "away_team": "Sassuolo",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:33.003680",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:46.960262",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -172,9 +196,12 @@
       "home_team": "PSG",
       "away_team": "Troyes",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:33.011220",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:46.964261",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -183,9 +210,12 @@
       "home_team": "Hertha Berlin",
       "away_team": "Wolfsburg",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:33.016757",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:46.972260",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -194,9 +224,12 @@
       "home_team": "Aris Salonika",
       "away_team": "Panetolikos",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:33.021774",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.013763",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -205,9 +238,12 @@
       "home_team": "Rosenborg",
       "away_team": "IK Start",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:33.027301",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.034757",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -216,9 +252,12 @@
       "home_team": "Zeleznicar Pancevo",
       "away_team": "FK Rad",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:33.032298",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.051744",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -227,9 +266,12 @@
       "home_team": "South Shields",
       "away_team": "Southport",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:33.037832",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.060736",
+      "final_score": "5-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -238,9 +280,12 @@
       "home_team": "Ebbsfleet",
       "away_team": "Chesham",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:33.041829",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.070731",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -249,9 +294,12 @@
       "home_team": "Enfield T",
       "away_team": "AFC Whyteleafe",
       "confidence": "close",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:36:33.046332",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.080723",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -260,9 +308,12 @@
       "home_team": "Argentinos Jun",
       "away_team": "Huracan",
       "confidence": "close",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:36:33.050330",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.089719",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -271,9 +322,12 @@
       "home_team": "Seoul E-Land",
       "away_team": "Jeonnam Dragons",
       "confidence": "close",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:36:33.055844",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.097719",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -282,9 +336,12 @@
       "home_team": "Libertad Ecu",
       "away_team": "Emelec",
       "confidence": "close",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:36:33.061841",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.108218",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-08",
@@ -439,6 +496,39 @@
       "result": "pending",
       "recorded_at": "2026-11-07T08:36:33.168162",
       "published": true
+    },
+    {
+      "date": "2026-11-10",
+      "type": "home_win",
+      "league": "Football League Trophy",
+      "home_team": "Bradford",
+      "away_team": "York",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T09:42:58.447655",
+      "published": true
+    },
+    {
+      "date": "2026-11-13",
+      "type": "home_win",
+      "league": "Copa del Rey",
+      "home_team": "Montevideo City Torque",
+      "away_team": "Racing Club M",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T09:42:58.468935",
+      "published": true
+    },
+    {
+      "date": "2026-11-10",
+      "type": "home_win",
+      "league": "Football League Trophy",
+      "home_team": "Stockport",
+      "away_team": "Tranmere",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-11-08T09:42:58.496628",
+      "published": true
     }
   ],
   "over_under": [
@@ -451,9 +541,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.180494",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.118221",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -464,9 +557,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.200530",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.119222",
+      "final_score": "5-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -477,9 +573,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.210034",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.120212",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -490,9 +589,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.219554",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.122211",
+      "final_score": "0-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -503,9 +605,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.229062",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.123210",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -516,9 +621,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.238588",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.124209",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -529,9 +637,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.246129",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.125208",
+      "final_score": "4-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -542,9 +653,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.254147",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.126208",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -555,9 +669,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.264723",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.128207",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -568,9 +685,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.274247",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.129206",
+      "final_score": "1-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -581,9 +701,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.282778",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.130205",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -594,9 +717,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.290286",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.133206",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -607,9 +733,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.295789",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.136213",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -620,9 +749,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.304820",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.138204",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -633,9 +765,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.309843",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.141199",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -646,9 +781,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.314840",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.144198",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -659,9 +797,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.321139",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.147196",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -672,9 +813,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.326667",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.152194",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -685,9 +829,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.332666",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.156191",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -698,9 +845,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.339181",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.158191",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -711,9 +861,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.344177",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.162187",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -724,9 +877,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.351002",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.169185",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -737,9 +893,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.356499",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.174180",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -750,9 +909,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.360498",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.177178",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -763,9 +925,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.365495",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.184177",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -776,9 +941,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.371024",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.187175",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -789,9 +957,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.377069",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.193173",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -802,9 +973,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.384061",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.201173",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -815,9 +989,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.390055",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.204681",
+      "final_score": "2-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -828,9 +1005,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.394052",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.207682",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -841,9 +1021,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.400588",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.211679",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -854,9 +1037,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.406095",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.217679",
+      "final_score": "0-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -867,9 +1053,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.411097",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.222673",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -880,9 +1069,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.419734",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.239664",
+      "final_score": "0-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -893,9 +1085,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.426242",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.247660",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -906,9 +1101,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.432245",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.257655",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -919,9 +1117,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.437783",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.264650",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -932,9 +1133,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.444785",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.272646",
+      "final_score": "6-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -945,9 +1149,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.451926",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.279642",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -958,9 +1165,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.461433",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.286637",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -971,9 +1181,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.503514",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.295635",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -984,9 +1197,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.509023",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.306139",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -997,9 +1213,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.514018",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.323129",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1010,9 +1229,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.520646",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.331125",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1023,9 +1245,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-07T08:23:35.526683",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.355111",
+      "final_score": "POSTPONED",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1036,9 +1261,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.532689",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.359107",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1049,9 +1277,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.537199",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.364106",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1062,9 +1293,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.543194",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.376098",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1088,9 +1322,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.554134",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.398090",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1101,9 +1338,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.558713",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.408599",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1114,9 +1354,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:23:35.562711",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.421602",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-08",
@@ -1507,6 +1750,58 @@
       "result": "pending",
       "recorded_at": "2026-11-07T08:23:35.767336",
       "published": true
+    },
+    {
+      "date": "2026-11-10",
+      "type": "over_under",
+      "league": "Football Conference North",
+      "home_team": "Scarborough A",
+      "away_team": "Marine",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T03:22:47.917741",
+      "published": true
+    },
+    {
+      "date": "2026-11-10",
+      "type": "over_under",
+      "league": "Ryman Premier",
+      "home_team": "Whitehawk",
+      "away_team": "Welling",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T03:22:47.948609",
+      "published": true
+    },
+    {
+      "date": "2026-11-10",
+      "type": "over_under",
+      "league": "Ryman Premier",
+      "home_team": "Enfield T",
+      "away_team": "Lewes",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T03:22:47.969674",
+      "published": true
+    },
+    {
+      "date": "2026-11-13",
+      "type": "over_under",
+      "league": "Scottish Highland League",
+      "home_team": "Strathspey T",
+      "away_team": "Deveronvale",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T03:22:47.976206",
+      "published": true
     }
   ],
   "btts": [
@@ -1519,9 +1814,12 @@
       "prediction": "yes",
       "prob": 55.9,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:46:36.446650",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.422595",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1532,9 +1830,12 @@
       "prediction": "yes",
       "prob": 58.1,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:46:36.460175",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.423590",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1545,9 +1846,12 @@
       "prediction": "yes",
       "prob": 58.4,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:46:36.468228",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.424589",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1558,9 +1862,12 @@
       "prediction": "yes",
       "prob": 57.6,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:46:36.472758",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.425588",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1571,9 +1878,12 @@
       "prediction": "yes",
       "prob": 68.5,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:46:36.480764",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.426587",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1584,9 +1894,12 @@
       "prediction": "yes",
       "prob": 57.2,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:46:36.486270",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.428590",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1597,9 +1910,12 @@
       "prediction": "yes",
       "prob": 68.4,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:46:36.492799",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.430585",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1610,9 +1926,12 @@
       "prediction": "yes",
       "prob": 65.4,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:46:36.502311",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.436584",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1623,9 +1942,12 @@
       "prediction": "yes",
       "prob": 74.4,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:46:36.514386",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.441579",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1636,9 +1958,12 @@
       "prediction": "yes",
       "prob": 72.4,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:46:36.519404",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.451576",
+      "final_score": "0-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-08",
@@ -1727,8 +2052,37 @@
       "prediction": "no",
       "prob": 68.8,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:46:36.565615",
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.456570",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
+    },
+    {
+      "date": "2026-11-08",
+      "type": "btts",
+      "league": "Finland League",
+      "home_team": "KPS Kuopio",
+      "away_team": "FC Inter",
+      "prediction": "no",
+      "prob": 71.6,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-11-08T09:56:30.380642",
+      "published": true
+    },
+    {
+      "date": "2026-11-08",
+      "type": "btts",
+      "league": "Ukrainian League",
+      "home_team": "Zorya",
+      "away_team": "LNZ Cherkasy",
+      "prediction": "no",
+      "prob": 65.4,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T09:56:30.402467",
       "published": true
     }
   ],
@@ -1742,9 +2096,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.416841",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.458570",
+      "final_score": "4-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1755,9 +2112,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.430756",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.459569",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1768,9 +2128,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.436794",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.460568",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1781,9 +2144,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.442285",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.462566",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1794,9 +2160,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.449301",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.467567",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1807,9 +2176,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.456471",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.470564",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1820,9 +2192,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.466015",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.474559",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1833,9 +2208,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.474556",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.476558",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1846,9 +2224,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-07T08:55:50.484062",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.483557",
+      "final_score": "POSTPONED",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1859,9 +2240,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.491590",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.486554",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1872,9 +2256,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.499957",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.491557",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1885,9 +2272,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.509996",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.496556",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1898,9 +2288,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.513500",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.506078",
+      "final_score": "3-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1911,9 +2304,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.520499",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.514064",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1924,9 +2320,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.526005",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.522071",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1937,9 +2336,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.532543",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.527056",
+      "final_score": "6-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1950,9 +2352,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.538538",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.534056",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1963,9 +2368,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-07T08:55:50.543042",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.543048",
+      "final_score": "POSTPONED",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1976,9 +2384,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.548040",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.553054",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -1989,9 +2400,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.554583",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.563036",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2002,9 +2416,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.559580",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.576030",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2015,9 +2432,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:50.564224",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.585024",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2028,9 +2448,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.570728",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.591026",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2041,9 +2464,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.576233",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.601024",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2054,9 +2480,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:50.580738",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.612529",
+      "final_score": "0-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2080,9 +2509,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:50.590774",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.628517",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2093,9 +2525,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.597104",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.638512",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2106,9 +2541,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.602648",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.645508",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2119,9 +2557,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.609196",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.660498",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-08",
@@ -2509,9 +2950,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.796860",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.660498",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2522,9 +2966,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.801389",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.660498",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2535,9 +2982,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.806408",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.661498",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2548,9 +2998,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.810951",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.661498",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2561,9 +3014,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.816144",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.661498",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2574,9 +3030,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:50.821693",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.662497",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2587,9 +3046,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.827193",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.662497",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2600,9 +3062,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-07T08:55:50.831736",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.663498",
+      "final_score": "POSTPONED",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2613,9 +3078,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.837740",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.664496",
+      "final_score": "5-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2626,9 +3094,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.842249",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.666497",
+      "final_score": "5-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2639,9 +3110,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.847245",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.667500",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2652,9 +3126,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.851786",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.668496",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2665,9 +3142,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:50.857792",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.669493",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2678,9 +3158,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.862294",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.670493",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2691,9 +3174,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:50.866294",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.670493",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2704,9 +3190,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.870795",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.671493",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2717,9 +3206,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:50.875833",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.672492",
+      "final_score": "0-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2730,9 +3222,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.880829",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.673490",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2743,9 +3238,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.885339",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.674491",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2756,9 +3254,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.889346",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.675491",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2769,9 +3270,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.893994",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.676489",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2782,9 +3286,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:50.898500",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.676489",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2795,9 +3302,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.903021",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.677488",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2808,9 +3318,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.907022",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.678488",
+      "final_score": "6-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2821,9 +3334,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.913091",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.680486",
+      "final_score": "7-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2834,9 +3350,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.917089",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.680486",
+      "final_score": "1-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2847,9 +3366,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.921592",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.684487",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2860,9 +3382,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.927593",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.686483",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2873,9 +3398,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.932127",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.688482",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2886,9 +3414,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.937126",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.691487",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2899,9 +3430,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.941630",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.693485",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2912,9 +3446,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.946650",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.696484",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2925,9 +3462,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.950647",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.699485",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2938,9 +3478,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.957091",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.701482",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2951,9 +3494,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.961088",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.703480",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2964,9 +3510,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.966278",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.704983",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2977,9 +3526,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.970800",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.706983",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -2990,9 +3542,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.976161",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.708982",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3003,9 +3558,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.980682",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.711981",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3016,9 +3574,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.985149",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.717980",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3029,9 +3590,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.990145",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.724975",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3042,9 +3606,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.994649",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.734970",
+      "final_score": "5-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3055,9 +3622,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:50.998647",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.737970",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3068,9 +3638,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.006363",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.741965",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3081,9 +3654,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.011378",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.744964",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3094,9 +3670,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.015380",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.750961",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3107,9 +3686,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.021956",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.755956",
+      "final_score": "4-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3120,9 +3702,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.027977",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.759953",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3133,9 +3718,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.033500",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.763951",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3146,9 +3734,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.038498",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.769949",
+      "final_score": "4-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3159,9 +3750,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.044048",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.772947",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3172,9 +3766,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.050042",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.776943",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3185,9 +3782,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.055546",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.782947",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3198,9 +3798,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.059544",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.787937",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3211,9 +3814,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.065083",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.792938",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3224,9 +3830,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.069080",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.796937",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3237,9 +3846,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.074492",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.804445",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3250,9 +3862,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.078488",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.808446",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3263,9 +3878,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.084036",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.812446",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3276,9 +3894,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.090031",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.820457",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3289,9 +3910,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.096536",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.826436",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3302,9 +3926,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.106083",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.830434",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3315,9 +3942,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.111246",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.836435",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3328,9 +3958,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.115293",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.839429",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3354,9 +3987,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.123841",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.854420",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3367,9 +4003,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.129836",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.858420",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3380,9 +4019,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.134340",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.862415",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3393,9 +4035,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.138337",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.867417",
+      "final_score": "2-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3406,9 +4051,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.142873",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.872412",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3419,9 +4067,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.148872",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.878406",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3432,9 +4083,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.154374",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.885404",
+      "final_score": "0-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3445,9 +4099,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.159374",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.892403",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3458,9 +4115,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.164911",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.896401",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3471,9 +4131,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.168908",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.903396",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3484,9 +4147,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.173411",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.906904",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3497,9 +4163,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.179412",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.910901",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3510,9 +4179,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.184963",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.916901",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3523,9 +4195,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.188960",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.927894",
+      "final_score": "0-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3536,9 +4211,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.193467",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.934890",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3549,9 +4227,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.198464",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.942883",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3562,9 +4243,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.203009",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.945881",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3575,9 +4259,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.208513",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.953882",
+      "final_score": "5-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3588,9 +4275,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.214082",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.961872",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3601,9 +4291,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.219079",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.968868",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3614,9 +4307,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.225294",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.976863",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3627,9 +4323,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.230798",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.983861",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3640,9 +4339,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.236832",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.988857",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3653,9 +4355,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.243335",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.992856",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3666,9 +4371,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.248331",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:47.999856",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3679,9 +4387,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.253857",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.004358",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3692,9 +4403,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.257853",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.009359",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3705,9 +4419,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.262355",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.016358",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3718,9 +4435,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.267354",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.022351",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3731,9 +4451,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.274884",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.027348",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3744,9 +4467,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.279877",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.032347",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3757,9 +4483,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-07T08:55:51.287118",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.041340",
+      "final_score": "POSTPONED",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3770,9 +4499,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.291618",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.051335",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3783,9 +4515,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.297619",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.059329",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3796,9 +4531,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-07T08:55:51.304156",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.063327",
+      "final_score": "POSTPONED",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3809,9 +4547,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.309676",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.070323",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3822,9 +4563,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.318198",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.075320",
+      "final_score": "4-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3835,9 +4579,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.325374",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.080317",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3848,9 +4595,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.332985",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.087313",
+      "final_score": "0-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3861,9 +4611,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.339157",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.092315",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3874,9 +4627,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.344659",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.100317",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3887,9 +4643,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.349656",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.106343",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3900,9 +4659,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.354176",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.118337",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3913,9 +4675,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.359174",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.129330",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3926,9 +4691,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.364679",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.141323",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3939,9 +4707,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.368676",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.151318",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3952,9 +4723,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.373196",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.157313",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3965,9 +4739,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.378193",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.163309",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3978,9 +4755,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.382695",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.170306",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -3991,9 +4771,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.387694",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.183306",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -4004,9 +4787,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.391195",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.197297",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -4017,9 +4803,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.397208",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.213796",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -4030,9 +4819,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.402709",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.228784",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -4043,9 +4835,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.409218",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.241775",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -4056,9 +4851,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.414378",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.248774",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -4069,9 +4867,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.418376",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.256767",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -4082,9 +4883,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:51.422913",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.263763",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5395,9 +6199,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.103253",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.284752",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5408,9 +6215,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-07T08:55:52.115757",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.286750",
+      "final_score": "POSTPONED",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5421,9 +6231,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.122317",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.287751",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5434,9 +6247,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.127295",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.289766",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5447,9 +6263,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.133816",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.291764",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5460,9 +6279,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.139816",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.293763",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5473,9 +6295,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.145352",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.296761",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5486,9 +6311,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.151367",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.301761",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5499,9 +6327,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.156909",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.306264",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5512,9 +6343,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.163460",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.312261",
+      "final_score": "3-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5525,9 +6359,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.168457",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.319259",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5538,9 +6375,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.174999",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.330249",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5551,9 +6391,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.179996",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.339246",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5564,9 +6407,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.186539",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.349242",
+      "final_score": "0-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5577,9 +6423,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.195071",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.358233",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5590,9 +6439,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.200087",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.369227",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5603,9 +6455,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.203631",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.382222",
+      "final_score": "0-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5616,9 +6471,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.208152",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.390216",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5629,9 +6487,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.213680",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.396212",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5642,9 +6503,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.219706",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.408714",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-08",
@@ -5733,9 +6597,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.256858",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.409713",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5746,9 +6613,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.263407",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.409713",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5759,9 +6629,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.268404",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.410711",
+      "final_score": "0-5",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5772,9 +6645,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.272948",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.410711",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5785,9 +6661,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.277924",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.411710",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5798,9 +6677,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.282461",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.411710",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5811,9 +6693,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.287462",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.411710",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5824,9 +6709,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.292007",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.412710",
+      "final_score": "5-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5837,9 +6725,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.297004",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.413709",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5850,9 +6741,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.301505",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.415710",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5863,9 +6757,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.306506",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.416709",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5876,9 +6773,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.312616",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.416709",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5889,9 +6789,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.318608",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.417707",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5902,9 +6805,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.324264",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.417707",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5915,9 +6821,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.330312",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.418712",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5928,9 +6837,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.337836",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.420705",
+      "final_score": "4-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5941,9 +6853,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.343380",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.421705",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5954,9 +6869,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.349377",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.422704",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5967,9 +6885,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.354903",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.423703",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5980,9 +6901,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.359899",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.423703",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -5993,9 +6917,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.364453",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.424703",
+      "final_score": "1-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6006,9 +6933,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.368450",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.425702",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6019,9 +6949,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.374393",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.426702",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6032,9 +6965,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.380390",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.428700",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6045,9 +6981,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.385898",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.429702",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6058,9 +6997,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.391399",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.432702",
+      "final_score": "0-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6071,9 +7013,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.397418",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.435699",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6084,9 +7029,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.402976",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.438694",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6097,9 +7045,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.409370",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.441693",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6110,9 +7061,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.413912",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.443692",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6123,9 +7077,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.418909",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.445690",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6136,9 +7093,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.424442",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.446690",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6149,9 +7109,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.429441",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.450690",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6162,9 +7125,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.435666",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.455684",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6175,9 +7141,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.439664",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.457683",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6188,9 +7157,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.445200",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.461683",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6201,9 +7173,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.450195",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.471676",
+      "final_score": "0-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6214,9 +7189,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.454699",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.474673",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6227,9 +7205,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.458697",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.476673",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6240,9 +7221,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.464251",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.479670",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6253,9 +7237,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.469248",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.483671",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6266,9 +7253,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.472791",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.486667",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6279,9 +7269,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.477787",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.491668",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6292,9 +7285,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.484335",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.496665",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6305,9 +7301,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.489331",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.501663",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6318,9 +7317,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.495874",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.505183",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6331,9 +7333,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.499851",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.510179",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6344,9 +7349,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.505391",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.516178",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6357,9 +7365,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.508927",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.523171",
+      "final_score": "5-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6370,9 +7381,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.515519",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.528169",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6383,9 +7397,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.519516",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.535172",
+      "final_score": "1-5",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6396,9 +7413,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.524052",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.539163",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6409,9 +7429,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.529060",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.542161",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6422,9 +7445,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.535556",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.545159",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6448,9 +7474,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.546204",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.566150",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6461,9 +7490,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.551748",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.572144",
+      "final_score": "2-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6474,9 +7506,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.556749",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.578140",
+      "final_score": "0-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6487,9 +7522,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.562308",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.586137",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6500,9 +7538,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.568324",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.590138",
+      "final_score": "0-5",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6513,9 +7554,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.572867",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.594135",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6526,9 +7570,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.578863",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.603131",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6539,9 +7586,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.584399",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.609637",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6552,9 +7602,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.589394",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.616638",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6565,9 +7618,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.593898",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.620631",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6578,9 +7634,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.598895",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.624629",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6591,9 +7650,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.603434",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.629627",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6604,9 +7666,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.607940",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.636621",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6617,9 +7682,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.612487",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.643617",
+      "final_score": "3-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6630,9 +7698,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.618483",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.649620",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6643,9 +7714,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.624095",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.654611",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6656,9 +7730,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.628093",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.660607",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6669,9 +7746,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.632594",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.668603",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6682,9 +7762,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.637596",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.676598",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6695,9 +7778,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.643157",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.684595",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6708,9 +7794,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.649153",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.690593",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6721,9 +7810,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.655285",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.699591",
+      "final_score": "6-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6734,9 +7826,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.660286",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.706091",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6747,9 +7842,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.665795",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.710088",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6760,9 +7858,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-07T08:55:52.671298",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.715088",
+      "final_score": "POSTPONED",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6773,9 +7874,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.676313",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.724080",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6786,9 +7890,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.681811",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.733081",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6799,9 +7906,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.689814",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.742070",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6812,9 +7922,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.695337",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.749068",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6825,9 +7938,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.700332",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.756063",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6838,9 +7954,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.704837",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.760061",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6851,9 +7970,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.709339",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.770055",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6864,9 +7986,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.714529",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.778050",
+      "final_score": "4-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6877,9 +8002,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.719527",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.785047",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6890,9 +8018,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.726086",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.791044",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6903,9 +8034,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.731566",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.799042",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6916,9 +8050,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-07T08:55:52.735568",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.807541",
+      "final_score": "POSTPONED",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6929,9 +8066,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.739565",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.817537",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6942,9 +8082,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.744105",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.826530",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6955,9 +8098,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.750104",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.842523",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6968,9 +8114,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-07T08:55:52.755195",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.851517",
+      "final_score": "POSTPONED",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6981,9 +8130,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.761695",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.859511",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -6994,9 +8146,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.766202",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.869507",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7007,9 +8162,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.771740",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.875503",
+      "final_score": "4-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7020,9 +8178,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.778740",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.882500",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7033,9 +8194,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.784293",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.890495",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7046,9 +8210,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.790289",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.896492",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7072,9 +8239,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.799814",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.910991",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7085,9 +8255,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.805360",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.921985",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7098,9 +8271,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.811401",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.928980",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7111,9 +8287,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.816432",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.939974",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7124,9 +8303,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.822977",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.948971",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7137,9 +8319,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.828995",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.955965",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7150,9 +8335,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.834537",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.966961",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7163,9 +8351,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.839517",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.978952",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7176,9 +8367,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.846068",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:48.990986",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7189,9 +8383,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.851607",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:49.002960",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7202,9 +8399,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.857608",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:49.009465",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7215,9 +8415,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.863151",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:49.021459",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7228,9 +8431,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.869148",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:49.031457",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7241,9 +8447,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.874783",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:49.035449",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7254,9 +8463,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:52.879834",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:49.039446",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -7267,9 +8479,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.884377",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-08T02:49:49.045443",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-07",
@@ -8504,6 +9719,214 @@
       "confidence": "qualified",
       "result": "pending",
       "recorded_at": "2026-11-07T08:55:53.422378",
+      "published": true
+    },
+    {
+      "date": "2026-11-08",
+      "type": "oo05",
+      "league": "Portuguese Liga",
+      "home_team": "CD Nacional",
+      "away_team": "Academico de Viseu",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.656845",
+      "published": true
+    },
+    {
+      "date": "2026-11-10",
+      "type": "oo05",
+      "league": "Football Conference North",
+      "home_team": "Morecambe",
+      "away_team": "Hereford",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.672576",
+      "published": true
+    },
+    {
+      "date": "2026-11-10",
+      "type": "oo05",
+      "league": "Ryman Premier",
+      "home_team": "Whitehawk",
+      "away_team": "Welling",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.696654",
+      "published": true
+    },
+    {
+      "date": "2026-11-13",
+      "type": "oo05",
+      "league": "Nations League",
+      "home_team": "Serbia",
+      "away_team": "Germany",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.710759",
+      "published": true
+    },
+    {
+      "date": "2026-11-13",
+      "type": "oo05",
+      "league": "Scottish Highland League",
+      "home_team": "Strathspey T",
+      "away_team": "Deveronvale",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.726824",
+      "published": true
+    },
+    {
+      "date": "2026-11-13",
+      "type": "oo05",
+      "league": "Nations League",
+      "home_team": "Slovakia",
+      "away_team": "Faroe Islands",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.740889",
+      "published": true
+    },
+    {
+      "date": "2026-11-13",
+      "type": "oo05",
+      "league": "Copa del Rey",
+      "home_team": "Montevideo City Torque",
+      "away_team": "Racing Club M",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.757437",
+      "published": true
+    },
+    {
+      "date": "2026-11-13",
+      "type": "oo05",
+      "league": "Nations League",
+      "home_team": "Moldova",
+      "away_team": "Kazakhstan",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.769531",
+      "published": true
+    },
+    {
+      "date": "2026-11-13",
+      "type": "oo05",
+      "league": "Scottish Highland League",
+      "home_team": "Strathspey T",
+      "away_team": "Deveronvale",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.790210",
+      "published": true
+    },
+    {
+      "date": "2026-11-13",
+      "type": "oo05",
+      "league": "Spanish Segunda",
+      "home_team": "Leganes",
+      "away_team": "Burgos",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.803755",
+      "published": true
+    },
+    {
+      "date": "2026-11-08",
+      "type": "oo05",
+      "league": "Portuguese Liga",
+      "home_team": "CD Nacional",
+      "away_team": "Academico de Viseu",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.822289",
+      "published": true
+    },
+    {
+      "date": "2026-11-09",
+      "type": "oo05",
+      "league": "Football Conference South",
+      "home_team": "Chelmsford",
+      "away_team": "Ebbsfleet",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.834892",
+      "published": true
+    },
+    {
+      "date": "2026-11-10",
+      "type": "oo05",
+      "league": "Football League Trophy",
+      "home_team": "Northampton",
+      "away_team": "Gillingham",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.849243",
+      "published": true
+    },
+    {
+      "date": "2026-11-10",
+      "type": "oo05",
+      "league": "Football Conference North",
+      "home_team": "Scarborough A",
+      "away_team": "Marine",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.875073",
+      "published": true
+    },
+    {
+      "date": "2026-11-13",
+      "type": "oo05",
+      "league": "Nations League",
+      "home_team": "Luxembourg",
+      "away_team": "Estonia",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.889257",
+      "published": true
+    },
+    {
+      "date": "2026-11-13",
+      "type": "oo05",
+      "league": "Nations League",
+      "home_team": "Serbia",
+      "away_team": "Germany",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-08T10:07:37.903987",
       "published": true
     }
   ],

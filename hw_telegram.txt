@@ -1,146 +1,101 @@
-📅 Picks for 2026-11-07
+📅 Picks for 2026-11-08
 
-
-  🔥 Premium picks
-
-
-  1. Port Vale vs Scunthorpe
-     Date: 2026-11-07
-     League: English FA Cup
-     Pick: Home Win · High confidence (89.5%)
-     Category:
-       • Tier: 🔥 Premium
 
   ✅ Solid picks
 
 
-  2. Arsenal vs Hull
-     Date: 2026-11-07
+  1. Brighton vs Brentford
+     Date: 2026-11-08
      League: Premier League
-     Pick: Home Win · High confidence (91.0%)
+     Pick: Home Win · High confidence (82.3%)
      Category:
        • Tier: ✅ Solid
 
-  3. Boreham W vs Wigan
-     Date: 2026-11-07
+  2. Wimborne T vs Crawley
+     Date: 2026-11-08
      League: English FA Cup
-     Pick: Home Win · High confidence (93.1%)
+     Pick: Home Win · High confidence (81.2%)
      Category:
        • Tier: ✅ Solid
 
-  4. MK Dons vs Swindon
-     Date: 2026-11-07
-     League: English FA Cup
-     Pick: Home Win · High confidence (84.2%)
+  3. Spartak Moscow vs Akron
+     Date: 2026-11-08
+     League: Russian Premier
+     Pick: Home Win · High confidence (84.1%)
      Category:
        • Tier: ✅ Solid
 
-  5. Boness Utd vs Dunipace
-     Date: 2026-11-07
-     League: Scottish Lowland League
-     Pick: Home Win · High confidence (89.0%)
+  4. Union St Gilloise vs Genk
+     Date: 2026-11-08
+     League: Belgium League
+     Pick: Home Win · High confidence (80.8%)
      Category:
        • Tier: ✅ Solid
 
-  6. Rosario vs Estudiantes de Rio Cuarto
-     Date: 2026-11-07
-     League: Mexican Primera Apertura
-     Pick: Home Win · High confidence (85.0%)
+  5. Hartberg vs Altach
+     Date: 2026-11-08
+     League: Austrian Bundesliga
+     Pick: Home Win · High confidence (78.4%)
      Category:
        • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
 
   👀 Watchlist
 
 
-  7. Birmingham vs Swansea
-     Date: 2026-11-07
-     League: Football League Championship
-     Pick: Home Win · Medium confidence (66.8%)
+  6. Stafford vs Grimsby
+     Date: 2026-11-08
+     League: English FA Cup
+     Pick: Home Win · High confidence (74.6%)
      Category:
        • Tier: 👀 Watchlist
 
-  8. Roma vs Sassuolo
-     Date: 2026-11-07
-     League: Italian Serie A
-     Pick: Home Win · High confidence (87.7%)
+  7. Gent vs Kortrijk
+     Date: 2026-11-08
+     League: Belgium League
+     Pick: Home Win · High confidence (88.3%)
      Category:
        • Tier: 👀 Watchlist
 
-  9. PSG vs Troyes
-     Date: 2026-11-07
-     League: French Ligue 1
-     Pick: Home Win · High confidence (86.7%)
+  8. Legia Warsaw vs Rakow Czestochowa
+     Date: 2026-11-08
+     League: Polish Ekstraklasa
+     Pick: Home Win · Low confidence (53.9%)
      Category:
        • Tier: 👀 Watchlist
 
-  10. Hertha Berlin vs Wolfsburg
-     Date: 2026-11-07
-     League: German Bundesliga 2
-     Pick: Home Win · High confidence (91.0%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  11. Aris Salonika vs Panetolikos
-     Date: 2026-11-07
+  9. AEK Athens vs Levadiakos
+     Date: 2026-11-08
      League: Greek Super League
-     Pick: Home Win · High confidence (83.1%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  12. Rosenborg vs IK Start
-     Date: 2026-11-07
-     League: Norwegian Tippeligaen
      Pick: Home Win · High confidence (82.2%)
      Category:
        • Tier: 👀 Watchlist
 
-  13. Zeleznicar Pancevo vs FK Rad
-     Date: 2026-11-07
-     League: Serbian League
-     Pick: Home Win · High confidence (74.5%)
+  10. OFI Crete vs Atromitos
+     Date: 2026-11-08
+     League: Greek Super League
+     Pick: Home Win · High confidence (77.4%)
      Category:
        • Tier: 👀 Watchlist
 
-  14. South Shields vs Southport
-     Date: 2026-11-07
-     League: Football Conference North
-     Pick: Home Win · High confidence (87.7%)
+  11. Olympiakos vs PAOK Salonika
+     Date: 2026-11-08
+     League: Greek Super League
+     Pick: Home Win · High confidence (73.9%)
      Category:
        • Tier: 👀 Watchlist
 
-  15. Ebbsfleet vs Chesham
-     Date: 2026-11-07
-     League: Football Conference South
-     Pick: Home Win · High confidence (74.5%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  16. Enfield T vs AFC Whyteleafe
-     Date: 2026-11-07
-     League: Ryman Premier
-     Pick: Home Win · High confidence (82.2%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  17. Argentinos Jun vs Huracan
-     Date: 2026-11-07
+  12. Santa Fe vs Deportivo Pasto
+     Date: 2026-11-08
      League: Mexican Primera Apertura
-     Pick: Home Win · High confidence (81.3%)
+     Pick: Home Win · Medium confidence (66.0%)
      Category:
        • Tier: 👀 Watchlist
        • League type: weak-ROI region (extra model caution)
+       • Auto-flag: weak ROI history on this market
 
-  18. Seoul E-Land vs Jeonnam Dragons
-     Date: 2026-11-07
+  13. Suwon Samsung vs Yongin
+     Date: 2026-11-08
      League: Korean K-League 2
-     Pick: Home Win · High confidence (85.7%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  19. Libertad Ecu vs Emelec
-     Date: 2026-11-07
-     League: Ecuador Liga Pro
-     Pick: Home Win · High confidence (74.6%)
+     Pick: Home Win · Medium confidence (64.5%)
      Category:
        • Tier: 👀 Watchlist

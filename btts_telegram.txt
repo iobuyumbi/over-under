@@ -1,4 +1,4 @@
-📅 Picks for 2026-11-07
+📅 Picks for 2026-11-08
 
 
 🟢 BTTS Yes
@@ -6,84 +6,53 @@
   ✅ Solid picks
 
 
-  1. Newport Co vs Walsall
-     Date: 2026-11-07
-     League: English FA Cup
-     Pick: BTTS Yes · Medium confidence (55.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  2. Accrington vs Wycombe
-     Date: 2026-11-07
-     League: English FA Cup
-     Pick: BTTS Yes · High confidence (58.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  3. Cheltenham vs Halifax
-     Date: 2026-11-07
-     League: English FA Cup
-     Pick: BTTS Yes · High confidence (58.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  4. Barnet vs Tranmere
-     Date: 2026-11-07
-     League: English FA Cup
-     Pick: BTTS Yes · Medium confidence (57.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  5. Carlisle vs Salford
-     Date: 2026-11-07
-     League: English FA Cup
-     Pick: BTTS Yes · High confidence (68.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  6. St Johnstone vs Dundee
-     Date: 2026-11-07
-     League: Scottish Premier
-     Pick: BTTS Yes · Medium confidence (57.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  7. Dundee Utd vs Motherwell
-     Date: 2026-11-07
-     League: Scottish Premier
-     Pick: BTTS Yes · High confidence (68.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  8. Sporting vs Moreirense
-     Date: 2026-11-07
-     League: Portuguese Liga
-     Pick: BTTS Yes · High confidence (65.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  9. Lucerne vs Young Boys
-     Date: 2026-11-07
+  1. Servette vs FC Zurich
+     Date: 2026-11-08
      League: Swiss Super League
-     Pick: BTTS Yes · High confidence (74.4%)
+     Pick: BTTS Yes · High confidence (71.5%)
      Category:
        • Tier: ✅ Solid
 
-  10. M. Haifa vs M. Netanya
-     Date: 2026-11-07
-     League: Israeli League
-     Pick: BTTS Yes · High confidence (72.4%)
+  2. Lech Poznan vs Zaglebie Lubin
+     Date: 2026-11-08
+     League: Polish Ekstraklasa
+     Pick: BTTS Yes · High confidence (71.8%)
      Category:
        • Tier: ✅ Solid
+
+  3. Toluca vs Monterrey
+     Date: 2026-11-08
+     League: Mexican Primera Apertura
+     Pick: BTTS Yes · High confidence (76.4%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+  4. Pumas UNAM vs Club America
+     Date: 2026-11-08
+     League: Mexican Primera Apertura
+     Pick: BTTS Yes · High confidence (82.9%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
 
 🔴 BTTS No
 
   🔥 Premium picks
 
 
-  1. Epitsentr vs Kryvbas
-     Date: 2026-11-07
-     League: Ukrainian League
-     Pick: BTTS No · High confidence (68.8%)
+  1. KPS Kuopio vs FC Inter
+     Date: 2026-11-08
+     League: Finland League
+     Pick: BTTS No · High confidence (71.6%)
      Category:
        • Tier: 🔥 Premium
+  ✅ Solid picks
+
+
+  2. Zorya vs LNZ Cherkasy
+     Date: 2026-11-08
+     League: Ukrainian League
+     Pick: BTTS No · High confidence (65.4%)
+     Category:
+       • Tier: ✅ Solid
