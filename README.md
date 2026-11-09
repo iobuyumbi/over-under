@@ -214,7 +214,41 @@ Pending — data builds as `btts_soccerbase.py` runs. Generate fresh tables via 
 
 
 
+
 ## Weekly Performance Report
+
+**Last Updated:** 2026-11-09 10:53
+
+### Over 2.5 Goals
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+
+### Under 2.5 Goals
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+
+### Home Win
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+
+### BTTS Yes
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+
+### BTTS No
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+
+### Over 0.5 Team Goal
+
+| Week | Matches | Wins | Losses | Win Rate |
+|------|---------|------|--------|----------|
+
 
 **Last Updated:** 2026-11-03 09:48
 

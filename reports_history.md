@@ -4,6 +4,77 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: weekly 2026-11-09 -->
+## Weekly Report — 2026-11-09
+
+WEEKLY PERFORMANCE REPORT
+2026-11-02 to 2026-11-09
+
+Home win picks
+Total picks: 0
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+DOUBLE CHANCE (HOME OR DRAW)
+Total picks: 0
+Wins: 0
+Losses: 0
+Pending: 0
+
+OVER 2.5 GOALS
+Total picks: 0
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+OVER 1.5 GOALS
+Total picks: 0
+Wins: 0
+Losses: 0
+Pending: 0
+
+UNDER 2.5 GOALS
+Total picks: 0
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+UNDER 3.5 GOALS
+Total picks: 0
+Wins: 0
+Losses: 0
+Pending: 0
+
+BTTS YES
+Total picks: 0
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+BTTS NO
+Total picks: 0
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+OVER 0.5 TEAM GOAL
+Total picks: 0
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+---
+For informational purposes only
+Gamble responsibly
+
+
 <!-- report: daily 2026-11-09 -->
 ## Daily Picks — 2026-11-09
 
