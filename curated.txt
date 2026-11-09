@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-11-08
+✦ CURATED PICKS · 2026-11-09
   Input reports:
-    OU   → over_under_vip_report_2026-11-08.txt
-    BTTS → btts_vip_report_2026-11-08.txt
-    HW   → home_win_vip_report_2026-11-08.txt
+    OU   → over_under_vip_report_2026-11-09.txt
+    BTTS → btts_vip_report_2026-11-09.txt
+    HW   → home_win_vip_report_2026-11-09.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,50 +11,19 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-11-08)
+    • Today only (2026-11-09)
 
-━━━ OVER / UNDER 2.5  (8 accepted) ━━━
-   1. ✅ Viking vs KFUM Oslo  (Norwegian Tippeligaen)
-      Over 2.5 · High 77.2% · xG 2.42–1.65
-      Stake 0.5% @ 2.0  ·  EV +54.4c/$  ·  Edge +54.4%
-   2. ✅ Midtjylland vs SonderjyskE  (Danish SAS Ligaen)
-      Over 2.5 · High 76.5% · xG 2.29–1.73
-      Stake 0.5% @ 2.0  ·  EV +53.0c/$  ·  Edge +53.0%
-   3. ✅ AZ Alkmaar vs FC Groningen  (Netherlands League)
-      Over 2.5 · High 74.5% · xG 1.37–2.52
-      Stake 0.4% @ 2.0  ·  EV +49.0c/$  ·  Edge +49.0%
-   4. ✅ Lech Poznan vs Zaglebie Lubin  (Polish Ekstraklasa)
-      Over 2.5 · High 73.4% · xG 2.16–1.66
-      Stake 0.4% @ 2.0  ·  EV +46.8c/$  ·  Edge +46.8%
-   5. ✅ Ipswich vs Bournemouth  (Premier League)
-      Over 2.5 · High 73.3% · xG 1.38–2.43
-      Stake 0.4% @ 2.0  ·  EV +46.6c/$  ·  Edge +46.6%
-   6. ✅ Celtic vs Kilmarnock  (Scottish Premier)
-      Over 2.5 · High 72.3% · xG 2.31–1.44
-      Stake 0.4% @ 2.0  ·  EV +44.6c/$  ·  Edge +44.6%
-   7. ✅ Servette vs FC Zurich  (Swiss Super League)
-      Over 2.5 · High 71.8% · xG 1.76–1.96
-      Stake 0.4% @ 2.0  ·  EV +43.6c/$  ·  Edge +43.6%
-   8. ✅ Thun vs Basel  (Swiss Super League)
-      Over 2.5 · High 70.8% · xG 1.58–2.08
-      Stake 0.4% @ 2.0  ·  EV +41.6c/$  ·  Edge +41.6%
+━━━ OVER / UNDER 2.5  (0 accepted) ━━━
+  (none)
 
-━━━ BTTS (Yes / No)  (3 accepted) ━━━
-   1. ✅ Lech Poznan vs Zaglebie Lubin  (Polish Ekstraklasa)
-      BTTS Yes · High 71.8% · xG 2.19–1.65
-      Stake 1.9% @ 1.9  ·  EV 
-   2. 🔥 KPS Kuopio vs FC Inter  (Finland League)
-      BTTS No · High 71.6% · xG 0.65–0.90
-      Stake 7.6% @ 1.85  ·  EV 
-   3. ✅ Servette vs FC Zurich  (Swiss Super League)
-      BTTS Yes · High 71.5% · xG 1.79–1.95
-      Stake 1.9% @ 1.9  ·  EV 
+━━━ BTTS (Yes / No)  (0 accepted) ━━━
+  (none)
 
 ━━━ HOME WIN  (0 accepted) ━━━
   (none)
 
-📊 Summary: 11 curated picks
-   Parsed total: 61   Rejected: 50   Accepted: 11
+📊 Summary: 0 curated picks
+   Parsed total: 19   Rejected: 19   Accepted: 0
 
 ---
 For informational purposes only · Gamble responsibly

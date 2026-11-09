@@ -4,6 +4,29 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-09 -->
+## Daily Picks — 2026-11-09
+
+### Home Win  (1)
+  👀 Plymouth P vs Berkhamsted (English FA Cup) — Home Win · High 81.9%
+
+### Team Goals Over 0.5  (14)
+  🔥 Botosani vs Otelul Galati (Romanian Liga 1) — Home to Score · High 88.0%
+  🔥 Alianza Petrolera vs Llaneros (Mexican Primera Apertura) — Home to Score · Medium 72.7%
+  🔥 Tecnico Universitario vs Manta (Ecuador Liga Pro) — Home to Score · High 90.5%
+  ✅ Kristiansund vs Valerenga (Norwegian Tippeligaen) — Home to Score · High 80.4%
+  ✅ Plymouth P vs Berkhamsted (English FA Cup) — Home to Score · High 82.1%
+  ✅ Sabadell vs Real Sociedad B (Spanish Segunda) — Home to Score · High 86.5%
+  ✅ Queretaro vs Puebla (Mexican Primera Apertura) — Home to Score · Medium 77.5%
+  ✅ Leon vs Guadalajara (Mexican Primera Apertura) — Home to Score · Medium 74.6%
+  ✅ Mushuc Runa vs Delfin (Ecuador Liga Pro) — Home to Score · High 78.6%
+  ✅ Kristiansund vs Valerenga (Norwegian Tippeligaen) — Away to Score · High 86.3%
+  ✅ Sabadell vs Real Sociedad B (Spanish Segunda) — Away to Score · Low 59.7%
+  ✅ Chelmsford vs Ebbsfleet (Football Conference South) — Away to Score · High 87.6%
+  ✅ Leon vs Guadalajara (Mexican Primera Apertura) — Away to Score · High 79.0%
+  ✅ Tecnico Universitario vs Manta (Ecuador Liga Pro) — Away to Score · High 82.6%
+
+
 <!-- report: daily 2026-11-08 -->
 ## Daily Picks — 2026-11-08
 

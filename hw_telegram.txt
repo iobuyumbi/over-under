@@ -1,101 +1,12 @@
-📅 Picks for 2026-11-08
+📅 Picks for 2026-11-09
 
-
-  ✅ Solid picks
-
-
-  1. Brighton vs Brentford
-     Date: 2026-11-08
-     League: Premier League
-     Pick: Home Win · High confidence (82.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  2. Wimborne T vs Crawley
-     Date: 2026-11-08
-     League: English FA Cup
-     Pick: Home Win · High confidence (81.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  3. Spartak Moscow vs Akron
-     Date: 2026-11-08
-     League: Russian Premier
-     Pick: Home Win · High confidence (84.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  4. Union St Gilloise vs Genk
-     Date: 2026-11-08
-     League: Belgium League
-     Pick: Home Win · High confidence (80.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  5. Hartberg vs Altach
-     Date: 2026-11-08
-     League: Austrian Bundesliga
-     Pick: Home Win · High confidence (78.4%)
-     Category:
-       • Tier: ✅ Solid
 
   👀 Watchlist
 
 
-  6. Stafford vs Grimsby
-     Date: 2026-11-08
+  1. Plymouth P vs Berkhamsted
+     Date: 2026-11-09
      League: English FA Cup
-     Pick: Home Win · High confidence (74.6%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  7. Gent vs Kortrijk
-     Date: 2026-11-08
-     League: Belgium League
-     Pick: Home Win · High confidence (88.3%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  8. Legia Warsaw vs Rakow Czestochowa
-     Date: 2026-11-08
-     League: Polish Ekstraklasa
-     Pick: Home Win · Low confidence (53.9%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  9. AEK Athens vs Levadiakos
-     Date: 2026-11-08
-     League: Greek Super League
-     Pick: Home Win · High confidence (82.2%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  10. OFI Crete vs Atromitos
-     Date: 2026-11-08
-     League: Greek Super League
-     Pick: Home Win · High confidence (77.4%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  11. Olympiakos vs PAOK Salonika
-     Date: 2026-11-08
-     League: Greek Super League
-     Pick: Home Win · High confidence (73.9%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  12. Santa Fe vs Deportivo Pasto
-     Date: 2026-11-08
-     League: Mexican Primera Apertura
-     Pick: Home Win · Medium confidence (66.0%)
-     Category:
-       • Tier: 👀 Watchlist
-       • League type: weak-ROI region (extra model caution)
-       • Auto-flag: weak ROI history on this market
-
-  13. Suwon Samsung vs Yongin
-     Date: 2026-11-08
-     League: Korean K-League 2
-     Pick: Home Win · Medium confidence (64.5%)
+     Pick: Home Win · High confidence (81.9%)
      Category:
        • Tier: 👀 Watchlist

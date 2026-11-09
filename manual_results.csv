@@ -1800,6 +1800,7 @@ date,home_team,away_team,score
 2026-11-07,Zeleznicar Pancevo,FK Rad,3-1
 2026-11-07,Zemun,IMT New Belgrade,1-1
 2026-11-07,Zlin,Synot,0-1
+<<<<<<< Updated upstream
 2026-11-08,AEK Athens,Levadiakos,
 2026-11-08,AIK Solna,Hacken,
 2026-11-08,AZ Alkmaar,FC Groningen,
@@ -1817,107 +1818,126 @@ date,home_team,away_team,score
 2026-11-08,Brinje Grosuplje,NK Aluminij,
 2026-11-08,C Palace,Liverpool,
 2026-11-08,CD Nacional,Academico de Viseu,
+=======
+2026-11-08,AEK Athens,Levadiakos,2-1
+2026-11-08,AIK Solna,Hacken,3-2
+2026-11-08,AZ Alkmaar,FC Groningen,4-3
+2026-11-08,Aarhus,AC Horsens,2-0
+2026-11-08,America de Cali,Deportivo Cali,0-0
+2026-11-08,Atl Madrid,Barcelona,1-2
+2026-11-08,Aucas,Independiente d V,2-4
+2026-11-08,Audax Italiano,Coquimbo Unido,0-1
+2026-11-08,Austin FC,Portland Timb.,0-2
+2026-11-08,Baltika,Dynamo Makhachkala,0-1
+2026-11-08,Barcelona de G,LDU Quito,1-1
+2026-11-08,Besiktas,Genclerbirligi,3-0
+2026-11-08,Brest,Lyon,2-0
+2026-11-08,Brighton,Brentford,2-0
+2026-11-08,Brinje Grosuplje,NK Aluminij,1-0
+2026-11-08,C Palace,Liverpool,1-3
+2026-11-08,CD Nacional,Academico de Viseu,1-0
+>>>>>>> Stashed changes
 2026-11-08,CFR Cluj,Uni Craiova,
-2026-11-08,Cambuur,PSV Eindhoven,
-2026-11-08,Celta Vigo,Levante,
-2026-11-08,Celtic,Kilmarnock,
-2026-11-08,Central Cordoba SDE,Lanus,
-2026-11-08,Cerro Porteno,Deportivo Recoleta,
-2026-11-08,Cheonan City,Busan IPark,
-2026-11-08,Copenhagen,Brondby,
-2026-11-08,Corum,Fenerbahce,
-2026-11-08,Cray W,Stockport,
-2026-11-08,Daejeon Hana Citizen,Incheon United,
-2026-11-08,Dallas,Colorado,
-2026-11-08,Debrecen,Ujpest Dozsa,
-2026-11-08,Deportes Tolima,Millonarios,
-2026-11-08,Deportivo Garcilaso,Comerciantes Unidos,
-2026-11-08,Deportivo La Guaira,Carabobo FC,
-2026-11-08,Elche,Real Betis,
+2026-11-08,Cambuur,PSV Eindhoven,2-5
+2026-11-08,Celta Vigo,Levante,0-0
+2026-11-08,Celtic,Kilmarnock,1-0
+2026-11-08,Central Cordoba SDE,Lanus,1-1
+2026-11-08,Cerro Porteno,Deportivo Recoleta,1-1
+2026-11-08,Cheonan City,Busan IPark,1-0
+2026-11-08,Copenhagen,Brondby,1-0
+2026-11-08,Corum,Fenerbahce,0-5
+2026-11-08,Cray W,Stockport,2-3
+2026-11-08,Daejeon Hana Citizen,Incheon United,2-0
+2026-11-08,Dallas,Colorado,3-1
+2026-11-08,Debrecen,Ujpest Dozsa,3-1
+2026-11-08,Deportes Tolima,Millonarios,2-1
+2026-11-08,Deportivo Garcilaso,Comerciantes Unidos,0-0
+2026-11-08,Deportivo La Guaira,Carabobo FC,0-0
+2026-11-08,Elche,Real Betis,0-2
 2026-11-08,Estoril,Maritimo,
-2026-11-08,Estrela,Benfica,
-2026-11-08,FC Magdeburg,St Pauli,
-2026-11-08,FC Minsk,Dinamo Brest,
-2026-11-08,FC Seoul,Ulsan Hyundai,
-2026-11-08,FC Twente,Ajax,
-2026-11-08,Fiorentina,Juventus,
-2026-11-08,Fredrikstad,Brann,
-2026-11-08,Freiburg,Union Berlin,
-2026-11-08,Gent,Kortrijk,
-2026-11-08,Halmstads,Djurgaarden,
-2026-11-08,HamKam,Sarpsborg,
-2026-11-08,Hartberg,Altach,
-2026-11-08,Hearts,Falkirk,
-2026-11-08,Heidenheim,Hannover,
-2026-11-08,Hoffenheim,Schalke,
-2026-11-08,Houston,St. Louis City SC,
-2026-11-08,Inter,Como,
-2026-11-08,Ipswich,Bournemouth,
-2026-11-08,JEF United,Mito HollyHock,
-2026-11-08,Jagiellonia,GKS Katowice,
-2026-11-08,Jaguares de Cordoba,Atletico Bucaramanga,
-2026-11-08,Jubilo Iwata,Shonan Bellmare,
-2026-11-08,KPS Kuopio,FC Inter,
-2026-11-08,Kalmar,IK Sirius,
-2026-11-08,Le Mans,Monaco,
-2026-11-08,Lech Poznan,Zaglebie Lubin,
-2026-11-08,Legia Warsaw,Rakow Czestochowa,
-2026-11-08,Lens,Marseille,
-2026-11-08,Levski Sofia,CSKA Sofia,
-2026-11-08,Lillestrom,Aalesund,
-2026-11-08,Los Chankas,Alianza Lima,
-2026-11-08,Macara,Universidad Catolica,
-2026-11-08,Midtjylland,SonderjyskE,
-2026-11-08,Minnesota U,San Jose,
-2026-11-08,Monza,Atalanta,
-2026-11-08,Napoli,Lazio,
-2026-11-08,Novi Pazar,Mladost Lucani,
-2026-11-08,Nublense,Colo-Colo,
-2026-11-08,Nyiregyhaza,Gyori ETO,
-2026-11-08,OFI Crete,Atromitos,
-2026-11-08,Olympiakos,PAOK Salonika,
-2026-11-08,Osijek,Hajduk Split,
-2026-11-08,Partizan,Macva Sabac,
-2026-11-08,Portuguesa FC,Metropolitanos,
-2026-11-08,Pumas UNAM,Club America,
-2026-11-08,Radnik Surdulica,OFK Belgrade,
-2026-11-08,Randers,Nordsjaelland,
-2026-11-08,Real Salt Lake,LA Galaxy,
-2026-11-08,San Diego,Kansas City,
-2026-11-08,Sandefjord,Molde,
-2026-11-08,Santa Fe,Deportivo Pasto,
-2026-11-08,Seattle,Los Angeles FC,
-2026-11-08,Sepsi Sfantu G,Voluntari,
-2026-11-08,Servette,FC Zurich,
-2026-11-08,Slavia Prague,Artis Brno,
-2026-11-08,Sociedad,Rayo Vallecano,
-2026-11-08,Sp. Gijon,Valladolid,
-2026-11-08,Spartak Moscow,Akron,
-2026-11-08,Spartak Varna,Arda,
-2026-11-08,Sport Boys,UTC Cajamarca,
-2026-11-08,Sportivo Trinidense,Sportivo Ameliano,
-2026-11-08,St Gallen,Lugano,
-2026-11-08,Stafford,Grimsby,
-2026-11-08,Sturm Graz,RB Salzburg,
-2026-11-08,Sunderland,Chelsea,
-2026-11-08,Suwon Samsung,Yongin,
-2026-11-08,Swarovski Wattens,Aus. Vienna,
-2026-11-08,Thun,Basel,
-2026-11-08,Tigres,Cruz Azul,
-2026-11-08,Tochigi City,Omiya Ardija,
-2026-11-08,Toluca,Monterrey,
-2026-11-08,Tromso,Bodo Glimt,
-2026-11-08,Union La Calera,Huachipato,
-2026-11-08,Union St Gilloise,Genk,
-2026-11-08,Univ Catolica,Deportes Limache,
-2026-11-08,Univ de Chile,Cobresal,
-2026-11-08,Utrecht,NEC Nijmegen,
-2026-11-08,Vanraure Hachinohe,Consadole Sapporo,
-2026-11-08,Vasas,Ferencvaros,
-2026-11-08,Vegalta Sendai,Ventforet Kofu,
-2026-11-08,Viking,KFUM Oslo,
-2026-11-08,Wimborne T,Crawley,
-2026-11-08,Zorya,LNZ Cherkasy,
+2026-11-08,Estrela,Benfica,2-3
+2026-11-08,FC Magdeburg,St Pauli,4-1
+2026-11-08,FC Minsk,Dinamo Brest,2-2
+2026-11-08,FC Seoul,Ulsan Hyundai,1-2
+2026-11-08,FC Twente,Ajax,2-2
+2026-11-08,Fiorentina,Juventus,2-2
+2026-11-08,Fredrikstad,Brann,2-2
+2026-11-08,Freiburg,Union Berlin,2-0
+2026-11-08,Gent,Kortrijk,1-0
+2026-11-08,Halmstads,Djurgaarden,2-1
+2026-11-08,HamKam,Sarpsborg,3-0
+2026-11-08,Hartberg,Altach,3-0
+2026-11-08,Hearts,Falkirk,2-5
+2026-11-08,Heidenheim,Hannover,2-2
+2026-11-08,Hoffenheim,Schalke,2-1
+2026-11-08,Houston,St. Louis City SC,0-1
+2026-11-08,Inter,Como,2-0
+2026-11-08,Ipswich,Bournemouth,1-2
+2026-11-08,JEF United,Mito HollyHock,1-0
+2026-11-08,Jagiellonia,GKS Katowice,1-0
+2026-11-08,Jaguares de Cordoba,Atletico Bucaramanga,0-4
+2026-11-08,Jubilo Iwata,Shonan Bellmare,1-1
+2026-11-08,KPS Kuopio,FC Inter,0-2
+2026-11-08,Kalmar,IK Sirius,1-0
+2026-11-08,Le Mans,Monaco,1-1
+2026-11-08,Lech Poznan,Zaglebie Lubin,2-2
+2026-11-08,Legia Warsaw,Rakow Czestochowa,2-4
+2026-11-08,Lens,Marseille,1-2
+2026-11-08,Levski Sofia,CSKA Sofia,0-3
+2026-11-08,Lillestrom,Aalesund,3-2
+2026-11-08,Los Chankas,Alianza Lima,1-1
+2026-11-08,Macara,Universidad Catolica,2-2
+2026-11-08,Midtjylland,SonderjyskE,2-2
+2026-11-08,Minnesota U,San Jose,3-1
+2026-11-08,Monza,Atalanta,0-1
+2026-11-08,Napoli,Lazio,1-1
+2026-11-08,Novi Pazar,Mladost Lucani,2-0
+2026-11-08,Nublense,Colo-Colo,1-2
+2026-11-08,Nyiregyhaza,Gyori ETO,1-1
+2026-11-08,OFI Crete,Atromitos,0-0
+2026-11-08,Olympiakos,PAOK Salonika,1-1
+2026-11-08,Osijek,Hajduk Split,0-1
+2026-11-08,Partizan,Macva Sabac,1-2
+2026-11-08,Portuguesa FC,Metropolitanos,2-2
+2026-11-08,Pumas UNAM,Club America,2-2
+2026-11-08,Radnik Surdulica,OFK Belgrade,2-1
+2026-11-08,Randers,Nordsjaelland,1-6
+2026-11-08,Real Salt Lake,LA Galaxy,2-1
+2026-11-08,San Diego,Kansas City,0-1
+2026-11-08,Sandefjord,Molde,5-5
+2026-11-08,Santa Fe,Deportivo Pasto,5-0
+2026-11-08,Seattle,Los Angeles FC,2-1
+2026-11-08,Sepsi Sfantu G,Voluntari,2-1
+2026-11-08,Servette,FC Zurich,0-0
+2026-11-08,Slavia Prague,Artis Brno,4-1
+2026-11-08,Sociedad,Rayo Vallecano,1-0
+2026-11-08,Sp. Gijon,Valladolid,1-2
+2026-11-08,Spartak Moscow,Akron,2-1
+2026-11-08,Spartak Varna,Arda,3-2
+2026-11-08,Sport Boys,UTC Cajamarca,0-0
+2026-11-08,Sportivo Trinidense,Sportivo Ameliano,3-0
+2026-11-08,St Gallen,Lugano,5-0
+2026-11-08,Stafford,Grimsby,3-3
+2026-11-08,Sturm Graz,RB Salzburg,3-4
+2026-11-08,Sunderland,Chelsea,1-0
+2026-11-08,Suwon Samsung,Yongin,2-0
+2026-11-08,Swarovski Wattens,Aus. Vienna,1-1
+2026-11-08,Thun,Basel,3-3
+2026-11-08,Tigres,Cruz Azul,2-3
+2026-11-08,Tochigi City,Omiya Ardija,0-3
+2026-11-08,Toluca,Monterrey,4-0
+2026-11-08,Tromso,Bodo Glimt,0-2
+2026-11-08,Union La Calera,Huachipato,1-0
+2026-11-08,Union St Gilloise,Genk,1-0
+2026-11-08,Univ Catolica,Deportes Limache,3-0
+2026-11-08,Univ de Chile,Cobresal,2-1
+2026-11-08,Utrecht,NEC Nijmegen,2-3
+2026-11-08,Vanraure Hachinohe,Consadole Sapporo,0-1
+2026-11-08,Vasas,Ferencvaros,0-2
+2026-11-08,Vegalta Sendai,Ventforet Kofu,5-1
+2026-11-08,Viking,KFUM Oslo,5-1
+2026-11-08,Wimborne T,Crawley,2-0
+2026-11-08,Zorya,LNZ Cherkasy,1-2
 2026-11-09,Alianza Petrolera,Llaneros,
 2026-11-09,Botosani,Otelul Galati,
 2026-11-09,Chelmsford,Ebbsfleet,
