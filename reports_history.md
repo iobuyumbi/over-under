@@ -73,6 +73,76 @@ Pending: 0
 ---
 For informational purposes only
 Gamble responsibly
+<!-- report: daily 2026-11-10 -->
+## Daily Picks — 2026-11-10
+
+### Over/Under 2.5  (7)
+  ✅ Huddersfield vs Liverpool U (Football League Trophy) — Over 2.5 · High 63.5%
+  ✅ Leicester vs Walsall (Football League Trophy) — Over 2.5 · High 67.9%
+  ✅ Crawley vs Brentford U (Football League Trophy) — Over 2.5 · High 82.9%
+  ✅ Scarborough A vs Marine (Football Conference North) — Over 2.5 · High 75.6%
+  ✅ Enfield T vs Lewes (Ryman Premier) — Over 2.5 · High 75.0%
+  ✅ Chertsey Town vs Chichester C (Southern League Premier) — Over 2.5 · High 77.9%
+  ✅ Rylands vs Guiseley (Unibond Premier) — Over 2.5 · High 74.5%
+
+### BTTS  (2)
+  ✅ Leicester vs Walsall (Football League Trophy) — BTTS Yes · High 66.0%
+  ✅ Chertsey Town vs Chichester C (Southern League Premier) — BTTS Yes · High 73.0%
+
+### Home Win  (6)
+  🔥 Eastbourne vs Dulwich H (Ryman Premier) — Home Win · High 90.0%
+  ✅ Bradford vs York (Football League Trophy) — Home Win · High 87.1%
+  👀 Stockport vs Tranmere (Football League Trophy) — Home Win · High 88.4%
+  👀 Uxbridge vs Hanwell Town (Southern League Premier) — Home Win · High 86.6%
+  👀 Curzon A vs Ilkeston (Unibond Premier) — Home Win · High 94.0%
+  👀 Quorn vs Stockton T (Unibond Premier) — Home Win · High 81.3%
+
+### Team Goals Over 0.5  (45)
+  🔥 Chatham Town vs Leatherhead (Ryman Premier) — Home to Score · High 88.6%
+  🔥 Cray W vs Three Bridges (Ryman Premier) — Home to Score · High 91.7%
+  🔥 Eastbourne vs Dulwich H (Ryman Premier) — Home to Score · High 90.0%
+  🔥 Wimborne T vs Poole Town (Southern League Premier) — Home to Score · High 83.5%
+  🔥 Sholing vs Chippenham (Southern League Premier) — Home to Score · High 88.8%
+  🔥 Curzon A vs Ilkeston (Unibond Premier) — Home to Score · High 92.0%
+  ✅ Huddersfield vs Liverpool U (Football League Trophy) — Home to Score · High 84.3%
+  ✅ Grimsby vs N Forest U (Football League Trophy) — Home to Score · High 88.4%
+  ✅ Crewe vs Wigan (Football League Trophy) — Home to Score · High 82.8%
+  ✅ Burton vs Notts Co (Football League Trophy) — Home to Score · High 80.4%
+  ✅ Oxford vs Cheltenham (Football League Trophy) — Home to Score · High 79.4%
+  ✅ Stevenage vs Fulham U (Football League Trophy) — Home to Score · High 81.5%
+  ✅ Leicester vs Walsall (Football League Trophy) — Home to Score · High 84.6%
+  ✅ Crawley vs Brentford U (Football League Trophy) — Home to Score · High 88.1%
+  ✅ Colchester vs Ipswich Town U (Football League Trophy) — Home to Score · Medium 71.9%
+  ✅ Morecambe vs Hereford (Football Conference North) — Home to Score · High 81.5%
+  ✅ Salisbury FC vs Braintree (Football Conference South) — Home to Score · High 97.0%
+  ✅ Hemel vs Torquay (Football Conference South) — Home to Score · Low 63.6%
+  ✅ Whitehawk vs Welling (Ryman Premier) — Home to Score · High 78.6%
+  ✅ Enfield T vs Lewes (Ryman Premier) — Home to Score · High 88.5%
+  ✅ Gloucester vs Malvern Town (Southern League Premier) — Home to Score · High 90.5%
+  ✅ Uxbridge vs Hanwell Town (Southern League Premier) — Home to Score · High 85.5%
+  ✅ Chertsey Town vs Chichester C (Southern League Premier) — Home to Score · High 85.5%
+  ✅ Bath City vs Taunton Town (Southern League Premier) — Home to Score · Medium 70.8%
+  ✅ Havant & W vs Bracknell (Southern League Premier) — Home to Score · High 86.3%
+  ✅ Redcar Athletic vs Bamber Br. (Unibond Premier) — Home to Score · High 89.9%
+  ✅ Workington vs Alfreton (Unibond Premier) — Home to Score · High 83.1%
+  ✅ Quorn vs Stockton T (Unibond Premier) — Home to Score · High 89.9%
+  🔥 Rylands vs Guiseley (Unibond Premier) — Away to Score · High 89.6%
+  ✅ Northampton vs Gillingham (Football League Trophy) — Away to Score · Medium 70.8%
+  ✅ Barnet vs Leyton Orient (Football League Trophy) — Away to Score · Low 62.8%
+  ✅ Grimsby vs N Forest U (Football League Trophy) — Away to Score · High 81.2%
+  ✅ Leicester vs Walsall (Football League Trophy) — Away to Score · High 76.8%
+  ✅ Bromley vs MK Dons (Football League Trophy) — Away to Score · Medium 74.6%
+  ✅ Crawley vs Brentford U (Football League Trophy) — Away to Score · High 85.8%
+  ✅ Darlington vs Oxford C (Football Conference North) — Away to Score · Medium 74.8%
+  ✅ Scarborough A vs Marine (Football Conference North) — Away to Score · Medium 74.6%
+  ✅ Chatham Town vs Leatherhead (Ryman Premier) — Away to Score · High 77.9%
+  ✅ Cray W vs Three Bridges (Ryman Premier) — Away to Score · High 87.1%
+  ✅ Whitehawk vs Welling (Ryman Premier) — Away to Score · High 90.7%
+  ✅ Gloucester vs Malvern Town (Southern League Premier) — Away to Score · Medium 70.5%
+  ✅ Chertsey Town vs Chichester C (Southern League Premier) — Away to Score · High 88.5%
+  ✅ Workington vs Alfreton (Unibond Premier) — Away to Score · Medium 69.9%
+  ✅ Bury vs Cleethorpes T (Unibond Premier) — Away to Score · High 85.8%
+  ✅ Quorn vs Stockton T (Unibond Premier) — Away to Score · High 85.0%
 
 
 <!-- report: daily 2026-11-09 -->

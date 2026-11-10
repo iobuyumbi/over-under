@@ -9,6 +9,7 @@ import json
 import os
 import csv
 import logging
+import tempfile
 from datetime import datetime, timedelta
 from collections import defaultdict
 
@@ -855,22 +856,40 @@ def add_to_manual_results_csv(date_str, home_team, away_team):
 
 def load_history():
     default = {"home_win": [], "over_under": [], "btts": [], "oo05": [], "stats": {}}
-    if os.path.exists(HISTORY_FILE):
+    if not os.path.exists(HISTORY_FILE):
+        return default
+    try:
+        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except json.JSONDecodeError as exc:
+        # Never fall back to an empty history: a corrupt file (e.g. leftover
+        # git conflict markers) must fail loudly, otherwise the next
+        # save_history() would overwrite every settled result with nothing.
+        raise RuntimeError(
+            f"{HISTORY_FILE} is not valid JSON ({exc}); refusing to load so the "
+            "corrupt file cannot be silently overwritten. Repair it before re-running."
+        ) from exc
+    for key, val in default.items():
+        if key not in data:
+            data[key] = val if key != "stats" else {}
+    return data
+ 
+ 
+def save_history(history):
+    # Atomic write: a crash or concurrent writer can otherwise leave a
+    # truncated file, which load_history() would then reject as corrupt.
+    directory = os.path.dirname(os.path.abspath(HISTORY_FILE))
+    fd, tmp = tempfile.mkstemp(dir=directory, suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump(history, f, indent=2, default=str)
+        os.replace(tmp, HISTORY_FILE)
+    except BaseException:
         try:
-            with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            for key, val in default.items():
-                if key not in data:
-                    data[key] = val if key != "stats" else {}
-            return data
-        except (OSError, json.JSONDecodeError):
+            os.unlink(tmp)
+        except OSError:
             pass
-    return default 
- 
- 
-def save_history(history): 
-    with open(HISTORY_FILE, "w") as f: 
-        json.dump(history, f, indent=2, default=str) 
+        raise
  
  
 def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btts_picks=None, oo05_picks=None):

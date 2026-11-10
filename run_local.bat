@@ -349,6 +349,19 @@ if errorlevel 1 (
   exit /b 0
 )
 
+REM A conflicted autostash pop can leave conflict markers in tracked files and
+REM still exit 0. Committing those markers corrupts JSON/CSV data (the history
+REM wipe of 2026-11-07), so scan for them before staging anything.
+git grep -n -e "^<<<<<<< " -e "^>>>>>>> " -- . > _markers.txt 2>nul
+if not errorlevel 1 (
+  echo   ERROR: unresolved merge conflict markers found in tracked files:
+  type _markers.txt
+  del _markers.txt 2>nul
+  echo   Resolve them, then re-run. Nothing was staged or pushed.
+  exit /b 1
+)
+del _markers.txt 2>nul
+
 REM Stage AFTER the pull: --autostash reapplies the stash without restoring the
 REM index, so anything staged before the pull comes back unstaged and the
 REM commit below would find nothing to commit.
