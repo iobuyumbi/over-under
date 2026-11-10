@@ -498,6 +498,55 @@ class OverGoalVolumeRuleTests(unittest.TestCase):
         self.assertIn("Away goal volume (last 6)", failed)
 
 
+class SterileAttackVetoTests(unittest.TestCase):
+    """Over 2.5 losses are dominated by games where one side fails to score:
+    81% of settled Over losses finished with at least one team on 0 goals
+    (vs 19% of wins). _sterile_attack_veto_over widens the participation lens
+    from the last three venue games to the whole six-game window so a side
+    that blanks chronically but happened to score in two of its last three
+    no longer slides through.
+    """
+
+    def setUp(self):
+        self.healthy = [(2, 1), (1, 1), (2, 0), (1, 2), (2, 1), (1, 0)]   # scored 6/6
+        self.sterile = [(0, 1), (0, 2), (0, 0), (1, 0), (0, 1), (1, 1)]   # scored 2/6
+
+    def test_two_scoring_attacks_pass(self):
+        self.assertEqual(
+            over25_soccerbase._sterile_attack_veto_over(self.healthy, self.healthy),
+            (False, None),
+        )
+
+    def test_sterile_home_is_vetoed(self):
+        veto, reason = over25_soccerbase._sterile_attack_veto_over(self.sterile, self.healthy)
+        self.assertTrue(veto)
+        self.assertIn("home_sterile", reason)
+
+    def test_sterile_away_is_vetoed(self):
+        veto, reason = over25_soccerbase._sterile_attack_veto_over(self.healthy, self.sterile)
+        self.assertTrue(veto)
+        self.assertIn("away_sterile", reason)
+
+    def test_thin_sample_below_three_games_is_not_judged(self):
+        self.assertEqual(
+            over25_soccerbase._sterile_attack_veto_over([(0, 1), (0, 0)], self.healthy),
+            (False, None),
+        )
+
+    def test_three_game_window_matches_the_existing_two_of_three_gate(self):
+        # 2 of 3 scored -> pass (same bar as _over_btts_participation_gate).
+        self.assertEqual(
+            over25_soccerbase._sterile_attack_veto_over([(1, 0), (0, 1), (2, 0)], self.healthy),
+            (False, None),
+        )
+        # 1 of 3 scored -> blocked.
+        veto, reason = over25_soccerbase._sterile_attack_veto_over(
+            [(1, 0), (0, 1), (0, 2)], self.healthy
+        )
+        self.assertTrue(veto)
+        self.assertIn("home_sterile_1of3", reason)
+
+
 class OverLambdaGateTests(unittest.TestCase):
     """The Over gate demands a real model lean: combined lambda must clear
     MIN_COMBINED_LAMBDA_OVER, which maps to a ~60% Poisson Over probability.

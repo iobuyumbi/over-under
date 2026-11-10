@@ -462,6 +462,32 @@ def _over_leak_participation_gate(home_3, away_3):
     return False, None
 
 
+def _sterile_attack_veto_over(home_6, away_6):
+    """Block Over 2.5 when EITHER side's venue attack is sterile — it scored in
+    fewer than half of its available venue games.
+
+    Added 2026-11-10 from a settled-loss review: 87 of 108 Over 2.5 losses
+    (81%) finished with at least one team on 0 goals versus only 19% of the
+    wins, and 81% of wins had BOTH teams scoring. The existing three-game
+    participation gate
+    (_over_btts_participation_gate) only inspects the last three venue games,
+    so a side that blanks chronically but happened to score in two of its most
+    recent three slides through. This widens the clean-sheet lens to the whole
+    six-game venue window; the bar stays "fewer than half scored" so it is
+    never stricter than the 2-of-3 gate on short samples (n=3 -> 2 of 3) and
+    only adds coverage at n>=4.
+    """
+    for form, side in ((home_6, "home"), (away_6, "away")):
+        n = min(len(form or []), 6)
+        if n < 3:
+            continue
+        scored = sum(1 for gf, _ in form[:n] if gf >= 1)
+        required = (n + 1) // 2
+        if scored < required:
+            return True, f"{side}_sterile_{scored}of{n}_venue"
+    return False, None
+
+
 def _combined_low_event_veto(home_3, away_3):
     """Block Over if EITHER team has been in low-scoring games recently.
     
@@ -685,7 +711,7 @@ def _scoring_consistency_veto(home_6, away_6):
         if blanks >= 2:
             return True, f"home_inconsistent_{blanks}_blanks_in_3"
     if len(away_6 or []) >= 3:
-        blanks = sum(1 for gf, ga in away_6[:3] if ga == 0)
+        blanks = sum(1 for gf, ga in away_6[:3] if gf == 0)
         if blanks >= 2:
             return True, f"away_inconsistent_{blanks}_blanks_in_3"
     return False, None
@@ -1905,6 +1931,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         one_sided_blank_veto, one_sided_blank_reason = _one_sided_home_blank_away_midrange_veto(
             home_3, away_3
         )
+        sterile_attack_veto, sterile_attack_reason = _sterile_attack_veto_over(home_6, away_6)
 
         under3_result = apply_under_algorithm(home_3, away_3)
         if under3_result[0] is None:
@@ -1980,6 +2007,7 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             and not h2h_zero_bogey_veto and not borderline_one_veto
             and not one_sided_blank_veto and not venue_h2h_veto
             and not opponent_elite_defense_veto
+            and not sterile_attack_veto
         )
         under_qualifies = (
             bool(under_passed) and under_score >= under_min_score and under_gate
@@ -2116,6 +2144,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append(f"0-or-1-goal cluster ({borderline_one_reason})")
         if one_sided_blank_veto:
             regressions.append(f"home blank + away mid-range ({one_sided_blank_reason})")
+        if sterile_attack_veto:
+            regressions.append(f"sterile venue attack ({sterile_attack_reason})")
         if early_mult < 1.0:
             regressions.append(f"early-season penalty (x{early_mult})")
 
@@ -2175,6 +2205,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "borderline_one_reason": borderline_one_reason,
                     "one_sided_blank_veto": one_sided_blank_veto,
                     "one_sided_blank_reason": one_sided_blank_reason,
+                    "sterile_attack_veto": sterile_attack_veto,
+                    "sterile_attack_reason": sterile_attack_reason,
                     "early_season_mult": round(early_mult, 2),
                     "home_btts_6": home_btts_6,
                     "away_btts_6": away_btts_6,
@@ -2282,6 +2314,8 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
                     "borderline_one_reason": borderline_one_reason,
                     "one_sided_blank_veto": one_sided_blank_veto,
                     "one_sided_blank_reason": one_sided_blank_reason,
+                    "sterile_attack_veto": sterile_attack_veto,
+                    "sterile_attack_reason": sterile_attack_reason,
                     "early_season_mult": round(early_mult, 2),
                     "recent_cold_blocked": recent_cold_over_block,
                     "regression_penalty_applied": regressions,
