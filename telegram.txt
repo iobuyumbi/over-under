@@ -1,43 +1,153 @@
-📅 Daily Soccer Picks · 2026-11-10
+📅 Daily Soccer Picks · 2026-11-11
 
 ───────────
-📊 Yesterday · 2026-11-09 · 15
+📊 Yesterday · 2026-11-10 · 52W-17L-0P (1 pending)
 
 
-Plymouth P vs Berkhamsted · 2026-11-09 · HOME WIN · Pending
+Eastbourne vs Dulwich H · 2026-11-10 · HOME WIN · ✅ Win (4-2)
 
-Botosani vs Otelul Galati · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
+Oxford vs Cheltenham · 2026-11-10 · HOME WIN · ✅ Win (4-0)
 
-Alianza Petrolera vs Llaneros · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
+Sholing vs Chippenham · 2026-11-10 · HOME WIN · ❌ Loss (1-1)
 
-Tecnico Universitario vs Manta · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
+Uxbridge vs Hanwell Town · 2026-11-10 · HOME WIN · ✅ Win (4-2)
 
-Plymouth P vs Berkhamsted · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
+Curzon A vs Ilkeston · 2026-11-10 · HOME WIN · ✅ Win (1-0)
 
-Sabadell vs Real Sociedad B · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
+Quorn vs Stockton T · 2026-11-10 · HOME WIN · ❌ Loss (2-3)
 
-Kristiansund vs Valerenga · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
+Bradford vs York · 2026-11-10 · HOME WIN · ✅ Win (4-0)
 
-Queretaro vs Puebla · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
+Stockport vs Tranmere · 2026-11-10 · HOME WIN · ❌ Loss (0-0)
 
-Leon vs Guadalajara · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
+Leicester vs Walsall · 2026-11-10 · OVER 2.5 · ✅ Win (2-1)
 
-Mushuc Runa vs Delfin · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
+Crawley vs Brentford U · 2026-11-10 · OVER 2.5 · ✅ Win (1-2)
 
-Sabadell vs Real Sociedad B · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
+Cray W vs Three Bridges · 2026-11-10 · OVER 2.5 · ❌ Loss (2-0)
 
-Kristiansund vs Valerenga · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
+Chertsey Town vs Chichester C · 2026-11-10 · OVER 2.5 · ✅ Win (2-1)
 
-Leon vs Guadalajara · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
+Rylands vs Guiseley · 2026-11-10 · OVER 2.5 · ❌ Loss (1-1)
 
-Tecnico Universitario vs Manta · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
+Scarborough A vs Marine · 2026-11-10 · OVER 2.5 · ✅ Win (1-3)
 
-Chelmsford vs Ebbsfleet · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
+Whitehawk vs Welling · 2026-11-10 · OVER 2.5 · ✅ Win (2-2)
+
+Enfield T vs Lewes · 2026-11-10 · OVER 2.5 · ❌ Loss (2-0)
+
+Huddersfield vs Liverpool U · 2026-11-10 · OVER 2.5 · ✅ Win (4-0)
+
+Leicester vs Walsall · 2026-11-10 · BTTS YES · ✅ Win (2-1)
+
+Chertsey Town vs Chichester C · 2026-11-10 · BTTS YES · ✅ Win (2-1)
+
+Cray W vs Three Bridges · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Enfield T vs Lewes · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Eastbourne vs Dulwich H · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (4-2)
+
+Wimborne T vs Poole Town · 2026-11-10 · OVER 0.5 TEAM GOAL · Pending
+
+Chatham Town vs Leatherhead · 2026-11-10 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Sholing vs Chippenham · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Curzon A vs Ilkeston · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (1-0)
+
+Crewe vs Wigan · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Burton vs Notts Co · 2026-11-10 · OVER 0.5 TEAM GOAL · ❌ Loss (0-3)
+
+Oxford vs Cheltenham · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (4-0)
+
+Huddersfield vs Liverpool U · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (4-0)
+
+Grimsby vs N Forest U · 2026-11-10 · OVER 0.5 TEAM GOAL · ❌ Loss (0-3)
+
+Bristol R vs Reading · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Leicester vs Walsall · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Stevenage vs Fulham U · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Crawley vs Brentford U · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Colchester vs Ipswich Town U · 2026-11-10 · OVER 0.5 TEAM GOAL · ❌ Loss (0-0)
+
+Salisbury FC vs Braintree · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Gloucester vs Malvern Town · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (3-2)
+
+Uxbridge vs Hanwell Town · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (4-2)
+
+Hemel vs Torquay · 2026-11-10 · OVER 0.5 TEAM GOAL · ❌ Loss (0-2)
+
+Chertsey Town vs Chichester C · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Bath City vs Taunton Town · 2026-11-10 · OVER 0.5 TEAM GOAL · ❌ Loss (0-3)
+
+Havant & W vs Bracknell · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (3-2)
+
+Redcar Athletic vs Bamber Br. · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (4-0)
+
+Workington vs Alfreton · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (3-0)
+
+Quorn vs Stockton T · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-3)
+
+Rylands vs Guiseley · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Barnet vs Leyton Orient · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (4-2)
+
+Burton vs Notts Co · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (0-3)
+
+Mansfield vs Chesterfield · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (3-5)
+
+Grimsby vs N Forest U · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (0-3)
+
+Bromley vs MK Dons · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Leicester vs Walsall · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Stevenage vs Fulham U · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Crawley vs Brentford U · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Colchester vs Ipswich Town U · 2026-11-10 · OVER 0.5 TEAM GOAL · ❌ Loss (0-0)
+
+Cray W vs Three Bridges · 2026-11-10 · OVER 0.5 TEAM GOAL · ❌ Loss (2-0)
+
+Whitehawk vs Welling · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Gloucester vs Malvern Town · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (3-2)
+
+Chatham Town vs Leatherhead · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Chertsey Town vs Chichester C · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Darlington vs Oxford C · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Redcar Athletic vs Bamber Br. · 2026-11-10 · OVER 0.5 TEAM GOAL · ❌ Loss (4-0)
+
+Bury vs Cleethorpes T · 2026-11-10 · OVER 0.5 TEAM GOAL · ❌ Loss (1-0)
+
+Workington vs Alfreton · 2026-11-10 · OVER 0.5 TEAM GOAL · ❌ Loss (3-0)
+
+Quorn vs Stockton T · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-3)
+
+Morecambe vs Hereford · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Whitehawk vs Welling · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Northampton vs Gillingham · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Scarborough A vs Marine · 2026-11-10 · OVER 0.5 TEAM GOAL · ✅ Win (1-3)
 
 ───────────
 ⚽️ OVER / UNDER 2.5
 
-📅 Picks for 2026-11-10
+📅 Picks for 2026-11-11
 
 
 🟢 Over 2.5 goals
@@ -45,141 +155,27 @@ Chelmsford vs Ebbsfleet · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
   ✅ Solid picks
 
 
-  1. Huddersfield vs Liverpool U
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Over 2.5 · High confidence (63.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  2. Leicester vs Walsall
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Over 2.5 · High confidence (67.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  3. Crawley vs Brentford U
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Over 2.5 · High confidence (82.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  4. Scarborough A vs Marine
-     Date: 2026-11-10
-     League: Football Conference North
-     Pick: Over 2.5 · High confidence (75.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  5. Enfield T vs Lewes
-     Date: 2026-11-10
-     League: Ryman Premier
-     Pick: Over 2.5 · High confidence (75.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  6. Chertsey Town vs Chichester C
-     Date: 2026-11-10
+  1. Frome vs Plymouth P
+     Date: 2026-11-11
      League: Southern League Premier
-     Pick: Over 2.5 · High confidence (77.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  7. Rylands vs Guiseley
-     Date: 2026-11-10
-     League: Unibond Premier
-     Pick: Over 2.5 · High confidence (74.5%)
+     Pick: Over 2.5 · High confidence (73.7%)
      Category:
        • Tier: ✅ Solid
 
 ───────────
 🎯 BTTS (YES / NO)
 
-📅 Picks for 2026-11-10
-
-
-🟢 BTTS Yes
-
-  ✅ Solid picks
-
-
-  1. Leicester vs Walsall
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: BTTS Yes · High confidence (66.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  2. Chertsey Town vs Chichester C
-     Date: 2026-11-10
-     League: Southern League Premier
-     Pick: BTTS Yes · High confidence (73.0%)
-     Category:
-       • Tier: ✅ Solid
+📅 Picks for 2026-11-11
 
 ───────────
 🏠 HOME WIN
 
-📅 Picks for 2026-11-10
-
-
-  🔥 Premium picks
-
-
-  1. Eastbourne vs Dulwich H
-     Date: 2026-11-10
-     League: Ryman Premier
-     Pick: Home Win · High confidence (90.0%)
-     Category:
-       • Tier: 🔥 Premium
-
-  ✅ Solid picks
-
-
-  2. Bradford vs York
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Home Win · High confidence (87.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  👀 Watchlist
-
-
-  3. Stockport vs Tranmere
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Home Win · High confidence (88.4%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  4. Uxbridge vs Hanwell Town
-     Date: 2026-11-10
-     League: Southern League Premier
-     Pick: Home Win · High confidence (86.6%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  5. Curzon A vs Ilkeston
-     Date: 2026-11-10
-     League: Unibond Premier
-     Pick: Home Win · High confidence (94.0%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  6. Quorn vs Stockton T
-     Date: 2026-11-10
-     League: Unibond Premier
-     Pick: Home Win · High confidence (81.3%)
-     Category:
-       • Tier: 👀 Watchlist
+📅 Picks for 2026-11-11
 
 ───────────
 🎯 OVER 0.5 TEAM GOAL
 
-📅 Picks for 2026-11-10
+📅 Picks for 2026-11-11
 
 
 🏠 Home Team to Score
@@ -187,327 +183,31 @@ Chelmsford vs Ebbsfleet · 2026-11-09 · OVER 0.5 TEAM GOAL · Pending
   🔥 Premium picks
 
 
-  1. Chatham Town vs Leatherhead
-     Date: 2026-11-10
-     League: Ryman Premier
-     Pick: Home to Score · High confidence (88.6%)
+  1. Frome vs Plymouth P
+     Date: 2026-11-11
+     League: Southern League Premier
+     Pick: Home to Score · High confidence (85.8%)
      Category:
        • Tier: 🔥 Premium
-
-  2. Cray W vs Three Bridges
-     Date: 2026-11-10
-     League: Ryman Premier
-     Pick: Home to Score · High confidence (91.7%)
-     Category:
-       • Tier: 🔥 Premium
-
-  3. Eastbourne vs Dulwich H
-     Date: 2026-11-10
-     League: Ryman Premier
-     Pick: Home to Score · High confidence (90.0%)
-     Category:
-       • Tier: 🔥 Premium
-
-  4. Wimborne T vs Poole Town
-     Date: 2026-11-10
-     League: Southern League Premier
-     Pick: Home to Score · High confidence (83.5%)
-     Category:
-       • Tier: 🔥 Premium
-
-  5. Sholing vs Chippenham
-     Date: 2026-11-10
-     League: Southern League Premier
-     Pick: Home to Score · High confidence (88.8%)
-     Category:
-       • Tier: 🔥 Premium
-
-  6. Curzon A vs Ilkeston
-     Date: 2026-11-10
-     League: Unibond Premier
-     Pick: Home to Score · High confidence (92.0%)
-     Category:
-       • Tier: 🔥 Premium
-  ✅ Solid picks
-
-
-  7. Huddersfield vs Liverpool U
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Home to Score · High confidence (84.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  8. Grimsby vs N Forest U
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Home to Score · High confidence (88.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  9. Crewe vs Wigan
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Home to Score · High confidence (82.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  10. Burton vs Notts Co
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Home to Score · High confidence (80.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  11. Oxford vs Cheltenham
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Home to Score · High confidence (79.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  12. Stevenage vs Fulham U
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Home to Score · High confidence (81.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  13. Leicester vs Walsall
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Home to Score · High confidence (84.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  14. Crawley vs Brentford U
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Home to Score · High confidence (88.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  15. Colchester vs Ipswich Town U
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Home to Score · Medium confidence (71.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  16. Morecambe vs Hereford
-     Date: 2026-11-10
-     League: Football Conference North
-     Pick: Home to Score · High confidence (81.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  17. Salisbury FC vs Braintree
-     Date: 2026-11-10
-     League: Football Conference South
-     Pick: Home to Score · High confidence (97.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  18. Hemel vs Torquay
-     Date: 2026-11-10
-     League: Football Conference South
-     Pick: Home to Score · Low confidence (63.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  19. Whitehawk vs Welling
-     Date: 2026-11-10
-     League: Ryman Premier
-     Pick: Home to Score · High confidence (78.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  20. Enfield T vs Lewes
-     Date: 2026-11-10
-     League: Ryman Premier
-     Pick: Home to Score · High confidence (88.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  21. Gloucester vs Malvern Town
-     Date: 2026-11-10
-     League: Southern League Premier
-     Pick: Home to Score · High confidence (90.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  22. Uxbridge vs Hanwell Town
-     Date: 2026-11-10
-     League: Southern League Premier
-     Pick: Home to Score · High confidence (85.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  23. Chertsey Town vs Chichester C
-     Date: 2026-11-10
-     League: Southern League Premier
-     Pick: Home to Score · High confidence (85.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  24. Bath City vs Taunton Town
-     Date: 2026-11-10
-     League: Southern League Premier
-     Pick: Home to Score · Medium confidence (70.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  25. Havant & W vs Bracknell
-     Date: 2026-11-10
-     League: Southern League Premier
-     Pick: Home to Score · High confidence (86.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  26. Redcar Athletic vs Bamber Br.
-     Date: 2026-11-10
-     League: Unibond Premier
-     Pick: Home to Score · High confidence (89.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  27. Workington vs Alfreton
-     Date: 2026-11-10
-     League: Unibond Premier
-     Pick: Home to Score · High confidence (83.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  28. Quorn vs Stockton T
-     Date: 2026-11-10
-     League: Unibond Premier
-     Pick: Home to Score · High confidence (89.9%)
-     Category:
-       • Tier: ✅ Solid
 
 ✈️ Away Team to Score
 
   🔥 Premium picks
 
 
-  1. Rylands vs Guiseley
-     Date: 2026-11-10
+  1. Avro vs Whitby
+     Date: 2026-11-11
      League: Unibond Premier
-     Pick: Away to Score · High confidence (89.6%)
+     Pick: Away to Score · High confidence (89.8%)
      Category:
        • Tier: 🔥 Premium
   ✅ Solid picks
 
 
-  2. Northampton vs Gillingham
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Away to Score · Medium confidence (70.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  3. Barnet vs Leyton Orient
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Away to Score · Low confidence (62.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  4. Grimsby vs N Forest U
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Away to Score · High confidence (81.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  5. Leicester vs Walsall
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Away to Score · High confidence (76.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  6. Bromley vs MK Dons
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Away to Score · Medium confidence (74.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  7. Crawley vs Brentford U
-     Date: 2026-11-10
-     League: Football League Trophy
-     Pick: Away to Score · High confidence (85.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  8. Darlington vs Oxford C
-     Date: 2026-11-10
-     League: Football Conference North
-     Pick: Away to Score · Medium confidence (74.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  9. Scarborough A vs Marine
-     Date: 2026-11-10
-     League: Football Conference North
-     Pick: Away to Score · Medium confidence (74.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  10. Chatham Town vs Leatherhead
-     Date: 2026-11-10
-     League: Ryman Premier
-     Pick: Away to Score · High confidence (77.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  11. Cray W vs Three Bridges
-     Date: 2026-11-10
-     League: Ryman Premier
-     Pick: Away to Score · High confidence (87.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  12. Whitehawk vs Welling
-     Date: 2026-11-10
-     League: Ryman Premier
-     Pick: Away to Score · High confidence (90.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  13. Gloucester vs Malvern Town
-     Date: 2026-11-10
+  2. Frome vs Plymouth P
+     Date: 2026-11-11
      League: Southern League Premier
-     Pick: Away to Score · Medium confidence (70.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  14. Chertsey Town vs Chichester C
-     Date: 2026-11-10
-     League: Southern League Premier
-     Pick: Away to Score · High confidence (88.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  15. Workington vs Alfreton
-     Date: 2026-11-10
-     League: Unibond Premier
-     Pick: Away to Score · Medium confidence (69.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  16. Bury vs Cleethorpes T
-     Date: 2026-11-10
-     League: Unibond Premier
-     Pick: Away to Score · High confidence (85.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  17. Quorn vs Stockton T
-     Date: 2026-11-10
-     League: Unibond Premier
-     Pick: Away to Score · High confidence (85.0%)
+     Pick: Away to Score · High confidence (82.1%)
      Category:
        • Tier: ✅ Solid
 

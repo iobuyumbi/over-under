@@ -4,75 +4,18 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
-<!-- report: weekly 2026-11-09 -->
-## Weekly Report — 2026-11-09
+<!-- report: daily 2026-11-11 -->
+## Daily Picks — 2026-11-11
 
-WEEKLY PERFORMANCE REPORT
-2026-11-02 to 2026-11-09
+### Over/Under 2.5  (1)
+  ✅ Frome vs Plymouth P (Southern League Premier) — Over 2.5 · High 73.7%
 
-Home win picks
-Total picks: 0
-Wins: 0
-Losses: 0
-Pushes: 0
-Pending: 0
+### Team Goals Over 0.5  (3)
+  🔥 Frome vs Plymouth P (Southern League Premier) — Home to Score · High 85.8%
+  🔥 Avro vs Whitby (Unibond Premier) — Away to Score · High 89.8%
+  ✅ Frome vs Plymouth P (Southern League Premier) — Away to Score · High 82.1%
 
-DOUBLE CHANCE (HOME OR DRAW)
-Total picks: 0
-Wins: 0
-Losses: 0
-Pending: 0
 
-OVER 2.5 GOALS
-Total picks: 0
-Wins: 0
-Losses: 0
-Pushes: 0
-Pending: 0
-
-OVER 1.5 GOALS
-Total picks: 0
-Wins: 0
-Losses: 0
-Pending: 0
-
-UNDER 2.5 GOALS
-Total picks: 0
-Wins: 0
-Losses: 0
-Pushes: 0
-Pending: 0
-
-UNDER 3.5 GOALS
-Total picks: 0
-Wins: 0
-Losses: 0
-Pending: 0
-
-BTTS YES
-Total picks: 0
-Wins: 0
-Losses: 0
-Pushes: 0
-Pending: 0
-
-BTTS NO
-Total picks: 0
-Wins: 0
-Losses: 0
-Pushes: 0
-Pending: 0
-
-OVER 0.5 TEAM GOAL
-Total picks: 0
-Wins: 0
-Losses: 0
-Pushes: 0
-Pending: 0
-
----
-For informational purposes only
-Gamble responsibly
 <!-- report: daily 2026-11-10 -->
 ## Daily Picks — 2026-11-10
 
@@ -143,6 +86,77 @@ Gamble responsibly
   ✅ Workington vs Alfreton (Unibond Premier) — Away to Score · Medium 69.9%
   ✅ Bury vs Cleethorpes T (Unibond Premier) — Away to Score · High 85.8%
   ✅ Quorn vs Stockton T (Unibond Premier) — Away to Score · High 85.0%
+
+
+<!-- report: weekly 2026-11-09 -->
+## Weekly Report — 2026-11-09
+
+WEEKLY PERFORMANCE REPORT
+2026-11-02 to 2026-11-09
+
+Home win picks
+Total picks: 0
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+DOUBLE CHANCE (HOME OR DRAW)
+Total picks: 0
+Wins: 0
+Losses: 0
+Pending: 0
+
+OVER 2.5 GOALS
+Total picks: 0
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+OVER 1.5 GOALS
+Total picks: 0
+Wins: 0
+Losses: 0
+Pending: 0
+
+UNDER 2.5 GOALS
+Total picks: 0
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+UNDER 3.5 GOALS
+Total picks: 0
+Wins: 0
+Losses: 0
+Pending: 0
+
+BTTS YES
+Total picks: 0
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+BTTS NO
+Total picks: 0
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+OVER 0.5 TEAM GOAL
+Total picks: 0
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+---
+For informational purposes only
+Gamble responsibly
 
 
 <!-- report: daily 2026-11-09 -->

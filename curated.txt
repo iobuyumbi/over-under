@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-11-10
+✦ CURATED PICKS · 2026-11-11
   Input reports:
-    OU   → over_under_vip_report_2026-11-10.txt
-    BTTS → btts_vip_report_2026-11-10.txt
-    HW   → home_win_vip_report_2026-11-10.txt
+    OU   → over_under_vip_report_2026-11-11.txt
+    BTTS → btts_vip_report_2026-11-11.txt
+    HW   → home_win_vip_report_2026-11-11.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,23 +11,19 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-11-10)
+    • Today only (2026-11-11)
 
-━━━ OVER / UNDER 2.5  (1 accepted) ━━━
-   1. ✅ Crawley vs Brentford U  (Football League Trophy)
-      Over 2.5 · High 82.9% · xG 2.30–2.22
-      Stake 2.0% @ 2.0  ·  EV +65.8c/$  ·  Edge +65.8%
+━━━ OVER / UNDER 2.5  (0 accepted) ━━━
+  (none)
 
 ━━━ BTTS (Yes / No)  (0 accepted) ━━━
   (none)
 
-━━━ HOME WIN  (1 accepted) ━━━
-   1. ✅ Bradford vs York  (Football League Trophy)
-      Home Win · High 87.1%
-      Stake 8.2% @ 2.8  ·  EV +143.9c/$  ·  Edge +143.9%
+━━━ HOME WIN  (0 accepted) ━━━
+  (none)
 
-📊 Summary: 2 curated picks
-   Parsed total: 19   Rejected: 17   Accepted: 2
+📊 Summary: 0 curated picks
+   Parsed total: 49   Rejected: 49   Accepted: 0
 
 ---
 For informational purposes only · Gamble responsibly
