@@ -525,6 +525,39 @@ def _derby_veto(match):
     return False, None
 
 
+# Cup / continental competition markers. Deliberately excludes the bare word
+# "conference" (it is an English non-league DIVISION, "Football Conference
+# South/North") and the bare word "champions" (it matches "Championship"), so
+# only genuine knockout / cross-league competitions are caught.
+CUP_CONTINENTAL_KEYWORDS = (
+    "cup", "trophy", "copa", "coupe",
+    "europa", "european", "conference league", "champions league",
+    "libertadores", "sudamericana",
+)
+
+
+def _competition_class_veto(league_name):
+    """Block Over 0.5 Team Goal picks in cup and continental competitions.
+
+    Added 2026-11-10 from a settled-loss review of 1131 picks. Cup/trophy and
+    continental fixtures settle at 71.7% (86W/34L over 121) while league
+    fixtures settle at 78.7% (785W/212L over 1010) — a 7-point gap that is the
+    single cleanest split in the sample. Knockout football is where a side's
+    normal scoring streak least reliably transfers: rotation, one-off
+    game-states (parked buses, extra time) and cross-league matchups all break
+    the pattern the rulebook is built on. The worst offenders are the
+    continental / challenge comps (European Cup 66.7%, Scottish League
+    Challenge Cup 60.0%, Europa Conference 70.6%, English FA Cup 70.8%). This
+    matches the long-standing policy of avoiding cup and continental matches
+    for form-based predictions.
+    """
+    league = str(league_name or "").lower()
+    for keyword in CUP_CONTINENTAL_KEYWORDS:
+        if keyword in league:
+            return True, f"cup_or_continental_{keyword.replace(' ', '_')}"
+    return False, None
+
+
 # =============================================================================
 # MATCH PROCESSING
 # =============================================================================
@@ -557,6 +590,7 @@ def process_single_match(match, target_date, default_odds_home=OO05_DEFAULT_ODDS
         home_drought_veto, home_drought_reason = _scoring_drought_veto(home_form_20[:3])
         home_opp_wall_veto, home_opp_wall_reason = _opponent_defensive_wall_veto(away_form_20[:3])
         derby_veto, derby_reason = _derby_veto(match)
+        cup_veto, cup_reason = _competition_class_veto(league_name)
 
         home_data_mult = data_volume_penalty(home_form_20, away_form_20[:6], home_overall_20, away_overall_20[:10])
         home_league_mult = OO05_WEAK_ROI_MULTIPLIER if _is_weak_roi_league(league_name) else 1.0
@@ -573,6 +607,7 @@ def process_single_match(match, target_date, default_odds_home=OO05_DEFAULT_ODDS
             and home_streak_pass and home_def_pass  # BOTH gates required
             and not home_h2h_veto and not home_cold_veto
             and not home_drought_veto and not home_opp_wall_veto and not derby_veto
+            and not cup_veto
         )
         home_tier = tier_from_confidence(home_conf_score, home_is_perfect, home_streak_label, home_combined_gpg, home_def_elite) if home_qualifies else None
         home_kelly = calculate_kelly(home_prob_pct / 100, default_odds_home, use_half=True) if home_qualifies else 0.0
@@ -600,12 +635,17 @@ def process_single_match(match, target_date, default_odds_home=OO05_DEFAULT_ODDS
         away_combined_gpg = (sum(gf+ga for gf,ga in (away_form_20[:6] or [])) + sum(gf+ga for gf,ga in (home_form_20[:6] or []))) / max(1, len(away_form_20[:6] or [])+len(home_form_20[:6] or []))
 
         away_conf_score = compute_confidence_score(away_score, OO05_MAX_SCORE, away_prob_pct, default_odds_away, away_final_mult)
-        away_min_score = home_min_score
+        # Away-leg tightening (2026-11-10): the away pick settles at 73.6% in
+        # leagues versus 82.1% for the home pick (387 vs 503 settled picks), an
+        # ~8.5-point gap. Scoring on the road is intrinsically harder, so the
+        # away leg now needs one extra rule of evidence than the home leg.
+        away_min_score = home_min_score + 1
         away_qualifies = (
             away_passed is not None and away_score >= away_min_score
             and away_streak_pass and away_def_pass  # BOTH gates required
             and not away_h2h_veto and not away_cold_veto
             and not away_drought_veto and not away_opp_wall_veto and not derby_veto
+            and not cup_veto
         )
         away_tier = tier_from_confidence(away_conf_score, away_is_perfect, away_streak_label, away_combined_gpg, away_def_elite) if away_qualifies else None
         away_kelly = calculate_kelly(away_prob_pct / 100, default_odds_away, use_half=True) if away_qualifies else 0.0
@@ -619,6 +659,7 @@ def process_single_match(match, target_date, default_odds_home=OO05_DEFAULT_ODDS
         if home_drought_veto: home_regressions.append(f"drought ({home_drought_reason})")
         if home_opp_wall_veto: home_regressions.append(f"opp wall ({home_opp_wall_reason})")
         if derby_veto: home_regressions.append(f"derby ({derby_reason})")
+        if cup_veto: home_regressions.append(f"cup/continental ({cup_reason})")
         if home_early_mult < 1.0: home_regressions.append(f"early-season (x{home_early_mult})")
 
         away_regressions = []
@@ -629,6 +670,7 @@ def process_single_match(match, target_date, default_odds_home=OO05_DEFAULT_ODDS
         if away_drought_veto: away_regressions.append(f"drought ({away_drought_reason})")
         if away_opp_wall_veto: away_regressions.append(f"opp wall ({away_opp_wall_reason})")
         if derby_veto: away_regressions.append(f"derby ({derby_reason})")
+        if cup_veto: away_regressions.append(f"cup/continental ({cup_reason})")
         if home_early_mult < 1.0: away_regressions.append(f"early-season (x{home_early_mult})")
 
         return {
@@ -649,6 +691,7 @@ def process_single_match(match, target_date, default_odds_home=OO05_DEFAULT_ODDS
                     "drought_veto": home_drought_veto, "drought_reason": home_drought_reason,
                     "opp_wall_veto": home_opp_wall_veto, "opp_wall_reason": home_opp_wall_reason,
                     "derby_veto": derby_veto, "derby_reason": derby_reason,
+                    "cup_veto": cup_veto, "cup_reason": cup_reason,
                     "early_season_mult": round(home_early_mult, 2),
                     "data_mult": round(home_data_mult, 2), "weak_league_mult": round(home_league_mult, 2),
                     "min_score_threshold": home_min_score, "regressions": home_regressions,
@@ -667,6 +710,7 @@ def process_single_match(match, target_date, default_odds_home=OO05_DEFAULT_ODDS
                     "drought_veto": away_drought_veto, "drought_reason": away_drought_reason,
                     "opp_wall_veto": away_opp_wall_veto, "opp_wall_reason": away_opp_wall_reason,
                     "derby_veto": derby_veto, "derby_reason": derby_reason,
+                    "cup_veto": cup_veto, "cup_reason": cup_reason,
                     "early_season_mult": round(home_early_mult, 2),
                     "data_mult": round(away_data_mult, 2), "weak_league_mult": round(home_league_mult, 2),
                     "min_score_threshold": away_min_score, "regressions": away_regressions,

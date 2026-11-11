@@ -9,6 +9,7 @@ from unittest.mock import patch
 
 import fetch_results
 import generate_weekly_report
+import oo05_soccerbase
 import over25_soccerbase
 import prediction_tracker
 import scraping
@@ -564,6 +565,33 @@ class OverLambdaGateTests(unittest.TestCase):
         # 2.10 combined clears the Under ceiling (2.15) but not the Over bar.
         self.assertTrue(over25_soccerbase.lambda_gate_passes(1.05, 1.05, "under"))
         self.assertFalse(over25_soccerbase.lambda_gate_passes(1.05, 1.05, "over"))
+
+
+class Oo05CompetitionClassVetoTests(unittest.TestCase):
+    """cup/continental oo05 picks settle at 71.7% versus 78.7% for league
+    fixtures, so knockout and cross-league comps are vetoed. The keyword
+    list must catch genuine cups without swallowing leagues whose names
+    merely contain 'Conference' or 'Championship'.
+    """
+
+    def test_cup_and_continental_comps_are_vetoed(self):
+        for league in (
+            "English FA Cup", "FA Trophy", "Football League Trophy",
+            "Scottish League Challenge Cup", "Europa Conference League",
+            "European Cup", "Copa Libertadores", "Copa del Rey",
+        ):
+            veto, reason = oo05_soccerbase._competition_class_veto(league)
+            self.assertTrue(veto, league)
+            self.assertIn("cup_or_continental", reason)
+
+    def test_leagues_with_cup_like_words_are_not_vetoed(self):
+        for league in (
+            "Football League Championship", "Football Conference South",
+            "Football Conference North", "Premier League", "Italian Serie A",
+        ):
+            self.assertEqual(
+                oo05_soccerbase._competition_class_veto(league), (False, None), league
+            )
 
 
 if __name__ == "__main__":
