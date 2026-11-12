@@ -3356,9 +3356,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:23:35.767336",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-12T04:36:41.010605",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-10",
@@ -7813,6 +7816,19 @@
       "result": "pending",
       "recorded_at": "2026-11-11T05:14:04.196717",
       "published": true
+    },
+    {
+      "date": "2026-11-14",
+      "type": "over_under",
+      "league": "Football League Two",
+      "home_team": "Shrewsbury",
+      "away_team": "Oldham",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-12T04:59:02.335564",
+      "published": false
     }
   ],
   "btts": [
@@ -9162,6 +9178,19 @@
       "confidence": "perfect",
       "result": "pending",
       "recorded_at": "2026-11-11T05:35:00.554628",
+      "published": true
+    },
+    {
+      "date": "2026-11-14",
+      "type": "btts",
+      "league": "Unibond Premier",
+      "home_team": "Rylands",
+      "away_team": "Whitby",
+      "prediction": "yes",
+      "prob": 74.7,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-12T05:19:20.991697",
       "published": true
     }
   ],
@@ -13470,9 +13499,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.897212",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-12T04:36:41.013421",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-11",
@@ -13483,9 +13515,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.902301",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-12T04:36:41.013421",
+      "final_score": "5-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-12",
@@ -17361,9 +17396,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:53.363122",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-12T04:36:41.014428",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-12",
@@ -29158,6 +29196,162 @@
       "confidence": "qualified",
       "result": "pending",
       "recorded_at": "2026-11-11T05:43:42.985747",
+      "published": true
+    },
+    {
+      "date": "2026-11-15",
+      "type": "oo05",
+      "league": "Spanish Segunda",
+      "home_team": "Eibar",
+      "away_team": "Cadiz",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-11-12T05:28:54.258344",
+      "published": true
+    },
+    {
+      "date": "2026-11-15",
+      "type": "oo05",
+      "league": "Japanese J2 League",
+      "home_team": "Vegalta Sendai",
+      "away_team": "Blaublitz Akita",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-11-12T05:28:54.291966",
+      "published": true
+    },
+    {
+      "date": "2026-11-15",
+      "type": "oo05",
+      "league": "Spanish Segunda",
+      "home_team": "Tenerife",
+      "away_team": "AD Ceuta",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-12T05:28:54.323336",
+      "published": true
+    },
+    {
+      "date": "2026-11-15",
+      "type": "oo05",
+      "league": "Spanish Segunda",
+      "home_team": "Granada",
+      "away_team": "Las Palmas",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-12T05:28:54.356341",
+      "published": true
+    },
+    {
+      "date": "2026-11-15",
+      "type": "oo05",
+      "league": "Japanese J2 League",
+      "home_team": "Consadole Sapporo",
+      "away_team": "Sagan Tosu",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-12T05:28:54.387318",
+      "published": true
+    },
+    {
+      "date": "2026-11-15",
+      "type": "oo05",
+      "league": "Japanese J2 League",
+      "home_team": "Imabari",
+      "away_team": "Jubilo Iwata",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-12T05:28:54.415813",
+      "published": true
+    },
+    {
+      "date": "2026-11-15",
+      "type": "oo05",
+      "league": "Japanese J2 League",
+      "home_team": "Juan Pablo II College",
+      "away_team": "Deportivo Garcilaso",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-12T05:28:54.444681",
+      "published": true
+    },
+    {
+      "date": "2026-11-14",
+      "type": "oo05",
+      "league": "Football League One",
+      "home_team": "Sheff Wed",
+      "away_team": "Plymouth",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-12T05:28:54.473532",
+      "published": true
+    },
+    {
+      "date": "2026-11-15",
+      "type": "oo05",
+      "league": "Spanish Segunda",
+      "home_team": "Tenerife",
+      "away_team": "AD Ceuta",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-12T05:28:54.491138",
+      "published": true
+    },
+    {
+      "date": "2026-11-15",
+      "type": "oo05",
+      "league": "Japanese J2 League",
+      "home_team": "Vegalta Sendai",
+      "away_team": "Blaublitz Akita",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-12T05:28:54.501682",
+      "published": true
+    },
+    {
+      "date": "2026-11-15",
+      "type": "oo05",
+      "league": "Japanese J2 League",
+      "home_team": "Vanraure Hachinohe",
+      "away_team": "Iwaki",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-12T05:28:54.507748",
+      "published": true
+    },
+    {
+      "date": "2026-11-15",
+      "type": "oo05",
+      "league": "Japanese J2 League",
+      "home_team": "Imabari",
+      "away_team": "Jubilo Iwata",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-12T05:28:54.530544",
       "published": true
     }
   ],

@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-11-11
+✦ CURATED PICKS · 2026-11-12
   Input reports:
-    OU   → over_under_vip_report_2026-11-11.txt
-    BTTS → btts_vip_report_2026-11-11.txt
-    HW   → home_win_vip_report_2026-11-11.txt
+    OU   → over_under_vip_report_2026-11-12.txt
+    BTTS → btts_vip_report_2026-11-12.txt
+    HW   → home_win_vip_report_2026-11-12.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,7 +11,7 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-11-11)
+    • Today only (2026-11-12)
 
 ━━━ OVER / UNDER 2.5  (0 accepted) ━━━
   (none)
