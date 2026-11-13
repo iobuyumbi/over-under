@@ -10520,9 +10520,13 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-07T08:55:51.119291",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-13T13:34:23.833886",
+      "final_score": "1-0",
+      "result_source": "manual",
+      "result_date": "2026-11-08"
     },
     {
       "date": "2026-11-07",
@@ -14181,9 +14185,13 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-07T08:55:52.541057",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-13T13:34:23.834898",
+      "final_score": "1-0",
+      "result_source": "manual",
+      "result_date": "2026-11-08"
     },
     {
       "date": "2026-11-07",
