@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-11-12
+✦ CURATED PICKS · 2026-11-13
   Input reports:
-    OU   → over_under_vip_report_2026-11-12.txt
-    BTTS → btts_vip_report_2026-11-12.txt
-    HW   → home_win_vip_report_2026-11-12.txt
+    OU   → over_under_vip_report_2026-11-13.txt
+    BTTS → btts_vip_report_2026-11-13.txt
+    HW   → home_win_vip_report_2026-11-13.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,19 +11,26 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-11-12)
+    • Today only (2026-11-13)
 
-━━━ OVER / UNDER 2.5  (0 accepted) ━━━
-  (none)
+━━━ OVER / UNDER 2.5  (2 accepted) ━━━
+   1. ✅ Strathspey T vs Deveronvale  (Scottish Highland League)
+      Over 2.5 · High 74.5% · xG 1.26–2.63
+      Stake 0.3% @ 2.0  ·  EV +49.0c/$  ·  Edge +49.0%
+   2. ✅ Leganes vs Burgos  (Spanish Segunda)
+      Over 2.5 · High 72.6% · xG 1.08–2.69
+      Stake 0.3% @ 2.0  ·  EV +45.2c/$  ·  Edge +45.2%
 
 ━━━ BTTS (Yes / No)  (0 accepted) ━━━
   (none)
 
-━━━ HOME WIN  (0 accepted) ━━━
-  (none)
+━━━ HOME WIN  (1 accepted) ━━━
+   1. ✅ Montevideo City Torque vs Racing Club M  (Copa del Rey)
+      Home Win · High 89.9%
+      Stake 6.8% @ 2.8  ·  EV +151.7c/$  ·  Edge +151.7%
 
-📊 Summary: 0 curated picks
-   Parsed total: 49   Rejected: 49   Accepted: 0
+📊 Summary: 3 curated picks
+   Parsed total: 65   Rejected: 62   Accepted: 3
 
 ---
 For informational purposes only · Gamble responsibly

@@ -4,6 +4,22 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-13 -->
+## Daily Picks — 2026-11-13
+
+### Over/Under 2.5  (2)
+  ✅ Leganes vs Burgos (Spanish Segunda) — Over 2.5 · High 72.6%
+  ✅ Strathspey T vs Deveronvale (Scottish Highland League) — Over 2.5 · High 74.5%
+
+### Home Win  (1)
+  ✅ Montevideo City Torque vs Racing Club M (Copa del Rey) — Home Win · High 89.9%
+
+### Team Goals Over 0.5  (3)
+  ✅ Strathspey T vs Deveronvale (Scottish Highland League) — Home to Score · High 81.5%
+  🔥 Strathspey T vs Deveronvale (Scottish Highland League) — Away to Score · High 86.2%
+  🔥 Leganes vs Burgos (Spanish Segunda) — Away to Score · High 90.1%
+
+
 <!-- report: daily 2026-11-11 -->
 ## Daily Picks — 2026-11-11
 
