@@ -2107,7 +2107,8 @@ def main():
         # statistically-blocked leagues are still recorded with published=false.
         # record_predictions() handles the published flag internally via
         # is_statistical_block_only() and fully skips only static/integrity blocks.
-        all_yes = yes_perfect + yes_qualified + yes_close
+        # Record only the picks advertised on the publish_date board (see oo05).
+        all_yes = filter_pick_items_by_date(yes_perfect + yes_qualified + yes_close, publish_date)
         for pick in all_yes:
             tier = pick["yes"].get("tier") or (
                 "perfect" if pick in yes_perfect else
@@ -2127,7 +2128,7 @@ def main():
                 "away_lambda": pick["poisson"]["away_lambda"],
                 "favourite_skew": favourite_skew,
             })
-        all_no = no_perfect + no_qualified + no_close
+        all_no = filter_pick_items_by_date(no_perfect + no_qualified + no_close, publish_date)
         for pick in all_no:
             tier = pick["no"].get("tier") or (
                 "perfect" if pick in no_perfect else

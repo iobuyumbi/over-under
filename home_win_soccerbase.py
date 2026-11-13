@@ -1324,7 +1324,8 @@ def main():
     # is_statistical_block_only() and fully skips only static/integrity blocks.
     try:
         hw_picks = []
-        all_hw = perfect + qualified + close_calls
+        # Record only the picks advertised on the publish_date board (see oo05).
+        all_hw = filter_pick_items_by_date(perfect + qualified + close_calls, publish_date)
         for pick in all_hw:
             tier = pick.get("tier") or (
                 "perfect" if pick in perfect else

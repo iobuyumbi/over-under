@@ -2747,7 +2747,8 @@ def main():
     # is_statistical_block_only() and fully skips only static/integrity blocks.
     try:
         ou_picks = []
-        all_over = over_perfect + over_qualified + over_close
+        # Record only the picks advertised on the publish_date board (see oo05).
+        all_over = filter_pick_items_by_date(over_perfect + over_qualified + over_close, publish_date)
         for pick in all_over:
             tier = pick["over"].get("tier") or (
                 "perfect" if pick in over_perfect else
@@ -2761,7 +2762,7 @@ def main():
                 "prediction": "over",
                 "confidence": tier,
             })
-        all_under = under_perfect + under_qualified + under_close
+        all_under = filter_pick_items_by_date(under_perfect + under_qualified + under_close, publish_date)
         for pick in all_under:
             tier = pick["under"].get("tier") or (
                 "perfect" if pick in under_perfect else

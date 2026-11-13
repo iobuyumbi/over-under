@@ -929,10 +929,13 @@ def main():
 
     try:
         picks = []
-        for pick in home_perfect + home_qualified + home_close:
+        # Record only the picks advertised on the publish_date board. The scan
+        # window spans several days ahead, but only publish_date is shown, so
+        # recording the rest would surface never-advertised picks in results.
+        for pick in filter_pick_items_by_date(home_perfect + home_qualified + home_close, publish_date):
             tier = pick["home_team_goals"].get("tier") or ("perfect" if pick in home_perfect else "qualified" if pick in home_qualified else "close")
             picks.append({"league": pick["match"]["league"], "home": pick["match"]["home"], "away": pick["match"]["away"], "date": pick["match"]["date"], "prediction": "home_team_goals", "confidence": tier})
-        for pick in away_perfect + away_qualified + away_close:
+        for pick in filter_pick_items_by_date(away_perfect + away_qualified + away_close, publish_date):
             tier = pick["away_team_goals"].get("tier") or ("perfect" if pick in away_perfect else "qualified" if pick in away_qualified else "close")
             picks.append({"league": pick["match"]["league"], "home": pick["match"]["home"], "away": pick["match"]["away"], "date": pick["match"]["date"], "prediction": "away_team_goals", "confidence": tier})
         # ``record_predictions`` stores this market under the oo05 section.
