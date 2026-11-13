@@ -37,6 +37,12 @@ CACHE_DB = "results_cache.db"
 CACHE_TTL_HOURS = 24
 SELECTED_RESULTS_REPORT = "selected_results_report.txt"
 
+# A fixture can be postponed (e.g. weather) and played a few days after its
+# scheduled date.  A pick scheduled for day D may also settle against results
+# for D+1 .. D+SETTLEMENT_RESCHEDULE_WINDOW_DAYS, so a moved game still records
+# its real result instead of staying "pending" forever.
+SETTLEMENT_RESCHEDULE_WINDOW_DAYS = 3
+
 # API Keys from environment
 FOOTBALL_DATA_KEY = os.environ.get("FOOTBALL_DATA_KEY", "")
 API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_KEY", "")
@@ -542,6 +548,25 @@ def fetch_match_results(date_str):
 # =============================================================================
 # UPDATE HISTORY
 # =============================================================================
+def _pick_settles_on(pick, date_str):
+    """True when results fetched for date_str may settle this pick.
+
+    Normally that is the fixture day itself.  A postponed fixture (weather) may
+    only be played a few days later, so any day within the reschedule window
+    also qualifies — the pick keeps its own scheduled date for reporting.
+    """
+    pick_date_str = str(pick.get("date", ""))[:10]
+    if not pick_date_str:
+        return False
+    try:
+        pick_date = datetime.strptime(pick_date_str, "%Y-%m-%d").date()
+        result_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError:
+        return False
+    gap = (result_date - pick_date).days
+    return 0 <= gap <= SETTLEMENT_RESCHEDULE_WINDOW_DAYS
+
+
 def update_history_with_results(date_str, dry_run=False):
     logger.info(f"Updating history for {date_str}...")
 
@@ -563,7 +588,7 @@ def update_history_with_results(date_str, dry_run=False):
     settled = []
 
     for idx, pick in enumerate(history["home_win"]):
-        if pick["result"] == "pending" and pick["date"] == date_str and pick_is_due(pick):
+        if pick["result"] == "pending" and _pick_settles_on(pick, date_str) and pick_is_due(pick):
             match = find_matching_result(pick, results)
             result = determine_home_win_result(pick, [match]) if match else None
             if result:
@@ -572,6 +597,8 @@ def update_history_with_results(date_str, dry_run=False):
                     history["home_win"][idx]["updated_at"] = datetime.now().isoformat()
                     history["home_win"][idx]["final_score"] = match["score"]
                     history["home_win"][idx]["result_source"] = match.get("source")
+                    if date_str != str(pick.get("date", ""))[:10]:
+                        history["home_win"][idx]["result_date"] = date_str
                 updated += 1
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
@@ -593,7 +620,7 @@ def update_history_with_results(date_str, dry_run=False):
                 unmatched.append(f"HW: {pick_home} vs {pick_away}")
 
     for idx, pick in enumerate(history["over_under"]):
-        if pick["result"] == "pending" and pick["date"] == date_str and pick_is_due(pick):
+        if pick["result"] == "pending" and _pick_settles_on(pick, date_str) and pick_is_due(pick):
             match = find_matching_result(pick, results)
             result = determine_over_under_result(pick, [match]) if match else None
             if result:
@@ -602,6 +629,8 @@ def update_history_with_results(date_str, dry_run=False):
                     history["over_under"][idx]["updated_at"] = datetime.now().isoformat()
                     history["over_under"][idx]["final_score"] = match["score"]
                     history["over_under"][idx]["result_source"] = match.get("source")
+                    if date_str != str(pick.get("date", ""))[:10]:
+                        history["over_under"][idx]["result_date"] = date_str
                 updated += 1
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
@@ -625,7 +654,7 @@ def update_history_with_results(date_str, dry_run=False):
                 unmatched.append(f"OU: {pick_home} vs {pick_away}")
 
     for idx, pick in enumerate(history.get("btts", [])):
-        if pick["result"] == "pending" and pick["date"] == date_str and pick_is_due(pick):
+        if pick["result"] == "pending" and _pick_settles_on(pick, date_str) and pick_is_due(pick):
             match = find_matching_result(pick, results)
             result = determine_btts_result(pick, [match]) if match else None
             if result:
@@ -634,6 +663,8 @@ def update_history_with_results(date_str, dry_run=False):
                     history["btts"][idx]["updated_at"] = datetime.now().isoformat()
                     history["btts"][idx]["final_score"] = match["score"]
                     history["btts"][idx]["result_source"] = match.get("source")
+                    if date_str != str(pick.get("date", ""))[:10]:
+                        history["btts"][idx]["result_date"] = date_str
                 updated += 1
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
@@ -657,7 +688,7 @@ def update_history_with_results(date_str, dry_run=False):
                 unmatched.append(f"BTTS: {pick_home} vs {pick_away}")
 
     for idx, pick in enumerate(history.get("oo05", [])):
-        if pick["result"] == "pending" and pick["date"] == date_str and pick_is_due(pick):
+        if pick["result"] == "pending" and _pick_settles_on(pick, date_str) and pick_is_due(pick):
             match = find_matching_result(pick, results)
             result = determine_oo05_result(pick, [match]) if match else None
             if result:
@@ -666,6 +697,8 @@ def update_history_with_results(date_str, dry_run=False):
                     history["oo05"][idx]["updated_at"] = datetime.now().isoformat()
                     history["oo05"][idx]["final_score"] = match["score"]
                     history["oo05"][idx]["result_source"] = match.get("source")
+                    if date_str != str(pick.get("date", ""))[:10]:
+                        history["oo05"][idx]["result_date"] = date_str
                 updated += 1
                 pick_home = pick.get("home_team", pick.get("home"))
                 pick_away = pick.get("away_team", pick.get("away"))
@@ -880,7 +913,12 @@ def write_selected_results_report(dates_to_check, history, dry_run=False):
 
 
 def collect_settlement_dates(days_back, history=None):
-    """Calendar lookback plus every date that still has pending picks."""
+    """Calendar lookback plus a window around every still-pending pick.
+
+    Each pending pick contributes its scheduled day *and* the following days
+    (up to SETTLEMENT_RESCHEDULE_WINDOW_DAYS), so a fixture postponed to a later
+    day still gets fetched and settled.
+    """
     if history is None:
         history = load_history()
 
@@ -899,7 +937,10 @@ def collect_settlement_dates(days_back, history=None):
             except ValueError:
                 continue
             if pick_date < today:
-                dates.add(date_str)
+                for offset in range(0, SETTLEMENT_RESCHEDULE_WINDOW_DAYS + 1):
+                    day = pick_date + timedelta(days=offset)
+                    if day < today:
+                        dates.add(day.strftime("%Y-%m-%d"))
 
     return sorted(dates, reverse=True)
 
