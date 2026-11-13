@@ -1875,6 +1875,17 @@
       "updated_at": "2026-11-10T15:25:00.880926",
       "final_score": "2-2",
       "result_source": "manual"
+    },
+    {
+      "date": "2026-11-13",
+      "type": "home_win",
+      "league": "Copa del Rey",
+      "home_team": "Montevideo City Torque",
+      "away_team": "Racing Club M",
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-13T06:01:53.487455",
+      "published": true
     }
   ],
   "over_under": [
@@ -7237,6 +7248,32 @@
       "updated_at": "2026-11-10T15:25:00.884824",
       "final_score": "0-0",
       "result_source": "manual"
+    },
+    {
+      "date": "2026-11-13",
+      "type": "over_under",
+      "league": "Scottish Highland League",
+      "home_team": "Strathspey T",
+      "away_team": "Deveronvale",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-13T05:58:26.508936",
+      "published": true
+    },
+    {
+      "date": "2026-11-13",
+      "type": "over_under",
+      "league": "Spanish Segunda",
+      "home_team": "Leganes",
+      "away_team": "Burgos",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-13T05:58:26.516976",
+      "published": true
     }
   ],
   "btts": [
@@ -26771,6 +26808,45 @@
       "updated_at": "2026-11-10T15:25:58.999178",
       "final_score": "1-0",
       "result_source": "manual"
+    },
+    {
+      "date": "2026-11-13",
+      "type": "oo05",
+      "league": "Scottish Highland League",
+      "home_team": "Strathspey T",
+      "away_team": "Deveronvale",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-13T06:11:20.820661",
+      "published": true
+    },
+    {
+      "date": "2026-11-13",
+      "type": "oo05",
+      "league": "Scottish Highland League",
+      "home_team": "Strathspey T",
+      "away_team": "Deveronvale",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-11-13T06:11:20.827167",
+      "published": true
+    },
+    {
+      "date": "2026-11-13",
+      "type": "oo05",
+      "league": "Spanish Segunda",
+      "home_team": "Leganes",
+      "away_team": "Burgos",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "perfect",
+      "result": "pending",
+      "recorded_at": "2026-11-13T06:11:20.837212",
+      "published": true
     }
   ],
   "stats": {}

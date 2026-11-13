@@ -1,38 +1,14 @@
 📅 Daily Soccer Picks · 2026-11-13
 
 ───────────
-📊 Yesterday · 2026-11-12 · 4W-0L-0P (12 pending)
+📊 Yesterday · 2026-11-12 · 4W-0L-0P
 
-
-Aguilas Doradas vs Independiente M · 2026-11-12 · HOME WIN · Pending
 
 Montenegro vs Latvia · 2026-11-12 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
-
-Atletico Nacional vs Once Caldas · 2026-11-12 · OVER 0.5 TEAM GOAL · Pending
-
-Deportivo Cali vs Deportes Tolima · 2026-11-12 · OVER 0.5 TEAM GOAL · Pending
-
-Deportivo Pereira vs America de Cali · 2026-11-12 · OVER 0.5 TEAM GOAL · Pending
-
-Atletico Bucaramanga vs Fortaleza CEIF · 2026-11-12 · OVER 0.5 TEAM GOAL · Pending
-
-Aguilas Doradas vs Independiente M · 2026-11-12 · OVER 0.5 TEAM GOAL · Pending
-
-Cucuta Deportivo vs Jaguares de Cordoba · 2026-11-12 · OVER 0.5 TEAM GOAL · Pending
-
-Millonarios vs Alianza Petrolera · 2026-11-12 · OVER 0.5 TEAM GOAL · Pending
-
-La Equidad vs Santa Fe · 2026-11-12 · OVER 0.5 TEAM GOAL · Pending
-
-Llaneros vs Boyaca Chico · 2026-11-12 · OVER 0.5 TEAM GOAL · Pending
 
 Armenia vs Cyprus · 2026-11-12 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
 
 Turkey vs Belgium · 2026-11-12 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
-
-Atletico Bucaramanga vs Fortaleza CEIF · 2026-11-12 · OVER 0.5 TEAM GOAL · Pending
-
-Millonarios vs Alianza Petrolera · 2026-11-12 · OVER 0.5 TEAM GOAL · Pending
 
 Cerro Largo vs Progreso · 2026-11-12 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
 
@@ -47,17 +23,17 @@ Cerro Largo vs Progreso · 2026-11-12 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
   ✅ Solid picks
 
 
-  1. Leganes vs Burgos
-     Date: 2026-11-13
-     League: Spanish Segunda
-     Pick: Over 2.5 · High confidence (72.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  2. Strathspey T vs Deveronvale
+  1. Strathspey T vs Deveronvale
      Date: 2026-11-13
      League: Scottish Highland League
      Pick: Over 2.5 · High confidence (74.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  2. Leganes vs Burgos
+     Date: 2026-11-13
+     League: Spanish Segunda
+     Pick: Over 2.5 · High confidence (72.6%)
      Category:
        • Tier: ✅ Solid
 
@@ -78,7 +54,7 @@ Cerro Largo vs Progreso · 2026-11-12 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
   1. Montevideo City Torque vs Racing Club M
      Date: 2026-11-13
      League: Copa del Rey
-     Pick: Home Win · High confidence (89.9%)
+     Pick: Home Win · High confidence (90.1%)
      Category:
        • Tier: ✅ Solid
 
