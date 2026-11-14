@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-11-13
+✦ CURATED PICKS · 2026-11-14
   Input reports:
-    OU   → over_under_vip_report_2026-11-13.txt
-    BTTS → btts_vip_report_2026-11-13.txt
-    HW   → home_win_vip_report_2026-11-13.txt
+    OU   → over_under_vip_report_2026-11-14.txt
+    BTTS → btts_vip_report_2026-11-14.txt
+    HW   → home_win_vip_report_2026-11-14.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,26 +11,67 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-11-13)
+    • Today only (2026-11-14)
 
-━━━ OVER / UNDER 2.5  (2 accepted) ━━━
-   1. ✅ Strathspey T vs Deveronvale  (Scottish Highland League)
-      Over 2.5 · High 74.5% · xG 1.26–2.63
-      Stake 0.3% @ 2.0  ·  EV +49.0c/$  ·  Edge +49.0%
-   2. ✅ Leganes vs Burgos  (Spanish Segunda)
-      Over 2.5 · High 72.6% · xG 1.08–2.69
-      Stake 0.3% @ 2.0  ·  EV +45.2c/$  ·  Edge +45.2%
+━━━ OVER / UNDER 2.5  (13 accepted) ━━━
+   1. ✅ Keith vs Inverurie Locos  (Scottish Highland League)
+      Over 2.5 · High 94.3% · xG 2.33–3.80
+      Stake 0.6% @ 2.0  ·  EV +88.6c/$  ·  Edge +88.6%
+   2. ✅ Nairn County vs Invergordon  (Scottish Highland League)
+      Over 2.5 · High 93.7% · xG 3.45–2.52
+      Stake 0.6% @ 2.0  ·  EV +87.4c/$  ·  Edge +87.4%
+   3. 🔥 Leek vs Morecambe  (FA Trophy)
+      Over 2.5 · High 87.2% · xG 2.76–2.20
+      Stake 0.5% @ 2.0  ·  EV +74.4c/$  ·  Edge +74.4%
+   4. ✅ Buckie Thistle vs Wick Academy  (Scottish Highland League)
+      Over 2.5 · High 86.7% · xG 2.01–2.89
+      Stake 0.5% @ 2.0  ·  EV +73.4c/$  ·  Edge +73.4%
+   5. ✅ Radcliffe Boro vs Marine  (FA Trophy)
+      Over 2.5 · High 86.2% · xG 2.34–2.51
+      Stake 0.5% @ 2.0  ·  EV +72.4c/$  ·  Edge +72.4%
+   6. ✅ Harrogate vs Altrincham  (National League)
+      Over 2.5 · High 84.7% · xG 2.01–2.68
+      Stake 0.5% @ 2.0  ·  EV +69.4c/$  ·  Edge +69.4%
+   7. ✅ Wingate & F vs Hashtag United  (FA Trophy)
+      Over 2.5 · High 83.9% · xG 1.61–3.01
+      Stake 0.4% @ 2.0  ·  EV +67.8c/$  ·  Edge +67.8%
+   8. ✅ Newton S vs Renfrew  (Scottish Lowland League)
+      Over 2.5 · High 81.8% · xG 1.86–2.57
+      Stake 0.4% @ 2.0  ·  EV +63.6c/$  ·  Edge +63.6%
+   9. ✅ Eastleigh vs Fylde  (National League)
+      Over 2.5 · High 78.8% · xG 1.85–2.34
+      Stake 0.4% @ 2.0  ·  EV +57.6c/$  ·  Edge +57.6%
+  10. ✅ Dartford vs AFC Totton  (FA Trophy)
+      Over 2.5 · High 77.6% · xG 2.26–1.84
+      Stake 0.4% @ 2.0  ·  EV +55.2c/$  ·  Edge +55.2%
+  11. ✅ Weymouth vs Hampton & R  (FA Trophy)
+      Over 2.5 · High 76.6% · xG 2.40–1.63
+      Stake 0.3% @ 2.0  ·  EV +53.2c/$  ·  Edge +53.2%
+  12. ✅ Chorley vs Buxton  (FA Trophy)
+      Over 2.5 · High 73.6% · xG 1.85–1.98
+      Stake 0.3% @ 2.0  ·  EV +47.2c/$  ·  Edge +47.2%
+  13. ✅ Scunthorpe vs Worthing  (National League)
+      Over 2.5 · High 70.8% · xG 1.63–2.03
+      Stake 0.3% @ 2.0  ·  EV +41.6c/$  ·  Edge +41.6%
 
-━━━ BTTS (Yes / No)  (0 accepted) ━━━
-  (none)
+━━━ BTTS (Yes / No)  (3 accepted) ━━━
+   1. 🔥 Leek vs Morecambe  (FA Trophy)
+      BTTS Yes · High 83.0% · xG 2.83–2.14
+      Stake 3.6% @ 1.9  ·  EV 
+   2. 🔥 N Ireland vs Ukraine  (Nations League)
+      BTTS No · High 79.8% · xG 0.50–0.72
+      Stake 5.2% @ 1.85  ·  EV 
+   3. ✅ Georgia vs Hungary  (Nations League)
+      BTTS No · High 71.8% · xG 0.54–1.13
+      Stake 3.6% @ 1.85  ·  EV 
 
 ━━━ HOME WIN  (1 accepted) ━━━
-   1. ✅ Montevideo City Torque vs Racing Club M  (Copa del Rey)
-      Home Win · High 90.1%
-      Stake 6.7% @ 2.8  ·  EV +152.3c/$  ·  Edge +152.3%
+   1. ✅ Kilwinning Rang vs Cumnock  (Scottish Lowland League)
+      Home Win · High 88.7%
+      Stake 8.9% @ 2.8  ·  EV +148.4c/$  ·  Edge +148.4%
 
-📊 Summary: 3 curated picks
-   Parsed total: 65   Rejected: 62   Accepted: 3
+📊 Summary: 17 curated picks
+   Parsed total: 63   Rejected: 46   Accepted: 17
 
 ---
 For informational purposes only · Gamble responsibly
