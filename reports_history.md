@@ -4,6 +4,23 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-15 -->
+## Daily Picks — 2026-11-15
+
+### Team Goals Over 0.5  (11)
+  🔥 Eibar vs Cadiz (Spanish Segunda) — Home to Score · High 81.4%
+  🔥 Vegalta Sendai vs Blaublitz Akita (Japanese J2 League) — Home to Score · High 85.5%
+  ✅ Granada vs Las Palmas (Spanish Segunda) — Home to Score · High 86.7%
+  ✅ Tenerife vs AD Ceuta (Spanish Segunda) — Home to Score · High 82.8%
+  ✅ Consadole Sapporo vs Sagan Tosu (Japanese J2 League) — Home to Score · Medium 70.2%
+  ✅ Imabari vs Jubilo Iwata (Japanese J2 League) — Home to Score · Low 66.7%
+  ✅ Juan Pablo II College vs Deportivo Garcilaso (Japanese J2 League) — Home to Score · High 93.1%
+  ✅ Tenerife vs AD Ceuta (Spanish Segunda) — Away to Score · Low 60.9%
+  ✅ Vanraure Hachinohe vs Iwaki (Japanese J2 League) — Away to Score · High 80.2%
+  ✅ Vegalta Sendai vs Blaublitz Akita (Japanese J2 League) — Away to Score · Low 56.4%
+  ✅ Imabari vs Jubilo Iwata (Japanese J2 League) — Away to Score · High 84.6%
+
+
 <!-- report: daily 2026-11-14 -->
 ## Daily Picks — 2026-11-14
 
