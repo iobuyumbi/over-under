@@ -2127,6 +2127,7 @@ def main():
                 "home_lambda": pick["poisson"]["home_lambda"],
                 "away_lambda": pick["poisson"]["away_lambda"],
                 "favourite_skew": favourite_skew,
+                "odds": args.odds_yes,
             })
         all_no = filter_pick_items_by_date(no_perfect + no_qualified + no_close, publish_date)
         for pick in all_no:
@@ -2147,6 +2148,7 @@ def main():
                 "home_lambda": pick["poisson"]["home_lambda"],
                 "away_lambda": pick["poisson"]["away_lambda"],
                 "favourite_skew": favourite_skew,
+                "odds": args.odds_no,
             })
         stats = record_predictions(base_date, btts_picks=btts_picks)
         if stats["added"]:

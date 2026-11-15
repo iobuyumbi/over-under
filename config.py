@@ -65,6 +65,11 @@ WEAK_ROI_LEAGUE_KEYWORDS = (
 MAX_OVER_SCORE = 15
 MAX_UNDER_SCORE = 12
 
+# Staking defaults. Also the reporting fallback price for picks with no
+# captured odds (see DEFAULT_ODDS_BY_SIDE in prediction_tracker.py).
+DEFAULT_ODDS_OVER25 = 2.00
+DEFAULT_ODDS_UNDER25 = 1.85
+
 # Under 2.5 specific caps (from over25tips.com style rules)
 UNDER_HOME_SCORED_CAP = 1.2
 UNDER_HOME_CONCEDED_CAP = 1.2

@@ -58,6 +58,8 @@ from config import (
     WEAK_ROI_MULTIPLIER,
     WEAK_ROI_LEAGUE_KEYWORDS,
     WEAK_ROI_OVER_LAMBDA_BOOST,
+    DEFAULT_ODDS_OVER25,
+    DEFAULT_ODDS_UNDER25,
 
     # OU H2H
     OU_H2H_MAX_LOOKBACK,
@@ -1828,7 +1830,7 @@ def tier_from_confidence(score, side, home_lambda, away_lambda, is_perfect=True)
 # =============================================================================
 # MATCH PROCESSING
 # =============================================================================
-def process_single_match(match, target_date, default_odds_over=2.0, default_odds_under=1.85):
+def process_single_match(match, target_date, default_odds_over=DEFAULT_ODDS_OVER25, default_odds_under=DEFAULT_ODDS_UNDER25):
     try:
         league_name = match.get("league", "")
 
@@ -2534,13 +2536,13 @@ def main():
     parser.add_argument(
         "--odds-over",
         type=float,
-        default=2.0,
+        default=DEFAULT_ODDS_OVER25,
         help="Average decimal odds for Over 2.5"
     )
     parser.add_argument(
         "--odds-under",
         type=float,
-        default=1.85,
+        default=DEFAULT_ODDS_UNDER25,
         help="Average decimal odds for Under 2.5"
     )
     parser.add_argument(
@@ -2727,6 +2729,7 @@ def main():
                 "date": pick["match"]["date"],
                 "prediction": "over",
                 "confidence": tier,
+                "odds": args.odds_over,
             })
         all_under = filter_pick_items_by_date(under_perfect + under_qualified + under_close, publish_date)
         for pick in all_under:
@@ -2741,6 +2744,7 @@ def main():
                 "date": pick["match"]["date"],
                 "prediction": "under",
                 "confidence": tier,
+                "odds": args.odds_under,
             })
         stats = record_predictions(base_date, [], ou_picks)
         if stats["added"]:
