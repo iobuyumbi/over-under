@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-11-15
+✦ CURATED PICKS · 2026-11-16
   Input reports:
-    OU   → over_under_vip_report_2026-11-15.txt
-    BTTS → btts_vip_report_2026-11-15.txt
-    HW   → home_win_vip_report_2026-11-15.txt
+    OU   → over_under_vip_report_2026-11-16.txt
+    BTTS → btts_vip_report_2026-11-16.txt
+    HW   → home_win_vip_report_2026-11-16.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,19 +11,23 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-11-15)
+    • Today only (2026-11-16)
 
-━━━ OVER / UNDER 2.5  (0 accepted) ━━━
-  (none)
+━━━ OVER / UNDER 2.5  (1 accepted) ━━━
+   1. ✅ Lithuania vs Liechtenstein  (Nations League)
+      Under 2.5 · High 78.9% · xG 0.94–0.64
+      Stake 12.5% @ 1.85  ·  EV +46.0c/$  ·  Edge +46.0%
 
-━━━ BTTS (Yes / No)  (0 accepted) ━━━
-  (none)
+━━━ BTTS (Yes / No)  (1 accepted) ━━━
+   1. ✅ Lithuania vs Liechtenstein  (Nations League)
+      BTTS No · High 71.3% · xG 0.97–0.62
+      Stake 12.5% @ 1.85  ·  EV 
 
 ━━━ HOME WIN  (0 accepted) ━━━
   (none)
 
-📊 Summary: 0 curated picks
-   Parsed total: 28   Rejected: 28   Accepted: 0
+📊 Summary: 2 curated picks
+   Parsed total: 16   Rejected: 14   Accepted: 2
 
 ---
 For informational purposes only · Gamble responsibly

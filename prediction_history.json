@@ -7845,6 +7845,20 @@
       "updated_at": "2026-11-15T05:06:38.408166",
       "final_score": "0-1",
       "result_source": "soccerbase"
+    },
+    {
+      "date": "2026-11-16",
+      "type": "over_under",
+      "league": "Nations League",
+      "home_team": "Lithuania",
+      "away_team": "Liechtenstein",
+      "prediction": "under",
+      "prob": null,
+      "confidence": "qualified",
+      "odds": 1.85,
+      "result": "pending",
+      "recorded_at": "2026-11-16T05:15:22.416956",
+      "published": true
     }
   ],
   "btts": [
@@ -9239,6 +9253,20 @@
       "updated_at": "2026-11-15T05:06:38.418160",
       "final_score": "0-2",
       "result_source": "soccerbase"
+    },
+    {
+      "date": "2026-11-16",
+      "type": "btts",
+      "league": "Nations League",
+      "home_team": "Lithuania",
+      "away_team": "Liechtenstein",
+      "prediction": "no",
+      "prob": 71.3,
+      "confidence": "qualified",
+      "odds": 1.85,
+      "result": "pending",
+      "recorded_at": "2026-11-16T05:23:04.939862",
+      "published": true
     }
   ],
   "oo05": [
@@ -29223,9 +29251,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-15T05:38:26.865897",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-16T05:07:52.650765",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-15",
@@ -29236,9 +29267,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-15T05:38:26.885663",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-16T05:07:52.656330",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-15",
@@ -29249,9 +29283,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-15T05:38:26.890660",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-16T05:07:52.656330",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-15",
@@ -29262,9 +29299,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-15T05:38:26.896678",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-16T05:07:52.657856",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-15",
@@ -29275,9 +29315,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-15T05:38:26.902673",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-16T05:07:52.659365",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-15",
@@ -29288,9 +29331,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-15T05:38:26.908670",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-16T05:07:52.660369",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-15",
@@ -29301,9 +29347,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-15T05:38:26.915665",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-16T05:07:52.661369",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-15",
@@ -29314,9 +29363,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-15T05:38:26.921663",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-16T05:07:52.662367",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-15",
@@ -29327,9 +29379,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-15T05:38:26.927658",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-16T05:07:52.662872",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-15",
@@ -29340,9 +29395,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-15T05:38:26.932656",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-16T05:07:52.663876",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-15",
@@ -29353,8 +29411,67 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-15T05:38:26.937652",
+      "published": true,
+      "updated_at": "2026-11-16T05:07:52.665382",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
+    },
+    {
+      "date": "2026-11-16",
+      "type": "oo05",
+      "league": "Spanish Segunda",
+      "home_team": "Albacete",
+      "away_team": "Celta de Vigo B",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "odds": 1.45,
+      "result": "pending",
+      "recorded_at": "2026-11-16T05:26:35.823687",
+      "published": true
+    },
+    {
+      "date": "2026-11-16",
+      "type": "oo05",
+      "league": "Spanish Segunda",
+      "home_team": "Montevideo W",
+      "away_team": "Juventud de Las Piedras",
+      "prediction": "home_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "odds": 1.45,
+      "result": "pending",
+      "recorded_at": "2026-11-16T05:26:35.833405",
+      "published": true
+    },
+    {
+      "date": "2026-11-16",
+      "type": "oo05",
+      "league": "Spanish Segunda",
+      "home_team": "Albacete",
+      "away_team": "Celta de Vigo B",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "odds": 1.55,
+      "result": "pending",
+      "recorded_at": "2026-11-16T05:26:35.839442",
+      "published": true
+    },
+    {
+      "date": "2026-11-16",
+      "type": "oo05",
+      "league": "Spanish Segunda",
+      "home_team": "Cusco",
+      "away_team": "ADT",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "odds": 1.55,
+      "result": "pending",
+      "recorded_at": "2026-11-16T05:26:35.848531",
       "published": true
     }
   ],

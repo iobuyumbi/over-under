@@ -4,6 +4,22 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-16 -->
+## Daily Picks — 2026-11-16
+
+### Over/Under 2.5  (1)
+  ✅ Lithuania vs Liechtenstein (Nations League) — Under 2.5 · High 78.9%
+
+### BTTS  (1)
+  ✅ Lithuania vs Liechtenstein (Nations League) — BTTS No · High 71.3%
+
+### Team Goals Over 0.5  (4)
+  ✅ Albacete vs Celta de Vigo B (Spanish Segunda) — Home to Score · High 84.7%
+  ✅ Montevideo W vs Juventud de Las Piedras (Spanish Segunda) — Home to Score · Medium 70.5%
+  ✅ Albacete vs Celta de Vigo B (Spanish Segunda) — Away to Score · Medium 69.9%
+  ✅ Cusco vs ADT (Spanish Segunda) — Away to Score · Medium 74.1%
+
+
 <!-- report: daily 2026-11-15 -->
 ## Daily Picks — 2026-11-15
 
