@@ -4,6 +4,98 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: weekly 2026-11-16 -->
+## Weekly Report — 2026-11-16
+
+WEEKLY PERFORMANCE REPORT
+2026-11-09 to 2026-11-16
+
+Home win picks
+Total picks: 22
+Wins: 11
+Losses: 10
+Pushes: 0
+Pending: 1
+Win rate: 52.4%
+Units: +9.8u (ROI 46.7%)
+
+Performance by confidence:
+  close: 7/14 wins (50.0%)
+  perfect: 1/1 wins (100.0%)
+  qualified: 3/6 wins (50.0%)
+
+DOUBLE CHANCE (HOME OR DRAW)
+Total picks: 22
+Wins: 18
+Losses: 3
+Pending: 1
+Win rate: 85.7%
+
+OVER 2.5 GOALS
+Total picks: 37
+Wins: 23
+Losses: 13
+Pushes: 0
+Pending: 1
+Win rate: 63.9%
+Units: +10.0u (ROI 27.8%)
+
+Performance by confidence:
+  perfect: 0/1 wins (0.0%)
+  qualified: 23/35 wins (65.7%)
+
+OVER 1.5 GOALS
+Total picks: 37
+Wins: 31
+Losses: 5
+Pending: 1
+Win rate: 86.1%
+
+UNDER 2.5 GOALS
+Total picks: 1
+Wins: 0
+Losses: 0
+Pushes: 0
+Pending: 0
+
+UNDER 3.5 GOALS
+Total picks: 1
+Wins: 0
+Losses: 0
+Pending: 0
+
+BTTS YES
+Total picks: 6
+Wins: 5
+Losses: 1
+Pushes: 0
+Pending: 0
+Win rate: 83.3%
+Units: +3.5u (ROI 58.3%)
+
+BTTS NO
+Total picks: 3
+Wins: 2
+Losses: 0
+Pushes: 0
+Pending: 0
+Win rate: 100.0%
+Units: +1.7u (ROI 85.0%)
+
+OVER 0.5 TEAM GOAL
+Total picks: 196
+Wins: 140
+Losses: 42
+Pushes: 0
+Pending: 10
+Win rate: 76.9%
+Units: +27.0u (ROI 14.8%)
+
+---
+For informational purposes only
+Gamble responsibly
+
+
 <!-- report: daily 2026-11-16 -->
 ## Daily Picks — 2026-11-16
 
