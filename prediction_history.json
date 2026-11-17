@@ -7856,9 +7856,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.85,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-16T05:15:22.416956",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-17T16:41:15.725288",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     }
   ],
   "btts": [
@@ -9264,9 +9267,12 @@
       "prob": 71.3,
       "confidence": "qualified",
       "odds": 1.85,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-16T05:23:04.939862",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-17T16:41:15.725472",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     }
   ],
   "oo05": [
@@ -29428,9 +29434,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-16T05:26:35.823687",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-17T16:41:15.726878",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-16",
@@ -29442,9 +29451,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-16T05:26:35.833405",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-17T16:41:15.727160",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-16",
@@ -29456,9 +29468,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-16T05:26:35.839442",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-17T16:41:15.727373",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-16",
@@ -29470,9 +29485,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-16T05:26:35.848531",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-17T16:41:15.727594",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     }
   ],
   "stats": {}
