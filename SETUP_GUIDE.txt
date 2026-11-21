@@ -100,6 +100,23 @@ LOCAL (NO-CI) QUICK START (5 minutes) - For testing without CI
    rotating User-Agents. Verify with:
       python -c "import fake_useragent, dotenv"
 
+2b. Create .env (copy .env.example) and set the keys. On a fresh machine
+   the result-settling APIs are easy to forget, and without them the
+   pipeline still runs but settlement degrades badly:
+     - "No API key configured" in the fetch step -> results come from
+       Soccerbase only, so fixtures Soccerbase does not cover stay
+       "pending" forever (e.g. 12 picks stuck on 2026-11-14).
+     - "[warn] API_FOOTBALL_KEY not set" in the manual step -> blank
+       scores are never auto-filled and never-played rows are never
+       marked void, so manual_results.csv accumulates blank rows.
+   Keys (both optional, free tiers):
+     FOOTBALL_DATA_KEY=   https://www.football-data.org/client/register
+     API_FOOTBALL_KEY=    https://www.api-football.com (RapidAPI key)
+   NOTE: without API_FOOTBALL_KEY a blank row can never be resolved --
+   the updater only marks NOT PLAYED when the API actually answered for
+   that date (a guard so an outage can't void real fixtures). So on a
+   keyless machine old blank rows hang until a key is added.
+
 3. Run the full daily pipeline locally:
       run_local.bat
    Or individual engines:
