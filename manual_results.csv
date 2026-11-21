@@ -2097,37 +2097,80 @@ date,home_team,away_team,score
 2026-11-15,Tenerife,AD Ceuta,2-0
 2026-11-15,Vanraure Hachinohe,Iwaki,2-2
 2026-11-15,Vegalta Sendai,Blaublitz Akita,4-0
-2026-11-16,Albacete,Celta de Vigo B,
-2026-11-16,Cusco,ADT,
-2026-11-16,Lithuania,Liechtenstein,
-2026-11-16,Montevideo W,Juventud de Las Piedras,
-2026-11-17,Bedford,Chorley,
-2026-11-17,Berwick,Civil Serv Strol,
-2026-11-17,Burgess Hill,Brentwood T,
-2026-11-17,Chippenham,Sholing,
+2026-11-16,Albacete,Celta de Vigo B,1-0
+2026-11-16,Cusco,ADT,2-2
+2026-11-16,Lithuania,Liechtenstein,2-1
+2026-11-16,Montevideo W,Juventud de Las Piedras,2-1
+2026-11-17,Bedford,Chorley,1-2
+2026-11-17,Berwick,Civil Serv Strol,POSTPONED
+2026-11-17,Burgess Hill,Brentwood T,0-1
+2026-11-17,Chippenham,Sholing,2-2
 2026-11-17,Cleethorpes T,FC Utd,
-2026-11-17,Dartford,Three Bridges,
-2026-11-17,Guiseley,Ashton Utd,
-2026-11-17,Havant & W,Bracknell,
-2026-11-17,Hyde,Rylands,
-2026-11-17,Leatherhead,Wingate & F,
-2026-11-17,Luton,Peterborough,
+2026-11-17,Dartford,Three Bridges,1-0
+2026-11-17,Guiseley,Ashton Utd,4-1
+2026-11-17,Havant & W,Bracknell,3-2
+2026-11-17,Hyde,Rylands,1-3
+2026-11-17,Leatherhead,Wingate & F,0-1
+2026-11-17,Luton,Peterborough,3-0
 2026-11-17,Oxford C,Macclesfield,
-2026-11-17,Poole Town,Wimborne T,
-2026-11-17,Quorn,Bury,
-2026-11-17,Ramsgate,Cray W,
-2026-11-17,South Shields,Harborough T,
-2026-11-17,Spalding Utd,Hebburn Town,
+2026-11-17,Poole Town,Wimborne T,0-3
+2026-11-17,Quorn,Bury,5-4
+2026-11-17,Ramsgate,Cray W,2-3
+2026-11-17,South Shields,Harborough T,POSTPONED
+2026-11-17,Spalding Utd,Hebburn Town,0-0
 2026-11-17,Spennymoor,Chester,
-2026-11-17,Tonbridge,Chesham,
-2026-11-17,Truro City,Billericay,
-2026-11-18,Alianza Atletico,Melgar,
-2026-11-18,Auchinleck,Troon,
-2026-11-18,Beith Juniors,Johnstone Burgh,
-2026-11-18,Coritiba,Santos,
-2026-11-18,Flamengo,Paranaense,
-2026-11-18,Frome,Gloucester,
-2026-11-18,Gosport Bor,Chertsey Town,
-2026-11-18,Lochee Utd,Boness Utd,
-2026-11-18,Remo,Chapecoense,
-2026-11-18,Renfrew,Largs Thistle,
+2026-11-17,Tonbridge,Chesham,2-0
+2026-11-17,Truro City,Billericay,0-0
+2026-11-18,Alianza Atletico,Melgar,1-1
+2026-11-18,Auchinleck,Troon,3-0
+2026-11-18,Beith Juniors,Johnstone Burgh,0-1
+2026-11-18,Coritiba,Santos,0-1
+2026-11-18,Flamengo,Paranaense,2-1
+2026-11-18,Frome,Gloucester,0-1
+2026-11-18,Gosport Bor,Chertsey Town,1-1
+2026-11-18,Lochee Utd,Boness Utd,POSTPONED
+2026-11-18,Remo,Chapecoense,2-0
+2026-11-18,Renfrew,Largs Thistle,0-3
+2026-11-19,Boston River,Deportivo Maldonado,1-0
+2026-11-19,Corinthians,Botafogo,4-0
+2026-11-19,Gremio,Bahia,0-0
+2026-11-19,Penarol,Cerro Largo,3-0
+2026-11-19,Progreso,Montevideo City Torque,1-1
+2026-11-19,Vasco,Internacional,2-1
+2026-11-19,Vitoria,Red Bull Bragantino,2-1
+2026-11-20,Southend,Boreham W,
+2026-11-20,Botosani,Voluntari,
+2026-11-20,Arminia,FC Magdeburg,
+2026-11-20,Kashiwa Reysol,JEF United,
+2026-11-20,Liverpool FC,Montevideo W,
+2026-11-20,Ath Bilbao,Espanyol,
+2026-11-20,Pogon Szczecin,Slask Wroclaw,
+2026-11-20,Aarhus,Lyngby,
+2026-11-20,The New Saints,Trefelin,
+2026-11-20,Penybont,Haverfordwest,
+2026-11-20,Vissel Kobe,Mito HollyHock,
+2026-11-20,Racing Club M,Central Espanol,
+2026-11-20,Briton Ferry Ath,Holywell Town,
+2026-11-20,Inverness CT,Ayr,
+2026-11-20,B Munich,Cologne,
+2026-11-20,Barnsley,Sheff Wed,
+2026-11-20,Piast Gliwice,Korona Kielce,
+2026-11-20,FC Andorra,Leganes,
+2026-11-20,PFC Septemvri Sofia,Loko. Plovdiv,
+2026-11-20,Flint Town U,Cambrian United,
+2026-11-20,Caernarfon,Connah's Q,
+2026-11-20,Cardiff MU,Ammanford,
+2026-11-20,Orlando City,Cincinnati,
+2026-11-20,Seattle,Real Salt Lake,
+2026-11-20,Kashima Antlers,Shimizu S-Pulse,
+2026-11-20,Independiente d V,Macara,
+2026-11-20,Cobresal,Audax Italiano,
+2026-11-20,Palestino,Union La Calera,
+2026-11-20,Cercle Bruges,Westerlo,
+2026-11-20,Farul Constanta,Uni Cluj,
+2026-11-20,Darmstadt,Heidenheim,
+2026-11-20,Molde,Bodo Glimt,
+2026-11-20,Llandudno,Barry Town,
+2026-11-20,Airbus UK,Colwyn Bay,
+2026-11-20,Cerro,Nacional Montevideo,
+2026-11-20,Atletico Bucaramanga,America de Cali,

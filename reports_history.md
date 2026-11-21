@@ -4,6 +4,166 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-20 -->
+## Daily Picks — 2026-11-20
+
+### Over/Under 2.5  (4)
+  ✅ Southend vs Boreham W (National League) — Over 2.5 · High 69.5%
+  ✅ Botosani vs Voluntari (Romanian Liga 1) — Over 2.5 · High 68.5%
+  ✅ Arminia vs FC Magdeburg (German Bundesliga 2) — Over 2.5 · High 80.1%
+  ✅ Kashiwa Reysol vs JEF United (Japanese J1 League) — Over 2.5 · High 86.5%
+
+### BTTS  (1)
+  ✅ Kashiwa Reysol vs JEF United (Japanese J1 League) — BTTS Yes · High 81.4%
+
+### Home Win  (9)
+  🔥 Liverpool FC vs Montevideo W (Ecuador Liga Pro) — Home Win · High 90.1%
+  👀 Ath Bilbao vs Espanyol (Spanish La Liga) — Home Win · High 74.0%
+  👀 Pogon Szczecin vs Slask Wroclaw (Polish Ekstraklasa) — Home Win · High 91.5%
+  👀 Arminia vs FC Magdeburg (German Bundesliga 2) — Home Win · High 87.1%
+  👀 Aarhus vs Lyngby (Danish SAS Ligaen) — Home Win · High 81.9%
+  👀 The New Saints vs Trefelin (Welsh Premier) — Home Win · High 85.1%
+  👀 Penybont vs Haverfordwest (Welsh Premier) — Home Win · High 81.9%
+  👀 Vissel Kobe vs Mito HollyHock (Japanese J1 League) — Home Win · High 83.6%
+  👀 Racing Club M vs Central Espanol (Ecuador Liga Pro) — Home Win · High 86.5%
+
+### Team Goals Over 0.5  (45)
+  🔥 Botosani vs Voluntari (Romanian Liga 1) — Home to Score · High 88.1%
+  🔥 Pogon Szczecin vs Slask Wroclaw (Polish Ekstraklasa) — Home to Score · High 92.5%
+  🔥 Arminia vs FC Magdeburg (German Bundesliga 2) — Home to Score · High 93.9%
+  🔥 Briton Ferry Ath vs Holywell Town (Welsh Premier) — Home to Score · High 88.9%
+  🔥 Kashiwa Reysol vs JEF United (Japanese J1 League) — Home to Score · High 94.6%
+  ✅ Inverness CT vs Ayr (Scottish Championship) — Home to Score · Medium 76.1%
+  ✅ Southend vs Boreham W (National League) — Home to Score · Medium 76.3%
+  ✅ B Munich vs Cologne (German Bundesliga) — Home to Score · High 93.7%
+  ✅ Barnsley vs Sheff Wed (Football League One) — Home to Score · High 94.4%
+  ✅ Ath Bilbao vs Espanyol (Spanish La Liga) — Home to Score · High 82.8%
+  ✅ Piast Gliwice vs Korona Kielce (Polish Ekstraklasa) — Home to Score · High 89.6%
+  ✅ Aarhus vs Lyngby (Danish SAS Ligaen) — Home to Score · High 84.6%
+  ✅ FC Andorra vs Leganes (Spanish Segunda) — Home to Score · High 84.0%
+  ✅ PFC Septemvri Sofia vs Loko. Plovdiv (Bulgarian League) — Home to Score · Medium 71.3%
+  ✅ The New Saints vs Trefelin (Welsh Premier) — Home to Score · High 95.5%
+  ✅ Penybont vs Haverfordwest (Welsh Premier) — Home to Score · Medium 77.5%
+  ✅ Flint Town U vs Cambrian United (Welsh Premier) — Home to Score · High 96.3%
+  ✅ Caernarfon vs Connah's Q (Welsh Premier) — Home to Score · High 84.1%
+  ✅ Cardiff MU vs Ammanford (Welsh Premier) — Home to Score · High 88.7%
+  ✅ Orlando City vs Cincinnati (MLS) — Home to Score · High 86.3%
+  ✅ Seattle vs Real Salt Lake (MLS) — Home to Score · High 78.6%
+  ✅ Vissel Kobe vs Mito HollyHock (Japanese J1 League) — Home to Score · High 91.6%
+  ✅ Kashima Antlers vs Shimizu S-Pulse (Japanese J1 League) — Home to Score · High 93.2%
+  ✅ Independiente d V vs Macara (Ecuador Liga Pro) — Home to Score · Medium 71.6%
+  ✅ Racing Club M vs Central Espanol (Ecuador Liga Pro) — Home to Score · High 87.9%
+  ✅ Liverpool FC vs Montevideo W (Ecuador Liga Pro) — Home to Score · High 86.1%
+  ✅ Cobresal vs Audax Italiano (Chile Primera) — Home to Score · High 82.1%
+  ✅ Palestino vs Union La Calera (Chile Primera) — Home to Score · High 81.0%
+  🔥 Southend vs Boreham W (National League) — Away to Score · High 87.1%
+  🔥 Cercle Bruges vs Westerlo (Belgium League) — Away to Score · High 86.5%
+  🔥 Seattle vs Real Salt Lake (MLS) — Away to Score · Medium 68.7%
+  ✅ B Munich vs Cologne (German Bundesliga) — Away to Score · Medium 65.4%
+  ✅ Farul Constanta vs Uni Cluj (Romanian Liga 1) — Away to Score · High 87.6%
+  ✅ Arminia vs FC Magdeburg (German Bundesliga 2) — Away to Score · Medium 68.7%
+  ✅ Darmstadt vs Heidenheim (German Bundesliga 2) — Away to Score · Medium 66.0%
+  ✅ Molde vs Bodo Glimt (Norwegian Tippeligaen) — Away to Score · High 84.4%
+  ✅ Caernarfon vs Connah's Q (Welsh Premier) — Away to Score · High 77.0%
+  ✅ Llandudno vs Barry Town (Welsh Premier) — Away to Score · High 87.1%
+  ✅ Briton Ferry Ath vs Holywell Town (Welsh Premier) — Away to Score · Low 59.3%
+  ✅ Airbus UK vs Colwyn Bay (Welsh Premier) — Away to Score · High 79.6%
+  ✅ Orlando City vs Cincinnati (MLS) — Away to Score · Medium 73.3%
+  ✅ Kashiwa Reysol vs JEF United (Japanese J1 League) — Away to Score · High 81.9%
+  ✅ Cerro vs Nacional Montevideo (Ecuador Liga Pro) — Away to Score · High 86.7%
+  ✅ Cobresal vs Audax Italiano (Chile Primera) — Away to Score · Low 63.2%
+  ✅ Atletico Bucaramanga vs America de Cali (Chile Primera) — Away to Score · Low 62.1%
+
+
+<!-- report: daily 2026-11-19 -->
+## Daily Picks — 2026-11-19
+
+### BTTS  (3)
+  ✅ Gremio vs Bahia (Brazilian Serie A) — BTTS Yes · High 59.3%
+  ✅ Penarol vs Cerro Largo (Brazilian Serie A) — BTTS Yes · Low 49.9%
+  ✅ Boston River vs Deportivo Maldonado (Brazilian Serie A) — BTTS No · High 65.5%
+
+### Team Goals Over 0.5  (8)
+  🔥 Gremio vs Bahia (Brazilian Serie A) — Home to Score · High 80.0%
+  🔥 Corinthians vs Botafogo (Brazilian Serie A) — Home to Score · High 78.3%
+  🔥 Penarol vs Cerro Largo (Brazilian Serie A) — Home to Score · High 81.4%
+  ✅ Vasco vs Internacional (Brazilian Serie A) — Home to Score · High 83.3%
+  ✅ Vitoria vs Red Bull Bragantino (Brazilian Serie A) — Home to Score · Medium 74.3%
+  ✅ Progreso vs Montevideo City Torque (Brazilian Serie A) — Home to Score · Medium 70.5%
+  ✅ Vitoria vs Red Bull Bragantino (Brazilian Serie A) — Away to Score · Low 63.6%
+  ✅ Penarol vs Cerro Largo (Brazilian Serie A) — Away to Score · Low 60.5%
+
+
+<!-- report: daily 2026-11-18 -->
+## Daily Picks — 2026-11-18
+
+### Over/Under 2.5  (3)
+  ✅ Lochee Utd vs Boness Utd (Scottish Lowland League) — Over 2.5 · High 89.4%
+  ✅ Renfrew vs Largs Thistle (Scottish Lowland League) — Over 2.5 · High 86.8%
+  ✅ Gosport Bor vs Chertsey Town (Southern League Premier) — Over 2.5 · High 68.5%
+
+### Home Win  (1)
+  👀 Flamengo vs Paranaense (Brazilian Serie A) — Home Win · High 84.2%
+
+### Team Goals Over 0.5  (14)
+  🔥 Remo vs Chapecoense (Brazilian Serie A) — Home to Score · High 81.7%
+  ✅ Lochee Utd vs Boness Utd (Scottish Lowland League) — Home to Score · High 95.0%
+  ✅ Auchinleck vs Troon (Scottish Lowland League) — Home to Score · High 95.2%
+  ✅ Beith Juniors vs Johnstone Burgh (Scottish Lowland League) — Home to Score · Medium 77.9%
+  ✅ Frome vs Gloucester (Southern League Premier) — Home to Score · High 78.3%
+  ✅ Gosport Bor vs Chertsey Town (Southern League Premier) — Home to Score · High 81.7%
+  ✅ Coritiba vs Santos (Brazilian Serie A) — Home to Score · Medium 77.5%
+  ✅ Alianza Atletico vs Melgar (Southern League Premier) — Home to Score · High 80.6%
+  ✅ Flamengo vs Paranaense (Brazilian Serie A) — Home to Score · High 84.6%
+  🔥 Lochee Utd vs Boness Utd (Scottish Lowland League) — Away to Score · High 84.4%
+  ✅ Renfrew vs Largs Thistle (Scottish Lowland League) — Away to Score · High 92.3%
+  ✅ Beith Juniors vs Johnstone Burgh (Scottish Lowland League) — Away to Score · High 92.9%
+  ✅ Gosport Bor vs Chertsey Town (Southern League Premier) — Away to Score · High 82.4%
+  ✅ Coritiba vs Santos (Brazilian Serie A) — Away to Score · Medium 74.3%
+
+
+<!-- report: daily 2026-11-17 -->
+## Daily Picks — 2026-11-17
+
+### Over/Under 2.5  (5)
+  ✅ Berwick vs Civil Serv Strol (Scottish Lowland League) — Over 2.5 · High 61.4%
+  ✅ South Shields vs Harborough T (Football Conference North) — Over 2.5 · High 69.9%
+  ✅ Burgess Hill vs Brentwood T (Ryman Premier) — Over 2.5 · High 72.0%
+  ✅ Leatherhead vs Wingate & F (Ryman Premier) — Over 2.5 · High 86.2%
+  ✅ Quorn vs Bury (Unibond Premier) — Over 2.5 · High 70.6%
+
+### BTTS  (1)
+  ✅ Leatherhead vs Wingate & F (Ryman Premier) — BTTS Yes · High 81.6%
+
+### Home Win  (3)
+  👀 Luton vs Peterborough (Football League Trophy) — Home Win · High 92.0%
+  👀 South Shields vs Harborough T (Football Conference North) — Home Win · High 92.5%
+  👀 Havant & W vs Bracknell (Southern League Premier) — Home Win · High 88.7%
+
+### Team Goals Over 0.5  (21)
+  🔥 South Shields vs Harborough T (Football Conference North) — Home to Score · High 95.4%
+  🔥 Tonbridge vs Chesham (Football Conference South) — Home to Score · High 81.9%
+  🔥 Truro City vs Billericay (Football Conference South) — Home to Score · High 83.6%
+  ✅ Spalding Utd vs Hebburn Town (Football Conference North) — Home to Score · High 92.3%
+  ✅ Luton vs Peterborough (Football League Trophy) — Home to Score · High 87.9%
+  ✅ Bedford vs Chorley (Football Conference North) — Home to Score · Medium 71.1%
+  ✅ Burgess Hill vs Brentwood T (Ryman Premier) — Home to Score · High 86.3%
+  ✅ Ramsgate vs Cray W (Ryman Premier) — Home to Score · High 83.0%
+  ✅ Dartford vs Three Bridges (Ryman Premier) — Home to Score · High 92.0%
+  ✅ Chippenham vs Sholing (Southern League Premier) — Home to Score · High 86.7%
+  ✅ Havant & W vs Bracknell (Southern League Premier) — Home to Score · High 91.3%
+  ✅ Guiseley vs Ashton Utd (Unibond Premier) — Home to Score · High 87.5%
+  ✅ Quorn vs Bury (Unibond Premier) — Home to Score · High 92.3%
+  ✅ Hyde vs Rylands (Unibond Premier) — Home to Score · High 87.8%
+  ✅ Spalding Utd vs Hebburn Town (Football Conference North) — Away to Score · High 75.6%
+  ✅ Burgess Hill vs Brentwood T (Ryman Premier) — Away to Score · High 82.3%
+  ✅ Leatherhead vs Wingate & F (Ryman Premier) — Away to Score · High 90.7%
+  ✅ Poole Town vs Wimborne T (Southern League Premier) — Away to Score · High 87.0%
+  ✅ Guiseley vs Ashton Utd (Unibond Premier) — Away to Score · Medium 71.1%
+  ✅ Quorn vs Bury (Unibond Premier) — Away to Score · Medium 70.2%
+  ✅ Hyde vs Rylands (Unibond Premier) — Away to Score · High 81.4%
+
+
 <!-- report: weekly 2026-11-16 -->
 ## Weekly Report — 2026-11-16
 

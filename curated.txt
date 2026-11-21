@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-11-16
+✦ CURATED PICKS · 2026-11-20
   Input reports:
-    OU   → over_under_vip_report_2026-11-16.txt
-    BTTS → btts_vip_report_2026-11-16.txt
-    HW   → home_win_vip_report_2026-11-16.txt
+    OU   → over_under_vip_report_2026-11-20.txt
+    BTTS → btts_vip_report_2026-11-20.txt
+    HW   → home_win_vip_report_2026-11-20.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,23 +11,21 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-11-16)
+    • Today only (2026-11-20)
 
 ━━━ OVER / UNDER 2.5  (1 accepted) ━━━
-   1. ✅ Lithuania vs Liechtenstein  (Nations League)
-      Under 2.5 · High 78.9% · xG 0.94–0.64
-      Stake 12.5% @ 1.85  ·  EV +46.0c/$  ·  Edge +46.0%
+   1. ✅ Arminia vs FC Magdeburg  (German Bundesliga 2)
+      Over 2.5 · High 80.1% · xG 3.37–0.92
+      Stake 0.2% @ 2.0  ·  EV +60.2c/$  ·  Edge +60.2%
 
-━━━ BTTS (Yes / No)  (1 accepted) ━━━
-   1. ✅ Lithuania vs Liechtenstein  (Nations League)
-      BTTS No · High 71.3% · xG 0.97–0.62
-      Stake 12.5% @ 1.85  ·  EV 
+━━━ BTTS (Yes / No)  (0 accepted) ━━━
+  (none)
 
 ━━━ HOME WIN  (0 accepted) ━━━
   (none)
 
-📊 Summary: 2 curated picks
-   Parsed total: 16   Rejected: 14   Accepted: 2
+📊 Summary: 1 curated picks
+   Parsed total: 194   Rejected: 193   Accepted: 1
 
 ---
 For informational purposes only · Gamble responsibly
