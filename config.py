@@ -20,11 +20,15 @@ if os.getenv("CI"):
     REQUEST_DELAY_MIN = 4.0
     REQUEST_DELAY_MAX = 8.0
 
-# Per-market cache DB paths (separate caches are fine; TTL & concurrency shared)
-OVER25_CACHE_DB = "soccerbase_cache.db"
-HOME_WIN_CACHE_DB = "soccerbase_cache_home.db"
-BTTS_CACHE_DB = "soccerbase_cache_btts.db"
-OO05_CACHE_DB = "soccerbase_cache_oo05.db"
+# Soccerbase HTML cache. All four engines scrape the SAME fixture/team pages,
+# so they share ONE cache DB: the first engine to fetch a page pays the network
+# cost and the rest hit the cache. (run_local.bat runs the engines sequentially,
+# so there is no concurrent-write contention.)
+SOCCERBASE_CACHE_DB = "soccerbase_cache.db"
+OVER25_CACHE_DB = SOCCERBASE_CACHE_DB
+HOME_WIN_CACHE_DB = SOCCERBASE_CACHE_DB
+BTTS_CACHE_DB = SOCCERBASE_CACHE_DB
+OO05_CACHE_DB = SOCCERBASE_CACHE_DB
 
 # =============================================================================
 # Tiers & Confidence (defaults — markets may override)

@@ -19,7 +19,7 @@ import random
 import re
 import sqlite3
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import requests
 from bs4 import BeautifulSoup  # noqa: F401  (re-exported for convenience)
@@ -127,7 +127,14 @@ class Cache:
 
     def get(self, url):
         key = self._make_key(url)
-        cutoff = (datetime.now() - self.ttl).isoformat()
+        # created_at is written by SQLite's CURRENT_TIMESTAMP: UTC, in
+        # "YYYY-MM-DD HH:MM:SS" form (space separator, no tz). Build the cutoff
+        # the same way. Previously this used local time and isoformat()'s "T"
+        # separator, so ' ' < 'T' made every row look stale and the whole site
+        # was re-downloaded on every run.
+        cutoff = (datetime.now(timezone.utc).replace(tzinfo=None) - self.ttl).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        )
         with sqlite3.connect(self.db_path) as conn:
             row = conn.execute(
                 "SELECT value FROM cache WHERE key = ? AND created_at > ?",
