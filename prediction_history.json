@@ -1995,9 +1995,12 @@
       "home_team": "Curzon A",
       "away_team": "Quorn",
       "confidence": "close",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-14T05:53:31.282545",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T12:26:01.017393",
+      "final_score": "POSTPONED",
+      "result_source": "manual"
     },
     {
       "date": "2026-11-14",
@@ -7522,9 +7525,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-14T05:43:56.049799",
-      "published": false
+      "published": false,
+      "updated_at": "2026-11-21T12:24:31.673143",
+      "final_score": "POSTPONED",
+      "result_source": "manual"
     },
     {
       "date": "2026-11-14",
@@ -27783,9 +27789,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-14T06:13:59.174948",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T12:26:01.019841",
+      "final_score": "POSTPONED",
+      "result_source": "manual"
     },
     {
       "date": "2026-11-14",
@@ -27828,9 +27837,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-14T06:13:59.202529",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T12:26:01.021148",
+      "final_score": "POSTPONED",
+      "result_source": "manual"
     },
     {
       "date": "2026-11-14",
@@ -27921,9 +27933,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-14T06:13:59.236048",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T12:24:31.684389",
+      "final_score": "POSTPONED",
+      "result_source": "manual"
     },
     {
       "date": "2026-11-14",
@@ -28334,9 +28349,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-14T06:13:59.383615",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T12:24:31.686677",
+      "final_score": "POSTPONED",
+      "result_source": "manual"
     },
     {
       "date": "2026-11-14",
@@ -28379,9 +28397,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-14T06:13:59.400651",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T12:26:01.025172",
+      "final_score": "POSTPONED",
+      "result_source": "manual"
     },
     {
       "date": "2026-11-14",
@@ -28520,9 +28541,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-14T06:13:59.456233",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T12:26:01.026333",
+      "final_score": "POSTPONED",
+      "result_source": "manual"
     },
     {
       "date": "2026-11-14",
@@ -28645,9 +28669,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-14T06:13:59.503944",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T12:24:31.698192",
+      "final_score": "POSTPONED",
+      "result_source": "manual"
     },
     {
       "date": "2026-11-14",
@@ -28674,9 +28701,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-14T06:13:59.515495",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T12:24:31.700378",
+      "final_score": "POSTPONED",
+      "result_source": "manual"
     },
     {
       "date": "2026-11-14",
@@ -29119,9 +29149,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-14T06:13:59.681065",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T12:26:01.027393",
+      "final_score": "POSTPONED",
+      "result_source": "manual"
     },
     {
       "date": "2026-11-14",
@@ -29132,9 +29165,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "push",
       "recorded_at": "2026-11-14T06:13:59.687063",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T12:24:31.707745",
+      "final_score": "POSTPONED",
+      "result_source": "manual"
     },
     {
       "date": "2026-11-14",
