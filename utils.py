@@ -23,7 +23,12 @@ from datetime import datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup  # noqa: F401  (re-exported for convenience)
-from fake_useragent import UserAgent
+
+try:
+    from fake_useragent import UserAgent
+except ImportError:  # optional dependency: degrade to a fixed User-Agent
+    UserAgent = None
+
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
@@ -39,10 +44,12 @@ DEFAULT_TIMEOUT_SECONDS = 30
 MIN_VALID_PAGE_BYTES = 1500
 BLOCKED_PAGE_MARKERS = ("captcha", "verify you are human", "access denied", "blocked")
 
-_ua = UserAgent(
-    fallback="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-             "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+_FALLBACK_UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 )
+
+_ua = UserAgent(fallback=_FALLBACK_UA) if UserAgent is not None else None
 
 BASE_HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
@@ -56,7 +63,13 @@ BASE_HEADERS = {
 def get_random_headers():
     """Return a fresh header dict with a randomized User-Agent."""
     headers = BASE_HEADERS.copy()
-    headers["User-Agent"] = _ua.random
+    if _ua is not None:
+        try:
+            headers["User-Agent"] = _ua.random
+            return headers
+        except Exception:  # UA list unavailable (e.g. offline) -> fixed UA
+            pass
+    headers["User-Agent"] = _FALLBACK_UA
     return headers
 
 

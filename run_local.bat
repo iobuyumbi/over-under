@@ -2,6 +2,11 @@
 setlocal
 cd /d "%~dp0"
 
+REM Force Python into UTF-8 mode so emoji/box-drawing output cannot crash with
+REM "UnicodeEncodeError: 'charmap' codec can't encode ..." on a Windows console
+REM whose default code page is cp1252. Applies to every python call below.
+set "PYTHONUTF8=1"
+
 REM ============================================================
 REM  Soccer Picks -- local launcher
 REM
