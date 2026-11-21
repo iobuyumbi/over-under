@@ -1,71 +1,220 @@
-📅 Picks for 2026-11-20
+📅 Picks for 2026-11-21
 
 
-  🔥 Premium picks
+  ✅ Solid picks
 
 
-  1. Liverpool FC vs Montevideo W
-     Date: 2026-11-20
-     League: Ecuador Liga Pro
-     Pick: Home Win · High confidence (90.1%)
+  1. Bournemouth vs Nottm Forest
+     Date: 2026-11-21
+     League: Premier League
+     Pick: Home Win · High confidence (91.7%)
      Category:
-       • Tier: 🔥 Premium
+       • Tier: ✅ Solid
+
+  2. Bradford vs Doncaster
+     Date: 2026-11-21
+     League: Football League One
+     Pick: Home Win · High confidence (82.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  3. CSKA Mosc. vs Terek Grozny
+     Date: 2026-11-21
+     League: Russian Premier
+     Pick: Home Win · High confidence (91.3%)
+     Category:
+       • Tier: ✅ Solid
 
   👀 Watchlist
 
 
-  2. Ath Bilbao vs Espanyol
-     Date: 2026-11-20
-     League: Spanish La Liga
-     Pick: Home Win · High confidence (74.0%)
+  4. Southampton vs Derby
+     Date: 2026-11-21
+     League: Football League Championship
+     Pick: Home Win · High confidence (90.3%)
+     Category:
+       • Tier: 👀 Watchlist
+       • Auto-flag: poor league win rate on this market
+
+  5. Wolves vs Charlton
+     Date: 2026-11-21
+     League: Football League Championship
+     Pick: Home Win · High confidence (90.1%)
+     Category:
+       • Tier: 👀 Watchlist
+       • Auto-flag: poor league win rate on this market
+
+  6. Plymouth vs Peterborough
+     Date: 2026-11-21
+     League: Football League One
+     Pick: Home Win · High confidence (84.6%)
      Category:
        • Tier: 👀 Watchlist
 
-  3. Pogon Szczecin vs Slask Wroclaw
-     Date: 2026-11-20
-     League: Polish Ekstraklasa
+  7. Cheltenham vs Bristol R
+     Date: 2026-11-21
+     League: Football League Two
      Pick: Home Win · High confidence (91.5%)
      Category:
        • Tier: 👀 Watchlist
+       • Auto-flag: poor league win rate on this market
 
-  4. Arminia vs FC Magdeburg
-     Date: 2026-11-20
-     League: German Bundesliga 2
-     Pick: Home Win · High confidence (87.1%)
+  8. Barnet vs Port Vale
+     Date: 2026-11-21
+     League: Football League Two
+     Pick: Home Win · High confidence (91.5%)
+     Category:
+       • Tier: 👀 Watchlist
+       • Auto-flag: poor league win rate on this market
+
+  9. Celtic vs St Mirren
+     Date: 2026-11-21
+     League: Scottish Premier
+     Pick: Home Win · High confidence (84.6%)
      Category:
        • Tier: 👀 Watchlist
 
-  5. Aarhus vs Lyngby
-     Date: 2026-11-20
-     League: Danish SAS Ligaen
-     Pick: Home Win · High confidence (81.9%)
+  10. Clyde vs Stirling
+     Date: 2026-11-21
+     League: Scottish League Two
+     Pick: Home Win · High confidence (92.1%)
      Category:
        • Tier: 👀 Watchlist
 
-  6. The New Saints vs Trefelin
-     Date: 2026-11-20
-     League: Welsh Premier
+  11. Como vs Cagliari
+     Date: 2026-11-21
+     League: Italian Serie A
+     Pick: Home Win · High confidence (85.8%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  12. Lazio vs Lecce
+     Date: 2026-11-21
+     League: Italian Serie A
+     Pick: Home Win · High confidence (85.4%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  13. E Frankfurt vs Hoffenheim
+     Date: 2026-11-21
+     League: German Bundesliga
+     Pick: Home Win · High confidence (84.0%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  14. Real Madrid vs Celta Vigo
+     Date: 2026-11-21
+     League: Spanish La Liga
+     Pick: Home Win · High confidence (86.4%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  15. Monaco vs Auxerre
+     Date: 2026-11-21
+     League: French Ligue 1
+     Pick: Home Win · High confidence (81.3%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  16. Galatasaray vs Samsunspor
+     Date: 2026-11-21
+     League: Turkish Super Lig
+     Pick: Home Win · High confidence (91.3%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  17. O. Ljubljana vs NK Radomlje
+     Date: 2026-11-21
+     League: Slovenian League
+     Pick: Home Win · High confidence (76.4%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  18. Mlada Boleslav vs Zlin
+     Date: 2026-11-21
+     League: Czech Liga
+     Pick: Home Win · High confidence (95.3%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  19. Charleroi vs Sint-Truidense
+     Date: 2026-11-21
+     League: Belgium League
+     Pick: Home Win · High confidence (84.2%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  20. Genk vs RAAL La Louviere
+     Date: 2026-11-21
+     League: Belgium League
+     Pick: Home Win · High confidence (92.6%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  21. Lugano vs Grasshoppers
+     Date: 2026-11-21
+     League: Swiss Super League
+     Pick: Home Win · High confidence (91.2%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  22. Red Star vs Radnik Surdulica
+     Date: 2026-11-21
+     League: Serbian League
      Pick: Home Win · High confidence (85.1%)
      Category:
        • Tier: 👀 Watchlist
 
-  7. Penybont vs Haverfordwest
-     Date: 2026-11-20
-     League: Welsh Premier
-     Pick: Home Win · High confidence (81.9%)
+  23. Truro City vs Hemel
+     Date: 2026-11-21
+     League: Football Conference South
+     Pick: Home Win · High confidence (82.7%)
      Category:
        • Tier: 👀 Watchlist
 
-  8. Vissel Kobe vs Mito HollyHock
-     Date: 2026-11-20
+  24. Billericay vs Slough
+     Date: 2026-11-21
+     League: Football Conference South
+     Pick: Home Win · High confidence (82.8%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  25. Plymouth P vs Malvern Town
+     Date: 2026-11-21
+     League: Southern League Premier
+     Pick: Home Win · High confidence (94.2%)
+     Category:
+       • Tier: 👀 Watchlist
+       • Auto-flag: poor league win rate on this market
+
+  26. Santos Laguna vs Leon
+     Date: 2026-11-21
+     League: Mexican Primera Apertura
+     Pick: Home Win · High confidence (90.3%)
+     Category:
+       • Tier: 👀 Watchlist
+       • League type: weak-ROI region (extra model caution)
+
+  27. Kawasaki F vs Avispa Fukuoka
+     Date: 2026-11-21
      League: Japanese J1 League
-     Pick: Home Win · High confidence (83.6%)
+     Pick: Home Win · High confidence (90.1%)
      Category:
        • Tier: 👀 Watchlist
 
-  9. Racing Club M vs Central Espanol
-     Date: 2026-11-20
-     League: Ecuador Liga Pro
-     Pick: Home Win · High confidence (86.5%)
+  28. Incheon United vs Ulsan Hyundai
+     Date: 2026-11-21
+     League: Korean K-League 1
+     Pick: Home Win · High confidence (79.4%)
      Category:
        • Tier: 👀 Watchlist
+       • League type: weak-ROI region (extra model caution)
+       • Auto-flag: weak ROI history on this market
+
+  29. Suwon Samsung vs Gyeongnam
+     Date: 2026-11-21
+     League: Korean K-League 2
+     Pick: Home Win · High confidence (93.9%)
+     Category:
+       • Tier: 👀 Watchlist
+       • Auto-flag: weak ROI history on this market

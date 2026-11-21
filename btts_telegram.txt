@@ -1,4 +1,4 @@
-📅 Picks for 2026-11-20
+📅 Picks for 2026-11-21
 
 
 🟢 BTTS Yes
@@ -6,9 +6,88 @@
   ✅ Solid picks
 
 
-  1. Kashiwa Reysol vs JEF United
-     Date: 2026-11-20
-     League: Japanese J1 League
-     Pick: BTTS Yes · High confidence (81.4%)
+  1. Chesterfield vs Shrewsbury
+     Date: 2026-11-21
+     League: Football League Two
+     Pick: BTTS Yes · High confidence (84.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  2. Kidderminster vs Fylde
+     Date: 2026-11-21
+     League: National League
+     Pick: BTTS Yes · High confidence (60.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  3. Strasbourg vs Brest
+     Date: 2026-11-21
+     League: French Ligue 1
+     Pick: BTTS Yes · High confidence (63.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  4. Swarovski Wattens vs Austria Lustenau
+     Date: 2026-11-21
+     League: Austrian Bundesliga
+     Pick: BTTS Yes · High confidence (68.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  5. Young Boys vs Thun
+     Date: 2026-11-21
+     League: Swiss Super League
+     Pick: BTTS Yes · High confidence (85.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  6. Dorking W vs Ebbsfleet
+     Date: 2026-11-21
+     League: Football Conference South
+     Pick: BTTS Yes · High confidence (79.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  7. St Albans vs AFC Whyteleafe
+     Date: 2026-11-21
+     League: Ryman Premier
+     Pick: BTTS Yes · High confidence (62.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  8. Tecnico Universitario vs Deportivo Cuenca
+     Date: 2026-11-21
+     League: Ecuador Liga Pro
+     Pick: BTTS Yes · High confidence (67.0%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+🔴 BTTS No
+
+  🔥 Premium picks
+
+
+  1. Mjallby vs Malmo
+     Date: 2026-11-21
+     League: Swedish Allsvenskan
+     Pick: BTTS No · High confidence (76.5%)
+     Category:
+       • Tier: 🔥 Premium
+       • League type: weak-ROI region (extra model caution)
+  ✅ Solid picks
+
+
+  2. Csikszereda vs Corvinul Hunedoara
+     Date: 2026-11-21
+     League: Romanian Liga 1
+     Pick: BTTS No · High confidence (63.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  3. Castellon vs Eldense
+     Date: 2026-11-21
+     League: Spanish Segunda
+     Pick: BTTS No · High confidence (62.2%)
      Category:
        • Tier: ✅ Solid
