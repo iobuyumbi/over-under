@@ -85,8 +85,20 @@ LOCAL (NO-CI) QUICK START (5 minutes) - For testing without CI
 ----------------------------------------------------------------------
 
 1. Install Python 3.8+ from python.org
-2. Install required packages:
+2. Install required packages (REQUIRED — do not skip):
       pip install -r requirements.txt
+
+   FRESH-INSTALL GOTCHA (seen 2026-11-21): run_local.bat and the
+   engines use whatever `python` resolves to on PATH, not a venv, so a
+   machine that skipped this step fails outright. Missing
+   `fake-useragent` aborts every engine with
+   "ModuleNotFoundError: No module named 'fake_useragent'", and missing
+   `python-dotenv` makes the Telegram send fail. install.bat only
+   installs requests + beautifulsoup4 — always use requirements.txt.
+   Both imports are now optional in the code (fall back to a fixed
+   User-Agent / no-op .env load), but install them so the engines keep
+   rotating User-Agents. Verify with:
+      python -c "import fake_useragent, dotenv"
 
 3. Run the full daily pipeline locally:
       run_local.bat
@@ -214,6 +226,14 @@ Runner: stays grey/offline in GitHub Runners list
   -> Names differ between leagues/cups. Add manual mapping to
      clean_team_name() in the engine or pre-normalize via
      team_data_manager.py.
+
+"ModuleNotFoundError: No module named 'fake_useragent'":
+  -> A fresh install skipped the requirements step (install.bat is not
+     enough). Fix: pip install -r requirements.txt
+     The engines now degrade to a fixed User-Agent when fake-useragent
+     is absent and send_local_telegram.py treats python-dotenv as
+     optional, so the pipeline still runs — but installing both keeps
+     the rotating-User-Agent anti-block behaviour.
 
 ----------------------------------------------------------------------
 SUPPORT

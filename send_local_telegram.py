@@ -27,7 +27,12 @@ import sys
 import time
 
 import requests
-from dotenv import load_dotenv
+
+try:
+    from dotenv import load_dotenv
+except ImportError:  # optional dependency: launcher already exports .env vars
+    def load_dotenv(*_args, **_kwargs):
+        return False
 
 from build_telegram_daily import (
     build_daily_message,
