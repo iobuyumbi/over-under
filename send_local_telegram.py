@@ -28,11 +28,35 @@ import time
 
 import requests
 
+def _load_dotenv_fallback(path=".env", override=False):
+    """Minimal .env parser used when python-dotenv is not installed.
+
+    run_local.bat exports .env into the shell before calling this script, but
+    running it directly (e.g. `python send_local_telegram.py`) does not. Without
+    this fallback the guarded import above would silently load nothing and the
+    send would fail with "Set TELEGRAM_BOT_TOKEN ... env vars" even though .env
+    holds valid credentials.
+    """
+    try:
+        with open(path, encoding="utf-8-sig") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, _, value = line.partition("=")
+                key = key.strip()
+                value = value.strip().strip('"').strip("'")
+                if key and (override or key not in os.environ):
+                    os.environ[key] = value
+    except OSError:
+        pass
+    return False
+
+
 try:
     from dotenv import load_dotenv
-except ImportError:  # optional dependency: launcher already exports .env vars
-    def load_dotenv(*_args, **_kwargs):
-        return False
+except ImportError:  # optional dependency: fall back to a minimal .env parser
+    load_dotenv = _load_dotenv_fallback
 
 from build_telegram_daily import (
     build_daily_message,
