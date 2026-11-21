@@ -19,7 +19,7 @@ import re
 import sys
 from datetime import datetime
 
-from prediction_tracker import build_telegram_yesterday_block, format_units
+from prediction_tracker import build_telegram_yesterday_block
 
 
 def extract_marker(text, start, end):
@@ -254,20 +254,18 @@ def _render_results_block(rows):
     if not rows:
         return ["— no settled picks yesterday", ""]
 
-    headers = ["Market / Side", "Tier", "Tot", "W", "L", "P", "Pend", "Win%", "Units"]
-    caps = [14, 9, 4, 3, 3, 3, 4, 6, 7]
+    headers = ["Market / Side", "Tier", "Tot", "W", "L", "P", "Pend", "Win%"]
+    caps = [14, 9, 4, 3, 3, 3, 4, 6]
 
-    def cells(label, tier, wins, losses, pushes, pending, units):
+    def cells(label, tier, wins, losses, pushes, pending):
         return [
             label, tier, str(wins + losses + pushes + pending), str(wins),
             str(losses), str(pushes), str(pending),
             _format_win_rate(wins, losses),
-            format_units(units) if (wins + losses) else "-",
         ]
 
     table = []
     total = [0, 0, 0, 0]  # wins, losses, pushes, pending
-    total_units = 0.0
     index = 0
     while index < len(rows):
         label = rows[index]["label"]
@@ -279,31 +277,26 @@ def _render_results_block(rows):
             table.append(cells(
                 label, row.get("tier", ""),
                 row["wins"], row["losses"], row["pushes"], row["pending"],
-                row.get("units", 0.0),
             ))
         if len(group) > 1:
             w = sum(r["wins"] for r in group)
             l = sum(r["losses"] for r in group)
             p = sum(r["pushes"] for r in group)
             pending = sum(r["pending"] for r in group)
-            units = sum(r.get("units", 0.0) for r in group)
-            table.append(cells(label, "ALL", w, l, p, pending, units))
+            table.append(cells(label, "ALL", w, l, p, pending))
         else:
             w, l = group[0]["wins"], group[0]["losses"]
             p, pending = group[0]["pushes"], group[0]["pending"]
-            units = group[0].get("units", 0.0)
         total[0] += w
         total[1] += l
         total[2] += p
         total[3] += pending
-        total_units += units
 
-    table.append(cells("TOTAL", "", total[0], total[1], total[2], total[3], total_units))
+    table.append(cells("TOTAL", "", total[0], total[1], total[2], total[3]))
 
     lines = _render_table(table, headers, caps)
     lines.append("")
     lines.append("Tot = picks · W-L-P = win-loss-push (void) · Pend awaits settlement · Win% = W/(W+L)")
-    lines.append("Units = flat 1-unit stake profit at the recorded odds · ROI = units / (W+L)")
     lines.append("")
     return lines
 

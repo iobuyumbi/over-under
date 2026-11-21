@@ -890,10 +890,10 @@ def main():
         # recording the rest would surface never-advertised picks in results.
         for pick in filter_pick_items_by_date(home_perfect + home_qualified + home_close, publish_date):
             tier = pick["home_team_goals"].get("tier") or ("perfect" if pick in home_perfect else "qualified" if pick in home_qualified else "close")
-            picks.append({"league": pick["match"]["league"], "home": pick["match"]["home"], "away": pick["match"]["away"], "date": pick["match"]["date"], "prediction": "home_team_goals", "confidence": tier, "odds": args.odds_home})
+            picks.append({"league": pick["match"]["league"], "home": pick["match"]["home"], "away": pick["match"]["away"], "date": pick["match"]["date"], "prediction": "home_team_goals", "confidence": tier})
         for pick in filter_pick_items_by_date(away_perfect + away_qualified + away_close, publish_date):
             tier = pick["away_team_goals"].get("tier") or ("perfect" if pick in away_perfect else "qualified" if pick in away_qualified else "close")
-            picks.append({"league": pick["match"]["league"], "home": pick["match"]["home"], "away": pick["match"]["away"], "date": pick["match"]["date"], "prediction": "away_team_goals", "confidence": tier, "odds": args.odds_away})
+            picks.append({"league": pick["match"]["league"], "home": pick["match"]["home"], "away": pick["match"]["away"], "date": pick["match"]["date"], "prediction": "away_team_goals", "confidence": tier})
         # ``record_predictions`` stores this market under the oo05 section.
         # Keep the side in ``prediction``: settlement needs to know whether
         # the home or away team, rather than either team, was backed to score.

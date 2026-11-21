@@ -1337,7 +1337,6 @@ def main():
                 "away": pick["match"]["away"],
                 "date": pick["match"]["date"],
                 "confidence": tier,
-                "odds": args.odds,
             })
         stats = record_predictions(base_date, hw_picks, [])
         if stats["added"]:

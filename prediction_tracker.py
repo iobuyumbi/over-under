@@ -13,16 +13,6 @@ import tempfile
 from datetime import datetime, timedelta
 from collections import defaultdict
 
-from config import (
-    DEFAULT_ODDS_OVER25,
-    DEFAULT_ODDS_UNDER25,
-    HOME_WIN_DEFAULT_ODDS,
-    DEFAULT_ODDS_BTTS_YES,
-    DEFAULT_ODDS_BTTS_NO,
-    OO05_DEFAULT_ODDS_HOME,
-    OO05_DEFAULT_ODDS_AWAY,
-)
-
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO) 
  
@@ -934,7 +924,6 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
                 "home_team": home,
                 "away_team": away,
                 "confidence": pick.get("confidence", MEDIUM),
-                "odds": pick.get("odds"),
                 "result": "pending",
                 "recorded_at": datetime.now().isoformat(),
                 "published": published,
@@ -968,7 +957,6 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
                 "prediction": prediction,
                 "prob": pick.get("prob", pick.get("over25_prob")),
                 "confidence": pick.get("confidence", MEDIUM),
-                "odds": pick.get("odds"),
                 "result": "pending",
                 "recorded_at": datetime.now().isoformat(),
                 "published": published,
@@ -1002,7 +990,6 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
                 "prediction": prediction,
                 "prob": pick.get("prob"),
                 "confidence": pick.get("confidence", MEDIUM),
-                "odds": pick.get("odds"),
                 "result": "pending",
                 "recorded_at": datetime.now().isoformat(),
                 "published": published,
@@ -1036,7 +1023,6 @@ def record_predictions(date_str, home_win_picks=None, over_under_picks=None, btt
                 "prediction": prediction,
                 "prob": pick.get("prob"),
                 "confidence": pick.get("confidence", MEDIUM),
-                "odds": pick.get("odds"),
                 "result": "pending",
                 "recorded_at": datetime.now().isoformat(),
                 "published": published,
@@ -1305,7 +1291,7 @@ def get_yesterday_results(prediction_type=None, detailed=False, compact=False):
     history = load_history()
     yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
     results = []
-    summary = {"wins": 0, "losses": 0, "pushes": 0, "pending": 0, "units": 0.0}
+    summary = {"wins": 0, "losses": 0, "pushes": 0, "pending": 0}
 
     def report_hw_key(pick):
         return (
@@ -1335,9 +1321,6 @@ def get_yesterday_results(prediction_type=None, detailed=False, compact=False):
         result = resolve_pick_result(pick)
         if result in SETTLED_RESULTS:
             tally(result)
-            profit = stake_profit(pick)
-            if profit is not None:
-                summary["units"] += profit
         elif pick.get("result") == "pending" and pick_is_overdue(pick) and not pick_is_stale_pending(pick):
             summary["pending"] += 1
         else:
@@ -1463,71 +1446,6 @@ def oo05_side_label(pick):
     return "Away to Score" if "away" in value else "Home to Score"
 
 
-# --- Flat-stake ROI, reported per market side ------------------------------
-# A pick's price is the decimal odds captured when it was recorded (each engine
-# stores the odds it staked at).  Picks recorded before odds capture existed --
-# and any run that omits the --odds flags -- fall back to the same per-side
-# default the engine itself would have staked at, so one number stays
-# comparable across the whole history.  Win rate alone hides value: a 60% side
-# at 1.50 is a losing bet, and only the units line shows that.
-DEFAULT_ODDS_BY_SIDE = {
-    "Over 2.5": DEFAULT_ODDS_OVER25,
-    "Under 2.5": DEFAULT_ODDS_UNDER25,
-    "BTTS Yes": DEFAULT_ODDS_BTTS_YES,
-    "BTTS No": DEFAULT_ODDS_BTTS_NO,
-    "Home Win": HOME_WIN_DEFAULT_ODDS,
-    "Home to Score": OO05_DEFAULT_ODDS_HOME,
-    "Away to Score": OO05_DEFAULT_ODDS_AWAY,
-}
-
-
-def side_label_for_pick(pick):
-    """VIP market-side label for any stored pick, dispatched on its type."""
-    pick_type = str(pick.get("type", "")).strip().lower()
-    if pick_type == "home_win":
-        return "Home Win"
-    if pick_type == "over_under":
-        return ou_side_label(pick)
-    if pick_type == "btts":
-        return btts_side_label(pick)
-    if pick_type == "oo05":
-        return oo05_side_label(pick)
-    return None
-
-
-def pick_odds(pick, label=None):
-    """Decimal price for a pick: the odds stored at record time when present
-    and sane, else the market-side default.  None when neither is available."""
-    try:
-        captured = float(pick.get("odds"))
-    except (TypeError, ValueError):
-        captured = None
-    if captured and captured > 1.0:
-        return captured
-    if label is None:
-        label = side_label_for_pick(pick)
-    return DEFAULT_ODDS_BY_SIDE.get(label)
-
-
-def stake_profit(pick, label=None):
-    """Flat 1-unit profit for a settled pick: (odds - 1) on a win, -1 on a
-    loss, 0 on a push, and None while pending or when no price is known."""
-    result = resolve_pick_result(pick)
-    if result == "push":
-        return 0.0
-    if result not in ("win", "loss"):
-        return None
-    odds = pick_odds(pick, label)
-    if odds is None:
-        return None
-    return (odds - 1.0) if result == "win" else -1.0
-
-
-def format_units(value):
-    """Signed units string, e.g. '+3.4u' / '-1.0u' / '0.0u'; '-' when None."""
-    return "-" if value is None else f"{value:+.1f}u"
-
-
 def get_yesterday_market_breakdown():
     """Yesterday's record per market side and confidence tier, for the VIP board.
 
@@ -1535,12 +1453,11 @@ def get_yesterday_market_breakdown():
     get_yesterday_results() so the free-channel block and the VIP block can
     never disagree.  Returns ``(yesterday_date, rows)``; each row is a dict
     with ``label`` (the market side), ``tier`` (Premium/Solid/Watchlist),
-    ``wins``/``losses``/``pushes``/``pending``, ``win_rate`` and the
-    flat-stake ``units`` profit with its ``roi`` percentage.  Rows are
+    ``wins``/``losses``/``pushes``/``pending`` and ``win_rate``.  Rows are
     ordered by side, then tier (strongest first) so the caller can group them
     by side with a simple scan.  Buckets with no activity are omitted, and
-    ``win_rate``/``roi`` are None (rendered as a dash) when nothing was
-    decided so pushes never inflate the percentage.
+    ``win_rate`` is None (rendered as a dash) when nothing was decided so
+    pushes never inflate the percentage.
     """
     history = load_history()
     yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
@@ -1550,7 +1467,7 @@ def get_yesterday_market_breakdown():
         key = (label, tier_for_confidence(pick.get("confidence")))
         bucket = buckets.setdefault(key, {
             "label": label, "tier": key[1],
-            "wins": 0, "losses": 0, "pushes": 0, "pending": 0, "units": 0.0,
+            "wins": 0, "losses": 0, "pushes": 0, "pending": 0,
         })
         result = resolve_pick_result(pick)
         if result in SETTLED_RESULTS:
@@ -1560,9 +1477,6 @@ def get_yesterday_market_breakdown():
                 bucket["losses"] += 1
             else:
                 bucket["pushes"] += 1
-            profit = stake_profit(pick, label)
-            if profit is not None:
-                bucket["units"] += profit
         elif (pick.get("result") == "pending" and pick_is_overdue(pick)
               and not pick_is_stale_pending(pick)):
             bucket["pending"] += 1
@@ -1591,7 +1505,6 @@ def get_yesterday_market_breakdown():
             decided = bucket["wins"] + bucket["losses"]
             row = dict(bucket)
             row["win_rate"] = (100.0 * bucket["wins"] / decided) if decided else None
-            row["roi"] = (100.0 * bucket["units"] / decided) if decided else None
             rows.append(row)
     return yesterday, rows
 
@@ -1688,9 +1601,6 @@ def format_yesterday_header(summary):
     settled = summary["wins"] + summary["losses"] + summary["pushes"] 
     if settled: 
         line = f"📊 Record: {summary['wins']}W-{summary['losses']}L-{summary['pushes']}P" 
-        units = summary.get("units")
-        if units is not None: 
-            line += f" · {format_units(units)}" 
         if summary["pending"]: 
             line += f" ({summary['pending']} pending)" 
         return line 
@@ -1908,9 +1818,7 @@ def calculate_performance(history_list, days=30):
         "pushes": 0, 
         "pending": 0, 
         "win_rate": 0.0, 
-        "total_decisions": 0,
-        "units": 0.0,
-        "roi": 0.0
+        "total_decisions": 0 
     } 
     
     for pick in history_list: 
@@ -1919,14 +1827,9 @@ def calculate_performance(history_list, days=30):
             if pick["result"] == "win": 
                 stats["wins"] += 1 
                 stats["total_decisions"] += 1 
-                odds = pick_odds(pick)
-                if odds is not None:
-                    stats["units"] += odds - 1.0
             elif pick["result"] == "loss": 
                 stats["losses"] += 1 
                 stats["total_decisions"] += 1 
-                if pick_odds(pick) is not None:
-                    stats["units"] -= 1.0
             elif pick["result"] == "push": 
                 stats["pushes"] += 1 
             else: 
@@ -1934,7 +1837,6 @@ def calculate_performance(history_list, days=30):
     
     if stats["total_decisions"] > 0: 
         stats["win_rate"] = (stats["wins"] / stats["total_decisions"]) * 100 
-        stats["roi"] = (stats["units"] / stats["total_decisions"]) * 100 
     
     return stats
 
@@ -2249,8 +2151,6 @@ def generate_weekly_report():
             "pending": 0, 
             "decisions": 0, 
             "win_rate": 0.0, 
-            "units": 0.0,
-            "roi": 0.0,
             "by_confidence": {} 
         } 
         
@@ -2266,14 +2166,9 @@ def generate_weekly_report():
                 stats["total"] += 1 
                 conf = pick.get("confidence", "N/A") 
                 if conf not in stats["by_confidence"]: 
-                    stats["by_confidence"][conf] = {"wins":0, "losses":0, "pushes":0, "pending":0, "decisions":0, "units":0.0} 
+                    stats["by_confidence"][conf] = {"wins":0, "losses":0, "pushes":0, "pending":0, "decisions":0} 
                 
                 result = resolve_pick_result(pick)
-                if result in ("win", "loss"):
-                    profit = stake_profit(pick)
-                    if profit is not None:
-                        stats["units"] += profit
-                        stats["by_confidence"][conf]["units"] += profit
                 if result == "win": 
                     stats["wins"] += 1 
                     stats["decisions"] += 1 
@@ -2293,7 +2188,6 @@ def generate_weekly_report():
         
         if stats["decisions"] >0: 
             stats["win_rate"] = (stats["wins"] / stats["decisions"])*100 
-            stats["roi"] = (stats["units"] / stats["decisions"])*100 
         
         # Calculate win rate by confidence 
         for conf in stats["by_confidence"]: 
@@ -2347,7 +2241,6 @@ def generate_weekly_report():
     report.append(f"Pending: {hw_stats['pending']}") 
     if hw_stats['decisions']>0: 
         report.append(f"Win rate: {hw_stats['win_rate']:.1f}%") 
-        report.append(f"Units: {format_units(hw_stats['units'])} (ROI {hw_stats['roi']:.1f}%)") 
     
     settled_hw = [ 
         (conf, cs) for conf, cs in sorted(hw_stats['by_confidence'].items()) 
@@ -2377,7 +2270,6 @@ def generate_weekly_report():
     report.append(f"Pending: {over_stats['pending']}") 
     if over_stats['decisions']>0: 
         report.append(f"Win rate: {over_stats['win_rate']:.1f}%") 
-        report.append(f"Units: {format_units(over_stats['units'])} (ROI {over_stats['roi']:.1f}%)") 
     
     settled_over = [ 
         (conf, cs) for conf, cs in sorted(over_stats['by_confidence'].items()) 
@@ -2407,7 +2299,6 @@ def generate_weekly_report():
     report.append(f"Pending: {under_stats['pending']}") 
     if under_stats['decisions']>0: 
         report.append(f"Win rate: {under_stats['win_rate']:.1f}%") 
-        report.append(f"Units: {format_units(under_stats['units'])} (ROI {under_stats['roi']:.1f}%)") 
     
     settled_under = [ 
         (conf, cs) for conf, cs in sorted(under_stats['by_confidence'].items()) 
@@ -2437,7 +2328,6 @@ def generate_weekly_report():
     report.append(f"Pending: {btts_yes_stats['pending']}") 
     if btts_yes_stats['decisions']>0: 
         report.append(f"Win rate: {btts_yes_stats['win_rate']:.1f}%") 
-        report.append(f"Units: {format_units(btts_yes_stats['units'])} (ROI {btts_yes_stats['roi']:.1f}%)") 
     
     report.append("") 
     report.append("BTTS NO") 
@@ -2448,7 +2338,6 @@ def generate_weekly_report():
     report.append(f"Pending: {btts_no_stats['pending']}") 
     if btts_no_stats['decisions']>0: 
         report.append(f"Win rate: {btts_no_stats['win_rate']:.1f}%") 
-        report.append(f"Units: {format_units(btts_no_stats['units'])} (ROI {btts_no_stats['roi']:.1f}%)") 
     
     report.append("") 
     report.append("OVER 0.5 TEAM GOAL") 
@@ -2459,7 +2348,6 @@ def generate_weekly_report():
     report.append(f"Pending: {oo05_stats['pending']}") 
     if oo05_stats['decisions']>0: 
         report.append(f"Win rate: {oo05_stats['win_rate']:.1f}%") 
-        report.append(f"Units: {format_units(oo05_stats['units'])} (ROI {oo05_stats['roi']:.1f}%)") 
     
     report.append("") 
     report.append("---") 
