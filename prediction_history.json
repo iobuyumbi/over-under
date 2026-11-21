@@ -2126,9 +2126,12 @@
       "away_team": "Montevideo W",
       "confidence": "perfect",
       "odds": 2.8,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T06:18:21.407577",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.304748",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -2138,9 +2141,12 @@
       "away_team": "Espanyol",
       "confidence": "close",
       "odds": 2.8,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T06:18:21.433864",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.305002",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -2150,9 +2156,12 @@
       "away_team": "Slask Wroclaw",
       "confidence": "close",
       "odds": 2.8,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T06:18:21.458513",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.305253",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -2162,9 +2171,12 @@
       "away_team": "FC Magdeburg",
       "confidence": "close",
       "odds": 2.8,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T06:18:21.485641",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.305500",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -2174,9 +2186,12 @@
       "away_team": "Lyngby",
       "confidence": "close",
       "odds": 2.8,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T06:18:21.499185",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.305763",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -2186,9 +2201,12 @@
       "away_team": "Trefelin",
       "confidence": "close",
       "odds": 2.8,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T06:18:21.514303",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.306148",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -2198,9 +2216,12 @@
       "away_team": "Haverfordwest",
       "confidence": "close",
       "odds": 2.8,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T06:18:21.539871",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.306511",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -2210,9 +2231,12 @@
       "away_team": "Mito HollyHock",
       "confidence": "close",
       "odds": 2.8,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T06:18:21.567734",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.307016",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -2222,9 +2246,12 @@
       "away_team": "Central Espanol",
       "confidence": "close",
       "odds": 2.8,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T06:18:21.593286",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.307570",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     }
   ],
   "over_under": [
@@ -8183,9 +8210,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 2.0,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T05:57:03.161662",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.307755",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -8197,9 +8227,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 2.0,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T05:57:03.191298",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.308007",
+      "final_score": "3-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -8211,9 +8244,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 2.0,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T05:57:03.215324",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.308259",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -8225,9 +8261,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 2.0,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T05:57:03.242962",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.308755",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     }
   ],
   "btts": [
@@ -9718,9 +9757,12 @@
       "prob": 81.4,
       "confidence": "qualified",
       "odds": 1.9,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T06:43:18.594790",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.309291",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     }
   ],
   "oo05": [
@@ -30711,9 +30753,12 @@
       "prob": null,
       "confidence": "perfect",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:18.884924",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.309753",
+      "final_score": "3-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30725,9 +30770,12 @@
       "prob": null,
       "confidence": "perfect",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:18.900491",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.310043",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30739,9 +30787,12 @@
       "prob": null,
       "confidence": "perfect",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:18.907030",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.310293",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30753,9 +30804,12 @@
       "prob": null,
       "confidence": "perfect",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:18.914025",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.310734",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30767,9 +30821,12 @@
       "prob": null,
       "confidence": "perfect",
       "odds": 1.45,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T07:03:18.930086",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.311253",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30781,9 +30838,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T07:03:18.943913",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.311412",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30795,9 +30855,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:18.959260",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.311601",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30809,9 +30872,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:18.973801",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.311822",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30823,9 +30889,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:18.988893",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.311977",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30837,9 +30906,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T07:03:19.013397",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.312166",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30851,9 +30923,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.028439",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.312501",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30865,9 +30940,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.041555",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.312827",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30879,9 +30957,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.055631",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.313186",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30893,9 +30974,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T07:03:19.073507",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.313606",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30907,9 +30991,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.096081",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.314042",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30921,9 +31008,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.110783",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.314452",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30935,9 +31025,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T07:03:19.115866",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.314874",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30949,9 +31042,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.131134",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.315316",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30963,9 +31059,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.153566",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.315763",
+      "final_score": "4-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30977,9 +31076,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.226263",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.316285",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -30991,9 +31093,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.253299",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.316780",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31005,9 +31110,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.282862",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.317323",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31019,9 +31127,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.295918",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.317888",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31033,9 +31144,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T07:03:19.310422",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.318482",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31047,9 +31161,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.333257",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.319107",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31061,9 +31178,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T07:03:19.346843",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.319698",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31075,9 +31195,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.352839",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.320165",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31089,9 +31212,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T07:03:19.369891",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.320786",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31103,9 +31229,12 @@
       "prob": null,
       "confidence": "perfect",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.394929",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.320984",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31117,9 +31246,12 @@
       "prob": null,
       "confidence": "perfect",
       "odds": 1.55,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T07:03:19.407796",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.321346",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31131,9 +31263,12 @@
       "prob": null,
       "confidence": "perfect",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.420256",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.321835",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31145,9 +31280,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.435296",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.322065",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31159,9 +31297,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.443268",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.322329",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31173,9 +31314,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.461436",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.322623",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31187,9 +31331,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.479786",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.322925",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31201,9 +31348,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.497053",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.323259",
+      "final_score": "2-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31215,9 +31365,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T07:03:19.519080",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.323680",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31229,9 +31382,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.532627",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.324139",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31243,9 +31399,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T07:03:19.551386",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.324641",
+      "final_score": "1-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31257,9 +31416,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.566974",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.325128",
+      "final_score": "3-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31271,9 +31433,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.584576",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.325636",
+      "final_score": "1-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31285,9 +31450,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.600376",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.326202",
+      "final_score": "0-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31299,9 +31467,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-20T07:03:19.605916",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.326748",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31313,9 +31484,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.622274",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.327207",
+      "final_score": "3-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-20",
@@ -31327,9 +31501,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-20T07:03:19.636293",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-21T15:05:59.327900",
+      "final_score": "2-2",
+      "result_source": "soccerbase"
     }
   ],
   "stats": {}
