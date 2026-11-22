@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 """Build the Telegram messages from predictor TELEGRAM markers.
 
-Two messages are produced:
+Both messages are the same board -- every fixture, split by market, then by
+side within the market (Over vs Under, BTTS Yes vs No, home vs away goal),
+then grouped by confidence level, all rendered as monospace tables, with a
+yesterday results table split the same way (per-market-side AND per-tier
+W-L-P and win rate) and a per-pick list of actual results:
 
-* the free-tier daily message (``build_daily_message``) -- the raw per-market
-  sections, forwarded as-is; and
-* the VIP board (``build_vip_board``) -- every fixture, split by market, then by
-  side within the market (Over vs Under, BTTS Yes vs No, home vs away goal),
-  then grouped by confidence level, all rendered as monospace tables, with a
-  yesterday results table split the same way (per-market-side AND per-tier
-  W-L-P and win rate) prepended when the caller supplies the breakdown,
-  followed by a per-pick list showing each pick's actual result and score
-  when the caller supplies the detail rows.
+* the free-tier daily message (``build_daily_message``) -- the board under the
+  ``📅 Daily Soccer Picks`` title; and
+* the VIP board (``build_vip_board``) -- the identical board under the
+  ``🏆 VIP BOARD`` title.
+
+Only the header line differs between the two, so the free channel gets the
+same clean, concise layout as VIP.
 """
 
 import argparse
@@ -19,7 +21,10 @@ import re
 import sys
 from datetime import datetime
 
-from prediction_tracker import build_telegram_yesterday_block
+from prediction_tracker import (
+    get_yesterday_market_breakdown,
+    get_yesterday_pick_results,
+)
 
 
 def extract_marker(text, start, end):
@@ -40,48 +45,20 @@ def read_telegram_section(path):
         return ""
 
 
-def _clean_body(body):
-    if not body:
-        return ""
-    cleaned_lines = []
-    for raw in (body or "").splitlines():
-        cleaned_lines.append(raw.rstrip())
-    while cleaned_lines and not cleaned_lines[0].strip():
-        cleaned_lines.pop(0)
-    while cleaned_lines and not cleaned_lines[-1].strip():
-        cleaned_lines.pop()
-    return "\n".join(cleaned_lines)
-
-
 def build_daily_message(date, ou_body, btts_body, hw_body, oo05_body):
-    lines = [f"📅 Daily Soccer Picks · {date}", ""]
+    """Free-tier message: the same board as VIP, under the free title.
 
-    yesterday = build_telegram_yesterday_block()
-    if yesterday:
-        lines.append("───────────")
-        lines.append(f"📊 {yesterday[0]}")
-        lines.append("")
-        for line in yesterday[1:]:
-            lines.append(line)
-
-    sections = [
-        ("⚽️ OVER / UNDER 2.5", ou_body),
-        ("🎯 BTTS (YES / NO)", btts_body),
-        ("🏠 HOME WIN", hw_body),
-        ("🎯 OVER 0.5 TEAM GOAL", oo05_body),
-    ]
-    for title, body in sections:
-        clean = _clean_body(body) or "— none"
-        lines.append("")
-        lines.append("───────────")
-        lines.append(title)
-        lines.append("")
-        lines.append(clean)
-
-    lines.append("")
-    lines.append("───────────")
-    lines.append("Info only · gamble responsibly")
-    return "\n".join(lines).strip()
+    The free channel gets the identical market/side/confidence tables plus the
+    yesterday record and per-pick detail; only the header line differs.  The
+    first line stays ``📅 Daily Soccer Picks · <date>`` because the CI publisher
+    (send_daily_telegram) parses it to detect a stale board.
+    """
+    return build_vip_board(
+        date, ou_body, btts_body, hw_body, oo05_body,
+        results=get_yesterday_market_breakdown(),
+        details=get_yesterday_pick_results(),
+        title=f"📅 Daily Soccer Picks · {date}",
+    )
 
 
 _FIXTURE_RE = re.compile(r"^\s*\d+\.\s+(.+?)\s*$")
@@ -330,7 +307,7 @@ def _render_results_detail(rows):
 
 
 def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body, results=None,
-                    details=None):
+                    details=None, title=None):
     """Every fixture, split by market, then by side, then by confidence level.
 
     Markets are never blended, and neither are the sides inside a market:
@@ -345,6 +322,9 @@ def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body, results=None,
     Pass ``details`` (the ``(yesterday_date, rows)`` tuple from
     ``prediction_tracker.get_yesterday_pick_results()``) to add a per-pick
     list under the summary table showing each pick's actual result and score.
+
+    ``title`` overrides the header line so the same board can be published
+    under a different name (e.g. the free channel); it defaults to VIP.
     """
     picks = []
     picks += parse_telegram_section(ou_body, "Over/Under 2.5")
@@ -357,7 +337,7 @@ def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body, results=None,
         counts[p["market"]] = counts.get(p["market"], 0) + 1
 
     lines = [
-        f"🏆 VIP BOARD · {date}",
+        title or f"🏆 VIP BOARD · {date}",
         "Every fixture, split by market and side, grouped by confidence.",
         "",
         "📊 " + " · ".join(f"{m} {counts.get(m, 0)}" for m in _MARKETS),

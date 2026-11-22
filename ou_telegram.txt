@@ -38,17 +38,17 @@
      Category:
        • Tier: ✅ Solid
 
-  5. Barcelona vs Villarreal
-     Date: 2026-11-22
-     League: Spanish La Liga
-     Pick: Over 2.5 · High confidence (83.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  6. Racing vs Sociedad
+  5. Racing vs Sociedad
      Date: 2026-11-22
      League: Spanish La Liga
      Pick: Over 2.5 · High confidence (86.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  6. Barcelona vs Villarreal
+     Date: 2026-11-22
+     League: Spanish La Liga
+     Pick: Over 2.5 · High confidence (83.7%)
      Category:
        • Tier: ✅ Solid
 
@@ -130,15 +130,7 @@
      Category:
        • Tier: ✅ Solid
 
-  18. Guadalajara vs Cruz Azul
-     Date: 2026-11-22
-     League: Mexican Primera Apertura
-     Pick: Over 2.5 · High confidence (74.5%)
-     Category:
-       • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
-
-  19. Tigres vs Club America
+  18. Tigres vs Club America
      Date: 2026-11-22
      League: Mexican Primera Apertura
      Pick: Over 2.5 · High confidence (88.9%)
@@ -146,18 +138,26 @@
        • Tier: ✅ Solid
        • League type: weak-ROI region (extra model caution)
 
-  20. Jeonnam Dragons vs Ansan Greeners
+  19. Guadalajara vs Cruz Azul
      Date: 2026-11-22
-     League: Korean K-League 2
-     Pick: Over 2.5 · High confidence (66.0%)
+     League: Mexican Primera Apertura
+     Pick: Over 2.5 · High confidence (74.5%)
      Category:
        • Tier: ✅ Solid
        • League type: weak-ROI region (extra model caution)
 
-  21. Daegu vs Gimhae City
+  20. Daegu vs Gimhae City
      Date: 2026-11-22
      League: Korean K-League 2
      Pick: Over 2.5 · High confidence (63.5%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+  21. Jeonnam Dragons vs Ansan Greeners
+     Date: 2026-11-22
+     League: Korean K-League 2
+     Pick: Over 2.5 · High confidence (66.0%)
      Category:
        • Tier: ✅ Solid
        • League type: weak-ROI region (extra model caution)

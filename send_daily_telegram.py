@@ -200,7 +200,7 @@ def main():
     print(f"Free-tier message: {len(free_msg or '')} chars")
     print(f"VIP message: {len(vip_msg) if vip_msg else 0} chars")
 
-    ok = _send_chunks(token, free_chat, free_msg, label="FREE")
+    ok = _send_chunks(token, free_chat, free_msg, label="FREE", as_pre=True)
     if vip_chat:
         ok_vip = _send_chunks(token, vip_chat, vip_msg, label="VIP", as_pre=True)
         ok = ok and ok_vip

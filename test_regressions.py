@@ -118,7 +118,13 @@ class TelegramTests(unittest.TestCase):
             try:
                 os.chdir(directory)
                 with open("oo05_telegram.txt", "w", encoding="utf-8") as file:
-                    file.write("OO05 pick")
+                    file.write(
+                        "  1. Alpha vs Beta\n"
+                        "     League: Test League\n"
+                        "     Pick: Home to Score · High confidence (91.0%)\n"
+                        "     Category:\n"
+                        "       • Tier: ✅ Solid\n"
+                    )
                 response = unittest.mock.Mock(status_code=200)
                 with patch.dict(os.environ, {
                     "TELEGRAM_BOT_TOKEN": "123456789:TESTTOKEN", "TELEGRAM_CHAT_ID": "chat",
@@ -131,7 +137,12 @@ class TelegramTests(unittest.TestCase):
             call.kwargs["data"]["text"] for call in post.call_args_list
             if call.kwargs["data"]["chat_id"] == "chat"
         ]
-        self.assertTrue(any("OO05 pick" in text for text in free_texts))
+        # The free board now renders the same monospace tables as VIP, so the
+        # OO05 market and its fixture appear parsed into the board rather than
+        # being forwarded verbatim.
+        self.assertTrue(any("🎯 OVER 0.5 TEAM GOAL" in text for text in free_texts))
+        self.assertTrue(any("Alpha vs Beta" in text for text in free_texts))
+        self.assertTrue(any("📅 Daily Soccer Picks · 2026-09-11" in text for text in free_texts))
 
     def test_vip_board_separates_markets_sides_and_confidence(self):
         ou = (

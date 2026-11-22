@@ -10,12 +10,15 @@ Usage:
 
 The script reads the four per-market Telegram section files
 (ou_telegram.txt, btts_telegram.txt, hw_telegram.txt, oo05_telegram.txt) that each
-predictor writes and posts two messages:
+predictor writes and posts the same board to two chats (both as monospace
+tables, differing only in the header line):
 
-  * the free-tier chat (TELEGRAM_CHAT_ID) gets the assembled daily message; and
-  * the VIP chat (TELEGRAM_VIP_CHAT_ID) gets the full board -- every fixture
-    from all four markets, rendered as a confidence-grouped monospace table,
-    preceded by yesterday's record split by market and side (W-L-P + win%).
+  * the free-tier chat (TELEGRAM_CHAT_ID) gets the board under the
+    `📅 Daily Soccer Picks` title; and
+  * the VIP chat (TELEGRAM_VIP_CHAT_ID) gets the identical board under the
+    `🏆 VIP BOARD` title -- every fixture from all four markets, rendered as a
+    confidence-grouped monospace table, preceded by yesterday's record split
+    by market and side (W-L-P + win%).
 
 This is the local-only counterpart to the inline Telegram posting
 that lives inside the GitHub Actions workflow (run_daily.yml).
@@ -174,7 +177,7 @@ def main():
         print(f"    {OU_FILE}, {BTTS_FILE}, {HW_FILE}, {OO05_FILE}")
         return 2
 
-    ok = _send(TOKEN, CHAT, msg, "FREE")
+    ok = _send(TOKEN, CHAT, msg, "FREE", as_pre=True)
 
     if VIP:
         vip_msg = build_vip_board(
