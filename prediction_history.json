@@ -2636,9 +2636,12 @@
       "away_team": "Leon",
       "confidence": "close",
       "odds": 2.8,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-21T13:50:46.226729",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-22T15:03:42.535087",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-21",
@@ -35708,9 +35711,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-21T14:33:50.771025",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-22T15:03:42.539200",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-21",
@@ -35722,9 +35728,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.45,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-21T14:33:50.780463",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-22T15:03:42.540999",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-21",
@@ -37470,9 +37479,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-21T14:33:51.449730",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-22T15:03:42.542720",
+      "final_score": "0-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-21",
@@ -38062,9 +38074,12 @@
       "prob": null,
       "confidence": "qualified",
       "odds": 1.55,
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-21T14:33:51.644149",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-22T15:03:42.544341",
+      "final_score": "2-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-21",
