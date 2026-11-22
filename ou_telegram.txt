@@ -24,17 +24,17 @@
        • Tier: ✅ Solid
        • Auto-flag: poor league win rate on this market
 
-  3. Augsburg vs Mainz
-     Date: 2026-11-22
-     League: German Bundesliga
-     Pick: Over 2.5 · High confidence (87.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  4. W Bremen vs Hamburg
+  3. W Bremen vs Hamburg
      Date: 2026-11-22
      League: German Bundesliga
      Pick: Over 2.5 · High confidence (70.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  4. Augsburg vs Mainz
+     Date: 2026-11-22
+     League: German Bundesliga
+     Pick: Over 2.5 · High confidence (87.0%)
      Category:
        • Tier: ✅ Solid
 
@@ -166,6 +166,14 @@
      Date: 2026-11-22
      League: Chile Primera
      Pick: Over 2.5 · High confidence (69.2%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+  23. Sport Huancayo vs Universitario de Deportes
+     Date: 2026-11-22
+     League: Peru Liga 1 Clausura
+     Pick: Over 2.5 · High confidence (70.4%)
      Category:
        • Tier: ✅ Solid
        • League type: weak-ROI region (extra model caution)

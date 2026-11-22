@@ -85,8 +85,8 @@
 
   12. Once Caldas vs Atletico Nacional
      Date: 2026-11-22
-     League: Mexican Primera Apertura
-     Pick: Home to Score · Medium confidence (68.3%)
+     League: Colombia Prim A Finalizacion
+     Pick: Home to Score · Medium confidence (68.0%)
      Category:
        • Tier: 🔥 Premium
 
@@ -106,45 +106,45 @@
 
   15. Sport Huancayo vs Universitario de Deportes
      Date: 2026-11-22
-     League: Ecuador Liga Pro
-     Pick: Home to Score · High confidence (93.0%)
+     League: Peru Liga 1 Clausura
+     Pick: Home to Score · High confidence (87.3%)
      Category:
        • Tier: 🔥 Premium
   ✅ Solid picks
 
 
-  16. Juventus vs Venezia
-     Date: 2026-11-22
-     League: Italian Serie A
-     Pick: Home to Score · High confidence (84.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  17. Burnley vs Blackburn
-     Date: 2026-11-22
-     League: Football League Championship
-     Pick: Home to Score · Medium confidence (77.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  18. Liverpool vs Man Utd
+  16. Liverpool vs Man Utd
      Date: 2026-11-22
      League: Premier League
      Pick: Home to Score · High confidence (85.0%)
      Category:
        • Tier: ✅ Solid
 
-  19. Sassuolo vs Genoa
+  17. Juventus vs Venezia
      Date: 2026-11-22
      League: Italian Serie A
-     Pick: Home to Score · High confidence (81.0%)
+     Pick: Home to Score · High confidence (84.4%)
      Category:
        • Tier: ✅ Solid
 
-  20. Bologna vs Udinese
+  18. Burnley vs Blackburn
+     Date: 2026-11-22
+     League: Football League Championship
+     Pick: Home to Score · Medium confidence (77.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  19. Bologna vs Udinese
      Date: 2026-11-22
      League: Italian Serie A
      Pick: Home to Score · High confidence (80.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  20. Sassuolo vs Genoa
+     Date: 2026-11-22
+     League: Italian Serie A
+     Pick: Home to Score · High confidence (81.0%)
      Category:
        • Tier: ✅ Solid
 
@@ -155,17 +155,17 @@
      Category:
        • Tier: ✅ Solid
 
-  22. Barcelona vs Villarreal
-     Date: 2026-11-22
-     League: Spanish La Liga
-     Pick: Home to Score · High confidence (92.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  23. Racing vs Sociedad
+  22. Racing vs Sociedad
      Date: 2026-11-22
      League: Spanish La Liga
      Pick: Home to Score · Medium confidence (77.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  23. Barcelona vs Villarreal
+     Date: 2026-11-22
+     League: Spanish La Liga
+     Pick: Home to Score · High confidence (92.1%)
      Category:
        • Tier: ✅ Solid
 
@@ -183,17 +183,17 @@
      Category:
        • Tier: ✅ Solid
 
-  26. Erzurum B vs Goztepe
-     Date: 2026-11-22
-     League: Turkish Super Lig
-     Pick: Home to Score · Medium confidence (72.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  27. Marseille vs Le Mans
+  26. Marseille vs Le Mans
      Date: 2026-11-22
      League: French Ligue 1
      Pick: Home to Score · High confidence (86.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  27. Erzurum B vs Goztepe
+     Date: 2026-11-22
+     League: Turkish Super Lig
+     Pick: Home to Score · Medium confidence (72.2%)
      Category:
        • Tier: ✅ Solid
 
@@ -218,17 +218,17 @@
      Category:
        • Tier: ✅ Solid
 
-  31. FC Twente vs Willem II
-     Date: 2026-11-22
-     League: Netherlands League
-     Pick: Home to Score · High confidence (96.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  32. Ajax vs Den Haag
+  31. Ajax vs Den Haag
      Date: 2026-11-22
      League: Netherlands League
      Pick: Home to Score · High confidence (83.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  32. FC Twente vs Willem II
+     Date: 2026-11-22
+     League: Netherlands League
+     Pick: Home to Score · High confidence (96.1%)
      Category:
        • Tier: ✅ Solid
 
@@ -302,17 +302,17 @@
      Category:
        • Tier: ✅ Solid
 
-  43. Girona vs Eibar
-     Date: 2026-11-22
-     League: Spanish Segunda
-     Pick: Home to Score · Medium confidence (76.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  44. Celta de Vigo B vs Valladolid
+  43. Celta de Vigo B vs Valladolid
      Date: 2026-11-22
      League: Spanish Segunda
      Pick: Home to Score · Medium confidence (74.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  44. Girona vs Eibar
+     Date: 2026-11-22
+     League: Spanish Segunda
+     Pick: Home to Score · Medium confidence (76.5%)
      Category:
        • Tier: ✅ Solid
 
@@ -456,24 +456,24 @@
      Category:
        • Tier: ✅ Solid
 
-  65. Rosario vs Gimnasia de Mendoza
-     Date: 2026-11-22
-     League: Ecuador Liga Pro
-     Pick: Home to Score · High confidence (88.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  66. LDU Quito vs Aucas
+  65. LDU Quito vs Aucas
      Date: 2026-11-22
      League: Ecuador Liga Pro
      Pick: Home to Score · Medium confidence (71.1%)
      Category:
        • Tier: ✅ Solid
 
+  66. Rosario vs Gimnasia de Mendoza
+     Date: 2026-11-22
+     League: Liga Prof Argentina Torneo
+     Pick: Home to Score · High confidence (83.5%)
+     Category:
+       • Tier: ✅ Solid
+
   67. Sporting Cristal vs Cienciano
      Date: 2026-11-22
-     League: Ecuador Liga Pro
-     Pick: Home to Score · High confidence (97.0%)
+     League: Peru Liga 1 Clausura
+     Pick: Home to Score · High confidence (95.3%)
      Category:
        • Tier: ✅ Solid
 
@@ -554,17 +554,17 @@
      Category:
        • Tier: ✅ Solid
 
-  11. Sassuolo vs Genoa
-     Date: 2026-11-22
-     League: Italian Serie A
-     Pick: Away to Score · High confidence (88.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  12. Bologna vs Udinese
+  11. Bologna vs Udinese
      Date: 2026-11-22
      League: Italian Serie A
      Pick: Away to Score · High confidence (81.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  12. Sassuolo vs Genoa
+     Date: 2026-11-22
+     League: Italian Serie A
+     Pick: Away to Score · High confidence (88.7%)
      Category:
        • Tier: ✅ Solid
 
@@ -589,17 +589,17 @@
      Category:
        • Tier: ✅ Solid
 
-  16. Barcelona vs Villarreal
-     Date: 2026-11-22
-     League: Spanish La Liga
-     Pick: Away to Score · High confidence (83.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  17. Racing vs Sociedad
+  16. Racing vs Sociedad
      Date: 2026-11-22
      League: Spanish La Liga
      Pick: Away to Score · High confidence (95.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  17. Barcelona vs Villarreal
+     Date: 2026-11-22
+     League: Spanish La Liga
+     Pick: Away to Score · High confidence (83.6%)
      Category:
        • Tier: ✅ Solid
 
@@ -645,17 +645,17 @@
      Category:
        • Tier: ✅ Solid
 
-  24. Wisla Plock vs Legia Warsaw
-     Date: 2026-11-22
-     League: Polish Ekstraklasa
-     Pick: Away to Score · Medium confidence (69.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  25. GKS Katowice vs Lech Poznan
+  24. GKS Katowice vs Lech Poznan
      Date: 2026-11-22
      League: Polish Ekstraklasa
      Pick: Away to Score · Medium confidence (71.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  25. Wisla Plock vs Legia Warsaw
+     Date: 2026-11-22
+     League: Polish Ekstraklasa
+     Pick: Away to Score · Medium confidence (69.9%)
      Category:
        • Tier: ✅ Solid
 
@@ -701,17 +701,17 @@
      Category:
        • Tier: ✅ Solid
 
-  32. Basel vs Lucerne
-     Date: 2026-11-22
-     League: Swiss Super League
-     Pick: Away to Score · High confidence (77.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  33. Lausanne vs Vaduz
+  32. Lausanne vs Vaduz
      Date: 2026-11-22
      League: Swiss Super League
      Pick: Away to Score · High confidence (89.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  33. Basel vs Lucerne
+     Date: 2026-11-22
+     League: Swiss Super League
+     Pick: Away to Score · High confidence (77.5%)
      Category:
        • Tier: ✅ Solid
 
@@ -722,17 +722,17 @@
      Category:
        • Tier: ✅ Solid
 
-  35. Wolfsberger vs Ried
-     Date: 2026-11-22
-     League: Austrian Bundesliga
-     Pick: Away to Score · High confidence (85.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  36. Burgos vs Albacete
+  35. Burgos vs Albacete
      Date: 2026-11-22
      League: Spanish Segunda
      Pick: Away to Score · Medium confidence (68.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  36. Wolfsberger vs Ried
+     Date: 2026-11-22
+     League: Austrian Bundesliga
+     Pick: Away to Score · High confidence (85.5%)
      Category:
        • Tier: ✅ Solid
 
@@ -873,5 +873,12 @@
      Date: 2026-11-22
      League: Ecuador Liga Pro
      Pick: Away to Score · High confidence (77.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  57. Sport Huancayo vs Universitario de Deportes
+     Date: 2026-11-22
+     League: Peru Liga 1 Clausura
+     Pick: Away to Score · High confidence (82.4%)
      Category:
        • Tier: ✅ Solid

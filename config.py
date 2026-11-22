@@ -60,7 +60,8 @@ WEAK_ROI_LEAGUE_KEYWORDS = (
     "k-league", "k league", "korean k-league",
     "league of ireland", "irish", "fai cup",
     "mexican primera", "brazilian serie a",
-    "mls", "ecuador", "argentina primera", "chile primera",
+    "mls", "ecuador", "argentina", "chile primera",
+    "peru", "paraguay", "venezuela", "colombia",
 )
 
 # =============================================================================
@@ -140,6 +141,7 @@ HW_WEAK_ROI_LEAGUE_KEYWORDS = (
     "mexican primera apertura",
     "brazilian serie a",
     "mls",
+    "peru", "paraguay", "venezuela", "colombia",
 )
 HW_WEAK_ROI_MULTIPLIER = 0.82
 HW_REGRESSION_WIN_STREAK = 5
@@ -183,7 +185,8 @@ BTTS_WEAK_ROI_LEAGUE_KEYWORDS = (
     "k-league", "k league", "korean k-league",
     "league of ireland", "irish", "fai cup",
     "mexican primera", "brazilian serie a",
-    "mls", "ecuador", "argentina primera", "chile primera",
+    "mls", "ecuador", "argentina", "chile primera",
+    "peru", "paraguay", "venezuela", "colombia",
 )
 BTTS_WEAK_ROI_MULTIPLIER = 0.82
 

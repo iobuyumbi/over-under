@@ -2827,6 +2827,17 @@
       "result": "pending",
       "recorded_at": "2026-11-22T03:35:25.291634",
       "published": true
+    },
+    {
+      "date": "2026-11-22",
+      "type": "home_win",
+      "league": "Ecuador Liga Pro",
+      "home_team": "Sporting Cristal",
+      "away_team": "Cienciano",
+      "confidence": "close",
+      "result": "pending",
+      "recorded_at": "2026-11-22T11:05:57.767955",
+      "published": true
     }
   ],
   "over_under": [
@@ -9893,6 +9904,19 @@
       "result": "pending",
       "recorded_at": "2026-11-22T03:21:49.155994",
       "published": true
+    },
+    {
+      "date": "2026-11-22",
+      "type": "over_under",
+      "league": "Ecuador Liga Pro",
+      "home_team": "Sport Huancayo",
+      "away_team": "Universitario de Deportes",
+      "prediction": "over",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-22T10:55:53.573997",
+      "published": false
     }
   ],
   "btts": [
@@ -11640,6 +11664,19 @@
       "confidence": "qualified",
       "result": "pending",
       "recorded_at": "2026-11-22T04:02:54.906472",
+      "published": true
+    },
+    {
+      "date": "2026-11-22",
+      "type": "btts",
+      "league": "Ecuador Liga Pro",
+      "home_team": "Sport Huancayo",
+      "away_team": "Universitario de Deportes",
+      "prediction": "yes",
+      "prob": 85.8,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-22T11:10:38.770326",
       "published": true
     }
   ],
@@ -39830,6 +39867,19 @@
       "confidence": "qualified",
       "result": "pending",
       "recorded_at": "2026-11-22T04:14:02.853390",
+      "published": true
+    },
+    {
+      "date": "2026-11-22",
+      "type": "oo05",
+      "league": "Ecuador Liga Pro",
+      "home_team": "Sport Huancayo",
+      "away_team": "Universitario de Deportes",
+      "prediction": "away_team_goals",
+      "prob": null,
+      "confidence": "qualified",
+      "result": "pending",
+      "recorded_at": "2026-11-22T11:12:42.957555",
       "published": true
     }
   ],

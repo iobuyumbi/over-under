@@ -67,9 +67,16 @@ def fetch_soccerbase_fixtures(date_str, fetch_fn):
     for table in tables:
         current_league = "Unknown League"
         for row in table.find_all("tr"):
-            league_link = row.find("a", href=lambda h: h and "comp_id=" in h)
-            if league_link:
-                current_league = league_link.get_text(strip=True)
+            # Competition header row: "<th colspan=...><h2>League</h2>". Some
+            # leagues render the name as plain text with no comp_id link (e.g.
+            # Peru, Argentina, Venezuela), so read the heading itself instead of
+            # the anchor — otherwise the previous league leaks onto every
+            # following fixture and they get mislabelled.
+            if row.find("th") is not None:
+                heading = row.find("h2") or row.find("th")
+                name = heading.get_text(" ", strip=True)
+                if name:
+                    current_league = name
                 continue
 
             cells = row.find_all("td")
@@ -106,7 +113,19 @@ def fetch_soccerbase_fixtures(date_str, fetch_fn):
                 "status": "Scheduled" if score_or_v.lower() == "v" else "Completed",
             })
 
-    return matches
+    # Some leagues list the same fixture under two competition phases (e.g.
+    # Peru appears as both "Liga 1 Clausura" and "Liga 1 Acumulada"), which
+    # would otherwise emit duplicate rows now that each keeps its own league
+    # name. Collapse on the fixture identity, keeping the first occurrence.
+    deduped = []
+    seen_fixtures = set()
+    for m in matches:
+        key = (m["home_team_id"], m["away_team_id"], m["date"])
+        if key in seen_fixtures:
+            continue
+        seen_fixtures.add(key)
+        deduped.append(m)
+    return deduped
 
 
 def fetch_soccerbase_team_results(team_id, fetch_fn):
@@ -171,7 +190,22 @@ def fetch_soccerbase_team_results(team_id, fetch_fn):
                 continue
 
     matches.sort(key=lambda x: x.get("date_str") or "0000-00-00", reverse=True)
-    return matches
+
+    # Soccerbase renders some leagues under more than one competition view
+    # (e.g. Peru lists the same fixture under both "Liga 1 Clausura" and
+    # "Liga 1 Acumulada"), emitting duplicate result rows. Collapse exact
+    # duplicates so per-match counters ("scored in N of M", "conceded in
+    # N of M", H2H) are not computed on doubled evidence.
+    deduped = []
+    seen_matches = set()
+    for m in matches:
+        key = (m.get("date_str"), m.get("opponent_team_id"),
+               m.get("is_home"), m.get("gf"), m.get("ga"))
+        if key in seen_matches:
+            continue
+        seen_matches.add(key)
+        deduped.append(m)
+    return deduped
 
 
 def get_team_form(team_id, results_fetcher, is_home=True, num_matches=6, target_date_str=None, parse_date_fn=None):

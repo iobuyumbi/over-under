@@ -1,8 +1,8 @@
 📅 Daily Soccer Picks · 2026-11-22
 Every fixture, split by market and side, grouped by confidence.
 
-📊 Over/Under 2.5 22 · BTTS 5 · Home Win 13 · Over 0.5 Team Goal 123
-   Total: 163 picks
+📊 Over/Under 2.5 23 · BTTS 6 · Home Win 14 · Over 0.5 Team Goal 124
+   Total: 167 picks
 
 Tier: 🔥 Premium · ✅ Solid · 👀 Watchlist    ⚠ weak-ROI caution
 
@@ -407,10 +407,10 @@ Away to Score  Tecnico Universitario vs Depo…  Loss     2-0
 Away to Score  Universidad Catolica vs Barce…  Win      0-1
 
 ═══════════════════════════
-⚽️ OVER / UNDER 2.5  (22)
+⚽️ OVER / UNDER 2.5  (23)
 ═══════════════════════════
-── ⬆️ OVER 2.5  (22) ──
-━━━ 🟢 HIGH CONFIDENCE  (22) ━━━
+── ⬆️ OVER 2.5  (23) ──
+━━━ 🟢 HIGH CONFIDENCE  (23) ━━━
 #   Match                             League                Conf   Tier
 -----------------------------------------------------------------------
 1   Tigres vs Club America            Mexican Primera Ape…  88.9%  ✅⚠
@@ -425,26 +425,28 @@ Away to Score  Universidad Catolica vs Barce…  Win      0-1
 10  Go A Eagles vs F. Sittard         Netherlands League    74.8%  ✅
 11  Guadalajara vs Cruz Azul          Mexican Primera Ape…  74.5%  ✅⚠
 12  FC Zurich vs St Gallen            Swiss Super League    71.8%  ✅
-13  W Bremen vs Hamburg               German Bundesliga     70.4%  ✅
-14  Sassuolo vs Genoa                 Italian Serie A       70.1%  ✅⚠
-15  KFUM Oslo vs Brann                Norwegian Tippeliga…  69.5%  ✅
-16  Colo-Colo vs Univ Catolica        Chile Primera         69.2%  ✅⚠
-17  GKS Katowice vs Lech Poznan       Polish Ekstraklasa    67.7%  ✅
-18  Jeonnam Dragons vs Ansan Greene…  Korean K-League 2     66.0%  ✅⚠
-19  Karlsruhe vs Osnabruck            German Bundesliga 2   65.4%  ✅
-20  Rodina Moscow vs Lok. Moscow      Russian Premier       64.3%  ✅
-21  Daegu vs Gimhae City              Korean K-League 2     63.5%  ✅⚠
-22  Zalaegerszeg vs Vasas             Hungarian League      59.9%  ✅
+13  Sport Huancayo vs Universitario…  Peru Liga 1 Clausura  70.4%  ✅⚠
+14  W Bremen vs Hamburg               German Bundesliga     70.4%  ✅
+15  Sassuolo vs Genoa                 Italian Serie A       70.1%  ✅⚠
+16  KFUM Oslo vs Brann                Norwegian Tippeliga…  69.5%  ✅
+17  Colo-Colo vs Univ Catolica        Chile Primera         69.2%  ✅⚠
+18  GKS Katowice vs Lech Poznan       Polish Ekstraklasa    67.7%  ✅
+19  Jeonnam Dragons vs Ansan Greene…  Korean K-League 2     66.0%  ✅⚠
+20  Karlsruhe vs Osnabruck            German Bundesliga 2   65.4%  ✅
+21  Rodina Moscow vs Lok. Moscow      Russian Premier       64.3%  ✅
+22  Daegu vs Gimhae City              Korean K-League 2     63.5%  ✅⚠
+23  Zalaegerszeg vs Vasas             Hungarian League      59.9%  ✅
 
 ═══════════════════════════
-🎯 BTTS (YES / NO)  (5)
+🎯 BTTS (YES / NO)  (6)
 ═══════════════════════════
-── ✅ BTTS YES  (4) ──
-━━━ 🟢 HIGH CONFIDENCE  (2) ━━━
-#  Match                     League                Conf   Tier
---------------------------------------------------------------
-1  Chicago vs Charlotte FC   MLS                   84.4%  🔥⚠
-2  Guadalajara vs Cruz Azul  Mexican Primera Ape…  70.5%  ✅⚠
+── ✅ BTTS YES  (5) ──
+━━━ 🟢 HIGH CONFIDENCE  (3) ━━━
+#  Match                             League                Conf   Tier
+----------------------------------------------------------------------
+1  Chicago vs Charlotte FC           MLS                   84.4%  🔥⚠
+2  Sport Huancayo vs Universitario…  Peru Liga 1 Clausura  73.7%  ✅⚠
+3  Guadalajara vs Cruz Azul          Mexican Primera Ape…  70.5%  ✅⚠
 
 ━━━ 🟡 MEDIUM CONFIDENCE  (2) ━━━
 #  Match                          League             Conf   Tier
@@ -459,70 +461,71 @@ Away to Score  Universidad Catolica vs Barce…  Win      0-1
 1  UT Arad vs Uni Craiova  Romanian Liga 1  71.8%  ✅
 
 ═══════════════════════════
-🏠 HOME WIN  (13)
+🏠 HOME WIN  (14)
 ═══════════════════════════
-━━━ 🟢 HIGH CONFIDENCE  (13) ━━━
-#   Match                           League               Conf   Tier
---------------------------------------------------------------------
-1   Dynamo Kyiv vs Obolon Kiev      Ukrainian League     93.5%  ✅
-2   Trabzonspor vs Eyupspor         Turkish Super Lig    91.0%  👀
-3   Paris FC vs Angers              French Ligue 1       89.9%  👀
-4   Isloch Minsk vs Torpedo Zh      Belarus League       88.9%  ✅⚠
-5   Hacken vs Elfsborg              Swedish Allsvenskan  88.3%  👀⚠
-6   Rosario vs Gimnasia de Mendoza  Ecuador Liga Pro     88.1%  ✅
-7   Ajax vs Den Haag                Netherlands League   88.0%  👀
-8   ML Vitebsk vs Slavia Mozyr      Belarus League       87.5%  👀⚠
-9   Juventus vs Venezia             Italian Serie A      85.6%  👀
-10  Panathinaikos vs OFI Crete      Greek Super League   85.0%  👀
-11  Olympiakos vs Iraklis           Greek Super League   84.8%  👀
-12  Anderlecht vs O-H Leuven        Belgium League       83.1%  👀
-13  Orense vs Mushuc Runa           Ecuador Liga Pro     82.8%  👀
+━━━ 🟢 HIGH CONFIDENCE  (14) ━━━
+#   Match                           League                Conf   Tier
+---------------------------------------------------------------------
+1   Dynamo Kyiv vs Obolon Kiev      Ukrainian League      92.6%  ✅
+2   Trabzonspor vs Eyupspor         Turkish Super Lig     91.0%  👀
+3   Sporting Cristal vs Cienciano   Peru Liga 1 Clausura  90.6%  👀
+4   Paris FC vs Angers              French Ligue 1        89.6%  👀
+5   Isloch Minsk vs Torpedo Zh      Belarus League        88.6%  ✅⚠
+6   Hacken vs Elfsborg              Swedish Allsvenskan   88.0%  👀⚠
+7   Rosario vs Gimnasia de Mendoza  Liga Prof Argentina…  87.8%  ✅
+8   Ajax vs Den Haag                Netherlands League    87.7%  👀
+9   ML Vitebsk vs Slavia Mozyr      Belarus League        87.2%  👀⚠
+10  Juventus vs Venezia             Italian Serie A       85.6%  👀
+11  Anderlecht vs O-H Leuven        Belgium League        83.1%  👀
+12  Orense vs Mushuc Runa           Ecuador Liga Pro      73.0%  👀
+13  Panathinaikos vs OFI Crete      Greek Super League    71.0%  👀
+14  Olympiakos vs Iraklis           Greek Super League    70.7%  👀
 
 ═══════════════════════════
-🎯 OVER 0.5 TEAM GOAL  (123)
+🎯 OVER 0.5 TEAM GOAL  (124)
 ═══════════════════════════
 ── 🏠 HOME TO SCORE  (67) ──
 ━━━ 🟢 HIGH CONFIDENCE  (48) ━━━
 #   Match                             League                Conf   Tier
 -----------------------------------------------------------------------
-1   Sporting Cristal vs Cienciano     Ecuador Liga Pro      97.0%  ✅
-2   FC Twente vs Willem II            Netherlands League    96.1%  ✅
+1   FC Twente vs Willem II            Netherlands League    96.1%  ✅
+2   Sporting Cristal vs Cienciano     Peru Liga 1 Clausura  95.3%  ✅
 3   Trabzonspor vs Eyupspor           Turkish Super Lig     94.9%  ✅
 4   Colo-Colo vs Univ Catolica        Chile Primera         93.0%  ✅
-5   Sport Huancayo vs Universitario…  Ecuador Liga Pro      93.0%  🔥
-6   AC Horsens vs Silkeborg           Danish SAS Ligaen     92.6%  ✅
-7   Orense vs Mushuc Runa             Ecuador Liga Pro      92.5%  ✅
-8   Barcelona vs Villarreal           Spanish La Liga       92.1%  ✅
-9   ML Vitebsk vs Slavia Mozyr        Belarus League        91.2%  🔥
-10  Chicago vs Charlotte FC           MLS                   90.9%  🔥
-11  Daegu vs Gimhae City              Korean K-League 2     90.7%  🔥
-12  W Bremen vs Hamburg               German Bundesliga     90.2%  🔥
-13  Isloch Minsk vs Torpedo Zh        Belarus League        89.6%  ✅
-14  Rijeka vs HNK Gorica              Croatian HNL          89.4%  ✅
-15  Kasimpasa vs Alanyaspor           Turkish Super Lig     89.2%  ✅
-16  GKS Katowice vs Lech Poznan       Polish Ekstraklasa    89.0%  ✅
-17  Cordoba vs Real Oviedo            Spanish Segunda       88.9%  ✅
-18  Hacken vs Elfsborg                Swedish Allsvenskan   88.9%  🔥
-19  Rosario vs Gimnasia de Mendoza    Ecuador Liga Pro      88.7%  ✅
-20  Dynamo Kyiv vs Obolon Kiev        Ukrainian League      88.1%  ✅
-21  FC Zurich vs St Gallen            Swiss Super League    87.6%  ✅
-22  Zalaegerszeg vs Vasas             Hungarian League      87.1%  ✅
-23  Pardubice vs FC Brno              Czech Liga            86.9%  🔥
-24  Marseille vs Le Mans              French Ligue 1        86.7%  ✅
-25  Go A Eagles vs F. Sittard         Netherlands League    86.5%  ✅
-26  Rakow Czestochowa vs Widzew Lodz  Polish Ekstraklasa    85.5%  ✅
-27  Liverpool vs Man Utd              Premier League        85.0%  ✅
-28  Pumas UNAM vs Monterrey           Mexican Primera Ape…  84.7%  ✅
-29  Anderlecht vs O-H Leuven          Belgium League        84.6%  🔥
-30  Guadalajara vs Cruz Azul          Mexican Primera Ape…  84.6%  🔥
-31  Juventus vs Venezia               Italian Serie A       84.4%  ✅
-32  Tigres vs Club America            Mexican Primera Ape…  84.4%  ✅
-33  Nashville MLS vs Cincinnati       MLS                   84.3%  ✅
-34  Milan vs Frosinone                Italian Serie A       84.0%  ✅
-35  PAOK Salonika vs Kifisia          Greek Super League    84.0%  🔥
-36  Paranaense vs Remo                Brazilian Serie A     83.8%  ✅
-37  Ajax vs Den Haag                  Netherlands League    83.5%  ✅
-38  Lorient vs Rennes                 French Ligue 1        83.5%  ✅
+5   AC Horsens vs Silkeborg           Danish SAS Ligaen     92.6%  ✅
+6   Orense vs Mushuc Runa             Ecuador Liga Pro      92.5%  ✅
+7   Barcelona vs Villarreal           Spanish La Liga       92.1%  ✅
+8   ML Vitebsk vs Slavia Mozyr        Belarus League        91.2%  🔥
+9   Chicago vs Charlotte FC           MLS                   90.9%  🔥
+10  Daegu vs Gimhae City              Korean K-League 2     90.7%  🔥
+11  W Bremen vs Hamburg               German Bundesliga     90.2%  🔥
+12  Isloch Minsk vs Torpedo Zh        Belarus League        89.6%  ✅
+13  Rijeka vs HNK Gorica              Croatian HNL          89.4%  ✅
+14  Kasimpasa vs Alanyaspor           Turkish Super Lig     89.2%  ✅
+15  GKS Katowice vs Lech Poznan       Polish Ekstraklasa    89.0%  ✅
+16  Cordoba vs Real Oviedo            Spanish Segunda       88.9%  ✅
+17  Hacken vs Elfsborg                Swedish Allsvenskan   88.9%  🔥
+18  Dynamo Kyiv vs Obolon Kiev        Ukrainian League      88.1%  ✅
+19  FC Zurich vs St Gallen            Swiss Super League    87.6%  ✅
+20  Sport Huancayo vs Universitario…  Peru Liga 1 Clausura  87.3%  🔥
+21  Zalaegerszeg vs Vasas             Hungarian League      87.1%  ✅
+22  Pardubice vs FC Brno              Czech Liga            86.9%  🔥
+23  Marseille vs Le Mans              French Ligue 1        86.7%  ✅
+24  Go A Eagles vs F. Sittard         Netherlands League    86.5%  ✅
+25  Rakow Czestochowa vs Widzew Lodz  Polish Ekstraklasa    85.5%  ✅
+26  Liverpool vs Man Utd              Premier League        85.0%  ✅
+27  Pumas UNAM vs Monterrey           Mexican Primera Ape…  84.7%  ✅
+28  Anderlecht vs O-H Leuven          Belgium League        84.6%  🔥
+29  Guadalajara vs Cruz Azul          Mexican Primera Ape…  84.6%  🔥
+30  Juventus vs Venezia               Italian Serie A       84.4%  ✅
+31  Tigres vs Club America            Mexican Primera Ape…  84.4%  ✅
+32  Nashville MLS vs Cincinnati       MLS                   84.3%  ✅
+33  Milan vs Frosinone                Italian Serie A       84.0%  ✅
+34  PAOK Salonika vs Kifisia          Greek Super League    84.0%  🔥
+35  Paranaense vs Remo                Brazilian Serie A     83.8%  ✅
+36  Ajax vs Den Haag                  Netherlands League    83.5%  ✅
+37  Lorient vs Rennes                 French Ligue 1        83.5%  ✅
+38  Rosario vs Gimnasia de Mendoza    Liga Prof Argentina…  83.5%  ✅
 39  Altach vs Sturm Graz              Austrian Bundesliga   83.3%  ✅
 40  KFUM Oslo vs Brann                Norwegian Tippeliga…  83.3%  ✅
 41  Kristiansund vs Sandefjord        Norwegian Tippeliga…  82.1%  🔥
@@ -555,10 +558,10 @@ Away to Score  Universidad Catolica vs Barce…  Win      0-1
 16  LDU Quito vs Aucas                Ecuador Liga Pro      71.1%  ✅
 17  Levski Sofia vs Lokomotiv Sofia   Bulgarian League      70.2%  ✅
 18  Osasuna vs Malaga                 Spanish La Liga       69.6%  ✅
-19  Once Caldas vs Atletico Nacional  Mexican Primera Ape…  68.3%  🔥
+19  Once Caldas vs Atletico Nacional  Colombia Prim A Fin…  68.0%  🔥
 
-── ✈️ AWAY TO SCORE  (56) ──
-━━━ 🟢 HIGH CONFIDENCE  (36) ━━━
+── ✈️ AWAY TO SCORE  (57) ──
+━━━ 🟢 HIGH CONFIDENCE  (37) ━━━
 #   Match                             League                Conf   Tier
 -----------------------------------------------------------------------
 1   Aalesund vs Rosenborg             Norwegian Tippeliga…  97.0%  ✅
@@ -585,18 +588,19 @@ Away to Score  Universidad Catolica vs Barce…  Win      0-1
 22  Go A Eagles vs F. Sittard         Netherlands League    83.8%  🔥
 23  Barcelona vs Villarreal           Spanish La Liga       83.6%  ✅
 24  Dynamo Makhachkala vs Spartak M…  Russian Premier       83.1%  ✅
-25  Pumas UNAM vs Monterrey           Mexican Primera Ape…  82.3%  ✅
-26  Getafe vs Atl Madrid              Spanish La Liga       82.1%  ✅
-27  KFUM Oslo vs Brann                Norwegian Tippeliga…  82.1%  🔥
-28  Bologna vs Udinese                Italian Serie A       81.5%  ✅
-29  Kristiansund vs Sandefjord        Norwegian Tippeliga…  81.5%  ✅
-30  Celta de Vigo B vs Valladolid     Spanish Segunda       79.0%  🔥
-31  Sp. Gijon vs Las Palmas           Spanish Segunda       79.0%  ✅
-32  SonderjyskE vs OB Odense          Danish SAS Ligaen     78.6%  ✅
-33  LDU Quito vs Aucas                Ecuador Liga Pro      77.9%  ✅
-34  Nyiregyhaza vs Debrecen           Hungarian League      77.7%  🔥
-35  Basel vs Lucerne                  Swiss Super League    77.5%  ✅
-36  AC Horsens vs Silkeborg           Danish SAS Ligaen     75.3%  ✅
+25  Sport Huancayo vs Universitario…  Peru Liga 1 Clausura  82.4%  ✅
+26  Pumas UNAM vs Monterrey           Mexican Primera Ape…  82.3%  ✅
+27  Getafe vs Atl Madrid              Spanish La Liga       82.1%  ✅
+28  KFUM Oslo vs Brann                Norwegian Tippeliga…  82.1%  🔥
+29  Bologna vs Udinese                Italian Serie A       81.5%  ✅
+30  Kristiansund vs Sandefjord        Norwegian Tippeliga…  81.5%  ✅
+31  Celta de Vigo B vs Valladolid     Spanish Segunda       79.0%  🔥
+32  Sp. Gijon vs Las Palmas           Spanish Segunda       79.0%  ✅
+33  SonderjyskE vs OB Odense          Danish SAS Ligaen     78.6%  ✅
+34  LDU Quito vs Aucas                Ecuador Liga Pro      77.9%  ✅
+35  Nyiregyhaza vs Debrecen           Hungarian League      77.7%  🔥
+36  Basel vs Lucerne                  Swiss Super League    77.5%  ✅
+37  AC Horsens vs Silkeborg           Danish SAS Ligaen     75.3%  ✅
 
 ━━━ 🟡 MEDIUM CONFIDENCE  (17) ━━━
 #   Match                           League                Conf   Tier
