@@ -37,6 +37,9 @@ results_cache.db
 *.log
 debug.log
 _diag_out.txt
+# ad-hoc redirect logs from manual/one-off shell runs (never source)
+_push_log.txt
+_send_log.txt
 
 # --- Ad-hoc / dated output files (predictions, reports, telegram previews) ---
 # These are pipeline OUTPUT, not source. If you want prediction history

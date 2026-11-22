@@ -348,24 +348,28 @@ if errorlevel 1 git config user.email "local@run-local.invalid"
 
 echo   -- pulling latest origin/main (rebase + autostash) --
 git pull --rebase --autostash origin main 2>&1
-if errorlevel 1 (
-  echo   WARNING: git pull --rebase failed ^(possible merge conflicts^).
-  echo   Resolve conflicts manually, then commit and push by hand.
+set "PULL_RC=%errorlevel%"
+
+REM A conflicted autostash pop (or rebase) can leave conflict markers in the
+REM working tree and still report success. Committing those markers corrupts
+REM JSON/CSV data (the history wipe of 2026-11-07), so hand the tree to the
+REM resolver before staging anything. It union-merges the append-only data
+REM files, takes one clean side for the regenerable boards, and aborts cleanly
+REM if it meets a conflict it does not recognise.
+python resolve_git_conflicts.py
+set "RES_RC=%errorlevel%"
+
+if "%RES_RC%"=="2" goto git_conflicts_unresolved
+if "%RES_RC%"=="1" goto git_conflicts_unresolved
+
+REM A non-zero pull with nothing to resolve means the failure was not a merge
+REM conflict - usually a network or auth problem. Bail instead of committing
+REM on top of a half-updated branch.
+if "%RES_RC%"=="0" if not "%PULL_RC%"=="0" (
+  echo   WARNING: git pull --rebase returned errorlevel %PULL_RC% and no conflicts needed resolving.
+  echo   This is usually a network or auth problem. Nothing was staged or pushed.
   exit /b 0
 )
-
-REM A conflicted autostash pop can leave conflict markers in tracked files and
-REM still exit 0. Committing those markers corrupts JSON/CSV data (the history
-REM wipe of 2026-11-07), so scan for them before staging anything.
-git grep -n -e "^<<<<<<< " -e "^>>>>>>> " -- . > _markers.txt 2>nul
-if not errorlevel 1 (
-  echo   ERROR: unresolved merge conflict markers found in tracked files:
-  type _markers.txt
-  del _markers.txt 2>nul
-  echo   Resolve them, then re-run. Nothing was staged or pushed.
-  exit /b 1
-)
-del _markers.txt 2>nul
 
 REM Stage AFTER the pull: --autostash reapplies the stash without restoring the
 REM index, so anything staged before the pull comes back unstaged and the
@@ -414,6 +418,14 @@ if errorlevel 1 (
 )
 endlocal
 exit /b 0
+
+:git_conflicts_unresolved
+REM resolve_git_conflicts.py could not merge a conflict on its own. It has
+REM already aborted any in-progress rebase, so the tree is back in its
+REM pre-pull state - just leave it for a human instead of committing markers.
+echo   ERROR: unresolved git conflicts remain ^(see the resolver output above^).
+echo   Nothing was staged or pushed. Fix the files, then re-run.
+exit /b 1
 
 REM ============================================================
 REM  Failure handler

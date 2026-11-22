@@ -11,6 +11,7 @@ import fetch_results
 import generate_weekly_report
 import over25_soccerbase
 import prediction_tracker
+import resolve_git_conflicts
 import scraping
 import send_daily_telegram
 import send_local_telegram
@@ -515,6 +516,51 @@ class OverLambdaGateTests(unittest.TestCase):
         # 2.10 combined clears the Under ceiling (2.15) but not the Over bar.
         self.assertTrue(over25_soccerbase.lambda_gate_passes(1.05, 1.05, "under"))
         self.assertFalse(over25_soccerbase.lambda_gate_passes(1.05, 1.05, "over"))
+
+
+class ConflictResolverTests(unittest.TestCase):
+    """resolve_git_conflicts.py must union-merge the append-only data files.
+
+    A conflicted `git pull --rebase --autostash` used to leave markers in
+    prediction_history.json / manual_results.csv; committing them wiped history
+    on 2026-11-07. These lock in the union behaviour that replaced that.
+    """
+
+    def test_history_union_keeps_both_sides_and_prefers_the_settled_copy(self):
+        shared = {"date": "2026-09-11", "type": "home_win", "home_team": "A",
+                  "away_team": "B", "prediction": "home_win", "recorded_at": "t1"}
+        ours = json.dumps({"home_win": [{**shared, "result": "pending"}], "stats": {}})
+        theirs = json.dumps({
+            "home_win": [{**shared, "result": "win", "final_score": "2-0"}],
+            "over_under": [{"date": "2026-09-12", "type": "over_under", "home_team": "C",
+                            "away_team": "D", "prediction": "over", "recorded_at": "t2"}],
+        })
+        merged = json.loads(resolve_git_conflicts.merge_history_json(ours, theirs))
+        self.assertEqual(len(merged["home_win"]), 1)
+        self.assertEqual(merged["home_win"][0]["result"], "win")
+        self.assertEqual(len(merged["over_under"]), 1)
+        self.assertIn("stats", merged)
+
+    def test_results_union_keeps_every_row_and_fills_the_score(self):
+        ours = "date,home_team,away_team,score\n2026-09-11,A,B,\n"
+        theirs = ("date,home_team,away_team,score\n2026-09-11,A,B,2-0\n"
+                  "2026-09-12,C,D,1-0\n")
+        rows = resolve_git_conflicts.merge_results_csv(ours, theirs).strip().splitlines()
+        self.assertEqual(rows[0], "date,home_team,away_team,score")
+        self.assertEqual(len(rows), 3)
+        self.assertIn("2026-09-11,A,B,2-0", rows)
+        self.assertIn("2026-09-12,C,D,1-0", rows)
+
+    def test_marker_split_recovers_both_sides(self):
+        conflicted = "head\n<<<<<<< ours\nX\n=======\nY\n>>>>>>> theirs\ntail\n"
+        ours, theirs = resolve_git_conflicts.split_markers(conflicted)
+        self.assertEqual(ours, "head\nX\ntail\n")
+        self.assertEqual(theirs, "head\nY\ntail\n")
+
+    def test_regenerable_boards_and_unknown_files_are_classified(self):
+        self.assertTrue(resolve_git_conflicts.is_regenerable("ou_telegram.txt"))
+        self.assertTrue(resolve_git_conflicts.is_regenerable("curated.json"))
+        self.assertFalse(resolve_git_conflicts.is_regenerable("app.py"))
 
 
 if __name__ == "__main__":
