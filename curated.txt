@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-11-21
+✦ CURATED PICKS · 2026-11-22
   Input reports:
-    OU   → over_under_vip_report_2026-11-21.txt
-    BTTS → btts_vip_report_2026-11-21.txt
-    HW   → home_win_vip_report_2026-11-21.txt
+    OU   → over_under_vip_report_2026-11-22.txt
+    BTTS → btts_vip_report_2026-11-22.txt
+    HW   → home_win_vip_report_2026-11-22.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,94 +11,49 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-11-21)
+    • Today only (2026-11-22)
 
-━━━ OVER / UNDER 2.5  (22 accepted) ━━━
-   1. ✅ Young Boys vs Thun  (Swiss Super League)
-      Over 2.5 · High 92.6% · xG 3.80–1.95
-      Stake 0.2% @ 2.0  ·  EV +85.2c/$  ·  Edge +85.2%
-   2. ✅ Deveronvale vs Brora Rangers  (Scottish Highland League)
-      Over 2.5 · High 91.6% · xG 1.77–3.80
-      Stake 0.2% @ 2.0  ·  EV +83.2c/$  ·  Edge +83.2%
-   3. ✅ Clyde vs Stirling  (Scottish League Two)
-      Over 2.5 · High 88.4% · xG 3.50–1.61
-      Stake 0.2% @ 2.0  ·  EV +76.8c/$  ·  Edge +76.8%
-   4. ✅ Charleroi vs Sint-Truidense  (Belgium League)
-      Over 2.5 · High 88.3% · xG 2.49–2.60
-      Stake 0.2% @ 2.0  ·  EV +76.6c/$  ·  Edge +76.6%
-   5. ✅ Chesterfield vs Shrewsbury  (Football League Two)
-      Over 2.5 · High 86.7% · xG 2.36–2.54
-      Stake 0.2% @ 2.0  ·  EV +73.4c/$  ·  Edge +73.4%
-   6. ✅ Tottenham vs Ipswich  (Premier League)
-      Over 2.5 · High 83.2% · xG 2.83–1.72
-      Stake 0.2% @ 2.0  ·  EV +66.4c/$  ·  Edge +66.4%
-   7. ✅ Nice vs PSG  (French Ligue 1)
-      Over 2.5 · High 83.2% · xG 1.18–3.37
-      Stake 0.2% @ 2.0  ·  EV +66.4c/$  ·  Edge +66.4%
-   8. ✅ Keith vs Forres Mech  (Scottish Highland League)
-      Over 2.5 · High 80.3% · xG 2.09–2.21
-      Stake 0.2% @ 2.0  ·  EV +60.6c/$  ·  Edge +60.6%
-   9. ✅ Aston Villa vs Sunderland  (Premier League)
-      Over 2.5 · High 79.8% · xG 2.96–1.30
-      Stake 0.1% @ 2.0  ·  EV +59.6c/$  ·  Edge +59.6%
-  10. ✅ FC Groningen vs Heerenveen  (Netherlands League)
-      Over 2.5 · High 79.2% · xG 2.17–2.05
-      Stake 0.1% @ 2.0  ·  EV +58.4c/$  ·  Edge +58.4%
-  11. ✅ Invergordon vs Fraserburgh  (Scottish Highland League)
-      Over 2.5 · High 78.8% · xG 1.84–2.35
-      Stake 0.1% @ 2.0  ·  EV +57.6c/$  ·  Edge +57.6%
-  12. ✅ LASK Linz vs Hartberg  (Austrian Bundesliga)
-      Over 2.5 · High 78.8% · xG 1.73–2.46
-      Stake 0.1% @ 2.0  ·  EV +57.6c/$  ·  Edge +57.6%
-  13. ✅ Lens vs Toulouse  (French Ligue 1)
-      Over 2.5 · High 77.7% · xG 1.05–3.06
-      Stake 0.1% @ 2.0  ·  EV +55.4c/$  ·  Edge +55.4%
-  14. ✅ Wick Academy vs Banks o'Dee  (Scottish Highland League)
-      Over 2.5 · High 77.2% · xG 1.36–2.71
-      Stake 0.1% @ 2.0  ·  EV +54.4c/$  ·  Edge +54.4%
-  15. ✅ Utrecht vs Cambuur  (Netherlands League)
-      Over 2.5 · High 76.5% · xG 1.74–2.28
-      Stake 0.1% @ 2.0  ·  EV +53.0c/$  ·  Edge +53.0%
-  16. ✅ Galatasaray vs Samsunspor  (Turkish Super Lig)
-      Over 2.5 · High 76.2% · xG 2.21–1.79
-      Stake 0.1% @ 2.0  ·  EV +52.4c/$  ·  Edge +52.4%
-  17. ✅ Huddersfield vs Leicester  (Football League One)
-      Over 2.5 · High 75.9% · xG 1.89–2.09
-      Stake 0.1% @ 2.0  ·  EV +51.8c/$  ·  Edge +51.8%
-  18. ✅ Turriff U vs Clachnacuddin  (Scottish Highland League)
-      Over 2.5 · High 74.8% · xG 2.05–1.86
-      Stake 0.1% @ 2.0  ·  EV +49.6c/$  ·  Edge +49.6%
-  19. ✅ Valerenga vs IK Start  (Norwegian Tippeligaen)
-      Over 2.5 · High 73.1% · xG 2.27–1.53
-      Stake 0.1% @ 2.0  ·  EV +46.2c/$  ·  Edge +46.2%
-  20. ✅ Wealdstone vs Hornchurch  (National League)
-      Over 2.5 · High 72.9% · xG 1.94–1.85
-      Stake 0.1% @ 2.0  ·  EV +45.8c/$  ·  Edge +45.8%
-  21. ✅ Blackpool vs Wigan  (Football League One)
-      Over 2.5 · High 72.6% · xG 1.54–2.23
-      Stake 0.1% @ 2.0  ·  EV +45.2c/$  ·  Edge +45.2%
-  22. ✅ Formartine Utd vs Strathspey T  (Scottish Highland League)
-      Over 2.5 · High 71.5% · xG 1.95–1.75
-      Stake 0.1% @ 2.0  ·  EV +43.0c/$  ·  Edge +43.0%
+━━━ OVER / UNDER 2.5  (9 accepted) ━━━
+   1. ✅ Augsburg vs Mainz  (German Bundesliga)
+      Over 2.5 · High 87.0% · xG 1.14–3.80
+      Stake 0.3% @ 2.0  ·  EV +74.0c/$  ·  Edge +74.0%
+   2. ✅ Racing vs Sociedad  (Spanish La Liga)
+      Over 2.5 · High 86.6% · xG 1.10–3.80
+      Stake 0.3% @ 2.0  ·  EV +73.2c/$  ·  Edge +73.2%
+   3. ✅ FC Twente vs Willem II  (Netherlands League)
+      Over 2.5 · High 84.9% · xG 3.79–0.93
+      Stake 0.3% @ 2.0  ·  EV +69.8c/$  ·  Edge +69.8%
+   4. ✅ Barcelona vs Villarreal  (Spanish La Liga)
+      Over 2.5 · High 83.7% · xG 1.96–2.64
+      Stake 0.3% @ 2.0  ·  EV +67.4c/$  ·  Edge +67.4%
+   5. ✅ AC Horsens vs Silkeborg  (Danish SAS Ligaen)
+      Over 2.5 · High 78.2% · xG 2.36–1.78
+      Stake 0.2% @ 2.0  ·  EV +56.4c/$  ·  Edge +56.4%
+   6. ✅ Rakow Czestochowa vs Widzew Lodz  (Polish Ekstraklasa)
+      Over 2.5 · High 77.6% · xG 1.85–2.25
+      Stake 0.2% @ 2.0  ·  EV +55.2c/$  ·  Edge +55.2%
+   7. ✅ Go A Eagles vs F. Sittard  (Netherlands League)
+      Over 2.5 · High 74.8% · xG 2.51–1.40
+      Stake 0.2% @ 2.0  ·  EV +49.6c/$  ·  Edge +49.6%
+   8. ✅ FC Zurich vs St Gallen  (Swiss Super League)
+      Over 2.5 · High 71.8% · xG 2.61–1.11
+      Stake 0.2% @ 2.0  ·  EV +43.6c/$  ·  Edge +43.6%
+   9. ✅ W Bremen vs Hamburg  (German Bundesliga)
+      Over 2.5 · High 70.4% · xG 1.42–2.22
+      Stake 0.2% @ 2.0  ·  EV +40.8c/$  ·  Edge +40.8%
 
-━━━ BTTS (Yes / No)  (2 accepted) ━━━
-   1. ✅ Young Boys vs Thun  (Swiss Super League)
-      BTTS Yes · High 85.5% · xG 3.80–2.08
-      Stake 1.3% @ 1.9  ·  EV 
-   2. ✅ Chesterfield vs Shrewsbury  (Football League Two)
-      BTTS Yes · High 84.5% · xG 2.35–2.72
-      Stake 1.3% @ 1.9  ·  EV 
+━━━ BTTS (Yes / No)  (1 accepted) ━━━
+   1. ✅ UT Arad vs Uni Craiova  (Romanian Liga 1)
+      BTTS No · High 71.8% · xG 0.54–1.13
+      Stake 6.6% @ 1.85  ·  EV 
 
-━━━ HOME WIN  (2 accepted) ━━━
-   1. ✅ Bournemouth vs Nottm Forest  (Premier League)
-      Home Win · High 91.7%
-      Stake 1.7% @ 2.8  ·  EV +156.8c/$  ·  Edge +156.8%
-   2. ✅ CSKA Mosc. vs Terek Grozny  (Russian Premier)
-      Home Win · High 91.3%
-      Stake 1.7% @ 2.8  ·  EV +155.6c/$  ·  Edge +155.6%
+━━━ HOME WIN  (1 accepted) ━━━
+   1. ✅ Dynamo Kyiv vs Obolon Kiev  (Ukrainian League)
+      Home Win · High 93.5%
+      Stake 2.4% @ 2.8  ·  EV +161.8c/$  ·  Edge +161.8%
 
-📊 Summary: 26 curated picks
-   Parsed total: 189   Rejected: 163   Accepted: 26
+📊 Summary: 11 curated picks
+   Parsed total: 111   Rejected: 100   Accepted: 11
 
 ---
 For informational purposes only · Gamble responsibly

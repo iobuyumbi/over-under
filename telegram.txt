@@ -1,663 +1,1094 @@
-📅 Daily Soccer Picks · 2026-11-21
+📅 Daily Soccer Picks · 2026-11-22
 
+───────────
+📊 Yesterday · 2026-11-21 · 276W-75L-14P (6 pending)
+
+
+Bournemouth vs Nottm Forest · 2026-11-21 · HOME WIN · ✅ Win (2-0)
+
+Bradford vs Doncaster · 2026-11-21 · HOME WIN · ❌ Loss (2-2)
+
+CSKA Mosc. vs Terek Grozny · 2026-11-21 · HOME WIN · ❌ Loss (1-2)
+
+Southampton vs Derby · 2026-11-21 · HOME WIN · ✅ Win (2-0)
+
+Wolves vs Charlton · 2026-11-21 · HOME WIN · ✅ Win (2-1)
+
+Plymouth vs Peterborough · 2026-11-21 · HOME WIN · ❌ Loss (0-2)
+
+Cheltenham vs Bristol R · 2026-11-21 · HOME WIN · ❌ Loss (0-3)
+
+Barnet vs Port Vale · 2026-11-21 · HOME WIN · ✅ Win (2-1)
+
+Celtic vs St Mirren · 2026-11-21 · HOME WIN · ✅ Win (4-1)
+
+Clyde vs Stirling · 2026-11-21 · HOME WIN · ✅ Win (4-3)
+
+Como vs Cagliari · 2026-11-21 · HOME WIN · ✅ Win (2-0)
+
+Lazio vs Lecce · 2026-11-21 · HOME WIN · ✅ Win (3-0)
+
+E Frankfurt vs Hoffenheim · 2026-11-21 · HOME WIN · ✅ Win (1-0)
+
+Real Madrid vs Celta Vigo · 2026-11-21 · HOME WIN · ✅ Win (2-1)
+
+Monaco vs Auxerre · 2026-11-21 · HOME WIN · ❌ Loss (1-1)
+
+Galatasaray vs Samsunspor · 2026-11-21 · HOME WIN · ✅ Win (2-1)
+
+O. Ljubljana vs NK Radomlje · 2026-11-21 · HOME WIN · ✅ Win (1-0)
+
+Mlada Boleslav vs Zlin · 2026-11-21 · HOME WIN · ✅ Win (1-0)
+
+Charleroi vs Sint-Truidense · 2026-11-21 · HOME WIN · ❌ Loss (2-2)
+
+Genk vs RAAL La Louviere · 2026-11-21 · HOME WIN · ✅ Win (3-0)
+
+Lugano vs Grasshoppers · 2026-11-21 · HOME WIN · ✅ Win (2-1)
+
+Red Star vs Radnik Surdulica · 2026-11-21 · HOME WIN · ✅ Win (2-0)
+
+Truro City vs Hemel · 2026-11-21 · HOME WIN · ✅ Win (4-0)
+
+Billericay vs Slough · 2026-11-21 · HOME WIN · ✅ Win (4-1)
+
+Plymouth P vs Malvern Town · 2026-11-21 · HOME WIN · ✅ Win (3-0)
+
+Santos Laguna vs Leon · 2026-11-21 · HOME WIN · Pending
+
+Kawasaki F vs Avispa Fukuoka · 2026-11-21 · HOME WIN · ✅ Win (1-0)
+
+Incheon United vs Ulsan Hyundai · 2026-11-21 · HOME WIN · ✅ Win (2-1)
+
+Suwon Samsung vs Gyeongnam · 2026-11-21 · HOME WIN · ✅ Win (3-1)
+
+Tottenham vs Ipswich · 2026-11-21 · OVER 2.5 · ❌ Loss (2-0)
+
+Aston Villa vs Sunderland · 2026-11-21 · OVER 2.5 · ❌ Loss (0-0)
+
+Blackpool vs Wigan · 2026-11-21 · OVER 2.5 · ✅ Win (1-2)
+
+Huddersfield vs Leicester · 2026-11-21 · OVER 2.5 · ❌ Loss (0-1)
+
+Crawley vs Fleetwood · 2026-11-21 · OVER 2.5 · ✅ Win (2-1)
+
+Chesterfield vs Shrewsbury · 2026-11-21 · OVER 2.5 · ✅ Win (4-1)
+
+Solihull M vs Altrincham · 2026-11-21 · OVER 2.5 · ✅ Win (2-1)
+
+Worthing vs Harrogate · 2026-11-21 · OVER 2.5 · ✅ Win (2-1)
+
+Wealdstone vs Hornchurch · 2026-11-21 · OVER 2.5 · ✅ Win (4-0)
+
+Hibernian vs Dundee Utd · 2026-11-21 · OVER 2.5 · ✅ Win (0-4)
+
+Dundee vs Hearts · 2026-11-21 · OVER 2.5 · ✅ Win (0-8)
+
+Montrose vs Alloa · 2026-11-21 · OVER 2.5 · ❌ Loss (1-1)
+
+Clyde vs Stirling · 2026-11-21 · OVER 2.5 · ✅ Win (4-3)
+
+Invergordon vs Fraserburgh · 2026-11-21 · OVER 2.5 · ✅ Win (0-7)
+
+Turriff U vs Clachnacuddin · 2026-11-21 · OVER 2.5 · ✅ Win (0-4)
+
+Formartine Utd vs Strathspey T · 2026-11-21 · OVER 2.5 · ➖ Push (POSTPONED)
+
+Keith vs Forres Mech · 2026-11-21 · OVER 2.5 · ➖ Push (POSTPONED)
+
+Deveronvale vs Brora Rangers · 2026-11-21 · OVER 2.5 · ✅ Win (2-5)
+
+Wick Academy vs Banks o'Dee · 2026-11-21 · OVER 2.5 · ➖ Push (POSTPONED)
+
+Lazio vs Lecce · 2026-11-21 · OVER 2.5 · ✅ Win (3-0)
+
+Napoli vs Torino · 2026-11-21 · OVER 2.5 · ❌ Loss (1-0)
+
+Nice vs PSG · 2026-11-21 · OVER 2.5 · ✅ Win (2-3)
+
+Lens vs Toulouse · 2026-11-21 · OVER 2.5 · ❌ Loss (1-1)
+
+Galatasaray vs Samsunspor · 2026-11-21 · OVER 2.5 · ✅ Win (2-1)
+
+Valerenga vs IK Start · 2026-11-21 · OVER 2.5 · ✅ Win (1-2)
+
+Real Sociedad B vs Cadiz · 2026-11-21 · OVER 2.5 · ✅ Win (0-3)
+
+O. Ljubljana vs NK Radomlje · 2026-11-21 · OVER 2.5 · ❌ Loss (1-0)
+
+AIK Solna vs Degerfors · 2026-11-21 · OVER 2.5 · ❌ Loss (0-0)
+
+Charleroi vs Sint-Truidense · 2026-11-21 · OVER 2.5 · ✅ Win (2-2)
+
+Utrecht vs Cambuur · 2026-11-21 · OVER 2.5 · ✅ Win (2-3)
+
+NEC Nijmegen vs PSV Eindhoven · 2026-11-21 · OVER 2.5 · ✅ Win (1-4)
+
+FC Groningen vs Heerenveen · 2026-11-21 · OVER 2.5 · ✅ Win (1-3)
+
+LASK Linz vs Hartberg · 2026-11-21 · OVER 2.5 · ✅ Win (2-1)
+
+Young Boys vs Thun · 2026-11-21 · OVER 2.5 · ✅ Win (3-2)
+
+Kalamata vs AEK Athens · 2026-11-21 · OVER 2.5 · ❌ Loss (0-1)
+
+Dorking W vs Ebbsfleet · 2026-11-21 · OVER 2.5 · ✅ Win (2-2)
+
+Dulwich H vs Welling · 2026-11-21 · OVER 2.5 · ✅ Win (2-2)
+
+Carshalton vs Aveley · 2026-11-21 · OVER 2.5 · ❌ Loss (0-2)
+
+Chippenham vs Bracknell · 2026-11-21 · OVER 2.5 · ❌ Loss (1-1)
+
+Plymouth P vs Malvern Town · 2026-11-21 · OVER 2.5 · ✅ Win (3-0)
+
+Sholing vs Evesham · 2026-11-21 · OVER 2.5 · ❌ Loss (1-0)
+
+Chichester C vs Basingstoke · 2026-11-21 · OVER 2.5 · ✅ Win (2-2)
+
+Taunton Town vs Chertsey Town · 2026-11-21 · OVER 2.5 · ✅ Win (4-1)
+
+Kyoto Sanga vs Urawa Red Diamonds · 2026-11-21 · OVER 2.5 · ✅ Win (2-1)
+
+Gamba Osaka vs Fagiano Okayama · 2026-11-21 · OVER 2.5 · ❌ Loss (0-1)
+
+Chesterfield vs Shrewsbury · 2026-11-21 · BTTS YES · ✅ Win (4-1)
+
+Kidderminster vs Fylde · 2026-11-21 · BTTS YES · ✅ Win (2-2)
+
+Strasbourg vs Brest · 2026-11-21 · BTTS YES · ❌ Loss (0-1)
+
+Swarovski Wattens vs Austria Lustenau · 2026-11-21 · BTTS YES · ❌ Loss (0-1)
+
+Young Boys vs Thun · 2026-11-21 · BTTS YES · ✅ Win (3-2)
+
+Dorking W vs Ebbsfleet · 2026-11-21 · BTTS YES · ✅ Win (2-2)
+
+St Albans vs AFC Whyteleafe · 2026-11-21 · BTTS YES · ✅ Win (3-4)
+
+Tecnico Universitario vs Deportivo Cuenca · 2026-11-21 · BTTS YES · ❌ Loss (2-0)
+
+Mjallby vs Malmo · 2026-11-21 · BTTS NO · ❌ Loss (1-1)
+
+Csikszereda vs Corvinul Hunedoara · 2026-11-21 · BTTS NO · ✅ Win (0-4)
+
+Castellon vs Eldense · 2026-11-21 · BTTS NO · ✅ Win (2-0)
+
+Bournemouth vs Nottm Forest · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Aston Villa vs Sunderland · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-0)
+
+Sheff Utd vs Watford · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-0)
+
+Wolves vs Charlton · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Leyton Orient vs AFC W'bledon · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-1)
+
+Barnet vs Port Vale · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+York vs Walsall · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-0)
+
+Crawley vs Fleetwood · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Chesterfield vs Shrewsbury · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-1)
+
+E Frankfurt vs Hoffenheim · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-0)
+
+Lille vs Lyon · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Monaco vs Auxerre · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+St Pauli vs Bochum · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Valerenga vs IK Start · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Real Sociedad B vs Cadiz · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-3)
+
+O. Ljubljana vs NK Radomlje · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-0)
+
+AIK Solna vs Degerfors · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-0)
+
+Swarovski Wattens vs Austria Lustenau · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Puskas FA FC vs MTK · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Chippenham vs Bracknell · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Plymouth P vs Malvern Town · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-0)
+
+Chichester C vs Basingstoke · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Sholing vs Evesham · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-0)
+
+AFC Emley vs Hyde · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-2)
+
+Chelsea vs Leeds · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-4)
+
+Norwich vs Cardiff · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Southampton vs Derby · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Lincoln vs Wrexham · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Middlesbrough vs Bristol C · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Stoke vs Birmingham · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-0)
+
+Swansea vs West Brom · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+West Ham vs Preston · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Blackpool vs Wigan · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Reading vs Bromley · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Huddersfield vs Leicester · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Notts Co vs Stevenage · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Mansfield vs MK Dons · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Bradford vs Doncaster · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Newport Co vs Swindon · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Tranmere vs Colchester · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Accrington vs Salford · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Cheltenham vs Bristol R · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-3)
+
+Tamworth vs Eastleigh · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-3)
+
+Solihull M vs Altrincham · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Aldershot vs Scunthorpe · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Barrow vs Carlisle · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-2)
+
+Kidderminster vs Fylde · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Halifax vs Woking · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (5-0)
+
+Celtic vs St Mirren · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-1)
+
+Wealdstone vs Hornchurch · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-0)
+
+Kilmarnock vs Aberdeen · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-4)
+
+Dundee vs Hearts · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-8)
+
+Falkirk vs St Johnstone · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Queen of Sth vs Hamilton · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-3)
+
+Dunfermline vs Morton · 2026-11-21 · OVER 0.5 TEAM GOAL · ➖ Push (POSTPONED)
+
+East Fife vs Airdrieonians · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-2)
+
+Clyde vs Stirling · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-3)
+
+Montrose vs Alloa · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Stranraer vs Elgin City · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-0)
+
+Huntly vs Lossiemouth · 2026-11-21 · OVER 0.5 TEAM GOAL · ➖ Push (POSTPONED)
+
+Formartine Utd vs Strathspey T · 2026-11-21 · OVER 0.5 TEAM GOAL · ➖ Push (POSTPONED)
+
+Keith vs Forres Mech · 2026-11-21 · OVER 0.5 TEAM GOAL · ➖ Push (POSTPONED)
+
+Inverurie Locos vs Buckie Thistle · 2026-11-21 · OVER 0.5 TEAM GOAL · Pending
+
+Wick Academy vs Banks o'Dee · 2026-11-21 · OVER 0.5 TEAM GOAL · ➖ Push (POSTPONED)
+
+Como vs Cagliari · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Lazio vs Lecce · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-0)
+
+Napoli vs Torino · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-0)
+
+Elversberg vs Freiburg · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Union Berlin vs RB Leipzig · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-5)
+
+Lens vs Toulouse · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Nice vs PSG · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-3)
+
+Strasbourg vs Brest · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Akron vs Fakel Voronezh · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-2)
+
+CSKA Mosc. vs Terek Grozny · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Genclerbirligi vs Gazisehir · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-0)
+
+Amedspor vs Rizespor · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-2)
+
+Galatasaray vs Samsunspor · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Hannover vs Greuther Furth · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Nuremberg vs Braunschweig · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Wolfsburg vs Holstein Kiel · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-0)
+
+Din. Bucharest vs Petrolul · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Castellon vs Eldense · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Cracovia vs Jagiellonia · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-1)
+
+Mlada Boleslav vs Zlin · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-0)
+
+NK Rudes vs NK Varazdin · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-2)
+
+Genk vs RAAL La Louviere · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-0)
+
+Charleroi vs Sint-Truidense · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+NEC Nijmegen vs PSV Eindhoven · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-4)
+
+Utrecht vs Cambuur · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-3)
+
+Feyenoord vs Excelsior · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-3)
+
+FC Groningen vs Heerenveen · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-3)
+
+Telstar vs PEC Zwolle · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-3)
+
+LASK Linz vs Hartberg · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+FC Sion vs Servette · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Young Boys vs Thun · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-2)
+
+Kalamata vs AEK Athens · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Karpaty Lvov vs Zorya · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-0)
+
+Gomel vs Bate Borisov · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-1)
+
+Dinamo Brest vs FC Naftan · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-1)
+
+Radnicki Nis vs Zemun · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-0)
+
+Red Star vs Radnik Surdulica · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Ujpest Dozsa vs Kisvarda · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-0)
+
+Ferencvaros vs Gyori ETO · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-3)
+
+Dallas vs Portland Timb. · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-0)
+
+New England vs Philadelphia U · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Chester vs Macclesfield · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (6-1)
+
+Spalding Utd vs Merthyr · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Hereford vs Darlington · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Tonbridge vs Weston S-M. · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Maidstone vs Farnham Town · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Truro City vs Hemel · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-0)
+
+Dorking W vs Ebbsfleet · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Billericay vs Slough · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-1)
+
+Dulwich H vs Welling · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Wingate & F vs Brentwood T · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Three Bridges vs Cheshunt · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Ramsgate vs Lewes · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-1)
+
+Cray W vs Whitehawk · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Enfield T vs Eastbourne · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-4)
+
+Chatham Town vs Maldon & T · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-3)
+
+Berkhamsted vs Frome · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-1)
+
+Dartford vs Leatherhead · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-0)
+
+Gosport Bor vs Havant & W · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Hanworth Villa vs Poole Town · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Taunton Town vs Chertsey Town · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-1)
+
+Workington vs Gainsborough · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Warrington vs Guiseley · 2026-11-21 · OVER 0.5 TEAM GOAL · ➖ Push (POSTPONED)
+
+FC Utd vs Rylands · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-3)
+
+Bury vs Redcar Athletic · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Stockton T vs Ilkeston · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Whitby vs Leek · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Quorn vs Avro · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-4)
+
+Puebla vs Atletico San Luis · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Tijuana vs Atlante · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-0)
+
+Pachuca vs Toluca · 2026-11-21 · OVER 0.5 TEAM GOAL · Pending
+
+Santos Laguna vs Leon · 2026-11-21 · OVER 0.5 TEAM GOAL · Pending
+
+Deportivo Cali vs Millonarios · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-0)
+
+Kawasaki F vs Avispa Fukuoka · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-0)
+
+Incheon United vs Ulsan Hyundai · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Suwon Samsung vs Gyeongnam · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-1)
+
+Blaublitz Akita vs Montedio Yamagata · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-1)
+
+Tegevajaro Miyazaki vs Iwaki · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Kataller Toyama vs Oita Trinita · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Jubilo Iwata vs Omiya Ardija · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-0)
+
+Ostersunds FK vs Varbergs Bois · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-2)
+
+Tochigi City vs Albirex Niigata · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-3)
+
+Coquimbo Unido vs Everton de Vina del Mar · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+O'Higgins vs Univ de Chile · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Defensa y Justicia vs Barracas Central · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Argentinos Jun vs Independiente · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Universidad Catolica vs Barcelona de G · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Bahia vs Coritiba · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-1)
+
+Man City vs Fulham · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Newcastle vs Arsenal · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Chesterfield vs Shrewsbury · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-1)
+
+Gateshead vs Hartlepool · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Hibernian vs Dundee Utd · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-4)
+
+Edinburgh C vs Kelty Hearts · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Wick Academy vs Banks o'Dee · 2026-11-21 · OVER 0.5 TEAM GOAL · ➖ Push (POSTPONED)
+
+Strasbourg vs Brest · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+NEC Nijmegen vs PSV Eindhoven · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-4)
+
+Swarovski Wattens vs Austria Lustenau · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Radcliffe Boro vs Telford · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-4)
+
+Walton & H vs Chelmsford · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Dulwich H vs Welling · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Wingate & F vs Brentwood T · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Aston Villa vs Sunderland · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-0)
+
+Norwich vs Cardiff · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Millwall vs QPR · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Swansea vs West Brom · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Blackpool vs Wigan · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Huddersfield vs Leicester · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Notts Co vs Stevenage · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Mansfield vs MK Dons · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Cambridge U vs Stockport · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-3)
+
+Gillingham vs Crewe · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-3)
+
+Accrington vs Salford · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Northampton vs Rochdale · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-2)
+
+Barnet vs Port Vale · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Oldham vs Exeter · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Crawley vs Fleetwood · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Tamworth vs Eastleigh · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-3)
+
+Solihull M vs Altrincham · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Worthing vs Harrogate · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Aldershot vs Scunthorpe · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (2-0)
+
+Kidderminster vs Fylde · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Halifax vs Woking · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (5-0)
+
+Kilmarnock vs Aberdeen · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-4)
+
+Dundee vs Hearts · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-8)
+
+Motherwell vs Rangers · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Queen's Park vs Livingston · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-4)
+
+Queen of Sth vs Hamilton · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-3)
+
+Peterhead vs East Kilbride · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (1-0)
+
+Clyde vs Stirling · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-3)
+
+Annan vs Forfar · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Spartans vs Dumbarton · 2026-11-21 · OVER 0.5 TEAM GOAL · ➖ Push (POSTPONED)
+
+Rothes vs Nairn County · 2026-11-21 · OVER 0.5 TEAM GOAL · ➖ Push (POSTPONED)
+
+Turriff U vs Clachnacuddin · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-4)
+
+Invergordon vs Fraserburgh · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-7)
+
+Keith vs Forres Mech · 2026-11-21 · OVER 0.5 TEAM GOAL · ➖ Push (POSTPONED)
+
+Deveronvale vs Brora Rangers · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-5)
+
+Parma vs Roma · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-5)
+
+Napoli vs Torino · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (1-0)
+
+Elversberg vs Freiburg · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Union Berlin vs RB Leipzig · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-5)
+
+E Frankfurt vs Hoffenheim · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (1-0)
+
+Alaves vs Deportivo · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-1)
+
+Rayo Vallecano vs Valencia · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Lens vs Toulouse · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Nice vs PSG · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-3)
+
+Monaco vs Auxerre · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Rubin vs Zenit · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-1)
+
+Amedspor vs Rizespor · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-2)
+
+Tromso vs Viking · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-2)
+
+HamKam vs Fredrikstad · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-0)
+
+Real Sociedad B vs Cadiz · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-3)
+
+Tenerife vs Mallorca · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-0)
+
+Radomiak Radom vs Wisla Krakow · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-0)
+
+Artis Brno vs Jablonec · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-1)
+
+Loko. Zagreb vs Hajduk Split · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+NK Rudes vs NK Varazdin · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-2)
+
+Charleroi vs Sint-Truidense · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Mechelen vs Club Brugge · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-5)
+
+Waregem vs Royal Antwerp · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Utrecht vs Cambuur · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-3)
+
+FC Groningen vs Heerenveen · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-3)
+
+Telstar vs PEC Zwolle · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-3)
+
+LASK Linz vs Hartberg · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+GAK vs Rapid Vienna · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-3)
+
+FC Sion vs Servette · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (2-0)
+
+Young Boys vs Thun · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-2)
+
+Kalamata vs AEK Athens · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Kryvbas vs Kudrivka · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Kolos Kovalivka vs Metalist · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Baranovichi vs Belshina · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Red Star vs Radnik Surdulica · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (2-0)
+
+Mladost Lucani vs Zeleznicar Pancevo · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-4)
+
+Ujpest Dozsa vs Kisvarda · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-0)
+
+Inter Miami CF vs Columbus Crew · 2026-11-21 · OVER 0.5 TEAM GOAL · Pending
+
+Southport vs Brackley · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Chester vs Macclesfield · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (6-1)
+
+Spalding Utd vs Merthyr · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Buxton vs Hednesford · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-3)
+
+Hebburn Town vs Marine · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Hereford vs Darlington · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (2-0)
+
+Bedford vs South Shields · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-4)
+
+Maidstone vs Farnham Town · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Maidenhead vs Folkestone · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Dorking W vs Ebbsfleet · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Farnborough vs Salisbury FC · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-3)
+
+Three Bridges vs Cheshunt · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Chatham Town vs Maldon & T · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-3)
+
+Carshalton vs Aveley · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-2)
+
+St Albans vs AFC Whyteleafe · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-4)
+
+Chippenham vs Bracknell · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Dartford vs Leatherhead · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (3-0)
+
+Yate vs Hanwell Town · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-0)
+
+Plymouth P vs Malvern Town · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (3-0)
+
+Gosport Bor vs Havant & W · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Chichester C vs Basingstoke · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-2)
+
+Hanworth Villa vs Poole Town · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Taunton Town vs Chertsey Town · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (4-1)
+
+Workington vs Gainsborough · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Warrington vs Guiseley · 2026-11-21 · OVER 0.5 TEAM GOAL · ➖ Push (POSTPONED)
+
+FC Utd vs Rylands · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-3)
+
+Alfreton vs Curzon A · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-3)
+
+Bamber Br. vs Cleethorpes T · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Lancaster vs Ashton Utd · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-3)
+
+Stockton T vs Ilkeston · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Whitby vs Leek · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Puebla vs Atletico San Luis · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+FC Juarez vs Atlas · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (3-3)
+
+Tijuana vs Atlante · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (1-0)
+
+Pachuca vs Toluca · 2026-11-21 · OVER 0.5 TEAM GOAL · Pending
+
+Kyoto Sanga vs Urawa Red Diamonds · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Gamba Osaka vs Fagiano Okayama · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Incheon United vs Ulsan Hyundai · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (2-1)
+
+Busan IPark vs Cheongju · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (0-0)
+
+Gimpo Citizen vs Suwon FC · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Seongnam vs Yongin · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (5-0)
+
+Kataller Toyama vs Oita Trinita · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-1)
+
+Tochigi City vs Albirex Niigata · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-3)
+
+O'Higgins vs Univ de Chile · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
+
+Argentinos Jun vs Independiente · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (1-2)
+
+Tecnico Universitario vs Deportivo Cuenca · 2026-11-21 · OVER 0.5 TEAM GOAL · ❌ Loss (2-0)
+
+Universidad Catolica vs Barcelona de G · 2026-11-21 · OVER 0.5 TEAM GOAL · ✅ Win (0-1)
 
 ───────────
 ⚽️ OVER / UNDER 2.5
 
-📅 Picks for 2026-11-21
+📅 Picks for 2026-11-22
 
 
 🟢 Over 2.5 goals
 
-  ✅ Solid picks
-
-
-  1. Tottenham vs Ipswich
-     Date: 2026-11-21
-     League: Premier League
-     Pick: Over 2.5 · High confidence (83.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  2. Aston Villa vs Sunderland
-     Date: 2026-11-21
-     League: Premier League
-     Pick: Over 2.5 · High confidence (79.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  3. Blackpool vs Wigan
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Over 2.5 · High confidence (72.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  4. Huddersfield vs Leicester
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Over 2.5 · High confidence (75.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  5. Crawley vs Fleetwood
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Over 2.5 · High confidence (66.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  6. Chesterfield vs Shrewsbury
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Over 2.5 · High confidence (86.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  7. Solihull M vs Altrincham
-     Date: 2026-11-21
-     League: National League
-     Pick: Over 2.5 · High confidence (66.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  8. Worthing vs Harrogate
-     Date: 2026-11-21
-     League: National League
-     Pick: Over 2.5 · High confidence (63.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  9. Wealdstone vs Hornchurch
-     Date: 2026-11-21
-     League: National League
-     Pick: Over 2.5 · High confidence (72.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  10. Hibernian vs Dundee Utd
-     Date: 2026-11-21
-     League: Scottish Premier
-     Pick: Over 2.5 · High confidence (81.8%)
-     Category:
-       • Tier: ✅ Solid
-       • Auto-flag: poor league win rate on this market
-
-  11. Dundee vs Hearts
-     Date: 2026-11-21
-     League: Scottish Premier
-     Pick: Over 2.5 · High confidence (78.4%)
-     Category:
-       • Tier: ✅ Solid
-       • Auto-flag: poor league win rate on this market
-
-  12. Clyde vs Stirling
-     Date: 2026-11-21
-     League: Scottish League Two
-     Pick: Over 2.5 · High confidence (88.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  13. Montrose vs Alloa
-     Date: 2026-11-21
-     League: Scottish League One
-     Pick: Over 2.5 · High confidence (60.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  14. Turriff U vs Clachnacuddin
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Over 2.5 · High confidence (74.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  15. Invergordon vs Fraserburgh
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Over 2.5 · High confidence (78.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  16. Formartine Utd vs Strathspey T
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Over 2.5 · High confidence (71.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  17. Keith vs Forres Mech
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Over 2.5 · High confidence (80.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  18. Deveronvale vs Brora Rangers
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Over 2.5 · High confidence (91.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  19. Wick Academy vs Banks o'Dee
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Over 2.5 · High confidence (77.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  20. Lazio vs Lecce
-     Date: 2026-11-21
-     League: Italian Serie A
-     Pick: Over 2.5 · High confidence (60.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  21. Napoli vs Torino
-     Date: 2026-11-21
-     League: Italian Serie A
-     Pick: Over 2.5 · High confidence (60.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  22. Nice vs PSG
-     Date: 2026-11-21
-     League: French Ligue 1
-     Pick: Over 2.5 · High confidence (83.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  23. Lens vs Toulouse
-     Date: 2026-11-21
-     League: French Ligue 1
-     Pick: Over 2.5 · High confidence (77.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  24. Galatasaray vs Samsunspor
-     Date: 2026-11-21
-     League: Turkish Super Lig
-     Pick: Over 2.5 · High confidence (76.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  25. Valerenga vs IK Start
-     Date: 2026-11-21
-     League: Norwegian Tippeligaen
-     Pick: Over 2.5 · High confidence (73.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  26. Real Sociedad B vs Cadiz
-     Date: 2026-11-21
-     League: Spanish Segunda
-     Pick: Over 2.5 · High confidence (60.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  27. O. Ljubljana vs NK Radomlje
-     Date: 2026-11-21
-     League: Slovenian League
-     Pick: Over 2.5 · High confidence (67.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  28. AIK Solna vs Degerfors
-     Date: 2026-11-21
-     League: Swedish Allsvenskan
-     Pick: Over 2.5 · High confidence (64.9%)
-     Category:
-       • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
-
-  29. Charleroi vs Sint-Truidense
-     Date: 2026-11-21
-     League: Belgium League
-     Pick: Over 2.5 · High confidence (88.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  30. Utrecht vs Cambuur
-     Date: 2026-11-21
-     League: Netherlands League
-     Pick: Over 2.5 · High confidence (76.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  31. NEC Nijmegen vs PSV Eindhoven
-     Date: 2026-11-21
-     League: Netherlands League
-     Pick: Over 2.5 · High confidence (67.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  32. FC Groningen vs Heerenveen
-     Date: 2026-11-21
-     League: Netherlands League
-     Pick: Over 2.5 · High confidence (79.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  33. LASK Linz vs Hartberg
-     Date: 2026-11-21
-     League: Austrian Bundesliga
-     Pick: Over 2.5 · High confidence (78.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  34. Young Boys vs Thun
-     Date: 2026-11-21
-     League: Swiss Super League
-     Pick: Over 2.5 · High confidence (92.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  35. Kalamata vs AEK Athens
-     Date: 2026-11-21
-     League: Greek Super League
-     Pick: Over 2.5 · High confidence (79.4%)
-     Category:
-       • Tier: ✅ Solid
-       • Auto-flag: poor league win rate on this market
-
-  36. Dorking W vs Ebbsfleet
-     Date: 2026-11-21
-     League: Football Conference South
-     Pick: Over 2.5 · High confidence (84.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  37. Dulwich H vs Welling
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Over 2.5 · High confidence (77.1%)
-     Category:
-       • Tier: ✅ Solid
-       • Auto-flag: poor league win rate on this market
-
-  38. Carshalton vs Aveley
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Over 2.5 · High confidence (66.8%)
-     Category:
-       • Tier: ✅ Solid
-       • Auto-flag: poor league win rate on this market
-
-  39. Chippenham vs Bracknell
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Over 2.5 · High confidence (73.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  40. Plymouth P vs Malvern Town
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Over 2.5 · High confidence (71.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  41. Sholing vs Evesham
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Over 2.5 · High confidence (67.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  42. Chichester C vs Basingstoke
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Over 2.5 · High confidence (79.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  43. Taunton Town vs Chertsey Town
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Over 2.5 · High confidence (75.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  44. Kyoto Sanga vs Urawa Red Diamonds
-     Date: 2026-11-21
-     League: Japanese J1 League
-     Pick: Over 2.5 · High confidence (66.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  45. Gamba Osaka vs Fagiano Okayama
-     Date: 2026-11-21
-     League: Japanese J1 League
-     Pick: Over 2.5 · High confidence (67.2%)
-     Category:
-       • Tier: ✅ Solid
-
-───────────
-🎯 BTTS (YES / NO)
-
-📅 Picks for 2026-11-21
-
-
-🟢 BTTS Yes
-
-  ✅ Solid picks
-
-
-  1. Chesterfield vs Shrewsbury
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: BTTS Yes · High confidence (84.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  2. Kidderminster vs Fylde
-     Date: 2026-11-21
-     League: National League
-     Pick: BTTS Yes · High confidence (60.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  3. Strasbourg vs Brest
-     Date: 2026-11-21
-     League: French Ligue 1
-     Pick: BTTS Yes · High confidence (63.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  4. Swarovski Wattens vs Austria Lustenau
-     Date: 2026-11-21
-     League: Austrian Bundesliga
-     Pick: BTTS Yes · High confidence (68.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  5. Young Boys vs Thun
-     Date: 2026-11-21
-     League: Swiss Super League
-     Pick: BTTS Yes · High confidence (85.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  6. Dorking W vs Ebbsfleet
-     Date: 2026-11-21
-     League: Football Conference South
-     Pick: BTTS Yes · High confidence (79.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  7. St Albans vs AFC Whyteleafe
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: BTTS Yes · High confidence (62.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  8. Tecnico Universitario vs Deportivo Cuenca
-     Date: 2026-11-21
-     League: Ecuador Liga Pro
-     Pick: BTTS Yes · High confidence (67.0%)
-     Category:
-       • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
-
-🔴 BTTS No
-
   🔥 Premium picks
 
 
-  1. Mjallby vs Malmo
-     Date: 2026-11-21
-     League: Swedish Allsvenskan
-     Pick: BTTS No · High confidence (76.5%)
+  1. Chicago vs Charlotte FC
+     Date: 2026-11-22
+     League: MLS
+     Pick: Over 2.5 · High confidence (85.6%)
      Category:
        • Tier: 🔥 Premium
        • League type: weak-ROI region (extra model caution)
   ✅ Solid picks
 
 
-  2. Csikszereda vs Corvinul Hunedoara
-     Date: 2026-11-21
-     League: Romanian Liga 1
-     Pick: BTTS No · High confidence (63.4%)
+  2. Sassuolo vs Genoa
+     Date: 2026-11-22
+     League: Italian Serie A
+     Pick: Over 2.5 · High confidence (70.1%)
+     Category:
+       • Tier: ✅ Solid
+       • Auto-flag: poor league win rate on this market
+
+  3. Augsburg vs Mainz
+     Date: 2026-11-22
+     League: German Bundesliga
+     Pick: Over 2.5 · High confidence (87.0%)
      Category:
        • Tier: ✅ Solid
 
-  3. Castellon vs Eldense
-     Date: 2026-11-21
-     League: Spanish Segunda
-     Pick: BTTS No · High confidence (62.2%)
+  4. W Bremen vs Hamburg
+     Date: 2026-11-22
+     League: German Bundesliga
+     Pick: Over 2.5 · High confidence (70.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  5. Barcelona vs Villarreal
+     Date: 2026-11-22
+     League: Spanish La Liga
+     Pick: Over 2.5 · High confidence (83.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  6. Racing vs Sociedad
+     Date: 2026-11-22
+     League: Spanish La Liga
+     Pick: Over 2.5 · High confidence (86.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  7. Rodina Moscow vs Lok. Moscow
+     Date: 2026-11-22
+     League: Russian Premier
+     Pick: Over 2.5 · High confidence (64.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  8. FC Twente vs Willem II
+     Date: 2026-11-22
+     League: Netherlands League
+     Pick: Over 2.5 · High confidence (84.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  9. Go A Eagles vs F. Sittard
+     Date: 2026-11-22
+     League: Netherlands League
+     Pick: Over 2.5 · High confidence (74.8%)
+     Category:
+       • Tier: ✅ Solid
+
+  10. Rakow Czestochowa vs Widzew Lodz
+     Date: 2026-11-22
+     League: Polish Ekstraklasa
+     Pick: Over 2.5 · High confidence (77.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  11. GKS Katowice vs Lech Poznan
+     Date: 2026-11-22
+     League: Polish Ekstraklasa
+     Pick: Over 2.5 · High confidence (67.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  12. Karlsruhe vs Osnabruck
+     Date: 2026-11-22
+     League: German Bundesliga 2
+     Pick: Over 2.5 · High confidence (65.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  13. AC Horsens vs Silkeborg
+     Date: 2026-11-22
+     League: Danish SAS Ligaen
+     Pick: Over 2.5 · High confidence (78.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  14. FC Zurich vs St Gallen
+     Date: 2026-11-22
+     League: Swiss Super League
+     Pick: Over 2.5 · High confidence (71.8%)
+     Category:
+       • Tier: ✅ Solid
+
+  15. PAOK Salonika vs Kifisia
+     Date: 2026-11-22
+     League: Greek Super League
+     Pick: Over 2.5 · High confidence (88.4%)
+     Category:
+       • Tier: ✅ Solid
+       • Auto-flag: poor league win rate on this market
+
+  16. KFUM Oslo vs Brann
+     Date: 2026-11-22
+     League: Norwegian Tippeligaen
+     Pick: Over 2.5 · High confidence (69.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  17. Zalaegerszeg vs Vasas
+     Date: 2026-11-22
+     League: Hungarian League
+     Pick: Over 2.5 · High confidence (59.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  18. Guadalajara vs Cruz Azul
+     Date: 2026-11-22
+     League: Mexican Primera Apertura
+     Pick: Over 2.5 · High confidence (74.5%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+  19. Tigres vs Club America
+     Date: 2026-11-22
+     League: Mexican Primera Apertura
+     Pick: Over 2.5 · High confidence (88.9%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+  20. Jeonnam Dragons vs Ansan Greeners
+     Date: 2026-11-22
+     League: Korean K-League 2
+     Pick: Over 2.5 · High confidence (66.0%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+  21. Daegu vs Gimhae City
+     Date: 2026-11-22
+     League: Korean K-League 2
+     Pick: Over 2.5 · High confidence (63.5%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+  22. Colo-Colo vs Univ Catolica
+     Date: 2026-11-22
+     League: Chile Primera
+     Pick: Over 2.5 · High confidence (69.2%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+───────────
+🎯 BTTS (YES / NO)
+
+📅 Picks for 2026-11-22
+
+
+🟢 BTTS Yes
+
+  🔥 Premium picks
+
+
+  1. Chicago vs Charlotte FC
+     Date: 2026-11-22
+     League: MLS
+     Pick: BTTS Yes · High confidence (84.4%)
+     Category:
+       • Tier: 🔥 Premium
+       • League type: weak-ROI region (extra model caution)
+  ✅ Solid picks
+
+
+  2. Red Bull Bragantino vs Vasco
+     Date: 2026-11-22
+     League: Brazilian Serie A
+     Pick: BTTS Yes · Medium confidence (53.7%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+       • Auto-flag: weak ROI history on this market
+
+  3. Guadalajara vs Cruz Azul
+     Date: 2026-11-22
+     League: Mexican Primera Apertura
+     Pick: BTTS Yes · High confidence (70.5%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+  4. Paju Frontier vs Cheonan City
+     Date: 2026-11-22
+     League: Korean K-League 2
+     Pick: BTTS Yes · Medium confidence (53.2%)
+     Category:
+       • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
+
+🔴 BTTS No
+
+  ✅ Solid picks
+
+
+  1. UT Arad vs Uni Craiova
+     Date: 2026-11-22
+     League: Romanian Liga 1
+     Pick: BTTS No · High confidence (71.8%)
      Category:
        • Tier: ✅ Solid
 
 ───────────
 🏠 HOME WIN
 
-📅 Picks for 2026-11-21
+📅 Picks for 2026-11-22
 
 
   ✅ Solid picks
 
 
-  1. Bournemouth vs Nottm Forest
-     Date: 2026-11-21
-     League: Premier League
-     Pick: Home Win · High confidence (91.7%)
+  1. Dynamo Kyiv vs Obolon Kiev
+     Date: 2026-11-22
+     League: Ukrainian League
+     Pick: Home Win · High confidence (93.5%)
      Category:
        • Tier: ✅ Solid
 
-  2. Bradford vs Doncaster
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Home Win · High confidence (82.5%)
+  2. Isloch Minsk vs Torpedo Zh
+     Date: 2026-11-22
+     League: Belarus League
+     Pick: Home Win · High confidence (88.9%)
      Category:
        • Tier: ✅ Solid
+       • League type: weak-ROI region (extra model caution)
 
-  3. CSKA Mosc. vs Terek Grozny
-     Date: 2026-11-21
-     League: Russian Premier
-     Pick: Home Win · High confidence (91.3%)
+  3. Rosario vs Gimnasia de Mendoza
+     Date: 2026-11-22
+     League: Ecuador Liga Pro
+     Pick: Home Win · High confidence (88.1%)
      Category:
        • Tier: ✅ Solid
 
   👀 Watchlist
 
 
-  4. Southampton vs Derby
-     Date: 2026-11-21
-     League: Football League Championship
-     Pick: Home Win · High confidence (90.3%)
-     Category:
-       • Tier: 👀 Watchlist
-       • Auto-flag: poor league win rate on this market
-
-  5. Wolves vs Charlton
-     Date: 2026-11-21
-     League: Football League Championship
-     Pick: Home Win · High confidence (90.1%)
-     Category:
-       • Tier: 👀 Watchlist
-       • Auto-flag: poor league win rate on this market
-
-  6. Plymouth vs Peterborough
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Home Win · High confidence (84.6%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  7. Cheltenham vs Bristol R
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Home Win · High confidence (91.5%)
-     Category:
-       • Tier: 👀 Watchlist
-       • Auto-flag: poor league win rate on this market
-
-  8. Barnet vs Port Vale
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Home Win · High confidence (91.5%)
-     Category:
-       • Tier: 👀 Watchlist
-       • Auto-flag: poor league win rate on this market
-
-  9. Celtic vs St Mirren
-     Date: 2026-11-21
-     League: Scottish Premier
-     Pick: Home Win · High confidence (84.6%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  10. Clyde vs Stirling
-     Date: 2026-11-21
-     League: Scottish League Two
-     Pick: Home Win · High confidence (92.1%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  11. Como vs Cagliari
-     Date: 2026-11-21
+  4. Juventus vs Venezia
+     Date: 2026-11-22
      League: Italian Serie A
-     Pick: Home Win · High confidence (85.8%)
+     Pick: Home Win · High confidence (85.6%)
      Category:
        • Tier: 👀 Watchlist
 
-  12. Lazio vs Lecce
-     Date: 2026-11-21
-     League: Italian Serie A
-     Pick: Home Win · High confidence (85.4%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  13. E Frankfurt vs Hoffenheim
-     Date: 2026-11-21
-     League: German Bundesliga
-     Pick: Home Win · High confidence (84.0%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  14. Real Madrid vs Celta Vigo
-     Date: 2026-11-21
-     League: Spanish La Liga
-     Pick: Home Win · High confidence (86.4%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  15. Monaco vs Auxerre
-     Date: 2026-11-21
+  5. Paris FC vs Angers
+     Date: 2026-11-22
      League: French Ligue 1
-     Pick: Home Win · High confidence (81.3%)
+     Pick: Home Win · High confidence (89.9%)
      Category:
        • Tier: 👀 Watchlist
 
-  16. Galatasaray vs Samsunspor
-     Date: 2026-11-21
+  6. Trabzonspor vs Eyupspor
+     Date: 2026-11-22
      League: Turkish Super Lig
-     Pick: Home Win · High confidence (91.3%)
+     Pick: Home Win · High confidence (91.0%)
      Category:
        • Tier: 👀 Watchlist
 
-  17. O. Ljubljana vs NK Radomlje
-     Date: 2026-11-21
-     League: Slovenian League
-     Pick: Home Win · High confidence (76.4%)
+  7. Ajax vs Den Haag
+     Date: 2026-11-22
+     League: Netherlands League
+     Pick: Home Win · High confidence (88.0%)
      Category:
        • Tier: 👀 Watchlist
 
-  18. Mlada Boleslav vs Zlin
-     Date: 2026-11-21
-     League: Czech Liga
-     Pick: Home Win · High confidence (95.3%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  19. Charleroi vs Sint-Truidense
-     Date: 2026-11-21
+  8. Anderlecht vs O-H Leuven
+     Date: 2026-11-22
      League: Belgium League
-     Pick: Home Win · High confidence (84.2%)
+     Pick: Home Win · High confidence (83.1%)
      Category:
        • Tier: 👀 Watchlist
 
-  20. Genk vs RAAL La Louviere
-     Date: 2026-11-21
-     League: Belgium League
-     Pick: Home Win · High confidence (92.6%)
+  9. Hacken vs Elfsborg
+     Date: 2026-11-22
+     League: Swedish Allsvenskan
+     Pick: Home Win · High confidence (88.3%)
+     Category:
+       • Tier: 👀 Watchlist
+       • League type: weak-ROI region (extra model caution)
+
+  10. Panathinaikos vs OFI Crete
+     Date: 2026-11-22
+     League: Greek Super League
+     Pick: Home Win · High confidence (85.0%)
      Category:
        • Tier: 👀 Watchlist
 
-  21. Lugano vs Grasshoppers
-     Date: 2026-11-21
-     League: Swiss Super League
-     Pick: Home Win · High confidence (91.2%)
+  11. Olympiakos vs Iraklis
+     Date: 2026-11-22
+     League: Greek Super League
+     Pick: Home Win · High confidence (84.8%)
      Category:
        • Tier: 👀 Watchlist
 
-  22. Red Star vs Radnik Surdulica
-     Date: 2026-11-21
-     League: Serbian League
-     Pick: Home Win · High confidence (85.1%)
+  12. ML Vitebsk vs Slavia Mozyr
+     Date: 2026-11-22
+     League: Belarus League
+     Pick: Home Win · High confidence (87.5%)
      Category:
        • Tier: 👀 Watchlist
+       • League type: weak-ROI region (extra model caution)
 
-  23. Truro City vs Hemel
-     Date: 2026-11-21
-     League: Football Conference South
-     Pick: Home Win · High confidence (82.7%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  24. Billericay vs Slough
-     Date: 2026-11-21
-     League: Football Conference South
+  13. Orense vs Mushuc Runa
+     Date: 2026-11-22
+     League: Ecuador Liga Pro
      Pick: Home Win · High confidence (82.8%)
      Category:
        • Tier: 👀 Watchlist
 
-  25. Plymouth P vs Malvern Town
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Home Win · High confidence (94.2%)
-     Category:
-       • Tier: 👀 Watchlist
-       • Auto-flag: poor league win rate on this market
-
-  26. Santos Laguna vs Leon
-     Date: 2026-11-21
-     League: Mexican Primera Apertura
-     Pick: Home Win · High confidence (90.3%)
-     Category:
-       • Tier: 👀 Watchlist
-       • League type: weak-ROI region (extra model caution)
-
-  27. Kawasaki F vs Avispa Fukuoka
-     Date: 2026-11-21
-     League: Japanese J1 League
-     Pick: Home Win · High confidence (90.1%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  28. Incheon United vs Ulsan Hyundai
-     Date: 2026-11-21
-     League: Korean K-League 1
-     Pick: Home Win · High confidence (79.4%)
-     Category:
-       • Tier: 👀 Watchlist
-       • League type: weak-ROI region (extra model caution)
-       • Auto-flag: weak ROI history on this market
-
-  29. Suwon Samsung vs Gyeongnam
-     Date: 2026-11-21
-     League: Korean K-League 2
-     Pick: Home Win · High confidence (93.9%)
-     Category:
-       • Tier: 👀 Watchlist
-       • Auto-flag: weak ROI history on this market
-
 ───────────
 🎯 OVER 0.5 TEAM GOAL
 
-📅 Picks for 2026-11-21
+📅 Picks for 2026-11-22
 
 
 🏠 Home Team to Score
@@ -665,1069 +1096,474 @@
   🔥 Premium picks
 
 
-  1. Bournemouth vs Nottm Forest
-     Date: 2026-11-21
-     League: Premier League
-     Pick: Home to Score · High confidence (91.7%)
-     Category:
-       • Tier: 🔥 Premium
-
-  2. Aston Villa vs Sunderland
-     Date: 2026-11-21
-     League: Premier League
-     Pick: Home to Score · High confidence (94.3%)
-     Category:
-       • Tier: 🔥 Premium
-
-  3. Sheff Utd vs Watford
-     Date: 2026-11-21
-     League: Football League Championship
-     Pick: Home to Score · High confidence (83.6%)
-     Category:
-       • Tier: 🔥 Premium
-
-  4. Wolves vs Charlton
-     Date: 2026-11-21
-     League: Football League Championship
-     Pick: Home to Score · High confidence (88.8%)
-     Category:
-       • Tier: 🔥 Premium
-
-  5. Leyton Orient vs AFC W'bledon
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Home to Score · High confidence (92.5%)
-     Category:
-       • Tier: 🔥 Premium
-
-  6. Barnet vs Port Vale
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Home to Score · High confidence (90.0%)
-     Category:
-       • Tier: 🔥 Premium
-
-  7. York vs Walsall
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Home to Score · High confidence (87.6%)
-     Category:
-       • Tier: 🔥 Premium
-
-  8. Crawley vs Fleetwood
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Home to Score · High confidence (86.1%)
-     Category:
-       • Tier: 🔥 Premium
-
-  9. Chesterfield vs Shrewsbury
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Home to Score · High confidence (92.3%)
-     Category:
-       • Tier: 🔥 Premium
-
-  10. E Frankfurt vs Hoffenheim
-     Date: 2026-11-21
+  1. W Bremen vs Hamburg
+     Date: 2026-11-22
      League: German Bundesliga
-     Pick: Home to Score · High confidence (82.6%)
+     Pick: Home to Score · High confidence (90.2%)
      Category:
        • Tier: 🔥 Premium
 
-  11. Lille vs Lyon
-     Date: 2026-11-21
-     League: French Ligue 1
-     Pick: Home to Score · High confidence (79.8%)
+  2. Pardubice vs FC Brno
+     Date: 2026-11-22
+     League: Czech Liga
+     Pick: Home to Score · High confidence (86.9%)
      Category:
        • Tier: 🔥 Premium
 
-  12. Monaco vs Auxerre
-     Date: 2026-11-21
-     League: French Ligue 1
-     Pick: Home to Score · High confidence (94.2%)
+  3. Anderlecht vs O-H Leuven
+     Date: 2026-11-22
+     League: Belgium League
+     Pick: Home to Score · High confidence (84.6%)
      Category:
        • Tier: 🔥 Premium
 
-  13. St Pauli vs Bochum
-     Date: 2026-11-21
-     League: German Bundesliga 2
-     Pick: Home to Score · Medium confidence (72.2%)
-     Category:
-       • Tier: 🔥 Premium
-
-  14. Valerenga vs IK Start
-     Date: 2026-11-21
-     League: Norwegian Tippeligaen
-     Pick: Home to Score · High confidence (94.6%)
-     Category:
-       • Tier: 🔥 Premium
-
-  15. Real Sociedad B vs Cadiz
-     Date: 2026-11-21
-     League: Spanish Segunda
-     Pick: Home to Score · Medium confidence (77.5%)
-     Category:
-       • Tier: 🔥 Premium
-
-  16. O. Ljubljana vs NK Radomlje
-     Date: 2026-11-21
-     League: Slovenian League
-     Pick: Home to Score · High confidence (90.4%)
-     Category:
-       • Tier: 🔥 Premium
-
-  17. AIK Solna vs Degerfors
-     Date: 2026-11-21
+  4. Hacken vs Elfsborg
+     Date: 2026-11-22
      League: Swedish Allsvenskan
-     Pick: Home to Score · High confidence (91.5%)
+     Pick: Home to Score · High confidence (88.9%)
      Category:
        • Tier: 🔥 Premium
 
-  18. Swarovski Wattens vs Austria Lustenau
-     Date: 2026-11-21
-     League: Austrian Bundesliga
-     Pick: Home to Score · High confidence (88.2%)
+  5. Sp. Gijon vs Las Palmas
+     Date: 2026-11-22
+     League: Spanish Segunda
+     Pick: Home to Score · Medium confidence (76.8%)
      Category:
        • Tier: 🔥 Premium
 
-  19. Puskas FA FC vs MTK
-     Date: 2026-11-21
-     League: Hungarian League
-     Pick: Home to Score · High confidence (89.4%)
+  6. PAOK Salonika vs Kifisia
+     Date: 2026-11-22
+     League: Greek Super League
+     Pick: Home to Score · High confidence (84.0%)
      Category:
        • Tier: 🔥 Premium
 
-  20. Chippenham vs Bracknell
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Home to Score · High confidence (89.7%)
+  7. Kristiansund vs Sandefjord
+     Date: 2026-11-22
+     League: Norwegian Tippeligaen
+     Pick: Home to Score · High confidence (82.1%)
      Category:
        • Tier: 🔥 Premium
 
-  21. Plymouth P vs Malvern Town
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Home to Score · High confidence (92.3%)
+  8. ML Vitebsk vs Slavia Mozyr
+     Date: 2026-11-22
+     League: Belarus League
+     Pick: Home to Score · High confidence (91.2%)
      Category:
        • Tier: 🔥 Premium
 
-  22. Chichester C vs Basingstoke
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Home to Score · High confidence (94.1%)
+  9. Chicago vs Charlotte FC
+     Date: 2026-11-22
+     League: MLS
+     Pick: Home to Score · High confidence (90.9%)
      Category:
        • Tier: 🔥 Premium
 
-  23. Sholing vs Evesham
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Home to Score · High confidence (89.6%)
+  10. Fluminense vs Mirassol
+     Date: 2026-11-22
+     League: Brazilian Serie A
+     Pick: Home to Score · High confidence (78.6%)
      Category:
        • Tier: 🔥 Premium
 
-  24. AFC Emley vs Hyde
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Home to Score · High confidence (81.0%)
+  11. Guadalajara vs Cruz Azul
+     Date: 2026-11-22
+     League: Mexican Primera Apertura
+     Pick: Home to Score · High confidence (84.6%)
+     Category:
+       • Tier: 🔥 Premium
+
+  12. Once Caldas vs Atletico Nacional
+     Date: 2026-11-22
+     League: Mexican Primera Apertura
+     Pick: Home to Score · Medium confidence (68.3%)
+     Category:
+       • Tier: 🔥 Premium
+
+  13. Daegu vs Gimhae City
+     Date: 2026-11-22
+     League: Korean K-League 2
+     Pick: Home to Score · High confidence (90.7%)
+     Category:
+       • Tier: 🔥 Premium
+
+  14. Paju Frontier vs Cheonan City
+     Date: 2026-11-22
+     League: Korean K-League 2
+     Pick: Home to Score · Medium confidence (76.5%)
+     Category:
+       • Tier: 🔥 Premium
+
+  15. Sport Huancayo vs Universitario de Deportes
+     Date: 2026-11-22
+     League: Ecuador Liga Pro
+     Pick: Home to Score · High confidence (93.0%)
      Category:
        • Tier: 🔥 Premium
   ✅ Solid picks
 
 
-  25. Chelsea vs Leeds
-     Date: 2026-11-21
-     League: Premier League
-     Pick: Home to Score · High confidence (94.0%)
+  16. Juventus vs Venezia
+     Date: 2026-11-22
+     League: Italian Serie A
+     Pick: Home to Score · High confidence (84.4%)
      Category:
        • Tier: ✅ Solid
 
-  26. Norwich vs Cardiff
-     Date: 2026-11-21
+  17. Burnley vs Blackburn
+     Date: 2026-11-22
      League: Football League Championship
-     Pick: Home to Score · High confidence (86.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  27. Southampton vs Derby
-     Date: 2026-11-21
-     League: Football League Championship
-     Pick: Home to Score · High confidence (92.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  28. Lincoln vs Wrexham
-     Date: 2026-11-21
-     League: Football League Championship
-     Pick: Home to Score · High confidence (78.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  29. Middlesbrough vs Bristol C
-     Date: 2026-11-21
-     League: Football League Championship
-     Pick: Home to Score · High confidence (85.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  30. Stoke vs Birmingham
-     Date: 2026-11-21
-     League: Football League Championship
-     Pick: Home to Score · Medium confidence (72.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  31. Swansea vs West Brom
-     Date: 2026-11-21
-     League: Football League Championship
-     Pick: Home to Score · Medium confidence (77.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  32. West Ham vs Preston
-     Date: 2026-11-21
-     League: Football League Championship
-     Pick: Home to Score · High confidence (91.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  33. Blackpool vs Wigan
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Home to Score · High confidence (81.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  34. Reading vs Bromley
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Home to Score · High confidence (85.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  35. Huddersfield vs Leicester
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Home to Score · High confidence (87.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  36. Notts Co vs Stevenage
-     Date: 2026-11-21
-     League: Football League One
      Pick: Home to Score · Medium confidence (77.5%)
      Category:
        • Tier: ✅ Solid
 
-  37. Mansfield vs MK Dons
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Home to Score · Medium confidence (77.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  38. Bradford vs Doncaster
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Home to Score · High confidence (96.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  39. Newport Co vs Swindon
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Home to Score · High confidence (82.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  40. Tranmere vs Colchester
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Home to Score · High confidence (82.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  41. Accrington vs Salford
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Home to Score · Medium confidence (69.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  42. Cheltenham vs Bristol R
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Home to Score · High confidence (91.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  43. Tamworth vs Eastleigh
-     Date: 2026-11-21
-     League: National League
-     Pick: Home to Score · High confidence (84.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  44. Solihull M vs Altrincham
-     Date: 2026-11-21
-     League: National League
-     Pick: Home to Score · High confidence (80.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  45. Aldershot vs Scunthorpe
-     Date: 2026-11-21
-     League: National League
-     Pick: Home to Score · High confidence (84.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  46. Barrow vs Carlisle
-     Date: 2026-11-21
-     League: National League
-     Pick: Home to Score · Medium confidence (72.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  47. Kidderminster vs Fylde
-     Date: 2026-11-21
-     League: National League
-     Pick: Home to Score · High confidence (79.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  48. Halifax vs Woking
-     Date: 2026-11-21
-     League: National League
-     Pick: Home to Score · High confidence (87.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  49. Celtic vs St Mirren
-     Date: 2026-11-21
-     League: Scottish Premier
-     Pick: Home to Score · High confidence (93.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  50. Wealdstone vs Hornchurch
-     Date: 2026-11-21
-     League: National League
-     Pick: Home to Score · High confidence (87.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  51. Kilmarnock vs Aberdeen
-     Date: 2026-11-21
-     League: Scottish Premier
-     Pick: Home to Score · High confidence (78.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  52. Dundee vs Hearts
-     Date: 2026-11-21
-     League: Scottish Premier
-     Pick: Home to Score · High confidence (92.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  53. Falkirk vs St Johnstone
-     Date: 2026-11-21
-     League: Scottish Premier
-     Pick: Home to Score · High confidence (86.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  54. Queen of Sth vs Hamilton
-     Date: 2026-11-21
-     League: Scottish League One
-     Pick: Home to Score · High confidence (81.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  55. Dunfermline vs Morton
-     Date: 2026-11-21
-     League: Scottish Championship
+  18. Liverpool vs Man Utd
+     Date: 2026-11-22
+     League: Premier League
      Pick: Home to Score · High confidence (85.0%)
      Category:
        • Tier: ✅ Solid
 
-  56. East Fife vs Airdrieonians
-     Date: 2026-11-21
-     League: Scottish League One
-     Pick: Home to Score · Medium confidence (75.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  57. Clyde vs Stirling
-     Date: 2026-11-21
-     League: Scottish League Two
-     Pick: Home to Score · High confidence (97.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  58. Montrose vs Alloa
-     Date: 2026-11-21
-     League: Scottish League One
-     Pick: Home to Score · High confidence (84.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  59. Stranraer vs Elgin City
-     Date: 2026-11-21
-     League: Scottish League Two
-     Pick: Home to Score · High confidence (86.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  60. Huntly vs Lossiemouth
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Home to Score · High confidence (96.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  61. Formartine Utd vs Strathspey T
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Home to Score · High confidence (87.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  62. Keith vs Forres Mech
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Home to Score · High confidence (88.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  63. Inverurie Locos vs Buckie Thistle
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Home to Score · High confidence (80.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  64. Wick Academy vs Banks o'Dee
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Home to Score · Medium confidence (77.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  65. Como vs Cagliari
-     Date: 2026-11-21
+  19. Sassuolo vs Genoa
+     Date: 2026-11-22
      League: Italian Serie A
-     Pick: Home to Score · High confidence (88.7%)
+     Pick: Home to Score · High confidence (81.0%)
      Category:
        • Tier: ✅ Solid
 
-  66. Lazio vs Lecce
-     Date: 2026-11-21
-     League: Italian Serie A
-     Pick: Home to Score · High confidence (85.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  67. Napoli vs Torino
-     Date: 2026-11-21
+  20. Bologna vs Udinese
+     Date: 2026-11-22
      League: Italian Serie A
      Pick: Home to Score · High confidence (80.2%)
      Category:
        • Tier: ✅ Solid
 
-  68. Elversberg vs Freiburg
-     Date: 2026-11-21
-     League: German Bundesliga
+  21. Milan vs Frosinone
+     Date: 2026-11-22
+     League: Italian Serie A
      Pick: Home to Score · High confidence (84.0%)
      Category:
        • Tier: ✅ Solid
 
-  69. Union Berlin vs RB Leipzig
-     Date: 2026-11-21
-     League: German Bundesliga
-     Pick: Home to Score · High confidence (81.0%)
+  22. Barcelona vs Villarreal
+     Date: 2026-11-22
+     League: Spanish La Liga
+     Pick: Home to Score · High confidence (92.1%)
      Category:
        • Tier: ✅ Solid
 
-  70. Lens vs Toulouse
-     Date: 2026-11-21
+  23. Racing vs Sociedad
+     Date: 2026-11-22
+     League: Spanish La Liga
+     Pick: Home to Score · Medium confidence (77.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  24. Osasuna vs Malaga
+     Date: 2026-11-22
+     League: Spanish La Liga
+     Pick: Home to Score · Medium confidence (69.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  25. Lorient vs Rennes
+     Date: 2026-11-22
      League: French Ligue 1
+     Pick: Home to Score · High confidence (83.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  26. Erzurum B vs Goztepe
+     Date: 2026-11-22
+     League: Turkish Super Lig
      Pick: Home to Score · Medium confidence (72.2%)
      Category:
        • Tier: ✅ Solid
 
-  71. Nice vs PSG
-     Date: 2026-11-21
+  27. Marseille vs Le Mans
+     Date: 2026-11-22
      League: French Ligue 1
-     Pick: Home to Score · Medium confidence (77.9%)
+     Pick: Home to Score · High confidence (86.7%)
      Category:
        • Tier: ✅ Solid
 
-  72. Strasbourg vs Brest
-     Date: 2026-11-21
-     League: French Ligue 1
-     Pick: Home to Score · High confidence (81.2%)
+  28. Kasimpasa vs Alanyaspor
+     Date: 2026-11-22
+     League: Turkish Super Lig
+     Pick: Home to Score · High confidence (89.2%)
      Category:
        • Tier: ✅ Solid
 
-  73. Akron vs Fakel Voronezh
-     Date: 2026-11-21
+  29. Trabzonspor vs Eyupspor
+     Date: 2026-11-22
+     League: Turkish Super Lig
+     Pick: Home to Score · High confidence (94.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  30. Rodina Moscow vs Lok. Moscow
+     Date: 2026-11-22
      League: Russian Premier
-     Pick: Home to Score · High confidence (79.0%)
+     Pick: Home to Score · Medium confidence (77.0%)
      Category:
        • Tier: ✅ Solid
 
-  74. CSKA Mosc. vs Terek Grozny
-     Date: 2026-11-21
-     League: Russian Premier
-     Pick: Home to Score · High confidence (84.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  75. Genclerbirligi vs Gazisehir
-     Date: 2026-11-21
-     League: Turkish Super Lig
-     Pick: Home to Score · High confidence (85.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  76. Amedspor vs Rizespor
-     Date: 2026-11-21
-     League: Turkish Super Lig
-     Pick: Home to Score · High confidence (84.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  77. Galatasaray vs Samsunspor
-     Date: 2026-11-21
-     League: Turkish Super Lig
-     Pick: Home to Score · High confidence (92.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  78. Hannover vs Greuther Furth
-     Date: 2026-11-21
-     League: German Bundesliga 2
-     Pick: Home to Score · High confidence (84.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  79. Nuremberg vs Braunschweig
-     Date: 2026-11-21
-     League: German Bundesliga 2
-     Pick: Home to Score · High confidence (92.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  80. Wolfsburg vs Holstein Kiel
-     Date: 2026-11-21
-     League: German Bundesliga 2
-     Pick: Home to Score · High confidence (87.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  81. Din. Bucharest vs Petrolul
-     Date: 2026-11-21
-     League: Romanian Liga 1
-     Pick: Home to Score · High confidence (85.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  82. Castellon vs Eldense
-     Date: 2026-11-21
-     League: Spanish Segunda
-     Pick: Home to Score · High confidence (85.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  83. Cracovia vs Jagiellonia
-     Date: 2026-11-21
-     League: Polish Ekstraklasa
-     Pick: Home to Score · Medium confidence (71.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  84. Mlada Boleslav vs Zlin
-     Date: 2026-11-21
-     League: Czech Liga
-     Pick: Home to Score · High confidence (91.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  85. NK Rudes vs NK Varazdin
-     Date: 2026-11-21
-     League: Croatian HNL
-     Pick: Home to Score · Medium confidence (71.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  86. Genk vs RAAL La Louviere
-     Date: 2026-11-21
-     League: Belgium League
-     Pick: Home to Score · High confidence (95.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  87. Charleroi vs Sint-Truidense
-     Date: 2026-11-21
-     League: Belgium League
-     Pick: Home to Score · High confidence (94.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  88. NEC Nijmegen vs PSV Eindhoven
-     Date: 2026-11-21
+  31. FC Twente vs Willem II
+     Date: 2026-11-22
      League: Netherlands League
-     Pick: Home to Score · High confidence (81.9%)
+     Pick: Home to Score · High confidence (96.1%)
      Category:
        • Tier: ✅ Solid
 
-  89. Utrecht vs Cambuur
-     Date: 2026-11-21
+  32. Ajax vs Den Haag
+     Date: 2026-11-22
      League: Netherlands League
-     Pick: Home to Score · Medium confidence (77.7%)
+     Pick: Home to Score · High confidence (83.5%)
      Category:
        • Tier: ✅ Solid
 
-  90. Feyenoord vs Excelsior
-     Date: 2026-11-21
+  33. Sp. Rotterdam vs AZ Alkmaar
+     Date: 2026-11-22
      League: Netherlands League
-     Pick: Home to Score · High confidence (82.3%)
+     Pick: Home to Score · Medium confidence (74.1%)
      Category:
        • Tier: ✅ Solid
 
-  91. FC Groningen vs Heerenveen
-     Date: 2026-11-21
+  34. Go A Eagles vs F. Sittard
+     Date: 2026-11-22
      League: Netherlands League
-     Pick: Home to Score · High confidence (84.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  92. Telstar vs PEC Zwolle
-     Date: 2026-11-21
-     League: Netherlands League
-     Pick: Home to Score · High confidence (85.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  93. LASK Linz vs Hartberg
-     Date: 2026-11-21
-     League: Austrian Bundesliga
-     Pick: Home to Score · High confidence (86.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  94. FC Sion vs Servette
-     Date: 2026-11-21
-     League: Swiss Super League
-     Pick: Home to Score · High confidence (81.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  95. Young Boys vs Thun
-     Date: 2026-11-21
-     League: Swiss Super League
-     Pick: Home to Score · High confidence (95.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  96. Kalamata vs AEK Athens
-     Date: 2026-11-21
-     League: Greek Super League
-     Pick: Home to Score · High confidence (91.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  97. Karpaty Lvov vs Zorya
-     Date: 2026-11-21
-     League: Ukrainian League
-     Pick: Home to Score · High confidence (78.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  98. Gomel vs Bate Borisov
-     Date: 2026-11-21
-     League: Belarus League
-     Pick: Home to Score · High confidence (78.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  99. Dinamo Brest vs FC Naftan
-     Date: 2026-11-21
-     League: Belarus League
-     Pick: Home to Score · High confidence (88.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  100. Radnicki Nis vs Zemun
-     Date: 2026-11-21
-     League: Serbian League
-     Pick: Home to Score · High confidence (83.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  101. Red Star vs Radnik Surdulica
-     Date: 2026-11-21
-     League: Serbian League
-     Pick: Home to Score · High confidence (85.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  102. Ujpest Dozsa vs Kisvarda
-     Date: 2026-11-21
-     League: Hungarian League
-     Pick: Home to Score · Medium confidence (74.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  103. Ferencvaros vs Gyori ETO
-     Date: 2026-11-21
-     League: Hungarian League
-     Pick: Home to Score · High confidence (83.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  104. Dallas vs Portland Timb.
-     Date: 2026-11-21
-     League: MLS
-     Pick: Home to Score · High confidence (80.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  105. New England vs Philadelphia U
-     Date: 2026-11-21
-     League: MLS
-     Pick: Home to Score · Medium confidence (72.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  106. Chester vs Macclesfield
-     Date: 2026-11-21
-     League: Football Conference North
-     Pick: Home to Score · Medium confidence (72.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  107. Spalding Utd vs Merthyr
-     Date: 2026-11-21
-     League: Football Conference North
-     Pick: Home to Score · High confidence (83.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  108. Hereford vs Darlington
-     Date: 2026-11-21
-     League: Football Conference North
-     Pick: Home to Score · High confidence (81.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  109. Tonbridge vs Weston S-M.
-     Date: 2026-11-21
-     League: Football Conference South
-     Pick: Home to Score · High confidence (87.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  110. Maidstone vs Farnham Town
-     Date: 2026-11-21
-     League: Football Conference South
-     Pick: Home to Score · Medium confidence (70.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  111. Truro City vs Hemel
-     Date: 2026-11-21
-     League: Football Conference South
-     Pick: Home to Score · High confidence (80.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  112. Dorking W vs Ebbsfleet
-     Date: 2026-11-21
-     League: Football Conference South
      Pick: Home to Score · High confidence (86.5%)
      Category:
        • Tier: ✅ Solid
 
-  113. Billericay vs Slough
-     Date: 2026-11-21
-     League: Football Conference South
-     Pick: Home to Score · High confidence (95.8%)
+  35. Rakow Czestochowa vs Widzew Lodz
+     Date: 2026-11-22
+     League: Polish Ekstraklasa
+     Pick: Home to Score · High confidence (85.5%)
      Category:
        • Tier: ✅ Solid
 
-  114. Dulwich H vs Welling
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Home to Score · High confidence (80.8%)
+  36. GKS Katowice vs Lech Poznan
+     Date: 2026-11-22
+     League: Polish Ekstraklasa
+     Pick: Home to Score · High confidence (89.0%)
      Category:
        • Tier: ✅ Solid
 
-  115. Wingate & F vs Brentwood T
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Home to Score · High confidence (82.4%)
+  37. Synot vs Hradec Kralove
+     Date: 2026-11-22
+     League: Czech Liga
+     Pick: Home to Score · Medium confidence (71.9%)
      Category:
        • Tier: ✅ Solid
 
-  116. Three Bridges vs Cheshunt
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Home to Score · High confidence (89.8%)
+  38. AC Horsens vs Silkeborg
+     Date: 2026-11-22
+     League: Danish SAS Ligaen
+     Pick: Home to Score · High confidence (92.6%)
      Category:
        • Tier: ✅ Solid
 
-  117. Ramsgate vs Lewes
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Home to Score · High confidence (89.5%)
+  39. Viborg vs Randers
+     Date: 2026-11-22
+     League: Danish SAS Ligaen
+     Pick: Home to Score · High confidence (80.0%)
      Category:
        • Tier: ✅ Solid
 
-  118. Cray W vs Whitehawk
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Home to Score · High confidence (83.0%)
+  40. FC Zurich vs St Gallen
+     Date: 2026-11-22
+     League: Swiss Super League
+     Pick: Home to Score · High confidence (87.6%)
      Category:
        • Tier: ✅ Solid
 
-  119. Enfield T vs Eastbourne
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Home to Score · High confidence (84.9%)
+  41. Basel vs Lucerne
+     Date: 2026-11-22
+     League: Swiss Super League
+     Pick: Home to Score · High confidence (81.0%)
      Category:
        • Tier: ✅ Solid
 
-  120. Chatham Town vs Maldon & T
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Home to Score · High confidence (83.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  121. Berkhamsted vs Frome
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Home to Score · Medium confidence (74.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  122. Dartford vs Leatherhead
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Home to Score · High confidence (81.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  123. Gosport Bor vs Havant & W
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Home to Score · High confidence (90.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  124. Hanworth Villa vs Poole Town
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Home to Score · High confidence (80.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  125. Taunton Town vs Chertsey Town
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Home to Score · High confidence (81.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  126. Workington vs Gainsborough
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Home to Score · High confidence (85.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  127. Warrington vs Guiseley
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Home to Score · Medium confidence (75.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  128. FC Utd vs Rylands
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Home to Score · High confidence (79.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  129. Bury vs Redcar Athletic
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Home to Score · High confidence (84.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  130. Stockton T vs Ilkeston
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Home to Score · High confidence (84.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  131. Whitby vs Leek
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Home to Score · High confidence (79.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  132. Quorn vs Avro
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Home to Score · High confidence (90.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  133. Puebla vs Atletico San Luis
-     Date: 2026-11-21
-     League: Mexican Primera Apertura
-     Pick: Home to Score · Medium confidence (68.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  134. Tijuana vs Atlante
-     Date: 2026-11-21
-     League: Mexican Primera Apertura
-     Pick: Home to Score · High confidence (84.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  135. Pachuca vs Toluca
-     Date: 2026-11-21
-     League: Mexican Primera Apertura
-     Pick: Home to Score · High confidence (85.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  136. Santos Laguna vs Leon
-     Date: 2026-11-21
-     League: Mexican Primera Apertura
-     Pick: Home to Score · High confidence (79.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  137. Deportivo Cali vs Millonarios
-     Date: 2026-11-21
-     League: Mexican Primera Apertura
-     Pick: Home to Score · High confidence (80.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  138. Kawasaki F vs Avispa Fukuoka
-     Date: 2026-11-21
-     League: Japanese J1 League
-     Pick: Home to Score · High confidence (94.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  139. Incheon United vs Ulsan Hyundai
-     Date: 2026-11-21
-     League: Korean K-League 1
-     Pick: Home to Score · High confidence (85.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  140. Suwon Samsung vs Gyeongnam
-     Date: 2026-11-21
-     League: Korean K-League 2
+  42. Cordoba vs Real Oviedo
+     Date: 2026-11-22
+     League: Spanish Segunda
      Pick: Home to Score · High confidence (88.9%)
      Category:
        • Tier: ✅ Solid
 
-  141. Blaublitz Akita vs Montedio Yamagata
-     Date: 2026-11-21
-     League: Japanese J2 League
-     Pick: Home to Score · High confidence (79.4%)
+  43. Girona vs Eibar
+     Date: 2026-11-22
+     League: Spanish Segunda
+     Pick: Home to Score · Medium confidence (76.5%)
      Category:
        • Tier: ✅ Solid
 
-  142. Tegevajaro Miyazaki vs Iwaki
-     Date: 2026-11-21
-     League: Japanese J2 League
-     Pick: Home to Score · High confidence (84.1%)
+  44. Celta de Vigo B vs Valladolid
+     Date: 2026-11-22
+     League: Spanish Segunda
+     Pick: Home to Score · Medium confidence (74.3%)
      Category:
        • Tier: ✅ Solid
 
-  143. Kataller Toyama vs Oita Trinita
-     Date: 2026-11-21
-     League: Japanese J2 League
-     Pick: Home to Score · Medium confidence (71.6%)
+  45. Burgos vs Albacete
+     Date: 2026-11-22
+     League: Spanish Segunda
+     Pick: Home to Score · Medium confidence (75.8%)
      Category:
        • Tier: ✅ Solid
 
-  144. Jubilo Iwata vs Omiya Ardija
-     Date: 2026-11-21
-     League: Japanese J2 League
-     Pick: Home to Score · Low confidence (61.3%)
+  46. Altach vs Sturm Graz
+     Date: 2026-11-22
+     League: Austrian Bundesliga
+     Pick: Home to Score · High confidence (83.3%)
      Category:
        • Tier: ✅ Solid
 
-  145. Ostersunds FK vs Varbergs Bois
-     Date: 2026-11-21
-     League: Swedish Superettan
-     Pick: Home to Score · Low confidence (65.7%)
+  47. Dinamo Zagreb vs NK Istra
+     Date: 2026-11-22
+     League: Croatian HNL
+     Pick: Home to Score · Medium confidence (77.2%)
      Category:
        • Tier: ✅ Solid
 
-  146. Tochigi City vs Albirex Niigata
-     Date: 2026-11-21
-     League: Japanese J2 League
-     Pick: Home to Score · Medium confidence (77.5%)
+  48. Rijeka vs HNK Gorica
+     Date: 2026-11-22
+     League: Croatian HNL
+     Pick: Home to Score · High confidence (89.4%)
      Category:
        • Tier: ✅ Solid
 
-  147. Coquimbo Unido vs Everton de Vina del Mar
-     Date: 2026-11-21
-     League: Chile Primera
-     Pick: Home to Score · High confidence (81.5%)
+  49. KFUM Oslo vs Brann
+     Date: 2026-11-22
+     League: Norwegian Tippeligaen
+     Pick: Home to Score · High confidence (83.3%)
      Category:
        • Tier: ✅ Solid
 
-  148. O'Higgins vs Univ de Chile
-     Date: 2026-11-21
-     League: Chile Primera
-     Pick: Home to Score · Medium confidence (68.0%)
+  50. Dynamo Kyiv vs Obolon Kiev
+     Date: 2026-11-22
+     League: Ukrainian League
+     Pick: Home to Score · High confidence (88.1%)
      Category:
        • Tier: ✅ Solid
 
-  149. Defensa y Justicia vs Barracas Central
-     Date: 2026-11-21
-     League: Chile Primera
+  51. Levski Sofia vs Lokomotiv Sofia
+     Date: 2026-11-22
+     League: Bulgarian League
+     Pick: Home to Score · Medium confidence (70.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  52. Isloch Minsk vs Torpedo Zh
+     Date: 2026-11-22
+     League: Belarus League
+     Pick: Home to Score · High confidence (89.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  53. Zalaegerszeg vs Vasas
+     Date: 2026-11-22
+     League: Hungarian League
+     Pick: Home to Score · High confidence (87.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  54. Nashville MLS vs Cincinnati
+     Date: 2026-11-22
+     League: MLS
+     Pick: Home to Score · High confidence (84.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  55. Chapecoense vs Cruzeiro
+     Date: 2026-11-22
+     League: Brazilian Serie A
+     Pick: Home to Score · Medium confidence (73.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  56. Paranaense vs Remo
+     Date: 2026-11-22
+     League: Brazilian Serie A
+     Pick: Home to Score · High confidence (83.8%)
+     Category:
+       • Tier: ✅ Solid
+
+  57. Red Bull Bragantino vs Vasco
+     Date: 2026-11-22
+     League: Brazilian Serie A
+     Pick: Home to Score · Medium confidence (76.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  58. Pumas UNAM vs Monterrey
+     Date: 2026-11-22
+     League: Mexican Primera Apertura
+     Pick: Home to Score · High confidence (84.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  59. Tigres vs Club America
+     Date: 2026-11-22
+     League: Mexican Primera Apertura
+     Pick: Home to Score · High confidence (84.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  60. Gimcheon Sangmu vs Jeju United
+     Date: 2026-11-22
+     League: Korean K-League 1
      Pick: Home to Score · Medium confidence (75.3%)
      Category:
        • Tier: ✅ Solid
 
-  150. Argentinos Jun vs Independiente
-     Date: 2026-11-21
+  61. Jeonnam Dragons vs Ansan Greeners
+     Date: 2026-11-22
+     League: Korean K-League 2
+     Pick: Home to Score · High confidence (81.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  62. Seoul E-Land vs Chungnam Asan
+     Date: 2026-11-22
+     League: Korean K-League 2
+     Pick: Home to Score · High confidence (81.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  63. Colo-Colo vs Univ Catolica
+     Date: 2026-11-22
      League: Chile Primera
-     Pick: Home to Score · Low confidence (63.2%)
+     Pick: Home to Score · High confidence (93.0%)
      Category:
        • Tier: ✅ Solid
 
-  151. Universidad Catolica vs Barcelona de G
-     Date: 2026-11-21
+  64. Orense vs Mushuc Runa
+     Date: 2026-11-22
      League: Ecuador Liga Pro
-     Pick: Home to Score · High confidence (83.6%)
+     Pick: Home to Score · High confidence (92.5%)
      Category:
        • Tier: ✅ Solid
 
-  152. Bahia vs Coritiba
-     Date: 2026-11-21
-     League: Brazilian Serie A
-     Pick: Home to Score · High confidence (84.4%)
+  65. Rosario vs Gimnasia de Mendoza
+     Date: 2026-11-22
+     League: Ecuador Liga Pro
+     Pick: Home to Score · High confidence (88.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  66. LDU Quito vs Aucas
+     Date: 2026-11-22
+     League: Ecuador Liga Pro
+     Pick: Home to Score · Medium confidence (71.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  67. Sporting Cristal vs Cienciano
+     Date: 2026-11-22
+     League: Ecuador Liga Pro
+     Pick: Home to Score · High confidence (97.0%)
      Category:
        • Tier: ✅ Solid
 
@@ -1736,943 +1572,397 @@
   🔥 Premium picks
 
 
-  1. Man City vs Fulham
-     Date: 2026-11-21
-     League: Premier League
-     Pick: Away to Score · High confidence (80.2%)
-     Category:
-       • Tier: 🔥 Premium
-
-  2. Newcastle vs Arsenal
-     Date: 2026-11-21
-     League: Premier League
-     Pick: Away to Score · High confidence (77.0%)
-     Category:
-       • Tier: 🔥 Premium
-
-  3. Chesterfield vs Shrewsbury
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Away to Score · High confidence (88.1%)
-     Category:
-       • Tier: 🔥 Premium
-
-  4. Gateshead vs Hartlepool
-     Date: 2026-11-21
-     League: National League
-     Pick: Away to Score · High confidence (90.0%)
-     Category:
-       • Tier: 🔥 Premium
-
-  5. Hibernian vs Dundee Utd
-     Date: 2026-11-21
-     League: Scottish Premier
-     Pick: Away to Score · High confidence (92.9%)
-     Category:
-       • Tier: 🔥 Premium
-
-  6. Edinburgh C vs Kelty Hearts
-     Date: 2026-11-21
-     League: Scottish League Two
-     Pick: Away to Score · High confidence (92.0%)
-     Category:
-       • Tier: 🔥 Premium
-
-  7. Wick Academy vs Banks o'Dee
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Away to Score · High confidence (90.8%)
-     Category:
-       • Tier: 🔥 Premium
-
-  8. Strasbourg vs Brest
-     Date: 2026-11-21
-     League: French Ligue 1
-     Pick: Away to Score · High confidence (79.8%)
-     Category:
-       • Tier: 🔥 Premium
-
-  9. NEC Nijmegen vs PSV Eindhoven
-     Date: 2026-11-21
+  1. Go A Eagles vs F. Sittard
+     Date: 2026-11-22
      League: Netherlands League
-     Pick: Away to Score · High confidence (84.4%)
+     Pick: Away to Score · High confidence (83.8%)
      Category:
        • Tier: 🔥 Premium
 
-  10. Swarovski Wattens vs Austria Lustenau
-     Date: 2026-11-21
-     League: Austrian Bundesliga
-     Pick: Away to Score · High confidence (75.8%)
+  2. Rakow Czestochowa vs Widzew Lodz
+     Date: 2026-11-22
+     League: Polish Ekstraklasa
+     Pick: Away to Score · High confidence (87.6%)
      Category:
        • Tier: 🔥 Premium
 
-  11. Radcliffe Boro vs Telford
-     Date: 2026-11-21
-     League: Football Conference North
-     Pick: Away to Score · High confidence (83.1%)
+  3. Celta de Vigo B vs Valladolid
+     Date: 2026-11-22
+     League: Spanish Segunda
+     Pick: Away to Score · High confidence (79.0%)
      Category:
        • Tier: 🔥 Premium
 
-  12. Walton & H vs Chelmsford
-     Date: 2026-11-21
-     League: Football Conference South
-     Pick: Away to Score · High confidence (90.1%)
+  4. KFUM Oslo vs Brann
+     Date: 2026-11-22
+     League: Norwegian Tippeligaen
+     Pick: Away to Score · High confidence (82.1%)
      Category:
        • Tier: 🔥 Premium
 
-  13. Dulwich H vs Welling
-     Date: 2026-11-21
-     League: Ryman Premier
+  5. Sarpsborg vs Lillestrom
+     Date: 2026-11-22
+     League: Norwegian Tippeligaen
      Pick: Away to Score · High confidence (89.4%)
      Category:
        • Tier: 🔥 Premium
 
-  14. Wingate & F vs Brentwood T
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Away to Score · High confidence (76.8%)
+  6. Nyiregyhaza vs Debrecen
+     Date: 2026-11-22
+     League: Hungarian League
+     Pick: Away to Score · High confidence (77.7%)
+     Category:
+       • Tier: 🔥 Premium
+
+  7. Chicago vs Charlotte FC
+     Date: 2026-11-22
+     League: MLS
+     Pick: Away to Score · High confidence (92.0%)
+     Category:
+       • Tier: 🔥 Premium
+
+  8. Colo-Colo vs Univ Catolica
+     Date: 2026-11-22
+     League: Chile Primera
+     Pick: Away to Score · Medium confidence (71.9%)
      Category:
        • Tier: 🔥 Premium
   ✅ Solid picks
 
 
-  15. Aston Villa vs Sunderland
-     Date: 2026-11-21
+  9. Hull vs Brighton
+     Date: 2026-11-22
      League: Premier League
-     Pick: Away to Score · Medium confidence (69.3%)
+     Pick: Away to Score · Medium confidence (73.8%)
      Category:
        • Tier: ✅ Solid
 
-  16. Norwich vs Cardiff
-     Date: 2026-11-21
+  10. Burnley vs Blackburn
+     Date: 2026-11-22
      League: Football League Championship
-     Pick: Away to Score · Medium confidence (67.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  17. Millwall vs QPR
-     Date: 2026-11-21
-     League: Football League Championship
-     Pick: Away to Score · Low confidence (63.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  18. Swansea vs West Brom
-     Date: 2026-11-21
-     League: Football League Championship
-     Pick: Away to Score · Low confidence (62.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  19. Blackpool vs Wigan
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Away to Score · High confidence (86.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  20. Huddersfield vs Leicester
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Away to Score · High confidence (83.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  21. Notts Co vs Stevenage
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Away to Score · High confidence (75.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  22. Mansfield vs MK Dons
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Away to Score · High confidence (79.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  23. Cambridge U vs Stockport
-     Date: 2026-11-21
-     League: Football League One
-     Pick: Away to Score · Medium confidence (74.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  24. Gillingham vs Crewe
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Away to Score · High confidence (78.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  25. Accrington vs Salford
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Away to Score · High confidence (83.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  26. Northampton vs Rochdale
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Away to Score · Medium confidence (74.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  27. Barnet vs Port Vale
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Away to Score · Low confidence (56.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  28. Oldham vs Exeter
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Away to Score · Medium confidence (70.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  29. Crawley vs Fleetwood
-     Date: 2026-11-21
-     League: Football League Two
-     Pick: Away to Score · Medium confidence (74.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  30. Tamworth vs Eastleigh
-     Date: 2026-11-21
-     League: National League
-     Pick: Away to Score · Low confidence (62.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  31. Solihull M vs Altrincham
-     Date: 2026-11-21
-     League: National League
-     Pick: Away to Score · High confidence (81.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  32. Worthing vs Harrogate
-     Date: 2026-11-21
-     League: National League
-     Pick: Away to Score · High confidence (76.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  33. Aldershot vs Scunthorpe
-     Date: 2026-11-21
-     League: National League
-     Pick: Away to Score · High confidence (84.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  34. Kidderminster vs Fylde
-     Date: 2026-11-21
-     League: National League
-     Pick: Away to Score · Medium confidence (74.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  35. Halifax vs Woking
-     Date: 2026-11-21
-     League: National League
-     Pick: Away to Score · High confidence (92.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  36. Kilmarnock vs Aberdeen
-     Date: 2026-11-21
-     League: Scottish Premier
-     Pick: Away to Score · High confidence (86.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  37. Dundee vs Hearts
-     Date: 2026-11-21
-     League: Scottish Premier
-     Pick: Away to Score · Medium confidence (73.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  38. Motherwell vs Rangers
-     Date: 2026-11-21
-     League: Scottish Premier
-     Pick: Away to Score · High confidence (90.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  39. Queen's Park vs Livingston
-     Date: 2026-11-21
-     League: Scottish Championship
-     Pick: Away to Score · High confidence (78.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  40. Queen of Sth vs Hamilton
-     Date: 2026-11-21
-     League: Scottish League One
-     Pick: Away to Score · High confidence (91.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  41. Peterhead vs East Kilbride
-     Date: 2026-11-21
-     League: Scottish League One
-     Pick: Away to Score · Medium confidence (74.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  42. Clyde vs Stirling
-     Date: 2026-11-21
-     League: Scottish League Two
-     Pick: Away to Score · Medium confidence (74.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  43. Annan vs Forfar
-     Date: 2026-11-21
-     League: Scottish League Two
-     Pick: Away to Score · High confidence (81.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  44. Spartans vs Dumbarton
-     Date: 2026-11-21
-     League: Scottish League Two
-     Pick: Away to Score · High confidence (75.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  45. Rothes vs Nairn County
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Away to Score · High confidence (91.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  46. Turriff U vs Clachnacuddin
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Away to Score · High confidence (80.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  47. Invergordon vs Fraserburgh
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Away to Score · High confidence (87.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  48. Keith vs Forres Mech
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Away to Score · High confidence (86.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  49. Deveronvale vs Brora Rangers
-     Date: 2026-11-21
-     League: Scottish Highland League
-     Pick: Away to Score · High confidence (97.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  50. Parma vs Roma
-     Date: 2026-11-21
-     League: Italian Serie A
-     Pick: Away to Score · High confidence (89.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  51. Napoli vs Torino
-     Date: 2026-11-21
-     League: Italian Serie A
-     Pick: Away to Score · High confidence (77.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  52. Elversberg vs Freiburg
-     Date: 2026-11-21
-     League: German Bundesliga
-     Pick: Away to Score · High confidence (80.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  53. Union Berlin vs RB Leipzig
-     Date: 2026-11-21
-     League: German Bundesliga
-     Pick: Away to Score · Medium confidence (72.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  54. E Frankfurt vs Hoffenheim
-     Date: 2026-11-21
-     League: German Bundesliga
-     Pick: Away to Score · Medium confidence (68.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  55. Alaves vs Deportivo
-     Date: 2026-11-21
-     League: Spanish La Liga
-     Pick: Away to Score · Medium confidence (71.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  56. Rayo Vallecano vs Valencia
-     Date: 2026-11-21
-     League: Spanish La Liga
-     Pick: Away to Score · High confidence (86.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  57. Lens vs Toulouse
-     Date: 2026-11-21
-     League: French Ligue 1
-     Pick: Away to Score · High confidence (92.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  58. Nice vs PSG
-     Date: 2026-11-21
-     League: French Ligue 1
-     Pick: Away to Score · High confidence (93.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  59. Monaco vs Auxerre
-     Date: 2026-11-21
-     League: French Ligue 1
-     Pick: Away to Score · Low confidence (64.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  60. Rubin vs Zenit
-     Date: 2026-11-21
-     League: Russian Premier
-     Pick: Away to Score · High confidence (80.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  61. Amedspor vs Rizespor
-     Date: 2026-11-21
-     League: Turkish Super Lig
-     Pick: Away to Score · Low confidence (60.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  62. Tromso vs Viking
-     Date: 2026-11-21
-     League: Norwegian Tippeligaen
-     Pick: Away to Score · High confidence (76.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  63. HamKam vs Fredrikstad
-     Date: 2026-11-21
-     League: Norwegian Tippeligaen
-     Pick: Away to Score · High confidence (82.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  64. Real Sociedad B vs Cadiz
-     Date: 2026-11-21
-     League: Spanish Segunda
-     Pick: Away to Score · High confidence (80.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  65. Tenerife vs Mallorca
-     Date: 2026-11-21
-     League: Spanish Segunda
-     Pick: Away to Score · Medium confidence (65.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  66. Radomiak Radom vs Wisla Krakow
-     Date: 2026-11-21
-     League: Polish Ekstraklasa
-     Pick: Away to Score · Medium confidence (68.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  67. Artis Brno vs Jablonec
-     Date: 2026-11-21
-     League: Czech Liga
-     Pick: Away to Score · High confidence (81.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  68. Loko. Zagreb vs Hajduk Split
-     Date: 2026-11-21
-     League: Croatian HNL
-     Pick: Away to Score · Medium confidence (66.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  69. NK Rudes vs NK Varazdin
-     Date: 2026-11-21
-     League: Croatian HNL
-     Pick: Away to Score · High confidence (79.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  70. Charleroi vs Sint-Truidense
-     Date: 2026-11-21
-     League: Belgium League
-     Pick: Away to Score · High confidence (86.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  71. Mechelen vs Club Brugge
-     Date: 2026-11-21
-     League: Belgium League
-     Pick: Away to Score · High confidence (94.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  72. Waregem vs Royal Antwerp
-     Date: 2026-11-21
-     League: Belgium League
-     Pick: Away to Score · High confidence (79.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  73. Utrecht vs Cambuur
-     Date: 2026-11-21
-     League: Netherlands League
-     Pick: Away to Score · High confidence (92.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  74. FC Groningen vs Heerenveen
-     Date: 2026-11-21
-     League: Netherlands League
-     Pick: Away to Score · High confidence (90.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  75. Telstar vs PEC Zwolle
-     Date: 2026-11-21
-     League: Netherlands League
-     Pick: Away to Score · High confidence (84.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  76. LASK Linz vs Hartberg
-     Date: 2026-11-21
-     League: Austrian Bundesliga
-     Pick: Away to Score · High confidence (88.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  77. GAK vs Rapid Vienna
-     Date: 2026-11-21
-     League: Austrian Bundesliga
-     Pick: Away to Score · High confidence (84.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  78. FC Sion vs Servette
-     Date: 2026-11-21
-     League: Swiss Super League
-     Pick: Away to Score · High confidence (79.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  79. Young Boys vs Thun
-     Date: 2026-11-21
-     League: Swiss Super League
-     Pick: Away to Score · High confidence (92.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  80. Kalamata vs AEK Athens
-     Date: 2026-11-21
-     League: Greek Super League
-     Pick: Away to Score · High confidence (77.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  81. Kryvbas vs Kudrivka
-     Date: 2026-11-21
-     League: Ukrainian League
-     Pick: Away to Score · Medium confidence (73.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  82. Kolos Kovalivka vs Metalist
-     Date: 2026-11-21
-     League: Ukrainian League
-     Pick: Away to Score · High confidence (78.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  83. Baranovichi vs Belshina
-     Date: 2026-11-21
-     League: Belarus League
-     Pick: Away to Score · Low confidence (55.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  84. Red Star vs Radnik Surdulica
-     Date: 2026-11-21
-     League: Serbian League
-     Pick: Away to Score · Low confidence (55.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  85. Mladost Lucani vs Zeleznicar Pancevo
-     Date: 2026-11-21
-     League: Serbian League
-     Pick: Away to Score · Medium confidence (66.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  86. Ujpest Dozsa vs Kisvarda
-     Date: 2026-11-21
-     League: Hungarian League
-     Pick: Away to Score · Low confidence (63.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  87. Inter Miami CF vs Columbus Crew
-     Date: 2026-11-21
-     League: MLS
-     Pick: Away to Score · High confidence (87.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  88. Southport vs Brackley
-     Date: 2026-11-21
-     League: Football Conference North
-     Pick: Away to Score · High confidence (80.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  89. Chester vs Macclesfield
-     Date: 2026-11-21
-     League: Football Conference North
-     Pick: Away to Score · Medium confidence (71.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  90. Spalding Utd vs Merthyr
-     Date: 2026-11-21
-     League: Football Conference North
-     Pick: Away to Score · Medium confidence (69.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  91. Buxton vs Hednesford
-     Date: 2026-11-21
-     League: Football Conference North
-     Pick: Away to Score · Medium confidence (65.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  92. Hebburn Town vs Marine
-     Date: 2026-11-21
-     League: Football Conference North
-     Pick: Away to Score · High confidence (77.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  93. Hereford vs Darlington
-     Date: 2026-11-21
-     League: Football Conference North
-     Pick: Away to Score · High confidence (75.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  94. Bedford vs South Shields
-     Date: 2026-11-21
-     League: Football Conference North
-     Pick: Away to Score · High confidence (82.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  95. Maidstone vs Farnham Town
-     Date: 2026-11-21
-     League: Football Conference South
-     Pick: Away to Score · High confidence (84.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  96. Maidenhead vs Folkestone
-     Date: 2026-11-21
-     League: Football Conference South
-     Pick: Away to Score · Low confidence (64.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  97. Dorking W vs Ebbsfleet
-     Date: 2026-11-21
-     League: Football Conference South
-     Pick: Away to Score · High confidence (91.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  98. Farnborough vs Salisbury FC
-     Date: 2026-11-21
-     League: Football Conference South
-     Pick: Away to Score · High confidence (94.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  99. Three Bridges vs Cheshunt
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Away to Score · High confidence (81.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  100. Chatham Town vs Maldon & T
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Away to Score · High confidence (78.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  101. Carshalton vs Aveley
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Away to Score · High confidence (78.1%)
-     Category:
-       • Tier: ✅ Solid
-
-  102. St Albans vs AFC Whyteleafe
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Away to Score · Medium confidence (73.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  103. Chippenham vs Bracknell
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Away to Score · High confidence (77.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  104. Dartford vs Leatherhead
-     Date: 2026-11-21
-     League: Ryman Premier
-     Pick: Away to Score · Medium confidence (69.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  105. Yate vs Hanwell Town
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Away to Score · Medium confidence (73.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  106. Plymouth P vs Malvern Town
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Away to Score · Medium confidence (65.7%)
-     Category:
-       • Tier: ✅ Solid
-
-  107. Gosport Bor vs Havant & W
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Away to Score · Medium confidence (69.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  108. Chichester C vs Basingstoke
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Away to Score · Medium confidence (73.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  109. Hanworth Villa vs Poole Town
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Away to Score · High confidence (86.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  110. Taunton Town vs Chertsey Town
-     Date: 2026-11-21
-     League: Southern League Premier
-     Pick: Away to Score · High confidence (88.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  111. Workington vs Gainsborough
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Away to Score · High confidence (83.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  112. Warrington vs Guiseley
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Away to Score · High confidence (88.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  113. FC Utd vs Rylands
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Away to Score · High confidence (85.5%)
-     Category:
-       • Tier: ✅ Solid
-
-  114. Alfreton vs Curzon A
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Away to Score · Medium confidence (73.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  115. Bamber Br. vs Cleethorpes T
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Away to Score · High confidence (77.2%)
-     Category:
-       • Tier: ✅ Solid
-
-  116. Lancaster vs Ashton Utd
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Away to Score · High confidence (80.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  117. Stockton T vs Ilkeston
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Away to Score · Medium confidence (70.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  118. Whitby vs Leek
-     Date: 2026-11-21
-     League: Unibond Premier
-     Pick: Away to Score · High confidence (92.3%)
-     Category:
-       • Tier: ✅ Solid
-
-  119. Puebla vs Atletico San Luis
-     Date: 2026-11-21
-     League: Mexican Primera Apertura
-     Pick: Away to Score · High confidence (83.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  120. FC Juarez vs Atlas
-     Date: 2026-11-21
-     League: Mexican Primera Apertura
-     Pick: Away to Score · High confidence (77.0%)
-     Category:
-       • Tier: ✅ Solid
-
-  121. Tijuana vs Atlante
-     Date: 2026-11-21
-     League: Mexican Primera Apertura
-     Pick: Away to Score · Low confidence (63.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  122. Pachuca vs Toluca
-     Date: 2026-11-21
-     League: Mexican Primera Apertura
-     Pick: Away to Score · High confidence (84.9%)
-     Category:
-       • Tier: ✅ Solid
-
-  123. Kyoto Sanga vs Urawa Red Diamonds
-     Date: 2026-11-21
-     League: Japanese J1 League
-     Pick: Away to Score · Medium confidence (73.8%)
-     Category:
-       • Tier: ✅ Solid
-
-  124. Gamba Osaka vs Fagiano Okayama
-     Date: 2026-11-21
-     League: Japanese J1 League
-     Pick: Away to Score · High confidence (84.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  125. Incheon United vs Ulsan Hyundai
-     Date: 2026-11-21
-     League: Korean K-League 1
      Pick: Away to Score · Medium confidence (66.7%)
      Category:
        • Tier: ✅ Solid
 
-  126. Busan IPark vs Cheongju
-     Date: 2026-11-21
-     League: Korean K-League 2
-     Pick: Away to Score · Low confidence (64.7%)
+  11. Sassuolo vs Genoa
+     Date: 2026-11-22
+     League: Italian Serie A
+     Pick: Away to Score · High confidence (88.7%)
      Category:
        • Tier: ✅ Solid
 
-  127. Gimpo Citizen vs Suwon FC
-     Date: 2026-11-21
-     League: Korean K-League 2
-     Pick: Away to Score · High confidence (82.8%)
+  12. Bologna vs Udinese
+     Date: 2026-11-22
+     League: Italian Serie A
+     Pick: Away to Score · High confidence (81.5%)
      Category:
        • Tier: ✅ Solid
 
-  128. Seongnam vs Yongin
-     Date: 2026-11-21
-     League: Korean K-League 2
-     Pick: Away to Score · Medium confidence (74.8%)
+  13. Milan vs Frosinone
+     Date: 2026-11-22
+     League: Italian Serie A
+     Pick: Away to Score · High confidence (86.1%)
      Category:
        • Tier: ✅ Solid
 
-  129. Kataller Toyama vs Oita Trinita
-     Date: 2026-11-21
-     League: Japanese J2 League
-     Pick: Away to Score · Low confidence (64.3%)
+  14. Atalanta vs Inter
+     Date: 2026-11-22
+     League: Italian Serie A
+     Pick: Away to Score · High confidence (94.0%)
      Category:
        • Tier: ✅ Solid
 
-  130. Tochigi City vs Albirex Niigata
-     Date: 2026-11-21
-     League: Japanese J2 League
+  15. Augsburg vs Mainz
+     Date: 2026-11-22
+     League: German Bundesliga
+     Pick: Away to Score · High confidence (90.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  16. Barcelona vs Villarreal
+     Date: 2026-11-22
+     League: Spanish La Liga
+     Pick: Away to Score · High confidence (83.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  17. Racing vs Sociedad
+     Date: 2026-11-22
+     League: Spanish La Liga
+     Pick: Away to Score · High confidence (95.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  18. Osasuna vs Malaga
+     Date: 2026-11-22
+     League: Spanish La Liga
+     Pick: Away to Score · Low confidence (60.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  19. Getafe vs Atl Madrid
+     Date: 2026-11-22
+     League: Spanish La Liga
+     Pick: Away to Score · High confidence (82.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  20. Marseille vs Le Mans
+     Date: 2026-11-22
+     League: French Ligue 1
+     Pick: Away to Score · Medium confidence (67.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  21. Dynamo Makhachkala vs Spartak Moscow
+     Date: 2026-11-22
+     League: Russian Premier
+     Pick: Away to Score · High confidence (83.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  22. Rodina Moscow vs Lok. Moscow
+     Date: 2026-11-22
+     League: Russian Premier
+     Pick: Away to Score · High confidence (84.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  23. FC Twente vs Willem II
+     Date: 2026-11-22
+     League: Netherlands League
+     Pick: Away to Score · Medium confidence (73.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  24. Wisla Plock vs Legia Warsaw
+     Date: 2026-11-22
+     League: Polish Ekstraklasa
+     Pick: Away to Score · Medium confidence (69.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  25. GKS Katowice vs Lech Poznan
+     Date: 2026-11-22
+     League: Polish Ekstraklasa
+     Pick: Away to Score · Medium confidence (71.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  26. Cottbus vs Hertha Berlin
+     Date: 2026-11-22
+     League: German Bundesliga 2
+     Pick: Away to Score · High confidence (87.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  27. Karlsruhe vs Osnabruck
+     Date: 2026-11-22
+     League: German Bundesliga 2
+     Pick: Away to Score · Medium confidence (70.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  28. Kortrijk vs Union St Gilloise
+     Date: 2026-11-22
+     League: Belgium League
+     Pick: Away to Score · High confidence (92.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  29. AC Horsens vs Silkeborg
+     Date: 2026-11-22
+     League: Danish SAS Ligaen
+     Pick: Away to Score · High confidence (75.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  30. SonderjyskE vs OB Odense
+     Date: 2026-11-22
+     League: Danish SAS Ligaen
+     Pick: Away to Score · High confidence (78.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  31. Nordsjaelland vs Copenhagen
+     Date: 2026-11-22
+     League: Danish SAS Ligaen
+     Pick: Away to Score · High confidence (85.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  32. Basel vs Lucerne
+     Date: 2026-11-22
+     League: Swiss Super League
+     Pick: Away to Score · High confidence (77.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  33. Lausanne vs Vaduz
+     Date: 2026-11-22
+     League: Swiss Super League
+     Pick: Away to Score · High confidence (89.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  34. Sp. Gijon vs Las Palmas
+     Date: 2026-11-22
+     League: Spanish Segunda
+     Pick: Away to Score · High confidence (79.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  35. Wolfsberger vs Ried
+     Date: 2026-11-22
+     League: Austrian Bundesliga
+     Pick: Away to Score · High confidence (85.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  36. Burgos vs Albacete
+     Date: 2026-11-22
+     League: Spanish Segunda
+     Pick: Away to Score · Medium confidence (68.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  37. Altach vs Sturm Graz
+     Date: 2026-11-22
+     League: Austrian Bundesliga
+     Pick: Away to Score · Medium confidence (69.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  38. Aus. Vienna vs RB Salzburg
+     Date: 2026-11-22
+     League: Austrian Bundesliga
      Pick: Away to Score · High confidence (84.3%)
      Category:
        • Tier: ✅ Solid
 
-  131. O'Higgins vs Univ de Chile
-     Date: 2026-11-21
-     League: Chile Primera
-     Pick: Away to Score · High confidence (75.1%)
+  39. Panathinaikos vs OFI Crete
+     Date: 2026-11-22
+     League: Greek Super League
+     Pick: Away to Score · Medium confidence (68.0%)
      Category:
        • Tier: ✅ Solid
 
-  132. Argentinos Jun vs Independiente
-     Date: 2026-11-21
-     League: Chile Primera
-     Pick: Away to Score · Medium confidence (66.4%)
+  40. PAOK Salonika vs Kifisia
+     Date: 2026-11-22
+     League: Greek Super League
+     Pick: Away to Score · High confidence (90.0%)
      Category:
        • Tier: ✅ Solid
 
-  133. Tecnico Universitario vs Deportivo Cuenca
-     Date: 2026-11-21
+  41. Aalesund vs Rosenborg
+     Date: 2026-11-22
+     League: Norwegian Tippeligaen
+     Pick: Away to Score · High confidence (97.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  42. Kristiansund vs Sandefjord
+     Date: 2026-11-22
+     League: Norwegian Tippeligaen
+     Pick: Away to Score · High confidence (81.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  43. Botev Vratsa vs CSKA
+     Date: 2026-11-22
+     League: Bulgarian League
+     Pick: Away to Score · Medium confidence (73.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  44. Macva Sabac vs Vojvodina NS
+     Date: 2026-11-22
+     League: Serbian League
+     Pick: Away to Score · High confidence (88.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  45. Zalaegerszeg vs Vasas
+     Date: 2026-11-22
+     League: Hungarian League
+     Pick: Away to Score · Medium confidence (66.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  46. Chapecoense vs Cruzeiro
+     Date: 2026-11-22
+     League: Brazilian Serie A
+     Pick: Away to Score · High confidence (89.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  47. Paranaense vs Remo
+     Date: 2026-11-22
+     League: Brazilian Serie A
+     Pick: Away to Score · Medium confidence (71.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  48. Red Bull Bragantino vs Vasco
+     Date: 2026-11-22
+     League: Brazilian Serie A
+     Pick: Away to Score · Medium confidence (74.8%)
+     Category:
+       • Tier: ✅ Solid
+
+  49. Pumas UNAM vs Monterrey
+     Date: 2026-11-22
+     League: Mexican Primera Apertura
+     Pick: Away to Score · High confidence (82.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  50. Tigres vs Club America
+     Date: 2026-11-22
+     League: Mexican Primera Apertura
+     Pick: Away to Score · High confidence (96.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  51. Gimcheon Sangmu vs Jeju United
+     Date: 2026-11-22
+     League: Korean K-League 1
+     Pick: Away to Score · Medium confidence (69.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  52. Jeonnam Dragons vs Ansan Greeners
+     Date: 2026-11-22
+     League: Korean K-League 2
+     Pick: Away to Score · High confidence (85.8%)
+     Category:
+       • Tier: ✅ Solid
+
+  53. Paju Frontier vs Cheonan City
+     Date: 2026-11-22
+     League: Korean K-League 2
+     Pick: Away to Score · Medium confidence (68.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  54. Tokushima Vortis vs Shonan Bellmare
+     Date: 2026-11-22
+     League: Japanese J2 League
+     Pick: Away to Score · Low confidence (64.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  55. Orense vs Mushuc Runa
+     Date: 2026-11-22
      League: Ecuador Liga Pro
-     Pick: Away to Score · High confidence (79.4%)
+     Pick: Away to Score · Low confidence (57.7%)
      Category:
        • Tier: ✅ Solid
 
-  134. Universidad Catolica vs Barcelona de G
-     Date: 2026-11-21
+  56. LDU Quito vs Aucas
+     Date: 2026-11-22
      League: Ecuador Liga Pro
-     Pick: Away to Score · High confidence (78.6%)
+     Pick: Away to Score · High confidence (77.9%)
      Category:
        • Tier: ✅ Solid
 
