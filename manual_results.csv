@@ -2391,94 +2391,113 @@ date,home_team,away_team,score
 2026-11-21,Yate,Hanwell Town,0-0
 2026-11-21,York,Walsall,0-0
 2026-11-21,Young Boys,Thun,3-2
-2026-11-22,AC Horsens,Silkeborg,
-2026-11-22,Aalesund,Rosenborg,
-2026-11-22,Ajax,Den Haag,
-2026-11-22,Altach,Sturm Graz,
-2026-11-22,Anderlecht,O-H Leuven,
-2026-11-22,Atalanta,Inter,
-2026-11-22,Augsburg,Mainz,
-2026-11-22,Aus. Vienna,RB Salzburg,
-2026-11-22,Barcelona,Villarreal,
-2026-11-22,Basel,Lucerne,
-2026-11-22,Bologna,Udinese,
-2026-11-22,Botev Vratsa,CSKA,
-2026-11-22,Burgos,Albacete,
-2026-11-22,Burnley,Blackburn,
-2026-11-22,Celta de Vigo B,Valladolid,
-2026-11-22,Chapecoense,Cruzeiro,
-2026-11-22,Chicago,Charlotte FC,
-2026-11-22,Colo-Colo,Univ Catolica,
-2026-11-22,Cordoba,Real Oviedo,
-2026-11-22,Cottbus,Hertha Berlin,
-2026-11-22,Daegu,Gimhae City,
-2026-11-22,Dinamo Zagreb,NK Istra,
-2026-11-22,Dynamo Kyiv,Obolon Kiev,
-2026-11-22,Dynamo Makhachkala,Spartak Moscow,
-2026-11-22,Erzurum B,Goztepe,
-2026-11-22,FC Twente,Willem II,
-2026-11-22,FC Zurich,St Gallen,
-2026-11-22,Fluminense,Mirassol,
-2026-11-22,GKS Katowice,Lech Poznan,
-2026-11-22,Getafe,Atl Madrid,
-2026-11-22,Gimcheon Sangmu,Jeju United,
-2026-11-22,Girona,Eibar,
-2026-11-22,Go A Eagles,F. Sittard,
-2026-11-22,Guadalajara,Cruz Azul,
-2026-11-22,Hacken,Elfsborg,
-2026-11-22,Hull,Brighton,
-2026-11-22,Isloch Minsk,Torpedo Zh,
-2026-11-22,Jeonnam Dragons,Ansan Greeners,
-2026-11-22,Juventus,Venezia,
-2026-11-22,KFUM Oslo,Brann,
-2026-11-22,Karlsruhe,Osnabruck,
-2026-11-22,Kasimpasa,Alanyaspor,
-2026-11-22,Kortrijk,Union St Gilloise,
-2026-11-22,Kristiansund,Sandefjord,
-2026-11-22,LDU Quito,Aucas,
-2026-11-22,Lausanne,Vaduz,
-2026-11-22,Levski Sofia,Lokomotiv Sofia,
-2026-11-22,Liverpool,Man Utd,
-2026-11-22,Lorient,Rennes,
-2026-11-22,ML Vitebsk,Slavia Mozyr,
-2026-11-22,Macva Sabac,Vojvodina NS,
-2026-11-22,Marseille,Le Mans,
-2026-11-22,Milan,Frosinone,
-2026-11-22,Nashville MLS,Cincinnati,
-2026-11-22,Nordsjaelland,Copenhagen,
-2026-11-22,Nyiregyhaza,Debrecen,
-2026-11-22,Olympiakos,Iraklis,
-2026-11-22,Once Caldas,Atletico Nacional,
-2026-11-22,Orense,Mushuc Runa,
-2026-11-22,Osasuna,Malaga,
-2026-11-22,PAOK Salonika,Kifisia,
-2026-11-22,Paju Frontier,Cheonan City,
-2026-11-22,Panathinaikos,OFI Crete,
-2026-11-22,Paranaense,Remo,
-2026-11-22,Pardubice,FC Brno,
-2026-11-22,Paris FC,Angers,
-2026-11-22,Pumas UNAM,Monterrey,
-2026-11-22,Racing,Sociedad,
-2026-11-22,Rakow Czestochowa,Widzew Lodz,
-2026-11-22,Red Bull Bragantino,Vasco,
-2026-11-22,Rijeka,HNK Gorica,
-2026-11-22,Rodina Moscow,Lok. Moscow,
-2026-11-22,Rosario,Gimnasia de Mendoza,
-2026-11-22,Sarpsborg,Lillestrom,
-2026-11-22,Sassuolo,Genoa,
-2026-11-22,Seoul E-Land,Chungnam Asan,
-2026-11-22,SonderjyskE,OB Odense,
-2026-11-22,Sp. Gijon,Las Palmas,
-2026-11-22,Sp. Rotterdam,AZ Alkmaar,
-2026-11-22,Sport Huancayo,Universitario de Deportes,
-2026-11-22,Sporting Cristal,Cienciano,
-2026-11-22,Synot,Hradec Kralove,
-2026-11-22,Tigres,Club America,
-2026-11-22,Tokushima Vortis,Shonan Bellmare,
-2026-11-22,Trabzonspor,Eyupspor,
-2026-11-22,UT Arad,Uni Craiova,
-2026-11-22,Viborg,Randers,
-2026-11-22,W Bremen,Hamburg,
-2026-11-22,Wisla Plock,Legia Warsaw,
-2026-11-22,Wolfsberger,Ried,
-2026-11-22,Zalaegerszeg,Vasas,
+2026-11-22,AC Horsens,Silkeborg,3-1
+2026-11-22,Aalesund,Rosenborg,2-2
+2026-11-22,Ajax,Den Haag,3-0
+2026-11-22,Altach,Sturm Graz,1-0
+2026-11-22,Anderlecht,O-H Leuven,1-0
+2026-11-22,Atalanta,Inter,4-4
+2026-11-22,Augsburg,Mainz,3-1
+2026-11-22,Aus. Vienna,RB Salzburg,1-0
+2026-11-22,Barcelona,Villarreal,3-2
+2026-11-22,Basel,Lucerne,0-2
+2026-11-22,Bologna,Udinese,1-1
+2026-11-22,Botev Vratsa,CSKA,1-1
+2026-11-22,Burgos,Albacete,1-0
+2026-11-22,Burnley,Blackburn,2-2
+2026-11-22,Celta de Vigo B,Valladolid,1-1
+2026-11-22,Chapecoense,Cruzeiro,1-2
+2026-11-22,Chicago,Charlotte FC,1-2
+2026-11-22,Colo-Colo,Univ Catolica,3-0
+2026-11-22,Cordoba,Real Oviedo,3-0
+2026-11-22,Cottbus,Hertha Berlin,0-4
+2026-11-22,Daegu,Gimhae City,3-0
+2026-11-22,Dinamo Zagreb,NK Istra,3-2
+2026-11-22,Dynamo Kyiv,Obolon Kiev,4-2
+2026-11-22,Dynamo Makhachkala,Spartak Moscow,1-1
+2026-11-22,Erzurum B,Goztepe,0-1
+2026-11-22,FC Twente,Willem II,2-1
+2026-11-22,FC Zurich,St Gallen,2-2
+2026-11-22,Fluminense,Mirassol,1-0
+2026-11-22,GKS Katowice,Lech Poznan,0-1
+2026-11-22,Getafe,Atl Madrid,0-3
+2026-11-22,Gimcheon Sangmu,Jeju United,0-1
+2026-11-22,Girona,Eibar,2-1
+2026-11-22,Go A Eagles,F. Sittard,0-1
+2026-11-22,Guadalajara,Cruz Azul,1-0
+2026-11-22,Hacken,Elfsborg,2-1
+2026-11-22,Hull,Brighton,2-0
+2026-11-22,Isloch Minsk,Torpedo Zh,4-3
+2026-11-22,Jeonnam Dragons,Ansan Greeners,1-2
+2026-11-22,Juventus,Venezia,4-0
+2026-11-22,KFUM Oslo,Brann,3-4
+2026-11-22,Karlsruhe,Osnabruck,0-0
+2026-11-22,Kasimpasa,Alanyaspor,2-1
+2026-11-22,Kortrijk,Union St Gilloise,0-1
+2026-11-22,Kristiansund,Sandefjord,2-2
+2026-11-22,LDU Quito,Aucas,0-1
+2026-11-22,Lausanne,Vaduz,2-2
+2026-11-22,Levski Sofia,Lokomotiv Sofia,4-1
+2026-11-22,Liverpool,Man Utd,4-0
+2026-11-22,Lorient,Rennes,1-1
+2026-11-22,ML Vitebsk,Slavia Mozyr,2-1
+2026-11-22,Macva Sabac,Vojvodina NS,1-5
+2026-11-22,Marseille,Le Mans,2-3
+2026-11-22,Milan,Frosinone,5-1
+2026-11-22,Nashville MLS,Cincinnati,0-1
+2026-11-22,Nordsjaelland,Copenhagen,5-0
+2026-11-22,Nyiregyhaza,Debrecen,2-6
+2026-11-22,Olympiakos,Iraklis,6-2
+2026-11-22,Once Caldas,Atletico Nacional,0-0
+2026-11-22,Orense,Mushuc Runa,2-3
+2026-11-22,Osasuna,Malaga,1-0
+2026-11-22,PAOK Salonika,Kifisia,4-0
+2026-11-22,Paju Frontier,Cheonan City,1-2
+2026-11-22,Panathinaikos,OFI Crete,2-0
+2026-11-22,Paranaense,Remo,4-2
+2026-11-22,Pardubice,FC Brno,1-1
+2026-11-22,Paris FC,Angers,4-0
+2026-11-22,Pumas UNAM,Monterrey,0-2
+2026-11-22,Racing,Sociedad,3-2
+2026-11-22,Rakow Czestochowa,Widzew Lodz,3-1
+2026-11-22,Red Bull Bragantino,Vasco,1-0
+2026-11-22,Rijeka,HNK Gorica,2-0
+2026-11-22,Rodina Moscow,Lok. Moscow,0-1
+2026-11-22,Rosario,Gimnasia de Mendoza,3-1
+2026-11-22,Sarpsborg,Lillestrom,0-2
+2026-11-22,Sassuolo,Genoa,0-2
+2026-11-22,Seoul E-Land,Chungnam Asan,1-1
+2026-11-22,SonderjyskE,OB Odense,1-2
+2026-11-22,Sp. Gijon,Las Palmas,0-2
+2026-11-22,Sp. Rotterdam,AZ Alkmaar,1-5
+2026-11-22,Sport Huancayo,Universitario de Deportes,4-1
+2026-11-22,Sporting Cristal,Cienciano,4-1
+2026-11-22,Synot,Hradec Kralove,4-2
+2026-11-22,Tigres,Club America,1-0
+2026-11-22,Tokushima Vortis,Shonan Bellmare,1-2
+2026-11-22,Trabzonspor,Eyupspor,1-0
+2026-11-22,UT Arad,Uni Craiova,2-6
+2026-11-22,Viborg,Randers,0-0
+2026-11-22,W Bremen,Hamburg,4-0
+2026-11-22,Wisla Plock,Legia Warsaw,0-1
+2026-11-22,Wolfsberger,Ried,1-2
+2026-11-22,Zalaegerszeg,Vasas,0-0
+2026-11-23,Basaksehir,Corum,
+2026-11-23,Brondby,Midtjylland,
+2026-11-23,Wieczysta Krakow,Motor Lublin,
+2026-11-23,Ludogorets,Dunav Ruse,
+2026-11-23,Chelmsford,Maidstone,
+2026-11-23,Vancouver W,Real Salt Lake,
+2026-11-23,Internacional,Vitoria,
+2026-11-23,Botafogo,Sao Paulo,
+2026-11-23,Monza,Fiorentina,
+2026-11-23,Koper,NK Aluminij,
+2026-11-23,Orgryte IS,Kalmar,
+2026-11-23,Slaven,Osijek,
+2026-11-23,Hammarby,IFK Goth'burg,
+2026-11-23,Instituto,Huracan,
+2026-11-23,Albion FC,Danubio,
+2026-11-23,Brentford,Everton,
+2026-11-23,Levante,Elche,
+2026-11-23,Sepsi Sfantu G,Rapid Buch.,
+2026-11-23,AD Ceuta,Almeria,

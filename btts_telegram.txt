@@ -1,62 +1,14 @@
-📅 Picks for 2026-11-22
+📅 Picks for 2026-11-23
 
 
 🟢 BTTS Yes
 
-  🔥 Premium picks
-
-
-  1. Chicago vs Charlotte FC
-     Date: 2026-11-22
-     League: MLS
-     Pick: BTTS Yes · High confidence (84.4%)
-     Category:
-       • Tier: 🔥 Premium
-       • League type: weak-ROI region (extra model caution)
   ✅ Solid picks
 
 
-  2. Red Bull Bragantino vs Vasco
-     Date: 2026-11-22
-     League: Brazilian Serie A
-     Pick: BTTS Yes · Medium confidence (53.7%)
-     Category:
-       • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
-       • Auto-flag: weak ROI history on this market
-
-  3. Guadalajara vs Cruz Azul
-     Date: 2026-11-22
-     League: Mexican Primera Apertura
-     Pick: BTTS Yes · High confidence (70.5%)
-     Category:
-       • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
-
-  4. Paju Frontier vs Cheonan City
-     Date: 2026-11-22
-     League: Korean K-League 2
-     Pick: BTTS Yes · Medium confidence (53.2%)
-     Category:
-       • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
-
-  5. Sport Huancayo vs Universitario de Deportes
-     Date: 2026-11-22
-     League: Peru Liga 1 Clausura
-     Pick: BTTS Yes · High confidence (73.7%)
-     Category:
-       • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
-
-🔴 BTTS No
-
-  ✅ Solid picks
-
-
-  1. UT Arad vs Uni Craiova
-     Date: 2026-11-22
-     League: Romanian Liga 1
-     Pick: BTTS No · High confidence (71.8%)
+  1. Wieczysta Krakow vs Motor Lublin
+     Date: 2026-11-23
+     League: Polish Ekstraklasa
+     Pick: BTTS Yes · High confidence (65.3%)
      Category:
        • Tier: ✅ Solid

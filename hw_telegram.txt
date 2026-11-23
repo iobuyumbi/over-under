@@ -1,109 +1,21 @@
-📅 Picks for 2026-11-22
+📅 Picks for 2026-11-23
 
-
-  ✅ Solid picks
-
-
-  1. Dynamo Kyiv vs Obolon Kiev
-     Date: 2026-11-22
-     League: Ukrainian League
-     Pick: Home Win · High confidence (92.6%)
-     Category:
-       • Tier: ✅ Solid
-
-  2. Isloch Minsk vs Torpedo Zh
-     Date: 2026-11-22
-     League: Belarus League
-     Pick: Home Win · High confidence (88.6%)
-     Category:
-       • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
-
-  3. Rosario vs Gimnasia de Mendoza
-     Date: 2026-11-22
-     League: Liga Prof Argentina Torneo
-     Pick: Home Win · High confidence (87.8%)
-     Category:
-       • Tier: ✅ Solid
 
   👀 Watchlist
 
 
-  4. Juventus vs Venezia
-     Date: 2026-11-22
-     League: Italian Serie A
-     Pick: Home Win · High confidence (85.6%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  5. Paris FC vs Angers
-     Date: 2026-11-22
-     League: French Ligue 1
+  1. Internacional vs Vitoria
+     Date: 2026-11-23
+     League: Brazilian Serie A
      Pick: Home Win · High confidence (89.6%)
      Category:
        • Tier: 👀 Watchlist
+       • League type: weak-ROI region (extra model caution)
 
-  6. Trabzonspor vs Eyupspor
-     Date: 2026-11-22
-     League: Turkish Super Lig
-     Pick: Home Win · High confidence (91.0%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  7. Ajax vs Den Haag
-     Date: 2026-11-22
-     League: Netherlands League
-     Pick: Home Win · High confidence (87.7%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  8. Anderlecht vs O-H Leuven
-     Date: 2026-11-22
-     League: Belgium League
-     Pick: Home Win · High confidence (83.1%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  9. Hacken vs Elfsborg
-     Date: 2026-11-22
-     League: Swedish Allsvenskan
-     Pick: Home Win · High confidence (88.0%)
+  2. Botafogo vs Sao Paulo
+     Date: 2026-11-23
+     League: Brazilian Serie A
+     Pick: Home Win · High confidence (88.7%)
      Category:
        • Tier: 👀 Watchlist
        • League type: weak-ROI region (extra model caution)
-
-  10. Panathinaikos vs OFI Crete
-     Date: 2026-11-22
-     League: Greek Super League
-     Pick: Home Win · High confidence (71.0%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  11. Olympiakos vs Iraklis
-     Date: 2026-11-22
-     League: Greek Super League
-     Pick: Home Win · High confidence (70.7%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  12. ML Vitebsk vs Slavia Mozyr
-     Date: 2026-11-22
-     League: Belarus League
-     Pick: Home Win · High confidence (87.2%)
-     Category:
-       • Tier: 👀 Watchlist
-       • League type: weak-ROI region (extra model caution)
-
-  13. Orense vs Mushuc Runa
-     Date: 2026-11-22
-     League: Ecuador Liga Pro
-     Pick: Home Win · High confidence (73.0%)
-     Category:
-       • Tier: 👀 Watchlist
-
-  14. Sporting Cristal vs Cienciano
-     Date: 2026-11-22
-     League: Peru Liga 1 Clausura
-     Pick: Home Win · High confidence (90.6%)
-     Category:
-       • Tier: 👀 Watchlist

@@ -4,6 +4,52 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-23 -->
+## Daily Picks — 2026-11-23
+
+### Over/Under 2.5  (6)
+  ✅ Basaksehir vs Corum (Turkish Super Lig) — Over 2.5 · High 84.2%
+  ✅ Brondby vs Midtjylland (Danish SAS Ligaen) — Over 2.5 · High 77.2%
+  ✅ Wieczysta Krakow vs Motor Lublin (Polish Ekstraklasa) — Over 2.5 · High 66.6%
+  ✅ Ludogorets vs Dunav Ruse (Bulgarian League) — Over 2.5 · High 70.6%
+  ✅ Chelmsford vs Maidstone (Football Conference South) — Over 2.5 · High 63.0%
+  ✅ Vancouver W vs Real Salt Lake (MLS) — Over 2.5 · High 64.7%
+
+### BTTS  (1)
+  ✅ Wieczysta Krakow vs Motor Lublin (Polish Ekstraklasa) — BTTS Yes · High 65.3%
+
+### Home Win  (2)
+  👀 Internacional vs Vitoria (Brazilian Serie A) — Home Win · High 89.6%
+  👀 Botafogo vs Sao Paulo (Brazilian Serie A) — Home Win · High 88.7%
+
+### Team Goals Over 0.5  (25)
+  🔥 Wieczysta Krakow vs Motor Lublin (Polish Ekstraklasa) — Home to Score · High 78.1%
+  🔥 Ludogorets vs Dunav Ruse (Bulgarian League) — Home to Score · High 90.3%
+  🔥 Vancouver W vs Real Salt Lake (MLS) — Home to Score · High 89.8%
+  🔥 Internacional vs Vitoria (Brazilian Serie A) — Home to Score · High 81.7%
+  ✅ Monza vs Fiorentina (Italian Serie A) — Home to Score · High 85.8%
+  ✅ Koper vs NK Aluminij (Slovenian League) — Home to Score · High 79.0%
+  ✅ Orgryte IS vs Kalmar (Swedish Allsvenskan) — Home to Score · Low 62.5%
+  ✅ Basaksehir vs Corum (Turkish Super Lig) — Home to Score · High 90.3%
+  ✅ Slaven vs Osijek (Croatian HNL) — Home to Score · High 78.6%
+  ✅ Hammarby vs IFK Goth'burg (Swedish Allsvenskan) — Home to Score · High 80.6%
+  ✅ Brondby vs Midtjylland (Danish SAS Ligaen) — Home to Score · High 79.6%
+  ✅ Chelmsford vs Maidstone (Football Conference South) — Home to Score · Medium 71.9%
+  ✅ Instituto vs Huracan (Liga Prof Argentina Torneo) — Home to Score · Medium 77.5%
+  ✅ Albion FC vs Danubio (Uruguay Primera Clausura) — Home to Score · Medium 70.8%
+  ✅ Botafogo vs Sao Paulo (Brazilian Serie A) — Home to Score · High 78.8%
+  ✅ Brentford vs Everton (Premier League) — Away to Score · Low 59.3%
+  ✅ Levante vs Elche (Spanish La Liga) — Away to Score · High 92.0%
+  ✅ Monza vs Fiorentina (Italian Serie A) — Away to Score · High 91.3%
+  ✅ Basaksehir vs Corum (Turkish Super Lig) — Away to Score · High 86.6%
+  ✅ Wieczysta Krakow vs Motor Lublin (Polish Ekstraklasa) — Away to Score · High 84.4%
+  ✅ Sepsi Sfantu G vs Rapid Buch. (Romanian Liga 1) — Away to Score · High 88.4%
+  ✅ Brondby vs Midtjylland (Danish SAS Ligaen) — Away to Score · High 88.2%
+  ✅ AD Ceuta vs Almeria (Spanish Segunda) — Away to Score · High 82.6%
+  ✅ Vancouver W vs Real Salt Lake (MLS) — Away to Score · High 76.3%
+  ✅ Chelmsford vs Maidstone (Football Conference South) — Away to Score · High 83.3%
+
+
 <!-- report: daily 2026-11-22 -->
 ## Daily Picks — 2026-11-22
 
