@@ -1,21 +1,108 @@
-📅 Picks for 2026-11-23
+📅 Picks for 2026-11-24
 
+
+  ✅ Solid picks
+
+
+  1. Como vs AEK Athens
+     Date: 2026-11-24
+     League: European Cup
+     Pick: Home Win · High confidence (85.8%)
+     Category:
+       • Tier: ✅ Solid
+
+  2. RB Leipzig vs Lens
+     Date: 2026-11-24
+     League: European Cup
+     Pick: Home Win · High confidence (85.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  3. Carlisle vs Tamworth
+     Date: 2026-11-24
+     League: National League
+     Pick: Home Win · High confidence (88.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  4. Rangers vs Aberdeen
+     Date: 2026-11-24
+     League: Scottish Premier
+     Pick: Home Win · High confidence (88.3%)
+     Category:
+       • Tier: ✅ Solid
 
   👀 Watchlist
 
 
-  1. Internacional vs Vitoria
-     Date: 2026-11-23
-     League: Brazilian Serie A
+  5. Middlesbrough vs Swansea
+     Date: 2026-11-24
+     League: Football League Championship
+     Pick: Home Win · High confidence (81.8%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  6. Stevenage vs Sheff Wed
+     Date: 2026-11-24
+     League: Football League One
+     Pick: Home Win · Medium confidence (68.9%)
+     Category:
+       • Tier: 👀 Watchlist
+       • Auto-flag: poor league win rate on this market
+
+  7. Wolves vs Derby
+     Date: 2026-11-24
+     League: Football League Championship
+     Pick: Home Win · High confidence (90.4%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  8. Bradford vs Barnsley
+     Date: 2026-11-24
+     League: Football League One
+     Pick: Home Win · High confidence (87.5%)
+     Category:
+       • Tier: 👀 Watchlist
+       • Auto-flag: poor league win rate on this market
+
+  9. Ross County vs Stenh'semuir
+     Date: 2026-11-24
+     League: Scottish League Challenge Cup
      Pick: Home Win · High confidence (89.6%)
      Category:
        • Tier: 👀 Watchlist
-       • League type: weak-ROI region (extra model caution)
 
-  2. Botafogo vs Sao Paulo
-     Date: 2026-11-23
-     League: Brazilian Serie A
-     Pick: Home Win · High confidence (88.7%)
+  10. Clydebank vs Queen's Park
+     Date: 2026-11-24
+     League: Scottish League Challenge Cup
+     Pick: Home Win · High confidence (92.9%)
      Category:
        • Tier: 👀 Watchlist
-       • League type: weak-ROI region (extra model caution)
+
+  11. South Shields vs Worksop
+     Date: 2026-11-24
+     League: Football Conference North
+     Pick: Home Win · High confidence (89.6%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  12. King's Lynn vs Radcliffe Boro
+     Date: 2026-11-24
+     League: Football Conference North
+     Pick: Home Win · High confidence (74.3%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  13. Salisbury FC vs AFC Totton
+     Date: 2026-11-24
+     League: Football Conference South
+     Pick: Home Win · High confidence (83.8%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  14. Eastbourne vs Aveley
+     Date: 2026-11-24
+     League: Ryman Premier
+     Pick: Home Win · High confidence (90.9%)
+     Category:
+       • Tier: 👀 Watchlist

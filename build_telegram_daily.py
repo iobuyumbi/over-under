@@ -306,6 +306,34 @@ def _render_results_detail(rows):
     return lines
 
 
+def build_yesterday_sections(results=None, details=None):
+    """Yesterday's summary table and per-pick detail, as one shared block.
+
+    Used by the daily board (``build_vip_board``) and the mid-day results
+    report so both render yesterday's record in the same monospace layout:
+    ``results`` is the ``(date, rows)`` tuple from
+    ``get_yesterday_market_breakdown()`` (W-L-P per market side and tier),
+    ``details`` the ``(date, rows)`` tuple from ``get_yesterday_pick_results()``
+    (one line per pick with its final score).
+    """
+    lines = []
+    if results is not None:
+        results_date, results_rows = results
+        lines.append("═══════════════════════════")
+        lines.append(f"📊 YESTERDAY · {results_date}")
+        lines.append("═══════════════════════════")
+        lines.extend(_render_results_block(results_rows))
+
+    if details is not None:
+        details_date, detail_rows = details
+        if detail_rows:
+            lines.append("═══════════════════════════")
+            lines.append(f"📋 YESTERDAY PICKS · {details_date}")
+            lines.append("═══════════════════════════")
+            lines.extend(_render_results_detail(detail_rows))
+    return lines
+
+
 def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body, results=None,
                     details=None, title=None):
     """Every fixture, split by market, then by side, then by confidence level.
@@ -347,20 +375,7 @@ def build_vip_board(date, ou_body, btts_body, hw_body, oo05_body, results=None,
         "",
     ]
 
-    if results is not None:
-        results_date, results_rows = results
-        lines.append("═══════════════════════════")
-        lines.append(f"📊 YESTERDAY · {results_date}")
-        lines.append("═══════════════════════════")
-        lines.extend(_render_results_block(results_rows))
-
-    if details is not None:
-        details_date, detail_rows = details
-        if detail_rows:
-            lines.append("═══════════════════════════")
-            lines.append(f"📋 YESTERDAY PICKS · {details_date}")
-            lines.append("═══════════════════════════")
-            lines.extend(_render_results_detail(detail_rows))
+    lines.extend(build_yesterday_sections(results=results, details=details))
 
     # The pick itself is dropped from the table: the market, side and
     # confidence headers already state it, so the columns stay narrow.

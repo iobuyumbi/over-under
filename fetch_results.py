@@ -865,12 +865,20 @@ def write_selected_results_report(dates_to_check, history, dry_run=False):
     mode = "[DRY RUN] " if dry_run else ""
 
     with open(SELECTED_RESULTS_REPORT, "w", encoding="utf-8") as f:
-        from prediction_tracker import build_telegram_yesterday_block, format_compact_result_line
+        from build_telegram_daily import build_yesterday_sections
+        from prediction_tracker import (
+            get_yesterday_market_breakdown,
+            get_yesterday_pick_results,
+            format_compact_result_line,
+        )
 
-        yesterday_block = build_telegram_yesterday_block()
-        if yesterday_block:
-            f.write(f"{mode}📊 Results\n")
-            for line in yesterday_block:
+        # Yesterday's record as the same monospace tables the daily board uses
+        # (summary by market side/tier, then per-pick detail). The "📊 Results"
+        # title is added by send_results_telegram.py, so it is not written here.
+        results = get_yesterday_market_breakdown()
+        details = get_yesterday_pick_results()
+        if results[1] or details[1]:
+            for line in build_yesterday_sections(results=results, details=details):
                 f.write(f"{line}\n")
             f.write("\n")
 

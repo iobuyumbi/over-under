@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-11-23
+✦ CURATED PICKS · 2026-11-24
   Input reports:
-    OU   → over_under_vip_report_2026-11-23.txt
-    BTTS → btts_vip_report_2026-11-23.txt
-    HW   → home_win_vip_report_2026-11-23.txt
+    OU   → over_under_vip_report_2026-11-24.txt
+    BTTS → btts_vip_report_2026-11-24.txt
+    HW   → home_win_vip_report_2026-11-24.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,24 +11,52 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-11-23)
+    • Today only (2026-11-24)
 
-━━━ OVER / UNDER 2.5  (2 accepted) ━━━
-   1. ✅ Basaksehir vs Corum  (Turkish Super Lig)
-      Over 2.5 · High 84.2% · xG 1.79–2.85
-      Stake 0.5% @ 2.0  ·  EV +68.4c/$  ·  Edge +68.4%
-   2. ✅ Brondby vs Midtjylland  (Danish SAS Ligaen)
-      Over 2.5 · High 77.2% · xG 1.19–2.88
-      Stake 0.4% @ 2.0  ·  EV +54.4c/$  ·  Edge +54.4%
+━━━ OVER / UNDER 2.5  (6 accepted) ━━━
+   1. ✅ Eastleigh vs Yeovil  (National League)
+      Over 2.5 · High 85.0% · xG 1.73–2.99
+      Stake 0.6% @ 2.0  ·  EV +70.0c/$  ·  Edge +70.0%
+   2. ✅ Real Madrid vs PSV Eindhoven  (European Cup)
+      Over 2.5 · High 84.0% · xG 1.13–3.50
+      Stake 0.5% @ 2.0  ·  EV +68.0c/$  ·  Edge +68.0%
+   3. ✅ S. Bratislava vs Real Betis  (European Cup)
+      Over 2.5 · High 76.5% · xG 0.74–3.28
+      Stake 0.4% @ 2.0  ·  EV +53.0c/$  ·  Edge +53.0%
+   4. ✅ Portsmouth vs West Ham  (Football League Championship)
+      Over 2.5 · High 75.9% · xG 1.56–2.42
+      Stake 0.4% @ 2.0  ·  EV +51.8c/$  ·  Edge +51.8%
+   5. ✅ Salford vs Sunderland U  (Football League Trophy)
+      Over 2.5 · High 72.0% · xG 1.56–2.17
+      Stake 0.3% @ 2.0  ·  EV +44.0c/$  ·  Edge +44.0%
+   6. ✅ Port Vale vs Northampton  (Football League Two)
+      Over 2.5 · High 71.8% · xG 2.45–1.27
+      Stake 0.3% @ 2.0  ·  EV +43.6c/$  ·  Edge +43.6%
 
-━━━ BTTS (Yes / No)  (0 accepted) ━━━
-  (none)
+━━━ BTTS (Yes / No)  (2 accepted) ━━━
+   1. ✅ Fleetwood vs Leeds U  (Football League Trophy)
+      BTTS Yes · High 73.2% · xG 1.70–2.26
+      Stake 2.0% @ 1.9  ·  EV 
+   2. ✅ Portsmouth vs West Ham  (Football League Championship)
+      BTTS Yes · High 71.3% · xG 1.49–2.53
+      Stake 1.8% @ 1.9  ·  EV 
 
-━━━ HOME WIN  (0 accepted) ━━━
-  (none)
+━━━ HOME WIN  (4 accepted) ━━━
+   1. ✅ Carlisle vs Tamworth  (National League)
+      Home Win · High 88.7%
+      Stake 2.8% @ 2.8  ·  EV +148.4c/$  ·  Edge +148.4%
+   2. ✅ Rangers vs Aberdeen  (Scottish Premier)
+      Home Win · High 88.3%
+      Stake 2.8% @ 2.8  ·  EV +147.2c/$  ·  Edge +147.2%
+   3. ✅ Como vs AEK Athens  (European Cup)
+      Home Win · High 85.8%
+      Stake 2.7% @ 2.8  ·  EV +140.2c/$  ·  Edge +140.2%
+   4. ✅ RB Leipzig vs Lens  (European Cup)
+      Home Win · High 85.6%
+      Stake 2.6% @ 2.8  ·  EV +139.7c/$  ·  Edge +139.7%
 
-📊 Summary: 2 curated picks
-   Parsed total: 66   Rejected: 64   Accepted: 2
+📊 Summary: 12 curated picks
+   Parsed total: 70   Rejected: 58   Accepted: 12
 
 ---
 For informational purposes only · Gamble responsibly

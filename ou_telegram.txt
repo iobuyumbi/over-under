@@ -1,4 +1,4 @@
-📅 Picks for 2026-11-23
+📅 Picks for 2026-11-24
 
 
 🟢 Over 2.5 goals
@@ -6,45 +6,110 @@
   ✅ Solid picks
 
 
-  1. Basaksehir vs Corum
-     Date: 2026-11-23
-     League: Turkish Super Lig
-     Pick: Over 2.5 · High confidence (84.2%)
+  1. S. Bratislava vs Real Betis
+     Date: 2026-11-24
+     League: European Cup
+     Pick: Over 2.5 · High confidence (76.5%)
      Category:
        • Tier: ✅ Solid
 
-  2. Brondby vs Midtjylland
-     Date: 2026-11-23
-     League: Danish SAS Ligaen
-     Pick: Over 2.5 · High confidence (77.2%)
+  2. Real Madrid vs PSV Eindhoven
+     Date: 2026-11-24
+     League: European Cup
+     Pick: Over 2.5 · High confidence (84.0%)
      Category:
        • Tier: ✅ Solid
 
-  3. Wieczysta Krakow vs Motor Lublin
-     Date: 2026-11-23
-     League: Polish Ekstraklasa
-     Pick: Over 2.5 · High confidence (66.6%)
+  3. Portsmouth vs West Ham
+     Date: 2026-11-24
+     League: Football League Championship
+     Pick: Over 2.5 · High confidence (75.9%)
      Category:
        • Tier: ✅ Solid
 
-  4. Ludogorets vs Dunav Ruse
-     Date: 2026-11-23
-     League: Bulgarian League
-     Pick: Over 2.5 · High confidence (70.6%)
+  4. Crawley vs Barnet
+     Date: 2026-11-24
+     League: Football League Two
+     Pick: Over 2.5 · High confidence (60.5%)
      Category:
        • Tier: ✅ Solid
 
-  5. Chelmsford vs Maidstone
-     Date: 2026-11-23
+  5. Port Vale vs Northampton
+     Date: 2026-11-24
+     League: Football League Two
+     Pick: Over 2.5 · High confidence (71.8%)
+     Category:
+       • Tier: ✅ Solid
+
+  6. Eastleigh vs Yeovil
+     Date: 2026-11-24
+     League: National League
+     Pick: Over 2.5 · High confidence (85.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  7. Salford vs Sunderland U
+     Date: 2026-11-24
+     League: Football League Trophy
+     Pick: Over 2.5 · High confidence (72.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  8. Ross County vs Stenh'semuir
+     Date: 2026-11-24
+     League: Scottish League Challenge Cup
+     Pick: Over 2.5 · High confidence (72.9%)
+     Category:
+       • Tier: ✅ Solid
+       • Auto-flag: poor league win rate on this market
+
+  9. Ayr vs Inverness CT
+     Date: 2026-11-24
+     League: Scottish League Challenge Cup
+     Pick: Over 2.5 · High confidence (72.9%)
+     Category:
+       • Tier: ✅ Solid
+       • Auto-flag: poor league win rate on this market
+
+  10. Merthyr vs Bedford
+     Date: 2026-11-24
+     League: Football Conference North
+     Pick: Over 2.5 · High confidence (74.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  11. South Shields vs Worksop
+     Date: 2026-11-24
+     League: Football Conference North
+     Pick: Over 2.5 · High confidence (64.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  12. Telford vs Buxton
+     Date: 2026-11-24
+     League: Football Conference North
+     Pick: Over 2.5 · High confidence (71.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  13. Farnham Town vs Maidenhead
+     Date: 2026-11-24
      League: Football Conference South
-     Pick: Over 2.5 · High confidence (63.0%)
+     Pick: Over 2.5 · High confidence (75.6%)
      Category:
        • Tier: ✅ Solid
 
-  6. Vancouver W vs Real Salt Lake
-     Date: 2026-11-23
-     League: MLS
-     Pick: Over 2.5 · High confidence (64.7%)
+  14. Eastbourne vs Aveley
+     Date: 2026-11-24
+     League: Ryman Premier
+     Pick: Over 2.5 · High confidence (61.4%)
      Category:
        • Tier: ✅ Solid
-       • League type: weak-ROI region (extra model caution)
+       • Auto-flag: poor league win rate on this market
+
+  15. Bracknell vs Berkhamsted
+     Date: 2026-11-24
+     League: Southern League Premier
+     Pick: Over 2.5 · High confidence (72.1%)
+     Category:
+       • Tier: ✅ Solid
