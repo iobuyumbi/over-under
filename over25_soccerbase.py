@@ -363,31 +363,6 @@ def _h2h_over_blocked_2game(home_team_id, away_team_id, target_date_str=None):
     return False, meetings
 
 
-def _h2h_under_majority_veto(home_team_id, away_team_id, target_date_str=None):
-    """Block Over 2.5 when a strict majority of recent H2H meetings were Under.
-
-    _h2h_over_blocked needs >=3 meetings AND <=33% Over rate, so a fixture
-    whose history leans Under without clearing that bar (3 of 5, 4 of 6) slips
-    through; _h2h_over_blocked_2game only covers the 2-meeting case.  This
-    fills the middle ground: a fixture whose H2H history is Under-leaning by
-    majority still has the Over rate above the 33% gate, so nothing else
-    catches it.
-
-    Requires at least 2 meetings, so fixtures with no H2H history are left to
-    the other gates.
-    """
-    meetings = get_h2h_meetings(home_team_id, away_team_id, target_date_str, limit=6)
-    if len(meetings) < 2:
-        return False, meetings
-    under_count = sum(
-        1 for m in meetings
-        if m.get("total", m.get("gf", 0) + m.get("ga", 0)) < 2.5
-    )
-    if under_count * 2 > len(meetings):
-        return True, meetings
-    return False, meetings
-
-
 def _scoring_drought_veto_over(home_3, away_3):
     """Block Over 2.5 if EITHER team failed to score in BOTH of their last 2
     venue games. Prevents picks where one attack is completely cold.
@@ -1000,35 +975,6 @@ def _combined_weak_attack_strong_defence_veto(home_6, away_6):
             f"both_low_event_h{h_gf_avg:.1f}scored_{h_ga_avg:.1f}conceded_"
             f"a{a_gf_avg:.1f}scored_{a_ga_avg:.1f}conceded"
         )
-    return False, None
-
-
-def _both_strong_defence_veto(home_6, away_6):
-    """Block Over 2.5 when BOTH teams have tight defences at their venues.
-
-    Catches matchups where neither side leaks goals easily even though both
-    can score -- e.g. PAOK Salonika vs Kifisia and Racing vs Sociedad.
-    Two strong defences cap the game at 1-0 / 0-1 / 1-1 (Under 2.5)
-    territory.
-
-    This complements _opponent_elite_defense_veto (which is frequency-based:
-    conceded in N of M games) by measuring the AVERAGE goals conceded -- a
-    team that concedes exactly 1 goal in 4/6 games passes the frequency gate
-    but still averages only 0.67 gpg against, i.e. a genuine strong defence.
-
-    Triggers if BOTH teams conceded <= 1.2 gpg avg in last 6 venue games.
-    """
-    h = home_6 or []
-    a = away_6 or []
-    if len(h) < 4 or len(a) < 4:
-        return False, None
-
-    hn, an = min(len(h), 6), min(len(a), 6)
-    h_ga_avg = sum(ga for _, ga in h[:hn]) / hn
-    a_ga_avg = sum(ga for _, ga in a[:an]) / an
-
-    if h_ga_avg <= 1.2 and a_ga_avg <= 1.2:
-        return True, f"both_strong_defence_hga{h_ga_avg:.1f}_aga{a_ga_avg:.1f}"
     return False, None
 
 
@@ -1918,9 +1864,6 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         h2h_over_blocked_2, h2h_over_meetings_2 = _h2h_over_blocked_2game(
             match["home_team_id"], match["away_team_id"], target_date
         )
-        h2h_under_majority_veto, h2h_under_majority_meetings = _h2h_under_majority_veto(
-            match["home_team_id"], match["away_team_id"], target_date
-        )
         h2h_under_blocked, h2h_under_meetings = _h2h_under_blocked(
             match["home_team_id"], match["away_team_id"], target_date
         )
@@ -1950,7 +1893,6 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
         )
         mutual_cold_veto, mutual_cold_reason = _mutual_cold_attacks_defences_veto(home_3, away_3)
         combined_weak_veto, combined_weak_reason = _combined_weak_attack_strong_defence_veto(home_6, away_6)
-        both_strong_defence_veto, both_strong_defence_reason = _both_strong_defence_veto(home_6, away_6)
         venue_h2h_veto, venue_h2h_meetings = _venue_h2h_bogey_veto(
             match["home_team_id"], match["away_team_id"], target_date
         )
@@ -2035,11 +1977,9 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             and not borderline_cluster_veto and not severe_crisis_veto
             and not xg_imbalance_veto
             and not mutual_cold_veto and not combined_weak_veto
-            and not both_strong_defence_veto
             and not h2h_zero_bogey_veto and not borderline_one_veto
             and not one_sided_blank_veto and not venue_h2h_veto
             and not opponent_elite_defense_veto
-            and not h2h_under_majority_veto
         )
         under_qualifies = (
             bool(under_passed) and under_score >= under_min_score and under_gate
@@ -2122,8 +2062,6 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append(f"h2h low-scoring bogey ({len(h2h_over_meetings)} meetings)")
         if h2h_over_blocked_2:
             regressions.append(f"h2h 2-game low-scoring bogey ({len(h2h_over_meetings_2)} meetings)")
-        if h2h_under_majority_veto:
-            regressions.append(f"h2h under-majority ({len(h2h_under_majority_meetings)} meetings)")
         if h2h_under_blocked:
             regressions.append(f"h2h high-scoring bogey ({len(h2h_under_meetings)} meetings)")
         if scoring_drought_veto:
@@ -2172,8 +2110,6 @@ def process_single_match(match, target_date, default_odds_over=2.0, default_odds
             regressions.append(f"mutual 0-0 streak ({mutual_cold_reason})")
         if combined_weak_veto:
             regressions.append(f"combined weak attack+defence ({combined_weak_reason})")
-        if both_strong_defence_veto:
-            regressions.append(f"both strong defences ({both_strong_defence_reason})")
         if h2h_zero_bogey_veto:
             regressions.append(f"h2h 0-or-1-goal bogey ({len(h2h_zero_bogey_meetings)} meetings)")
         if borderline_one_veto:
