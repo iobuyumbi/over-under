@@ -42472,9 +42472,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-24T13:40:17.624886",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-25T17:48:39.436341",
+      "final_score": "4-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-24",
