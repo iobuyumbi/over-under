@@ -4,6 +4,65 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-25 -->
+## Daily Picks — 2026-11-25
+
+### Over/Under 2.5  (4)
+  ✅ Club Brugge vs Liverpool (European Cup) — Over 2.5 · High 81.1%
+  ✅ Bolton vs West Brom (Football League Championship) — Over 2.5 · High 72.6%
+  ✅ Boreham W vs Aldershot (National League) — Over 2.5 · High 87.9%
+  ✅ Hartlepool vs Solihull M (National League) — Over 2.5 · High 65.1%
+
+### BTTS  (1)
+  ✅ Hartlepool vs Solihull M (National League) — BTTS Yes · High 65.5%
+
+### Home Win  (2)
+  ✅ Stoke vs Millwall (Football League Championship) — Home Win · High 86.4%
+  👀 Sporting vs Man Utd (European Cup) — Home Win · High 89.6%
+
+### Team Goals Over 0.5  (40)
+  🔥 Bolton vs West Brom (Football League Championship) — Home to Score · Medium 71.3%
+  🔥 Consadole Sapporo vs Fujieda MYFC (Japanese J2 League) — Home to Score · High 79.8%
+  🔥 Urawa Red Diamonds vs Cerezo Osaka (Japanese J1 League) — Home to Score · High 94.0%
+  ✅ Sabah vs Barcelona (European Cup) — Home to Score · High 85.8%
+  ✅ PSG vs Roma (European Cup) — Home to Score · High 87.8%
+  ✅ Slavia Prague vs Villarreal (European Cup) — Home to Score · High 86.9%
+  ✅ Club Brugge vs Liverpool (European Cup) — Home to Score · High 84.4%
+  ✅ Sporting vs Man Utd (European Cup) — Home to Score · High 90.9%
+  ✅ Lille vs B Munich (European Cup) — Home to Score · Medium 71.9%
+  ✅ Atl Madrid vs Viking (European Cup) — Home to Score · High 83.3%
+  ✅ Burnley vs Birmingham (Football League Championship) — Home to Score · Low 66.7%
+  ✅ Boreham W vs Aldershot (National League) — Home to Score · High 96.7%
+  ✅ Stoke vs Millwall (Football League Championship) — Home to Score · High 85.0%
+  ✅ Hartlepool vs Solihull M (National League) — Home to Score · High 81.5%
+  ✅ Inverurie Locos vs Buckie Thistle (Scottish Highland League) — Home to Score · High 81.0%
+  ✅ San Jose vs Houston (MLS) — Home to Score · High 83.3%
+  ✅ Santa Fe vs Once Caldas (Colombia Prim A Finalizacion) — Home to Score · High 79.2%
+  ✅ Sagan Tosu vs Oita Trinita (Japanese J2 League) — Home to Score · Medium 72.2%
+  ✅ Omiya Ardija vs Tokushima Vortis (Japanese J2 League) — Home to Score · Medium 77.2%
+  ✅ Shonan Bellmare vs Ventforet Kofu (Japanese J2 League) — Home to Score · High 84.6%
+  ✅ Iwaki vs Kataller Toyama (Japanese J2 League) — Home to Score · Medium 73.8%
+  ✅ V-Varen Nagasaki vs Kawasaki F (Japanese J1 League) — Home to Score · High 90.0%
+  ✅ Fagiano Okayama vs Shimizu S-Pulse (Japanese J1 League) — Home to Score · Medium 76.3%
+  ✅ JEF United vs Nagoya Grampus (Japanese J1 League) — Home to Score · Medium 74.6%
+  ✅ Atletico Mineiro vs Corinthians (Brazilian Serie A) — Home to Score · Medium 77.0%
+  🔥 Hartlepool vs Solihull M (National League) — Away to Score · High 79.4%
+  ✅ Bolton vs West Brom (Football League Championship) — Away to Score · High 90.0%
+  ✅ Burnley vs Birmingham (Football League Championship) — Away to Score · Medium 72.2%
+  ✅ Boreham W vs Aldershot (National League) — Away to Score · High 78.8%
+  ✅ Radnicki Nis vs Zeleznicar Pancevo (Serbian League) — Away to Score · High 87.0%
+  ✅ Kryvbas vs Metalist (Ukrainian League) — Away to Score · High 94.6%
+  ✅ San Jose vs Houston (MLS) — Away to Score · Medium 71.3%
+  ✅ Vanraure Hachinohe vs Albirex Niigata (Japanese J2 League) — Away to Score · High 82.8%
+  ✅ Montedio Yamagata vs Jubilo Iwata (Japanese J2 League) — Away to Score · High 77.5%
+  ✅ Imabari vs Tegevajaro Miyazaki (Japanese J2 League) — Away to Score · High 90.9%
+  ✅ Tochigi City vs Blaublitz Akita (Japanese J2 League) — Away to Score · Medium 72.7%
+  ✅ Yokohama FC vs Vegalta Sendai (Japanese J2 League) — Away to Score · Medium 66.0%
+  ✅ Mito HollyHock vs Tokyo Verdy (Japanese J1 League) — Away to Score · High 81.0%
+  ✅ Avispa Fukuoka vs Yokohama F. Marinos (Japanese J1 League) — Away to Score · Medium 72.2%
+  ✅ Urawa Red Diamonds vs Cerezo Osaka (Japanese J1 League) — Away to Score · High 80.0%
+
+
 <!-- report: daily 2026-11-24 -->
 ## Daily Picks — 2026-11-24
 

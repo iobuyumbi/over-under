@@ -1,258 +1,267 @@
-📅 Daily Soccer Picks · 2026-11-24
+📅 Daily Soccer Picks · 2026-11-25
 Every fixture, split by market and side, grouped by confidence.
 
-📊 Over/Under 2.5 15 · BTTS 5 · Home Win 14 · Over 0.5 Team Goal 102
-   Total: 136 picks
+📊 Over/Under 2.5 4 · BTTS 1 · Home Win 2 · Over 0.5 Team Goal 40
+   Total: 47 picks
 
 Tier: 🔥 Premium · ✅ Solid · 👀 Watchlist    ⚠ weak-ROI caution
 
 ═══════════════════════════
-📊 YESTERDAY · 2026-11-23
+📊 YESTERDAY · 2026-11-24
 ═══════════════════════════
-Market / Side  Tier       Tot  W   L   P  Pend  Win%
-----------------------------------------------------
-Over 2.5       Solid      6    2   4   0  0     33.3%
-BTTS Yes       Solid      1    1   0   0  0     100.0%
-Home Win       Watchlist  2    0   2   0  0     0.0%
-Home to Score  Premium    4    4   0   0  0     100.0%
-Home to Score  Solid      11   10  1   0  0     90.9%
-Home to Score  ALL        15   14  1   0  0     93.3%
-Away to Score  Solid      10   6   4   0  0     60.0%
-TOTAL                     34   23  11  0  0     67.6%
+Market / Side  Tier       Tot  W    L   P  Pend  Win%
+-----------------------------------------------------
+Over 2.5       Solid      15   8    7   0  0     53.3%
+BTTS Yes       Solid      5    1    3   0  1     25.0%
+Home Win       Solid      4    3    1   0  0     75.0%
+Home Win       Watchlist  10   6    4   0  0     60.0%
+Home Win       ALL        14   9    5   0  0     64.3%
+Home to Score  Premium    10   8    2   0  0     80.0%
+Home to Score  Solid      49   41   6   0  2     87.2%
+Home to Score  ALL        59   49   8   0  2     86.0%
+Away to Score  Premium    9    7    2   0  0     77.8%
+Away to Score  Solid      34   26   7   0  1     78.8%
+Away to Score  ALL        43   33   9   0  1     78.6%
+TOTAL                     136  100  32  0  4     75.8%
 
 Tot = picks · W-L-P = win-loss-push (void) · Pend awaits settlement · Win% = W/(W+L)
 
 ═══════════════════════════
-📋 YESTERDAY PICKS · 2026-11-23
+📋 YESTERDAY PICKS · 2026-11-24
 ═══════════════════════════
-Market / Side  Match                           Result  Score
-------------------------------------------------------------
-Over 2.5       Basaksehir vs Corum             Win     4-2
-Over 2.5       Brondby vs Midtjylland          Loss    0-2
-Over 2.5       Wieczysta Krakow vs Motor Lub…  Win     2-1
-Over 2.5       Ludogorets vs Dunav Ruse        Loss    1-0
-Over 2.5       Chelmsford vs Maidstone         Loss    1-0
-Over 2.5       Vancouver W vs Real Salt Lake   Loss    2-0
-BTTS Yes       Wieczysta Krakow vs Motor Lub…  Win     2-1
-Home Win       Internacional vs Vitoria        Loss    2-5
-Home Win       Botafogo vs Sao Paulo           Loss    1-1
-Home to Score  Wieczysta Krakow vs Motor Lub…  Win     2-1
-Home to Score  Ludogorets vs Dunav Ruse        Win     1-0
-Home to Score  Vancouver W vs Real Salt Lake   Win     2-0
-Home to Score  Internacional vs Vitoria        Win     2-5
-Home to Score  Monza vs Fiorentina             Win     3-0
-Home to Score  Koper vs NK Aluminij            Win     2-0
-Home to Score  Orgryte IS vs Kalmar            Win     3-2
-Home to Score  Basaksehir vs Corum             Win     4-2
-Home to Score  Slaven vs Osijek                Win     1-0
-Home to Score  Hammarby vs IFK Goth'burg       Win     3-1
-Home to Score  Brondby vs Midtjylland          Loss    0-2
-Home to Score  Chelmsford vs Maidstone         Win     1-0
-Home to Score  Instituto vs Huracan            Win     2-1
-Home to Score  Albion FC vs Danubio            Win     1-1
-Home to Score  Botafogo vs Sao Paulo           Win     1-1
-Away to Score  Brentford vs Everton            Loss    4-0
-Away to Score  Levante vs Elche                Win     1-1
-Away to Score  Monza vs Fiorentina             Loss    3-0
-Away to Score  Basaksehir vs Corum             Win     4-2
-Away to Score  Wieczysta Krakow vs Motor Lub…  Win     2-1
-Away to Score  Sepsi Sfantu G vs Rapid Buch.   Win     1-3
-Away to Score  Brondby vs Midtjylland          Win     0-2
-Away to Score  AD Ceuta vs Almeria             Win     2-3
-Away to Score  Vancouver W vs Real Salt Lake   Loss    2-0
-Away to Score  Chelmsford vs Maidstone         Loss    1-0
+Market / Side  Match                           Result   Score
+-------------------------------------------------------------
+Over 2.5       S. Bratislava vs Real Betis     Loss     0-2
+Over 2.5       Real Madrid vs PSV Eindhoven    Win      5-1
+Over 2.5       Portsmouth vs West Ham          Loss     1-0
+Over 2.5       Crawley vs Barnet               Loss     0-0
+Over 2.5       Port Vale vs Northampton        Loss     1-1
+Over 2.5       Eastleigh vs Yeovil             Win      1-3
+Over 2.5       Salford vs Sunderland U         Win      3-2
+Over 2.5       Ross County vs Stenh'semuir     Loss     1-1
+Over 2.5       Ayr vs Inverness CT             Win      2-1
+Over 2.5       Merthyr vs Bedford              Loss     1-0
+Over 2.5       South Shields vs Worksop        Win      2-1
+Over 2.5       Telford vs Buxton               Loss     1-0
+Over 2.5       Farnham Town vs Maidenhead      Win      2-1
+Over 2.5       Eastbourne vs Aveley            Win      3-1
+Over 2.5       Bracknell vs Berkhamsted        Win      1-2
+BTTS Yes       Portsmouth vs West Ham          Loss     1-0
+BTTS Yes       Crawley vs Barnet               Loss     0-0
+BTTS Yes       Fleetwood vs Leeds U            Pending  -
+BTTS Yes       Merthyr vs Bedford              Loss     1-0
+BTTS Yes       Farnham Town vs Maidenhead      Win      2-1
+Home Win       Como vs AEK Athens              Win      1-0
+Home Win       RB Leipzig vs Lens              Win      3-1
+Home Win       Carlisle vs Tamworth            Loss     1-2
+Home Win       Rangers vs Aberdeen             Win      3-2
+Home Win       Middlesbrough vs Swansea        Win      2-1
+Home Win       Stevenage vs Sheff Wed          Loss     0-0
+Home Win       Wolves vs Derby                 Win      3-0
+Home Win       Bradford vs Barnsley            Win      3-0
+Home Win       Ross County vs Stenh'semuir     Loss     1-1
+Home Win       Clydebank vs Queen's Park       Loss     3-3
+Home Win       South Shields vs Worksop        Win      2-1
+Home Win       King's Lynn vs Radcliffe Boro   Win      1-0
+Home Win       Salisbury FC vs AFC Totton      Loss     1-1
+Home Win       Eastbourne vs Aveley            Win      3-1
+Home to Score  Wolves vs Derby                 Win      3-0
+Home to Score  Cardiff vs Preston              Loss     0-4
+Home to Score  Forest Green vs Southend        Loss     0-2
+Home to Score  Salford vs Sunderland U         Win      3-2
+Home to Score  Tranmere vs Everton U           Win      2-1
+Home to Score  Livingston vs Peterhead         Win      3-0
+Home to Score  Merthyr vs Bedford              Win      1-0
+Home to Score  Telford vs Buxton               Win      1-0
+Home to Score  Chippenham vs Havant & W        Win      3-2
+Home to Score  Malvern Town vs Hanworth Villa  Win      3-2
+Home to Score  Como vs AEK Athens              Win      1-0
+Home to Score  Bodo Glimt vs LASK Linz         Win      1-0
+Home to Score  Galatasaray vs Aston Villa      Win      1-0
+Home to Score  RB Leipzig vs Lens              Win      3-1
+Home to Score  Real Madrid vs PSV Eindhoven    Win      5-1
+Home to Score  Man City vs Napoli              Win      2-2
+Home to Score  Feyenoord vs Porto              Loss     0-1
+Home to Score  Portsmouth vs West Ham          Win      1-0
+Home to Score  Sheff Utd vs Southampton        Win      1-1
+Home to Score  Norwich vs QPR                  Win      1-1
+Home to Score  Middlesbrough vs Swansea        Win      2-1
+Home to Score  Stevenage vs Sheff Wed          Loss     0-0
+Home to Score  Bradford vs Barnsley            Win      3-0
+Home to Score  Port Vale vs Northampton        Win      1-1
+Home to Score  Crawley vs Barnet               Loss     0-0
+Home to Score  Woking vs Worthing              Win      4-3
+Home to Score  Altrincham vs Wealdstone        Win      3-0
+Home to Score  Carlisle vs Tamworth            Win      1-2
+Home to Score  Eastleigh vs Yeovil             Win      1-3
+Home to Score  Fylde vs Halifax                Loss     0-2
+Home to Score  Scunthorpe vs Gateshead         Win      1-2
+Home to Score  Hornchurch vs Sutton Utd        Loss     0-0
+Home to Score  Oxford vs Tottenham U           Win      2-1
+Home to Score  Fleetwood vs Leeds U            Pending  -
+Home to Score  Hibernian vs Dundee             Win      2-1
+Home to Score  Rangers vs Aberdeen             Win      3-2
+Home to Score  Ross County vs Stenh'semuir     Win      1-1
+Home to Score  Arbroath vs Airdrieonians       Win      1-3
+Home to Score  Clydebank vs Queen's Park       Win      3-3
+Home to Score  St. Louis City SC vs Los Ange…  Win      3-2
+Home to Score  Darlington vs Southport         Win      2-1
+Home to Score  Macclesfield vs Morecambe       Win      3-2
+Home to Score  Chorley vs Hebburn Town         Win      1-1
+Home to Score  South Shields vs Worksop        Win      2-1
+Home to Score  Marine vs Spennymoor            Win      5-0
+Home to Score  Torquay vs Chesham              Win      2-1
+Home to Score  Weston S-M. vs Walton & H       Win      2-0
+Home to Score  Farnham Town vs Maidenhead      Win      2-1
+Home to Score  Ebbsfleet vs Billericay         Win      1-1
+Home to Score  Slough vs Farnborough           Win      4-2
+Home to Score  Salisbury FC vs AFC Totton      Win      1-1
+Home to Score  Horsham vs Truro City           Win      1-0
+Home to Score  Leatherhead vs Ramsgate         Win      1-0
+Home to Score  Eastbourne vs Aveley            Win      3-1
+Home to Score  Basingstoke vs Sholing          Win      3-2
+Home to Score  Bracknell vs Berkhamsted        Win      1-2
+Home to Score  Leek vs Gainsborough            Win      2-2
+Home to Score  Santos vs Gremio                Loss     0-2
+Home to Score  Millonarios vs Atletico Bucar…  Pending  -
+Away to Score  S. Bratislava vs Real Betis     Win      0-2
+Away to Score  Crawley vs Barnet               Loss     0-0
+Away to Score  Tranmere vs Everton U           Win      2-1
+Away to Score  Hibernian vs Dundee             Win      2-1
+Away to Score  Hamilton vs Cove Rangers        Win      1-1
+Away to Score  Ayr vs Inverness CT             Win      2-1
+Away to Score  Merthyr vs Bedford              Loss     1-0
+Away to Score  Brackley vs Hereford            Win      3-2
+Away to Score  Leek vs Gainsborough            Win      2-2
+Away to Score  Galatasaray vs Aston Villa      Loss     1-0
+Away to Score  Real Madrid vs PSV Eindhoven    Win      5-1
+Away to Score  Man City vs Napoli              Win      2-2
+Away to Score  Feyenoord vs Porto              Win      0-1
+Away to Score  Portsmouth vs West Ham          Loss     1-0
+Away to Score  Norwich vs QPR                  Win      1-1
+Away to Score  Blackpool vs Leicester          Win      1-1
+Away to Score  Bromley vs Wycombe              Win      1-1
+Away to Score  Woking vs Worthing              Win      4-3
+Away to Score  Altrincham vs Wealdstone        Loss     3-0
+Away to Score  Boston Utd vs Barrow            Win      0-1
+Away to Score  Eastleigh vs Yeovil             Win      1-3
+Away to Score  Fylde vs Halifax                Win      0-2
+Away to Score  Salford vs Sunderland U         Win      3-2
+Away to Score  Fleetwood vs Leeds U            Pending  -
+Away to Score  East Kilbride vs Partick        Win      3-3
+Away to Score  Arbroath vs Airdrieonians       Win      1-3
+Away to Score  Holywell Town vs Penybont       Win      1-4
+Away to Score  St. Louis City SC vs Los Ange…  Win      3-2
+Away to Score  Macclesfield vs Morecambe       Win      3-2
+Away to Score  Chorley vs Hebburn Town         Win      1-1
+Away to Score  South Shields vs Worksop        Win      2-1
+Away to Score  Harborough T vs Chester         Win      1-2
+Away to Score  Telford vs Buxton               Loss     1-0
+Away to Score  Weston S-M. vs Walton & H       Loss     2-0
+Away to Score  Farnham Town vs Maidenhead      Win      2-1
+Away to Score  Hampton & R vs Dover            Win      0-5
+Away to Score  Leatherhead vs Ramsgate         Loss     1-0
+Away to Score  Cray W vs Wingate & F           Win      1-1
+Away to Score  Chippenham vs Havant & W        Win      3-2
+Away to Score  Basingstoke vs Sholing          Win      3-2
+Away to Score  Bracknell vs Berkhamsted        Win      1-2
+Away to Score  Santos vs Gremio                Win      0-2
+Away to Score  Chapecoense vs Palmeiras        Loss     3-0
 
 ═══════════════════════════
-⚽️ OVER / UNDER 2.5  (15)
+⚽️ OVER / UNDER 2.5  (4)
 ═══════════════════════════
-── ⬆️ OVER 2.5  (15) ──
-━━━ 🟢 HIGH CONFIDENCE  (15) ━━━
-#   Match                         League                Conf   Tier
--------------------------------------------------------------------
-1   Eastleigh vs Yeovil           National League       85.0%  ✅
-2   Real Madrid vs PSV Eindhoven  European Cup          84.0%  ✅
-3   S. Bratislava vs Real Betis   European Cup          76.5%  ✅
-4   Portsmouth vs West Ham        Football League Cha…  75.9%  ✅
-5   Farnham Town vs Maidenhead    Football Conference…  75.6%  ✅
-6   Merthyr vs Bedford            Football Conference…  74.5%  ✅
-7   Ayr vs Inverness CT           Scottish League Cha…  72.9%  ✅⚠
-8   Ross County vs Stenh'semuir   Scottish League Cha…  72.9%  ✅⚠
-9   Bracknell vs Berkhamsted      Southern League Pre…  72.1%  ✅
-10  Salford vs Sunderland U       Football League Tro…  72.0%  ✅
-11  Port Vale vs Northampton      Football League Two   71.8%  ✅
-12  Telford vs Buxton             Football Conference…  71.3%  ✅
-13  South Shields vs Worksop      Football Conference…  64.3%  ✅
-14  Eastbourne vs Aveley          Ryman Premier         61.4%  ✅⚠
-15  Crawley vs Barnet             Football League Two   60.5%  ✅
+── ⬆️ OVER 2.5  (4) ──
+━━━ 🟢 HIGH CONFIDENCE  (4) ━━━
+#  Match                     League                Conf   Tier
+--------------------------------------------------------------
+1  Boreham W vs Aldershot    National League       87.9%  ✅
+2  Club Brugge vs Liverpool  European Cup          81.1%  ✅
+3  Bolton vs West Brom       Football League Cha…  72.6%  ✅⚠
+4  Hartlepool vs Solihull M  National League       65.1%  ✅
 
 ═══════════════════════════
-🎯 BTTS (YES / NO)  (5)
+🎯 BTTS (YES / NO)  (1)
 ═══════════════════════════
-── ✅ BTTS YES  (5) ──
-━━━ 🟢 HIGH CONFIDENCE  (5) ━━━
-#  Match                       League                Conf   Tier
-----------------------------------------------------------------
-1  Fleetwood vs Leeds U        Football League Tro…  73.2%  ✅
-2  Merthyr vs Bedford          Football Conference…  71.3%  ✅
-3  Portsmouth vs West Ham      Football League Cha…  71.3%  ✅
-4  Farnham Town vs Maidenhead  Football Conference…  71.2%  ✅
-5  Crawley vs Barnet           Football League Two   58.4%  ✅
+── ✅ BTTS YES  (1) ──
+━━━ 🟢 HIGH CONFIDENCE  (1) ━━━
+#  Match                     League           Conf   Tier
+---------------------------------------------------------
+1  Hartlepool vs Solihull M  National League  65.5%  ✅
 
 ═══════════════════════════
-🏠 HOME WIN  (14)
+🏠 HOME WIN  (2)
 ═══════════════════════════
-━━━ 🟢 HIGH CONFIDENCE  (13) ━━━
-#   Match                          League                Conf   Tier
---------------------------------------------------------------------
-1   Clydebank vs Queen's Park      Scottish League Cha…  92.9%  👀
-2   Eastbourne vs Aveley           Ryman Premier         90.9%  👀
-3   Wolves vs Derby                Football League Cha…  90.4%  👀
-4   Ross County vs Stenh'semuir    Scottish League Cha…  89.6%  👀
-5   South Shields vs Worksop       Football Conference…  89.6%  👀
-6   Carlisle vs Tamworth           National League       88.7%  ✅
-7   Rangers vs Aberdeen            Scottish Premier      88.3%  ✅
-8   Bradford vs Barnsley           Football League One   87.5%  👀⚠
-9   Como vs AEK Athens             European Cup          85.8%  ✅
-10  RB Leipzig vs Lens             European Cup          85.6%  ✅
-11  Salisbury FC vs AFC Totton     Football Conference…  83.8%  👀
-12  Middlesbrough vs Swansea       Football League Cha…  81.8%  👀
-13  King's Lynn vs Radcliffe Boro  Football Conference…  74.3%  👀
-
-━━━ 🟡 MEDIUM CONFIDENCE  (1) ━━━
-#  Match                   League               Conf   Tier
------------------------------------------------------------
-1  Stevenage vs Sheff Wed  Football League One  68.9%  👀⚠
+━━━ 🟢 HIGH CONFIDENCE  (2) ━━━
+#  Match                League                Conf   Tier
+---------------------------------------------------------
+1  Sporting vs Man Utd  European Cup          89.6%  👀
+2  Stoke vs Millwall    Football League Cha…  86.4%  ✅
 
 ═══════════════════════════
-🎯 OVER 0.5 TEAM GOAL  (102)
+🎯 OVER 0.5 TEAM GOAL  (40)
 ═══════════════════════════
-── 🏠 HOME TO SCORE  (59) ──
-━━━ 🟢 HIGH CONFIDENCE  (51) ━━━
+── 🏠 HOME TO SCORE  (25) ──
+━━━ 🟢 HIGH CONFIDENCE  (16) ━━━
 #   Match                             League                Conf   Tier
 -----------------------------------------------------------------------
-1   Bradford vs Barnsley              Football League One   96.3%  ✅
-2   Cardiff vs Preston                Football League Cha…  95.0%  🔥
-3   Ross County vs Stenh'semuir       Scottish League Cha…  94.8%  ✅
-4   Salisbury FC vs AFC Totton        Football Conference…  93.4%  ✅
-5   Port Vale vs Northampton          Football League Two   93.1%  ✅
-6   RB Leipzig vs Lens                European Cup          92.9%  ✅
-7   Galatasaray vs Aston Villa        European Cup          91.6%  ✅
-8   South Shields vs Worksop          Football Conference…  91.2%  ✅
-9   Middlesbrough vs Swansea          Football League Cha…  91.0%  ✅
-10  Scunthorpe vs Gateshead           National League       90.2%  ✅
-11  Merthyr vs Bedford                Football Conference…  90.1%  🔥
-12  Forest Green vs Southend          National League       89.5%  🔥
-13  Eastbourne vs Aveley              Ryman Premier         88.4%  ✅
-14  Farnham Town vs Maidenhead        Football Conference…  88.4%  ✅
-15  Clydebank vs Queen's Park         Scottish League Cha…  88.0%  ✅
-16  Wolves vs Derby                   Football League Cha…  87.9%  🔥
-17  Chippenham vs Havant & W          Southern League Pre…  87.8%  🔥
-18  Fleetwood vs Leeds U              Football League Tro…  87.8%  ✅
-19  Real Madrid vs PSV Eindhoven      European Cup          87.5%  ✅
-20  Man City vs Napoli                European Cup          87.3%  ✅
-21  Rangers vs Aberdeen               Scottish Premier      86.7%  ✅
-22  Salford vs Sunderland U           Football League Tro…  86.7%  🔥
-23  Carlisle vs Tamworth              National League       86.6%  ✅
-24  Como vs AEK Athens                European Cup          86.3%  ✅
-25  Malvern Town vs Hanworth Villa    Southern League Pre…  86.2%  🔥
-26  Eastleigh vs Yeovil               National League       86.1%  ✅
-27  Ebbsfleet vs Billericay           Football Conference…  86.1%  ✅
-28  Fylde vs Halifax                  National League       85.5%  ✅
-29  Leek vs Gainsborough              Unibond Premier       85.0%  ✅
-30  Darlington vs Southport           Football Conference…  84.6%  ✅
-31  Basingstoke vs Sholing            Southern League Pre…  84.0%  ✅
-32  Macclesfield vs Morecambe         Football Conference…  84.0%  ✅
-33  Marine vs Spennymoor              Football Conference…  84.0%  ✅
-34  Torquay vs Chesham                Football Conference…  84.0%  ✅
-35  Oxford vs Tottenham U             Football League Tro…  83.8%  ✅
-36  Portsmouth vs West Ham            Football League Cha…  83.8%  ✅
-37  St. Louis City SC vs Los Angele…  MLS                   83.6%  ✅
-38  Chorley vs Hebburn Town           Football Conference…  83.1%  ✅
-39  Arbroath vs Airdrieonians         Scottish League Cha…  82.3%  ✅
-40  Telford vs Buxton                 Football Conference…  82.3%  🔥
-41  Leatherhead vs Ramsgate           Ryman Premier         82.1%  ✅
-42  Bodo Glimt vs LASK Linz           European Cup          81.2%  ✅
-43  Stevenage vs Sheff Wed            Football League One   81.2%  ✅
-44  Norwich vs QPR                    Football League Cha…  81.0%  ✅
-45  Weston S-M. vs Walton & H         Football Conference…  80.6%  ✅
-46  Livingston vs Peterhead           Scottish League Cha…  79.6%  🔥
-47  Bracknell vs Berkhamsted          Southern League Pre…  79.2%  ✅
-48  Feyenoord vs Porto                European Cup          79.0%  ✅
-49  Slough vs Farnborough             Football Conference…  79.0%  ✅
-50  Woking vs Worthing                National League       78.3%  ✅
-51  Sheff Utd vs Southampton          Football League Cha…  78.1%  ✅
+1   Boreham W vs Aldershot            National League       96.7%  ✅
+2   Urawa Red Diamonds vs Cerezo Os…  Japanese J1 League    94.0%  🔥
+3   Sporting vs Man Utd               European Cup          90.9%  ✅
+4   V-Varen Nagasaki vs Kawasaki F    Japanese J1 League    90.0%  ✅
+5   PSG vs Roma                       European Cup          87.8%  ✅
+6   Slavia Prague vs Villarreal       European Cup          86.9%  ✅
+7   Sabah vs Barcelona                European Cup          85.8%  ✅
+8   Stoke vs Millwall                 Football League Cha…  85.0%  ✅
+9   Shonan Bellmare vs Ventforet Ko…  Japanese J2 League    84.6%  ✅
+10  Club Brugge vs Liverpool          European Cup          84.4%  ✅
+11  Atl Madrid vs Viking              European Cup          83.3%  ✅
+12  San Jose vs Houston               MLS                   83.3%  ✅
+13  Hartlepool vs Solihull M          National League       81.5%  ✅
+14  Inverurie Locos vs Buckie Thist…  Scottish Highland L…  81.0%  ✅
+15  Consadole Sapporo vs Fujieda MY…  Japanese J2 League    79.8%  🔥
+16  Santa Fe vs Once Caldas           Colombia Prim A Fin…  79.2%  ✅
 
-━━━ 🟡 MEDIUM CONFIDENCE  (7) ━━━
+━━━ 🟡 MEDIUM CONFIDENCE  (8) ━━━
 #  Match                             League                Conf   Tier
 ----------------------------------------------------------------------
-1  Tranmere vs Everton U             Football League Tro…  77.9%  🔥
-2  Altrincham vs Wealdstone          National League       75.6%  ✅
-3  Crawley vs Barnet                 Football League Two   75.3%  ✅
-4  Hornchurch vs Sutton Utd          National League       74.8%  ✅
-5  Millonarios vs Atletico Bucaram…  Colombia Prim A Fin…  72.5%  ✅
-6  Santos vs Gremio                  Brazilian Serie A     72.2%  ✅
-7  Horsham vs Truro City             Football Conference…  71.6%  ✅
+1  Omiya Ardija vs Tokushima Vortis  Japanese J2 League    77.2%  ✅
+2  Atletico Mineiro vs Corinthians   Brazilian Serie A     77.0%  ✅
+3  Fagiano Okayama vs Shimizu S-Pu…  Japanese J1 League    76.3%  ✅
+4  JEF United vs Nagoya Grampus      Japanese J1 League    74.6%  ✅
+5  Iwaki vs Kataller Toyama          Japanese J2 League    73.8%  ✅
+6  Sagan Tosu vs Oita Trinita        Japanese J2 League    72.2%  ✅
+7  Lille vs B Munich                 European Cup          71.9%  ✅
+8  Bolton vs West Brom               Football League Cha…  71.3%  🔥
 
 ━━━ 🔵 LOW CONFIDENCE  (1) ━━━
-#  Match                League            Conf   Tier
------------------------------------------------------
-1  Hibernian vs Dundee  Scottish Premier  66.0%  ✅
+#  Match                  League                Conf   Tier
+-----------------------------------------------------------
+1  Burnley vs Birmingham  Football League Cha…  66.7%  ✅
 
-── ✈️ AWAY TO SCORE  (43) ──
-━━━ 🟢 HIGH CONFIDENCE  (31) ━━━
-#   Match                         League                Conf   Tier
--------------------------------------------------------------------
-1   Holywell Town vs Penybont     Welsh Premier         97.0%  ✅
-2   Eastleigh vs Yeovil           National League       91.6%  ✅
-3   Blackpool vs Leicester        Football League One   90.5%  ✅
-4   Feyenoord vs Porto            European Cup          90.1%  ✅
-5   Bromley vs Wycombe            Football League One   88.0%  ✅
-6   Leek vs Gainsborough          Unibond Premier       87.5%  🔥
-7   S. Bratislava vs Real Betis   European Cup          87.3%  🔥
-8   Portsmouth vs West Ham        Football League Cha…  86.5%  ✅
-9   Bracknell vs Berkhamsted      Southern League Pre…  85.9%  ✅
-10  Hampton & R vs Dover          Football Conference…  85.9%  ✅
-11  Leatherhead vs Ramsgate       Ryman Premier         85.2%  ✅
-12  Arbroath vs Airdrieonians     Scottish League Cha…  84.9%  ✅
-13  Galatasaray vs Aston Villa    European Cup          84.4%  ✅
-14  East Kilbride vs Partick      Scottish League Cha…  83.1%  ✅
-15  Boston Utd vs Barrow          National League       83.0%  ✅
-16  Real Madrid vs PSV Eindhoven  European Cup          82.3%  ✅
-17  Hibernian vs Dundee           Scottish Premier      82.1%  🔥
-18  Crawley vs Barnet             Football League Two   81.2%  🔥
-19  Macclesfield vs Morecambe     Football Conference…  81.2%  ✅
-20  Farnham Town vs Maidenhead    Football Conference…  80.8%  ✅
-21  Cray W vs Wingate & F         Ryman Premier         80.0%  ✅
-22  Telford vs Buxton             Football Conference…  79.8%  ✅
-23  Ayr vs Inverness CT           Scottish League Cha…  79.6%  🔥
-24  Brackley vs Hereford          Football Conference…  78.3%  🔥
-25  Chapecoense vs Palmeiras      Brazilian Serie A     78.1%  ✅
-26  Harborough T vs Chester       Football Conference…  77.5%  ✅
-27  Woking vs Worthing            National League       77.0%  ✅
-28  Merthyr vs Bedford            Football Conference…  76.5%  🔥
-29  Fleetwood vs Leeds U          Football League Tro…  75.8%  ✅
-30  Hamilton vs Cove Rangers      Scottish League Cha…  75.8%  🔥
-31  Chippenham vs Havant & W      Southern League Pre…  75.6%  ✅
+── ✈️ AWAY TO SCORE  (15) ──
+━━━ 🟢 HIGH CONFIDENCE  (10) ━━━
+#   Match                             League                Conf   Tier
+-----------------------------------------------------------------------
+1   Kryvbas vs Metalist               Ukrainian League      94.6%  ✅
+2   Imabari vs Tegevajaro Miyazaki    Japanese J2 League    90.9%  ✅
+3   Bolton vs West Brom               Football League Cha…  90.0%  ✅
+4   Radnicki Nis vs Zeleznicar Panc…  Serbian League        87.0%  ✅
+5   Vanraure Hachinohe vs Albirex N…  Japanese J2 League    82.8%  ✅
+6   Mito HollyHock vs Tokyo Verdy     Japanese J1 League    81.0%  ✅
+7   Urawa Red Diamonds vs Cerezo Os…  Japanese J1 League    80.0%  ✅
+8   Hartlepool vs Solihull M          National League       79.4%  🔥
+9   Boreham W vs Aldershot            National League       78.8%  ✅
+10  Montedio Yamagata vs Jubilo Iwa…  Japanese J2 League    77.5%  ✅
 
-━━━ 🟡 MEDIUM CONFIDENCE  (7) ━━━
+━━━ 🟡 MEDIUM CONFIDENCE  (5) ━━━
 #  Match                             League                Conf   Tier
 ----------------------------------------------------------------------
-1  Man City vs Napoli                European Cup          74.8%  ✅
-2  Salford vs Sunderland U           Football League Tro…  72.7%  ✅
-3  Chorley vs Hebburn Town           Football Conference…  72.5%  ✅
-4  St. Louis City SC vs Los Angele…  MLS                   71.3%  ✅
-5  Tranmere vs Everton U             Football League Tro…  69.6%  🔥
-6  Altrincham vs Wealdstone          National League       67.4%  ✅
-7  Norwich vs QPR                    Football League Cha…  66.7%  ✅
-
-━━━ 🔵 LOW CONFIDENCE  (5) ━━━
-#  Match                      League                Conf   Tier
----------------------------------------------------------------
-1  Basingstoke vs Sholing     Southern League Pre…  63.6%  ✅
-2  Fylde vs Halifax           National League       62.5%  ✅
-3  Santos vs Gremio           Brazilian Serie A     62.5%  ✅
-4  South Shields vs Worksop   Football Conference…  61.7%  ✅
-5  Weston S-M. vs Walton & H  Football Conference…  55.1%  ✅
+1  Tochigi City vs Blaublitz Akita   Japanese J2 League    72.7%  ✅
+2  Avispa Fukuoka vs Yokohama F. M…  Japanese J1 League    72.2%  ✅
+3  Burnley vs Birmingham             Football League Cha…  72.2%  ✅
+4  San Jose vs Houston               MLS                   71.3%  ✅
+5  Yokohama FC vs Vegalta Sendai     Japanese J2 League    66.0%  ✅
 
 ───────────
 Info only · gamble responsibly

@@ -2501,76 +2501,110 @@ date,home_team,away_team,score
 2026-11-23,Slaven,Osijek,1-0
 2026-11-23,Vancouver W,Real Salt Lake,2-0
 2026-11-23,Wieczysta Krakow,Motor Lublin,2-1
-2026-11-24,Altrincham,Wealdstone,
-2026-11-24,Arbroath,Airdrieonians,
-2026-11-24,Ayr,Inverness CT,
-2026-11-24,Basingstoke,Sholing,
-2026-11-24,Blackpool,Leicester,
-2026-11-24,Bodo Glimt,LASK Linz,
-2026-11-24,Boston Utd,Barrow,
-2026-11-24,Brackley,Hereford,
-2026-11-24,Bracknell,Berkhamsted,
-2026-11-24,Bradford,Barnsley,
-2026-11-24,Bromley,Wycombe,
-2026-11-24,Cardiff,Preston,
-2026-11-24,Carlisle,Tamworth,
-2026-11-24,Chapecoense,Palmeiras,
-2026-11-24,Chippenham,Havant & W,
-2026-11-24,Chorley,Hebburn Town,
-2026-11-24,Clydebank,Queen's Park,
-2026-11-24,Como,AEK Athens,
-2026-11-24,Crawley,Barnet,
-2026-11-24,Cray W,Wingate & F,
-2026-11-24,Darlington,Southport,
-2026-11-24,East Kilbride,Partick,
-2026-11-24,Eastbourne,Aveley,
-2026-11-24,Eastleigh,Yeovil,
-2026-11-24,Ebbsfleet,Billericay,
-2026-11-24,Farnham Town,Maidenhead,
-2026-11-24,Feyenoord,Porto,
+2026-11-24,Altrincham,Wealdstone,3-0
+2026-11-24,Arbroath,Airdrieonians,1-3
+2026-11-24,Ayr,Inverness CT,2-1
+2026-11-24,Basingstoke,Sholing,3-2
+2026-11-24,Blackpool,Leicester,1-1
+2026-11-24,Bodo Glimt,LASK Linz,1-0
+2026-11-24,Boston Utd,Barrow,0-1
+2026-11-24,Brackley,Hereford,3-2
+2026-11-24,Bracknell,Berkhamsted,1-2
+2026-11-24,Bradford,Barnsley,3-0
+2026-11-24,Bromley,Wycombe,1-1
+2026-11-24,Cardiff,Preston,0-4
+2026-11-24,Carlisle,Tamworth,1-2
+2026-11-24,Chapecoense,Palmeiras,3-0
+2026-11-24,Chippenham,Havant & W,3-2
+2026-11-24,Chorley,Hebburn Town,1-1
+2026-11-24,Clydebank,Queen's Park,3-3
+2026-11-24,Como,AEK Athens,1-0
+2026-11-24,Crawley,Barnet,0-0
+2026-11-24,Cray W,Wingate & F,1-1
+2026-11-24,Darlington,Southport,2-1
+2026-11-24,East Kilbride,Partick,3-3
+2026-11-24,Eastbourne,Aveley,3-1
+2026-11-24,Eastleigh,Yeovil,1-3
+2026-11-24,Ebbsfleet,Billericay,1-1
+2026-11-24,Farnham Town,Maidenhead,2-1
+2026-11-24,Feyenoord,Porto,0-1
 2026-11-24,Fleetwood,Leeds U,
-2026-11-24,Forest Green,Southend,
-2026-11-24,Fylde,Halifax,
-2026-11-24,Galatasaray,Aston Villa,
-2026-11-24,Hamilton,Cove Rangers,
-2026-11-24,Hampton & R,Dover,
-2026-11-24,Harborough T,Chester,
-2026-11-24,Hibernian,Dundee,
-2026-11-24,Holywell Town,Penybont,
-2026-11-24,Hornchurch,Sutton Utd,
-2026-11-24,Horsham,Truro City,
-2026-11-24,King's Lynn,Radcliffe Boro,
-2026-11-24,Leatherhead,Ramsgate,
-2026-11-24,Leek,Gainsborough,
-2026-11-24,Livingston,Peterhead,
-2026-11-24,Macclesfield,Morecambe,
-2026-11-24,Malvern Town,Hanworth Villa,
-2026-11-24,Man City,Napoli,
-2026-11-24,Marine,Spennymoor,
-2026-11-24,Merthyr,Bedford,
-2026-11-24,Middlesbrough,Swansea,
+2026-11-24,Forest Green,Southend,0-2
+2026-11-24,Fylde,Halifax,0-2
+2026-11-24,Galatasaray,Aston Villa,1-0
+2026-11-24,Hamilton,Cove Rangers,1-1
+2026-11-24,Hampton & R,Dover,0-5
+2026-11-24,Harborough T,Chester,1-2
+2026-11-24,Hibernian,Dundee,2-1
+2026-11-24,Holywell Town,Penybont,1-4
+2026-11-24,Hornchurch,Sutton Utd,0-0
+2026-11-24,Horsham,Truro City,1-0
+2026-11-24,King's Lynn,Radcliffe Boro,1-0
+2026-11-24,Leatherhead,Ramsgate,1-0
+2026-11-24,Leek,Gainsborough,2-2
+2026-11-24,Livingston,Peterhead,3-0
+2026-11-24,Macclesfield,Morecambe,3-2
+2026-11-24,Malvern Town,Hanworth Villa,3-2
+2026-11-24,Man City,Napoli,2-2
+2026-11-24,Marine,Spennymoor,5-0
+2026-11-24,Merthyr,Bedford,1-0
+2026-11-24,Middlesbrough,Swansea,2-1
 2026-11-24,Millonarios,Atletico Bucaramanga,
-2026-11-24,Norwich,QPR,
-2026-11-24,Oxford,Tottenham U,
-2026-11-24,Port Vale,Northampton,
-2026-11-24,Portsmouth,West Ham,
-2026-11-24,RB Leipzig,Lens,
-2026-11-24,Rangers,Aberdeen,
-2026-11-24,Real Madrid,PSV Eindhoven,
-2026-11-24,Ross County,Stenh'semuir,
-2026-11-24,S. Bratislava,Real Betis,
-2026-11-24,Salford,Sunderland U,
-2026-11-24,Salisbury FC,AFC Totton,
-2026-11-24,Santos,Gremio,
-2026-11-24,Scunthorpe,Gateshead,
-2026-11-24,Sheff Utd,Southampton,
-2026-11-24,Slough,Farnborough,
-2026-11-24,South Shields,Worksop,
-2026-11-24,St. Louis City SC,Los Angeles FC,
-2026-11-24,Stevenage,Sheff Wed,
-2026-11-24,Telford,Buxton,
-2026-11-24,Torquay,Chesham,
-2026-11-24,Tranmere,Everton U,
-2026-11-24,Weston S-M.,Walton & H,
-2026-11-24,Woking,Worthing,
-2026-11-24,Wolves,Derby,
+2026-11-24,Norwich,QPR,1-1
+2026-11-24,Oxford,Tottenham U,2-1
+2026-11-24,Port Vale,Northampton,1-1
+2026-11-24,Portsmouth,West Ham,1-0
+2026-11-24,RB Leipzig,Lens,3-1
+2026-11-24,Rangers,Aberdeen,3-2
+2026-11-24,Real Madrid,PSV Eindhoven,5-1
+2026-11-24,Ross County,Stenh'semuir,1-1
+2026-11-24,S. Bratislava,Real Betis,0-2
+2026-11-24,Salford,Sunderland U,3-2
+2026-11-24,Salisbury FC,AFC Totton,1-1
+2026-11-24,Santos,Gremio,0-2
+2026-11-24,Scunthorpe,Gateshead,1-2
+2026-11-24,Sheff Utd,Southampton,1-1
+2026-11-24,Slough,Farnborough,4-2
+2026-11-24,South Shields,Worksop,2-1
+2026-11-24,St. Louis City SC,Los Angeles FC,3-2
+2026-11-24,Stevenage,Sheff Wed,0-0
+2026-11-24,Telford,Buxton,1-0
+2026-11-24,Torquay,Chesham,2-1
+2026-11-24,Tranmere,Everton U,2-1
+2026-11-24,Weston S-M.,Walton & H,2-0
+2026-11-24,Woking,Worthing,4-3
+2026-11-24,Wolves,Derby,3-0
+2026-11-25,Club Brugge,Liverpool,
+2026-11-25,Bolton,West Brom,
+2026-11-25,Boreham W,Aldershot,
+2026-11-25,Hartlepool,Solihull M,
+2026-11-25,Stoke,Millwall,
+2026-11-25,Sporting,Man Utd,
+2026-11-25,Consadole Sapporo,Fujieda MYFC,
+2026-11-25,Urawa Red Diamonds,Cerezo Osaka,
+2026-11-25,Sabah,Barcelona,
+2026-11-25,PSG,Roma,
+2026-11-25,Slavia Prague,Villarreal,
+2026-11-25,Lille,B Munich,
+2026-11-25,Atl Madrid,Viking,
+2026-11-25,Burnley,Birmingham,
+2026-11-25,Inverurie Locos,Buckie Thistle,
+2026-11-25,San Jose,Houston,
+2026-11-25,Santa Fe,Once Caldas,
+2026-11-25,Sagan Tosu,Oita Trinita,
+2026-11-25,Omiya Ardija,Tokushima Vortis,
+2026-11-25,Shonan Bellmare,Ventforet Kofu,
+2026-11-25,Iwaki,Kataller Toyama,
+2026-11-25,V-Varen Nagasaki,Kawasaki F,
+2026-11-25,Fagiano Okayama,Shimizu S-Pulse,
+2026-11-25,JEF United,Nagoya Grampus,
+2026-11-25,Atletico Mineiro,Corinthians,
+2026-11-25,Radnicki Nis,Zeleznicar Pancevo,
+2026-11-25,Kryvbas,Metalist,
+2026-11-25,Vanraure Hachinohe,Albirex Niigata,
+2026-11-25,Montedio Yamagata,Jubilo Iwata,
+2026-11-25,Imabari,Tegevajaro Miyazaki,
+2026-11-25,Tochigi City,Blaublitz Akita,
+2026-11-25,Yokohama FC,Vegalta Sendai,
+2026-11-25,Mito HollyHock,Tokyo Verdy,
+2026-11-25,Avispa Fukuoka,Yokohama F. Marinos,
