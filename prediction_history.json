@@ -43669,9 +43669,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-25T05:19:35.237946",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-26T17:32:08.211359",
+      "final_score": "3-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-25",
@@ -43794,9 +43797,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-25T05:19:35.457210",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-26T17:32:08.212177",
+      "final_score": "1-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-25",
