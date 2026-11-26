@@ -1,4 +1,4 @@
-📅 Picks for 2026-11-25
+📅 Picks for 2026-11-26
 
 
 🟢 Over 2.5 goals
@@ -6,31 +6,67 @@
   ✅ Solid picks
 
 
-  1. Club Brugge vs Liverpool
-     Date: 2026-11-25
-     League: European Cup
-     Pick: Over 2.5 · High confidence (81.1%)
+  1. RB Salzburg vs Ararat-Armenia
+     Date: 2026-11-26
+     League: Europa League
+     Pick: Over 2.5 · High confidence (87.7%)
      Category:
        • Tier: ✅ Solid
 
-  2. Bolton vs West Brom
-     Date: 2026-11-25
-     League: Football League Championship
-     Pick: Over 2.5 · High confidence (72.6%)
+  2. Dinamo Zagreb vs B Leverkusen
+     Date: 2026-11-26
+     League: Europa League
+     Pick: Over 2.5 · High confidence (79.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  3. Viktoria Plzen vs Benfica
+     Date: 2026-11-26
+     League: Europa League
+     Pick: Over 2.5 · High confidence (68.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  4. Torreense vs Celtic
+     Date: 2026-11-26
+     League: Europa League
+     Pick: Over 2.5 · High confidence (67.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  5. NEC Nijmegen vs Rennes
+     Date: 2026-11-26
+     League: Europa League
+     Pick: Over 2.5 · High confidence (86.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  6. Sparta Prague vs AZ Alkmaar
+     Date: 2026-11-26
+     League: Europa League
+     Pick: Over 2.5 · High confidence (70.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  7. C Palace vs Sociedad
+     Date: 2026-11-26
+     League: Europa League
+     Pick: Over 2.5 · High confidence (80.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  8. Hearts vs Monaco
+     Date: 2026-11-26
+     League: Europa Conference League
+     Pick: Over 2.5 · High confidence (67.2%)
      Category:
        • Tier: ✅ Solid
        • Auto-flag: poor league win rate on this market
 
-  3. Boreham W vs Aldershot
-     Date: 2026-11-25
-     League: National League
-     Pick: Over 2.5 · High confidence (87.9%)
+  9. Brann vs Aarhus
+     Date: 2026-11-26
+     League: Europa Conference League
+     Pick: Over 2.5 · High confidence (62.0%)
      Category:
        • Tier: ✅ Solid
-
-  4. Hartlepool vs Solihull M
-     Date: 2026-11-25
-     League: National League
-     Pick: Over 2.5 · High confidence (65.1%)
-     Category:
-       • Tier: ✅ Solid
+       • Auto-flag: poor league win rate on this market

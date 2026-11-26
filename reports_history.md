@@ -4,6 +4,72 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-26 -->
+## Daily Picks — 2026-11-26
+
+### Over/Under 2.5  (9)
+  ✅ RB Salzburg vs Ararat-Armenia (Europa League) — Over 2.5 · High 87.7%
+  ✅ Dinamo Zagreb vs B Leverkusen (Europa League) — Over 2.5 · High 79.2%
+  ✅ Viktoria Plzen vs Benfica (Europa League) — Over 2.5 · High 68.6%
+  ✅ Torreense vs Celtic (Europa League) — Over 2.5 · High 67.9%
+  ✅ NEC Nijmegen vs Rennes (Europa League) — Over 2.5 · High 86.6%
+  ✅ Sparta Prague vs AZ Alkmaar (Europa League) — Over 2.5 · High 70.9%
+  ✅ C Palace vs Sociedad (Europa League) — Over 2.5 · High 80.9%
+  ✅ Hearts vs Monaco (Europa Conference League) — Over 2.5 · High 67.2%
+  ✅ Brann vs Aarhus (Europa Conference League) — Over 2.5 · High 62.0%
+
+### BTTS  (1)
+  ✅ Viktoria Plzen vs Benfica (Europa League) — BTTS Yes · High 67.2%
+
+### Home Win  (7)
+  🔥 Boca Juniors vs Independiente Rivadavia (Liga Prof Argentina Torneo) — Home Win · High 93.5%
+  ✅ Saburtalo vs Getafe (Europa Conference League) — Home Win · High 83.8%
+  ✅ Hajduk Split vs Sint-Truidense (Europa Conference League) — Home Win · High 91.2%
+  ✅ B. Banja Luka vs Atalanta (Europa Conference League) — Home Win · High 90.9%
+  👀 Union St Gilloise vs Lech Poznan (Europa League) — Home Win · High 76.0%
+  👀 Besiktas vs H Beer Sheva (Europa League) — Home Win · Medium 68.6%
+  👀 Ajax vs Thun (Europa Conference League) — Home Win · High 83.0%
+
+### Team Goals Over 0.5  (37)
+  🔥 NEC Nijmegen vs Rennes (Europa League) — Home to Score · High 93.5%
+  🔥 Hearts vs Monaco (Europa Conference League) — Home to Score · High 82.4%
+  🔥 Barcelona de G vs Independiente d V (Ecuador Liga Pro) — Home to Score · Medium 77.0%
+  ✅ Besiktas vs H Beer Sheva (Europa League) — Home to Score · High 94.2%
+  ✅ RB Salzburg vs Ararat-Armenia (Europa League) — Home to Score · High 94.7%
+  ✅ Union St Gilloise vs Lech Poznan (Europa League) — Home to Score · High 90.6%
+  ✅ Olympiakos vs Milan (Europa League) — Home to Score · High 89.8%
+  ✅ Viktoria Plzen vs Benfica (Europa League) — Home to Score · Medium 74.3%
+  ✅ Torreense vs Celtic (Europa League) — Home to Score · High 83.6%
+  ✅ Ferencvaros vs NK Celje (Europa League) — Home to Score · High 83.0%
+  ✅ Hoffenheim vs Sturm Graz (Europa League) — Home to Score · High 91.2%
+  ✅ Sparta Prague vs AZ Alkmaar (Europa League) — Home to Score · Medium 73.0%
+  ✅ C Palace vs Sociedad (Europa League) — Home to Score · High 84.4%
+  ✅ Kairat Almaty vs Mjallby (Europa Conference League) — Home to Score · Medium 70.5%
+  ✅ Ajax vs Thun (Europa Conference League) — Home to Score · High 93.7%
+  ✅ Saburtalo vs Getafe (Europa Conference League) — Home to Score · High 85.9%
+  ✅ Brann vs Aarhus (Europa Conference League) — Home to Score · High 81.2%
+  ✅ Braga vs KPS Kuopio (Europa Conference League) — Home to Score · High 83.5%
+  ✅ Hajduk Split vs Sint-Truidense (Europa Conference League) — Home to Score · High 92.0%
+  ✅ B. Banja Luka vs Atalanta (Europa Conference League) — Home to Score · High 88.0%
+  ✅ Boca Juniors vs Independiente Rivadavia (Liga Prof Argentina Torneo) — Home to Score · High 81.0%
+  ✅ Toluca vs Atlas (Mexican Primera Apertura) — Home to Score · High 89.7%
+  🔥 NEC Nijmegen vs Rennes (Europa League) — Away to Score · High 83.1%
+  ✅ RB Salzburg vs Ararat-Armenia (Europa League) — Away to Score · High 80.2%
+  ✅ Marseille vs Levski Sofia (Europa League) — Away to Score · High 80.8%
+  ✅ Viktoria Plzen vs Benfica (Europa League) — Away to Score · High 88.4%
+  ✅ Dinamo Zagreb vs B Leverkusen (Europa League) — Away to Score · High 84.4%
+  ✅ Torreense vs Celtic (Europa League) — Away to Score · High 76.5%
+  ✅ Hoffenheim vs Sturm Graz (Europa League) — Away to Score · Low 62.5%
+  ✅ C Palace vs Sociedad (Europa League) — Away to Score · High 90.6%
+  ✅ Hearts vs Monaco (Europa Conference League) — Away to Score · High 80.6%
+  ✅ Pafos vs Midtjylland (Europa Conference League) — Away to Score · High 82.6%
+  ✅ Egnatia vs Lincoln R I (Europa Conference League) — Away to Score · High 78.6%
+  ✅ Freiburg vs FC Twente (Europa Conference League) — Away to Score · High 93.5%
+  ✅ Brann vs Aarhus (Europa Conference League) — Away to Score · High 77.2%
+  ✅ Barcelona de G vs Independiente d V (Ecuador Liga Pro) — Away to Score · High 79.8%
+  ✅ Toluca vs Atlas (Mexican Primera Apertura) — Away to Score · High 84.7%
+
+
 <!-- report: daily 2026-11-25 -->
 ## Daily Picks — 2026-11-25
 
