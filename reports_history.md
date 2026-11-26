@@ -4,6 +4,65 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-27 -->
+## Daily Picks — 2026-11-27
+
+### Over/Under 2.5  (4)
+  ✅ Heidenheim vs Nuremberg (German Bundesliga 2) — Over 2.5 · High 75.1%
+  ✅ FC Groningen vs Willem II (Netherlands League) — Over 2.5 · High 84.7%
+  ✅ Gyori ETO vs Debrecen (Hungarian League) — Over 2.5 · High 75.4%
+  ✅ Cardiff MU vs Airbus UK (Welsh Premier) — Over 2.5 · High 86.1%
+
+### BTTS  (4)
+  ✅ Artis Brno vs Synot (Czech Liga) — BTTS Yes · Medium 57.1%
+  ✅ NK Istra vs NK Varazdin (Croatian HNL) — BTTS Yes · Medium 53.0%
+  ✅ Heidenheim vs Nuremberg (German Bundesliga 2) — BTTS Yes · High 68.1%
+  🔥 Alanyaspor vs Konyaspor (Turkish Super Lig) — BTTS No · High 70.6%
+
+### Home Win  (4)
+  👀 Southampton vs Middlesbrough (Football League Championship) — Home Win · High 85.3%
+  👀 W Bremen vs B M'gladbach (German Bundesliga) — Home Win · High 85.0%
+  👀 Colwyn Bay vs Ammanford (Welsh Premier) — Home Win · High 88.1%
+  👀 Deportivo Cuenca vs Manta (Ecuador Liga Pro) — Home Win · Medium 66.9%
+
+### Team Goals Over 0.5  (35)
+  🔥 W Bremen vs B M'gladbach (German Bundesliga) — Home to Score · High 93.5%
+  ✅ Southampton vs Middlesbrough (Football League Championship) — Home to Score · High 83.0%
+  ✅ Scunthorpe vs Wealdstone (National League) — Home to Score · High 80.8%
+  ✅ Largs Thistle vs Ayr (Scottish FA Cup) — Home to Score · Medium 76.5%
+  ✅ Levante vs Racing (Spanish La Liga) — Home to Score · High 87.5%
+  ✅ Uni Cluj vs Sepsi Sfantu G (Romanian Liga 1) — Home to Score · High 81.4%
+  ✅ Petrolul vs Arges Pitesti (Romanian Liga 1) — Home to Score · Medium 76.5%
+  ✅ Gornik Zabrze vs Wisla Plock (Polish Ekstraklasa) — Home to Score · High 82.3%
+  ✅ Heidenheim vs Nuremberg (German Bundesliga 2) — Home to Score · High 87.9%
+  ✅ SonderjyskE vs Brondby (Danish SAS Ligaen) — Home to Score · High 82.3%
+  ✅ Bochum vs Darmstadt (German Bundesliga 2) — Home to Score · High 89.6%
+  ✅ FC Groningen vs Willem II (Netherlands League) — Home to Score · High 94.0%
+  ✅ O-H Leuven vs Kortrijk (Belgium League) — Home to Score · High 81.2%
+  ✅ Gyori ETO vs Debrecen (Hungarian League) — Home to Score · Medium 72.2%
+  ✅ Cambrian United vs Trefelin (Welsh Premier) — Home to Score · High 89.0%
+  ✅ Colwyn Bay vs Ammanford (Welsh Premier) — Home to Score · High 95.2%
+  ✅ Cardiff MU vs Airbus UK (Welsh Premier) — Home to Score · High 83.3%
+  ✅ Rylands vs Lancaster (Unibond Premier) — Home to Score · High 88.2%
+  ✅ Deportivo Cuenca vs Manta (Ecuador Liga Pro) — Home to Score · High 83.5%
+  ✅ Fluminense vs Cruzeiro (Brazilian Serie A) — Home to Score · High 78.3%
+  🔥 Rizespor vs Kasimpasa (Turkish Super Lig) — Away to Score · High 85.8%
+  🔥 M. Petah Tikva vs H Tel Aviv (Israeli League) — Away to Score · High 92.6%
+  ✅ Scunthorpe vs Wealdstone (National League) — Away to Score · Medium 66.0%
+  ✅ Nottm Forest vs Chelsea (Premier League) — Away to Score · Medium 66.0%
+  ✅ Venezia vs Bologna (Italian Serie A) — Away to Score · High 89.7%
+  ✅ Levante vs Racing (Spanish La Liga) — Away to Score · High 81.7%
+  ✅ Brest vs Paris FC (French Ligue 1) — Away to Score · Medium 65.0%
+  ✅ Artis Brno vs Synot (Czech Liga) — Away to Score · Medium 69.6%
+  ✅ NK Istra vs NK Varazdin (Croatian HNL) — Away to Score · Medium 72.5%
+  ✅ Rakow Czestochowa vs Piast Gliwice (Polish Ekstraklasa) — Away to Score · High 77.0%
+  ✅ SonderjyskE vs Brondby (Danish SAS Ligaen) — Away to Score · High 82.8%
+  ✅ FC Groningen vs Willem II (Netherlands League) — Away to Score · High 83.1%
+  ✅ Gyori ETO vs Debrecen (Hungarian League) — Away to Score · High 90.7%
+  ✅ Cardiff MU vs Airbus UK (Welsh Premier) — Away to Score · High 97.0%
+  ✅ Rylands vs Lancaster (Unibond Premier) — Away to Score · High 76.5%
+
+
 <!-- report: daily 2026-11-26 -->
 ## Daily Picks — 2026-11-26
 
