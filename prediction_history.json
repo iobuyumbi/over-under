@@ -3171,9 +3171,12 @@
       "home_team": "Hajduk Split",
       "away_team": "Sint-Truidense",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-26T05:26:34.037920",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.289341",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -3182,9 +3185,12 @@
       "home_team": "B. Banja Luka",
       "away_team": "Atalanta",
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-26T05:26:34.065397",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.289765",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -10877,9 +10883,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:20:45.052164",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.290068",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -10890,9 +10899,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:20:45.080809",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.290306",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -10903,9 +10915,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:20:45.108568",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.290585",
+      "final_score": "2-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -10916,9 +10931,12 @@
       "prediction": "over",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:20:45.136708",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.290859",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -44234,9 +44252,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:43:14.236716",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.291271",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -44359,9 +44380,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:43:14.339035",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.291506",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -44372,9 +44396,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-26T05:43:14.347035",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.291703",
+      "final_score": "0-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -44385,9 +44412,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:43:14.366111",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.291909",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -44398,9 +44428,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:43:14.394742",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.292146",
+      "final_score": "2-4",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -44411,9 +44444,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:43:14.409782",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.292403",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -44488,9 +44524,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:43:14.466507",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.292737",
+      "final_score": "4-0",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -44501,9 +44540,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "loss",
       "recorded_at": "2026-11-26T05:43:14.485584",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.293094",
+      "final_score": "0-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -44514,9 +44556,12 @@
       "prediction": "home_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:43:14.500867",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.293485",
+      "final_score": "2-3",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -44559,9 +44604,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "perfect",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:43:14.531303",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.293712",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -44636,9 +44684,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:43:14.593304",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.293913",
+      "final_score": "1-2",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -44649,9 +44700,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:43:14.598826",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.294130",
+      "final_score": "3-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -44662,9 +44716,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:43:14.605413",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.294385",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
@@ -44723,9 +44780,12 @@
       "prediction": "away_team_goals",
       "prob": null,
       "confidence": "qualified",
-      "result": "pending",
+      "result": "win",
       "recorded_at": "2026-11-26T05:43:14.696468",
-      "published": true
+      "published": true,
+      "updated_at": "2026-11-27T17:13:48.294695",
+      "final_score": "2-1",
+      "result_source": "soccerbase"
     },
     {
       "date": "2026-11-26",
