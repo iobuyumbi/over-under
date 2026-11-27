@@ -1,33 +1,190 @@
-📅 Picks for 2026-11-27
+📅 Picks for 2026-11-28
 
+
+  🔥 Premium picks
+
+
+  1. Dynamo Kyiv vs Ch. Odessa
+     Date: 2026-11-28
+     League: Ukrainian League
+     Pick: Home Win · High confidence (89.2%)
+     Category:
+       • Tier: 🔥 Premium
+
+  ✅ Solid picks
+
+
+  2. Exeter vs Crawley
+     Date: 2026-11-28
+     League: Football League Two
+     Pick: Home Win · High confidence (76.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  3. Dyn Dresden vs St Pauli
+     Date: 2026-11-28
+     League: German Bundesliga 2
+     Pick: Home Win · High confidence (91.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  4. Mlada Boleslav vs Sigma O.
+     Date: 2026-11-28
+     League: Czech Liga
+     Pick: Home Win · High confidence (92.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  5. Arouca vs Rio Ave
+     Date: 2026-11-28
+     League: Portuguese Liga
+     Pick: Home Win · High confidence (89.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  6. Morecambe vs Spalding Utd
+     Date: 2026-11-28
+     League: Football Conference North
+     Pick: Home Win · High confidence (92.1%)
+     Category:
+       • Tier: ✅ Solid
 
   👀 Watchlist
 
 
-  1. Southampton vs Middlesbrough
-     Date: 2026-11-27
+  7. Birmingham vs Bolton
+     Date: 2026-11-28
      League: Football League Championship
-     Pick: Home Win · High confidence (85.3%)
+     Pick: Home Win · High confidence (78.6%)
      Category:
        • Tier: 👀 Watchlist
 
-  2. W Bremen vs B M'gladbach
-     Date: 2026-11-27
-     League: German Bundesliga
-     Pick: Home Win · High confidence (85.0%)
+  8. Boreham W vs Gateshead
+     Date: 2026-11-28
+     League: National League
+     Pick: Home Win · High confidence (85.1%)
      Category:
        • Tier: 👀 Watchlist
 
-  3. Colwyn Bay vs Ammanford
-     Date: 2026-11-27
-     League: Welsh Premier
+  9. Cumnock vs Arbroath
+     Date: 2026-11-28
+     League: Scottish FA Cup
+     Pick: Home Win · High confidence (90.3%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  10. Auchinleck vs Pollok
+     Date: 2026-11-28
+     League: Scottish Lowland League
+     Pick: Home Win · High confidence (87.3%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  11. Real Betis vs Rayo Vallecano
+     Date: 2026-11-28
+     League: Spanish La Liga
      Pick: Home Win · High confidence (88.1%)
      Category:
        • Tier: 👀 Watchlist
 
-  4. Deportivo Cuenca vs Manta
-     Date: 2026-11-27
-     League: Ecuador Liga Pro
-     Pick: Home Win · Medium confidence (66.9%)
+  12. Real Madrid vs Alaves
+     Date: 2026-11-28
+     League: Spanish La Liga
+     Pick: Home Win · High confidence (90.9%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  13. Hertha Berlin vs Karlsruhe
+     Date: 2026-11-28
+     League: German Bundesliga 2
+     Pick: Home Win · High confidence (94.2%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  14. Wisla Krakow vs Motor Lublin
+     Date: 2026-11-28
+     League: Polish Ekstraklasa
+     Pick: Home Win · High confidence (88.1%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  15. Charleroi vs W Beveren
+     Date: 2026-11-28
+     League: Belgium League
+     Pick: Home Win · High confidence (87.5%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  16. PSV Eindhoven vs Go A Eagles
+     Date: 2026-11-28
+     League: Netherlands League
+     Pick: Home Win · High confidence (71.4%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  17. Cukaricki vs Mladost Lucani
+     Date: 2026-11-28
+     League: Serbian League
+     Pick: Home Win · High confidence (77.8%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  18. M Tel Aviv vs H. Petah Tikva
+     Date: 2026-11-28
+     League: Israeli League
+     Pick: Home Win · High confidence (83.6%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  19. Columbus Crew vs Inter Miami CF
+     Date: 2026-11-28
+     League: MLS
+     Pick: Home Win · High confidence (82.8%)
+     Category:
+       • Tier: 👀 Watchlist
+       • League type: weak-ROI region (extra model caution)
+       • Auto-flag: weak ROI history on this market
+
+  20. Charlotte FC vs Chicago
+     Date: 2026-11-28
+     League: MLS
+     Pick: Home Win · Medium confidence (67.6%)
+     Category:
+       • Tier: 👀 Watchlist
+       • League type: weak-ROI region (extra model caution)
+       • Auto-flag: weak ROI history on this market
+
+  21. Dorking W vs Farnborough
+     Date: 2026-11-28
+     League: Football Conference South
+     Pick: Home Win · High confidence (81.8%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  22. Plymouth P vs Sholing
+     Date: 2026-11-28
+     League: Southern League Premier
+     Pick: Home Win · High confidence (94.7%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  23. Avro vs Bamber Br.
+     Date: 2026-11-28
+     League: Unibond Premier
+     Pick: Home Win · High confidence (91.3%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  24. Guiseley vs Whitby
+     Date: 2026-11-28
+     League: Unibond Premier
+     Pick: Home Win · High confidence (93.9%)
+     Category:
+       • Tier: 👀 Watchlist
+
+  25. Curzon A vs Bury
+     Date: 2026-11-28
+     League: Unibond Premier
+     Pick: Home Win · High confidence (90.8%)
      Category:
        • Tier: 👀 Watchlist

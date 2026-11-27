@@ -4,6 +4,371 @@ Consolidated archive of generated reports (newest first): weekly/monthly
 performance reports plus a compact per-day digest of the market picks.
 Maintained automatically by `consolidate_reports.py` -- do not edit by hand.
 
+<!-- report: daily 2026-11-28 -->
+## Daily Picks — 2026-11-28
+
+### Over/Under 2.5  (46)
+  ✅ Man Utd vs Brentford (Premier League) — Over 2.5 · High 92.3%
+  ✅ QPR vs Sheff Utd (Football League Championship) — Over 2.5 · High 62.6%
+  ✅ West Ham vs Stoke (Football League Championship) — Over 2.5 · High 64.1%
+  ✅ Salford vs Gillingham (Football League Two) — Over 2.5 · High 63.2%
+  ✅ Port Vale vs Newport Co (Football League Two) — Over 2.5 · High 62.2%
+  ✅ Crewe vs Grimsby (Football League Two) — Over 2.5 · High 84.9%
+  ✅ Swindon vs Chesterfield (Football League Two) — Over 2.5 · High 76.3%
+  ✅ Fylde vs Aldershot (National League) — Over 2.5 · High 75.7%
+  ✅ Forest Green vs Tamworth (National League) — Over 2.5 · High 62.6%
+  ✅ Altrincham vs Worthing (National League) — Over 2.5 · High 68.6%
+  ✅ Harrogate vs Yeovil (National League) — Over 2.5 · High 83.9%
+  ✅ Troon vs Raith (Scottish FA Cup) — Over 2.5 · High 67.4%
+  ✅ Ross County vs Brora Rangers (Scottish FA Cup) — Over 2.5 · High 87.5%
+  ✅ East Kilbride vs Clyde (Scottish FA Cup) — Over 2.5 · High 90.3%
+  ✅ Boness Utd vs Brechin (Scottish FA Cup) — Over 2.5 · High 71.1%
+  ✅ Montrose vs Hamilton (Scottish FA Cup) — Over 2.5 · High 62.0%
+  ✅ Musselburgh Ath vs Airdrieonians (Scottish FA Cup) — Over 2.5 · High 65.1%
+  ✅ Buckie Thistle vs Turriff U (Scottish Highland League) — Over 2.5 · High 72.6%
+  ✅ Deveronvale vs Banks o'Dee (Scottish Highland League) — Over 2.5 · High 89.6%
+  ✅ Tranent Juniors vs Broxburn Ath (Scottish Lowland League) — Over 2.5 · High 87.2%
+  ✅ Frosinone vs Parma (Italian Serie A) — Over 2.5 · High 66.6%
+  ✅ Torino vs Lazio (Italian Serie A) — Over 2.5 · High 82.4%
+  ✅ Hamburg vs B Munich (German Bundesliga) — Over 2.5 · High 81.8%
+  ✅ Malaga vs Ath Bilbao (Spanish La Liga) — Over 2.5 · High 74.8%
+  ✅ Real Madrid vs Alaves (Spanish La Liga) — Over 2.5 · High 76.9%
+  ✅ Le Havre vs Strasbourg (French Ligue 1) — Over 2.5 · High 77.2%
+  ✅ Rosenborg vs Molde (Norwegian Tippeligaen) — Over 2.5 · High 91.2%
+  ✅ Kifisia vs Kalamata (Greek Super League) — Over 2.5 · High 74.4%
+  ✅ Cambuur vs Sp. Rotterdam (Netherlands League) — Over 2.5 · High 88.1%
+  ✅ Barry Town vs Caernarfon (Welsh Premier) — Over 2.5 · High 86.9%
+  ✅ Chorley vs Harborough T (Football Conference North) — Over 2.5 · High 62.4%
+  ✅ Radcliffe Boro vs Chester (Football Conference North) — Over 2.5 · High 86.2%
+  ✅ Scarborough A vs Hereford (Football Conference North) — Over 2.5 · High 78.3%
+  ✅ Farnham Town vs Ebbsfleet (Football Conference South) — Over 2.5 · High 80.9%
+  ✅ Slough vs Tonbridge (Football Conference South) — Over 2.5 · High 79.5%
+  ✅ Dorking W vs Farnborough (Football Conference South) — Over 2.5 · High 76.9%
+  ✅ Billericay vs Horsham (Football Conference South) — Over 2.5 · High 69.9%
+  ✅ Maldon & T vs St Albans (Ryman Premier) — Over 2.5 · High 68.3%
+  ✅ AFC Whyteleafe vs Aveley (Ryman Premier) — Over 2.5 · High 73.1%
+  ✅ Hanwell Town vs Frome (Southern League Premier) — Over 2.5 · High 66.6%
+  ✅ Plymouth P vs Sholing (Southern League Premier) — Over 2.5 · High 64.1%
+  ✅ Taunton Town vs Gosport Bor (Southern League Premier) — Over 2.5 · High 89.1%
+  ✅ Leek vs FC Utd (Unibond Premier) — Over 2.5 · High 60.7%
+  ✅ Ashton Utd vs Stockton T (Unibond Premier) — Over 2.5 · High 76.6%
+  ✅ Guiseley vs Whitby (Unibond Premier) — Over 2.5 · High 80.3%
+  ✅ Kyoto Sanga vs Cerezo Osaka (Japanese J1 League) — Over 2.5 · High 80.5%
+
+### BTTS  (9)
+  ✅ QPR vs Sheff Utd (Football League Championship) — BTTS Yes · High 64.4%
+  ✅ Harrogate vs Yeovil (National League) — BTTS Yes · High 81.2%
+  ✅ Hartlepool vs Southend (National League) — BTTS Yes · High 63.3%
+  ✅ Eibar vs Burgos (Spanish Segunda) — BTTS Yes · High 65.9%
+  ✅ Rosenborg vs Molde (Norwegian Tippeligaen) — BTTS Yes · High 87.4%
+  ✅ Merthyr vs Worksop (Football Conference North) — BTTS Yes · High 65.7%
+  ✅ Chorley vs Harborough T (Football Conference North) — BTTS Yes · High 63.0%
+  ✅ Farnham Town vs Ebbsfleet (Football Conference South) — BTTS Yes · High 73.3%
+  ✅ Vissel Kobe vs JEF United (Japanese J1 League) — BTTS Yes · High 70.7%
+
+### Home Win  (25)
+  🔥 Dynamo Kyiv vs Ch. Odessa (Ukrainian League) — Home Win · High 89.2%
+  ✅ Exeter vs Crawley (Football League Two) — Home Win · High 76.3%
+  ✅ Dyn Dresden vs St Pauli (German Bundesliga 2) — Home Win · High 91.5%
+  ✅ Mlada Boleslav vs Sigma O. (Czech Liga) — Home Win · High 92.0%
+  ✅ Arouca vs Rio Ave (Portuguese Liga) — Home Win · High 89.4%
+  ✅ Morecambe vs Spalding Utd (Football Conference North) — Home Win · High 92.1%
+  👀 Birmingham vs Bolton (Football League Championship) — Home Win · High 78.6%
+  👀 Boreham W vs Gateshead (National League) — Home Win · High 85.1%
+  👀 Cumnock vs Arbroath (Scottish FA Cup) — Home Win · High 90.3%
+  👀 Auchinleck vs Pollok (Scottish Lowland League) — Home Win · High 87.3%
+  👀 Real Betis vs Rayo Vallecano (Spanish La Liga) — Home Win · High 88.1%
+  👀 Real Madrid vs Alaves (Spanish La Liga) — Home Win · High 90.9%
+  👀 Hertha Berlin vs Karlsruhe (German Bundesliga 2) — Home Win · High 94.2%
+  👀 Wisla Krakow vs Motor Lublin (Polish Ekstraklasa) — Home Win · High 88.1%
+  👀 Charleroi vs W Beveren (Belgium League) — Home Win · High 87.5%
+  👀 PSV Eindhoven vs Go A Eagles (Netherlands League) — Home Win · High 71.4%
+  👀 Cukaricki vs Mladost Lucani (Serbian League) — Home Win · High 77.8%
+  👀 M Tel Aviv vs H. Petah Tikva (Israeli League) — Home Win · High 83.6%
+  👀 Columbus Crew vs Inter Miami CF (MLS) — Home Win · High 82.8%
+  👀 Charlotte FC vs Chicago (MLS) — Home Win · Medium 67.6%
+  👀 Dorking W vs Farnborough (Football Conference South) — Home Win · High 81.8%
+  👀 Plymouth P vs Sholing (Southern League Premier) — Home Win · High 94.7%
+  👀 Avro vs Bamber Br. (Unibond Premier) — Home Win · High 91.3%
+  👀 Guiseley vs Whitby (Unibond Premier) — Home Win · High 93.9%
+  👀 Curzon A vs Bury (Unibond Premier) — Home Win · High 90.8%
+
+### Team Goals Over 0.5  (273)
+  🔥 Blackburn vs Charlton (Football League Championship) — Home to Score · High 88.6%
+  🔥 Salford vs Gillingham (Football League Two) — Home to Score · High 84.3%
+  🔥 Crewe vs Grimsby (Football League Two) — Home to Score · High 83.3%
+  🔥 Altrincham vs Worthing (National League) — Home to Score · High 86.3%
+  🔥 Harrogate vs Yeovil (National League) — Home to Score · High 91.6%
+  🔥 Auchinleck vs Pollok (Scottish Lowland League) — Home to Score · High 96.7%
+  🔥 Mainz vs Union Berlin (German Bundesliga) — Home to Score · High 90.3%
+  🔥 Hertha Berlin vs Karlsruhe (German Bundesliga 2) — Home to Score · High 94.4%
+  🔥 Eibar vs Burgos (Spanish Segunda) — Home to Score · High 82.8%
+  🔥 Albacete vs Tenerife (Spanish Segunda) — Home to Score · High 80.4%
+  🔥 Wisla Krakow vs Motor Lublin (Polish Ekstraklasa) — Home to Score · High 85.0%
+  🔥 Charleroi vs W Beveren (Belgium League) — Home to Score · High 96.0%
+  🔥 MTK vs Ujpest Dozsa (Hungarian League) — Home to Score · High 81.0%
+  🔥 Philadelphia U vs New England (MLS) — Home to Score · High 87.4%
+  🔥 Chorley vs Harborough T (Football Conference North) — Home to Score · High 83.8%
+  🔥 Scarborough A vs Hereford (Football Conference North) — Home to Score · High 79.6%
+  🔥 Hebburn Town vs Bedford (Football Conference North) — Home to Score · High 79.8%
+  🔥 Berkhamsted vs Evesham (Southern League Premier) — Home to Score · High 84.9%
+  🔥 Malvern Town vs Chertsey Town (Southern League Premier) — Home to Score · High 89.7%
+  🔥 Taunton Town vs Gosport Bor (Southern League Premier) — Home to Score · High 93.5%
+  🔥 Redcar Athletic vs Workington (Unibond Premier) — Home to Score · High 94.0%
+  🔥 Cleethorpes T vs Quorn (Unibond Premier) — Home to Score · High 90.9%
+  🔥 Guiseley vs Whitby (Unibond Premier) — Home to Score · High 96.4%
+  🔥 Kyoto Sanga vs Cerezo Osaka (Japanese J1 League) — Home to Score · High 91.9%
+  ✅ Ipswich vs Aston Villa (Premier League) — Home to Score · High 86.1%
+  ✅ Man Utd vs Brentford (Premier League) — Home to Score · High 90.4%
+  ✅ Leeds vs Coventry (Premier League) — Home to Score · High 83.1%
+  ✅ Birmingham vs Bolton (Football League Championship) — Home to Score · High 88.2%
+  ✅ QPR vs Sheff Utd (Football League Championship) — Home to Score · High 87.1%
+  ✅ West Brom vs Bristol C (Football League Championship) — Home to Score · High 81.5%
+  ✅ West Ham vs Stoke (Football League Championship) — Home to Score · Medium 71.1%
+  ✅ Luton vs Oxford (Football League One) — Home to Score · High 86.6%
+  ✅ Stockport vs Leyton Orient (Football League One) — Home to Score · High 84.3%
+  ✅ Wigan vs Plymouth (Football League One) — Home to Score · High 86.1%
+  ✅ Bristol R vs Tranmere (Football League Two) — Home to Score · Low 67.0%
+  ✅ Exeter vs Crawley (Football League Two) — Home to Score · High 81.7%
+  ✅ Port Vale vs Newport Co (Football League Two) — Home to Score · High 86.7%
+  ✅ Rochdale vs Barnet (Football League Two) — Home to Score · Low 57.3%
+  ✅ Shrewsbury vs Cheltenham (Football League Two) — Home to Score · High 84.7%
+  ✅ Swindon vs Chesterfield (Football League Two) — Home to Score · Medium 75.1%
+  ✅ Walsall vs Northampton (Football League Two) — Home to Score · High 83.0%
+  ✅ Fylde vs Aldershot (National League) — Home to Score · High 94.0%
+  ✅ Forest Green vs Tamworth (National League) — Home to Score · High 83.6%
+  ✅ Boreham W vs Gateshead (National League) — Home to Score · High 95.2%
+  ✅ Hornchurch vs Solihull M (National League) — Home to Score · Medium 77.5%
+  ✅ Hartlepool vs Southend (National League) — Home to Score · High 79.0%
+  ✅ Rangers vs Falkirk (Scottish Premier) — Home to Score · High 83.8%
+  ✅ Dundee Utd vs St Johnstone (Scottish Premier) — Home to Score · High 79.8%
+  ✅ Troon vs Raith (Scottish FA Cup) — Home to Score · High 79.4%
+  ✅ Dumbarton vs Johnstone Burgh (Scottish FA Cup) — Home to Score · Medium 70.8%
+  ✅ Renfrew vs Cumbernauld C (Scottish FA Cup) — Home to Score · High 81.4%
+  ✅ Ross County vs Brora Rangers (Scottish FA Cup) — Home to Score · High 89.1%
+  ✅ Annan vs Morton (Scottish FA Cup) — Home to Score · Low 67.7%
+  ✅ East Kilbride vs Clyde (Scottish FA Cup) — Home to Score · High 92.3%
+  ✅ Cumnock vs Arbroath (Scottish FA Cup) — Home to Score · High 91.2%
+  ✅ Montrose vs Hamilton (Scottish FA Cup) — Home to Score · Medium 76.5%
+  ✅ Peterhead vs Edinburgh C (Scottish FA Cup) — Home to Score · Low 66.0%
+  ✅ Musselburgh Ath vs Airdrieonians (Scottish FA Cup) — Home to Score · Medium 75.8%
+  ✅ Buckie Thistle vs Turriff U (Scottish Highland League) — Home to Score · High 83.5%
+  ✅ Deveronvale vs Banks o'Dee (Scottish Highland League) — Home to Score · High 89.8%
+  ✅ Tranent Juniors vs Broxburn Ath (Scottish Lowland League) — Home to Score · High 96.5%
+  ✅ Lochee Utd vs Dunipace (Scottish Lowland League) — Home to Score · High 95.5%
+  ✅ Celtic II vs Kilwinning Rang (Scottish Lowland League) — Home to Score · High 90.0%
+  ✅ Cumnock vs Johnstone Burgh (Scottish Lowland League) — Home to Score · High 89.5%
+  ✅ Edusport Acad vs Cumbernauld C (Scottish Lowland League) — Home to Score · High 94.1%
+  ✅ Frosinone vs Parma (Italian Serie A) — Home to Score · High 89.6%
+  ✅ Inter vs Genoa (Italian Serie A) — Home to Score · Medium 77.5%
+  ✅ Hamburg vs B Munich (German Bundesliga) — Home to Score · High 79.4%
+  ✅ Cologne vs Elversberg (German Bundesliga) — Home to Score · High 86.5%
+  ✅ Stuttgart vs E Frankfurt (German Bundesliga) — Home to Score · High 84.3%
+  ✅ Real Betis vs Rayo Vallecano (Spanish La Liga) — Home to Score · High 86.6%
+  ✅ Real Madrid vs Alaves (Spanish La Liga) — Home to Score · High 92.5%
+  ✅ Nice vs Troyes (French Ligue 1) — Home to Score · High 81.2%
+  ✅ Le Mans vs Lille (French Ligue 1) — Home to Score · Medium 70.2%
+  ✅ Rubin vs Akron (Russian Premier) — Home to Score · High 78.1%
+  ✅ Dyn Dresden vs St Pauli (German Bundesliga 2) — Home to Score · High 87.0%
+  ✅ Voluntari vs CFR Cluj (Romanian Liga 1) — Home to Score · Medium 68.3%
+  ✅ Osnabruck vs Hannover (German Bundesliga 2) — Home to Score · High 81.5%
+  ✅ Eldense vs Girona (Spanish Segunda) — Home to Score · Low 67.0%
+  ✅ Valladolid vs Real Sociedad B (Spanish Segunda) — Home to Score · High 88.9%
+  ✅ Slask Wroclaw vs GKS Katowice (Polish Ekstraklasa) — Home to Score · Medium 71.1%
+  ✅ Widzew Lodz vs Zaglebie Lubin (Polish Ekstraklasa) — Home to Score · High 81.4%
+  ✅ Mlada Boleslav vs Sigma O. (Czech Liga) — Home to Score · High 88.2%
+  ✅ Bravo Publikum vs NK Aluminij (Slovenian League) — Home to Score · Medium 77.0%
+  ✅ Bodo Glimt vs KFUM Oslo (Norwegian Tippeligaen) — Home to Score · High 85.2%
+  ✅ Rosenborg vs Molde (Norwegian Tippeligaen) — Home to Score · High 95.7%
+  ✅ Westerlo vs RAAL La Louviere (Belgium League) — Home to Score · High 96.3%
+  ✅ Cercle Bruges vs Mechelen (Belgium League) — Home to Score · Medium 72.5%
+  ✅ Iraklis vs Panetolikos (Greek Super League) — Home to Score · High 88.2%
+  ✅ Volos NFC vs Asteras T. (Greek Super League) — Home to Score · High 81.4%
+  ✅ Cambuur vs Sp. Rotterdam (Netherlands League) — Home to Score · High 93.2%
+  ✅ Arouca vs Rio Ave (Portuguese Liga) — Home to Score · High 80.6%
+  ✅ PSV Eindhoven vs Go A Eagles (Netherlands League) — Home to Score · High 93.7%
+  ✅ Grasshoppers vs Basel (Swiss Super League) — Home to Score · High 85.0%
+  ✅ Vaduz vs FC Zurich (Swiss Super League) — Home to Score · High 84.6%
+  ✅ Cherno More vs Botev Plovdiv (Bulgarian League) — Home to Score · High 83.6%
+  ✅ Holywell Town vs Llandudno (Welsh Premier) — Home to Score · High 84.7%
+  ✅ Barry Town vs Caernarfon (Welsh Premier) — Home to Score · High 86.5%
+  ✅ Dynamo Kyiv vs Ch. Odessa (Ukrainian League) — Home to Score · High 85.8%
+  ✅ Radnik Surdulica vs Vojvodina NS (Serbian League) — Home to Score · Medium 76.5%
+  ✅ Bnei Sakhnin vs M. Haifa (Israeli League) — Home to Score · Medium 71.1%
+  ✅ Partizan vs Radnicki Nis (Serbian League) — Home to Score · High 82.6%
+  ✅ Cukaricki vs Mladost Lucani (Serbian League) — Home to Score · High 90.5%
+  ✅ M Tel Aviv vs H. Petah Tikva (Israeli League) — Home to Score · High 92.0%
+  ✅ Beitar J'salem vs Hapoel Jerusalem (Israeli League) — Home to Score · Medium 75.1%
+  ✅ Columbus Crew vs Inter Miami CF (MLS) — Home to Score · High 87.0%
+  ✅ Charlotte FC vs Chicago (MLS) — Home to Score · High 90.0%
+  ✅ Merthyr vs Worksop (Football Conference North) — Home to Score · High 86.9%
+  ✅ Darlington vs Brackley (Football Conference North) — Home to Score · High 82.6%
+  ✅ King's Lynn vs Macclesfield (Football Conference North) — Home to Score · High 82.1%
+  ✅ Buxton vs Spennymoor (Football Conference North) — Home to Score · High 95.0%
+  ✅ Oxford C vs Southport (Football Conference North) — Home to Score · High 84.7%
+  ✅ Morecambe vs Spalding Utd (Football Conference North) — Home to Score · High 83.0%
+  ✅ Telford vs South Shields (Football Conference North) — Home to Score · Medium 75.3%
+  ✅ Torquay vs Chelmsford (Football Conference South) — Home to Score · Medium 76.5%
+  ✅ Weston S-M. vs Maidenhead (Football Conference South) — Home to Score · High 84.0%
+  ✅ Farnham Town vs Ebbsfleet (Football Conference South) — Home to Score · High 85.6%
+  ✅ Folkestone vs Hampton & R (Football Conference South) — Home to Score · High 79.6%
+  ✅ Maidstone vs Chesham (Football Conference South) — Home to Score · High 78.8%
+  ✅ Braintree vs AFC Totton (Football Conference South) — Home to Score · Medium 77.7%
+  ✅ Dorking W vs Farnborough (Football Conference South) — Home to Score · High 92.6%
+  ✅ Hemel vs Walton & H (Football Conference South) — Home to Score · Medium 68.0%
+  ✅ Billericay vs Horsham (Football Conference South) — Home to Score · High 88.7%
+  ✅ Maldon & T vs St Albans (Ryman Premier) — Home to Score · Medium 77.9%
+  ✅ Cheshunt vs Ramsgate (Ryman Premier) — Home to Score · Medium 77.0%
+  ✅ Three Bridges vs Wingate & F (Ryman Premier) — Home to Score · Medium 69.3%
+  ✅ Dulwich H vs Stanway (Ryman Premier) — Home to Score · High 86.3%
+  ✅ Chatham Town vs Carshalton (Ryman Premier) — Home to Score · High 92.1%
+  ✅ Brentwood T vs Whitehawk (Ryman Premier) — Home to Score · High 79.8%
+  ✅ AFC Whyteleafe vs Aveley (Ryman Premier) — Home to Score · High 92.1%
+  ✅ Dartford vs Cray W (Ryman Premier) — Home to Score · High 81.0%
+  ✅ Welling vs Enfield T (Ryman Premier) — Home to Score · High 91.3%
+  ✅ Leatherhead vs Lewes (Ryman Premier) — Home to Score · High 89.4%
+  ✅ Hanwell Town vs Frome (Southern League Premier) — Home to Score · High 88.7%
+  ✅ Plymouth P vs Sholing (Southern League Premier) — Home to Score · High 91.5%
+  ✅ Basingstoke vs Gloucester (Southern League Premier) — Home to Score · Medium 77.5%
+  ✅ Gainsborough vs Alfreton (Unibond Premier) — Home to Score · High 83.3%
+  ✅ Ashton Utd vs Stockton T (Unibond Premier) — Home to Score · High 81.4%
+  ✅ Avro vs Bamber Br. (Unibond Premier) — Home to Score · High 91.5%
+  ✅ Curzon A vs Bury (Unibond Premier) — Home to Score · High 89.7%
+  ✅ Kashima Antlers vs Fagiano Okayama (Japanese J1 League) — Home to Score · High 79.2%
+  ✅ Vissel Kobe vs JEF United (Japanese J1 League) — Home to Score · High 85.3%
+  ✅ Anyang vs Jeju United (Korean K-League 1) — Home to Score · Medium 73.8%
+  ✅ Omiya Ardija vs Imabari (Japanese J2 League) — Home to Score · Medium 72.2%
+  ✅ Universidad Catolica vs Independiente d V (Ecuador Liga Pro) — Home to Score · Medium 70.2%
+  ✅ Barcelona de G vs Aucas (Ecuador Liga Pro) — Home to Score · Low 62.5%
+  ✅ Macara vs LDU Quito (Ecuador Liga Pro) — Home to Score · High 80.8%
+  ✅ Palmeiras vs Estudiantes (Copa Libertadores) — Home to Score · High 85.0%
+  ✅ Coquimbo Unido vs Deportes Limache (Chile Primera) — Home to Score · High 80.8%
+  ✅ Velez Sarsfield vs Independiente (Liga Prof Argentina Torneo) — Home to Score · Medium 71.6%
+  ✅ Sportivo Trinidense vs Deportivo Recoleta (Paraguay League Clausura) — Home to Score · High 83.3%
+  🔥 Millwall vs Burnley (Football League Championship) — Away to Score · High 83.8%
+  🔥 West Ham vs Stoke (Football League Championship) — Away to Score · High 85.9%
+  🔥 MK Dons vs Notts Co (Football League One) — Away to Score · High 82.6%
+  🔥 Rotherham vs Oldham (Football League Two) — Away to Score · High 82.3%
+  🔥 Swindon vs Chesterfield (Football League Two) — Away to Score · High 90.6%
+  🔥 Woking vs Barrow (National League) — Away to Score · High 87.8%
+  🔥 Rothes vs Strathspey T (Scottish Highland League) — Away to Score · High 94.7%
+  🔥 Deveronvale vs Banks o'Dee (Scottish Highland League) — Away to Score · High 93.7%
+  🔥 Moreirense vs Santa Clara (Portuguese Liga) — Away to Score · High 83.6%
+  🔥 Chorley vs Harborough T (Football Conference North) — Away to Score · Medium 71.6%
+  🔥 Radcliffe Boro vs Chester (Football Conference North) — Away to Score · High 97.0%
+  🔥 Torquay vs Chelmsford (Football Conference South) — Away to Score · High 80.4%
+  🔥 Anyang vs Jeju United (Korean K-League 1) — Away to Score · High 76.8%
+  🔥 Barcelona de G vs Aucas (Ecuador Liga Pro) — Away to Score · Low 63.2%
+  ✅ Man Utd vs Brentford (Premier League) — Away to Score · High 94.4%
+  ✅ Preston vs Norwich (Football League Championship) — Away to Score · High 89.0%
+  ✅ Lincoln vs Wolves (Football League Championship) — Away to Score · High 81.9%
+  ✅ QPR vs Sheff Utd (Football League Championship) — Away to Score · Medium 69.6%
+  ✅ Wrexham vs Portsmouth (Football League Championship) — Away to Score · Low 53.2%
+  ✅ AFC W'bledon vs Barnsley (Football League One) — Away to Score · Low 57.7%
+  ✅ Salford vs Gillingham (Football League Two) — Away to Score · Medium 73.8%
+  ✅ Port Vale vs Newport Co (Football League Two) — Away to Score · Medium 71.1%
+  ✅ Rochdale vs Barnet (Football League Two) — Away to Score · High 87.1%
+  ✅ Crewe vs Grimsby (Football League Two) — Away to Score · High 92.5%
+  ✅ Walsall vs Northampton (Football League Two) — Away to Score · High 80.0%
+  ✅ Fleetwood vs Accrington (Football League Two) — Away to Score · High 81.2%
+  ✅ Fylde vs Aldershot (National League) — Away to Score · Medium 67.4%
+  ✅ Boston Utd vs Kidderminster (National League) — Away to Score · Low 56.4%
+  ✅ Eastleigh vs Halifax (National League) — Away to Score · High 85.5%
+  ✅ Harrogate vs Yeovil (National League) — Away to Score · High 85.8%
+  ✅ Hartlepool vs Southend (National League) — Away to Score · High 80.0%
+  ✅ Aberdeen vs Dundee (Scottish Premier) — Away to Score · High 76.5%
+  ✅ Dundee Utd vs St Johnstone (Scottish Premier) — Away to Score · Medium 71.1%
+  ✅ St Mirren vs Kilmarnock (Scottish Premier) — Away to Score · Medium 66.7%
+  ✅ Motherwell vs Hibernian (Scottish Premier) — Away to Score · High 84.3%
+  ✅ Troon vs Raith (Scottish FA Cup) — Away to Score · High 84.3%
+  ✅ Queen of Sth vs Dunfermline (Scottish FA Cup) — Away to Score · High 91.1%
+  ✅ Queen's Park vs Spartans (Scottish FA Cup) — Away to Score · High 83.0%
+  ✅ Dumbarton vs Johnstone Burgh (Scottish FA Cup) — Away to Score · High 90.4%
+  ✅ Renfrew vs Cumbernauld C (Scottish FA Cup) — Away to Score · High 91.5%
+  ✅ Ross County vs Brora Rangers (Scottish FA Cup) — Away to Score · High 91.0%
+  ✅ Elgin City vs Partick (Scottish FA Cup) — Away to Score · High 83.5%
+  ✅ East Kilbride vs Clyde (Scottish FA Cup) — Away to Score · High 92.4%
+  ✅ Boness Utd vs Brechin (Scottish FA Cup) — Away to Score · High 81.2%
+  ✅ Stenh'semuir vs East Fife (Scottish FA Cup) — Away to Score · Medium 71.1%
+  ✅ Montrose vs Hamilton (Scottish FA Cup) — Away to Score · High 81.2%
+  ✅ Musselburgh Ath vs Airdrieonians (Scottish FA Cup) — Away to Score · High 83.0%
+  ✅ Clydebank vs Livingston (Scottish FA Cup) — Away to Score · High 86.9%
+  ✅ Buckie Thistle vs Turriff U (Scottish Highland League) — Away to Score · High 84.7%
+  ✅ Tranent Juniors vs Broxburn Ath (Scottish Lowland League) — Away to Score · High 80.8%
+  ✅ Celtic II vs Kilwinning Rang (Scottish Lowland League) — Away to Score · High 79.4%
+  ✅ Torino vs Lazio (Italian Serie A) — Away to Score · High 94.8%
+  ✅ Hamburg vs B Munich (German Bundesliga) — Away to Score · High 88.7%
+  ✅ Stuttgart vs E Frankfurt (German Bundesliga) — Away to Score · High 79.0%
+  ✅ Real Betis vs Rayo Vallecano (Spanish La Liga) — Away to Score · High 76.8%
+  ✅ Malaga vs Ath Bilbao (Spanish La Liga) — Away to Score · High 91.0%
+  ✅ Elche vs Atl Madrid (Spanish La Liga) — Away to Score · High 88.8%
+  ✅ Le Havre vs Strasbourg (French Ligue 1) — Away to Score · High 88.6%
+  ✅ Real Madrid vs Alaves (Spanish La Liga) — Away to Score · High 75.8%
+  ✅ Le Mans vs Lille (French Ligue 1) — Away to Score · High 75.3%
+  ✅ Rubin vs Akron (Russian Premier) — Away to Score · Low 62.1%
+  ✅ Holstein Kiel vs Kaiserslautern (German Bundesliga 2) — Away to Score · Medium 65.0%
+  ✅ Voluntari vs CFR Cluj (Romanian Liga 1) — Away to Score · Medium 73.0%
+  ✅ Osnabruck vs Hannover (German Bundesliga 2) — Away to Score · High 76.1%
+  ✅ Gazisehir vs Amedspor (Turkish Super Lig) — Away to Score · High 90.3%
+  ✅ Eibar vs Burgos (Spanish Segunda) — Away to Score · High 76.1%
+  ✅ Eldense vs Girona (Spanish Segunda) — Away to Score · Medium 69.0%
+  ✅ Osijek vs Rijeka (Croatian HNL) — Away to Score · Medium 69.3%
+  ✅ Rosenborg vs Molde (Norwegian Tippeligaen) — Away to Score · High 87.8%
+  ✅ Volos NFC vs Asteras T. (Greek Super League) — Away to Score · High 87.3%
+  ✅ Austria Lustenau vs Rapid Vienna (Austrian Bundesliga) — Away to Score · High 88.6%
+  ✅ Academico de Viseu vs Alverca (Portuguese Liga) — Away to Score · High 82.1%
+  ✅ Grasshoppers vs Basel (Swiss Super League) — Away to Score · High 86.6%
+  ✅ Vaduz vs FC Zurich (Swiss Super League) — Away to Score · High 85.2%
+  ✅ FC Minsk vs Dnepr Mogilev (Belarus League) — Away to Score · Medium 69.6%
+  ✅ Bate Borisov vs Isloch Minsk (Belarus League) — Away to Score · High 83.6%
+  ✅ Belshina vs ML Vitebsk (Belarus League) — Away to Score · High 95.4%
+  ✅ FC Naftan vs Dinamo Minsk (Belarus League) — Away to Score · High 94.6%
+  ✅ Botev Vratsa vs Ludogorets (Bulgarian League) — Away to Score · High 79.0%
+  ✅ Barry Town vs Caernarfon (Welsh Premier) — Away to Score · High 94.0%
+  ✅ Vasas vs Honved (Hungarian League) — Away to Score · High 79.2%
+  ✅ Zemun vs FK Rad (Serbian League) — Away to Score · Medium 72.2%
+  ✅ Kisvarda vs Nyiregyhaza (Hungarian League) — Away to Score · Medium 69.9%
+  ✅ Beitar J'salem vs Hapoel Jerusalem (Israeli League) — Away to Score · High 75.3%
+  ✅ Columbus Crew vs Inter Miami CF (MLS) — Away to Score · Medium 68.0%
+  ✅ Philadelphia U vs New England (MLS) — Away to Score · Medium 74.6%
+  ✅ Merthyr vs Worksop (Football Conference North) — Away to Score · Medium 69.3%
+  ✅ Darlington vs Brackley (Football Conference North) — Away to Score · Low 62.8%
+  ✅ Telford vs South Shields (Football Conference North) — Away to Score · High 88.1%
+  ✅ Farnham Town vs Ebbsfleet (Football Conference South) — Away to Score · High 87.1%
+  ✅ Slough vs Tonbridge (Football Conference South) — Away to Score · High 84.4%
+  ✅ Braintree vs AFC Totton (Football Conference South) — Away to Score · Medium 74.6%
+  ✅ Maldon & T vs St Albans (Ryman Premier) — Away to Score · High 84.9%
+  ✅ Cheshunt vs Ramsgate (Ryman Premier) — Away to Score · Medium 67.4%
+  ✅ Burgess Hill vs Eastbourne (Ryman Premier) — Away to Score · High 90.2%
+  ✅ Three Bridges vs Wingate & F (Ryman Premier) — Away to Score · High 81.0%
+  ✅ Chatham Town vs Carshalton (Ryman Premier) — Away to Score · High 78.3%
+  ✅ Leatherhead vs Lewes (Ryman Premier) — Away to Score · Medium 74.3%
+  ✅ Poole Town vs Havant & W (Southern League Premier) — Away to Score · High 86.9%
+  ✅ Hanwell Town vs Frome (Southern League Premier) — Away to Score · Medium 70.5%
+  ✅ Chippenham vs Bath City (Southern League Premier) — Away to Score · High 87.1%
+  ✅ Basingstoke vs Gloucester (Southern League Premier) — Away to Score · Medium 66.0%
+  ✅ Malvern Town vs Chertsey Town (Southern League Premier) — Away to Score · High 75.6%
+  ✅ Bracknell vs Wimborne T (Southern League Premier) — Away to Score · High 90.8%
+  ✅ Chichester C vs Uxbridge (Southern League Premier) — Away to Score · Medium 71.9%
+  ✅ Taunton Town vs Gosport Bor (Southern League Premier) — Away to Score · High 88.8%
+  ✅ Hyde vs Warrington (Unibond Premier) — Away to Score · High 81.7%
+  ✅ Ilkeston vs AFC Emley (Unibond Premier) — Away to Score · High 75.3%
+  ✅ Ashton Utd vs Stockton T (Unibond Premier) — Away to Score · High 86.7%
+  ✅ Guiseley vs Whitby (Unibond Premier) — Away to Score · Low 63.6%
+  ✅ Shimizu S-Pulse vs Urawa Red Diamonds (Japanese J1 League) — Away to Score · High 77.7%
+  ✅ Kyoto Sanga vs Cerezo Osaka (Japanese J1 League) — Away to Score · High 79.2%
+  ✅ Kashima Antlers vs Fagiano Okayama (Japanese J1 League) — Away to Score · Medium 69.6%
+  ✅ Vissel Kobe vs JEF United (Japanese J1 League) — Away to Score · High 78.8%
+  ✅ FC Seoul vs Daejeon Hana Citizen (Korean K-League 1) — Away to Score · High 81.2%
+  ✅ Kashiwa Reysol vs Sanf Hiroshima (Japanese J1 League) — Away to Score · High 76.3%
+  ✅ Pohang S vs Gwangju (Korean K-League 1) — Away to Score · Medium 73.0%
+  ✅ Gimhae City vs Seongnam (Korean K-League 2) — Away to Score · High 81.0%
+  ✅ Universidad Catolica vs Independiente d V (Ecuador Liga Pro) — Away to Score · High 79.6%
+  ✅ Palmeiras vs Estudiantes (Copa Libertadores) — Away to Score · Low 57.3%
+  ✅ Velez Sarsfield vs Independiente (Liga Prof Argentina Torneo) — Away to Score · Medium 74.6%
+  ✅ Colo-Colo vs La Serena (Chile Primera) — Away to Score · Medium 66.0%
+
+
 <!-- report: daily 2026-11-27 -->
 ## Daily Picks — 2026-11-27
 

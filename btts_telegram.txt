@@ -1,4 +1,4 @@
-📅 Picks for 2026-11-27
+📅 Picks for 2026-11-28
 
 
 🟢 BTTS Yes
@@ -6,35 +6,65 @@
   ✅ Solid picks
 
 
-  1. Artis Brno vs Synot
-     Date: 2026-11-27
-     League: Czech Liga
-     Pick: BTTS Yes · Medium confidence (57.1%)
+  1. QPR vs Sheff Utd
+     Date: 2026-11-28
+     League: Football League Championship
+     Pick: BTTS Yes · High confidence (64.4%)
      Category:
        • Tier: ✅ Solid
 
-  2. NK Istra vs NK Varazdin
-     Date: 2026-11-27
-     League: Croatian HNL
-     Pick: BTTS Yes · Medium confidence (53.0%)
+  2. Harrogate vs Yeovil
+     Date: 2026-11-28
+     League: National League
+     Pick: BTTS Yes · High confidence (81.2%)
      Category:
        • Tier: ✅ Solid
 
-  3. Heidenheim vs Nuremberg
-     Date: 2026-11-27
-     League: German Bundesliga 2
-     Pick: BTTS Yes · High confidence (68.1%)
+  3. Hartlepool vs Southend
+     Date: 2026-11-28
+     League: National League
+     Pick: BTTS Yes · High confidence (63.3%)
      Category:
        • Tier: ✅ Solid
 
-🔴 BTTS No
-
-  🔥 Premium picks
-
-
-  1. Alanyaspor vs Konyaspor
-     Date: 2026-11-27
-     League: Turkish Super Lig
-     Pick: BTTS No · High confidence (70.6%)
+  4. Eibar vs Burgos
+     Date: 2026-11-28
+     League: Spanish Segunda
+     Pick: BTTS Yes · High confidence (65.9%)
      Category:
-       • Tier: 🔥 Premium
+       • Tier: ✅ Solid
+
+  5. Rosenborg vs Molde
+     Date: 2026-11-28
+     League: Norwegian Tippeligaen
+     Pick: BTTS Yes · High confidence (87.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  6. Merthyr vs Worksop
+     Date: 2026-11-28
+     League: Football Conference North
+     Pick: BTTS Yes · High confidence (65.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  7. Chorley vs Harborough T
+     Date: 2026-11-28
+     League: Football Conference North
+     Pick: BTTS Yes · High confidence (63.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  8. Farnham Town vs Ebbsfleet
+     Date: 2026-11-28
+     League: Football Conference South
+     Pick: BTTS Yes · High confidence (73.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  9. Vissel Kobe vs JEF United
+     Date: 2026-11-28
+     League: Japanese J1 League
+     Pick: BTTS Yes · High confidence (70.7%)
+     Category:
+       • Tier: ✅ Solid

@@ -1,8 +1,8 @@
-✦ CURATED PICKS · 2026-11-27
+✦ CURATED PICKS · 2026-11-28
   Input reports:
-    OU   → over_under_vip_report_2026-11-27.txt
-    BTTS → btts_vip_report_2026-11-27.txt
-    HW   → home_win_vip_report_2026-11-27.txt
+    OU   → over_under_vip_report_2026-11-28.txt
+    BTTS → btts_vip_report_2026-11-28.txt
+    HW   → home_win_vip_report_2026-11-28.txt
 
   Calibrated from the 30/08/2026 8/8 winning 28.56-odds accumulator:
     • Tier: Premium/Solid only (Watchlist dropped)
@@ -11,32 +11,88 @@
     • Weak-ROI / poor-win-rate leagues → blocked
     • Over 2.5 min xG sum ≥ 2.5
     • Conservative league keywords (MLS / Mexican / Bulgarian / Conference N&S etc.) → blocked
-    • Today only (2026-11-27)
+    • Today only (2026-11-28)
 
-━━━ OVER / UNDER 2.5  (4 accepted) ━━━
-   1. ✅ Cardiff MU vs Airbus UK  (Welsh Premier)
-      Over 2.5 · High 86.1% · xG 1.04–3.80
-      Stake 0.2% @ 2.0  ·  EV +72.2c/$  ·  Edge +72.2%
-   2. ✅ FC Groningen vs Willem II  (Netherlands League)
-      Over 2.5 · High 84.7% · xG 3.17–1.52
-      Stake 0.2% @ 2.0  ·  EV +69.4c/$  ·  Edge +69.4%
-   3. ✅ Gyori ETO vs Debrecen  (Hungarian League)
-      Over 2.5 · High 75.4% · xG 1.03–2.92
-      Stake 0.1% @ 2.0  ·  EV +50.8c/$  ·  Edge +50.8%
-   4. ✅ Heidenheim vs Nuremberg  (German Bundesliga 2)
-      Over 2.5 · High 75.1% · xG 2.60–1.33
-      Stake 0.1% @ 2.0  ·  EV +50.2c/$  ·  Edge +50.2%
+━━━ OVER / UNDER 2.5  (18 accepted) ━━━
+   1. ✅ Rosenborg vs Molde  (Norwegian Tippeligaen)
+      Over 2.5 · High 91.2% · xG 2.54–2.97
+      Stake 0.2% @ 2.0  ·  EV +82.4c/$  ·  Edge +82.4%
+   2. ✅ East Kilbride vs Clyde  (Scottish FA Cup)
+      Over 2.5 · High 90.3% · xG 2.28–3.08
+      Stake 0.2% @ 2.0  ·  EV +80.6c/$  ·  Edge +80.6%
+   3. ✅ Deveronvale vs Banks o'Dee  (Scottish Highland League)
+      Over 2.5 · High 89.6% · xG 2.66–2.60
+      Stake 0.2% @ 2.0  ·  EV +79.2c/$  ·  Edge +79.2%
+   4. ✅ Cambuur vs Sp. Rotterdam  (Netherlands League)
+      Over 2.5 · High 88.1% · xG 3.08–1.99
+      Stake 0.2% @ 2.0  ·  EV +76.2c/$  ·  Edge +76.2%
+   5. ✅ Ross County vs Brora Rangers  (Scottish FA Cup)
+      Over 2.5 · High 87.5% · xG 1.94–3.06
+      Stake 0.2% @ 2.0  ·  EV +75.0c/$  ·  Edge +75.0%
+   6. ✅ Tranent Juniors vs Broxburn Ath  (Scottish Lowland League)
+      Over 2.5 · High 87.2% · xG 3.80–1.16
+      Stake 0.2% @ 2.0  ·  EV +74.4c/$  ·  Edge +74.4%
+   7. ✅ Barry Town vs Caernarfon  (Welsh Premier)
+      Over 2.5 · High 86.9% · xG 1.13–3.80
+      Stake 0.2% @ 2.0  ·  EV +73.8c/$  ·  Edge +73.8%
+   8. ✅ Crewe vs Grimsby  (Football League Two)
+      Over 2.5 · High 84.9% · xG 1.64–3.07
+      Stake 0.2% @ 2.0  ·  EV +69.8c/$  ·  Edge +69.8%
+   9. ✅ Harrogate vs Yeovil  (National League)
+      Over 2.5 · High 83.9% · xG 2.22–2.40
+      Stake 0.2% @ 2.0  ·  EV +67.8c/$  ·  Edge +67.8%
+  10. ✅ Hamburg vs B Munich  (German Bundesliga)
+      Over 2.5 · High 81.8% · xG 0.92–3.51
+      Stake 0.2% @ 2.0  ·  EV +63.6c/$  ·  Edge +63.6%
+  11. ✅ Le Havre vs Strasbourg  (French Ligue 1)
+      Over 2.5 · High 77.2% · xG 1.03–3.04
+      Stake 0.1% @ 2.0  ·  EV +54.4c/$  ·  Edge +54.4%
+  12. ✅ Real Madrid vs Alaves  (Spanish La Liga)
+      Over 2.5 · High 76.9% · xG 2.08–1.97
+      Stake 0.1% @ 2.0  ·  EV +53.8c/$  ·  Edge +53.8%
+  13. ✅ Swindon vs Chesterfield  (Football League Two)
+      Over 2.5 · High 76.3% · xG 1.25–2.76
+      Stake 0.1% @ 2.0  ·  EV +52.6c/$  ·  Edge +52.6%
+  14. ✅ Fylde vs Aldershot  (National League)
+      Over 2.5 · High 75.7% · xG 2.64–1.33
+      Stake 0.1% @ 2.0  ·  EV +51.4c/$  ·  Edge +51.4%
+  15. ✅ Malaga vs Ath Bilbao  (Spanish La Liga)
+      Over 2.5 · High 74.8% · xG 0.85–3.06
+      Stake 0.1% @ 2.0  ·  EV +49.6c/$  ·  Edge +49.6%
+  16. ✅ Kifisia vs Kalamata  (Greek Super League)
+      Over 2.5 · High 74.4% · xG 1.07–2.81
+      Stake 0.1% @ 2.0  ·  EV +48.8c/$  ·  Edge +48.8%
+  17. ✅ Buckie Thistle vs Turriff U  (Scottish Highland League)
+      Over 2.5 · High 72.6% · xG 2.06–1.71
+      Stake 0.1% @ 2.0  ·  EV +45.2c/$  ·  Edge +45.2%
+  18. ✅ Boness Utd vs Brechin  (Scottish FA Cup)
+      Over 2.5 · High 71.1% · xG 1.67–2.01
+      Stake 0.1% @ 2.0  ·  EV +42.2c/$  ·  Edge +42.2%
 
-━━━ BTTS (Yes / No)  (1 accepted) ━━━
-   1. 🔥 Alanyaspor vs Konyaspor  (Turkish Super Lig)
-      BTTS No · High 70.6% · xG 0.67–0.92
-      Stake 2.5% @ 1.85  ·  EV 
+━━━ BTTS (Yes / No)  (2 accepted) ━━━
+   1. ✅ Rosenborg vs Molde  (Norwegian Tippeligaen)
+      BTTS Yes · High 87.4% · xG 2.54–2.97
+      Stake 1.4% @ 1.9  ·  EV 
+   2. ✅ Harrogate vs Yeovil  (National League)
+      BTTS Yes · High 81.2% · xG 2.22–2.42
+      Stake 1.2% @ 1.9  ·  EV 
 
-━━━ HOME WIN  (0 accepted) ━━━
-  (none)
+━━━ HOME WIN  (4 accepted) ━━━
+   1. ✅ Mlada Boleslav vs Sigma O.  (Czech Liga)
+      Home Win · High 92.0%
+      Stake 3.3% @ 2.8  ·  EV +157.6c/$  ·  Edge +157.6%
+   2. ✅ Dyn Dresden vs St Pauli  (German Bundesliga 2)
+      Home Win · High 91.5%
+      Stake 3.3% @ 2.8  ·  EV +156.2c/$  ·  Edge +156.2%
+   3. ✅ Arouca vs Rio Ave  (Portuguese Liga)
+      Home Win · High 89.4%
+      Stake 3.2% @ 2.8  ·  EV +150.3c/$  ·  Edge +150.3%
+   4. 🔥 Dynamo Kyiv vs Ch. Odessa  (Ukrainian League)
+      Home Win · High 89.2%
+      Stake 3.2% @ 2.8  ·  EV +149.8c/$  ·  Edge +149.8%
 
-📊 Summary: 5 curated picks
-   Parsed total: 171   Rejected: 166   Accepted: 5
+📊 Summary: 24 curated picks
+   Parsed total: 172   Rejected: 148   Accepted: 24
 
 ---
 For informational purposes only · Gamble responsibly

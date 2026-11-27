@@ -1,4 +1,4 @@
-📅 Picks for 2026-11-27
+📅 Picks for 2026-11-28
 
 
 🟢 Over 2.5 goals
@@ -6,30 +6,329 @@
   ✅ Solid picks
 
 
-  1. Heidenheim vs Nuremberg
-     Date: 2026-11-27
-     League: German Bundesliga 2
-     Pick: Over 2.5 · High confidence (75.1%)
+  1. Man Utd vs Brentford
+     Date: 2026-11-28
+     League: Premier League
+     Pick: Over 2.5 · High confidence (92.3%)
+     Category:
+       • Tier: ✅ Solid
+       • Auto-flag: poor league win rate on this market
+
+  2. QPR vs Sheff Utd
+     Date: 2026-11-28
+     League: Football League Championship
+     Pick: Over 2.5 · High confidence (62.6%)
      Category:
        • Tier: ✅ Solid
 
-  2. FC Groningen vs Willem II
-     Date: 2026-11-27
+  3. West Ham vs Stoke
+     Date: 2026-11-28
+     League: Football League Championship
+     Pick: Over 2.5 · High confidence (64.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  4. Salford vs Gillingham
+     Date: 2026-11-28
+     League: Football League Two
+     Pick: Over 2.5 · High confidence (63.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  5. Port Vale vs Newport Co
+     Date: 2026-11-28
+     League: Football League Two
+     Pick: Over 2.5 · High confidence (62.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  6. Crewe vs Grimsby
+     Date: 2026-11-28
+     League: Football League Two
+     Pick: Over 2.5 · High confidence (84.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  7. Swindon vs Chesterfield
+     Date: 2026-11-28
+     League: Football League Two
+     Pick: Over 2.5 · High confidence (76.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  8. Fylde vs Aldershot
+     Date: 2026-11-28
+     League: National League
+     Pick: Over 2.5 · High confidence (75.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  9. Forest Green vs Tamworth
+     Date: 2026-11-28
+     League: National League
+     Pick: Over 2.5 · High confidence (62.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  10. Altrincham vs Worthing
+     Date: 2026-11-28
+     League: National League
+     Pick: Over 2.5 · High confidence (68.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  11. Harrogate vs Yeovil
+     Date: 2026-11-28
+     League: National League
+     Pick: Over 2.5 · High confidence (83.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  12. Troon vs Raith
+     Date: 2026-11-28
+     League: Scottish FA Cup
+     Pick: Over 2.5 · High confidence (67.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  13. Ross County vs Brora Rangers
+     Date: 2026-11-28
+     League: Scottish FA Cup
+     Pick: Over 2.5 · High confidence (87.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  14. East Kilbride vs Clyde
+     Date: 2026-11-28
+     League: Scottish FA Cup
+     Pick: Over 2.5 · High confidence (90.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  15. Boness Utd vs Brechin
+     Date: 2026-11-28
+     League: Scottish FA Cup
+     Pick: Over 2.5 · High confidence (71.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  16. Montrose vs Hamilton
+     Date: 2026-11-28
+     League: Scottish FA Cup
+     Pick: Over 2.5 · High confidence (62.0%)
+     Category:
+       • Tier: ✅ Solid
+
+  17. Musselburgh Ath vs Airdrieonians
+     Date: 2026-11-28
+     League: Scottish FA Cup
+     Pick: Over 2.5 · High confidence (65.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  18. Buckie Thistle vs Turriff U
+     Date: 2026-11-28
+     League: Scottish Highland League
+     Pick: Over 2.5 · High confidence (72.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  19. Deveronvale vs Banks o'Dee
+     Date: 2026-11-28
+     League: Scottish Highland League
+     Pick: Over 2.5 · High confidence (89.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  20. Tranent Juniors vs Broxburn Ath
+     Date: 2026-11-28
+     League: Scottish Lowland League
+     Pick: Over 2.5 · High confidence (87.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  21. Frosinone vs Parma
+     Date: 2026-11-28
+     League: Italian Serie A
+     Pick: Over 2.5 · High confidence (66.6%)
+     Category:
+       • Tier: ✅ Solid
+       • Auto-flag: poor league win rate on this market
+
+  22. Torino vs Lazio
+     Date: 2026-11-28
+     League: Italian Serie A
+     Pick: Over 2.5 · High confidence (82.4%)
+     Category:
+       • Tier: ✅ Solid
+       • Auto-flag: poor league win rate on this market
+
+  23. Hamburg vs B Munich
+     Date: 2026-11-28
+     League: German Bundesliga
+     Pick: Over 2.5 · High confidence (81.8%)
+     Category:
+       • Tier: ✅ Solid
+
+  24. Malaga vs Ath Bilbao
+     Date: 2026-11-28
+     League: Spanish La Liga
+     Pick: Over 2.5 · High confidence (74.8%)
+     Category:
+       • Tier: ✅ Solid
+
+  25. Real Madrid vs Alaves
+     Date: 2026-11-28
+     League: Spanish La Liga
+     Pick: Over 2.5 · High confidence (76.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  26. Le Havre vs Strasbourg
+     Date: 2026-11-28
+     League: French Ligue 1
+     Pick: Over 2.5 · High confidence (77.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  27. Rosenborg vs Molde
+     Date: 2026-11-28
+     League: Norwegian Tippeligaen
+     Pick: Over 2.5 · High confidence (91.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  28. Kifisia vs Kalamata
+     Date: 2026-11-28
+     League: Greek Super League
+     Pick: Over 2.5 · High confidence (74.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  29. Cambuur vs Sp. Rotterdam
+     Date: 2026-11-28
      League: Netherlands League
-     Pick: Over 2.5 · High confidence (84.7%)
+     Pick: Over 2.5 · High confidence (88.1%)
      Category:
        • Tier: ✅ Solid
 
-  3. Gyori ETO vs Debrecen
-     Date: 2026-11-27
-     League: Hungarian League
-     Pick: Over 2.5 · High confidence (75.4%)
-     Category:
-       • Tier: ✅ Solid
-
-  4. Cardiff MU vs Airbus UK
-     Date: 2026-11-27
+  30. Barry Town vs Caernarfon
+     Date: 2026-11-28
      League: Welsh Premier
-     Pick: Over 2.5 · High confidence (86.1%)
+     Pick: Over 2.5 · High confidence (86.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  31. Chorley vs Harborough T
+     Date: 2026-11-28
+     League: Football Conference North
+     Pick: Over 2.5 · High confidence (62.4%)
+     Category:
+       • Tier: ✅ Solid
+
+  32. Radcliffe Boro vs Chester
+     Date: 2026-11-28
+     League: Football Conference North
+     Pick: Over 2.5 · High confidence (86.2%)
+     Category:
+       • Tier: ✅ Solid
+
+  33. Scarborough A vs Hereford
+     Date: 2026-11-28
+     League: Football Conference North
+     Pick: Over 2.5 · High confidence (78.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  34. Farnham Town vs Ebbsfleet
+     Date: 2026-11-28
+     League: Football Conference South
+     Pick: Over 2.5 · High confidence (80.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  35. Slough vs Tonbridge
+     Date: 2026-11-28
+     League: Football Conference South
+     Pick: Over 2.5 · High confidence (79.5%)
+     Category:
+       • Tier: ✅ Solid
+
+  36. Dorking W vs Farnborough
+     Date: 2026-11-28
+     League: Football Conference South
+     Pick: Over 2.5 · High confidence (76.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  37. Billericay vs Horsham
+     Date: 2026-11-28
+     League: Football Conference South
+     Pick: Over 2.5 · High confidence (69.9%)
+     Category:
+       • Tier: ✅ Solid
+
+  38. Maldon & T vs St Albans
+     Date: 2026-11-28
+     League: Ryman Premier
+     Pick: Over 2.5 · High confidence (68.3%)
+     Category:
+       • Tier: ✅ Solid
+       • Auto-flag: poor league win rate on this market
+
+  39. AFC Whyteleafe vs Aveley
+     Date: 2026-11-28
+     League: Ryman Premier
+     Pick: Over 2.5 · High confidence (73.1%)
+     Category:
+       • Tier: ✅ Solid
+       • Auto-flag: poor league win rate on this market
+
+  40. Hanwell Town vs Frome
+     Date: 2026-11-28
+     League: Southern League Premier
+     Pick: Over 2.5 · High confidence (66.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  41. Plymouth P vs Sholing
+     Date: 2026-11-28
+     League: Southern League Premier
+     Pick: Over 2.5 · High confidence (64.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  42. Taunton Town vs Gosport Bor
+     Date: 2026-11-28
+     League: Southern League Premier
+     Pick: Over 2.5 · High confidence (89.1%)
+     Category:
+       • Tier: ✅ Solid
+
+  43. Leek vs FC Utd
+     Date: 2026-11-28
+     League: Unibond Premier
+     Pick: Over 2.5 · High confidence (60.7%)
+     Category:
+       • Tier: ✅ Solid
+
+  44. Ashton Utd vs Stockton T
+     Date: 2026-11-28
+     League: Unibond Premier
+     Pick: Over 2.5 · High confidence (76.6%)
+     Category:
+       • Tier: ✅ Solid
+
+  45. Guiseley vs Whitby
+     Date: 2026-11-28
+     League: Unibond Premier
+     Pick: Over 2.5 · High confidence (80.3%)
+     Category:
+       • Tier: ✅ Solid
+
+  46. Kyoto Sanga vs Cerezo Osaka
+     Date: 2026-11-28
+     League: Japanese J1 League
+     Pick: Over 2.5 · High confidence (80.5%)
      Category:
        • Tier: ✅ Solid

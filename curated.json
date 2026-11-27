@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-27",
+  "date": "2026-11-28",
   "rules": {
     "allow_watchlist": false,
     "allow_weak_league": false,
@@ -36,50 +36,29 @@
     ]
   },
   "counts": {
-    "parsed": 171,
-    "accepted": 5,
-    "rejected": 166,
+    "parsed": 172,
+    "accepted": 24,
+    "rejected": 148,
     "accepted_by_market": {
-      "Over/Under": 4,
-      "BTTS": 1,
-      "Home Win": 0
+      "Over/Under": 18,
+      "BTTS": 2,
+      "Home Win": 4
     }
   },
   "accepted": [
     {
-      "fixture": "Heidenheim vs Nuremberg",
-      "date": "2026-11-27",
-      "league": "German Bundesliga 2",
+      "fixture": "Crewe vs Grimsby",
+      "date": "2026-11-28",
+      "league": "Football League Two",
       "market": "Over/Under",
       "pick": "Over 2.5",
-      "confidence_pct": 75.1,
+      "confidence_pct": 84.9,
       "confidence_label": "High",
       "tier": "Solid",
-      "xg_home": 2.6,
-      "xg_away": 1.33,
-      "stake_pct": "0.1% @ 2.0",
-      "ev_per_dollar": "+50.2c/$  ·  Edge +50.2%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 13/15 checks passed",
-      "notes": [
-        "Missed: Away over 2.5 (last 6) (3/6); Home over 2.5 (last 3) (1/3) (+3 more)"
-      ],
-      "reject_reason": null
-    },
-    {
-      "fixture": "FC Groningen vs Willem II",
-      "date": "2026-11-27",
-      "league": "Netherlands League",
-      "market": "Over/Under",
-      "pick": "Over 2.5",
-      "confidence_pct": 84.7,
-      "confidence_label": "High",
-      "tier": "Solid",
-      "xg_home": 3.17,
-      "xg_away": 1.52,
+      "xg_home": 1.64,
+      "xg_away": 3.07,
       "stake_pct": "0.2% @ 2.0",
-      "ev_per_dollar": "+69.4c/$  ·  Edge +69.4%",
+      "ev_per_dollar": "+69.8c/$  ·  Edge +69.8%",
       "has_weak_flag": false,
       "has_thin_data": false,
       "profile_checks": "Profile: 18/15 checks passed",
@@ -87,39 +66,325 @@
       "reject_reason": null
     },
     {
-      "fixture": "Gyori ETO vs Debrecen",
-      "date": "2026-11-27",
-      "league": "Hungarian League",
+      "fixture": "Swindon vs Chesterfield",
+      "date": "2026-11-28",
+      "league": "Football League Two",
       "market": "Over/Under",
       "pick": "Over 2.5",
-      "confidence_pct": 75.4,
+      "confidence_pct": 76.3,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 1.25,
+      "xg_away": 2.76,
+      "stake_pct": "0.1% @ 2.0",
+      "ev_per_dollar": "+52.6c/$  ·  Edge +52.6%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 16/15 checks passed",
+      "notes": [
+        "Missed: Home over 2.5 (last 6) (2/6); Home total goals (last 6) (15)"
+      ],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Fylde vs Aldershot",
+      "date": "2026-11-28",
+      "league": "National League",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 75.7,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 2.64,
+      "xg_away": 1.33,
+      "stake_pct": "0.1% @ 2.0",
+      "ev_per_dollar": "+51.4c/$  ·  Edge +51.4%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 14/15 checks passed",
+      "notes": [
+        "Missed: Away goal volume (last 6) (scored 7, opp conceded 6); Home BTTS (last 6 home) (2/6) (+1 more)"
+      ],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Harrogate vs Yeovil",
+      "date": "2026-11-28",
+      "league": "National League",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 83.9,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 2.22,
+      "xg_away": 2.4,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+67.8c/$  ·  Edge +67.8%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 17/15 checks passed",
+      "notes": [],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Ross County vs Brora Rangers",
+      "date": "2026-11-28",
+      "league": "Scottish FA Cup",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 87.5,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 1.94,
+      "xg_away": 3.06,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+75.0c/$  ·  Edge +75.0%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 16/15 checks passed",
+      "notes": [
+        "Missed: Home over 2.5 (last 6) (3/6)"
+      ],
+      "reject_reason": null
+    },
+    {
+      "fixture": "East Kilbride vs Clyde",
+      "date": "2026-11-28",
+      "league": "Scottish FA Cup",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 90.3,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 2.28,
+      "xg_away": 3.08,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+80.6c/$  ·  Edge +80.6%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 16/15 checks passed",
+      "notes": [
+        "Missed: Away over 2.5 (last 3) (1/3); Away over 2.5 (last 6) (3/6)"
+      ],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Boness Utd vs Brechin",
+      "date": "2026-11-28",
+      "league": "Scottish FA Cup",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 71.1,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 1.67,
+      "xg_away": 2.01,
+      "stake_pct": "0.1% @ 2.0",
+      "ev_per_dollar": "+42.2c/$  ·  Edge +42.2%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 17/15 checks passed",
+      "notes": [],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Buckie Thistle vs Turriff U",
+      "date": "2026-11-28",
+      "league": "Scottish Highland League",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 72.6,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 2.06,
+      "xg_away": 1.71,
+      "stake_pct": "0.1% @ 2.0",
+      "ev_per_dollar": "+45.2c/$  ·  Edge +45.2%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 16/15 checks passed",
+      "notes": [
+        "Missed: Away over 2.5 (last 3) (1/3); Away total goals (last 3) (6)"
+      ],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Deveronvale vs Banks o'Dee",
+      "date": "2026-11-28",
+      "league": "Scottish Highland League",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 89.6,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 2.66,
+      "xg_away": 2.6,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+79.2c/$  ·  Edge +79.2%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 18/15 checks passed",
+      "notes": [],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Tranent Juniors vs Broxburn Ath",
+      "date": "2026-11-28",
+      "league": "Scottish Lowland League",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 87.2,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 3.8,
+      "xg_away": 1.16,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+74.4c/$  ·  Edge +74.4%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 16/15 checks passed",
+      "notes": [
+        "Missed: Overall goal activity (6) (neither team had activity in all available: 6/6)"
+      ],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Hamburg vs B Munich",
+      "date": "2026-11-28",
+      "league": "German Bundesliga",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 81.8,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 0.92,
+      "xg_away": 3.51,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+63.6c/$  ·  Edge +63.6%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 17/15 checks passed",
+      "notes": [
+        "Missed: Home goal volume (last 6) (scored 7, opp conceded 9)"
+      ],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Malaga vs Ath Bilbao",
+      "date": "2026-11-28",
+      "league": "Spanish La Liga",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 74.8,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 0.85,
+      "xg_away": 3.06,
+      "stake_pct": "0.1% @ 2.0",
+      "ev_per_dollar": "+49.6c/$  ·  Edge +49.6%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 12/15 checks passed",
+      "notes": [
+        "Missed: Away over 2.5 (last 6) (2/6); Away total goals (last 6) (17) (+3 more)"
+      ],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Real Madrid vs Alaves",
+      "date": "2026-11-28",
+      "league": "Spanish La Liga",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 76.9,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 2.08,
+      "xg_away": 1.97,
+      "stake_pct": "0.1% @ 2.0",
+      "ev_per_dollar": "+53.8c/$  ·  Edge +53.8%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 16/15 checks passed",
+      "notes": [
+        "Missed: Away goal volume (last 6) (scored 9, opp conceded 5)"
+      ],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Le Havre vs Strasbourg",
+      "date": "2026-11-28",
+      "league": "French Ligue 1",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 77.2,
       "confidence_label": "High",
       "tier": "Solid",
       "xg_home": 1.03,
-      "xg_away": 2.92,
+      "xg_away": 3.04,
       "stake_pct": "0.1% @ 2.0",
-      "ev_per_dollar": "+50.8c/$  ·  Edge +50.8%",
+      "ev_per_dollar": "+54.4c/$  ·  Edge +54.4%",
       "has_weak_flag": false,
       "has_thin_data": false,
-      "profile_checks": "Profile: 11/15 checks passed",
+      "profile_checks": "Profile: 16/15 checks passed",
       "notes": [
-        "Missed: Away over 2.5 (last 6) (3/6); Home BTTS (last 6 home) (2/6) (+4 more)"
+        "Missed: Home over 2.5 (last 6) (3/6); Home total goals (last 6) (16)"
       ],
       "reject_reason": null
     },
     {
-      "fixture": "Cardiff MU vs Airbus UK",
-      "date": "2026-11-27",
-      "league": "Welsh Premier",
+      "fixture": "Rosenborg vs Molde",
+      "date": "2026-11-28",
+      "league": "Norwegian Tippeligaen",
       "market": "Over/Under",
       "pick": "Over 2.5",
-      "confidence_pct": 86.1,
+      "confidence_pct": 91.2,
       "confidence_label": "High",
       "tier": "Solid",
-      "xg_home": 1.04,
-      "xg_away": 3.8,
+      "xg_home": 2.54,
+      "xg_away": 2.97,
       "stake_pct": "0.2% @ 2.0",
-      "ev_per_dollar": "+72.2c/$  ·  Edge +72.2%",
+      "ev_per_dollar": "+82.4c/$  ·  Edge +82.4%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 17/15 checks passed",
+      "notes": [],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Kifisia vs Kalamata",
+      "date": "2026-11-28",
+      "league": "Greek Super League",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 74.4,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 1.07,
+      "xg_away": 2.81,
+      "stake_pct": "0.1% @ 2.0",
+      "ev_per_dollar": "+48.8c/$  ·  Edge +48.8%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 14/15 checks passed",
+      "notes": [
+        "Missed: Away goal volume (last 6) (scored 5, opp conceded 8); Away over 2.5 (last 6) (-THIN (2/5 < 3) (+2 more)"
+      ],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Cambuur vs Sp. Rotterdam",
+      "date": "2026-11-28",
+      "league": "Netherlands League",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 88.1,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 3.08,
+      "xg_away": 1.99,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+76.2c/$  ·  Edge +76.2%",
       "has_weak_flag": false,
       "has_thin_data": false,
       "profile_checks": "Profile: 18/15 checks passed",
@@ -127,22 +392,146 @@
       "reject_reason": null
     },
     {
-      "fixture": "Alanyaspor vs Konyaspor",
-      "date": "2026-11-27",
-      "league": "Turkish Super Lig",
-      "market": "BTTS",
-      "pick": "BTTS No",
-      "confidence_pct": 70.6,
+      "fixture": "Barry Town vs Caernarfon",
+      "date": "2026-11-28",
+      "league": "Welsh Premier",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 86.9,
       "confidence_label": "High",
-      "tier": "Premium",
-      "xg_home": 0.67,
-      "xg_away": 0.92,
-      "stake_pct": "2.5% @ 1.85",
+      "tier": "Solid",
+      "xg_home": 1.13,
+      "xg_away": 3.8,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+73.8c/$  ·  Edge +73.8%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 18/15 checks passed",
+      "notes": [],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Harrogate vs Yeovil",
+      "date": "2026-11-28",
+      "league": "National League",
+      "market": "BTTS",
+      "pick": "BTTS Yes",
+      "confidence_pct": 81.2,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 2.22,
+      "xg_away": 2.42,
+      "stake_pct": "1.2% @ 1.9",
       "ev_per_dollar": "",
       "has_weak_flag": false,
       "has_thin_data": false,
       "profile_checks": "",
       "notes": [],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Rosenborg vs Molde",
+      "date": "2026-11-28",
+      "league": "Norwegian Tippeligaen",
+      "market": "BTTS",
+      "pick": "BTTS Yes",
+      "confidence_pct": 87.4,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 2.54,
+      "xg_away": 2.97,
+      "stake_pct": "1.4% @ 1.9",
+      "ev_per_dollar": "",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "",
+      "notes": [],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Dynamo Kyiv vs Ch. Odessa",
+      "date": "2026-11-28",
+      "league": "Ukrainian League",
+      "market": "Home Win",
+      "pick": "Home Win",
+      "confidence_pct": 89.2,
+      "confidence_label": "High",
+      "tier": "Premium",
+      "xg_home": null,
+      "xg_away": null,
+      "stake_pct": "3.2% @ 2.8",
+      "ev_per_dollar": "+149.8c/$  ·  Edge +149.8%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 11/11 checks passed",
+      "notes": [
+        "H2H note: Away defence gate: venue_5/5 (PASS)"
+      ],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Dyn Dresden vs St Pauli",
+      "date": "2026-11-28",
+      "league": "German Bundesliga 2",
+      "market": "Home Win",
+      "pick": "Home Win",
+      "confidence_pct": 91.5,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": null,
+      "xg_away": null,
+      "stake_pct": "3.3% @ 2.8",
+      "ev_per_dollar": "+156.2c/$  ·  Edge +156.2%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 9/11 checks passed",
+      "notes": [
+        "H2H note: Away defence gate: venue_4/5 (PASS)",
+        "Missed: Home form (no losses) (4/6 < 5); Home overall form (5) (2W-2L in 5)"
+      ],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Mlada Boleslav vs Sigma O.",
+      "date": "2026-11-28",
+      "league": "Czech Liga",
+      "market": "Home Win",
+      "pick": "Home Win",
+      "confidence_pct": 92.0,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": null,
+      "xg_away": null,
+      "stake_pct": "3.3% @ 2.8",
+      "ev_per_dollar": "+157.6c/$  ·  Edge +157.6%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 10/11 checks passed",
+      "notes": [
+        "H2H note: Away defence gate: venue_5/5 (PASS)",
+        "Missed: Away goals scored (7 > 5)"
+      ],
+      "reject_reason": null
+    },
+    {
+      "fixture": "Arouca vs Rio Ave",
+      "date": "2026-11-28",
+      "league": "Portuguese Liga",
+      "market": "Home Win",
+      "pick": "Home Win",
+      "confidence_pct": 89.4,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": null,
+      "xg_away": null,
+      "stake_pct": "3.2% @ 2.8",
+      "ev_per_dollar": "+150.3c/$  ·  Edge +150.3%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 11/11 checks passed",
+      "notes": [
+        "H2H note: Away defence gate: venue_4/5 (PASS)"
+      ],
       "reject_reason": null
     }
   ],
@@ -167,7 +556,7 @@
         "H2H note: Away defence gate: venue_4/5 (PASS)",
         "Missed: Away goals scored (7 > 5); Away overall form (5) (1W-1L in 5)"
       ],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "tier Watchlist"
     },
     {
       "fixture": "Hertha Berlin vs Karlsruhe",
@@ -189,7 +578,7 @@
         "H2H note: Away defence gate: venue_5/5 (PASS)",
         "Missed: Away goals scored (7 > 5)"
       ],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "tier Watchlist"
     },
     {
       "fixture": "Guiseley vs Whitby",
@@ -211,7 +600,7 @@
         "H2H note: Away defence gate: venue_5/5 (PASS)",
         "Missed: Away goals scored (7 > 5); Home goals conceded (6 > 5)"
       ],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "tier Watchlist"
     },
     {
       "fixture": "Zeleznicar Pancevo vs OFK Belgrade",
@@ -232,6 +621,25 @@
       "notes": [
         "H2H note: Away defence gate: venue_4/5 (PASS)"
       ],
+      "reject_reason": "not today (2026-11-29)"
+    },
+    {
+      "fixture": "Hoffenheim vs Augsburg",
+      "date": "2026-11-29",
+      "league": "German Bundesliga",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 93.1,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 2.08,
+      "xg_away": 3.78,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+86.2c/$  ·  Edge +86.2%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 18/15 checks passed",
+      "notes": [],
       "reject_reason": "not today (2026-11-29)"
     },
     {
@@ -274,7 +682,7 @@
       "notes": [
         "Missed: Away over 2.5 (last 3) (1/3)"
       ],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "weak-ROI / poor-league-win-rate flag"
     },
     {
       "fixture": "Morecambe vs Spalding Utd",
@@ -296,29 +704,7 @@
         "H2H note: Away defence gate: venue_4/5 (PASS)",
         "Missed: Home overall form (5) (2W-2L in 5); Home recent form (1/2 < 2)"
       ],
-      "reject_reason": "not today (2026-11-28)"
-    },
-    {
-      "fixture": "Mlada Boleslav vs Sigma O.",
-      "date": "2026-11-28",
-      "league": "Czech Liga",
-      "market": "Home Win",
-      "pick": "Home Win",
-      "confidence_pct": 92.0,
-      "confidence_label": "High",
-      "tier": "Solid",
-      "xg_home": null,
-      "xg_away": null,
-      "stake_pct": "3.3% @ 2.8",
-      "ev_per_dollar": "+157.6c/$  ·  Edge +157.6%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 10/11 checks passed",
-      "notes": [
-        "H2H note: Away defence gate: venue_5/5 (PASS)",
-        "Missed: Away goals scored (7 > 5)"
-      ],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "conservative league keyword: Conference North"
     },
     {
       "fixture": "FC Magdeburg vs Cottbus",
@@ -343,28 +729,6 @@
       "reject_reason": "not today (2026-11-29)"
     },
     {
-      "fixture": "Dyn Dresden vs St Pauli",
-      "date": "2026-11-28",
-      "league": "German Bundesliga 2",
-      "market": "Home Win",
-      "pick": "Home Win",
-      "confidence_pct": 91.5,
-      "confidence_label": "High",
-      "tier": "Solid",
-      "xg_home": null,
-      "xg_away": null,
-      "stake_pct": "3.3% @ 2.8",
-      "ev_per_dollar": "+156.2c/$  ·  Edge +156.2%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 9/11 checks passed",
-      "notes": [
-        "H2H note: Away defence gate: venue_4/5 (PASS)",
-        "Missed: Home form (no losses) (4/6 < 5); Home overall form (5) (2W-2L in 5)"
-      ],
-      "reject_reason": "not today (2026-11-28)"
-    },
-    {
       "fixture": "Dynamo Kyiv vs Livyi Bereh",
       "date": "2026-12-02",
       "league": "Ukrainian League",
@@ -379,12 +743,56 @@
       "ev_per_dollar": "+156.2c/$  ·  Edge +156.2%",
       "has_weak_flag": false,
       "has_thin_data": false,
-      "profile_checks": "Profile: 10/11 checks passed",
+      "profile_checks": "Profile: 9/11 checks passed",
       "notes": [
         "H2H note: Away defence gate: venue_4/5 (PASS)",
-        "Missed: Away goals conceded (5 < 10)"
+        "Missed: Away goals conceded (5 < 10); Away overall form (5) (1W-1L in 5)"
       ],
       "reject_reason": "not today (2026-12-02)"
+    },
+    {
+      "fixture": "Juventus vs Sassuolo",
+      "date": "2026-12-03",
+      "league": "Coppa Italia",
+      "market": "Home Win",
+      "pick": "Home Win",
+      "confidence_pct": 91.5,
+      "confidence_label": "High",
+      "tier": "Watchlist",
+      "xg_home": null,
+      "xg_away": null,
+      "stake_pct": "0.0% @ 2.8",
+      "ev_per_dollar": "+156.2c/$  ·  Edge +156.2%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 9/11 checks passed",
+      "notes": [
+        "H2H note: Away defence gate: venue_5/5 (PASS)",
+        "Missed: Away goals scored (6 > 5); Home goals conceded (6 > 5)"
+      ],
+      "reject_reason": "not today (2026-12-03)"
+    },
+    {
+      "fixture": "Cruzeiro vs Internacional",
+      "date": "2026-12-03",
+      "league": "Brazilian Serie A",
+      "market": "Home Win",
+      "pick": "Home Win",
+      "confidence_pct": 91.5,
+      "confidence_label": "High",
+      "tier": "Watchlist",
+      "xg_home": null,
+      "xg_away": null,
+      "stake_pct": "0.0% @ 2.8",
+      "ev_per_dollar": "+156.2c/$  ·  Edge +156.2%",
+      "has_weak_flag": true,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 10/11 checks passed",
+      "notes": [
+        "H2H note: Away defence gate: venue_5/5 (PASS)",
+        "Missed: Away goals conceded (9 < 10)"
+      ],
+      "reject_reason": "not today (2026-12-03)"
     },
     {
       "fixture": "Avro vs Bamber Br.",
@@ -406,26 +814,7 @@
         "H2H note: Away defence gate: venue_4/5 (PASS)",
         "Missed: Home form (no losses) (4/6 < 5); Home goals conceded (9 > 5)"
       ],
-      "reject_reason": "not today (2026-11-28)"
-    },
-    {
-      "fixture": "Rosenborg vs Molde",
-      "date": "2026-11-28",
-      "league": "Norwegian Tippeligaen",
-      "market": "Over/Under",
-      "pick": "Over 2.5",
-      "confidence_pct": 91.2,
-      "confidence_label": "High",
-      "tier": "Solid",
-      "xg_home": 2.54,
-      "xg_away": 2.97,
-      "stake_pct": "0.2% @ 2.0",
-      "ev_per_dollar": "+82.4c/$  ·  Edge +82.4%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 17/15 checks passed",
-      "notes": [],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "tier Watchlist"
     },
     {
       "fixture": "Real Madrid vs Alaves",
@@ -447,29 +836,7 @@
         "H2H note: Away defence gate: overall_8/10 (PASS)",
         "Missed: Away goals scored (9 > 5); Away overall form (5) (2W-1L in 5)"
       ],
-      "reject_reason": "not today (2026-11-28)"
-    },
-    {
-      "fixture": "Union St Gilloise vs Gent",
-      "date": "2026-11-29",
-      "league": "Belgium League",
-      "market": "Home Win",
-      "pick": "Home Win",
-      "confidence_pct": 90.8,
-      "confidence_label": "High",
-      "tier": "Solid",
-      "xg_home": null,
-      "xg_away": null,
-      "stake_pct": "3.2% @ 2.8",
-      "ev_per_dollar": "+154.2c/$  ·  Edge +154.2%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 10/11 checks passed",
-      "notes": [
-        "H2H note: Away defence gate: venue_4/5 (PASS)",
-        "Missed: Away goals conceded (8 < 10)"
-      ],
-      "reject_reason": "not today (2026-11-29)"
+      "reject_reason": "tier Watchlist"
     },
     {
       "fixture": "Curzon A vs Bury",
@@ -491,7 +858,7 @@
         "H2H note: Away defence gate: venue_4/5 (PASS)",
         "Missed: Away goals scored (9 > 5)"
       ],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "tier Watchlist"
     },
     {
       "fixture": "Roma vs Monza",
@@ -538,27 +905,6 @@
       "reject_reason": "not today (2026-11-29)"
     },
     {
-      "fixture": "East Kilbride vs Clyde",
-      "date": "2026-11-28",
-      "league": "Scottish FA Cup",
-      "market": "Over/Under",
-      "pick": "Over 2.5",
-      "confidence_pct": 90.3,
-      "confidence_label": "High",
-      "tier": "Solid",
-      "xg_home": 2.29,
-      "xg_away": 3.07,
-      "stake_pct": "0.2% @ 2.0",
-      "ev_per_dollar": "+80.6c/$  ·  Edge +80.6%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 16/15 checks passed",
-      "notes": [
-        "Missed: Away over 2.5 (last 3) (1/3); Away over 2.5 (last 6) (3/6)"
-      ],
-      "reject_reason": "not today (2026-11-28)"
-    },
-    {
       "fixture": "Cumnock vs Arbroath",
       "date": "2026-11-28",
       "league": "Scottish FA Cup",
@@ -578,7 +924,28 @@
         "H2H note: Away defence gate: venue_5/5 (PASS)",
         "Missed: Away overall form (5) (3W-2L in 5); Home recent form (1/2 < 2)"
       ],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "tier Watchlist"
+    },
+    {
+      "fixture": "Chelsea vs C Palace",
+      "date": "2026-12-02",
+      "league": "Premier League",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 90.1,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 2.53,
+      "xg_away": 2.8,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+80.2c/$  ·  Edge +80.2%",
+      "has_weak_flag": true,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 15/15 checks passed",
+      "notes": [
+        "Missed: Away over 2.5 (last 3) (1/3); Home over 2.5 (last 3) (1/3) (+1 more)"
+      ],
+      "reject_reason": "not today (2026-12-02)"
     },
     {
       "fixture": "Benfica vs Famalicao",
@@ -601,25 +968,6 @@
         "Missed: Away goals conceded (8 < 10); Away goals scored (12 > 5)"
       ],
       "reject_reason": "not today (2026-11-30)"
-    },
-    {
-      "fixture": "Deveronvale vs Banks o'Dee",
-      "date": "2026-11-28",
-      "league": "Scottish Highland League",
-      "market": "Over/Under",
-      "pick": "Over 2.5",
-      "confidence_pct": 89.6,
-      "confidence_label": "High",
-      "tier": "Solid",
-      "xg_home": 2.66,
-      "xg_away": 2.6,
-      "stake_pct": "0.2% @ 2.0",
-      "ev_per_dollar": "+79.2c/$  ·  Edge +79.2%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 18/15 checks passed",
-      "notes": [],
-      "reject_reason": "not today (2026-11-28)"
     },
     {
       "fixture": "Coventry vs Ipswich",
@@ -663,46 +1011,26 @@
       "reject_reason": "not today (2026-11-29)"
     },
     {
-      "fixture": "Arouca vs Rio Ave",
-      "date": "2026-11-28",
-      "league": "Portuguese Liga",
+      "fixture": "Brighton vs Newcastle",
+      "date": "2026-11-29",
+      "league": "Premier League",
       "market": "Home Win",
       "pick": "Home Win",
-      "confidence_pct": 89.4,
+      "confidence_pct": 89.3,
       "confidence_label": "High",
       "tier": "Solid",
       "xg_home": null,
       "xg_away": null,
       "stake_pct": "3.2% @ 2.8",
-      "ev_per_dollar": "+150.3c/$  ·  Edge +150.3%",
+      "ev_per_dollar": "+150.0c/$  ·  Edge +150.0%",
       "has_weak_flag": false,
       "has_thin_data": false,
-      "profile_checks": "Profile: 11/11 checks passed",
+      "profile_checks": "Profile: 10/11 checks passed",
       "notes": [
-        "H2H note: Away defence gate: venue_4/5 (PASS)"
+        "H2H note: Away defence gate: venue_4/5 (PASS)",
+        "Missed: Away goals scored (7 > 5)"
       ],
-      "reject_reason": "not today (2026-11-28)"
-    },
-    {
-      "fixture": "Dynamo Kyiv vs Ch. Odessa",
-      "date": "2026-11-28",
-      "league": "Ukrainian League",
-      "market": "Home Win",
-      "pick": "Home Win",
-      "confidence_pct": 89.2,
-      "confidence_label": "High",
-      "tier": "Premium",
-      "xg_home": null,
-      "xg_away": null,
-      "stake_pct": "3.1% @ 2.8",
-      "ev_per_dollar": "+149.8c/$  ·  Edge +149.8%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 11/11 checks passed",
-      "notes": [
-        "H2H note: Away defence gate: venue_5/5 (PASS)"
-      ],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "not today (2026-11-29)"
     },
     {
       "fixture": "Taunton Town vs Gosport Bor",
@@ -721,92 +1049,28 @@
       "has_thin_data": false,
       "profile_checks": "Profile: 18/15 checks passed",
       "notes": [],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "conservative league keyword: Southern League"
     },
     {
-      "fixture": "Ferencvaros vs Zalaegerszeg",
-      "date": "2026-11-29",
-      "league": "Hungarian League",
+      "fixture": "Flamengo vs Chapecoense",
+      "date": "2026-12-03",
+      "league": "Brazilian Serie A",
       "market": "Home Win",
       "pick": "Home Win",
-      "confidence_pct": 88.9,
+      "confidence_pct": 88.3,
       "confidence_label": "High",
-      "tier": "Watchlist",
-      "xg_home": null,
-      "xg_away": null,
-      "stake_pct": "0.0% @ 2.8",
-      "ev_per_dollar": "+148.9c/$  ·  Edge +148.9%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 9/11 checks passed",
-      "notes": [
-        "H2H note: Away defence gate: venue_5/5 (PASS)",
-        "Missed: Home goals conceded (6 > 5); Home recent form (1/2 < 2)"
-      ],
-      "reject_reason": "not today (2026-11-29)"
-    },
-    {
-      "fixture": "Brighton vs Newcastle",
-      "date": "2026-11-29",
-      "league": "Premier League",
-      "market": "Home Win",
-      "pick": "Home Win",
-      "confidence_pct": 88.7,
-      "confidence_label": "High",
-      "tier": "Solid",
+      "tier": "Premium",
       "xg_home": null,
       "xg_away": null,
       "stake_pct": "3.1% @ 2.8",
-      "ev_per_dollar": "+148.4c/$  ·  Edge +148.4%",
-      "has_weak_flag": false,
+      "ev_per_dollar": "+147.2c/$  ·  Edge +147.2%",
+      "has_weak_flag": true,
       "has_thin_data": false,
-      "profile_checks": "Profile: 10/11 checks passed",
+      "profile_checks": "Profile: 11/11 checks passed",
       "notes": [
-        "H2H note: Away defence gate: venue_4/5 (PASS)",
-        "Missed: Away goals scored (7 > 5)"
+        "H2H note: Away defence gate: venue_5/5 (PASS)"
       ],
-      "reject_reason": "not today (2026-11-29)"
-    },
-    {
-      "fixture": "Freiburg vs RB Leipzig",
-      "date": "2026-11-29",
-      "league": "German Bundesliga",
-      "market": "Over/Under",
-      "pick": "Over 2.5",
-      "confidence_pct": 88.1,
-      "confidence_label": "High",
-      "tier": "Solid",
-      "xg_home": 1.27,
-      "xg_away": 3.8,
-      "stake_pct": "0.2% @ 2.0",
-      "ev_per_dollar": "+76.2c/$  ·  Edge +76.2%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 18/15 checks passed",
-      "notes": [],
-      "reject_reason": "not today (2026-11-29)"
-    },
-    {
-      "fixture": "Colwyn Bay vs Ammanford",
-      "date": "2026-11-27",
-      "league": "Welsh Premier",
-      "market": "Home Win",
-      "pick": "Home Win",
-      "confidence_pct": 88.1,
-      "confidence_label": "High",
-      "tier": "Watchlist",
-      "xg_home": null,
-      "xg_away": null,
-      "stake_pct": "0.0% @ 2.8",
-      "ev_per_dollar": "+146.7c/$  ·  Edge +146.7%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 10/11 checks passed",
-      "notes": [
-        "H2H note: Away defence gate: venue_4/5 (PASS)",
-        "Missed: Home recent form (1/2 < 2)"
-      ],
-      "reject_reason": "tier Watchlist"
+      "reject_reason": "not today (2026-12-03)"
     },
     {
       "fixture": "Real Betis vs Rayo Vallecano",
@@ -828,7 +1092,7 @@
         "H2H note: Away defence gate: venue_5/5 (PASS)",
         "Missed: Away goals scored (8 > 5); Home goals conceded (10 > 5)"
       ],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "tier Watchlist"
     },
     {
       "fixture": "Wisla Krakow vs Motor Lublin",
@@ -850,7 +1114,7 @@
         "H2H note: Away defence gate: venue_5/5 (PASS)",
         "Missed: Away goals scored (9 > 5); Away overall form (5) (3W-1L in 5)"
       ],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "tier Watchlist"
     },
     {
       "fixture": "Bournemouth vs Brighton",
@@ -870,28 +1134,9 @@
       "profile_checks": "Profile: 9/11 checks passed",
       "notes": [
         "H2H note: Away defence gate: best_v3/5_o3/10 (FAIL)",
-        "Missed: Away goals conceded (6 < 10); Away overall form (5) (3W-1L in 5)"
+        "Missed: Away goals conceded (6 < 10); Away overall form (5) (4W-1L in 5)"
       ],
       "reject_reason": "not today (2026-12-02)"
-    },
-    {
-      "fixture": "Cambuur vs Sp. Rotterdam",
-      "date": "2026-11-28",
-      "league": "Netherlands League",
-      "market": "Over/Under",
-      "pick": "Over 2.5",
-      "confidence_pct": 87.9,
-      "confidence_label": "High",
-      "tier": "Solid",
-      "xg_home": 3.07,
-      "xg_away": 1.97,
-      "stake_pct": "0.2% @ 2.0",
-      "ev_per_dollar": "+75.8c/$  ·  Edge +75.8%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 18/15 checks passed",
-      "notes": [],
-      "reject_reason": "not today (2026-11-28)"
     },
     {
       "fixture": "Dunfermline vs Arbroath",
@@ -916,27 +1161,6 @@
       "reject_reason": "not today (2026-12-01)"
     },
     {
-      "fixture": "Ross County vs Brora Rangers",
-      "date": "2026-11-28",
-      "league": "Scottish FA Cup",
-      "market": "Over/Under",
-      "pick": "Over 2.5",
-      "confidence_pct": 87.5,
-      "confidence_label": "High",
-      "tier": "Solid",
-      "xg_home": 1.95,
-      "xg_away": 3.05,
-      "stake_pct": "0.2% @ 2.0",
-      "ev_per_dollar": "+75.0c/$  ·  Edge +75.0%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 16/15 checks passed",
-      "notes": [
-        "Missed: Home over 2.5 (last 6) (3/6)"
-      ],
-      "reject_reason": "not today (2026-11-28)"
-    },
-    {
       "fixture": "Charleroi vs W Beveren",
       "date": "2026-11-28",
       "league": "Belgium League",
@@ -956,45 +1180,7 @@
         "H2H note: Away defence gate: venue_5/5 (PASS)",
         "Missed: Home goals conceded (10 > 5); Home recent form (1/2 < 2)"
       ],
-      "reject_reason": "not today (2026-11-28)"
-    },
-    {
-      "fixture": "Rosenborg vs Molde",
-      "date": "2026-11-28",
-      "league": "Norwegian Tippeligaen",
-      "market": "BTTS",
-      "pick": "BTTS Yes",
-      "confidence_pct": 87.4,
-      "confidence_label": "High",
-      "tier": "Solid",
-      "xg_home": 2.54,
-      "xg_away": 2.97,
-      "stake_pct": "1.6% @ 1.9",
-      "ev_per_dollar": "",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "",
-      "notes": [],
-      "reject_reason": "not today (2026-11-28)"
-    },
-    {
-      "fixture": "Barry Town vs Caernarfon",
-      "date": "2026-11-28",
-      "league": "Welsh Premier",
-      "market": "Over/Under",
-      "pick": "Over 2.5",
-      "confidence_pct": 87.3,
-      "confidence_label": "High",
-      "tier": "Solid",
-      "xg_home": 1.18,
-      "xg_away": 3.8,
-      "stake_pct": "0.2% @ 2.0",
-      "ev_per_dollar": "+74.6c/$  ·  Edge +74.6%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 18/15 checks passed",
-      "notes": [],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "tier Watchlist"
     },
     {
       "fixture": "Auchinleck vs Pollok",
@@ -1016,7 +1202,7 @@
         "H2H note: Away defence gate: venue_5/5 (PASS)",
         "Missed: Away goals scored (12 > 5); Away losses (1 < 2)"
       ],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "tier Watchlist"
     },
     {
       "fixture": "Granada vs AD Ceuta",
@@ -1062,27 +1248,6 @@
       "reject_reason": "not today (2026-11-29)"
     },
     {
-      "fixture": "Tranent Juniors vs Broxburn Ath",
-      "date": "2026-11-28",
-      "league": "Scottish Lowland League",
-      "market": "Over/Under",
-      "pick": "Over 2.5",
-      "confidence_pct": 87.2,
-      "confidence_label": "High",
-      "tier": "Solid",
-      "xg_home": 3.8,
-      "xg_away": 1.16,
-      "stake_pct": "0.2% @ 2.0",
-      "ev_per_dollar": "+74.4c/$  ·  Edge +74.4%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 16/15 checks passed",
-      "notes": [
-        "Missed: Overall goal activity (6) (neither team had activity in all available: 6/6)"
-      ],
-      "reject_reason": "not today (2026-11-28)"
-    },
-    {
       "fixture": "Incheon United vs Gangwon",
       "date": "2026-11-29",
       "league": "Korean K-League 1",
@@ -1105,6 +1270,47 @@
       "reject_reason": "not today (2026-11-29)"
     },
     {
+      "fixture": "Freiburg vs RB Leipzig",
+      "date": "2026-11-29",
+      "league": "German Bundesliga",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 86.4,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 1.26,
+      "xg_away": 3.61,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+72.8c/$  ·  Edge +72.8%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 18/15 checks passed",
+      "notes": [],
+      "reject_reason": "not today (2026-11-29)"
+    },
+    {
+      "fixture": "Union St Gilloise vs Gent",
+      "date": "2026-11-29",
+      "league": "Belgium League",
+      "market": "Home Win",
+      "pick": "Home Win",
+      "confidence_pct": 86.4,
+      "confidence_label": "High",
+      "tier": "Watchlist",
+      "xg_home": null,
+      "xg_away": null,
+      "stake_pct": "0.0% @ 2.8",
+      "ev_per_dollar": "+141.9c/$  ·  Edge +141.9%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 9/11 checks passed",
+      "notes": [
+        "H2H note: Away defence gate: venue_4/5 (PASS)",
+        "Missed: Away goals conceded (8 < 10); Home recent form (1/2 < 2)"
+      ],
+      "reject_reason": "not today (2026-11-29)"
+    },
+    {
       "fixture": "Radcliffe Boro vs Chester",
       "date": "2026-11-28",
       "league": "Football Conference North",
@@ -1123,7 +1329,7 @@
       "notes": [
         "Missed: Overall goal activity (6) (neither team had activity in all available: 6/6)"
       ],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "conservative league keyword: Conference North"
     },
     {
       "fixture": "Marine vs Bedford",
@@ -1148,28 +1354,6 @@
       "reject_reason": "not today (2026-12-01)"
     },
     {
-      "fixture": "Southampton vs Middlesbrough",
-      "date": "2026-11-27",
-      "league": "Football League Championship",
-      "market": "Home Win",
-      "pick": "Home Win",
-      "confidence_pct": 85.3,
-      "confidence_label": "High",
-      "tier": "Watchlist",
-      "xg_home": null,
-      "xg_away": null,
-      "stake_pct": "0.0% @ 2.8",
-      "ev_per_dollar": "+138.8c/$  ·  Edge +138.8%",
-      "has_weak_flag": false,
-      "has_thin_data": false,
-      "profile_checks": "Profile: 9/11 checks passed",
-      "notes": [
-        "H2H note: Away defence gate: venue_4/5 (PASS)",
-        "Missed: Away goals scored (10 > 5); Away overall form (5) (3W-1L in 5)"
-      ],
-      "reject_reason": "tier Watchlist"
-    },
-    {
       "fixture": "Boreham W vs Gateshead",
       "date": "2026-11-28",
       "league": "National League",
@@ -1189,29 +1373,237 @@
         "H2H note: Away defence gate: venue_5/5 (PASS)",
         "Missed: Home goals conceded (10 > 5); Home recent form (1/2 < 2)"
       ],
-      "reject_reason": "not today (2026-11-28)"
+      "reject_reason": "tier Watchlist"
     },
     {
-      "fixture": "W Bremen vs B M'gladbach",
-      "date": "2026-11-27",
-      "league": "German Bundesliga",
+      "fixture": "Ferencvaros vs Zalaegerszeg",
+      "date": "2026-11-29",
+      "league": "Hungarian League",
       "market": "Home Win",
       "pick": "Home Win",
-      "confidence_pct": 85.0,
+      "confidence_pct": 85.1,
       "confidence_label": "High",
       "tier": "Watchlist",
       "xg_home": null,
       "xg_away": null,
       "stake_pct": "0.0% @ 2.8",
-      "ev_per_dollar": "+138.0c/$  ·  Edge +138.0%",
+      "ev_per_dollar": "+138.3c/$  ·  Edge +138.3%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 10/11 checks passed",
+      "notes": [
+        "H2H note: Away defence gate: venue_5/5 (PASS)",
+        "Missed: Home recent form (0/2 < 2)"
+      ],
+      "reject_reason": "not today (2026-11-29)"
+    },
+    {
+      "fixture": "AEK Athens vs PAOK Salonika",
+      "date": "2026-11-29",
+      "league": "Greek Super League",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 84.9,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 1.57,
+      "xg_away": 3.14,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+69.8c/$  ·  Edge +69.8%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 17/15 checks passed",
+      "notes": [],
+      "reject_reason": "not today (2026-11-29)"
+    },
+    {
+      "fixture": "Hearts vs Aberdeen",
+      "date": "2026-12-02",
+      "league": "Scottish Premier",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 84.6,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 2.41,
+      "xg_away": 2.27,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+69.2c/$  ·  Edge +69.2%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 18/15 checks passed",
+      "notes": [],
+      "reject_reason": "not today (2026-12-02)"
+    },
+    {
+      "fixture": "Barnsley vs Wycombe",
+      "date": "2026-12-01",
+      "league": "Football League One",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 84.3,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 2.45,
+      "xg_away": 2.2,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+68.6c/$  ·  Edge +68.6%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 16/15 checks passed",
+      "notes": [
+        "Missed: Away over 2.5 (last 3) (1/3); Away over 2.5 (last 6) (2/6)"
+      ],
+      "reject_reason": "not today (2026-12-01)"
+    },
+    {
+      "fixture": "M Tel Aviv vs H. Petah Tikva",
+      "date": "2026-11-28",
+      "league": "Israeli League",
+      "market": "Home Win",
+      "pick": "Home Win",
+      "confidence_pct": 83.6,
+      "confidence_label": "High",
+      "tier": "Watchlist",
+      "xg_home": null,
+      "xg_away": null,
+      "stake_pct": "0.0% @ 2.8",
+      "ev_per_dollar": "+134.1c/$  ·  Edge +134.1%",
       "has_weak_flag": false,
       "has_thin_data": false,
       "profile_checks": "Profile: 9/11 checks passed",
       "notes": [
         "H2H note: Away defence gate: venue_5/5 (PASS)",
-        "Missed: Away goals scored (10 > 5); Home goals conceded (5 > 4)"
+        "Missed: Home goals conceded (7 > 5); Home recent form (1/2 < 2)"
       ],
       "reject_reason": "tier Watchlist"
+    },
+    {
+      "fixture": "Swansea vs Cardiff",
+      "date": "2026-11-29",
+      "league": "Football League Championship",
+      "market": "Home Win",
+      "pick": "Home Win",
+      "confidence_pct": 83.6,
+      "confidence_label": "High",
+      "tier": "Watchlist",
+      "xg_home": null,
+      "xg_away": null,
+      "stake_pct": "0.0% @ 2.8",
+      "ev_per_dollar": "+134.1c/$  ·  Edge +134.1%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 9/11 checks passed",
+      "notes": [
+        "H2H note: Away defence gate: venue_5/5 (PASS)",
+        "Missed: Home overall form (5) (1W-3L in 5); Home recent form (1/2 < 2)"
+      ],
+      "reject_reason": "not today (2026-11-29)"
+    },
+    {
+      "fixture": "Warrington vs Bury",
+      "date": "2026-12-01",
+      "league": "Unibond Premier",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 83.4,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 1.78,
+      "xg_away": 2.79,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+66.8c/$  ·  Edge +66.8%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 17/15 checks passed",
+      "notes": [
+        "Missed: Overall goal activity (6) (neither team had activity in all available: 6/6)"
+      ],
+      "reject_reason": "not today (2026-12-01)"
+    },
+    {
+      "fixture": "Columbus Crew vs Inter Miami CF",
+      "date": "2026-11-28",
+      "league": "MLS",
+      "market": "Home Win",
+      "pick": "Home Win",
+      "confidence_pct": 82.8,
+      "confidence_label": "High",
+      "tier": "Watchlist",
+      "xg_home": null,
+      "xg_away": null,
+      "stake_pct": "0.0% @ 2.8",
+      "ev_per_dollar": "+131.8c/$  ·  Edge +131.8%",
+      "has_weak_flag": true,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 9/11 checks passed",
+      "notes": [
+        "H2H note: Away defence gate: venue_5/5 (PASS) · 3 H2H meetings logged",
+        "Missed: Away goals conceded (9 < 10); Away goals scored (9 > 5)"
+      ],
+      "reject_reason": "tier Watchlist"
+    },
+    {
+      "fixture": "Dallas vs Portland Timb.",
+      "date": "2026-12-03",
+      "league": "MLS",
+      "market": "Home Win",
+      "pick": "Home Win",
+      "confidence_pct": 82.5,
+      "confidence_label": "High",
+      "tier": "Watchlist",
+      "xg_home": null,
+      "xg_away": null,
+      "stake_pct": "0.0% @ 2.8",
+      "ev_per_dollar": "+131.0c/$  ·  Edge +131.0%",
+      "has_weak_flag": true,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 9/11 checks passed",
+      "notes": [
+        "H2H note: Away defence gate: venue_4/5 (PASS) · 3 H2H meetings logged",
+        "Missed: Away goals scored (9 > 5); Away overall form (5) (4W-1L in 5)"
+      ],
+      "reject_reason": "not today (2026-12-03)"
+    },
+    {
+      "fixture": "Torino vs Lazio",
+      "date": "2026-11-28",
+      "league": "Italian Serie A",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 82.4,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 0.68,
+      "xg_away": 3.8,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+64.8c/$  ·  Edge +64.8%",
+      "has_weak_flag": true,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 13/15 checks passed",
+      "notes": [
+        "Missed: Away over 2.5 (last 6) (3/6); Home goal volume (last 6) (scored 7, opp conceded 4) (+2 more)"
+      ],
+      "reject_reason": "weak-ROI / poor-league-win-rate flag"
+    },
+    {
+      "fixture": "Brann vs Kristiansund",
+      "date": "2026-11-29",
+      "league": "Norwegian Tippeligaen",
+      "market": "Over/Under",
+      "pick": "Over 2.5",
+      "confidence_pct": 82.4,
+      "confidence_label": "High",
+      "tier": "Solid",
+      "xg_home": 1.8,
+      "xg_away": 2.68,
+      "stake_pct": "0.2% @ 2.0",
+      "ev_per_dollar": "+64.8c/$  ·  Edge +64.8%",
+      "has_weak_flag": false,
+      "has_thin_data": false,
+      "profile_checks": "Profile: 18/15 checks passed",
+      "notes": [],
+      "reject_reason": "not today (2026-11-29)"
     }
   ]
 }
